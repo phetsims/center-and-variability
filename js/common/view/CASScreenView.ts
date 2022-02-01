@@ -19,7 +19,7 @@ export type CASScreenViewOptions = ScreenViewOptions;
 
 class CASScreenView extends ScreenView {
 
-  constructor( model: CASModel, options?: CASScreenViewOptions ) {
+  constructor( model: CASModel, options: CASScreenViewOptions ) {
     options = optionize<CASScreenViewOptions>( {
 
       // phet-io options
