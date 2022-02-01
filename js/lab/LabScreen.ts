@@ -16,13 +16,13 @@ import CASScreen, { CASScreenOptions } from '../common/CASScreen.js';
 import LabScreenView from './view/LabScreenView.js';
 import centerAndSpreadStrings from '../centerAndSpreadStrings.js';
 
-type CenterAndSpreadScreenOptions = CASScreenOptions;
+type LabScreenOptions = CASScreenOptions;
 
 class LabScreen extends CASScreen {
 
-  constructor( providedOptions: CenterAndSpreadScreenOptions ) {
+  constructor( providedOptions: LabScreenOptions ) {
 
-    const options = optionize<CenterAndSpreadScreenOptions>( {
+    const options = optionize<LabScreenOptions>( {
       name: centerAndSpreadStrings.screen.lab,
       //TODO if you include homeScreenIcon or navigationBarIcon, use JOIST/ScreenIcon
       backgroundColorProperty: CASColors.screenBackgroundColorProperty,

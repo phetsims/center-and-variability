@@ -16,13 +16,13 @@ import CASScreen, { CASScreenOptions } from '../common/CASScreen.js';
 import MedianScreenView from './view/MedianScreenView.js';
 import centerAndSpreadStrings from '../centerAndSpreadStrings.js';
 
-type CenterAndSpreadScreenOptions = CASScreenOptions;
+type MedianScreenOptions = CASScreenOptions;
 
 class MedianScreen extends CASScreen {
 
-  constructor( providedOptions: CenterAndSpreadScreenOptions ) {
+  constructor( providedOptions: MedianScreenOptions ) {
 
-    const options = optionize<CenterAndSpreadScreenOptions>( {
+    const options = optionize<MedianScreenOptions>( {
       name: centerAndSpreadStrings.screen.median,
       //TODO if you include homeScreenIcon or navigationBarIcon, use JOIST/ScreenIcon
       backgroundColorProperty: CASColors.screenBackgroundColorProperty,
