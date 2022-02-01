@@ -17,6 +17,10 @@
       "phet",
       "adapted-from-phet"
     ],
+    "phetLibs": [
+      "bamboo",
+      "twixt"
+    ],
     "supportsOutputJS": true
   },
   "eslintConfig": {
