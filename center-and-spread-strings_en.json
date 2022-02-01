@@ -1,5 +1,17 @@
 {
   "center-and-spread.title": {
     "value": "Center and Spread"
+  },
+  "screen.median": {
+    "value": "Median"
+  },
+  "screen.meanAndMedian": {
+    "value": "Mean & Median"
+  },
+  "screen.centerAndSpread": {
+    "value": "Center & Spread"
+  },
+  "screen.lab": {
+    "value": "Lab"
   }
 }

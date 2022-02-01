@@ -10,6 +10,12 @@ import centerAndSpread from './centerAndSpread.js';
 type StringsType = {
   'center-and-spread': {
     'title': string
+  },
+  'screen': {
+    'median': string,
+    'meanAndMedian': string,
+    'centerAndSpread': string,
+    'lab': string
   }
 };
 

@@ -3,31 +3,30 @@
 /**
  * TODO Describe this class and its responsibilities.
  *
- * @author Chris Klusendorf
+ * @author Chris Klusendorf (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import ScreenView from '../../../../joist/js/ScreenView.js';
 import merge from '../../../../phet-core/js/merge.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import CenterAndSpreadConstants from '../../common/CenterAndSpreadConstants.js';
+import CASConstants from '../../common/CASConstants.js';
 import centerAndSpread from '../../centerAndSpread.js';
 import CenterAndSpreadModel from '../model/CenterAndSpreadModel.js';
+import CASScreenView, { CASScreenViewOptions } from '../../common/view/CASScreenView.js';
 
-class CenterAndSpreadScreenView extends ScreenView {
+type CenterAndSpreadScreenViewOptions = CASScreenViewOptions;
 
-  /**
-   * @param {CenterAndSpreadModel} model
-   * @param {Object} [options]
-   */
-  constructor( model, options ) {
+class CenterAndSpreadScreenView extends CASScreenView {
+
+  constructor( model: CenterAndSpreadModel, providedOptions: CenterAndSpreadScreenViewOptions ) {
     assert && assert( model instanceof CenterAndSpreadModel, 'invalid model' );
 
-    options = merge( {
+    const options = merge( {
 
       // phet-io options
       tandem: Tandem.REQUIRED
-    }, options );
+    }, providedOptions );
 
     super( options );
 
@@ -37,28 +36,24 @@ class CenterAndSpreadScreenView extends ScreenView {
         model.reset();
         this.reset();
       },
-      right: this.layoutBounds.maxX - CenterAndSpreadConstants.SCREEN_VIEW_X_MARGIN,
-      bottom: this.layoutBounds.maxY - CenterAndSpreadConstants.SCREEN_VIEW_Y_MARGIN,
-      tandem: options.tandem.createTandem( 'resetAllButton' )
+      right: this.layoutBounds.maxX - CASConstants.SCREEN_VIEW_X_MARGIN,
+      bottom: this.layoutBounds.maxY - CASConstants.SCREEN_VIEW_Y_MARGIN,
+      tandem: providedOptions.tandem.createTandem( 'resetAllButton' )
     } );
     this.addChild( resetAllButton );
   }
 
   /**
    * Resets the view.
-   * @public
    */
   reset() {
-    //TODO
   }
 
   /**
    * Steps the view.
-   * @param {number} dt - time step, in seconds
-   * @public
+   * @param dt - time step, in seconds
    */
-  step( dt ) {
-    //TODO
+  step( dt: number ) {
   }
 }
 

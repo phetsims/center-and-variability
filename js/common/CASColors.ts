@@ -11,13 +11,14 @@
  * each of which is required to have a default color. Note that dynamic colors can be edited by running the sim from
  * phetmarks using the "Color Edit" mode.
  *
- * @author Chris Klusendorf
+ * @author Chris Klusendorf (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
  */
 
 import { ProfileColorProperty } from '../../../scenery/js/imports.js';
 import centerAndSpread from '../centerAndSpread.js';
 
-const centerAndSpreadColors = {
+const CASColors = {
 
   // Background color that for screens in this sim
   screenBackgroundColorProperty: new ProfileColorProperty( centerAndSpread, 'background', {
@@ -25,5 +26,5 @@ const centerAndSpreadColors = {
   } )
 };
 
-centerAndSpread.register( 'centerAndSpreadColors', centerAndSpreadColors );
-export default centerAndSpreadColors;
+centerAndSpread.register( 'CASColors', CASColors );
+export default CASColors;

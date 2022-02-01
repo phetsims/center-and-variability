@@ -3,12 +3,13 @@
 /**
  * Constants used throughout this simulation.
  *
- * @author Chris Klusendorf
+ * @author Chris Klusendorf (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
  */
 
 import centerAndSpread from '../centerAndSpread.js';
 
-const CenterAndSpreadConstants = {
+const CASConstants = {
 
   SCREEN_VIEW_X_MARGIN: 15,
   SCREEN_VIEW_Y_MARGIN: 15
@@ -16,5 +17,5 @@ const CenterAndSpreadConstants = {
   //TODO
 };
 
-centerAndSpread.register( 'CenterAndSpreadConstants', CenterAndSpreadConstants );
-export default CenterAndSpreadConstants;
+centerAndSpread.register( 'CASConstants', CASConstants );
+export default CASConstants;

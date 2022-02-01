@@ -35,10 +35,13 @@
         "requirejsNamespace": "CENTER_AND_SPREAD",
         "simulation": true,
         "runnable": true,
-        "readmeCreatedManually": true,
         "supportedBrands": [
           "phet",
           "adapted-from-phet"
+        ],
+        "phetLibs": [
+          "bamboo",
+          "twixt"
         ],
         "supportsOutputJS": true
       },
@@ -49,16 +52,20 @@
   window.phet.chipper.stringRepos =
     [
       {
+        "repo": "bamboo",
+        "requirejsNamespace": "BAMBOO"
+      },
+      {
+        "repo": "center-and-spread",
+        "requirejsNamespace": "CENTER_AND_SPREAD"
+      },
+      {
         "repo": "joist",
         "requirejsNamespace": "JOIST"
       },
       {
         "repo": "scenery-phet",
         "requirejsNamespace": "SCENERY_PHET"
-      },
-      {
-        "repo": "center-and-spread",
-        "requirejsNamespace": "CENTER_AND_SPREAD"
       },
       {
         "repo": "sun",

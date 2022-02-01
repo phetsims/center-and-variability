@@ -3,7 +3,8 @@
 /**
  * Main entry point for the sim.
  *
- * @author Chris Klusendorf
+ * @author Chris Klusendorf (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
  */
 
 import Sim from '../../joist/js/Sim.js';
@@ -11,6 +12,9 @@ import simLauncher from '../../joist/js/simLauncher.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import CenterAndSpreadScreen from './center-and-spread/CenterAndSpreadScreen.js';
 import centerAndSpreadStrings from './centerAndSpreadStrings.js';
+import MedianScreen from './median/MedianScreen.js';
+import MeanAndMedianScreen from './mean-and-median/MeanAndMedianScreen.js';
+import LabScreen from './lab/LabScreen.js';
 
 const centerAndSpreadTitleString = centerAndSpreadStrings[ 'center-and-spread' ].title;
 
@@ -32,7 +36,10 @@ const simOptions = {
 // until the images are fully loaded, see https://github.com/phetsims/coulombs-law/issues/70
 simLauncher.launch( () => {
   const sim = new Sim( centerAndSpreadTitleString, [
-    new CenterAndSpreadScreen( { tandem: Tandem.ROOT.createTandem( 'centerAndSpreadScreen' ) } )
+    new MedianScreen( { tandem: Tandem.ROOT.createTandem( 'medianScreen' ) } ),
+    new MeanAndMedianScreen( { tandem: Tandem.ROOT.createTandem( 'meanAndMedianScreen' ) } ),
+    new CenterAndSpreadScreen( { tandem: Tandem.ROOT.createTandem( 'centerAndSpreadScreen' ) } ),
+    new LabScreen( { tandem: Tandem.ROOT.createTandem( 'labScreen' ) } )
   ], simOptions );
   sim.start();
 } );
