@@ -8,8 +8,8 @@
   "screen.meanAndMedian": {
     "value": "Mean & Median"
   },
-  "screen.centerAndSpread": {
-    "value": "Center & Spread"
+  "screen.spread": {
+    "value": "Spread"
   },
   "screen.lab": {
     "value": "Lab"

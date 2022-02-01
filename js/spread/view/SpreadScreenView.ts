@@ -10,16 +10,16 @@
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndSpread from '../../centerAndSpread.js';
-import CenterAndSpreadModel from '../model/CenterAndSpreadModel.js';
+import SpreadModel from '../model/SpreadModel.js';
 import CASScreenView, { CASScreenViewOptions } from '../../common/view/CASScreenView.js';
 
-type CenterAndSpreadScreenViewOptions = CASScreenViewOptions;
+type SpreadScreenViewOptions = CASScreenViewOptions;
 
-class CenterAndSpreadScreenView extends CASScreenView {
+class SpreadScreenView extends CASScreenView {
 
-  constructor( model: CenterAndSpreadModel, providedOptions: CenterAndSpreadScreenViewOptions ) {
+  constructor( model: SpreadModel, providedOptions: SpreadScreenViewOptions ) {
 
-    const options = optionize<CenterAndSpreadScreenViewOptions>( {
+    const options = optionize<SpreadScreenViewOptions>( {
 
       // phet-io options
       tandem: Tandem.REQUIRED
@@ -42,5 +42,5 @@ class CenterAndSpreadScreenView extends CASScreenView {
   }
 }
 
-centerAndSpread.register( 'CenterAndSpreadScreenView', CenterAndSpreadScreenView );
-export default CenterAndSpreadScreenView;
+centerAndSpread.register( 'SpreadScreenView', SpreadScreenView );
+export default SpreadScreenView;

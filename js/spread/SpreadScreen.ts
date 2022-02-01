@@ -11,19 +11,19 @@ import optionize from '../../../phet-core/js/optionize.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import CASColors from '../common/CASColors.js';
 import centerAndSpread from '../centerAndSpread.js';
-import CenterAndSpreadModel from './model/CenterAndSpreadModel.js';
+import SpreadModel from './model/SpreadModel.js';
 import CASScreen, { CASScreenOptions } from '../common/CASScreen.js';
-import CenterAndSpreadScreenView from './view/CenterAndSpreadScreenView.js';
+import SpreadScreenView from './view/SpreadScreenView.js';
 import centerAndSpreadStrings from '../centerAndSpreadStrings.js';
 
-type CenterAndSpreadScreenOptions = CASScreenOptions;
+type SpreadScreenOptions = CASScreenOptions;
 
-class CenterAndSpreadScreen extends CASScreen {
+class SpreadScreen extends CASScreen {
 
-  constructor( providedOptions: CenterAndSpreadScreenOptions ) {
+  constructor( providedOptions: SpreadScreenOptions ) {
 
-    const options = optionize<CenterAndSpreadScreenOptions>( {
-      name: centerAndSpreadStrings.screen.centerAndSpread,
+    const options = optionize<SpreadScreenOptions>( {
+      name: centerAndSpreadStrings.screen.spread,
       //TODO if you include homeScreenIcon or navigationBarIcon, use JOIST/ScreenIcon
       backgroundColorProperty: CASColors.screenBackgroundColorProperty,
 
@@ -32,12 +32,12 @@ class CenterAndSpreadScreen extends CASScreen {
     }, providedOptions );
 
     super(
-      () => new CenterAndSpreadModel( { tandem: options.tandem.createTandem( 'model' ) } ),
-      ( model: CenterAndSpreadModel ) => new CenterAndSpreadScreenView( model, { tandem: options.tandem.createTandem( 'view' ) } ),
+      () => new SpreadModel( { tandem: options.tandem.createTandem( 'model' ) } ),
+      ( model: SpreadModel ) => new SpreadScreenView( model, { tandem: options.tandem.createTandem( 'view' ) } ),
       options
     );
   }
 }
 
-centerAndSpread.register( 'CenterAndSpreadScreen', CenterAndSpreadScreen );
-export default CenterAndSpreadScreen;
+centerAndSpread.register( 'SpreadScreen', SpreadScreen );
+export default SpreadScreen;

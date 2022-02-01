@@ -12,14 +12,14 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndSpread from '../../centerAndSpread.js';
 import CASModel, { CASModelOptions } from '../../common/model/CASModel.js';
 
-type CenterAndSpreadModelSelfOptions = {};
-type CenterAndSpreadModelOptions = CenterAndSpreadModelSelfOptions & CASModelOptions;
+type SpreadModelSelfOptions = {};
+type SpreadModelOptions = SpreadModelSelfOptions & CASModelOptions;
 
-class CenterAndSpreadModel extends CASModel {
+class SpreadModel extends CASModel {
 
-  constructor( options: CenterAndSpreadModelOptions ) {
+  constructor( options: SpreadModelOptions ) {
 
-    options = optionize<CenterAndSpreadModelOptions, CenterAndSpreadModelSelfOptions, CASModelOptions>( {
+    options = optionize<SpreadModelOptions, SpreadModelSelfOptions, CASModelOptions>( {
 
       // phet-io options
       tandem: Tandem.REQUIRED
@@ -42,5 +42,5 @@ class CenterAndSpreadModel extends CASModel {
   }
 }
 
-centerAndSpread.register( 'CenterAndSpreadModel', CenterAndSpreadModel );
-export default CenterAndSpreadModel;
+centerAndSpread.register( 'SpreadModel', SpreadModel );
+export default SpreadModel;

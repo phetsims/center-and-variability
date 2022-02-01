@@ -14,7 +14,7 @@ type StringsType = {
   'screen': {
     'median': string,
     'meanAndMedian': string,
-    'centerAndSpread': string,
+    'spread': string,
     'lab': string
   }
 };

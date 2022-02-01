@@ -10,7 +10,7 @@
 import Sim from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
 import Tandem from '../../tandem/js/Tandem.js';
-import CenterAndSpreadScreen from './center-and-spread/CenterAndSpreadScreen.js';
+import SpreadScreen from './spread/SpreadScreen.js';
 import centerAndSpreadStrings from './centerAndSpreadStrings.js';
 import MedianScreen from './median/MedianScreen.js';
 import MeanAndMedianScreen from './mean-and-median/MeanAndMedianScreen.js';
@@ -38,7 +38,7 @@ simLauncher.launch( () => {
   const sim = new Sim( centerAndSpreadTitleString, [
     new MedianScreen( { tandem: Tandem.ROOT.createTandem( 'medianScreen' ) } ),
     new MeanAndMedianScreen( { tandem: Tandem.ROOT.createTandem( 'meanAndMedianScreen' ) } ),
-    new CenterAndSpreadScreen( { tandem: Tandem.ROOT.createTandem( 'centerAndSpreadScreen' ) } ),
+    new SpreadScreen( { tandem: Tandem.ROOT.createTandem( 'spreadScreen' ) } ),
     new LabScreen( { tandem: Tandem.ROOT.createTandem( 'labScreen' ) } )
   ], simOptions );
   sim.start();
