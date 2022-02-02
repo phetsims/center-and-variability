@@ -14,6 +14,7 @@ import CASModel from '../model/CASModel.js';
 import CASScreenView, { CASScreenViewOptions } from './CASScreenView.js';
 import QuestionBar, { QuestionBarOptions } from './QuestionBar.js';
 import KickButtonGroup from './KickButtonGroup.js';
+import CASConstants from '../CASConstants.js';
 
 type SoccerScreenViewSelfOptions = {
   questionBarOptions: QuestionBarOptions
@@ -33,8 +34,8 @@ class SoccerScreenView extends CASScreenView {
 
     this.addChild( new QuestionBar( this.layoutBounds, this.visibleBoundsProperty, options.questionBarOptions ) );
     this.addChild( new KickButtonGroup( {
-      left: this.layoutBounds.left,
-      bottom: this.layoutBounds.bottom
+      left: CASConstants.SCREEN_VIEW_X_MARGIN,
+      bottom: this.layoutBounds.bottom - CASConstants.SCREEN_VIEW_Y_MARGIN
     } ) );
   }
 
