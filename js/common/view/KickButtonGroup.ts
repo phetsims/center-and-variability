@@ -13,6 +13,7 @@ import { AlignGroup, NodeOptions, Text, VBox } from '../../../../scenery/js/impo
 import optionize from '../../../../phet-core/js/optionize.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import CASColors from '../CASColors.js';
 
 // TODO: VBox/LayoutBox could use TS options
 export type KickButtonGroupOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
@@ -30,18 +31,20 @@ class KickButtonGroup extends VBox {
     }, providedOptions );
 
     const alignGroup = new AlignGroup();
-    const kickOneAlignBox = alignGroup.createBox( new Text( centerAndSpreadStrings.kick1, {
-      maxWidth: TEXT_MAX_WIDTH,
-      tandem: options.tandem.createTandem( 'kickOneButton' )
-    } ) );
-    const kickTenAlignBox = alignGroup.createBox( new Text( centerAndSpreadStrings.kick10, {
-      maxWidth: TEXT_MAX_WIDTH,
-      tandem: options.tandem.createTandem( 'kickTenButton' )
-    } ) );
 
-    const kickOneButton = new RectangularPushButton( { content: kickOneAlignBox } );
-    const kickTenButton = new RectangularPushButton( { content: kickTenAlignBox } );
-    options.children = [ kickOneButton, kickTenButton ];
+    // TODO: Why does this function create different sized buttons?
+    const creatKickButton = ( label: string, tandemName: string ) => new RectangularPushButton( {
+      content: alignGroup.createBox( new Text( label, {
+        maxWidth: TEXT_MAX_WIDTH,
+        tandem: options.tandem.createTandem( tandemName )
+      } ) ),
+      baseColor: CASColors.kickButtonFillColorProperty
+    } );
+
+    options.children = [
+      creatKickButton( centerAndSpreadStrings.kick1, 'kickOneButton' ),
+      creatKickButton( centerAndSpreadStrings.kick10, 'kickTenButton' )
+    ];
 
     super( options );
   }

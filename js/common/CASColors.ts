@@ -15,7 +15,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { ProfileColorProperty } from '../../../scenery/js/imports.js';
+import { Color, ProfileColorProperty } from '../../../scenery/js/imports.js';
 import centerAndSpread from '../centerAndSpread.js';
 
 const CASColors = {
@@ -32,6 +32,9 @@ const CASColors = {
   } ),
   spreadQuestionBarFillColorProperty: new ProfileColorProperty( centerAndSpread, 'spreadQuestionBarFill', {
     default: '#f7d148'
+  } ),
+  kickButtonFillColorProperty: new ProfileColorProperty( centerAndSpread, 'kickButtonFillColor', {
+    default: Color.WHITE
   } )
 };
 
