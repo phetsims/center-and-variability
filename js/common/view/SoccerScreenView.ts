@@ -22,20 +22,21 @@ type SoccerScreenViewSelfOptions = {
 export type SoccerScreenViewOptions = SoccerScreenViewSelfOptions & CASScreenViewOptions;
 
 class SoccerScreenView extends CASScreenView {
-  constructor( model: CASModel, options: SoccerScreenViewOptions ) {
-    options = optionize<SoccerScreenViewOptions>( {
+  constructor( model: CASModel, providedOptions: SoccerScreenViewOptions ) {
+    const options = optionize<SoccerScreenViewOptions>( {
 
       // phet-io options
       tandem: Tandem.REQUIRED
 
-    }, options );
+    }, providedOptions );
 
     super( model, options );
 
     this.addChild( new QuestionBar( this.layoutBounds, this.visibleBoundsProperty, options.questionBarOptions ) );
     this.addChild( new KickButtonGroup( {
       left: CASConstants.SCREEN_VIEW_X_MARGIN,
-      bottom: this.layoutBounds.bottom - CASConstants.SCREEN_VIEW_Y_MARGIN
+      bottom: this.layoutBounds.bottom - CASConstants.SCREEN_VIEW_Y_MARGIN,
+      tandem: options.tandem.createTandem( 'kickButtonGroup' )
     } ) );
   }
 
