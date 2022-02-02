@@ -33,28 +33,31 @@ class KickButtonGroup extends VBox {
 
     const alignGroup = new AlignGroup();
 
-    const createContent = ( label: string, tandemName: string ) => alignGroup.createBox( new Text( label, {
+    const createContent = ( label: string, tandem: Tandem ) => alignGroup.createBox( new Text( label, {
       maxWidth: TEXT_MAX_WIDTH,
       font: new PhetFont( 16 ),
-      tandem: options.tandem.createTandem( tandemName )
+      tandem: tandem
     } ) );
 
-    const createKickButton = ( content: Node ) => {
+    const createKickButton = ( content: Node, tandem: Tandem ) => {
       return new RectangularPushButton( {
         content: content,
         baseColor: CASColors.kickButtonFillColorProperty,
         xMargin: 12,
-        yMargin: 12
+        yMargin: 12,
+        tandem: tandem
       } );
     };
 
     // Create labels first so their sizes can be aligned
-    const kick1Label = createContent( centerAndSpreadStrings.kick1, 'kickOneButton' );
-    const kick10Label = createContent( centerAndSpreadStrings.kick10, 'kickTenButton' );
+    const kick1ButtonTandem = options.tandem.createTandem( 'kickOneButton' );
+    const kick10ButtonTandem = options.tandem.createTandem( 'kickTenButton' );
+    const kick1Label = createContent( centerAndSpreadStrings.kick1, kick1ButtonTandem.createTandem( 'labelNode' ) );
+    const kick10Label = createContent( centerAndSpreadStrings.kick10, kick10ButtonTandem.createTandem( 'labelNode' ) );
 
     options.children = [
-      createKickButton( kick1Label ),
-      createKickButton( kick10Label )
+      createKickButton( kick1Label, kick1ButtonTandem ),
+      createKickButton( kick10Label, kick10ButtonTandem )
     ];
 
     super( options );
