@@ -39,7 +39,6 @@ class KickButtonGroup extends VBox {
       tandem: options.tandem.createTandem( tandemName )
     } ) );
 
-    // TODO: Why does this function create different sized buttons?
     const creatKickButton = ( content: Node ) => {
       return new RectangularPushButton( {
         content: content,
@@ -49,6 +48,7 @@ class KickButtonGroup extends VBox {
       } );
     };
 
+    // Create labels first so their sizes can be aligned
     const kick1Label = createContent( centerAndSpreadStrings.kick1, 'kickOneButton' );
     const kick10Label = createContent( centerAndSpreadStrings.kick10, 'kickTenButton' );
 

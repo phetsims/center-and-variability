@@ -35,7 +35,15 @@ const CASColors = {
   } ),
   kickButtonFillColorProperty: new ProfileColorProperty( centerAndSpread, 'kickButtonFillColor', {
     default: Color.WHITE
-  } )
+  } ),
+
+  // sky gradient, sampled from a screenshot
+  skyGradientTopColorProperty: new ProfileColorProperty( centerAndSpread, 'skyGradientTop', { default: '#2e4f8a' } ),
+  skyGradientMiddleColorProperty: new ProfileColorProperty( centerAndSpread, 'skyGradientMiddle', { default: '#5c98d3' } ),
+  skyGradientBottomColorProperty: new ProfileColorProperty( centerAndSpread, 'skyGradientBottom', { default: '#c9d9ef' } ),
+
+  // the ground
+  groundColorProperty: new ProfileColorProperty( centerAndSpread, 'groundColorProperty', { default: '#468a41' } )
 };
 
 centerAndSpread.register( 'CASColors', CASColors );
