@@ -22,5 +22,11 @@
   },
   "spreadQuestion": {
     "value": "How consistent is ball distance?"
+  },
+  "kick1": {
+    "value": "Kick 1"
+  },
+  "kick10": {
+    "value": "Kick 10"
   }
 }
