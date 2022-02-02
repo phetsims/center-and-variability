@@ -29,6 +29,7 @@ class CASScreenView extends ScreenView {
 
     super( options );
 
+    // Added by the child ScreenView so it is in the correct z-ordering
     this.resetAllButton = new ResetAllButton( {
       listener: () => {
         this.interruptSubtreeInput(); // cancel interactions that may be in progress
