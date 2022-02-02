@@ -16,7 +16,10 @@ type StringsType = {
     'meanAndMedian': string,
     'spread': string,
     'lab': string
-  }
+  },
+  'medianQuestion': string,
+  'meanAndMedianQuestion': string,
+  'spreadQuestion': string
 };
 
 const centerAndSpreadStrings = getStringModule( 'CENTER_AND_SPREAD' ) as StringsType;

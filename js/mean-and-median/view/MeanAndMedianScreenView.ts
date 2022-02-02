@@ -13,6 +13,7 @@ import centerAndSpread from '../../centerAndSpread.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
 import SoccerScreenView, { SoccerScreenViewOptions } from '../../common/view/SoccerScreenView.js';
 import CASColors from '../../common/CASColors.js';
+import CenterAndSpreadStrings from '../../centerAndSpreadStrings.js';
 
 type MeanAndMedianScreenViewOptions = SoccerScreenViewOptions;
 
@@ -26,7 +27,8 @@ class MeanAndMedianScreenView extends SoccerScreenView {
       tandem: Tandem.REQUIRED,
 
       questionBarOptions: {
-        barFill: CASColors.meanAndMedianQuestionBarFillColorProperty
+        barFill: CASColors.meanAndMedianQuestionBarFillColorProperty,
+        labelText: CenterAndSpreadStrings.meanAndMedianQuestion
       }
     }, providedOptions );
 

@@ -13,5 +13,14 @@
   },
   "screen.lab": {
     "value": "Lab"
+  },
+  "medianQuestion": {
+    "value": "What is the typical ball distance?"
+  },
+  "meanAndMedianQuestion": {
+    "value": "How does each kick influence the mean and median?"
+  },
+  "spreadQuestion": {
+    "value": "How consistent is ball distance?"
   }
 }
