@@ -12,8 +12,6 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndSpread from '../../centerAndSpread.js';
 import LabModel from '../model/LabModel.js';
 import CASScreenView, { CASScreenViewOptions } from '../../common/view/CASScreenView.js';
-import CASConstants from '../../common/CASConstants.js';
-import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 
 type LabScreenViewOptions = CASScreenViewOptions;
 
@@ -29,17 +27,7 @@ class LabScreenView extends CASScreenView {
 
     super( model, options );
 
-    const resetAllButton = new ResetAllButton( {
-      listener: () => {
-        this.interruptSubtreeInput(); // cancel interactions that may be in progress
-        model.reset();
-        this.reset();
-      },
-      right: this.layoutBounds.maxX - CASConstants.SCREEN_VIEW_X_MARGIN,
-      bottom: this.layoutBounds.maxY - CASConstants.SCREEN_VIEW_Y_MARGIN,
-      tandem: options.tandem.createTandem( 'resetAllButton' )
-    } );
-    this.addChild( resetAllButton );
+    this.addChild( this.resetAllButton );
   }
 
   /**

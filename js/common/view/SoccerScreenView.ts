@@ -14,9 +14,7 @@ import CASModel from '../model/CASModel.js';
 import CASScreenView, { CASScreenViewOptions } from './CASScreenView.js';
 import QuestionBar, { QuestionBarOptions } from './QuestionBar.js';
 import KickButtonGroup from './KickButtonGroup.js';
-import CASConstants from '../CASConstants.js';
 import BackgroundNode from './BackgroundNode.js';
-import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 
 type SoccerScreenViewSelfOptions = {
   questionBarOptions: QuestionBarOptions
@@ -43,17 +41,7 @@ class SoccerScreenView extends CASScreenView {
       tandem: options.tandem.createTandem( 'kickButtonGroup' )
     } ) );
 
-    const resetAllButton = new ResetAllButton( {
-      listener: () => {
-        this.interruptSubtreeInput(); // cancel interactions that may be in progress
-        model.reset();
-        this.reset();
-      },
-      right: this.layoutBounds.maxX - CASConstants.SCREEN_VIEW_X_MARGIN,
-      bottom: this.layoutBounds.maxY - CASConstants.SCREEN_VIEW_Y_MARGIN,
-      tandem: options.tandem.createTandem( 'resetAllButton' )
-    } );
-    this.addChild( resetAllButton );
+    this.addChild( this.resetAllButton );
   }
 
   /**
