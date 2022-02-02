@@ -39,7 +39,7 @@ class KickButtonGroup extends VBox {
       tandem: options.tandem.createTandem( tandemName )
     } ) );
 
-    const creatKickButton = ( content: Node ) => {
+    const createKickButton = ( content: Node ) => {
       return new RectangularPushButton( {
         content: content,
         baseColor: CASColors.kickButtonFillColorProperty,
@@ -53,8 +53,8 @@ class KickButtonGroup extends VBox {
     const kick10Label = createContent( centerAndSpreadStrings.kick10, 'kickTenButton' );
 
     options.children = [
-      creatKickButton( kick1Label ),
-      creatKickButton( kick10Label )
+      createKickButton( kick1Label ),
+      createKickButton( kick10Label )
     ];
 
     super( options );
