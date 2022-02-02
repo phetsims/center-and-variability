@@ -12,8 +12,8 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndSpread from '../../centerAndSpread.js';
 import CASModel from '../model/CASModel.js';
 import CASScreenView, { CASScreenViewOptions } from './CASScreenView.js';
-import StatusBar from '../../../../vegas/js/StatusBar.js';
 import QuestionBar, { QuestionBarOptions } from './QuestionBar.js';
+import KickButtonGroup from './KickButtonGroup.js';
 
 type SoccerScreenViewSelfOptions = {
   questionBarOptions: QuestionBarOptions
@@ -21,8 +21,6 @@ type SoccerScreenViewSelfOptions = {
 export type SoccerScreenViewOptions = SoccerScreenViewSelfOptions & CASScreenViewOptions;
 
 class SoccerScreenView extends CASScreenView {
-  questionBar: StatusBar;
-
   constructor( model: CASModel, options: SoccerScreenViewOptions ) {
     options = optionize<SoccerScreenViewOptions>( {
 
@@ -33,8 +31,11 @@ class SoccerScreenView extends CASScreenView {
 
     super( model, options );
 
-    this.questionBar = new QuestionBar( this.layoutBounds, this.visibleBoundsProperty, options.questionBarOptions );
-    this.addChild( this.questionBar );
+    this.addChild( new QuestionBar( this.layoutBounds, this.visibleBoundsProperty, options.questionBarOptions ) );
+    this.addChild( new KickButtonGroup( {
+      left: this.layoutBounds.left,
+      bottom: this.layoutBounds.bottom
+    } ) );
   }
 
   /**
