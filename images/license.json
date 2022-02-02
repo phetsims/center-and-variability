@@ -1,3 +1,10 @@
 {
-
+  "ball.png": {
+    "text": [
+      "Copyright 2022 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by ??? TODO: Annotate author"
+  }
 }
