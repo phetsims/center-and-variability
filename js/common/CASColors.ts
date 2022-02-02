@@ -25,7 +25,7 @@ const CASColors = {
     default: 'white'
   } ),
   medianQuestionBarFillColorProperty: new ProfileColorProperty( centerAndSpread, 'medianQuestionBarFill', {
-    default: '#73c66e'
+    default: '#75c35a'
   } ),
   meanAndMedianQuestionBarFillColorProperty: new ProfileColorProperty( centerAndSpread, 'meanAndMedianQuestionBarFill', {
     default: '#8c5dbd'

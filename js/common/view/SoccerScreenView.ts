@@ -34,12 +34,12 @@ class SoccerScreenView extends CASScreenView {
 
     super( model, options );
 
-    this.addChild( new BackgroundNode( 400, this.visibleBoundsProperty ) );
+    this.addChild( new BackgroundNode( 490, this.visibleBoundsProperty ) );
 
     this.addChild( new QuestionBar( this.layoutBounds, this.visibleBoundsProperty, options.questionBarOptions ) );
     this.addChild( new KickButtonGroup( {
-      left: CASConstants.SCREEN_VIEW_X_MARGIN,
-      bottom: this.layoutBounds.bottom - CASConstants.SCREEN_VIEW_Y_MARGIN,
+      left: 25,
+      bottom: this.layoutBounds.bottom - 8,
       tandem: options.tandem.createTandem( 'kickButtonGroup' )
     } ) );
 
