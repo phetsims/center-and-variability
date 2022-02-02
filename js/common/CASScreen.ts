@@ -16,7 +16,6 @@ import CASModel from './model/CASModel.js';
 import CASScreenView from './view/CASScreenView.js';
 import { PhetioObjectOptions } from '../../../tandem/js/PhetioObject.js';
 
-// type CASScreenOptions = ScreenOptions; //TODO
 export type CASScreenOptions = PhetioObjectOptions & Required<Pick<PhetioObjectOptions, 'tandem'>>;
 
 // TODO: Can we delete this file or does it provide value???
@@ -25,7 +24,7 @@ class CASScreen extends Screen {
   constructor( createModel: () => CASModel, createView: ( m: CASModel ) => CASScreenView, providedOptions?: CASScreenOptions ) {
 
     const options = optionize<CASScreenOptions>( {
-      //TODO if you include homeScreenIcon or navigationBarIcon, use JOIST/ScreenIcon
+      // TODO if you include homeScreenIcon or navigationBarIcon, use JOIST/ScreenIcon
       backgroundColorProperty: CASColors.screenBackgroundColorProperty,
 
       // phet-io options

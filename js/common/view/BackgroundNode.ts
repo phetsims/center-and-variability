@@ -14,7 +14,6 @@ import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import CASColors from '../CASColors.js';
 
-// TODO: Do we still want a separate node for Sky and Ground?
 class BackgroundNode extends Rectangle {
   constructor( bottomY: number, visibleBoundsProperty: Property<Bounds2> ) {
     super( visibleBoundsProperty.value.centerX, visibleBoundsProperty.value.top, visibleBoundsProperty.value.centerX, bottomY );
