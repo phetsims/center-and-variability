@@ -22,12 +22,11 @@ const simOptions = {
 
   //TODO fill in credits, all of these fields are optional, see joist.CreditsNode
   credits: {
-    leadDesign: '',
-    softwareDevelopment: '',
-    team: '',
-    qualityAssurance: '',
-    graphicArts: '',
-    soundDesign: '',
+    leadDesign: 'Amanda McGarry',
+    softwareDevelopment: 'Chris Klusendorf, Sam Reid',
+    team: 'Ariel Paul, Kathy Perkins',
+    qualityAssurance: 'Logan Bray, Clifford Hardin, Brooklyn Lash, Emily Miller, Nancy Salpepi, Kathryn Woessner',
+    graphicArts: 'Mariah Hermsmeyer',
     thanks: ''
   }
 };
