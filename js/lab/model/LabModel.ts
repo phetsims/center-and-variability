@@ -12,14 +12,14 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndSpread from '../../centerAndSpread.js';
 import CASModel, { CASModelOptions } from '../../common/model/CASModel.js';
 
-type MedianModelSelfOptions = {};
-type MedianModelOptions = MedianModelSelfOptions & CASModelOptions;
+type LabModelSelfOptions = {};
+type LabModelOptions = LabModelSelfOptions & CASModelOptions;
 
 class LabModel extends CASModel {
 
-  constructor( options: MedianModelOptions ) {
+  constructor( options: LabModelOptions ) {
 
-    options = optionize<MedianModelOptions, MedianModelSelfOptions, CASModelOptions>( {
+    options = optionize<LabModelOptions, LabModelSelfOptions, CASModelOptions>( {
 
       // phet-io options
       tandem: Tandem.REQUIRED
