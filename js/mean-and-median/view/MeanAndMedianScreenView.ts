@@ -11,18 +11,23 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndSpread from '../../centerAndSpread.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
-import CASScreenView, { CASScreenViewOptions } from '../../common/view/CASScreenView.js';
+import SoccerScreenView, { SoccerScreenViewOptions } from '../../common/view/SoccerScreenView.js';
+import CASColors from '../../common/CASColors.js';
 
-type MeanAndMedianScreenViewOptions = CASScreenViewOptions;
+type MeanAndMedianScreenViewOptions = SoccerScreenViewOptions;
 
-class MeanAndMedianScreenView extends CASScreenView {
+class MeanAndMedianScreenView extends SoccerScreenView {
 
   constructor( model: MeanAndMedianModel, providedOptions: MeanAndMedianScreenViewOptions ) {
 
     const options = optionize<MeanAndMedianScreenViewOptions>( {
 
       // phet-io options
-      tandem: Tandem.REQUIRED
+      tandem: Tandem.REQUIRED,
+
+      questionBarOptions: {
+        barFill: CASColors.meanAndMedianQuestionBarFillColorProperty
+      }
     }, providedOptions );
 
     super( model, options );

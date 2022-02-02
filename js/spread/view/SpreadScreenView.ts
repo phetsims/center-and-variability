@@ -11,18 +11,23 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndSpread from '../../centerAndSpread.js';
 import SpreadModel from '../model/SpreadModel.js';
-import CASScreenView, { CASScreenViewOptions } from '../../common/view/CASScreenView.js';
+import SoccerScreenView, { SoccerScreenViewOptions } from '../../common/view/SoccerScreenView.js';
+import CASColors from '../../common/CASColors.js';
 
-type SpreadScreenViewOptions = CASScreenViewOptions;
+type SpreadScreenViewOptions = SoccerScreenViewOptions;
 
-class SpreadScreenView extends CASScreenView {
+class SpreadScreenView extends SoccerScreenView {
 
   constructor( model: SpreadModel, providedOptions: SpreadScreenViewOptions ) {
 
     const options = optionize<SpreadScreenViewOptions>( {
 
       // phet-io options
-      tandem: Tandem.REQUIRED
+      tandem: Tandem.REQUIRED,
+
+      questionBarOptions: {
+        barFill: CASColors.spreadQuestionBarFillColorProperty
+      }
     }, providedOptions );
 
     super( model, options );

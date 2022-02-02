@@ -23,6 +23,15 @@ const CASColors = {
   // Background color that for screens in this sim
   screenBackgroundColorProperty: new ProfileColorProperty( centerAndSpread, 'background', {
     default: 'white'
+  } ),
+  medianQuestionBarFillColorProperty: new ProfileColorProperty( centerAndSpread, 'medianQuestionBarFill', {
+    default: '#73c66e'
+  } ),
+  meanAndMedianQuestionBarFillColorProperty: new ProfileColorProperty( centerAndSpread, 'meanAndMedianQuestionBarFill', {
+    default: '#8c5dbd'
+  } ),
+  spreadQuestionBarFillColorProperty: new ProfileColorProperty( centerAndSpread, 'spreadQuestionBarFill', {
+    default: '#f7d148'
   } )
 };
 
