@@ -33,7 +33,7 @@ class KickButtonGroup extends VBox {
 
     const alignGroup = new AlignGroup();
 
-    const createContent = ( label: string, tandem: Tandem ) => alignGroup.createBox( new Text( label, {
+    const createLabel = ( label: string, tandem: Tandem ) => alignGroup.createBox( new Text( label, {
       maxWidth: TEXT_MAX_WIDTH,
       font: new PhetFont( 16 ),
       tandem: tandem
@@ -49,11 +49,13 @@ class KickButtonGroup extends VBox {
       } );
     };
 
-    // Create labels first so their sizes can be aligned
+    // Create tandems so the labels can appear at the proper place in the tandem tree
     const kick1ButtonTandem = options.tandem.createTandem( 'kickOneButton' );
     const kick10ButtonTandem = options.tandem.createTandem( 'kickTenButton' );
-    const kick1Label = createContent( centerAndSpreadStrings.kick1, kick1ButtonTandem.createTandem( 'labelNode' ) );
-    const kick10Label = createContent( centerAndSpreadStrings.kick10, kick10ButtonTandem.createTandem( 'labelNode' ) );
+
+    // Create labels first so their sizes can be aligned
+    const kick1Label = createLabel( centerAndSpreadStrings.kick1, kick1ButtonTandem.createTandem( 'labelNode' ) );
+    const kick10Label = createLabel( centerAndSpreadStrings.kick10, kick10ButtonTandem.createTandem( 'labelNode' ) );
 
     options.children = [
       createKickButton( kick1Label, kick1ButtonTandem ),
