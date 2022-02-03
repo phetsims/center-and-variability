@@ -19,15 +19,12 @@ import LabScreen from './lab/LabScreen.js';
 const centerAndSpreadTitleString = centerAndSpreadStrings[ 'center-and-spread' ].title;
 
 const simOptions = {
-
-  //TODO fill in credits, all of these fields are optional, see joist.CreditsNode
   credits: {
     leadDesign: 'Amanda McGarry',
     softwareDevelopment: 'Chris Klusendorf, Sam Reid',
-    team: 'Ariel Paul, Kathy Perkins',
+    team: 'Dor Abrahamson, Kelly Findley, Marily Hartzell, Ariel Paul, Kathy Perkins, David Webb',
     qualityAssurance: 'Logan Bray, Clifford Hardin, Brooklyn Lash, Emily Miller, Nancy Salpepi, Kathryn Woessner',
-    graphicArts: 'Mariah Hermsmeyer',
-    thanks: ''
+    graphicArts: 'Mariah Hermsmeyer'
   }
 };
 
