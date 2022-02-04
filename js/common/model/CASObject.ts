@@ -27,6 +27,8 @@ class CASObject extends PhetioObject {
   readonly positionProperty: Vector2Property; // in model coordinates
   readonly radius: number;
 
+  // TODO: Move velocity here, and just use creative tandems for studio.
+
   constructor( providedOptions: CASObjectOptions ) {
 
     const options = optionize<CASObjectOptions, CASObjectSelfOptions, PhetioObjectOptions>( {

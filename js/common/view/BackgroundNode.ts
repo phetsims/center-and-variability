@@ -1,7 +1,7 @@
 // Copyright 2022, University of Colorado Boulder
 
 /**
- * TODO: Describe this class and its responsibilities.
+ * Shows the sky and the ground.
  * TODO: Possibly generalize this, move to scenery-phet, replace usages
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)

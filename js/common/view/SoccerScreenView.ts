@@ -23,7 +23,6 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import { Color, Node, Text } from '../../../../scenery/js/imports.js';
 import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
-import SoccerBall from '../model/SoccerBall.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import SoccerBallNode from './SoccerBallNode.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
@@ -84,18 +83,16 @@ class SoccerScreenView extends CASScreenView {
 
     const ballRadius = 0.2;
 
-    const soccerBall = new SoccerBall( {
-      initialPosition: new Vector2( 1, ballRadius ),
-      radius: ballRadius,
-      tandem: options.tandem.createTandem( 'soccerBall' )
-    } );
-
     // The ground is at y=0
     const modelViewTransform2 = ModelViewTransform2.createRectangleInvertedYMapping(
       new Bounds2( 1, 0, 16, 15 ),
       new Bounds2( NUMBER_LINE_MARGIN_X, GROUND_POSITION_Y - chartViewWidth, NUMBER_LINE_MARGIN_X + chartViewWidth, GROUND_POSITION_Y )
     );
 
+    const soccerBall = model.objectGroup.createNextElement( {
+      initialPosition: new Vector2( 1, ballRadius ),
+      radius: ballRadius
+    } );
     this.addChild( new SoccerBallNode( soccerBall, modelViewTransform2, {} ) );
   }
 
