@@ -64,13 +64,23 @@ class CASObject extends PhetioObject {
   reset() {
     this.positionProperty.reset();
   }
+
+  dispose() {
+    super.dispose();
+    this.positionProperty.dispose();
+    this.velocityProperty.dispose();
+  }
 }
 
 // TODO: Why isn't that automatically done for us?
 CASObject.CASObjectIO = new IOType( 'CASObjectIO', {
   valueType: CASObject,
-  toStateObject: ( soccerBall: CASObject ) => ( { position: Vector2.Vector2IO.toStateObject( soccerBall.positionProperty.value ) } ),
-  stateToArgsForConstructor: ( stateObject: any ) => [ Vector2.Vector2IO.fromStateObject( stateObject.position ) ],
+  toStateObject: ( casObject: CASObject ) => ( {
+    position: Vector2.Vector2IO.toStateObject( casObject.positionProperty.value )
+  } ),
+  stateToArgsForConstructor: ( stateObject: any ) => [ {
+    initialPosition: Vector2.Vector2IO.fromStateObject( stateObject.position )
+  } ],
   stateSchema: {
     position: Vector2.Vector2IO
   }

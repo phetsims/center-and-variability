@@ -19,6 +19,7 @@ import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
 import CASObjectNode from './CASObjectNode.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import CASObjectType from '../model/CASObjectType.js';
+import CASObject from '../model/CASObject.js';
 
 export type CASScreenViewOptions = ScreenViewOptions;
 
@@ -49,10 +50,18 @@ class CASScreenView extends ScreenView {
       supportsDynamicState: false
     } );
 
+    const map = new Map<CASObject, CASObjectNode>();
+
     model.objectGroup.elementCreatedEmitter.addListener( casObject => {
       const casObjectNode = objectNodeGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject,
         modelViewTransform, {} );
       this.addChild( casObjectNode );
+      map.set( casObject, casObjectNode );
+    } );
+
+    model.objectGroup.elementDisposedEmitter.addListener( casObject => {
+      const viewNode = map.get( casObject )!;
+      objectNodeGroup.disposeElement( viewNode );
     } );
 
     // Added by the child ScreenView so it is in the correct z-ordering
