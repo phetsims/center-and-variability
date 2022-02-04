@@ -16,11 +16,13 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import CASObjectType from './CASObjectType.js';
+import StringIO from '../../../../tandem/js/types/StringIO.js';
+import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 
 type CASObjectSelfOptions = {
   initialPosition?: Vector2,
   radius?: number
-  objectType: CASObjectType
+  objectType: CASObjectType // TODO: move to parameter
 };
 export type CASObjectOptions =
   CASObjectSelfOptions
@@ -37,6 +39,7 @@ class CASObject extends PhetioObject {
   // TODO: Move velocity here, and just use creative tandems for studio.
 
   constructor( providedOptions: CASObjectOptions ) {
+    console.log( providedOptions.tandem.phetioID );
 
     const options = optionize<CASObjectOptions, CASObjectSelfOptions, PhetioObjectOptions>( {
       initialPosition: Vector2.ZERO,
@@ -57,7 +60,9 @@ class CASObject extends PhetioObject {
       tandem: options.tandem.createTandem( 'positionProperty' )
     } );
     this.velocityProperty = new NumberProperty( 0, {
-      tandem: options.objectType === CASObjectType.SOCCER_BALL ? options.tandem.createTandem( 'velocityProperty' ) : Tandem.OPT_OUT
+      tandem: options.objectType === CASObjectType.SOCCER_BALL ?
+              options.tandem.createTandem( 'velocityProperty' ) :
+              Tandem.OPT_OUT
     } );
   }
 
@@ -76,13 +81,19 @@ class CASObject extends PhetioObject {
 CASObject.CASObjectIO = new IOType( 'CASObjectIO', {
   valueType: CASObject,
   toStateObject: ( casObject: CASObject ) => ( {
-    position: Vector2.Vector2IO.toStateObject( casObject.positionProperty.value )
+    position: Vector2.Vector2IO.toStateObject( casObject.positionProperty.value ),
+    objectType: casObject.objectType.toString(),
+    radius: casObject.radius
   } ),
   stateToArgsForConstructor: ( stateObject: any ) => [ {
-    initialPosition: Vector2.Vector2IO.fromStateObject( stateObject.position )
+    initialPosition: Vector2.Vector2IO.fromStateObject( stateObject.position ),
+    objectType: stateObject.objectType === 'SOCCER_BALL' ? CASObjectType.SOCCER_BALL : CASObjectType.DATA_POINT,
+    radius: stateObject.radius
   } ],
   stateSchema: {
-    position: Vector2.Vector2IO
+    position: Vector2.Vector2IO,
+    objectType: StringIO,
+    radius: NumberIO
   }
 } );
 

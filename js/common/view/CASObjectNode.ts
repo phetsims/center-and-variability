@@ -33,7 +33,8 @@ class CASObjectNode extends Node {
                    new ShadedSphereNode( casObject.radius * 2 ) );
 
     this.addLinkedElement( casObject, {
-      tandem: options.tandem.createTandem( casObject.objectType === CASObjectType.SOCCER_BALL ? 'soccerBall' : 'dataPoint' )
+      tandem: options.tandem.createTandem( casObject.objectType === CASObjectType.SOCCER_BALL ? 'soccerBall' : 'dataPoint' ),
+      phetioState: false
     } );
 
     casObject.positionProperty.link( position => {
