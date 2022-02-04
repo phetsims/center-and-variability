@@ -23,6 +23,10 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import { Color, Node, Text } from '../../../../scenery/js/imports.js';
 import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
+import SoccerBall from '../model/SoccerBall.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import SoccerBallNode from './SoccerBallNode.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 
 type SoccerScreenViewSelfOptions = {
   questionBarOptions: QuestionBarOptions
@@ -47,9 +51,11 @@ class SoccerScreenView extends CASScreenView {
 
     this.addChild( new BackgroundNode( GROUND_POSITION_Y, this.visibleBoundsProperty ) );
 
+    // TODO: instrument number line, maybe the whole node or just the tick labels?
     const numberLineNode = new Node();
+    const chartViewWidth = this.layoutBounds.width - NUMBER_LINE_MARGIN_X * 2;
     const chartTransform = new ChartTransform( {
-      viewWidth: this.layoutBounds.width - NUMBER_LINE_MARGIN_X * 2,
+      viewWidth: chartViewWidth,
       modelXRange: new Range( 1, 16 )
     } );
     const tickMarkSet = new TickMarkSet( chartTransform, Orientation.HORIZONTAL, 1, {
@@ -63,7 +69,8 @@ class SoccerScreenView extends CASScreenView {
       createLabel: ( value: number ) => new Text( Utils.toFixed( value, 0 ), { fontSize: 16 } )
     } );
     numberLineNode.addChild( tickLabelSet );
-    numberLineNode.centerTop = new Vector2( this.layoutBounds.centerX, GROUND_POSITION_Y );
+    numberLineNode.top = GROUND_POSITION_Y;
+    numberLineNode.x = NUMBER_LINE_MARGIN_X;
     this.addChild( numberLineNode );
 
     this.addChild( new QuestionBar( this.layoutBounds, this.visibleBoundsProperty, options.questionBarOptions ) );
@@ -74,6 +81,22 @@ class SoccerScreenView extends CASScreenView {
     } ) );
 
     this.addChild( this.resetAllButton );
+
+    const ballRadius = 0.2;
+
+    const soccerBall = new SoccerBall( {
+      initialPosition: new Vector2( 1, ballRadius ),
+      radius: ballRadius,
+      tandem: options.tandem.createTandem( 'soccerBall' )
+    } );
+
+    // The ground is at y=0
+    const modelViewTransform2 = ModelViewTransform2.createRectangleInvertedYMapping(
+      new Bounds2( 1, 0, 16, 15 ),
+      new Bounds2( NUMBER_LINE_MARGIN_X, GROUND_POSITION_Y - chartViewWidth, NUMBER_LINE_MARGIN_X + chartViewWidth, GROUND_POSITION_Y )
+    );
+
+    this.addChild( new SoccerBallNode( soccerBall, modelViewTransform2, {} ) );
   }
 
   /**
