@@ -7,22 +7,21 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-// import optionize from '../../../../phet-core/js/optionize.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
-// import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndSpread from '../../centerAndSpread.js';
 import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
-import SoccerBall from './SoccerBall.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import CASObject from './CASObject.js';
+import CASObjectType from './CASObjectType.js';
 
 type CASModelSelfOptions = {};
 export type CASModelOptions = CASModelSelfOptions & PhetioObjectOptions & Required<Pick<PhetioObjectOptions, 'tandem'>>; // TODO: Do we like the inline exports?
 
 class CASModel {
-  objectGroup: PhetioGroup<SoccerBall>;
+  objectGroup: PhetioGroup<CASObject>;
 
-  constructor( providedOptions: CASModelOptions ) {
+  constructor( objectType: CASObjectType, providedOptions: CASModelOptions ) {
 
     const options = optionize<CASModelOptions, CASModelSelfOptions, PhetioObjectOptions>( {
 
@@ -37,9 +36,9 @@ class CASModel {
       options.tandem = tandem;
 
       // TODO: Should not be soccer ball
-      return new SoccerBall( options );
-    }, [ {} ], {
-      phetioType: PhetioGroup.PhetioGroupIO( SoccerBall.SoccerBallIO ),
+      return new CASObject( options );
+    }, [ { objectType: objectType } ], {
+      phetioType: PhetioGroup.PhetioGroupIO( CASObject.CASObjectIO ),
       tandem: options.tandem.createTandem( 'objectGroup' )
     } );
   }

@@ -11,6 +11,7 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndSpread from '../../centerAndSpread.js';
 import CASModel, { CASModelOptions } from '../../common/model/CASModel.js';
+import CASObjectType from '../../common/model/CASObjectType.js';
 
 type MedianModelSelfOptions = {};
 type MedianModelOptions = MedianModelSelfOptions & CASModelOptions;
@@ -25,7 +26,7 @@ class MeanAndMedianModel extends CASModel {
       tandem: Tandem.REQUIRED
     }, options );
 
-    super( options );
+    super( CASObjectType.SOCCER_BALL, options );
   }
 
   /**

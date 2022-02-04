@@ -14,13 +14,18 @@ import centerAndSpread from '../../centerAndSpread.js';
 import CASModel from '../model/CASModel.js';
 import CASConstants from '../CASConstants.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
+import CASObjectNode from './CASObjectNode.js';
+import { Node } from '../../../../scenery/js/imports.js';
 
 export type CASScreenViewOptions = ScreenViewOptions;
 
 class CASScreenView extends ScreenView {
   protected readonly resetAllButton: ResetAllButton;
+  protected readonly modelViewTransform: ModelViewTransform2;
 
-  constructor( model: CASModel, options: CASScreenViewOptions ) {
+  constructor( model: CASModel, modelViewTransform: ModelViewTransform2, options: CASScreenViewOptions ) {
     options = optionize<CASScreenViewOptions>( {
 
       // phet-io options
@@ -28,6 +33,26 @@ class CASScreenView extends ScreenView {
     }, options );
 
     super( options );
+
+    this.modelViewTransform = modelViewTransform;
+
+    const objectNodeGroup = new PhetioGroup( ( tandem, casObject, modelViewTransform, options ) => {
+
+      // TODO: Optionize please
+      options.tandem = tandem;
+
+      return new CASObjectNode( casObject, modelViewTransform, options );
+    }, [ model.objectGroup.archetype, modelViewTransform, {} ], {
+      phetioType: PhetioGroup.PhetioGroupIO( Node.NodeIO ),
+      tandem: options.tandem.createTandem( 'objectNodeGroup' ),
+      supportsDynamicState: false
+    } );
+
+    model.objectGroup.elementCreatedEmitter.addListener( casObject => {
+      const casObjectNode = objectNodeGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject,
+        modelViewTransform, {} );
+      this.addChild( casObjectNode );
+    } );
 
     // Added by the child ScreenView so it is in the correct z-ordering
     this.resetAllButton = new ResetAllButton( {

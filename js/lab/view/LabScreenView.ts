@@ -12,6 +12,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndSpread from '../../centerAndSpread.js';
 import LabModel from '../model/LabModel.js';
 import CASScreenView, { CASScreenViewOptions } from '../../common/view/CASScreenView.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 
 type LabScreenViewOptions = CASScreenViewOptions;
 
@@ -25,7 +26,7 @@ class LabScreenView extends CASScreenView {
       tandem: Tandem.REQUIRED
     }, providedOptions );
 
-    super( model, options );
+    super( model, ModelViewTransform2.createIdentity(), options );
 
     this.addChild( this.resetAllButton );
   }

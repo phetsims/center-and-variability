@@ -24,8 +24,9 @@ import { Color, Node, Text } from '../../../../scenery/js/imports.js';
 import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import SoccerBallNode from './SoccerBallNode.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import CASObjectType from '../model/CASObjectType.js';
+import ScreenView from '../../../../joist/js/ScreenView.js';
 
 type SoccerScreenViewSelfOptions = {
   questionBarOptions: QuestionBarOptions
@@ -46,13 +47,20 @@ class SoccerScreenView extends CASScreenView {
 
     }, providedOptions );
 
-    super( model, options );
+    const chartViewWidth = ScreenView.DEFAULT_LAYOUT_BOUNDS.width - NUMBER_LINE_MARGIN_X * 2;
+
+    // The ground is at y=0
+    const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
+      new Bounds2( 1, 0, 16, 15 ),
+      new Bounds2( NUMBER_LINE_MARGIN_X, GROUND_POSITION_Y - chartViewWidth, NUMBER_LINE_MARGIN_X + chartViewWidth, GROUND_POSITION_Y )
+    );
+
+    super( model, modelViewTransform, options );
 
     this.addChild( new BackgroundNode( GROUND_POSITION_Y, this.visibleBoundsProperty ) );
 
     // TODO: instrument number line, maybe the whole node or just the tick labels?
     const numberLineNode = new Node();
-    const chartViewWidth = this.layoutBounds.width - NUMBER_LINE_MARGIN_X * 2;
     const chartTransform = new ChartTransform( {
       viewWidth: chartViewWidth,
       modelXRange: new Range( 1, 16 )
@@ -83,17 +91,11 @@ class SoccerScreenView extends CASScreenView {
 
     const ballRadius = 0.2;
 
-    // The ground is at y=0
-    const modelViewTransform2 = ModelViewTransform2.createRectangleInvertedYMapping(
-      new Bounds2( 1, 0, 16, 15 ),
-      new Bounds2( NUMBER_LINE_MARGIN_X, GROUND_POSITION_Y - chartViewWidth, NUMBER_LINE_MARGIN_X + chartViewWidth, GROUND_POSITION_Y )
-    );
-
-    const soccerBall = model.objectGroup.createNextElement( {
-      initialPosition: new Vector2( 1, ballRadius ),
-      radius: ballRadius
+    model.objectGroup.createNextElement( {
+      initialPosition: new Vector2( 8, ballRadius ),
+      radius: ballRadius,
+      objectType: CASObjectType.SOCCER_BALL
     } );
-    this.addChild( new SoccerBallNode( soccerBall, modelViewTransform2, {} ) );
   }
 
   /**
