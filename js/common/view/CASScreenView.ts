@@ -18,6 +18,7 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
 import CASObjectNode from './CASObjectNode.js';
 import { Node } from '../../../../scenery/js/imports.js';
+import CASObjectType from '../model/CASObjectType.js';
 
 export type CASScreenViewOptions = ScreenViewOptions;
 
@@ -44,7 +45,7 @@ class CASScreenView extends ScreenView {
       return new CASObjectNode( casObject, modelViewTransform, options );
     }, [ model.objectGroup.archetype, modelViewTransform, {} ], {
       phetioType: PhetioGroup.PhetioGroupIO( Node.NodeIO ),
-      tandem: options.tandem.createTandem( 'objectNodeGroup' ),
+      tandem: options.tandem.createTandem( model.objectType === CASObjectType.SOCCER_BALL ? 'soccerBallNodeGroup' : 'dataPointNodeGroup' ),
       supportsDynamicState: false
     } );
 

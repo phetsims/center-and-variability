@@ -17,11 +17,11 @@ import ball_png from '../../../images/ball_png.js';
 import ShadedSphereNode from '../../../../scenery-phet/js/ShadedSphereNode.js';
 
 type CASObjectNodeSelfOptions = {};
-export type CASObjectNodeOptions = CASObjectNodeSelfOptions & NodeOptions;
+export type CASObjectNodeOptions = CASObjectNodeSelfOptions & NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
 
 class CASObjectNode extends Node {
 
-  constructor( casObject: CASObject, modelViewTransform: ModelViewTransform2, providedOptions?: CASObjectNodeOptions ) {
+  constructor( casObject: CASObject, modelViewTransform: ModelViewTransform2, providedOptions: CASObjectNodeOptions ) {
     const options = optionize<CASObjectNodeOptions>( {
       phetioDynamicElement: true
     }, providedOptions );
@@ -31,6 +31,10 @@ class CASObjectNode extends Node {
     this.maxHeight = this.maxWidth;
     this.addChild( casObject.objectType === CASObjectType.SOCCER_BALL ? new Image( ball_png ) :
                    new ShadedSphereNode( casObject.radius * 2 ) );
+
+    this.addLinkedElement( casObject, {
+      tandem: options.tandem.createTandem( casObject.objectType === CASObjectType.SOCCER_BALL ? 'soccerBall' : 'dataPoint' )
+    } );
 
     casObject.positionProperty.link( position => {
       this.center = modelViewTransform.modelToViewPosition( position );

@@ -10,13 +10,13 @@
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndSpread from '../../centerAndSpread.js';
-import CASModel, { CASModelOptions } from '../../common/model/CASModel.js';
-import CASObjectType from '../../common/model/CASObjectType.js';
+import { CASModelOptions } from '../../common/model/CASModel.js';
+import SoccerModel from '../../common/model/SoccerModel.js';
 
 type MedianModelSelfOptions = {};
 type MedianModelOptions = MedianModelSelfOptions & CASModelOptions;
 
-class MeanAndMedianModel extends CASModel {
+class MeanAndMedianModel extends SoccerModel {
 
   constructor( options: MedianModelOptions ) {
 
@@ -26,20 +26,7 @@ class MeanAndMedianModel extends CASModel {
       tandem: Tandem.REQUIRED
     }, options );
 
-    super( CASObjectType.SOCCER_BALL, options );
-  }
-
-  /**
-   * Resets the model.
-   */
-  reset() {
-  }
-
-  /**
-   * Steps the model.
-   * @param dt - time step, in seconds
-   */
-  step( dt: number ) {
+    super( options );
   }
 }
 

@@ -10,13 +10,13 @@
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndSpread from '../../centerAndSpread.js';
-import CASModel, { CASModelOptions } from '../../common/model/CASModel.js';
-import CASObjectType from '../../common/model/CASObjectType.js';
+import { CASModelOptions } from '../../common/model/CASModel.js';
+import SoccerModel from '../../common/model/SoccerModel.js';
 
 type SpreadModelSelfOptions = {};
 type SpreadModelOptions = SpreadModelSelfOptions & CASModelOptions;
 
-class SpreadModel extends CASModel {
+class SpreadModel extends SoccerModel {
 
   constructor( options: SpreadModelOptions ) {
 
@@ -26,20 +26,7 @@ class SpreadModel extends CASModel {
       tandem: Tandem.REQUIRED
     }, options );
 
-    super( CASObjectType.SOCCER_BALL, options );
-  }
-
-  /**
-   * Resets the model.
-   */
-  reset() {
-  }
-
-  /**
-   * Steps the model.
-   * @param dt - time step, in seconds
-   */
-  step( dt: number ) {
+    super( options );
   }
 }
 
