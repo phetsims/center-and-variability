@@ -81,17 +81,14 @@ class CASObject extends PhetioObject {
 CASObject.CASObjectIO = new IOType( 'CASObjectIO', {
   valueType: CASObject,
   toStateObject: ( casObject: CASObject ) => ( {
-    position: Vector2.Vector2IO.toStateObject( casObject.positionProperty.value ),
     objectType: casObject.objectType.toString(),
     radius: casObject.radius
   } ),
   stateToArgsForConstructor: ( stateObject: any ) => [ {
-    initialPosition: Vector2.Vector2IO.fromStateObject( stateObject.position ),
     objectType: stateObject.objectType === 'SOCCER_BALL' ? CASObjectType.SOCCER_BALL : CASObjectType.DATA_POINT,
     radius: stateObject.radius
   } ],
   stateSchema: {
-    position: Vector2.Vector2IO,
     objectType: StringIO,
     radius: NumberIO
   }
