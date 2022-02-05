@@ -24,7 +24,6 @@ class LabScreen extends CASScreen {
 
     const options = optionize<LabScreenOptions>( {
       name: centerAndSpreadStrings.screen.lab,
-      //TODO if you include homeScreenIcon or navigationBarIcon, use JOIST/ScreenIcon
       backgroundColorProperty: CASColors.screenBackgroundColorProperty,
 
       // phet-io options

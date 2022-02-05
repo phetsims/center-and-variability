@@ -1,7 +1,7 @@
 // Copyright 2022, University of Colorado Boulder
 
 /**
- * Shows the sky and the ground.
+ * Shows the sky and the ground. Reshapes to the visible bounds.
  * TODO: Possibly generalize this, move to scenery-phet, replace usages
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)

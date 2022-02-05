@@ -24,7 +24,6 @@ class SpreadScreen extends CASScreen {
 
     const options = optionize<SpreadScreenOptions>( {
       name: centerAndSpreadStrings.screen.spread,
-      //TODO if you include homeScreenIcon or navigationBarIcon, use JOIST/ScreenIcon
       backgroundColorProperty: CASColors.screenBackgroundColorProperty,
 
       // phet-io options

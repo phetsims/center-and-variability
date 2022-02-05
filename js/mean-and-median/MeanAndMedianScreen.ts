@@ -24,7 +24,6 @@ class MeanAndMedianScreen extends CASScreen {
 
     const options = optionize<MeanAndMedianScreenOptions>( {
       name: centerAndSpreadStrings.screen.meanAndMedian,
-      //TODO if you include homeScreenIcon or navigationBarIcon, use JOIST/ScreenIcon
       backgroundColorProperty: CASColors.screenBackgroundColorProperty,
 
       // phet-io options
