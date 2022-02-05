@@ -19,8 +19,6 @@ import { PhetioObjectOptions } from '../../../tandem/js/PhetioObject.js';
 type CASScreenSelfOptions = {};
 export type CASScreenOptions = CASScreenSelfOptions & PhetioObjectOptions & Required<Pick<PhetioObjectOptions, 'tandem'>>;
 
-// TODO: Can we delete this file or does it provide value?  SR: In my opinion, it provides background color and types,
-// and provides enough value to stick around.
 class CASScreen extends Screen {
 
   constructor( createModel: () => CASModel, createView: ( m: CASModel ) => CASScreenView, providedOptions?: CASScreenOptions ) {

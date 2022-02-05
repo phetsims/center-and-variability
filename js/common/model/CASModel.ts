@@ -18,7 +18,7 @@ import merge from '../../../../phet-core/js/merge.js';
 type CASModelSelfOptions = {
   tandem: Tandem
 };
-export type CASModelOptions = CASModelSelfOptions & {}; // TODO: Do we like the inline exports?  SR: Yes
+export type CASModelOptions = CASModelSelfOptions & {};
 
 class CASModel {
   readonly objectGroup: PhetioGroup<CASObject>;
@@ -27,8 +27,6 @@ class CASModel {
   constructor( objectType: CASObjectType, providedOptions: CASModelOptions ) {
 
     const options = optionize<CASModelOptions, CASModelSelfOptions, {}>( {
-
-      // phet-io options // TODO: SR asks: can we remove comment lines like this?
       tandem: Tandem.REQUIRED
     }, providedOptions );
 
