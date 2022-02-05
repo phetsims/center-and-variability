@@ -40,6 +40,7 @@ const TICK_MARK_EXTENT = 18;
 
 class SoccerScreenView extends CASScreenView {
   constructor( model: CASModel, providedOptions: SoccerScreenViewOptions ) {
+
     const options = optionize<SoccerScreenViewOptions>( {
 
       // phet-io options

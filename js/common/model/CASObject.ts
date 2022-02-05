@@ -16,8 +16,8 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import CASObjectType from './CASObjectType.js';
-import StringIO from '../../../../tandem/js/types/StringIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
+import EnumerationIO from '../../../../tandem/js/types/EnumerationIO.js';
 
 type CASObjectSelfOptions = {
   initialPosition?: Vector2,
@@ -39,7 +39,6 @@ class CASObject extends PhetioObject {
   // TODO: Move velocity here, and just use creative tandems for studio.
 
   constructor( providedOptions: CASObjectOptions ) {
-    console.log( providedOptions.tandem.phetioID );
 
     const options = optionize<CASObjectOptions, CASObjectSelfOptions, PhetioObjectOptions>( {
       initialPosition: Vector2.ZERO,
@@ -66,10 +65,6 @@ class CASObject extends PhetioObject {
     } );
   }
 
-  reset() {
-    this.positionProperty.reset();
-  }
-
   dispose() {
     super.dispose();
     this.positionProperty.dispose();
@@ -77,19 +72,20 @@ class CASObject extends PhetioObject {
   }
 }
 
-// TODO: Why isn't that automatically done for us?
 CASObject.CASObjectIO = new IOType( 'CASObjectIO', {
   valueType: CASObject,
   toStateObject: ( casObject: CASObject ) => ( {
     objectType: casObject.objectType.toString(),
     radius: casObject.radius
   } ),
-  stateToArgsForConstructor: ( stateObject: any ) => [ {
-    objectType: stateObject.objectType === 'SOCCER_BALL' ? CASObjectType.SOCCER_BALL : CASObjectType.DATA_POINT,
-    radius: stateObject.radius
-  } ],
+  stateToArgsForConstructor: ( stateObject: any ) => {
+    return [ {
+      objectType: stateObject.objectType === 'SOCCER_BALL' ? CASObjectType.SOCCER_BALL : CASObjectType.DATA_POINT,
+      radius: stateObject.radius
+    } ];
+  },
   stateSchema: {
-    objectType: StringIO,
+    objectType: EnumerationIO( CASObjectType ),
     radius: NumberIO
   }
 } );

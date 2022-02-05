@@ -26,6 +26,7 @@ export type CASScreenViewOptions = ScreenViewOptions;
 class CASScreenView extends ScreenView {
   protected readonly resetAllButton: ResetAllButton;
   protected readonly modelViewTransform: ModelViewTransform2;
+  protected model: CASModel;
 
   constructor( model: CASModel, modelViewTransform: ModelViewTransform2, options: CASScreenViewOptions ) {
     options = optionize<CASScreenViewOptions>( {
@@ -37,14 +38,16 @@ class CASScreenView extends ScreenView {
     super( options );
 
     this.modelViewTransform = modelViewTransform;
+    this.model = model;
 
-    const objectNodeGroup = new PhetioGroup( ( tandem, casObject, options ) => {
+    const objectNodeGroup = new PhetioGroup( ( tandem, casObject ) => {
 
       // TODO: Optionize please
+      options = options || {};
       options.tandem = tandem;
 
       return new CASObjectNode( casObject, modelViewTransform, options );
-    }, [ model.objectGroup.archetype, {} ], {
+    }, [ model.objectGroup.archetype ], {
       phetioType: PhetioGroup.PhetioGroupIO( Node.NodeIO ),
       tandem: options.tandem.createTandem( model.objectType === CASObjectType.SOCCER_BALL ? 'soccerBallNodeGroup' : 'dataPointNodeGroup' ),
       supportsDynamicState: false
@@ -55,7 +58,6 @@ class CASScreenView extends ScreenView {
     model.objectGroup.elementCreatedEmitter.addListener( casObject => {
       const casObjectNode = objectNodeGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject, {} );
       this.addChild( casObjectNode );
-      console.log( casObjectNode.bounds );
       map.set( casObject, casObjectNode );
     } );
 

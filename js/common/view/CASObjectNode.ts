@@ -21,7 +21,8 @@ export type CASObjectNodeOptions = CASObjectNodeSelfOptions & NodeOptions & Requ
 
 class CASObjectNode extends Node {
 
-  constructor( casObject: CASObject, modelViewTransform: ModelViewTransform2, providedOptions: CASObjectNodeOptions ) {
+  constructor( casObject: CASObject, modelViewTransform: ModelViewTransform2, providedOptions?: CASObjectNodeOptions ) {
+
     const options = optionize<CASObjectNodeOptions>( {
       phetioDynamicElement: true
     }, providedOptions );
