@@ -22,7 +22,6 @@ import EnumerationIO from '../../../../tandem/js/types/EnumerationIO.js';
 type CASObjectSelfOptions = {
   initialPosition?: Vector2,
   radius?: number
-  objectType: CASObjectType // TODO: move to parameter
 };
 export type CASObjectOptions =
   CASObjectSelfOptions
@@ -36,9 +35,7 @@ class CASObject extends PhetioObject {
   static CASObjectIO: IOType;
   readonly objectType: CASObjectType;
 
-  // TODO: Move velocity here, and just use creative tandems for studio.
-
-  constructor( providedOptions: CASObjectOptions ) {
+  constructor( objectType: CASObjectType, providedOptions: CASObjectOptions ) {
 
     const options = optionize<CASObjectOptions, CASObjectSelfOptions, PhetioObjectOptions>( {
       initialPosition: Vector2.ZERO,
@@ -53,13 +50,13 @@ class CASObject extends PhetioObject {
     super( options );
 
     this.radius = options.radius;
-    this.objectType = options.objectType;
+    this.objectType = objectType;
 
     this.positionProperty = new Vector2Property( options.initialPosition, {
       tandem: options.tandem.createTandem( 'positionProperty' )
     } );
     this.velocityProperty = new NumberProperty( 0, {
-      tandem: options.objectType === CASObjectType.SOCCER_BALL ?
+      tandem: objectType === CASObjectType.SOCCER_BALL ?
               options.tandem.createTandem( 'velocityProperty' ) :
               Tandem.OPT_OUT
     } );
@@ -79,10 +76,10 @@ CASObject.CASObjectIO = new IOType( 'CASObjectIO', {
     radius: casObject.radius
   } ),
   stateToArgsForConstructor: ( stateObject: any ) => {
-    return [ {
-      objectType: stateObject.objectType === 'SOCCER_BALL' ? CASObjectType.SOCCER_BALL : CASObjectType.DATA_POINT,
-      radius: stateObject.radius
-    } ];
+    return [
+      stateObject.objectType === 'SOCCER_BALL' ? CASObjectType.SOCCER_BALL : CASObjectType.DATA_POINT, {
+        radius: stateObject.radius
+      } ];
   },
   stateSchema: {
     objectType: EnumerationIO( CASObjectType ),

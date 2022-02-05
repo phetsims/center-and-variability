@@ -16,7 +16,7 @@ import CASObject from './CASObject.js';
 import CASObjectType from './CASObjectType.js';
 
 type CASModelSelfOptions = {};
-export type CASModelOptions = CASModelSelfOptions & PhetioObjectOptions & Required<Pick<PhetioObjectOptions, 'tandem'>>; // TODO: Do we like the inline exports?
+export type CASModelOptions = CASModelSelfOptions & PhetioObjectOptions & Required<Pick<PhetioObjectOptions, 'tandem'>>; // TODO: Do we like the inline exports?  SR: Yes
 
 class CASModel {
   readonly objectGroup: PhetioGroup<CASObject>;
@@ -33,14 +33,13 @@ class CASModel {
     this.objectType = objectType;
 
     // @public {PhetioGroup}
-    this.objectGroup = new PhetioGroup( ( tandem, options ) => {
+    this.objectGroup = new PhetioGroup( ( tandem, objectType: CASObjectType, options ) => {
 
       // TODO: Optionize please
       options.tandem = tandem;
 
-      // TODO: Should not be soccer ball
-      return new CASObject( options );
-    }, [ { objectType: objectType } ], {
+      return new CASObject( objectType, options );
+    }, [ objectType, {} ], {
       phetioType: PhetioGroup.PhetioGroupIO( CASObject.CASObjectIO ),
       tandem: options.tandem.createTandem( objectType === CASObjectType.SOCCER_BALL ? 'soccerBallGroup' : 'dataPointGroup' )
     } );

@@ -1,7 +1,7 @@
 // Copyright 2022, University of Colorado Boulder
 
 /**
- * TODO Describe this class and its responsibilities.
+ * Shows the "Kick 1" and "Kick 10" buttons in the soccer screens.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
