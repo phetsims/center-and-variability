@@ -1,7 +1,7 @@
 // Copyright 2022, University of Colorado Boulder
 
 /**
- * TODO Describe this class and its responsibilities.
+ * Base class for the screens that use soccer.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
@@ -27,19 +27,6 @@ class SoccerModel extends CASModel {
     }, options );
 
     super( CASObjectType.SOCCER_BALL, options );
-  }
-
-  /**
-   * Resets the model.
-   */
-  reset() {
-  }
-
-  /**
-   * Steps the model.
-   * @param dt - time step, in seconds
-   */
-  step( dt: number ) {
   }
 }
 

@@ -35,8 +35,6 @@ class CASObject extends PhetioObject {
   static CASObjectIO: IOType;
   readonly objectType: CASObjectType;
 
-  // TODO: Move velocity here, and just use creative tandems for studio.
-
   constructor( objectType: CASObjectType, providedOptions: CASObjectOptions ) {
 
     const options = optionize<CASObjectOptions, CASObjectSelfOptions, PhetioObjectOptions>( {

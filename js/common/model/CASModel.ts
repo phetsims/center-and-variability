@@ -16,7 +16,7 @@ import CASObject from './CASObject.js';
 import CASObjectType from './CASObjectType.js';
 
 type CASModelSelfOptions = {};
-export type CASModelOptions = CASModelSelfOptions & PhetioObjectOptions & Required<Pick<PhetioObjectOptions, 'tandem'>>; // TODO: Do we like the inline exports?
+export type CASModelOptions = CASModelSelfOptions & PhetioObjectOptions & Required<Pick<PhetioObjectOptions, 'tandem'>>; // TODO: Do we like the inline exports?  SR: Yes
 
 class CASModel {
   readonly objectGroup: PhetioGroup<CASObject>;
