@@ -25,8 +25,6 @@ class LabScreen extends CASScreen {
     const options = optionize<LabScreenOptions>( {
       name: centerAndSpreadStrings.screen.lab,
       backgroundColorProperty: CASColors.screenBackgroundColorProperty,
-
-      // phet-io options
       tandem: Tandem.REQUIRED
     }, providedOptions );
 

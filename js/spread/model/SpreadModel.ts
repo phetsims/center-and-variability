@@ -21,8 +21,6 @@ class SpreadModel extends SoccerModel {
   constructor( options: SpreadModelOptions ) {
 
     options = optionize<SpreadModelOptions, SpreadModelSelfOptions, CASModelOptions>( {
-
-      // phet-io options
       tandem: Tandem.REQUIRED
     }, options );
 

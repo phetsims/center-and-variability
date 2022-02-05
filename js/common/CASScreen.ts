@@ -27,8 +27,6 @@ class CASScreen extends Screen {
 
       // @ts-ignore TODO: convert Screen to TypeScript
       backgroundColorProperty: CASColors.screenBackgroundColorProperty,
-
-      // phet-io options
       tandem: Tandem.REQUIRED
     }, providedOptions );
 

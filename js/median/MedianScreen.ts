@@ -26,8 +26,6 @@ class MedianScreen extends CASScreen {
       name: centerAndSpreadStrings.screen.median,
       //TODO if you include homeScreenIcon or navigationBarIcon, use JOIST/ScreenIcon
       backgroundColorProperty: CASColors.screenBackgroundColorProperty,
-
-      // phet-io options
       tandem: Tandem.REQUIRED
     }, providedOptions );
 

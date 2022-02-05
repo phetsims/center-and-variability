@@ -23,14 +23,11 @@ class MedianScreenView extends SoccerScreenView {
   constructor( model: MedianModel, providedOptions: MedianScreenViewOptions ) {
 
     const options = optionize<MedianScreenViewOptions>( {
-
-      // phet-io options
-      tandem: Tandem.REQUIRED,
-
       questionBarOptions: {
         barFill: CASColors.medianQuestionBarFillColorProperty,
         labelText: centerAndSpreadStrings.medianQuestion
-      }
+      },
+      tandem: Tandem.REQUIRED
     }, providedOptions );
 
     super( model, options );

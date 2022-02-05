@@ -21,8 +21,6 @@ class SoccerModel extends CASModel {
   constructor( options: SoccerModelOptions ) {
 
     options = optionize<SoccerModelOptions, SoccerModelSelfOptions, CASModelOptions>( {
-
-      // phet-io options
       tandem: Tandem.REQUIRED
     }, options );
 

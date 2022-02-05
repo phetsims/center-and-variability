@@ -25,8 +25,6 @@ class SpreadScreen extends CASScreen {
     const options = optionize<SpreadScreenOptions>( {
       name: centerAndSpreadStrings.screen.spread,
       backgroundColorProperty: CASColors.screenBackgroundColorProperty,
-
-      // phet-io options
       tandem: Tandem.REQUIRED
     }, providedOptions );
 

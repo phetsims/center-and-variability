@@ -25,8 +25,6 @@ class MeanAndMedianScreen extends CASScreen {
     const options = optionize<MeanAndMedianScreenOptions>( {
       name: centerAndSpreadStrings.screen.meanAndMedian,
       backgroundColorProperty: CASColors.screenBackgroundColorProperty,
-
-      // phet-io options
       tandem: Tandem.REQUIRED
     }, providedOptions );
 

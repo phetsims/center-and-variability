@@ -21,8 +21,6 @@ class LabScreenView extends CASScreenView {
   constructor( model: LabModel, providedOptions: LabScreenViewOptions ) {
 
     const options = optionize<LabScreenViewOptions>( {
-
-      // phet-io options
       tandem: Tandem.REQUIRED
     }, providedOptions );
 

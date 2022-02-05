@@ -30,8 +30,6 @@ class CASScreenView extends ScreenView {
 
   constructor( model: CASModel, modelViewTransform: ModelViewTransform2, options: CASScreenViewOptions ) {
     options = optionize<CASScreenViewOptions>( {
-
-      // phet-io options
       tandem: Tandem.REQUIRED
     }, options );
 

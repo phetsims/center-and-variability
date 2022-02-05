@@ -23,14 +23,11 @@ class SpreadScreenView extends SoccerScreenView {
   constructor( model: SpreadModel, providedOptions: SpreadScreenViewOptions ) {
 
     const options = optionize<SpreadScreenViewOptions>( {
-
-      // phet-io options
-      tandem: Tandem.REQUIRED,
-
       questionBarOptions: {
         barFill: CASColors.spreadQuestionBarFillColorProperty,
         labelText: centerAndSpreadStrings.spreadQuestion
-      }
+      },
+      tandem: Tandem.REQUIRED
     }, providedOptions );
 
     super( model, options );

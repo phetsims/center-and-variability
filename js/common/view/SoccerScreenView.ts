@@ -42,10 +42,7 @@ class SoccerScreenView extends CASScreenView {
   constructor( model: CASModel, providedOptions: SoccerScreenViewOptions ) {
 
     const options = optionize<SoccerScreenViewOptions>( {
-
-      // phet-io options
       tandem: Tandem.REQUIRED
-
     }, providedOptions );
 
     const chartViewWidth = ScreenView.DEFAULT_LAYOUT_BOUNDS.width - NUMBER_LINE_MARGIN_X * 2;

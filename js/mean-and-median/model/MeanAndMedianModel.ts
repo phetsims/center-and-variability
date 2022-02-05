@@ -21,8 +21,6 @@ class MeanAndMedianModel extends SoccerModel {
   constructor( options: MedianModelOptions ) {
 
     options = optionize<MedianModelOptions, MedianModelSelfOptions, CASModelOptions>( {
-
-      // phet-io options
       tandem: Tandem.REQUIRED
     }, options );
 

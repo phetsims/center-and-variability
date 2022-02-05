@@ -21,8 +21,6 @@ class LabModel extends CASModel {
   constructor( options: LabModelOptions ) {
 
     options = optionize<LabModelOptions, LabModelSelfOptions, CASModelOptions>( {
-
-      // phet-io options
       tandem: Tandem.REQUIRED
     }, options );
 

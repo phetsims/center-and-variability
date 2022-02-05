@@ -40,8 +40,6 @@ class CASObject extends PhetioObject {
     const options = optionize<CASObjectOptions, CASObjectSelfOptions, PhetioObjectOptions>( {
       initialPosition: Vector2.ZERO,
       radius: 15,
-
-      // phet-io options
       tandem: Tandem.REQUIRED,
       phetioType: CASObject.CASObjectIO,
       phetioDynamicElement: true

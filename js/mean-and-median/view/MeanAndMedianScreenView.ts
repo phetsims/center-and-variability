@@ -22,14 +22,11 @@ class MeanAndMedianScreenView extends SoccerScreenView {
   constructor( model: MeanAndMedianModel, providedOptions: MeanAndMedianScreenViewOptions ) {
 
     const options = optionize<MeanAndMedianScreenViewOptions>( {
-
-      // phet-io options
-      tandem: Tandem.REQUIRED,
-
       questionBarOptions: {
         barFill: CASColors.meanAndMedianQuestionBarFillColorProperty,
         labelText: centerAndSpreadStrings.meanAndMedianQuestion
-      }
+      },
+      tandem: Tandem.REQUIRED
     }, providedOptions );
 
     super( model, options );
