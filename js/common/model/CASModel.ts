@@ -7,16 +7,18 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import centerAndSpread from '../../centerAndSpread.js';
 import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CASObject from './CASObject.js';
 import CASObjectType from './CASObjectType.js';
+import merge from '../../../../phet-core/js/merge.js';
 
-type CASModelSelfOptions = {};
-export type CASModelOptions = CASModelSelfOptions & PhetioObjectOptions & Required<Pick<PhetioObjectOptions, 'tandem'>>; // TODO: Do we like the inline exports?  SR: Yes
+type CASModelSelfOptions = {
+  tandem: Tandem
+};
+export type CASModelOptions = CASModelSelfOptions & {}; // TODO: Do we like the inline exports?  SR: Yes
 
 class CASModel {
   readonly objectGroup: PhetioGroup<CASObject>;
@@ -24,20 +26,18 @@ class CASModel {
 
   constructor( objectType: CASObjectType, providedOptions: CASModelOptions ) {
 
-    const options = optionize<CASModelOptions, CASModelSelfOptions, PhetioObjectOptions>( {
+    const options = optionize<CASModelOptions, CASModelSelfOptions, {}>( {
 
-      // phet-io options
+      // phet-io options // TODO: SR asks: can we remove comment lines like this?
       tandem: Tandem.REQUIRED
     }, providedOptions );
 
     this.objectType = objectType;
 
-    // @public {PhetioGroup}
-    this.objectGroup = new PhetioGroup( ( tandem, objectType: CASObjectType, options ) => {
+    this.objectGroup = new PhetioGroup( ( tandem, objectType: CASObjectType, providedOptions ) => {
 
-      // TODO: Optionize please
-      options.tandem = tandem;
-
+      // TODO: Optionize
+      const options = merge( { tandem: tandem }, providedOptions );
       return new CASObject( objectType, options );
     }, [ objectType, {} ], {
       phetioType: PhetioGroup.PhetioGroupIO( CASObject.CASObjectIO ),
@@ -49,6 +49,7 @@ class CASModel {
    * Resets the model.
    */
   reset() {
+    this.objectGroup.clear();
   }
 
   /**

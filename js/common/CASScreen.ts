@@ -13,18 +13,21 @@ import Tandem from '../../../tandem/js/Tandem.js';
 import CASColors from '../common/CASColors.js';
 import centerAndSpread from '../centerAndSpread.js';
 import CASModel from './model/CASModel.js';
-import CASScreenView from './view/CASScreenView.js';
+import CASScreenView, { CASScreenViewOptions } from './view/CASScreenView.js';
 import { PhetioObjectOptions } from '../../../tandem/js/PhetioObject.js';
 
-export type CASScreenOptions = PhetioObjectOptions & Required<Pick<PhetioObjectOptions, 'tandem'>>;
+type CASScreenSelfOptions = {};
+export type CASScreenOptions = CASScreenViewOptions & PhetioObjectOptions & Required<Pick<PhetioObjectOptions, 'tandem'>>;
 
-// TODO: Can we delete this file or does it provide value???
+// TODO: Can we delete this file or does it provide value?  SR: In my opinion, it provides background color and types,
+// and provides enough value to stick around.
 class CASScreen extends Screen {
 
   constructor( createModel: () => CASModel, createView: ( m: CASModel ) => CASScreenView, providedOptions?: CASScreenOptions ) {
 
-    const options = optionize<CASScreenOptions>( {
-      // TODO if you include homeScreenIcon or navigationBarIcon, use JOIST/ScreenIcon
+    const options = optionize<CASScreenOptions, CASScreenSelfOptions, PhetioObjectOptions>( {
+
+      // @ts-ignore TODO: convert Screen to TypeScript
       backgroundColorProperty: CASColors.screenBackgroundColorProperty,
 
       // phet-io options

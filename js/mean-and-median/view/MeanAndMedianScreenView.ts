@@ -34,19 +34,6 @@ class MeanAndMedianScreenView extends SoccerScreenView {
 
     super( model, options );
   }
-
-  /**
-   * Resets the view.
-   */
-  reset() {
-  }
-
-  /**
-   * Steps the view.
-   * @param dt - time step, in seconds
-   */
-  step( dt: number ) {
-  }
 }
 
 centerAndSpread.register( 'MeanAndMedianScreenView', MeanAndMedianScreenView );

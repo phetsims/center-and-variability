@@ -64,19 +64,6 @@ class KickButtonGroup extends VBox {
 
     super( options );
   }
-
-  /**
-   * Resets the view.
-   */
-  reset() {
-  }
-
-  /**
-   * Steps the view.
-   * @param dt - time step, in seconds
-   */
-  step( dt: number ) {
-  }
 }
 
 centerAndSpread.register( 'KickButtonGroup', KickButtonGroup );
