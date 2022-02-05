@@ -41,12 +41,9 @@ class CASScreenView extends ScreenView {
     this.model = model;
 
     const objectNodeGroup = new PhetioGroup( ( tandem, casObject ) => {
-
-      // TODO: Optionize please
-      options = options || {};
-      options.tandem = tandem;
-
-      return new CASObjectNode( casObject, modelViewTransform, options );
+      return new CASObjectNode( casObject, modelViewTransform, {
+        tandem: tandem
+      } );
     }, [ model.objectGroup.archetype ], {
       phetioType: PhetioGroup.PhetioGroupIO( Node.NodeIO ),
       tandem: options.tandem.createTandem( model.objectType === CASObjectType.SOCCER_BALL ? 'soccerBallNodeGroup' : 'dataPointNodeGroup' ),
