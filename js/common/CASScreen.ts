@@ -13,11 +13,11 @@ import Tandem from '../../../tandem/js/Tandem.js';
 import CASColors from '../common/CASColors.js';
 import centerAndSpread from '../centerAndSpread.js';
 import CASModel from './model/CASModel.js';
-import CASScreenView, { CASScreenViewOptions } from './view/CASScreenView.js';
+import CASScreenView from './view/CASScreenView.js';
 import { PhetioObjectOptions } from '../../../tandem/js/PhetioObject.js';
 
 type CASScreenSelfOptions = {};
-export type CASScreenOptions = CASScreenViewOptions & PhetioObjectOptions & Required<Pick<PhetioObjectOptions, 'tandem'>>;
+export type CASScreenOptions = CASScreenSelfOptions & PhetioObjectOptions & Required<Pick<PhetioObjectOptions, 'tandem'>>;
 
 // TODO: Can we delete this file or does it provide value?  SR: In my opinion, it provides background color and types,
 // and provides enough value to stick around.
@@ -34,11 +34,7 @@ class CASScreen extends Screen {
       tandem: Tandem.REQUIRED
     }, providedOptions );
 
-    super(
-      createModel,
-      createView,
-      options
-    );
+    super( createModel, createView, options );
   }
 }
 
