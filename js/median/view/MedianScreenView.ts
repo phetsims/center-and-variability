@@ -14,7 +14,7 @@ import MedianModel from '../model/MedianModel.js';
 import { CASScreenViewOptions } from '../../common/view/CASScreenView.js';
 import SoccerScreenView from '../../common/view/SoccerScreenView.js';
 import CASColors from '../../common/CASColors.js';
-import CenterAndSpreadStrings from '../../centerAndSpreadStrings.js';
+import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 
 type MedianScreenViewOptions = CASScreenViewOptions;
 
@@ -29,7 +29,7 @@ class MedianScreenView extends SoccerScreenView {
 
       questionBarOptions: {
         barFill: CASColors.medianQuestionBarFillColorProperty,
-        labelText: CenterAndSpreadStrings.medianQuestion
+        labelText: centerAndSpreadStrings.medianQuestion
       }
     }, providedOptions );
 

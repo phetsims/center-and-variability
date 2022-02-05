@@ -14,7 +14,7 @@ import centerAndSpread from '../../centerAndSpread.js';
 import SpreadModel from '../model/SpreadModel.js';
 import SoccerScreenView, { SoccerScreenViewOptions } from '../../common/view/SoccerScreenView.js';
 import CASColors from '../../common/CASColors.js';
-import CenterAndSpreadStrings from '../../centerAndSpreadStrings.js';
+import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 
 type SpreadScreenViewOptions = SoccerScreenViewOptions;
 
@@ -29,7 +29,7 @@ class SpreadScreenView extends SoccerScreenView {
 
       questionBarOptions: {
         barFill: CASColors.spreadQuestionBarFillColorProperty,
-        labelText: CenterAndSpreadStrings.spreadQuestion
+        labelText: centerAndSpreadStrings.spreadQuestion
       }
     }, providedOptions );
 
