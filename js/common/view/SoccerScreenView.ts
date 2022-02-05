@@ -92,24 +92,10 @@ class SoccerScreenView extends CASScreenView {
 
     const ballRadius = 0.2;
 
-    model.objectGroup.createNextElement( {
+    model.objectGroup.createNextElement( CASObjectType.SOCCER_BALL, {
       initialPosition: new Vector2( 8, ballRadius ),
-      radius: ballRadius,
-      objectType: CASObjectType.SOCCER_BALL
+      radius: ballRadius
     } );
-  }
-
-  /**
-   * Resets the view.
-   */
-  reset() {
-  }
-
-  /**
-   * Steps the view.
-   * @param dt - time step, in seconds
-   */
-  step( dt: number ) {
   }
 }
 
