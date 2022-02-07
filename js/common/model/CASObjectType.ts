@@ -12,10 +12,16 @@ import EnumerationValue from '../../../../phet-core/js/EnumerationValue.js';
 import centerAndSpread from '../../centerAndSpread.js';
 
 class CASObjectType extends EnumerationValue {
-  static DATA_POINT = new CASObjectType();
-  static SOCCER_BALL = new CASObjectType();
+  radius: number;
+  static DATA_POINT = new CASObjectType( 1 ); // TODO: What should this be?
+  static SOCCER_BALL = new CASObjectType( 0.2 );
 
   static enumeration = new Enumeration( CASObjectType );
+
+  constructor( radius: number ) {
+    super();
+    this.radius = radius;
+  }
 }
 
 centerAndSpread.register( 'CASObjectType', CASObjectType );

@@ -28,10 +28,10 @@ class CASObjectNode extends Node {
     }, providedOptions );
     super( options );
 
-    this.maxWidth = modelViewTransform.modelToViewDeltaX( casObject.radius * 2 );
+    this.maxWidth = modelViewTransform.modelToViewDeltaX( casObject.objectType.radius * 2 );
     this.maxHeight = this.maxWidth;
     this.addChild( casObject.objectType === CASObjectType.SOCCER_BALL ? new Image( ball_png ) :
-                   new ShadedSphereNode( casObject.radius * 2 ) );
+                   new ShadedSphereNode( casObject.objectType.radius * 2 ) );
 
     this.addLinkedElement( casObject, {
       tandem: options.tandem.createTandem( casObject.objectType === CASObjectType.SOCCER_BALL ? 'soccerBall' : 'dataPoint' ),

@@ -15,6 +15,7 @@ import CASObject from './CASObject.js';
 import CASObjectType from './CASObjectType.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import dotRandom from '../../../../dot/js/dotRandom.js';
 
 type CASModelSelfOptions = {
   tandem: Tandem
@@ -44,11 +45,33 @@ class CASModel {
     } );
   }
 
-  createBall( position: Vector2 ) {
-    const ballRadius = 0.2;
+  createBall() {
+
+    // we know x0 and final x.  We know a = -g.  Solve for v and t.
+    // solve for v and t
+    // x1 = x0 + v_x*t
+    // y1 = y0 + v_y*t + 1/2 a t^2
+
+    // Different kickers should have different initial velocity.
+    const a = -9.8; // meters / second squared
+    const y0 = this.objectType.radius;
+    const x0 = 0;
+
+    // TODO: Follow a specified distribution
+    const x1 = dotRandom.nextIntBetween( 1, 16 );
+    const y1 = this.objectType.radius;// land on the ground TODO: account for ball radius
+    const t = 1; // TODO: this should be computed not assigned
+    const vx = ( x1 - x0 ) / t;
+    const vy = ( y1 - y0 - 1 / 2 * a * t * t ) / t;
+
+    // const distance = 8;
+    const position = new Vector2( 0, y0 );
+    const velocity = new Vector2( vx, vy );
+
     this.objectGroup.createNextElement( this.objectType, {
       position: position,
-      radius: ballRadius
+      velocity: velocity,
+      targetX: x1
     } );
   }
 
@@ -64,6 +87,7 @@ class CASModel {
    * @param dt - time step, in seconds
    */
   step( dt: number ) {
+    this.objectGroup.forEach( casObject => casObject.step( dt ) );
   }
 }
 

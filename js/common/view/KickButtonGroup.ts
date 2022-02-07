@@ -16,7 +16,6 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import CASColors from '../CASColors.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import CASModel from '../model/CASModel.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
 
 // TODO: VBox/LayoutBox could use TS options
 export type KickButtonGroupOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
@@ -61,9 +60,7 @@ class KickButtonGroup extends VBox {
     const kick10Label = createLabel( centerAndSpreadStrings.kick10, kick10ButtonTandem.createTandem( 'labelNode' ) );
 
     options.children = [
-      createKickButton( kick1Label, kick1ButtonTandem, () => {
-        model.createBall( new Vector2( 8, 0 ) );
-      } ),
+      createKickButton( kick1Label, kick1ButtonTandem, () => model.createBall() ),
       createKickButton( kick10Label, kick10ButtonTandem, () => {} ) // TODO
     ];
 
