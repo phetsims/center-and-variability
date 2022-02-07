@@ -52,7 +52,7 @@ class CASObjectNode extends Node {
 
     // TODO: Only allow dragging when isAnimatingProperty.value is false
     this.addInputListener( new DragListener( {
-      positionProperty: casObject.positionProperty,
+      positionProperty: casObject.dragPositionProperty,
       transform: modelViewTransform
     } ) );
   }

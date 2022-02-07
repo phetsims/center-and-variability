@@ -19,6 +19,7 @@ import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import EnumerationIO from '../../../../tandem/js/types/EnumerationIO.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import CASConstants from '../CASConstants.js';
+import Utils from '../../../../dot/js/Utils.js';
 
 type CASObjectSelfOptions = {
   position?: Vector2,
@@ -31,6 +32,9 @@ export type CASObjectOptions =
   & Required<Pick<PhetioObjectOptions, 'tandem'>>;
 
 class CASObject extends PhetioObject {
+
+  // When dragging, the object snaps to each tickmark
+  readonly dragPositionProperty: Vector2Property;
   readonly positionProperty: Vector2Property; // in model coordinates
   readonly velocityProperty: Vector2Property;
   readonly isAnimatingProperty: BooleanProperty;
@@ -65,6 +69,12 @@ class CASObject extends PhetioObject {
       tandem: objectType === CASObjectType.SOCCER_BALL ?
               options.tandem.createTandem( 'isAnimatingProperty' ) :
               Tandem.OPT_OUT
+    } );
+    this.dragPositionProperty = new Vector2Property( options.position );
+
+    // TODO: when the positionProperty changes from animation, sync the dragPositionProperty to it
+    this.dragPositionProperty.link( dragPosition => {
+      this.positionProperty.value = new Vector2( Utils.roundSymmetric( dragPosition.x ), dragPosition.y );
     } );
   }
 
