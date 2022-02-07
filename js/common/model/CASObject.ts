@@ -18,6 +18,7 @@ import CASObjectType from './CASObjectType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import EnumerationIO from '../../../../tandem/js/types/EnumerationIO.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import CASConstants from '../CASConstants.js';
 
 type CASObjectSelfOptions = {
   position?: Vector2,
@@ -28,9 +29,6 @@ export type CASObjectOptions =
   CASObjectSelfOptions
   & PhetioObjectOptions
   & Required<Pick<PhetioObjectOptions, 'tandem'>>;
-
-// constants
-const GRAVITY = -9.8; // in meters/second^2 TODO: should the Lab screen know about physics-related things?
 
 class CASObject extends PhetioObject {
   readonly positionProperty: Vector2Property; // in model coordinates
@@ -73,7 +71,7 @@ class CASObject extends PhetioObject {
   step( dt: number ) {
     if ( this.isAnimatingProperty.value ) {
       let x = this.positionProperty.value.x + this.velocityProperty.value.x * dt;
-      let y = this.positionProperty.value.y + this.velocityProperty.value.y * dt + 1 / 2 * GRAVITY * dt * dt;
+      let y = this.positionProperty.value.y + this.velocityProperty.value.y * dt + 1 / 2 * CASConstants.GRAVITY * dt * dt;
 
       let landed = false;
 
@@ -84,7 +82,7 @@ class CASObject extends PhetioObject {
       }
 
       // velocity = v0+at
-      this.velocityProperty.value = this.velocityProperty.value.plusXY( 0, GRAVITY * dt );
+      this.velocityProperty.value = this.velocityProperty.value.plusXY( 0, CASConstants.GRAVITY * dt );
       this.positionProperty.value = new Vector2( x, y );
 
       if ( landed ) {

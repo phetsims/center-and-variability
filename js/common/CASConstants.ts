@@ -11,7 +11,8 @@ import centerAndSpread from '../centerAndSpread.js';
 
 const CASConstants = {
   SCREEN_VIEW_X_MARGIN: 15,
-  SCREEN_VIEW_Y_MARGIN: 15
+  SCREEN_VIEW_Y_MARGIN: 15,
+  GRAVITY: -9.8 // in meters/second^2
 };
 
 centerAndSpread.register( 'CASConstants', CASConstants );

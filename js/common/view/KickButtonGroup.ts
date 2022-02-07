@@ -60,8 +60,8 @@ class KickButtonGroup extends VBox {
     const kick10Label = createLabel( centerAndSpreadStrings.kick10, kick10ButtonTandem.createTandem( 'labelNode' ) );
 
     options.children = [
-      createKickButton( kick1Label, kick1ButtonTandem, () => model.createBall() ),
-      createKickButton( kick10Label, kick10ButtonTandem, () => {} ) // TODO
+      createKickButton( kick1Label, kick1ButtonTandem, () => model.kick( 1 ) ),
+      createKickButton( kick10Label, kick10ButtonTandem, () => model.kick( 10 ) )
     ];
 
     super( options );

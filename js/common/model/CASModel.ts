@@ -16,16 +16,24 @@ import CASObjectType from './CASObjectType.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
+import CASConstants from '../CASConstants.js';
 
 type CASModelSelfOptions = {
   tandem: Tandem
 };
 export type CASModelOptions = CASModelSelfOptions & {};
 
+// constants
+const TIME_BETWEEN_RAPID_KICKS = 0.1; // in seconds
+
 class CASModel {
   readonly objectGroup: PhetioGroup<CASObject>;
   readonly objectType: CASObjectType;
+  private remainingNumberOfBallsToMultiKick: number;
+  private timeWhenLastBallWasKicked: number;
+  private time: number;
 
+  // TODO: Move soccer related things to SoccerModel
   constructor( objectType: CASObjectType, providedOptions: CASModelOptions ) {
 
     const options = optionize<CASModelOptions, CASModelSelfOptions, {}>( {
@@ -33,6 +41,12 @@ class CASModel {
     }, providedOptions );
 
     this.objectType = objectType;
+
+    // TODO: support state with these! Likely as instrumented NumberProperties
+    // TODO: handle reset case
+    this.remainingNumberOfBallsToMultiKick = 0;
+    this.time = 0;
+    this.timeWhenLastBallWasKicked = 0;
 
     this.objectGroup = new PhetioGroup( ( tandem, objectType: CASObjectType, providedOptions ) => {
 
@@ -48,7 +62,7 @@ class CASModel {
   /**
    * Creates a ball at the starting kick position and kicks off an animation to its target location.
    */
-  createBall(): void {
+  private createBall(): void {
 
     // we know x0 and final x.  We know a = -g.  Solve for v and t.
     // solve for v and t
@@ -56,7 +70,6 @@ class CASModel {
     // y1 = y0 + v_y*t + 1/2 a t^2
 
     // Different kickers should have different initial velocity.
-    const a = -9.8; // meters / second squared
     const y0 = this.objectType.radius;
     const x0 = 0;
 
@@ -68,7 +81,7 @@ class CASModel {
     const t = dotRandom.nextDoubleBetween( 1, 3 ); // TODO: this should be computed not assigned
     // const t = 0.2; // TODO: for testing
     const vx = ( x1 - x0 ) / t;
-    const vy = ( y1 - y0 - 1 / 2 * a * t * t ) / t;
+    const vy = ( y1 - y0 - 1 / 2 * CASConstants.GRAVITY * t * t ) / t;
 
     // const distance = 8;
     const position = new Vector2( 0, y0 );
@@ -80,6 +93,8 @@ class CASModel {
       targetX: x1
     } );
     casObject.isAnimatingProperty.value = true;
+    this.timeWhenLastBallWasKicked = this.time;
+    this.remainingNumberOfBallsToMultiKick--;
 
     const isAnimatingListener = ( isAnimating: boolean ) => {
       if ( !isAnimating ) {
@@ -108,6 +123,14 @@ class CASModel {
   }
 
   /**
+   * Adds the provided number of balls to the scheduled balls to kick
+   */
+  kick( numberOfBallsToKick: number ): void {
+    this.remainingNumberOfBallsToMultiKick += numberOfBallsToKick; // TODO: consider how many balls are available based on max
+    this.createBall();
+  }
+
+  /**
    * Returns all other objects at the target position of the provided object.
    */
   getOtherBallsAtTarget( casObject: CASObject ): CASObject[] {
@@ -128,6 +151,12 @@ class CASModel {
    * @param dt - time step, in seconds
    */
   step( dt: number ): void { // TODO: Specify return values everywhere
+    this.time += dt;
+
+    if ( this.remainingNumberOfBallsToMultiKick > 0 && this.time >= this.timeWhenLastBallWasKicked + TIME_BETWEEN_RAPID_KICKS ) {
+      this.createBall();
+    }
+
     this.objectGroup.forEach( casObject => casObject.step( dt ) );
   }
 }
