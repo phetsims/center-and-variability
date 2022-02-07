@@ -112,7 +112,23 @@ class CASModel {
         }
       }
     };
-    casObject.isAnimatingProperty.lazyLink( isAnimatingListener ); // TODO: Dispose
+    casObject.isAnimatingProperty.lazyLink( isAnimatingListener );
+
+    const dragPositionListener = ( dragPosition: Vector2 ) => {
+
+      // find other balls in the stack
+      const ballsInStack = this.getOtherBallsAtTarget( casObject );
+
+      if ( ballsInStack.length > 0 ) {
+        const topBall = _.maxBy( ballsInStack, ball => ball.positionProperty.value.y )!;
+        const targetY = topBall.positionProperty.value.y + topBall.objectType.radius + casObject.objectType.radius;
+        casObject.positionProperty.value = new Vector2( casObject.targetX, targetY );
+      }
+      else {
+        casObject.positionProperty.value = new Vector2( casObject.targetX, casObject.objectType.radius );
+      }
+    };
+    casObject.dragPositionProperty.lazyLink( dragPositionListener ); // TODO: Dispose
 
     // this is an n^2 operation, but that is okay because n small.
     this.objectGroup.elementDisposedEmitter.addListener( o => {

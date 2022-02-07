@@ -40,7 +40,7 @@ class CASObject extends PhetioObject {
   readonly isAnimatingProperty: BooleanProperty;
   static CASObjectIO: IOType;
   readonly objectType: CASObjectType;
-  readonly targetX: number;
+  targetX: number;
 
   constructor( objectType: CASObjectType, providedOptions: CASObjectOptions ) {
 
@@ -75,6 +75,7 @@ class CASObject extends PhetioObject {
     // TODO: when the positionProperty changes from animation, sync the dragPositionProperty to it
     this.dragPositionProperty.link( dragPosition => {
       this.positionProperty.value = new Vector2( Utils.roundSymmetric( dragPosition.x ), dragPosition.y );
+      this.targetX = this.positionProperty.value.x;
     } );
   }
 
