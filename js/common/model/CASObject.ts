@@ -70,8 +70,11 @@ class CASObject extends PhetioObject {
 
   step( dt: number ) {
     if ( this.isAnimatingProperty.value ) {
+
+      // TODO: sometimes the ball seems to "hitch" a little bit.  Should we average old and new velocities for this?
+      this.velocityProperty.value = this.velocityProperty.value.plusXY( 0, CASConstants.GRAVITY * dt );
       let x = this.positionProperty.value.x + this.velocityProperty.value.x * dt;
-      let y = this.positionProperty.value.y + this.velocityProperty.value.y * dt + 1 / 2 * CASConstants.GRAVITY * dt * dt;
+      let y = this.positionProperty.value.y + this.velocityProperty.value.y * dt;
 
       let landed = false;
 
@@ -81,8 +84,6 @@ class CASObject extends PhetioObject {
         landed = true;
       }
 
-      // velocity = v0+at
-      this.velocityProperty.value = this.velocityProperty.value.plusXY( 0, CASConstants.GRAVITY * dt );
       this.positionProperty.value = new Vector2( x, y );
 
       if ( landed ) {
