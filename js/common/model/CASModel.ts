@@ -14,6 +14,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import CASObject from './CASObject.js';
 import CASObjectType from './CASObjectType.js';
 import merge from '../../../../phet-core/js/merge.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
 
 type CASModelSelfOptions = {
   tandem: Tandem
@@ -40,6 +41,14 @@ class CASModel {
     }, [ objectType, {} ], {
       phetioType: PhetioGroup.PhetioGroupIO( CASObject.CASObjectIO ),
       tandem: options.tandem.createTandem( objectType === CASObjectType.SOCCER_BALL ? 'soccerBallGroup' : 'dataPointGroup' )
+    } );
+  }
+
+  createBall( position: Vector2 ) {
+    const ballRadius = 0.2;
+    this.objectGroup.createNextElement( this.objectType, {
+      position: position,
+      radius: ballRadius
     } );
   }
 

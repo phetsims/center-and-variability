@@ -20,7 +20,7 @@ import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import EnumerationIO from '../../../../tandem/js/types/EnumerationIO.js';
 
 type CASObjectSelfOptions = {
-  initialPosition?: Vector2,
+  position?: Vector2,
   radius?: number
 };
 export type CASObjectOptions =
@@ -38,7 +38,7 @@ class CASObject extends PhetioObject {
   constructor( objectType: CASObjectType, providedOptions: CASObjectOptions ) {
 
     const options = optionize<CASObjectOptions, CASObjectSelfOptions, PhetioObjectOptions>( {
-      initialPosition: Vector2.ZERO,
+      position: Vector2.ZERO,
       radius: 15,
       tandem: Tandem.REQUIRED,
       phetioType: CASObject.CASObjectIO,
@@ -50,7 +50,7 @@ class CASObject extends PhetioObject {
     this.radius = options.radius;
     this.objectType = objectType;
 
-    this.positionProperty = new Vector2Property( options.initialPosition, {
+    this.positionProperty = new Vector2Property( options.position, {
       tandem: options.tandem.createTandem( 'positionProperty' )
     } );
     this.velocityProperty = new NumberProperty( 0, {

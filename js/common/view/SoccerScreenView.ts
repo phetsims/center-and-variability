@@ -19,13 +19,11 @@ import TickMarkSet from '../../../../bamboo/js/TickMarkSet.js';
 import TickLabelSet from '../../../../bamboo/js/TickLabelSet.js';
 import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
 import { Color, Node, Text } from '../../../../scenery/js/imports.js';
 import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import CASObjectType from '../model/CASObjectType.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
 
 type SoccerScreenViewSelfOptions = {
@@ -79,20 +77,13 @@ class SoccerScreenView extends CASScreenView {
     this.addChild( numberLineNode );
 
     this.addChild( new QuestionBar( this.layoutBounds, this.visibleBoundsProperty, options.questionBarOptions ) );
-    this.addChild( new KickButtonGroup( {
+    this.addChild( new KickButtonGroup( model, {
       left: 25,
       bottom: this.layoutBounds.bottom - 8,
       tandem: options.tandem.createTandem( 'kickButtonGroup' )
     } ) );
 
     this.addChild( this.resetAllButton );
-
-    const ballRadius = 0.2;
-
-    model.objectGroup.createNextElement( CASObjectType.SOCCER_BALL, {
-      initialPosition: new Vector2( 8, ballRadius ),
-      radius: ballRadius
-    } );
   }
 }
 
