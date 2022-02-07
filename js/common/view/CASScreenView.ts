@@ -50,6 +50,8 @@ class CASScreenView extends ScreenView {
 
     const map = new Map<CASObject, CASObjectNode>();
 
+    // TODO: Doesn't create items for anything that's already in the group.  Should this be a NOTE or a TODO?
+
     model.objectGroup.elementCreatedEmitter.addListener( casObject => {
       const casObjectNode = objectNodeGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject, {} );
       this.addChild( casObjectNode );
