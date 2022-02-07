@@ -29,6 +29,9 @@ export type CASObjectOptions =
   & PhetioObjectOptions
   & Required<Pick<PhetioObjectOptions, 'tandem'>>;
 
+// constants
+const GRAVITY = -9.8; // in meters/second^2 TODO: should the Lab screen know about physics-related things?
+
 class CASObject extends PhetioObject {
   readonly positionProperty: Vector2Property; // in model coordinates
   readonly velocityProperty: Vector2Property;
@@ -68,21 +71,27 @@ class CASObject extends PhetioObject {
   }
 
   step( dt: number ) {
-    const GRAVITY_ACCELERATION = new Vector2( 0, -9.8 );
+    if ( this.isAnimatingProperty.value ) {
+      let x = this.positionProperty.value.x + this.velocityProperty.value.x * dt;
+      let y = this.positionProperty.value.y + this.velocityProperty.value.y * dt + 1 / 2 * GRAVITY * dt * dt;
 
-    let x = this.positionProperty.value.x + this.velocityProperty.value.x * dt;
-    let y = this.positionProperty.value.y + this.velocityProperty.value.y * dt + 1 / 2 * ( -9.8 ) * dt * dt;
+      let landed = false;
 
-    if ( y <= this.objectType.radius ) {
-      x = this.targetX;
-      y = this.objectType.radius;
+      if ( y <= this.objectType.radius ) {
+        x = this.targetX;
+        y = this.objectType.radius;
+        landed = true;
+      }
 
-      // TODO: after landing, pop to the top of the stack and become interactive
+      // velocity = v0+at
+      this.velocityProperty.value = this.velocityProperty.value.plusXY( 0, GRAVITY * dt );
+      this.positionProperty.value = new Vector2( x, y );
+
+      if ( landed ) {
+        this.isAnimatingProperty.value = false;
+        // TODO: after landing, become interactive too
+      }
     }
-
-    // velocity = v0+at
-    this.velocityProperty.value = this.velocityProperty.value.plus( GRAVITY_ACCELERATION.timesScalar( dt ) );
-    this.positionProperty.value = new Vector2( x, y );
   }
 
   dispose() {

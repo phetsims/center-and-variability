@@ -45,7 +45,10 @@ class CASModel {
     } );
   }
 
-  createBall() {
+  /**
+   * Creates a ball at the starting kick position and kicks off an animation to its target location.
+   */
+  createBall(): void {
 
     // we know x0 and final x.  We know a = -g.  Solve for v and t.
     // solve for v and t
@@ -59,8 +62,11 @@ class CASModel {
 
     // TODO: Follow a specified distribution
     const x1 = dotRandom.nextIntBetween( 1, 16 );
+    // const x1 = dotRandom.nextIntBetween( 5, 8 ); // TODO: for testing
+    // const x1 = 8; TODO: for testing
     const y1 = this.objectType.radius;// land on the ground TODO: account for ball radius
     const t = dotRandom.nextDoubleBetween( 1, 3 ); // TODO: this should be computed not assigned
+    // const t = 0.2; // TODO: for testing
     const vx = ( x1 - x0 ) / t;
     const vy = ( y1 - y0 - 1 / 2 * a * t * t ) / t;
 
@@ -68,17 +74,52 @@ class CASModel {
     const position = new Vector2( 0, y0 );
     const velocity = new Vector2( vx, vy );
 
-    this.objectGroup.createNextElement( this.objectType, {
+    const casObject = this.objectGroup.createNextElement( this.objectType, {
       position: position,
       velocity: velocity,
       targetX: x1
+    } );
+    casObject.isAnimatingProperty.value = true;
+
+    const isAnimatingListener = ( isAnimating: boolean ) => {
+      if ( !isAnimating ) {
+        assert && assert( casObject.positionProperty.value.x === casObject.targetX,
+          `object that finished animating is not at its targetX, positionX: ${casObject.positionProperty.value.x},
+            targetX: ${casObject.targetX}` );
+
+        // find other balls in the stack
+        const ballsInStack = this.getOtherBallsAtTarget( casObject );
+
+        if ( ballsInStack.length > 0 ) {
+          const topBall = _.maxBy( ballsInStack, ball => ball.positionProperty.value.y )!;
+          const targetY = topBall.positionProperty.value.y + topBall.objectType.radius + casObject.objectType.radius;
+          casObject.positionProperty.value = new Vector2( casObject.targetX, targetY );
+        }
+      }
+    };
+    casObject.isAnimatingProperty.lazyLink( isAnimatingListener ); // TODO: Dispose
+
+    // this is an n^2 operation, but that is okay because n small.
+    this.objectGroup.elementDisposedEmitter.addListener( o => {
+      if ( o === casObject ) {
+        o.isAnimatingProperty.unlink( isAnimatingListener );
+      }
+    } );
+  }
+
+  /**
+   * Returns all other objects at the target position of the provided object.
+   */
+  getOtherBallsAtTarget( casObject: CASObject ): CASObject[] {
+    return this.objectGroup.filter( ( o: CASObject ) => {
+      return !o.isAnimatingProperty.value && o.targetX === casObject.targetX && casObject !== o;
     } );
   }
 
   /**
    * Resets the model.
    */
-  reset() {
+  reset(): void {
     this.objectGroup.clear();
   }
 
@@ -86,7 +127,7 @@ class CASModel {
    * Steps the model.
    * @param dt - time step, in seconds
    */
-  step( dt: number ) {
+  step( dt: number ): void { // TODO: Specify return values everywhere
     this.objectGroup.forEach( casObject => casObject.step( dt ) );
   }
 }
