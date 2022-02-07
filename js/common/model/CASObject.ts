@@ -17,6 +17,7 @@ import IOType from '../../../../tandem/js/types/IOType.js';
 import CASObjectType from './CASObjectType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import EnumerationIO from '../../../../tandem/js/types/EnumerationIO.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 
 type CASObjectSelfOptions = {
   position?: Vector2,
@@ -31,9 +32,10 @@ export type CASObjectOptions =
 class CASObject extends PhetioObject {
   readonly positionProperty: Vector2Property; // in model coordinates
   readonly velocityProperty: Vector2Property;
+  readonly isAnimatingProperty: BooleanProperty;
   static CASObjectIO: IOType;
   readonly objectType: CASObjectType;
-  private readonly targetX: number;
+  readonly targetX: number;
 
   constructor( objectType: CASObjectType, providedOptions: CASObjectOptions ) {
 
@@ -56,6 +58,11 @@ class CASObject extends PhetioObject {
     this.velocityProperty = new Vector2Property( options.velocity, {
       tandem: objectType === CASObjectType.SOCCER_BALL ?
               options.tandem.createTandem( 'velocityProperty' ) :
+              Tandem.OPT_OUT
+    } );
+    this.isAnimatingProperty = new BooleanProperty( false, {
+      tandem: objectType === CASObjectType.SOCCER_BALL ?
+              options.tandem.createTandem( 'isAnimatingProperty' ) :
               Tandem.OPT_OUT
     } );
   }
@@ -82,21 +89,25 @@ class CASObject extends PhetioObject {
     super.dispose();
     this.positionProperty.dispose();
     this.velocityProperty.dispose();
+    this.isAnimatingProperty.dispose();
   }
 }
 
 CASObject.CASObjectIO = new IOType( 'CASObjectIO', {
   valueType: CASObject,
   toStateObject: ( casObject: CASObject ) => ( {
-    objectType: casObject.objectType.toString()
+    objectType: casObject.objectType.toString(),
+    targetX: casObject.targetX // TODO: Should toStateObject be on CASObject prototype?  It seems so.
   } ),
   stateToArgsForConstructor: ( stateObject: any ) => {
     return [
-      stateObject.objectType === 'SOCCER_BALL' ? CASObjectType.SOCCER_BALL : CASObjectType.DATA_POINT, {} ]; // TODO: Empty curly braces???
+      stateObject.objectType === 'SOCCER_BALL' ? CASObjectType.SOCCER_BALL : CASObjectType.DATA_POINT, {
+        targetX: stateObject.targetX
+      } ];
   },
   stateSchema: {
     objectType: EnumerationIO( CASObjectType ),
-    radius: NumberIO
+    targetX: NumberIO
   }
 } );
 

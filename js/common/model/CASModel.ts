@@ -60,7 +60,7 @@ class CASModel {
     // TODO: Follow a specified distribution
     const x1 = dotRandom.nextIntBetween( 1, 16 );
     const y1 = this.objectType.radius;// land on the ground TODO: account for ball radius
-    const t = 1; // TODO: this should be computed not assigned
+    const t = dotRandom.nextDoubleBetween( 1, 3 ); // TODO: this should be computed not assigned
     const vx = ( x1 - x0 ) / t;
     const vy = ( y1 - y0 - 1 / 2 * a * t * t ) / t;
 
