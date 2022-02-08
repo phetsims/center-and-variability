@@ -63,7 +63,7 @@ class CASModel {
   }
 
   // TODO: need options type for CASObject that doesn't include phetio things
-  protected createObject( options: any ) {
+  protected createObject( options: any ): CASObject {
     const casObject = this.objectGroup.createNextElement( this.objectType, options );
 
     // TODO: when the positionProperty changes from animation, sync the dragPositionProperty to it
@@ -122,7 +122,7 @@ class CASModel {
    * Steps the model.
    * @param dt - time step, in seconds
    */
-  step( dt: number ): void { // TODO: Specify return values everywhere
+  step( dt: number ): void {
     this.objectGroup.forEach( casObject => casObject.step( dt ) );
   }
 }

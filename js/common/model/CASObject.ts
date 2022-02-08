@@ -75,7 +75,7 @@ class CASObject extends PhetioObject {
     this.dragPositionProperty = new Vector2Property( options.position );
   }
 
-  step( dt: number ) {
+  step( dt: number ): void {
     if ( this.isAnimatingProperty.value ) {
 
       // TODO: sometimes the ball seems to "hitch" a little bit.  Should we average old and new velocities for this?
@@ -100,7 +100,7 @@ class CASObject extends PhetioObject {
     }
   }
 
-  dispose() {
+  dispose(): void {
     super.dispose();
     this.positionProperty.dispose();
     this.velocityProperty.dispose();

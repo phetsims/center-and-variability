@@ -30,14 +30,14 @@ class LabModel extends CASModel {
   /**
    * Resets the model.
    */
-  reset() {
+  reset(): void {
   }
 
   /**
    * Steps the model.
    * @param dt - time step, in seconds
    */
-  step( dt: number ) {
+  step( dt: number ): void {
   }
 }
 

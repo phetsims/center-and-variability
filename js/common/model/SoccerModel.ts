@@ -58,11 +58,8 @@ class SoccerModel extends CASModel {
 
     // TODO: Follow a specified distribution
     const x1 = dotRandom.nextIntBetween( this.rangeProperty.value.min, this.rangeProperty.value.max );
-    // const x1 = dotRandom.nextIntBetween( 5, 8 ); // TODO: for testing
-    // const x1 = 8; TODO: for testing
-    const y1 = this.objectType.radius;// land on the ground TODO: account for ball radius
+    const y1 = this.objectType.radius;// land on the ground
     const t = dotRandom.nextDoubleBetween( 1, 3 ); // TODO: this should be computed not assigned
-    // const t = 0.2; // TODO: for testing
     const vx = ( x1 - x0 ) / t;
     const vy = ( y1 - y0 - 1 / 2 * CASConstants.GRAVITY * t * t ) / t;
 
@@ -106,7 +103,7 @@ class SoccerModel extends CASModel {
     this.createBall();
   }
 
-  step( dt: number ) {
+  step( dt: number ): void {
     super.step( dt );
 
     this.time += dt;

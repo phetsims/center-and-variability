@@ -83,14 +83,14 @@ class CASScreenView extends ScreenView {
   /**
    * Resets the view.
    */
-  reset() {
+  reset(): void {
   }
 
   /**
    * Steps the view.
    * @param dt - time step, in seconds
    */
-  step( dt: number ) {
+  step( dt: number ): void {
   }
 }
 
