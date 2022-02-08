@@ -106,14 +106,18 @@ class CASObject extends PhetioObject {
     this.velocityProperty.dispose();
     this.isAnimatingProperty.dispose();
   }
+
+  toStateObject() {
+    return {
+      objectType: this.objectType.toString(),
+      targetX: this.targetX
+    };
+  }
 }
 
 CASObject.CASObjectIO = new IOType( 'CASObjectIO', {
   valueType: CASObject,
-  toStateObject: ( casObject: CASObject ) => ( {
-    objectType: casObject.objectType.toString(),
-    targetX: casObject.targetX // TODO: Should toStateObject be on CASObject prototype?  It seems so.
-  } ),
+  toStateObject: ( casObject: CASObject ) => casObject.toStateObject(),
   stateToArgsForConstructor: ( stateObject: any ) => {
     return [
       stateObject.objectType === 'SOCCER_BALL' ? CASObjectType.SOCCER_BALL : CASObjectType.DATA_POINT, {
