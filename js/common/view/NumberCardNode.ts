@@ -13,13 +13,16 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import CASObject from '../model/CASObject.js';
+import Vector2Property from '../../../../dot/js/Vector2Property.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
 
 type NumberCardSelfOptions = {};
 export type NumberCardOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
 
 class NumberCardNode extends Node {
+  readonly positionProperty: Vector2Property;
 
-  constructor( casObject: CASObject, providedOptions?: NumberCardOptions ) {
+  constructor( casObject: CASObject, position: Vector2, providedOptions?: NumberCardOptions ) {
 
     const sideLength = 50;
     const cornerRadius = 10;
@@ -43,6 +46,19 @@ class NumberCardNode extends Node {
     }, providedOptions );
 
     super( options );
+
+    this.positionProperty = new Vector2Property( position, {
+      tandem: options.tandem.createTandem( 'positionProperty' )
+    } );
+
+    this.positionProperty.link( position => {
+      this.translation = position;
+    } );
+  }
+
+  dispose() {
+    this.positionProperty.dispose();
+    super.dispose();
   }
 }
 

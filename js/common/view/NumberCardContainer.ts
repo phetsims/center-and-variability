@@ -16,6 +16,7 @@ import CASObject from '../model/CASObject.js';
 import CASObjectNode from './CASObjectNode.js';
 import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
 import NumberCardNode from './NumberCardNode.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
 
 type NumberCardContainerSelfOptions = {};
 export type NumberCardOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
@@ -41,8 +42,7 @@ class NumberCardContainer extends Node {
         const rightmostCard = _.maxBy( numberCardGroup.getArray(), ( card: NumberCardNode ) => card.bounds.maxX )!;
         x = rightmostCard.right + spacing;
       }
-      return new NumberCardNode( casObject, {
-        x: x,
+      return new NumberCardNode( casObject, new Vector2( x, 0 ), {
         tandem: tandem
       } );
     }, [ model.objectGroup.archetype ], {
