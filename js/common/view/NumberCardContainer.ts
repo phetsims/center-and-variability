@@ -13,7 +13,6 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CASModel from '../model/CASModel.js';
 import CASObject from '../model/CASObject.js';
-import CASObjectNode from './CASObjectNode.js';
 import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
 import NumberCardNode from './NumberCardNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -44,7 +43,7 @@ class NumberCardContainer extends Node {
       supportsDynamicState: false
     } );
 
-    const map = new Map<CASObject, CASObjectNode>();
+    const map = new Map<CASObject, NumberCardNode>();
 
     // TODO: If we eventually have a model PhetioGroup for the cards, we will listen to them instead.
     const listenForObjectLanding = ( casObject: CASObject ) => {
