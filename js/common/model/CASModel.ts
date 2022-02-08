@@ -65,14 +65,15 @@ class CASModel {
 
     const objectsAtTarget = this.getOtherObjectsAtTarget( casObject );
 
-    if ( objectsAtTarget.length > 0 ) {
-      const topObject = _.maxBy( objectsAtTarget, object => object.positionProperty.value.y )!;
-      const targetY = topObject.positionProperty.value.y + topObject.objectType.radius + casObject.objectType.radius;
-      casObject.positionProperty.value = new Vector2( casObject.targetX, targetY );
-    }
-    else {
-      casObject.positionProperty.value = new Vector2( casObject.targetX, casObject.objectType.radius );
-    }
+    // Sort from bottom to top, so they can be re-stacked. The specified object will appear at the top.
+    const sorted = [ ...objectsAtTarget.sort( object => object.positionProperty.value.y ), casObject ];
+
+    // collapse the rest of the stack. NOTE: This assumes the radii are the same.
+    let position = casObject.objectType.radius;
+    sorted.forEach( object => {
+      object.positionProperty.value = new Vector2( casObject.targetX, position );
+      position += object.objectType.radius * 2;
+    } );
   }
 
   /**

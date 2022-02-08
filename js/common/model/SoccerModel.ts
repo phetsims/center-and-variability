@@ -95,7 +95,7 @@ class SoccerModel extends CASModel {
     casObject.isAnimatingProperty.lazyLink( isAnimatingListener );
 
     // TODO: when the positionProperty changes from animation, sync the dragPositionProperty to it
-    const dragPositionListener = ( dragPosition: Vector2 ) => {
+    const dragPositionListener = ( dragPosition: Vector2, oldPosition: Vector2 ) => {
       casObject.targetX = Utils.roundSymmetric( xRange.constrainValue( dragPosition.x ) );
 
       this.moveToTop( casObject );
