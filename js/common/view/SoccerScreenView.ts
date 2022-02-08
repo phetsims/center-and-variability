@@ -87,7 +87,6 @@ class SoccerScreenView extends CASScreenView {
     } ) );
 
     this.addChild( this.resetAllButton );
-    this.addChild( this.objectsLayer );
   }
 }
 

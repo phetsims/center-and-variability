@@ -9,7 +9,7 @@
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import merge from '../../../../phet-core/js/merge.js';
-import { NodeOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { NodeOptions, Rectangle, Text, Node } from '../../../../scenery/js/imports.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import CASConstants from '../CASConstants.js';
 import optionize from '../../../../phet-core/js/optionize.js';
@@ -28,7 +28,7 @@ export type CASAccordionBoxOptions = CASAccordionBoxSelfOptions & {} & NodeOptio
 class CASAccordionBox extends AccordionBox {
   private readonly isExpandedProperty: BooleanProperty;
 
-  constructor( layoutBounds: Bounds2, providedOptions: CASAccordionBoxOptions ) {
+  constructor( contents: Node, layoutBounds: Bounds2, providedOptions: CASAccordionBoxOptions ) {
 
     const options = optionize<CASAccordionBoxOptions>( {
       tandem: Tandem.REQUIRED,
@@ -51,14 +51,21 @@ class CASAccordionBox extends AccordionBox {
       tandem: options.tandem.createTandem( 'isExpandedProperty' )
     } );
 
-    const contentNode = new Rectangle( {
+    const backgroundRectangle = new Rectangle( {
       rectHeight: 160,
       // TODO: CK - figure out precise size desired and document size calculation
       rectWidth: layoutBounds.width - CASConstants.SCREEN_VIEW_X_MARGIN * 2 - 40
     } );
 
+    // contents.centerX = backgroundRectangle.width / 2;
+    // contents.centerY = backgroundRectangle.height / 2;
+    backgroundRectangle.addChild( contents );
+
+    // TODO: CK: make it possible to put things above the background rectangle
+    // backgroundRectangle.localBounds = backgroundRectangle.bounds;
+
     // TODO: optionize
-    super( contentNode, merge( {
+    super( backgroundRectangle, merge( {
       titleNode: new Text( options.titleString, {
         font: new PhetFont( 16 ),
         maxWidth: 300
