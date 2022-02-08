@@ -15,7 +15,6 @@ import CASModel from '../model/CASModel.js';
 import CASObject from '../model/CASObject.js';
 import CASObjectNode from './CASObjectNode.js';
 import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
-import CASObjectType from '../model/CASObjectType.js';
 import NumberCardNode from './NumberCardNode.js';
 
 type NumberCardContainerSelfOptions = {};
@@ -48,7 +47,7 @@ class NumberCardContainer extends Node {
       } );
     }, [ model.objectGroup.archetype ], {
       phetioType: PhetioGroup.PhetioGroupIO( Node.NodeIO ),
-      tandem: options.tandem.createTandem( model.objectType === CASObjectType.SOCCER_BALL ? 'soccerBallNodeGroup' : 'dataPointNodeGroup' ),
+      tandem: options.tandem.createTandem( 'numberCardNodeGroup' ),
       supportsDynamicState: false
     } );
 
@@ -57,9 +56,9 @@ class NumberCardContainer extends Node {
     const listenForObjectLanding = ( casObject: CASObject ) => {
       const listener = ( value: number | null ) => {
         if ( value !== null ) {
-          const casObjectNode = numberCardGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject, {} );
-          this.addChild( casObjectNode );
-          map.set( casObject, casObjectNode );
+          const numberCardNode = numberCardGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject, {} );
+          this.addChild( numberCardNode );
+          map.set( casObject, numberCardNode );
 
           // Only create the card at the moment valueProperty becomes non-null.  After that, the card updates but new
           // cards are not created
@@ -73,7 +72,16 @@ class NumberCardContainer extends Node {
 
     model.objectGroup.elementDisposedEmitter.addListener( casObject => {
       const viewNode = map.get( casObject )!;
-      numberCardGroup.disposeElement( viewNode );
+
+      // TODO: This is failing in the PhET-iO state wrapper.
+      // TODO: Solve this by creating CardModelElements which are stateful.  This will solve the problem
+      // because the state-setting order defers all properties until after groups are set.
+      // TODO: We tried workarounds in PropertyStateHandler#61 with dontDefer, but that isn't general
+
+      // viewNode may not exist if the ball was still in the air
+      if ( viewNode ) {
+        numberCardGroup.disposeElement( viewNode );
+      }
     } );
   }
 }
