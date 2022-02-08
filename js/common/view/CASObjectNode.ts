@@ -29,10 +29,13 @@ class CASObjectNode extends Node {
     }, providedOptions );
     super( options );
 
-    this.maxWidth = modelViewTransform.modelToViewDeltaX( casObject.objectType.radius * 2 );
-    this.maxHeight = this.maxWidth;
     const childNode = casObject.objectType === CASObjectType.SOCCER_BALL ? new Image( ball_png ) :
                       new ShadedSphereNode( casObject.objectType.radius * 2 );
+    childNode.maxWidth = modelViewTransform.modelToViewDeltaX( casObject.objectType.radius * 2 );
+
+    // if the child node is non-square, it should still fit within specified dimensions. Note: this does not change the
+    // aspect ratio.
+    childNode.maxHeight = childNode.maxWidth;
 
     // Center the nested Node for compatibility with DragListener
     childNode.center = Vector2.ZERO;
@@ -53,6 +56,10 @@ class CASObjectNode extends Node {
       positionProperty: casObject.dragPositionProperty,
       transform: modelViewTransform
     } ) );
+
+    // expand the horizontal touch areas but don't overlap with the neighboring columns.
+    // TODO: do we want to expand the vertical touch areas for the top and bottom ball in a stack?
+    this.touchArea = this.localBounds.dilatedX( 10 );
 
     // Prevent dragging or interaction while the object is animating
     casObject.isAnimatingProperty.link( isAnimating => {
