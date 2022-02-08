@@ -19,6 +19,7 @@ import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import EnumerationIO from '../../../../tandem/js/types/EnumerationIO.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import CASConstants from '../CASConstants.js';
+import Property from '../../../../axon/js/Property.js';
 
 type CASObjectSelfOptions = {
   position?: Vector2,
@@ -39,7 +40,10 @@ class CASObject extends PhetioObject {
   readonly isAnimatingProperty: BooleanProperty;
   static CASObjectIO: IOType;
   readonly objectType: CASObjectType;
-  targetX: number;
+  private readonly targetX: number;
+
+  // The value that particpates in the data set.
+  valueProperty: Property<number | null>;
 
   constructor( objectType: CASObjectType, providedOptions: CASObjectOptions ) {
 
@@ -73,6 +77,7 @@ class CASObject extends PhetioObject {
               Tandem.OPT_OUT
     } );
     this.dragPositionProperty = new Vector2Property( options.position );
+    this.valueProperty = new Property<number | null>( null );
   }
 
   step( dt: number ): void {
@@ -89,6 +94,7 @@ class CASObject extends PhetioObject {
         x = this.targetX;
         y = this.objectType.radius;
         landed = true;
+        this.valueProperty.value = this.targetX;
       }
 
       this.positionProperty.value = new Vector2( x, y );

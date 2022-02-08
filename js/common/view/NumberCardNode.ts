@@ -28,9 +28,13 @@ class NumberCardNode extends Node {
       lineWidth: 2,
       fill: 'white'
     } );
-    const text = new Text( casObject.targetX + '', {
-      font: new PhetFont( 24 ),
-      center: rectangle.center
+    const text = new Text( '', {
+      font: new PhetFont( 24 )
+    } );
+
+    casObject.valueProperty.link( value => {
+      text.text = value + '';
+      text.center = rectangle.center;
     } );
 
     const options = optionize<NumberCardOptions, NumberCardSelfOptions, NodeOptions>( {

@@ -53,9 +53,13 @@ class CASModel {
     this.rangeProperty = new Property<Range>( new Range( 1, 16 ) );
 
     for ( let i = 0; i < CASQueryParameters.objects; i++ ) {
-      this.createObject( {
-        targetX: dotRandom.nextIntBetween( this.rangeProperty.value.min, this.rangeProperty.value.max )
+      const targetX = dotRandom.nextIntBetween( this.rangeProperty.value.min, this.rangeProperty.value.max );
+      const casObject = this.createObject( {
+        targetX: targetX
       } );
+
+      // TODO: SR: Promote to an option
+      casObject.valueProperty.value = targetX;
     }
 
     // Stack the objects. TODO: A simpler way?
@@ -68,7 +72,7 @@ class CASModel {
 
     // TODO: when the positionProperty changes from animation, sync the dragPositionProperty to it
     const dragPositionListener = ( dragPosition: Vector2, oldPosition: Vector2 ) => {
-      casObject.targetX = Utils.roundSymmetric( this.rangeProperty.value.constrainValue( dragPosition.x ) );
+      casObject.valueProperty.value = Utils.roundSymmetric( this.rangeProperty.value.constrainValue( dragPosition.x ) );
 
       this.moveToTop( casObject );
     };
@@ -89,7 +93,7 @@ class CASModel {
    */
   protected getOtherObjectsAtTarget( casObject: CASObject ): CASObject[] {
     return this.objectGroup.filter( ( o: CASObject ) => {
-      return !o.isAnimatingProperty.value && o.targetX === casObject.targetX && casObject !== o;
+      return !o.isAnimatingProperty.value && o.valueProperty.value === casObject.valueProperty.value && casObject !== o;
     } );
   }
 
@@ -106,7 +110,7 @@ class CASModel {
     // collapse the rest of the stack. NOTE: This assumes the radii are the same.
     let position = casObject.objectType.radius;
     sorted.forEach( object => {
-      object.positionProperty.value = new Vector2( casObject.targetX, position );
+      object.positionProperty.value = new Vector2( casObject.valueProperty.value!, position );
       position += object.objectType.radius * 2;
     } );
   }

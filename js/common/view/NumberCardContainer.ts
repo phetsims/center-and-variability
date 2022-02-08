@@ -54,13 +54,22 @@ class NumberCardContainer extends Node {
 
     const map = new Map<CASObject, CASObjectNode>();
 
-    const createObjectNode = ( casObject: CASObject ) => {
-      const casObjectNode = numberCardGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject, {} );
-      this.addChild( casObjectNode );
-      map.set( casObject, casObjectNode );
+    const listenForObjectLanding = ( casObject: CASObject ) => {
+      const listener = ( value: number | null ) => {
+        if ( value !== null ) {
+          const casObjectNode = numberCardGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject, {} );
+          this.addChild( casObjectNode );
+          map.set( casObject, casObjectNode );
+
+          // Only create the card at the moment valueProperty becomes non-null.  After that, the card updates but new
+          // cards are not created
+          casObject.valueProperty.unlink( listener );
+        }
+      };
+      casObject.valueProperty.link( listener );
     };
-    model.objectGroup.forEach( createObjectNode );
-    model.objectGroup.elementCreatedEmitter.addListener( createObjectNode );
+    model.objectGroup.forEach( listenForObjectLanding );
+    model.objectGroup.elementCreatedEmitter.addListener( listenForObjectLanding );
 
     model.objectGroup.elementDisposedEmitter.addListener( casObject => {
       const viewNode = map.get( casObject )!;

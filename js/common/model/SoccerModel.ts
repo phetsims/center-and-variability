@@ -81,12 +81,9 @@ class SoccerModel extends CASModel {
     this.timeWhenLastBallWasKicked = this.time;
     this.remainingNumberOfBallsToMultiKick--;
 
+    // TODO: Listen for when the valueProperty becomes non-null
     const isAnimatingListener = ( isAnimating: boolean ) => {
       if ( !isAnimating ) {
-        assert && assert( casObject.positionProperty.value.x === casObject.targetX,
-          `object that finished animating is not at its targetX, positionX: ${casObject.positionProperty.value.x},
-            targetX: ${casObject.targetX}` );
-
         this.moveToTop( casObject );
       }
     };
