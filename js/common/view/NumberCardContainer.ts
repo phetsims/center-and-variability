@@ -34,15 +34,8 @@ class NumberCardContainer extends Node {
 
     super( options );
 
-    const numberCardGroup = new PhetioGroup( ( tandem, casObject ) => {
-      let x = 0;
-      if ( numberCardGroup.countProperty.value > 0 ) {
-
-        // @ts-ignore TODO: Fix types
-        const rightmostCard = _.maxBy( numberCardGroup.getArray(), ( card: NumberCardNode ) => card.bounds.maxX )!;
-        x = rightmostCard.right + spacing;
-      }
-      return new NumberCardNode( casObject, new Vector2( x, 0 ), {
+    const numberCardGroup = new PhetioGroup<NumberCardNode>( ( tandem, casObject ) => {
+      return new NumberCardNode( casObject, new Vector2( 0, 0 ), {
         tandem: tandem
       } );
     }, [ model.objectGroup.archetype ], {
@@ -62,6 +55,14 @@ class NumberCardContainer extends Node {
 
       const listener = ( value: number | null ) => {
         if ( value !== null ) {
+
+          let x = 0;
+          const visibleCards = numberCardGroup.getArray().filter( cardNode => cardNode.visible );
+          if ( visibleCards.length > 0 ) {
+            const rightmostCard = _.maxBy( visibleCards, ( card: NumberCardNode ) => card.bounds.maxX )!;
+            x = rightmostCard.right + spacing;
+          }
+          numberCardNode.positionProperty.value = new Vector2( x, 0 );
           numberCardNode.visible = true;
 
           // Only show the card at the moment valueProperty becomes non-null.  After that, the card updates but is
