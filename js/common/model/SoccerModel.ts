@@ -49,23 +49,28 @@ class SoccerModel extends CASModel {
 
     // we know x0 and final x.  We know a = -g.  Solve for v and t.
     // solve for v and t
-    // x1 = x0 + v_x*t
-    // y1 = y0 + v_y*t + 1/2 a t^2
+    // x1 = x0 + vx*t             // Unknown: t, vx
+    // y1 = y0 + vy*t + 1/2 a t^2 // Unknown: t, vy
+
+    // Add a constraint, like vx^2 + vy^2=v^2
 
     // Different kickers should have different initial velocity.
     const y0 = this.objectType.radius;
-    const x0 = 0;
+    // const x0 = 0;
 
     // TODO: Follow a specified distribution
     const x1 = dotRandom.nextIntBetween( this.rangeProperty.value.min, this.rangeProperty.value.max );
-    const y1 = this.objectType.radius;// land on the ground
-    const t = dotRandom.nextDoubleBetween( 1, 3 ); // TODO: this should be computed not assigned
-    const vx = ( x1 - x0 ) / t;
-    const vy = ( y1 - y0 - 1 / 2 * CASConstants.GRAVITY * t * t ) / t;
+    // const y1 = this.objectType.radius;// land on the ground
 
-    // const distance = 8;
+    // Range equation is R=v0^2 sin(2 theta0) / g, see https://openstax.org/books/university-physics-volume-1/pages/4-3-projectile-motion
+    // Equation 4.26
+
+    // TODO: non-uniform distribution over angles, or distribution over initial velocity, and backcompute the angle?
+    const angle = dotRandom.nextDoubleBetween( Math.PI / 4, Math.PI / 2 * 5 / 6 );
+    const v0 = Math.sqrt( Math.abs( x1 * Math.abs( CASConstants.GRAVITY ) / Math.sin( 2 * angle ) ) );
+
+    const velocity = Vector2.createPolar( v0, angle );
     const position = new Vector2( 0, y0 );
-    const velocity = new Vector2( vx, vy );
 
     const casObject = this.createObject( {
       position: position,
