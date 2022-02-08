@@ -76,6 +76,9 @@ class SoccerScreenView extends CASScreenView {
     numberLineNode.x = NUMBER_LINE_MARGIN_X;
     this.addChild( numberLineNode );
 
+    // add the objects layer in front of all the background nodes but behind the question bar
+    this.addChild( this.objectsLayer );
+
     this.addChild( new QuestionBar( this.layoutBounds, this.visibleBoundsProperty, options.questionBarOptions ) );
     this.addChild( new KickButtonGroup( model, {
       left: 25,

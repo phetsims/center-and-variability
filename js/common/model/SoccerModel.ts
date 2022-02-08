@@ -12,7 +12,6 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndSpread from '../../centerAndSpread.js';
 import CASModel, { CASModelOptions } from '../../common/model/CASModel.js';
 import CASObjectType from '../../common/model/CASObjectType.js';
-import Range from '../../../../dot/js/Range.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import CASConstants from '../CASConstants.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -58,10 +57,8 @@ class SoccerModel extends CASModel {
     const y0 = this.objectType.radius;
     const x0 = 0;
 
-    const xRange = new Range( 1, 16 );
-
     // TODO: Follow a specified distribution
-    const x1 = dotRandom.nextIntBetween( xRange.min, xRange.max );
+    const x1 = dotRandom.nextIntBetween( this.rangeProperty.value.min, this.rangeProperty.value.max );
     // const x1 = dotRandom.nextIntBetween( 5, 8 ); // TODO: for testing
     // const x1 = 8; TODO: for testing
     const y1 = this.objectType.radius;// land on the ground TODO: account for ball radius
@@ -96,7 +93,7 @@ class SoccerModel extends CASModel {
 
     // TODO: when the positionProperty changes from animation, sync the dragPositionProperty to it
     const dragPositionListener = ( dragPosition: Vector2, oldPosition: Vector2 ) => {
-      casObject.targetX = Utils.roundSymmetric( xRange.constrainValue( dragPosition.x ) );
+      casObject.targetX = Utils.roundSymmetric( this.rangeProperty.value.constrainValue( dragPosition.x ) );
 
       this.moveToTop( casObject );
     };

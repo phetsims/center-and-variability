@@ -15,6 +15,10 @@ import CASObject from './CASObject.js';
 import CASObjectType from './CASObjectType.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import Range from '../../../../dot/js/Range.js';
+import CASQueryParameters from '../CASQueryParameters.js';
+import Property from '../../../../axon/js/Property.js';
+import dotRandom from '../../../../dot/js/dotRandom.js';
 
 type CASModelSelfOptions = {
   tandem: Tandem
@@ -24,6 +28,7 @@ export type CASModelOptions = CASModelSelfOptions & {};
 class CASModel {
   readonly objectGroup: PhetioGroup<CASObject>;
   readonly objectType: CASObjectType;
+  readonly rangeProperty: Property<Range>;
 
   constructor( objectType: CASObjectType, providedOptions: CASModelOptions ) {
 
@@ -42,6 +47,19 @@ class CASModel {
       phetioType: PhetioGroup.PhetioGroupIO( CASObject.CASObjectIO ),
       tandem: options.tandem.createTandem( objectType === CASObjectType.SOCCER_BALL ? 'soccerBallGroup' : 'dataPointGroup' )
     } );
+
+    // TODO: min and max should be constructor options
+    this.rangeProperty = new Property<Range>( new Range( 1, 16 ) );
+
+    // TODO: Objects created at startup are not draggable.
+    for ( let i = 0; i < CASQueryParameters.objects; i++ ) {
+      this.createObject( {
+        targetX: dotRandom.nextIntBetween( this.rangeProperty.value.min, this.rangeProperty.value.max )
+      } );
+    }
+
+    // TODO: A more robust way?
+    this.objectGroup.forEach( object => this.moveToTop( object ) );
   }
 
   // TODO: need options type for CASObject that doesn't include phetio things

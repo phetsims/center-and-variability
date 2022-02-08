@@ -27,6 +27,7 @@ class CASScreenView extends ScreenView {
   protected readonly resetAllButton: ResetAllButton;
   protected readonly modelViewTransform: ModelViewTransform2;
   protected model: CASModel;
+  protected readonly objectsLayer: Node;
 
   constructor( model: CASModel, modelViewTransform: ModelViewTransform2, options: CASScreenViewOptions ) {
     options = optionize<CASScreenViewOptions>( {
@@ -48,15 +49,18 @@ class CASScreenView extends ScreenView {
       supportsDynamicState: false
     } );
 
+    // Added by the child ScreenView so it is in the correct z-ordering TODO: question from CK: do we like this?
+    this.objectsLayer = new Node();
+
     const map = new Map<CASObject, CASObjectNode>();
 
-    // TODO: Doesn't create items for anything that's already in the group.  Should this be a NOTE or a TODO?
-
-    model.objectGroup.elementCreatedEmitter.addListener( casObject => {
+    const createObjectNode = ( casObject: CASObject ) => {
       const casObjectNode = objectNodeGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject, {} );
-      this.addChild( casObjectNode );
+      this.objectsLayer.addChild( casObjectNode );
       map.set( casObject, casObjectNode );
-    } );
+    };
+    model.objectGroup.forEach( createObjectNode );
+    model.objectGroup.elementCreatedEmitter.addListener( createObjectNode );
 
     model.objectGroup.elementDisposedEmitter.addListener( casObject => {
       const viewNode = map.get( casObject )!;
