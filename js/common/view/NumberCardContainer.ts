@@ -53,15 +53,19 @@ class NumberCardContainer extends Node {
 
     const map = new Map<CASObject, CASObjectNode>();
 
+    // TODO: If we eventually have a model PhetioGroup for the cards, we will listen to them instead.
     const listenForObjectLanding = ( casObject: CASObject ) => {
+      const numberCardNode = numberCardGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject, {} );
+      numberCardNode.visible = false;
+      this.addChild( numberCardNode );
+      map.set( casObject, numberCardNode );
+
       const listener = ( value: number | null ) => {
         if ( value !== null ) {
-          const numberCardNode = numberCardGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject, {} );
-          this.addChild( numberCardNode );
-          map.set( casObject, numberCardNode );
+          numberCardNode.visible = true;
 
-          // Only create the card at the moment valueProperty becomes non-null.  After that, the card updates but new
-          // cards are not created
+          // Only show the card at the moment valueProperty becomes non-null.  After that, the card updates but is
+          // always visible.
           casObject.valueProperty.unlink( listener );
         }
       };
