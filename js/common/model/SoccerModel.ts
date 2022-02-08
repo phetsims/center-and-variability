@@ -89,14 +89,7 @@ class SoccerModel extends CASModel {
           `object that finished animating is not at its targetX, positionX: ${casObject.positionProperty.value.x},
             targetX: ${casObject.targetX}` );
 
-        // find other balls in the stack
-        const ballsInStack = this.getOtherObjectsAtTarget( casObject );
-
-        if ( ballsInStack.length > 0 ) {
-          const topBall = _.maxBy( ballsInStack, ball => ball.positionProperty.value.y )!;
-          const targetY = topBall.positionProperty.value.y + topBall.objectType.radius + casObject.objectType.radius;
-          casObject.positionProperty.value = new Vector2( casObject.targetX, targetY );
-        }
+        this.moveToTop( casObject );
       }
     };
     casObject.isAnimatingProperty.lazyLink( isAnimatingListener );
@@ -105,17 +98,7 @@ class SoccerModel extends CASModel {
     const dragPositionListener = ( dragPosition: Vector2 ) => {
       casObject.targetX = Utils.roundSymmetric( xRange.constrainValue( dragPosition.x ) );
 
-      // find other balls in the stack
-      const ballsInStack = this.getOtherObjectsAtTarget( casObject );
-
-      if ( ballsInStack.length > 0 ) {
-        const topBall = _.maxBy( ballsInStack, ball => ball.positionProperty.value.y )!;
-        const targetY = topBall.positionProperty.value.y + topBall.objectType.radius + casObject.objectType.radius;
-        casObject.positionProperty.value = new Vector2( casObject.targetX, targetY );
-      }
-      else {
-        casObject.positionProperty.value = new Vector2( casObject.targetX, casObject.objectType.radius );
-      }
+      this.moveToTop( casObject );
     };
     casObject.dragPositionProperty.lazyLink( dragPositionListener );
 
