@@ -22,6 +22,7 @@ export type NumberCardOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem
 class NumberCardNode extends Node {
   readonly positionProperty: Vector2Property;
   dragListener: DragListener;
+  casObject: CASObject;
 
   constructor( casObject: CASObject, position: Vector2, providedOptions?: NumberCardOptions ) {
 
@@ -49,8 +50,11 @@ class NumberCardNode extends Node {
     super( options );
 
     this.positionProperty = new Vector2Property( position, {
-      tandem: options.tandem.createTandem( 'positionProperty' )
+      tandem: options.tandem.createTandem( 'positionProperty' ),
+      reentrant: true // TODO: Why????
     } );
+
+    this.casObject = casObject;
 
     this.positionProperty.link( position => {
 

@@ -55,21 +55,14 @@ class NumberCardContainer extends Node {
 
         // see what is dragging
         const numberCardNodes = Array.from( map.values() );
-        const draggingCards = numberCardNodes.filter( numberCardNode => numberCardNode.dragListener.isPressedProperty.value );
-        const undraggedCards = numberCardNodes.filter( numberCardNode => !numberCardNode.dragListener.isPressedProperty.value );
-        // console.log( draggingCards );
-        draggingCards.forEach( draggingCard => {
-
-          // find cards that are overlapped -- closer than 1 card radius
-          // TODO: Assumes cards are the same width.  Generalize this
-          const overlappedCards = undraggedCards.filter( undraggedCard => undraggedCard.translation.distance( draggingCard.translation ) < draggingCard.width / 2 );
-          // console.log( 'overlapped: ' + overlappedCards );
-
-          // overlapped, look for nearest unoccupied cell
-          overlappedCards.forEach( overlappedCard => {
-
-          } );
-        } );
+        const cardWidth = numberCardNodes[ 0 ].bounds.width;
+        const spacing = 10;
+        const sorted = _.sortBy( numberCardNodes, cardNode => cardNode.positionProperty.value.x );
+        for ( let i = 0; i < sorted.length; i++ ) {
+          if ( !sorted[ i ].dragListener.isPressed ) {
+            sorted[ i ].positionProperty.value = new Vector2( i * ( cardWidth + spacing ), 0 );
+          }
+        }
 
         isUpdating = false;
       }
