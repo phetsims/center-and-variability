@@ -53,11 +53,40 @@ class NumberCardContainer extends Node {
       if ( !isUpdating ) {
         isUpdating = true;
 
-        // see what is dragging
         const numberCardNodes = Array.from( map.values() );
         const cardWidth = numberCardNodes[ 0 ].bounds.width;
         const spacing = 10;
-        const sorted = _.sortBy( numberCardNodes, cardNode => cardNode.positionProperty.value.x );
+        const sorted = _.sortBy( numberCardNodes, cardNode => {
+
+          // Find the spot the dragged card is closest to
+          let bestMatch = 0;
+          let bestDistance = Number.POSITIVE_INFINITY;
+
+          for ( let i = 0; i < numberCardNodes.length; i++ ) {
+            const proposedX = i * ( cardWidth + spacing );
+            const distance = Math.abs( cardNode.positionProperty.value.x - proposedX );
+            if ( distance < bestDistance ) {
+              bestMatch = proposedX;
+              bestDistance = distance;
+            }
+          }
+
+          if ( cardNode.dragListener.isPressed ) {
+
+            // Dragging to the right
+            if ( cardNode.positionProperty.value.x < bestMatch ) {
+
+              // To break the tie, give precedence to the dragged card
+              bestMatch += 1E-6;
+            }
+            else {
+
+              // dragging to the left
+              bestMatch -= 1E-6;
+            }
+          }
+          return cardNode.dragListener.isPressed ? bestMatch : cardNode.positionProperty.value.x;
+        } );
         for ( let i = 0; i < sorted.length; i++ ) {
           if ( !sorted[ i ].dragListener.isPressed ) {
             sorted[ i ].positionProperty.value = new Vector2( i * ( cardWidth + spacing ), 0 );
