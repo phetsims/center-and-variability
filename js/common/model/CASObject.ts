@@ -19,7 +19,6 @@ import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import EnumerationIO from '../../../../tandem/js/types/EnumerationIO.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import CASConstants from '../CASConstants.js';
-import Utils from '../../../../dot/js/Utils.js';
 
 type CASObjectSelfOptions = {
   position?: Vector2,
@@ -55,6 +54,9 @@ class CASObject extends PhetioObject {
     super( options );
 
     this.objectType = objectType;
+
+    // TODO: We are currently using this to keep track of our position in the data set. We could continue to use this
+    // for both the animation target and the value in the data set, or create a separate number property for that.
     this.targetX = options.targetX;
 
     this.positionProperty = new Vector2Property( options.position, {
@@ -71,12 +73,6 @@ class CASObject extends PhetioObject {
               Tandem.OPT_OUT
     } );
     this.dragPositionProperty = new Vector2Property( options.position );
-
-    // TODO: when the positionProperty changes from animation, sync the dragPositionProperty to it
-    this.dragPositionProperty.link( dragPosition => {
-      this.positionProperty.value = new Vector2( Utils.roundSymmetric( dragPosition.x ), dragPosition.y );
-      this.targetX = this.positionProperty.value.x;
-    } );
   }
 
   step( dt: number ) {

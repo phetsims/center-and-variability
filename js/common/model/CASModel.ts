@@ -17,6 +17,7 @@ import merge from '../../../../phet-core/js/merge.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import CASConstants from '../CASConstants.js';
+import Utils from '../../../../dot/js/Utils.js';
 
 type CASModelSelfOptions = {
   tandem: Tandem
@@ -114,7 +115,9 @@ class CASModel {
     };
     casObject.isAnimatingProperty.lazyLink( isAnimatingListener );
 
+    // TODO: when the positionProperty changes from animation, sync the dragPositionProperty to it
     const dragPositionListener = ( dragPosition: Vector2 ) => {
+      casObject.targetX = Utils.roundSymmetric( dragPosition.x );
 
       // find other balls in the stack
       const ballsInStack = this.getOtherBallsAtTarget( casObject );
@@ -128,12 +131,13 @@ class CASModel {
         casObject.positionProperty.value = new Vector2( casObject.targetX, casObject.objectType.radius );
       }
     };
-    casObject.dragPositionProperty.lazyLink( dragPositionListener ); // TODO: Dispose
+    casObject.dragPositionProperty.lazyLink( dragPositionListener );
 
     // this is an n^2 operation, but that is okay because n small.
     this.objectGroup.elementDisposedEmitter.addListener( o => {
       if ( o === casObject ) {
         o.isAnimatingProperty.unlink( isAnimatingListener );
+        o.dragPositionProperty.unlink( dragPositionListener );
       }
     } );
   }
