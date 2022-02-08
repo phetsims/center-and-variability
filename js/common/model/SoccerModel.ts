@@ -104,7 +104,8 @@ class SoccerModel extends CASModel {
    * Adds the provided number of balls to the scheduled balls to kick
    */
   kick( numberOfBallsToKick: number ): void {
-    this.remainingNumberOfBallsToMultiKick += numberOfBallsToKick; // TODO: consider how many balls are available based on max
+    // TODO: 10 max balls on Median and Mean+Median and then 20 on Spread. Not decided on lab screen.
+    this.remainingNumberOfBallsToMultiKick += numberOfBallsToKick;
     this.createBall();
   }
 
