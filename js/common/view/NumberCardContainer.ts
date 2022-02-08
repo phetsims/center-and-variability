@@ -7,6 +7,8 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import Animation from '../../../../twixt/js/Animation.js';
+import Easing from '../../../../twixt/js/Easing.js';
 import centerAndSpread from '../../centerAndSpread.js';
 import { Node, NodeOptions } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
@@ -89,7 +91,27 @@ class NumberCardContainer extends Node {
         } );
         for ( let i = 0; i < sorted.length; i++ ) {
           if ( !sorted[ i ].dragListener.isPressed ) {
-            sorted[ i ].positionProperty.value = new Vector2( i * ( cardWidth + spacing ), 0 );
+
+            const cardNode = sorted[ i ];
+
+            const destination = new Vector2( i * ( cardWidth + spacing ), 0 );
+
+            // TODO: Compare animation and animation destination to make sure card is heading to correct spot.
+            if ( cardNode.positionProperty.value.distance( destination ) > 1E-6 && !cardNode.animation ) {
+              cardNode.animation = new Animation( {
+                duration: 0.3,
+                targets: [ {
+                  property: cardNode.positionProperty,
+                  to: destination,
+                  easing: Easing.QUADRATIC_IN_OUT
+                } ]
+              } );
+
+              cardNode.animation.start();
+              cardNode.animation.finishEmitter.addListener( () => {
+                cardNode.animation = null;
+              } );
+            }
           }
         }
 
@@ -107,6 +129,11 @@ class NumberCardContainer extends Node {
       map.set( casObject, numberCardNode );
 
       numberCardNode.positionProperty.link( update );
+      numberCardNode.dragListener.isPressedProperty.link( isPressed => {
+        if ( !isPressed ) {
+          update();
+        }
+      } );
 
       const listener = ( value: number | null ) => {
         if ( value !== null ) {

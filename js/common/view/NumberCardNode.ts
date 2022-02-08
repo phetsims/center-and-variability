@@ -15,6 +15,7 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import CASObject from '../model/CASObject.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import Animation from '../../../../twixt/js/Animation.js';
 
 type NumberCardSelfOptions = {};
 export type NumberCardOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
@@ -23,6 +24,7 @@ class NumberCardNode extends Node {
   readonly positionProperty: Vector2Property;
   dragListener: DragListener;
   casObject: CASObject;
+  animation: Animation | null;
 
   constructor( casObject: CASObject, position: Vector2, providedOptions?: NumberCardOptions ) {
 
@@ -55,6 +57,8 @@ class NumberCardNode extends Node {
     } );
 
     this.casObject = casObject;
+
+    this.animation = null;
 
     this.positionProperty.link( position => {
 
