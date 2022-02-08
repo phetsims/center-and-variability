@@ -95,7 +95,6 @@ class CASObject extends PhetioObject {
 
       if ( landed ) {
         this.isAnimatingProperty.value = false;
-        // TODO: after landing, become interactive too
       }
     }
   }
