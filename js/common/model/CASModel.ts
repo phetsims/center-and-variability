@@ -52,14 +52,13 @@ class CASModel {
     // TODO: min and max should be constructor options
     this.rangeProperty = new Property<Range>( new Range( 1, 16 ) );
 
-    // TODO: Objects created at startup are not draggable.
     for ( let i = 0; i < CASQueryParameters.objects; i++ ) {
       this.createObject( {
         targetX: dotRandom.nextIntBetween( this.rangeProperty.value.min, this.rangeProperty.value.max )
       } );
     }
 
-    // TODO: A more robust way?
+    // Stack the objects. TODO: A simpler way?
     this.objectGroup.forEach( object => this.moveToTop( object ) );
   }
 
