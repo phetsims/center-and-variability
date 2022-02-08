@@ -18,6 +18,7 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import CASConstants from '../CASConstants.js';
 import Utils from '../../../../dot/js/Utils.js';
+import Range from '../../../../dot/js/Range.js';
 
 type CASModelSelfOptions = {
   tandem: Tandem
@@ -74,8 +75,10 @@ class CASModel {
     const y0 = this.objectType.radius;
     const x0 = 0;
 
+    const xRange = new Range( 1, 16 );
+
     // TODO: Follow a specified distribution
-    const x1 = dotRandom.nextIntBetween( 1, 16 );
+    const x1 = dotRandom.nextIntBetween( xRange.min, xRange.max );
     // const x1 = dotRandom.nextIntBetween( 5, 8 ); // TODO: for testing
     // const x1 = 8; TODO: for testing
     const y1 = this.objectType.radius;// land on the ground TODO: account for ball radius
@@ -117,7 +120,7 @@ class CASModel {
 
     // TODO: when the positionProperty changes from animation, sync the dragPositionProperty to it
     const dragPositionListener = ( dragPosition: Vector2 ) => {
-      casObject.targetX = Utils.roundSymmetric( dragPosition.x );
+      casObject.targetX = Utils.roundSymmetric( xRange.constrainValue( dragPosition.x ) );
 
       // find other balls in the stack
       const ballsInStack = this.getOtherBallsAtTarget( casObject );
