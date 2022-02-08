@@ -19,9 +19,9 @@ import { PhetioObjectOptions } from '../../../tandem/js/PhetioObject.js';
 type CASScreenSelfOptions = {};
 export type CASScreenOptions = CASScreenSelfOptions & PhetioObjectOptions & Required<Pick<PhetioObjectOptions, 'tandem'>>;
 
-class CASScreen extends Screen {
+class CASScreen<T extends CASModel> extends Screen {
 
-  constructor( createModel: () => CASModel, createView: ( m: CASModel ) => CASScreenView, providedOptions?: CASScreenOptions ) {
+  constructor( createModel: () => T, createView: ( m: T ) => CASScreenView, providedOptions?: CASScreenOptions ) {
 
     const options = optionize<CASScreenOptions, CASScreenSelfOptions, PhetioObjectOptions>( {
 

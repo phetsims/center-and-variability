@@ -18,7 +18,7 @@ import centerAndSpreadStrings from '../centerAndSpreadStrings.js';
 
 type MedianScreenOptions = CASScreenOptions;
 
-class MedianScreen extends CASScreen {
+class MedianScreen extends CASScreen<MedianModel> {
 
   constructor( providedOptions: MedianScreenOptions ) {
 

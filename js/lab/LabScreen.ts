@@ -18,7 +18,7 @@ import centerAndSpreadStrings from '../centerAndSpreadStrings.js';
 
 type LabScreenOptions = CASScreenOptions;
 
-class LabScreen extends CASScreen {
+class LabScreen extends CASScreen<LabModel> {
 
   constructor( providedOptions: LabScreenOptions ) {
 

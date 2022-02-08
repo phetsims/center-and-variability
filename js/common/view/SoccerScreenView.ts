@@ -10,7 +10,6 @@
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndSpread from '../../centerAndSpread.js';
-import CASModel from '../model/CASModel.js';
 import CASScreenView, { CASScreenViewOptions } from './CASScreenView.js';
 import QuestionBar, { QuestionBarOptions } from './QuestionBar.js';
 import KickButtonGroup from './KickButtonGroup.js';
@@ -25,6 +24,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
+import SoccerModel from '../model/SoccerModel.js';
 
 type SoccerScreenViewSelfOptions = {
   questionBarOptions: QuestionBarOptions
@@ -37,7 +37,7 @@ const NUMBER_LINE_MARGIN_X = 140;
 const TICK_MARK_EXTENT = 18;
 
 class SoccerScreenView extends CASScreenView {
-  constructor( model: CASModel, providedOptions: SoccerScreenViewOptions ) {
+  constructor( model: SoccerModel, providedOptions: SoccerScreenViewOptions ) {
 
     const options = optionize<SoccerScreenViewOptions>( {
       tandem: Tandem.REQUIRED
