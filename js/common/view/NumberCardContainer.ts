@@ -45,12 +45,46 @@ class NumberCardContainer extends Node {
 
     const map = new Map<CASObject, NumberCardNode>();
 
+    let isUpdating = false;
+    // Readjust all of the cards when any of them are dragged
+
+    // TODO: Improve handling around "cells" -- NumberCards knowing which spot each card occupies
+    const update = () => {
+      if ( !isUpdating ) {
+        isUpdating = true;
+
+        // see what is dragging
+        const numberCardNodes = Array.from( map.values() );
+        const draggingCards = numberCardNodes.filter( numberCardNode => numberCardNode.dragListener.isPressedProperty.value );
+        const undraggedCards = numberCardNodes.filter( numberCardNode => !numberCardNode.dragListener.isPressedProperty.value );
+        // console.log( draggingCards );
+        draggingCards.forEach( draggingCard => {
+
+          // find cards that are overlapped -- closer than 1 card radius
+          // TODO: Assumes cards are the same width.  Generalize this
+          const overlappedCards = undraggedCards.filter( undraggedCard => undraggedCard.translation.distance( draggingCard.translation ) < draggingCard.width / 2 );
+          // console.log( 'overlapped: ' + overlappedCards );
+
+          // overlapped, look for nearest unoccupied cell
+          overlappedCards.forEach( overlappedCard => {
+
+          } );
+        } );
+
+        isUpdating = false;
+      }
+    };
+
     // TODO: If we eventually have a model PhetioGroup for the cards, we will listen to them instead.
     const listenForObjectLanding = ( casObject: CASObject ) => {
-      const numberCardNode = numberCardGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject, {} );
+
+      // TODO: Get rid of type annotation once PhetioGroup is TS
+      const numberCardNode: NumberCardNode = numberCardGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject, {} );
       numberCardNode.visible = false;
       this.addChild( numberCardNode );
       map.set( casObject, numberCardNode );
+
+      numberCardNode.positionProperty.link( update );
 
       const listener = ( value: number | null ) => {
         if ( value !== null ) {

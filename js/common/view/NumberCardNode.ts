@@ -21,6 +21,7 @@ export type NumberCardOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem
 
 class NumberCardNode extends Node {
   readonly positionProperty: Vector2Property;
+  dragListener: DragListener;
 
   constructor( casObject: CASObject, position: Vector2, providedOptions?: NumberCardOptions ) {
 
@@ -52,12 +53,18 @@ class NumberCardNode extends Node {
     } );
 
     this.positionProperty.link( position => {
-      this.translation = position;
+
+      // TODO: Don't drag past the edges
+      this.translation = new Vector2( position.x, 0 );
     } );
 
-    this.addInputListener( new DragListener( {
-      positionProperty: this.positionProperty
-    } ) );
+    this.dragListener = new DragListener( {
+      positionProperty: this.positionProperty,
+      start: () => {
+        this.moveToFront();
+      }
+    } );
+    this.addInputListener( this.dragListener );
   }
 
   dispose() {
