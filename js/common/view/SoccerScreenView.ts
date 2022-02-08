@@ -37,6 +37,8 @@ const NUMBER_LINE_MARGIN_X = 140;
 const TICK_MARK_EXTENT = 18;
 
 class SoccerScreenView extends CASScreenView {
+  protected readonly questionBar: QuestionBar;
+
   constructor( model: SoccerModel, providedOptions: SoccerScreenViewOptions ) {
 
     const options = optionize<SoccerScreenViewOptions>( {
@@ -76,10 +78,8 @@ class SoccerScreenView extends CASScreenView {
     numberLineNode.x = NUMBER_LINE_MARGIN_X;
     this.addChild( numberLineNode );
 
-    // add the objects layer in front of all the background nodes but behind the question bar
-    this.addChild( this.objectsLayer );
-
-    this.addChild( new QuestionBar( this.layoutBounds, this.visibleBoundsProperty, options.questionBarOptions ) );
+    this.questionBar = new QuestionBar( this.layoutBounds, this.visibleBoundsProperty, options.questionBarOptions );
+    this.addChild( this.questionBar );
     this.addChild( new KickButtonGroup( model, {
       left: 25,
       bottom: this.layoutBounds.bottom - 8,
@@ -87,6 +87,7 @@ class SoccerScreenView extends CASScreenView {
     } ) );
 
     this.addChild( this.resetAllButton );
+    this.addChild( this.objectsLayer );
   }
 }
 

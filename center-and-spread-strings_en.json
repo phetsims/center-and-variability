@@ -28,5 +28,8 @@
   },
   "kick10": {
     "value": "Kick 10"
+  },
+  "data": {
+    "value": "Data (in meters)"
   }
 }

@@ -15,10 +15,13 @@ import { CASScreenViewOptions } from '../../common/view/CASScreenView.js';
 import SoccerScreenView from '../../common/view/SoccerScreenView.js';
 import CASColors from '../../common/CASColors.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
+import CASAccordionBox from '../../common/view/CASAccordionBox.js';
+import CASConstants from '../../common/CASConstants.js';
 
 type MedianScreenViewOptions = CASScreenViewOptions;
 
 class MedianScreenView extends SoccerScreenView {
+  readonly dataAccordionBox: CASAccordionBox;
 
   constructor( model: MedianModel, providedOptions: MedianScreenViewOptions ) {
 
@@ -31,6 +34,20 @@ class MedianScreenView extends SoccerScreenView {
     }, providedOptions );
 
     super( model, options );
+
+    // TODO: CK - float to top of visibleBounds to certain aspect ratio
+    this.dataAccordionBox = new CASAccordionBox( this.layoutBounds, {
+      tandem: options.tandem.createTandem( 'casAccordionBox' ),
+      titleString: centerAndSpreadStrings.data,
+      centerX: this.layoutBounds.centerX,
+      top: this.questionBar.bottom + CASConstants.SCREEN_VIEW_Y_MARGIN
+    } );
+    this.addChild( this.dataAccordionBox );
+  }
+
+  reset() {
+    super.reset();
+    this.dataAccordionBox.reset();
   }
 }
 
