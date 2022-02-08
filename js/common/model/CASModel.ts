@@ -19,6 +19,7 @@ import Range from '../../../../dot/js/Range.js';
 import CASQueryParameters from '../CASQueryParameters.js';
 import Property from '../../../../axon/js/Property.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
+import Utils from '../../../../dot/js/Utils.js';
 
 type CASModelSelfOptions = {
   tandem: Tandem
@@ -64,7 +65,24 @@ class CASModel {
 
   // TODO: need options type for CASObject that doesn't include phetio things
   protected createObject( options: any ) {
-    return this.objectGroup.createNextElement( this.objectType, options );
+    const casObject = this.objectGroup.createNextElement( this.objectType, options );
+
+    // TODO: when the positionProperty changes from animation, sync the dragPositionProperty to it
+    const dragPositionListener = ( dragPosition: Vector2, oldPosition: Vector2 ) => {
+      casObject.targetX = Utils.roundSymmetric( this.rangeProperty.value.constrainValue( dragPosition.x ) );
+
+      this.moveToTop( casObject );
+    };
+    casObject.dragPositionProperty.lazyLink( dragPositionListener );
+
+    // this is an n^2 operation, but that is okay because n small.
+    this.objectGroup.elementDisposedEmitter.addListener( o => {
+      if ( o === casObject ) {
+        o.dragPositionProperty.unlink( dragPositionListener );
+      }
+    } );
+
+    return casObject;
   }
 
   /**

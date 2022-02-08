@@ -15,7 +15,6 @@ import CASObjectType from '../../common/model/CASObjectType.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import CASConstants from '../CASConstants.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import Utils from '../../../../dot/js/Utils.js';
 
 type SoccerModelSelfOptions = {};
 type SoccerModelOptions = SoccerModelSelfOptions & CASModelOptions;
@@ -91,19 +90,10 @@ class SoccerModel extends CASModel {
     };
     casObject.isAnimatingProperty.lazyLink( isAnimatingListener );
 
-    // TODO: when the positionProperty changes from animation, sync the dragPositionProperty to it
-    const dragPositionListener = ( dragPosition: Vector2, oldPosition: Vector2 ) => {
-      casObject.targetX = Utils.roundSymmetric( this.rangeProperty.value.constrainValue( dragPosition.x ) );
-
-      this.moveToTop( casObject );
-    };
-    casObject.dragPositionProperty.lazyLink( dragPositionListener );
-
     // this is an n^2 operation, but that is okay because n small.
     this.objectGroup.elementDisposedEmitter.addListener( o => {
       if ( o === casObject ) {
         o.isAnimatingProperty.unlink( isAnimatingListener );
-        o.dragPositionProperty.unlink( dragPositionListener );
       }
     } );
   }
