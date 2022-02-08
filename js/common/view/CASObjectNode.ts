@@ -25,8 +25,7 @@ class CASObjectNode extends Node {
   constructor( casObject: CASObject, modelViewTransform: ModelViewTransform2, providedOptions?: CASObjectNodeOptions ) {
 
     const options = optionize<CASObjectNodeOptions>( {
-      phetioDynamicElement: true,
-      cursor: 'pointer'
+      phetioDynamicElement: true
     }, providedOptions );
     super( options );
 
@@ -50,11 +49,16 @@ class CASObjectNode extends Node {
       this.translation = modelViewTransform.modelToViewPosition( position );
     } );
 
-    // TODO: Only allow dragging when isAnimatingProperty.value is false
     this.addInputListener( new DragListener( {
       positionProperty: casObject.dragPositionProperty,
       transform: modelViewTransform
     } ) );
+
+    // Prevent dragging or interaction while the object is animating
+    casObject.isAnimatingProperty.link( isAnimating => {
+      this.cursor = isAnimating ? null : 'pointer';
+      this.pickable = !isAnimating;
+    } );
   }
 }
 
