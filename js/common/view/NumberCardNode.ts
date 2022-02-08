@@ -8,7 +8,7 @@
  */
 
 import centerAndSpread from '../../centerAndSpread.js';
-import { Node, NodeOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { DragListener, Node, NodeOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
@@ -54,6 +54,10 @@ class NumberCardNode extends Node {
     this.positionProperty.link( position => {
       this.translation = position;
     } );
+
+    this.addInputListener( new DragListener( {
+      positionProperty: this.positionProperty
+    } ) );
   }
 
   dispose() {
