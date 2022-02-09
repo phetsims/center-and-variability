@@ -64,9 +64,8 @@ class SoccerModel extends CASModel {
 
     // Range equation is R=v0^2 sin(2 theta0) / g, see https://openstax.org/books/university-physics-volume-1/pages/4-3-projectile-motion
     // Equation 4.26
-
-    // TODO: non-uniform distribution over angles, or distribution over initial velocity, and backcompute the angle?
-    const angle = dotRandom.nextDoubleBetween( Math.PI / 4, Math.PI / 2 * 5 / 6 );
+    const degreesToRadians = ( degrees: number ) => degrees * Math.PI * 2 / 360;
+    const angle = dotRandom.nextDoubleBetween( degreesToRadians( 25 ), degreesToRadians( 70 ) );
     const v0 = Math.sqrt( Math.abs( x1 * Math.abs( CASConstants.GRAVITY ) / Math.sin( 2 * angle ) ) );
 
     const velocity = Vector2.createPolar( v0, angle );
