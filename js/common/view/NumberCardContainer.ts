@@ -36,12 +36,9 @@ class NumberCardContainer extends Node {
     super( options );
 
     this.cardNodeMap = new Map<CASObject, NumberCardNode>();
-    const getVisibleNumberCardNodes = () => Array.from( this.cardNodeMap.values() ).filter( cardNode => cardNode.visible );
-    const distanceBetweenCards = NumberCardNode.CARD_WIDTH + CARD_SPACING;
-    const getCardPositionX = ( index: number ) => index * distanceBetweenCards;
 
     const getDragRange = () => {
-      const numberCardNodes = getVisibleNumberCardNodes();
+      const numberCardNodes = this.getVisibleNumberCardNodes();
       const maxX = numberCardNodes.length > 0 ? getCardPositionX( numberCardNodes.length - 1 ) : 0;
       return new Range( 0, maxX );
     };
@@ -56,52 +53,15 @@ class NumberCardContainer extends Node {
       supportsDynamicState: false
     } );
 
-    let isUpdating = false;
-
     // TODO: Improve handling around "cells" -- NumberCards knowing which spot each card occupies
     // Readjust all of the cards when any of them are dragged
     const update = ( cardsToImmediatelyMove: NumberCardNode[] = [] ) => {
-      if ( !isUpdating ) {
-        isUpdating = true;
 
-        // Only consider the visible cards
-        const numberCardNodes = getVisibleNumberCardNodes();
-        if ( numberCardNodes.length === 0 ) {
-          isUpdating = false;
-          return;
-        }
+      // Only consider the visible cards
+      const numberCardNodes = this.getVisibleNumberCardNodes();
+      if ( numberCardNodes.length > 0 ) {
 
-        const sorted = _.sortBy( numberCardNodes, cardNode => {
-
-          // Find the spot the dragged card is closest to
-          let bestMatch = 0;
-          let bestDistance = Number.POSITIVE_INFINITY;
-
-          for ( let i = 0; i < numberCardNodes.length; i++ ) {
-            const proposedX = getCardPositionX( i );
-            const distance = Math.abs( cardNode.positionProperty.value.x - proposedX );
-            if ( distance < bestDistance ) {
-              bestMatch = proposedX;
-              bestDistance = distance;
-            }
-          }
-
-          if ( cardNode.dragListener.isPressed ) {
-
-            // Dragging to the right
-            if ( cardNode.positionProperty.value.x < bestMatch ) {
-
-              // To break the tie, give precedence to the dragged card
-              bestMatch += 1E-6;
-            }
-            else {
-
-              // dragging to the left
-              bestMatch -= 1E-6;
-            }
-          }
-          return cardNode.dragListener.isPressed ? bestMatch : cardNode.positionProperty.value.x;
-        } );
+        const sorted = _.sortBy( numberCardNodes, this.sortRule.bind( this ) );
         for ( let i = 0; i < sorted.length; i++ ) {
           if ( !sorted[ i ].dragListener.isPressed ) {
 
@@ -122,8 +82,6 @@ class NumberCardContainer extends Node {
             }
           }
         }
-
-        isUpdating = false;
       }
     };
 
@@ -147,28 +105,21 @@ class NumberCardContainer extends Node {
         }
       } );
 
-      numberCardNode.casObject.valueProperty.link( value => {
-        if ( model.isSortingDataProperty.value && value !== null ) {
-          sortData();
-        }
-      } );
-
       const listener = ( value: number | null ) => {
         if ( value !== null ) {
 
           // TODO: Better logic around this positioning.  This is so it sorts last.
           // TODO: It would be better to sort it into the nearest open spot, even if the user dragged a card far to the right.
 
-          let positionX = getCardPositionX( getVisibleNumberCardNodes().length ) + distanceBetweenCards / 2;
+          let positionX = getCardPositionX( this.getVisibleNumberCardNodes().length ) + distanceBetweenCards / 2;
           if ( model.isSortingDataProperty.value ) {
             const newValue = numberCardNode.casObject.valueProperty.value!;
-            const existingCardNodesWithValue = getVisibleNumberCardNodes().filter(
+            const existingCardNodesWithValue = this.getVisibleNumberCardNodes().filter(
               cardNode => cardNode.casObject.valueProperty.value! <= newValue );
 
             const sameValueCards = existingCardNodesWithValue.map( cardNode => cardNode.positionProperty.value.x );
             const largestXValue = sameValueCards.length > 0 ? _.max( sameValueCards ) : -10000;
 
-            //
             positionX = largestXValue! + distanceBetweenCards / 2;
           }
           numberCardNode.positionProperty.value = new Vector2( positionX, 0 );
@@ -183,6 +134,13 @@ class NumberCardContainer extends Node {
         }
       };
       casObject.valueProperty.link( listener );
+
+      // A ball landed OR a value changed
+      numberCardNode.casObject.valueProperty.link( value => {
+        if ( model.isSortingDataProperty.value && value !== null ) {
+          sortData();
+        }
+      } );
     };
     model.objectGroup.forEach( objectCreatedListener );
     model.objectGroup.elementCreatedEmitter.addListener( objectCreatedListener );
@@ -202,7 +160,7 @@ class NumberCardContainer extends Node {
     } );
 
     const sortData = () => {
-      const visibleCardNodes = getVisibleNumberCardNodes();
+      const visibleCardNodes = this.getVisibleNumberCardNodes();
 
       // If the card is visible, the value property should be non-null
       const sorted = _.sortBy( visibleCardNodes, cardNode => cardNode.casObject.valueProperty.value );
@@ -226,10 +184,60 @@ class NumberCardContainer extends Node {
     } );
   }
 
+  getVisibleNumberCardNodes() {
+    return Array.from( this.cardNodeMap.values() ).filter( cardNode => cardNode.casObject.valueProperty.value !== null );
+  }
+
+  sortRule( cardNode: NumberCardNode ) {
+
+    if ( cardNode.dragListener.isPressed ) {
+
+      // Find the spot the dragged card is closest to
+      let bestMatch = 0;
+      let bestDistance = Number.POSITIVE_INFINITY;
+
+      for ( let i = 0; i < this.getVisibleNumberCardNodes().length; i++ ) {
+        const proposedX = getCardPositionX( i );
+        const distance = Math.abs( cardNode.positionProperty.value.x - proposedX );
+        if ( distance < bestDistance ) {
+          bestMatch = proposedX;
+          bestDistance = distance;
+        }
+      }
+
+      if ( cardNode.dragListener.isPressed ) {
+
+        // Dragging to the right
+        if ( cardNode.positionProperty.value.x < bestMatch ) {
+
+          // To break the tie, give precedence to the dragged card
+          bestMatch += 1E-6;
+        }
+        else {
+
+          // dragging to the left
+          bestMatch -= 1E-6;
+        }
+      }
+      return bestMatch;
+    }
+    else {
+      if ( cardNode.animationTo ) {
+        return cardNode.animationTo.x;
+      }
+      else {
+        return cardNode.positionProperty.value.x;
+      }
+    }
+  }
+
   reset() {
     this.cardNodeMap.clear();
   }
 }
+
+const distanceBetweenCards = NumberCardNode.CARD_WIDTH + CARD_SPACING;
+const getCardPositionX = ( index: number ) => index * distanceBetweenCards;
 
 centerAndSpread.register( 'NumberCardContainer', NumberCardContainer );
 export default NumberCardContainer;
