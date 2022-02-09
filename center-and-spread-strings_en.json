@@ -31,5 +31,8 @@
   },
   "data": {
     "value": "Data (in meters)"
+  },
+  "sortData": {
+    "value": "Sort Data"
   }
 }

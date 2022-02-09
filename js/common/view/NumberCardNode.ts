@@ -17,6 +17,7 @@ import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Range from '../../../../dot/js/Range.js';
+import Easing from '../../../../twixt/js/Easing.js';
 
 type NumberCardSelfOptions = {};
 export type NumberCardOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
@@ -24,10 +25,12 @@ export type NumberCardOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem
 // TODO: Should be cursor: 'pointer'
 class NumberCardNode extends Node {
   readonly positionProperty: Vector2Property;
-  dragListener: DragListener;
-  casObject: CASObject;
+  readonly dragListener: DragListener;
+  readonly casObject: CASObject;
   animation: Animation | null;
-  static CARD_WIDTH = 50;
+  animationTo: Vector2 | null;
+
+  static readonly CARD_WIDTH = 50;
 
   constructor( casObject: CASObject, position: Vector2, getDragRange: () => Range, providedOptions?: NumberCardOptions ) {
 
@@ -74,6 +77,41 @@ class NumberCardNode extends Node {
       }
     } );
     this.addInputListener( this.dragListener );
+
+    this.animationTo = null;
+  }
+
+  animateTo( destination: Vector2, duration: number ) {
+
+    if ( this.animation ) {
+
+      assert && assert( !!this.animationTo, 'animationTo should be defined when animation is defined' );
+
+      if ( destination.equals( this.animationTo! ) ) {
+
+        // Already moving to the desired destination.
+        return;
+      }
+      else {
+        this.animation.stop();
+      }
+    }
+
+    this.animation = new Animation( {
+      duration: duration,
+      targets: [ {
+        property: this.positionProperty,
+        to: destination,
+        easing: Easing.QUADRATIC_IN_OUT
+      } ]
+    } );
+    this.animationTo = destination;
+
+    this.animation.start();
+    this.animation.finishEmitter.addListener( () => {
+      this.animation = null;
+      this.animationTo = null;
+    } );
   }
 
   dispose() {

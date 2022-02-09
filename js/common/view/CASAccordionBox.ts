@@ -17,6 +17,8 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import centerAndSpread from '../../centerAndSpread.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import TopRepresentationCheckboxPanel from './TopRepresentationCheckboxPanel.js';
+import CASModel from '../model/CASModel.js';
 
 // types
 type CASAccordionBoxSelfOptions = {
@@ -28,7 +30,7 @@ export type CASAccordionBoxOptions = CASAccordionBoxSelfOptions & {} & NodeOptio
 class CASAccordionBox extends AccordionBox {
   private readonly isExpandedProperty: BooleanProperty;
 
-  constructor( contents: Node, layoutBounds: Bounds2, providedOptions: CASAccordionBoxOptions ) {
+  constructor( model: CASModel, contents: Node, layoutBounds: Bounds2, providedOptions: CASAccordionBoxOptions ) {
 
     const options = optionize<CASAccordionBoxOptions>( {
       tandem: Tandem.REQUIRED,
@@ -57,8 +59,11 @@ class CASAccordionBox extends AccordionBox {
       rectWidth: layoutBounds.width - CASConstants.SCREEN_VIEW_X_MARGIN * 2 - 40
     } );
 
-    // contents.centerX = backgroundRectangle.width / 2;
-    // contents.centerY = backgroundRectangle.height / 2;
+    // TODO: Does this belong here, or move it to the call site?
+    const checkboxPanel = new TopRepresentationCheckboxPanel( model );
+    checkboxPanel.right = backgroundRectangle.right;
+
+    backgroundRectangle.addChild( checkboxPanel );
     backgroundRectangle.addChild( contents );
 
     // TODO: CK: make it possible to put things above the background rectangle

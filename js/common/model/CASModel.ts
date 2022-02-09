@@ -20,6 +20,7 @@ import CASQueryParameters from '../CASQueryParameters.js';
 import Property from '../../../../axon/js/Property.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Utils from '../../../../dot/js/Utils.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 
 type CASModelSelfOptions = {
   tandem: Tandem
@@ -30,6 +31,7 @@ class CASModel {
   readonly objectGroup: PhetioGroup<CASObject>;
   readonly objectType: CASObjectType;
   readonly rangeProperty: Property<Range>;
+  readonly isSortingDataProperty: BooleanProperty;
 
   constructor( objectType: CASObjectType, providedOptions: CASModelOptions ) {
 
@@ -51,6 +53,10 @@ class CASModel {
 
     // TODO: min and max should be constructor options
     this.rangeProperty = new Property<Range>( new Range( 1, 16 ) );
+
+    this.isSortingDataProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isSortingDataProperty' )
+    } );
 
     // Populate with initial objects for debugging
     for ( let i = 0; i < CASQueryParameters.objects; i++ ) {

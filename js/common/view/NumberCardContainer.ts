@@ -7,8 +7,6 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import Animation from '../../../../twixt/js/Animation.js';
-import Easing from '../../../../twixt/js/Easing.js';
 import centerAndSpread from '../../centerAndSpread.js';
 import { Node, NodeOptions } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
@@ -36,10 +34,13 @@ class NumberCardContainer extends Node {
 
     super( options );
 
+    const map = new Map<CASObject, NumberCardNode>();
+    const getVisibleNumberCardNodes = () => Array.from( map.values() ).filter( cardNode => cardNode.visible );
+    const getCardPositionX = ( index: number ) => index * ( NumberCardNode.CARD_WIDTH + CARD_SPACING );
+
     const getDragRange = () => {
-      const numberCardNodes = Array.from( map.values() ).filter( cardNode => cardNode.visible );
-      const maxX = numberCardNodes.length > 0 ?
-                   ( numberCardNodes.length - 1 ) * ( NumberCardNode.CARD_WIDTH + CARD_SPACING ) : 0;
+      const numberCardNodes = getVisibleNumberCardNodes();
+      const maxX = numberCardNodes.length > 0 ? getCardPositionX( numberCardNodes.length - 1 ) : 0;
       return new Range( 0, maxX );
     };
 
@@ -53,8 +54,6 @@ class NumberCardContainer extends Node {
       supportsDynamicState: false
     } );
 
-    const map = new Map<CASObject, NumberCardNode>();
-
     let isUpdating = false;
 
     // TODO: Improve handling around "cells" -- NumberCards knowing which spot each card occupies
@@ -64,7 +63,7 @@ class NumberCardContainer extends Node {
         isUpdating = true;
 
         // Only consider the visible cards
-        const numberCardNodes = Array.from( map.values() ).filter( cardNode => cardNode.visible );
+        const numberCardNodes = getVisibleNumberCardNodes();
         if ( numberCardNodes.length === 0 ) {
           isUpdating = false;
           return;
@@ -77,7 +76,7 @@ class NumberCardContainer extends Node {
           let bestDistance = Number.POSITIVE_INFINITY;
 
           for ( let i = 0; i < numberCardNodes.length; i++ ) {
-            const proposedX = i * ( NumberCardNode.CARD_WIDTH + CARD_SPACING );
+            const proposedX = getCardPositionX( i );
             const distance = Math.abs( cardNode.positionProperty.value.x - proposedX );
             if ( distance < bestDistance ) {
               bestMatch = proposedX;
@@ -106,31 +105,18 @@ class NumberCardContainer extends Node {
 
             const cardNode = sorted[ i ];
 
-            const destination = new Vector2( i * ( NumberCardNode.CARD_WIDTH + CARD_SPACING ), 0 );
+            const destination = new Vector2( getCardPositionX( i ), 0 );
 
             // TODO: Compare animation and animation destination to make sure card is heading to correct spot.
             // TODO: Test with equals instead of distance>1E-6
-            if ( cardNode.positionProperty.value.distance( destination ) > 1E-6 && !cardNode.animation ) {
+            if ( cardNode.positionProperty.value.distance( destination ) > 1E-6 ) {
 
               if ( cardsToImmediatelyMove.includes( cardNode ) ) {
                 cardNode.positionProperty.value = destination;
               }
               else {
-                cardNode.animation = new Animation( {
-                  duration: 0.3,
-                  targets: [ {
-                    property: cardNode.positionProperty,
-                    to: destination,
-                    easing: Easing.QUADRATIC_IN_OUT
-                  } ]
-                } );
-
-                cardNode.animation.start();
-                cardNode.animation.finishEmitter.addListener( () => {
-                  cardNode.animation = null;
-                } );
+                cardNode.animateTo( destination, 0.3 );
               }
-
             }
           }
         }
@@ -149,7 +135,9 @@ class NumberCardContainer extends Node {
       map.set( casObject, numberCardNode );
 
       numberCardNode.positionProperty.link( position => {
-        update();
+
+        // Update the position of all cards (via animation) whenever any card is dragged
+        numberCardNode.dragListener.isPressedProperty.value && update();
       } );
       numberCardNode.dragListener.isPressedProperty.link( isPressed => {
         if ( !isPressed ) {
@@ -165,6 +153,7 @@ class NumberCardContainer extends Node {
           numberCardNode.positionProperty.value = new Vector2( 100000, 0 );
           numberCardNode.visible = true;
           update( [ numberCardNode ] );
+          numberCardNode.positionProperty.value = numberCardNode.translation;
 
           // Only show the card at the moment valueProperty becomes non-null.  After that, the card updates but is
           // always visible.
@@ -187,6 +176,22 @@ class NumberCardContainer extends Node {
       // viewNode may not exist if the ball was still in the air
       if ( viewNode ) {
         numberCardGroup.disposeElement( viewNode );
+      }
+    } );
+
+    model.isSortingDataProperty.link( isSortingData => {
+      if ( isSortingData ) {
+        const visibleCardNodes = getVisibleNumberCardNodes();
+
+        // If the card is visible, the value property should be non-null
+        const sorted = _.sortBy( visibleCardNodes, cardNode => cardNode.casObject.valueProperty.value );
+
+        for ( let i = 0; i < sorted.length; i++ ) {
+          const cardNode = sorted[ i ];
+
+          // TODO: duration as a function of distance???
+          cardNode.animateTo( new Vector2( getCardPositionX( i ), 0 ), 0.5 );
+        }
       }
     } );
   }

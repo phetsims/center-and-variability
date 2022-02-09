@@ -22,7 +22,8 @@ type StringsType = {
   'spreadQuestion': string,
   'kick1': string,
   'kick10': string,
-  'data': string
+  'data': string,
+  'sortData': string
 };
 
 const centerAndSpreadStrings = getStringModule( 'CENTER_AND_SPREAD' ) as StringsType;

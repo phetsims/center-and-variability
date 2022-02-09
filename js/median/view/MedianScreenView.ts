@@ -38,7 +38,7 @@ class MedianScreenView extends SoccerScreenView {
 
     // TODO: CK - float to top of visibleBounds to certain aspect ratio
     const accordionBoxTandem = options.tandem.createTandem( 'dataAccordionBox' );
-    this.dataAccordionBox = new CASAccordionBox( new NumberCardContainer( this.model, {
+    this.dataAccordionBox = new CASAccordionBox( this.model, new NumberCardContainer( this.model, {
 
       // TODO: Should we expose this intermediate layer?
       tandem: accordionBoxTandem.createTandem( 'numberCardContainer' )
