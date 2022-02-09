@@ -64,6 +64,8 @@ class CASAccordionBox extends AccordionBox {
     checkboxPanel.right = backgroundRectangle.right;
 
     backgroundRectangle.addChild( checkboxPanel );
+
+    contents.centerY = backgroundRectangle.centerY - 24;
     backgroundRectangle.addChild( contents );
 
     // TODO: CK: make it possible to put things above the background rectangle
