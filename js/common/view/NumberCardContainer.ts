@@ -147,6 +147,12 @@ class NumberCardContainer extends Node {
         }
       } );
 
+      numberCardNode.casObject.valueProperty.link( value => {
+        if ( model.isSortingDataProperty.value && value !== null ) {
+          sortData();
+        }
+      } );
+
       const listener = ( value: number | null ) => {
         if ( value !== null ) {
 
@@ -195,25 +201,29 @@ class NumberCardContainer extends Node {
       }
     } );
 
+    const sortData = () => {
+      const visibleCardNodes = getVisibleNumberCardNodes();
+
+      // If the card is visible, the value property should be non-null
+      const sorted = _.sortBy( visibleCardNodes, cardNode => cardNode.casObject.valueProperty.value );
+
+      for ( let i = 0; i < sorted.length; i++ ) {
+        const cardNode = sorted[ i ];
+
+        const destination = new Vector2( getCardPositionX( i ), 0 );
+        const distance = cardNode.positionProperty.value.distance( destination );
+
+        // TODO: Should we show a more natural sort, like sending the lowest number to the left first, etc.
+        // speed = distance/time
+        // time = distance/speed
+        const time = distance / 20 / 10;
+        cardNode.animateTo( destination, time );
+      }
+    };
+
     model.isSortingDataProperty.link( isSortingData => {
       if ( isSortingData ) {
-        const visibleCardNodes = getVisibleNumberCardNodes();
-
-        // If the card is visible, the value property should be non-null
-        const sorted = _.sortBy( visibleCardNodes, cardNode => cardNode.casObject.valueProperty.value );
-
-        for ( let i = 0; i < sorted.length; i++ ) {
-          const cardNode = sorted[ i ];
-
-          const destination = new Vector2( getCardPositionX( i ), 0 );
-          const distance = cardNode.positionProperty.value.distance( destination );
-
-          // TODO: Should we show a more natural sort, like sending the lowest number to the left first, etc.
-          // speed = distance/time
-          // time = distance/speed
-          const time = distance / 20 / 10;
-          cardNode.animateTo( destination, time );
-        }
+        sortData();
       }
     } );
   }
