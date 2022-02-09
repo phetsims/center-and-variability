@@ -33,7 +33,7 @@ class NumberCardNode extends Node {
     const cornerRadius = 10;
     const rectangle = new Rectangle( 0, 0, NumberCardNode.CARD_WIDTH, NumberCardNode.CARD_WIDTH, cornerRadius, cornerRadius, {
       stroke: 'black',
-      lineWidth: 2,
+      lineWidth: 1,
       fill: 'white'
     } );
     const text = new Text( '', {
