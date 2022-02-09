@@ -22,7 +22,6 @@ import Easing from '../../../../twixt/js/Easing.js';
 type NumberCardSelfOptions = {};
 export type NumberCardOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
 
-// TODO: Should be cursor: 'pointer'
 class NumberCardNode extends Node {
   readonly positionProperty: Vector2Property;
   readonly dragListener: DragListener;
@@ -51,7 +50,8 @@ class NumberCardNode extends Node {
 
     const options = optionize<NumberCardOptions, NumberCardSelfOptions, NodeOptions>( {
       tandem: Tandem.REQUIRED,
-      children: [ rectangle, text ]
+      children: [ rectangle, text ],
+      cursor: 'pointer'
     }, providedOptions );
 
     super( options );
