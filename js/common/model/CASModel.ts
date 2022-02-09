@@ -124,6 +124,7 @@ class CASModel {
    * Resets the model.
    */
   reset(): void {
+    this.isSortingDataProperty.reset();
     this.objectGroup.clear();
   }
 

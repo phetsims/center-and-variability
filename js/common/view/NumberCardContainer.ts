@@ -25,6 +25,7 @@ type NumberCardContainerSelfOptions = {};
 export type NumberCardOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
 
 class NumberCardContainer extends Node {
+  private readonly cardNodeMap: Map<CASObject, NumberCardNode>;
 
   constructor( model: CASModel, providedOptions?: NumberCardOptions ) {
 
@@ -34,8 +35,8 @@ class NumberCardContainer extends Node {
 
     super( options );
 
-    const map = new Map<CASObject, NumberCardNode>();
-    const getVisibleNumberCardNodes = () => Array.from( map.values() ).filter( cardNode => cardNode.visible );
+    this.cardNodeMap = new Map<CASObject, NumberCardNode>();
+    const getVisibleNumberCardNodes = () => Array.from( this.cardNodeMap.values() ).filter( cardNode => cardNode.visible );
     const getCardPositionX = ( index: number ) => index * ( NumberCardNode.CARD_WIDTH + CARD_SPACING );
 
     const getDragRange = () => {
@@ -132,7 +133,7 @@ class NumberCardContainer extends Node {
       const numberCardNode: NumberCardNode = numberCardGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject );
       numberCardNode.visible = false;
       this.addChild( numberCardNode );
-      map.set( casObject, numberCardNode );
+      this.cardNodeMap.set( casObject, numberCardNode );
 
       numberCardNode.positionProperty.link( position => {
 
@@ -166,7 +167,7 @@ class NumberCardContainer extends Node {
     model.objectGroup.elementCreatedEmitter.addListener( objectCreatedListener );
 
     model.objectGroup.elementDisposedEmitter.addListener( casObject => {
-      const viewNode = map.get( casObject )!;
+      const viewNode = this.cardNodeMap.get( casObject )!;
 
       // TODO: This is failing in the PhET-iO state wrapper.
       // TODO: Solve this by creating CardModelElements which are stateful.  This will solve the problem
@@ -200,6 +201,10 @@ class NumberCardContainer extends Node {
         }
       }
     } );
+  }
+
+  reset() {
+    this.cardNodeMap.clear();
   }
 }
 

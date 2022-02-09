@@ -23,6 +23,7 @@ type MedianScreenViewOptions = CASScreenViewOptions;
 
 class MedianScreenView extends SoccerScreenView {
   readonly dataAccordionBox: CASAccordionBox;
+  private readonly numberCardContainer: NumberCardContainer;
 
   constructor( model: MedianModel, providedOptions: MedianScreenViewOptions ) {
 
@@ -36,13 +37,16 @@ class MedianScreenView extends SoccerScreenView {
 
     super( model, options );
 
-    // TODO: CK - float to top of visibleBounds to certain aspect ratio
     const accordionBoxTandem = options.tandem.createTandem( 'dataAccordionBox' );
-    this.dataAccordionBox = new CASAccordionBox( this.model, new NumberCardContainer( this.model, {
+
+    this.numberCardContainer = new NumberCardContainer( this.model, {
 
       // TODO: Should we expose this intermediate layer?
       tandem: accordionBoxTandem.createTandem( 'numberCardContainer' )
-    } ), this.layoutBounds, {
+    } );
+
+    // TODO: CK - float to top of visibleBounds to certain aspect ratio
+    this.dataAccordionBox = new CASAccordionBox( this.model, this.numberCardContainer, this.layoutBounds, {
       tandem: accordionBoxTandem,
       titleString: centerAndSpreadStrings.data,
       centerX: this.layoutBounds.centerX,
@@ -55,6 +59,7 @@ class MedianScreenView extends SoccerScreenView {
 
   reset() {
     super.reset();
+    this.numberCardContainer.reset();
     this.dataAccordionBox.reset();
   }
 }
