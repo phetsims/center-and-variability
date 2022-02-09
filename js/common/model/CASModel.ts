@@ -52,6 +52,7 @@ class CASModel {
     // TODO: min and max should be constructor options
     this.rangeProperty = new Property<Range>( new Range( 1, 16 ) );
 
+    // Populate with initial objects for debugging
     for ( let i = 0; i < CASQueryParameters.objects; i++ ) {
       const targetX = dotRandom.nextIntBetween( this.rangeProperty.value.min, this.rangeProperty.value.max );
       this.createObject( {
