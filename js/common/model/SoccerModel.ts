@@ -47,20 +47,8 @@ class SoccerModel extends CASModel {
    */
   private createBall(): void {
 
-    // we know x0 and final x.  We know a = -g.  Solve for v and t.
-    // solve for v and t
-    // x1 = x0 + vx*t             // Unknown: t, vx
-    // y1 = y0 + vy*t + 1/2 a t^2 // Unknown: t, vy
-
-    // Add a constraint, like vx^2 + vy^2=v^2
-
-    // Different kickers should have different initial velocity.
     const y0 = this.objectType.radius;
-    // const x0 = 0;
-
-    // TODO: Follow a specified distribution
     const x1 = dotRandom.nextIntBetween( this.rangeProperty.value.min, this.rangeProperty.value.max );
-    // const y1 = this.objectType.radius;// land on the ground
 
     // Range equation is R=v0^2 sin(2 theta0) / g, see https://openstax.org/books/university-physics-volume-1/pages/4-3-projectile-motion
     // Equation 4.26
