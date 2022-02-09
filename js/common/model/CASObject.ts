@@ -42,6 +42,8 @@ class CASObject extends PhetioObject {
   readonly isAnimatingProperty: BooleanProperty;
   static CASObjectIO: IOType;
   readonly objectType: CASObjectType;
+
+  // Where the object is animating to
   private readonly targetX: number;
 
   // The value that particpates in the data set.
@@ -62,8 +64,6 @@ class CASObject extends PhetioObject {
 
     this.objectType = objectType;
 
-    // TODO: We are currently using this to keep track of our position in the data set. We could continue to use this
-    // for both the animation target and the value in the data set, or create a separate number property for that.
     this.targetX = options.targetX;
 
     this.positionProperty = new Vector2Property( options.position, {
