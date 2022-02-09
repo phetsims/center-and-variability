@@ -37,7 +37,8 @@ class NumberCardContainer extends Node {
 
     this.cardNodeMap = new Map<CASObject, NumberCardNode>();
     const getVisibleNumberCardNodes = () => Array.from( this.cardNodeMap.values() ).filter( cardNode => cardNode.visible );
-    const getCardPositionX = ( index: number ) => index * ( NumberCardNode.CARD_WIDTH + CARD_SPACING );
+    const distanceBetweenCards = NumberCardNode.CARD_WIDTH + CARD_SPACING;
+    const getCardPositionX = ( index: number ) => index * distanceBetweenCards;
 
     const getDragRange = () => {
       const numberCardNodes = getVisibleNumberCardNodes();
@@ -151,7 +152,21 @@ class NumberCardContainer extends Node {
 
           // TODO: Better logic around this positioning.  This is so it sorts last.
           // TODO: It would be better to sort it into the nearest open spot, even if the user dragged a card far to the right.
-          numberCardNode.positionProperty.value = new Vector2( 100000, 0 );
+
+          let positionX = getCardPositionX( getVisibleNumberCardNodes().length ) + distanceBetweenCards / 2;
+          if ( model.isSortingDataProperty.value ) {
+            const newValue = numberCardNode.casObject.valueProperty.value!;
+            const existingCardNodesWithValue = getVisibleNumberCardNodes().filter(
+              cardNode => cardNode.casObject.valueProperty.value! <= newValue );
+
+            const sameValueCards = existingCardNodesWithValue.map( cardNode => cardNode.positionProperty.value.x );
+            const largestXValue = sameValueCards.length > 0 ? _.max( sameValueCards ) : -10000;
+
+            //
+            positionX = largestXValue! + distanceBetweenCards / 2;
+          }
+          numberCardNode.positionProperty.value = new Vector2( positionX, 0 );
+
           numberCardNode.visible = true;
           update( [ numberCardNode ] );
           numberCardNode.positionProperty.value = numberCardNode.translation;
