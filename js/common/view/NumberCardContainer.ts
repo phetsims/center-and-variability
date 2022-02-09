@@ -22,9 +22,6 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 type NumberCardContainerSelfOptions = {};
 export type NumberCardOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
 
-// constants
-const spacing = 5;
-
 class NumberCardContainer extends Node {
 
   constructor( model: CASModel, providedOptions?: NumberCardOptions ) {
@@ -51,11 +48,17 @@ class NumberCardContainer extends Node {
     // Readjust all of the cards when any of them are dragged
 
     // TODO: Improve handling around "cells" -- NumberCards knowing which spot each card occupies
-    const update = () => {
+    const update = ( cardsToImmediatelyMove: NumberCardNode[] = [] ) => {
       if ( !isUpdating ) {
         isUpdating = true;
 
-        const numberCardNodes = Array.from( map.values() );
+        // Only consider the visible cards
+        const numberCardNodes = Array.from( map.values() ).filter( cardNode => cardNode.visible );
+        if ( numberCardNodes.length === 0 ) {
+          isUpdating = false;
+          return;
+        }
+
         const cardWidth = numberCardNodes[ 0 ].bounds.width;
         const spacing = 10;
         const sorted = _.sortBy( numberCardNodes, cardNode => {
@@ -97,20 +100,28 @@ class NumberCardContainer extends Node {
             const destination = new Vector2( i * ( cardWidth + spacing ), 0 );
 
             // TODO: Compare animation and animation destination to make sure card is heading to correct spot.
+            // TODO: Test with equals instead of distance>1E-6
             if ( cardNode.positionProperty.value.distance( destination ) > 1E-6 && !cardNode.animation ) {
-              cardNode.animation = new Animation( {
-                duration: 0.3,
-                targets: [ {
-                  property: cardNode.positionProperty,
-                  to: destination,
-                  easing: Easing.QUADRATIC_IN_OUT
-                } ]
-              } );
 
-              cardNode.animation.start();
-              cardNode.animation.finishEmitter.addListener( () => {
-                cardNode.animation = null;
-              } );
+              if ( cardsToImmediatelyMove.includes( cardNode ) ) {
+                cardNode.positionProperty.value = destination;
+              }
+              else {
+                cardNode.animation = new Animation( {
+                  duration: 0.3,
+                  targets: [ {
+                    property: cardNode.positionProperty,
+                    to: destination,
+                    easing: Easing.QUADRATIC_IN_OUT
+                  } ]
+                } );
+
+                cardNode.animation.start();
+                cardNode.animation.finishEmitter.addListener( () => {
+                  cardNode.animation = null;
+                } );
+              }
+
             }
           }
         }
@@ -128,7 +139,9 @@ class NumberCardContainer extends Node {
       this.addChild( numberCardNode );
       map.set( casObject, numberCardNode );
 
-      numberCardNode.positionProperty.link( update );
+      numberCardNode.positionProperty.link( position => {
+        update();
+      } );
       numberCardNode.dragListener.isPressedProperty.link( isPressed => {
         if ( !isPressed ) {
           update();
@@ -138,14 +151,11 @@ class NumberCardContainer extends Node {
       const listener = ( value: number | null ) => {
         if ( value !== null ) {
 
-          let x = 0;
-          const visibleCards = numberCardGroup.getArray().filter( cardNode => cardNode.visible );
-          if ( visibleCards.length > 0 ) {
-            const rightmostCard = _.maxBy( visibleCards, ( card: NumberCardNode ) => card.bounds.maxX )!;
-            x = rightmostCard.right + spacing;
-          }
-          numberCardNode.positionProperty.value = new Vector2( x, 0 );
+          // TODO: Better logic around this positioning.  This is so it sorts last.
+          // TODO: It would be better to sort it into the nearest open spot, even if the user dragged a card far to the right.
+          numberCardNode.positionProperty.value = new Vector2( 100000, 0 );
           numberCardNode.visible = true;
+          update( [ numberCardNode ] );
 
           // Only show the card at the moment valueProperty becomes non-null.  After that, the card updates but is
           // always visible.
