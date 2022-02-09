@@ -21,6 +21,7 @@ import Range from '../../../../dot/js/Range.js';
 type NumberCardSelfOptions = {};
 export type NumberCardOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
 
+// TODO: Should be cursor: 'pointer'
 class NumberCardNode extends Node {
   readonly positionProperty: Vector2Property;
   dragListener: DragListener;
