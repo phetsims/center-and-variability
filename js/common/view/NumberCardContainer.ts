@@ -189,8 +189,14 @@ class NumberCardContainer extends Node {
         for ( let i = 0; i < sorted.length; i++ ) {
           const cardNode = sorted[ i ];
 
-          // TODO: duration as a function of distance???
-          cardNode.animateTo( new Vector2( getCardPositionX( i ), 0 ), 0.5 );
+          const destination = new Vector2( getCardPositionX( i ), 0 );
+          const distance = cardNode.positionProperty.value.distance( destination );
+
+          // TODO: Should we show a more natural sort, like sending the lowest number to the left first, etc.
+          // speed = distance/time
+          // time = distance/speed
+          const time = distance / 20 / 10;
+          cardNode.animateTo( destination, time );
         }
       }
     } );
