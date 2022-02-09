@@ -53,38 +53,6 @@ class NumberCardContainer extends Node {
       supportsDynamicState: false
     } );
 
-    // TODO: Improve handling around "cells" -- NumberCards knowing which spot each card occupies
-    // Readjust all of the cards when any of them are dragged
-    const update = ( cardsToImmediatelyMove: NumberCardNode[] = [] ) => {
-
-      // Only consider the visible cards
-      const numberCardNodes = this.getVisibleNumberCardNodes();
-      if ( numberCardNodes.length > 0 ) {
-
-        const sorted = _.sortBy( numberCardNodes, this.sortRule.bind( this ) );
-        for ( let i = 0; i < sorted.length; i++ ) {
-          if ( !sorted[ i ].dragListener.isPressed ) {
-
-            const cardNode = sorted[ i ];
-
-            const destination = new Vector2( getCardPositionX( i ), 0 );
-
-            // TODO: Compare animation and animation destination to make sure card is heading to correct spot.
-            // TODO: Test with equals instead of distance>1E-6
-            if ( cardNode.positionProperty.value.distance( destination ) > 1E-6 ) {
-
-              if ( cardsToImmediatelyMove.includes( cardNode ) ) {
-                cardNode.positionProperty.value = destination;
-              }
-              else {
-                cardNode.animateTo( destination, 0.3 );
-              }
-            }
-          }
-        }
-      }
-    };
-
     // TODO: If we eventually have a model PhetioGroup for the cards, we will listen to them instead.
     const objectCreatedListener = ( casObject: CASObject ) => {
 
@@ -97,11 +65,11 @@ class NumberCardContainer extends Node {
       numberCardNode.positionProperty.link( position => {
 
         // Update the position of all cards (via animation) whenever any card is dragged
-        numberCardNode.dragListener.isPressedProperty.value && update();
+        numberCardNode.dragListener.isPressedProperty.value && this.update();
       } );
       numberCardNode.dragListener.isPressedProperty.link( isPressed => {
         if ( !isPressed ) {
-          update();
+          this.update();
         }
       } );
 
@@ -125,7 +93,7 @@ class NumberCardContainer extends Node {
           numberCardNode.positionProperty.value = new Vector2( positionX, 0 );
 
           numberCardNode.visible = true;
-          update( [ numberCardNode ] );
+          this.update( [ numberCardNode ] );
           numberCardNode.positionProperty.value = numberCardNode.translation;
 
           // Only show the card at the moment valueProperty becomes non-null.  After that, the card updates but is
@@ -182,6 +150,33 @@ class NumberCardContainer extends Node {
         sortData();
       }
     } );
+  }
+
+  // TODO: Improve handling around "cells" -- NumberCards knowing which spot each card occupies
+  // Readjust all of the cards when any of them are dragged
+  update( cardsToImmediatelyMove: NumberCardNode[] = [] ) {
+
+    // Only consider the visible cards
+    const numberCardNodes = this.getVisibleNumberCardNodes();
+    if ( numberCardNodes.length > 0 ) {
+
+      const sorted = _.sortBy( numberCardNodes, this.sortRule.bind( this ) );
+      for ( let i = 0; i < sorted.length; i++ ) {
+        if ( !sorted[ i ].dragListener.isPressed ) {
+
+          const cardNode = sorted[ i ];
+
+          const destination = new Vector2( getCardPositionX( i ), 0 );
+
+          if ( cardsToImmediatelyMove.includes( cardNode ) ) {
+            cardNode.positionProperty.value = destination;
+          }
+          else {
+            cardNode.animateTo( destination, 0.3 );
+          }
+        }
+      }
+    }
   }
 
   getVisibleNumberCardNodes() {

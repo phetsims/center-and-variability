@@ -58,6 +58,7 @@ class NumberCardNode extends Node {
 
     this.positionProperty = new Vector2Property( position, {
       tandem: options.tandem.createTandem( 'positionProperty' ),
+      useDeepEquality: true,
       reentrant: true // TODO: Why????
     } );
 
@@ -97,6 +98,7 @@ class NumberCardNode extends Node {
       }
     }
 
+    this.moveToFront(); // TODO: If we keep this, we need to move any cards being dragged to the front
     this.animation = new Animation( {
       duration: duration,
       targets: [ {
@@ -111,6 +113,7 @@ class NumberCardNode extends Node {
     this.animation.finishEmitter.addListener( () => {
       this.animation = null;
       this.animationTo = null;
+      this.moveToBack();
     } );
   }
 
