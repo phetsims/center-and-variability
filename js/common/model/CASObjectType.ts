@@ -14,7 +14,7 @@ import centerAndSpread from '../../centerAndSpread.js';
 class CASObjectType extends EnumerationValue {
   radius: number;
   static DATA_POINT = new CASObjectType( 1 ); // TODO: What should this be?
-  static SOCCER_BALL = new CASObjectType( 0.2 );
+  static SOCCER_BALL = new CASObjectType( 0.3 );
 
   static enumeration = new Enumeration( CASObjectType );
 
