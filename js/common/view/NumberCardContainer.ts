@@ -211,12 +211,10 @@ class NumberCardContainer extends Node {
         const cardNode = sorted[ i ];
 
         const destination = new Vector2( getCardPositionX( i ), 0 );
-        const distance = cardNode.positionProperty.value.distance( destination );
 
-        // TODO: Should we show a more natural sort, like sending the lowest number to the left first, etc.
         // speed = distance/time
         // time = distance/speed
-        const time = distance / 20 / 10;
+        const time = 0.4;
         cardNode.animateTo( destination, time );
       }
     };
