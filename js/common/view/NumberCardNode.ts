@@ -16,6 +16,7 @@ import CASObject from '../model/CASObject.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Animation from '../../../../twixt/js/Animation.js';
+import Range from '../../../../dot/js/Range.js';
 
 type NumberCardSelfOptions = {};
 export type NumberCardOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
@@ -25,12 +26,12 @@ class NumberCardNode extends Node {
   dragListener: DragListener;
   casObject: CASObject;
   animation: Animation | null;
+  static CARD_WIDTH = 50;
 
-  constructor( casObject: CASObject, position: Vector2, providedOptions?: NumberCardOptions ) {
+  constructor( casObject: CASObject, position: Vector2, getDragRange: () => Range, providedOptions?: NumberCardOptions ) {
 
-    const sideLength = 50;
     const cornerRadius = 10;
-    const rectangle = new Rectangle( 0, 0, sideLength, sideLength, cornerRadius, cornerRadius, {
+    const rectangle = new Rectangle( 0, 0, NumberCardNode.CARD_WIDTH, NumberCardNode.CARD_WIDTH, cornerRadius, cornerRadius, {
       stroke: 'black',
       lineWidth: 2,
       fill: 'white'
@@ -61,9 +62,8 @@ class NumberCardNode extends Node {
     this.animation = null;
 
     this.positionProperty.link( position => {
-
-      // TODO: Don't drag past the edges
-      this.translation = new Vector2( position.x, 0 );
+      const range = getDragRange();
+      this.translation = new Vector2( range.constrainValue( position.x ), 0 );
     } );
 
     this.dragListener = new DragListener( {

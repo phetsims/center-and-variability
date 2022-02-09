@@ -18,6 +18,10 @@ import CASObject from '../model/CASObject.js';
 import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
 import NumberCardNode from './NumberCardNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import Range from '../../../../dot/js/Range.js';
+
+// constants
+const CARD_SPACING = 10;
 
 type NumberCardContainerSelfOptions = {};
 export type NumberCardOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
@@ -32,8 +36,15 @@ class NumberCardContainer extends Node {
 
     super( options );
 
+    const getDragRange = () => {
+      const numberCardNodes = Array.from( map.values() ).filter( cardNode => cardNode.visible );
+      const maxX = numberCardNodes.length > 0 ?
+                   ( numberCardNodes.length - 1 ) * ( NumberCardNode.CARD_WIDTH + CARD_SPACING ) : 0;
+      return new Range( 0, maxX );
+    };
+
     const numberCardGroup = new PhetioGroup<NumberCardNode>( ( tandem, casObject ) => {
-      return new NumberCardNode( casObject, new Vector2( 0, 0 ), {
+      return new NumberCardNode( casObject, new Vector2( 0, 0 ), getDragRange, {
         tandem: tandem
       } );
     }, [ model.objectGroup.archetype ], {
@@ -45,9 +56,9 @@ class NumberCardContainer extends Node {
     const map = new Map<CASObject, NumberCardNode>();
 
     let isUpdating = false;
-    // Readjust all of the cards when any of them are dragged
 
     // TODO: Improve handling around "cells" -- NumberCards knowing which spot each card occupies
+    // Readjust all of the cards when any of them are dragged
     const update = ( cardsToImmediatelyMove: NumberCardNode[] = [] ) => {
       if ( !isUpdating ) {
         isUpdating = true;
@@ -59,8 +70,6 @@ class NumberCardContainer extends Node {
           return;
         }
 
-        const cardWidth = numberCardNodes[ 0 ].bounds.width;
-        const spacing = 10;
         const sorted = _.sortBy( numberCardNodes, cardNode => {
 
           // Find the spot the dragged card is closest to
@@ -68,7 +77,7 @@ class NumberCardContainer extends Node {
           let bestDistance = Number.POSITIVE_INFINITY;
 
           for ( let i = 0; i < numberCardNodes.length; i++ ) {
-            const proposedX = i * ( cardWidth + spacing );
+            const proposedX = i * ( NumberCardNode.CARD_WIDTH + CARD_SPACING );
             const distance = Math.abs( cardNode.positionProperty.value.x - proposedX );
             if ( distance < bestDistance ) {
               bestMatch = proposedX;
@@ -97,7 +106,7 @@ class NumberCardContainer extends Node {
 
             const cardNode = sorted[ i ];
 
-            const destination = new Vector2( i * ( cardWidth + spacing ), 0 );
+            const destination = new Vector2( i * ( NumberCardNode.CARD_WIDTH + CARD_SPACING ), 0 );
 
             // TODO: Compare animation and animation destination to make sure card is heading to correct spot.
             // TODO: Test with equals instead of distance>1E-6
@@ -131,10 +140,10 @@ class NumberCardContainer extends Node {
     };
 
     // TODO: If we eventually have a model PhetioGroup for the cards, we will listen to them instead.
-    const listenForObjectLanding = ( casObject: CASObject ) => {
+    const objectCreatedListener = ( casObject: CASObject ) => {
 
       // TODO: Get rid of type annotation once PhetioGroup is TS
-      const numberCardNode: NumberCardNode = numberCardGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject, {} );
+      const numberCardNode: NumberCardNode = numberCardGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject );
       numberCardNode.visible = false;
       this.addChild( numberCardNode );
       map.set( casObject, numberCardNode );
@@ -164,8 +173,8 @@ class NumberCardContainer extends Node {
       };
       casObject.valueProperty.link( listener );
     };
-    model.objectGroup.forEach( listenForObjectLanding );
-    model.objectGroup.elementCreatedEmitter.addListener( listenForObjectLanding );
+    model.objectGroup.forEach( objectCreatedListener );
+    model.objectGroup.elementCreatedEmitter.addListener( objectCreatedListener );
 
     model.objectGroup.elementDisposedEmitter.addListener( casObject => {
       const viewNode = map.get( casObject )!;
