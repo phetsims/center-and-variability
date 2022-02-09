@@ -54,12 +54,10 @@ class CASModel {
 
     for ( let i = 0; i < CASQueryParameters.objects; i++ ) {
       const targetX = dotRandom.nextIntBetween( this.rangeProperty.value.min, this.rangeProperty.value.max );
-      const casObject = this.createObject( {
-        targetX: targetX
+      this.createObject( {
+        targetX: targetX,
+        value: targetX
       } );
-
-      // TODO: SR: Promote to an option
-      casObject.valueProperty.value = targetX;
     }
 
     // Stack the objects. TODO: A simpler way?

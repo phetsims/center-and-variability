@@ -25,7 +25,8 @@ import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 type CASObjectSelfOptions = {
   position?: Vector2,
   velocity?: Vector2,
-  targetX: number
+  targetX: number,
+  value?: number | null
 };
 export type CASObjectOptions =
   CASObjectSelfOptions
@@ -53,7 +54,8 @@ class CASObject extends PhetioObject {
       velocity: Vector2.ZERO,
       tandem: Tandem.REQUIRED,
       phetioType: CASObject.CASObjectIO,
-      phetioDynamicElement: true
+      phetioDynamicElement: true,
+      value: null
     }, providedOptions );
 
     super( options );
@@ -78,7 +80,7 @@ class CASObject extends PhetioObject {
               Tandem.OPT_OUT
     } );
     this.dragPositionProperty = new Vector2Property( options.position );
-    this.valueProperty = new Property<number | null>( null, {
+    this.valueProperty = new Property<number | null>( options.value, {
       tandem: options.tandem.createTandem( 'valueProperty' ),
       phetioType: Property.PropertyIO( NullableIO( NumberIO ) )
     } );
