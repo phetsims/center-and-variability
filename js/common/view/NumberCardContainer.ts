@@ -114,9 +114,6 @@ class NumberCardContainer extends Node {
           this.cardNodeCells.splice( targetIndex, 0, numberCardNode );
           this.sendToHomeCell( numberCardNode, false );
 
-          // TODO: Do we still need this?????
-          numberCardNode.positionProperty.value = numberCardNode.translation;
-
           // Animate all displaced cards
           for ( let i = targetIndex; i < this.cardNodeCells.length; i++ ) {
             this.sendToHomeCell( this.cardNodeCells[ i ] );
