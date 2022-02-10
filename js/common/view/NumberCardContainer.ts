@@ -65,11 +65,11 @@ class NumberCardContainer extends Node {
       numberCardNode.positionProperty.link( position => {
 
         // Update the position of all cards (via animation) whenever any card is dragged
-        numberCardNode.dragListener.isPressedProperty.value && this.update();
+        numberCardNode.dragListener.isPressedProperty.value && this.updateDroppedCardPositions();
       } );
       numberCardNode.dragListener.isPressedProperty.link( isPressed => {
         if ( !isPressed ) {
-          this.update();
+          this.updateDroppedCardPositions();
         }
       } );
 
@@ -93,7 +93,7 @@ class NumberCardContainer extends Node {
           numberCardNode.positionProperty.value = new Vector2( positionX, 0 );
 
           numberCardNode.visible = true;
-          this.update( [ numberCardNode ] );
+          this.updateDroppedCardPositions( [ numberCardNode ] );
           numberCardNode.positionProperty.value = numberCardNode.translation;
 
           // Only show the card at the moment valueProperty becomes non-null.  After that, the card updates but is
@@ -153,8 +153,13 @@ class NumberCardContainer extends Node {
   }
 
   // TODO: Improve handling around "cells" -- NumberCards knowing which spot each card occupies
-  // Readjust all of the cards when any of them are dragged
-  update( cardsToImmediatelyMove: NumberCardNode[] = [] ) {
+  /**
+   * Animate all non-dragged cards to the nearest open cell, while leaving the spot closest to any dragged cards 
+   * available.
+   * 
+   * @param cardsToImmediatelyMove
+   */
+  updateDroppedCardPositions( cardsToImmediatelyMove: NumberCardNode[] = [] ) {
 
     // Only consider the visible cards
     const numberCardNodes = this.getVisibleNumberCardNodes();
