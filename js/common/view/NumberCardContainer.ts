@@ -26,7 +26,9 @@ type NumberCardContainerSelfOptions = {};
 export type NumberCardOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
 
 class NumberCardContainer extends Node {
-  private cardNodeCells: NumberCardNode[];
+  private readonly cardNodeCells: NumberCardNode[];
+  private readonly model: CASModel;
+  private readonly numberCardGroup: PhetioGroup<NumberCardNode>;
 
   constructor( model: CASModel, providedOptions?: NumberCardOptions ) {
 
@@ -36,11 +38,13 @@ class NumberCardContainer extends Node {
 
     super( options );
 
+    this.model = model;
+
     // Each card is associated with one "cell", no two cards can be associated with the same cell.  The leftmost cell is 0.
     // The cells linearly map to locations across the screen.
     this.cardNodeCells = [];
 
-    const numberCardGroup = new PhetioGroup<NumberCardNode>( ( tandem, casObject ) => {
+    this.numberCardGroup = new PhetioGroup<NumberCardNode>( ( tandem, casObject ) => {
       return new NumberCardNode( casObject, new Vector2( 0, 0 ), () => this.getDragRange(), {
         tandem: tandem
       } );
@@ -51,6 +55,33 @@ class NumberCardContainer extends Node {
     } );
 
     // TODO: If we eventually have a model PhetioGroup for the cards, we will listen to them instead.
+    const objectCreatedListener = this.createObjectCreatedListener();
+    model.objectGroup.forEach( objectCreatedListener );
+    model.objectGroup.elementCreatedEmitter.addListener( objectCreatedListener );
+
+    model.objectGroup.elementDisposedEmitter.addListener( casObject => {
+      const numberCardNode = this.getNumberCardNode( casObject );
+
+      // TODO: This is failing in the PhET-iO state wrapper.
+      // TODO: Solve this by creating CardModelElements which are stateful.  This will solve the problem
+      // because the state-setting order defers all properties until after groups are set.
+      // TODO: We tried workarounds in PropertyStateHandler#61 with dontDefer, but that isn't general
+
+      // numberCardNode may not exist if the ball was still in the air
+      if ( numberCardNode ) {
+        this.numberCardGroup.disposeElement( numberCardNode );
+      }
+    } );
+
+    model.isSortingDataProperty.link( isSortingData => {
+      if ( isSortingData ) {
+        this.sortData();
+      }
+    } );
+  }
+
+  // Listen for when objects are created, also called for pre-existing objects.
+  createObjectCreatedListener() {
     const objectCreatedListener = ( casObject: CASObject ) => {
 
       const listener = ( value: number | null ) => {
@@ -58,33 +89,11 @@ class NumberCardContainer extends Node {
         if ( value !== null && !this.getNumberCardNode( casObject ) ) {
 
           // TODO: Get rid of type annotation once PhetioGroup is TS
-          const numberCardNode: NumberCardNode = numberCardGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject );
+          const numberCardNode: NumberCardNode = this.numberCardGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject );
           this.addChild( numberCardNode );
 
           // Update the position of all cards (via animation) whenever any card is dragged
-          // TODO question from CK: would it be nicer if this linked to numberCardNode.dragPositionProperty?
-          numberCardNode.positionProperty.link( position => {
-            if ( numberCardNode.dragListener.isPressedProperty.value ) {
-
-              const originalCell = this.cardNodeCells.indexOf( numberCardNode );
-
-              // Find the closest cell to the dragged card
-              const closestCell = this.getClosestCell( position.x );
-
-              const currentOccupant = this.cardNodeCells[ closestCell ];
-
-              // No-op if the dragged card is near its home cell
-              if ( currentOccupant !== numberCardNode ) {
-
-                // it's just a pairwise swap
-                this.cardNodeCells[ closestCell ] = numberCardNode;
-                this.cardNodeCells[ originalCell ] = currentOccupant;
-
-                // Just animated the displaced occupant
-                this.sendToHomeCell( currentOccupant, true );
-              }
-            }
-          } );
+          numberCardNode.positionProperty.link( this.createDragPositionListener( numberCardNode ) );
 
           // When a card is dropped, send it to its home cell
           numberCardNode.dragListener.isPressedProperty.link( isPressed => {
@@ -94,7 +103,7 @@ class NumberCardContainer extends Node {
           } );
 
           let targetIndex = this.cardNodeCells.length;
-          if ( model.isSortingDataProperty.value ) {
+          if ( this.model.isSortingDataProperty.value ) {
             const newValue = numberCardNode.casObject.valueProperty.value!;
             const existingLowerCardNodes = this.cardNodeCells.filter( cardNode => cardNode.casObject.valueProperty.value! <= newValue );
 
@@ -105,7 +114,7 @@ class NumberCardContainer extends Node {
           this.cardNodeCells.splice( targetIndex, 0, numberCardNode );
           this.sendToHomeCell( numberCardNode, false );
 
-          // TODO: Do we still need this??
+          // TODO: Do we still need this?????
           numberCardNode.positionProperty.value = numberCardNode.translation;
 
           // Animate all displaced cards
@@ -121,33 +130,38 @@ class NumberCardContainer extends Node {
 
       // A ball landed OR a value changed
       casObject.valueProperty.link( value => {
-        if ( model.isSortingDataProperty.value && value !== null ) {
+        if ( this.model.isSortingDataProperty.value && value !== null ) {
           this.sortData();
         }
       } );
     };
-    model.objectGroup.forEach( objectCreatedListener );
-    model.objectGroup.elementCreatedEmitter.addListener( objectCreatedListener );
+    return objectCreatedListener;
+  }
 
-    model.objectGroup.elementDisposedEmitter.addListener( casObject => {
-      const numberCardNode = this.getNumberCardNode( casObject );
+  // The listener which is linked to the numberCardNode.positionProperty
+  createDragPositionListener( numberCardNode: NumberCardNode ) {
+    return ( position: Vector2 ) => {
+      if ( numberCardNode.dragListener.isPressedProperty.value ) {
 
-      // TODO: This is failing in the PhET-iO state wrapper.
-      // TODO: Solve this by creating CardModelElements which are stateful.  This will solve the problem
-      // because the state-setting order defers all properties until after groups are set.
-      // TODO: We tried workarounds in PropertyStateHandler#61 with dontDefer, but that isn't general
+        const originalCell = this.cardNodeCells.indexOf( numberCardNode );
 
-      // numberCardNode may not exist if the ball was still in the air
-      if ( numberCardNode ) {
-        numberCardGroup.disposeElement( numberCardNode );
+        // Find the closest cell to the dragged card
+        const closestCell = this.getClosestCell( position.x );
+
+        const currentOccupant = this.cardNodeCells[ closestCell ];
+
+        // No-op if the dragged card is near its home cell
+        if ( currentOccupant !== numberCardNode ) {
+
+          // it's just a pairwise swap
+          this.cardNodeCells[ closestCell ] = numberCardNode;
+          this.cardNodeCells[ originalCell ] = currentOccupant;
+
+          // Just animated the displaced occupant
+          this.sendToHomeCell( currentOccupant, true );
+        }
       }
-    } );
-
-    model.isSortingDataProperty.link( isSortingData => {
-      if ( isSortingData ) {
-        this.sortData();
-      }
-    } );
+    };
   }
 
   sendToHomeCell( numberCardNode: NumberCardNode, animate = true, duration = 0.3 ): void {
