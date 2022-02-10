@@ -202,20 +202,13 @@ class NumberCardContainer extends Node {
    * Find the cell the dragged card is closest to
    */
   getClosestCell( x: number ): number {
-
-    let closestCell = 0;
-    let closestDistance = Number.POSITIVE_INFINITY;
-
-    for ( let i = 0; i < this.cardNodeCells.length; i++ ) {
-      const proposedX = getCardPositionX( i );
-      const distance = Math.abs( x - proposedX );
-      if ( distance < closestDistance ) {
-        closestCell = i;
-        closestDistance = distance;
-      }
+    if ( this.cardNodeCells.length === 0 ) {
+      return 0;
     }
-
-    return closestCell;
+    else {
+      const cellIndices = _.range( this.cardNodeCells.length );
+      return _.minBy( cellIndices, index => Math.abs( x - getCardPositionX( index ) ) )!;
+    }
   }
 
   getNumberCardNode( casObject: CASObject ): NumberCardNode | null {
