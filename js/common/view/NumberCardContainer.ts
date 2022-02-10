@@ -63,7 +63,6 @@ class NumberCardContainer extends Node {
 
           // Update the position of all cards (via animation) whenever any card is dragged
           numberCardNode.positionProperty.link( position => {
-            // numberCardNode.dragListener.isPressedProperty.value && this.updateDroppedCardPositions();
             if ( numberCardNode.dragListener.isPressedProperty.value ) {
 
               const originalCell = this.cardNodeCells.indexOf( numberCardNode );
@@ -81,7 +80,7 @@ class NumberCardContainer extends Node {
                 this.cardNodeCells[ originalCell ] = currentOccupant;
 
                 // Just animated the displaced occupant
-                currentOccupant.animateTo( new Vector2( getCardPositionX( originalCell ), 0 ), 0.5 );
+                this.sendToHomeCell( currentOccupant );
               }
             }
           } );
@@ -89,7 +88,7 @@ class NumberCardContainer extends Node {
           // When a card is dropped, send it to its home cell
           numberCardNode.dragListener.isPressedProperty.link( isPressed => {
             if ( !isPressed ) {
-              numberCardNode.animateTo( new Vector2( getCardPositionX( this.cardNodeCells.indexOf( numberCardNode ) ), 0 ), 0.5 );
+              this.sendToHomeCell( numberCardNode );
             }
           } );
 
@@ -106,15 +105,15 @@ class NumberCardContainer extends Node {
           }
 
           this.cardNodeCells.splice( targetIndex, 0, numberCardNode );
-          numberCardNode.positionProperty.value = new Vector2( getCardPositionX( this.cardNodeCells.indexOf( numberCardNode ) ), 0 ); // TODO copied from 125!!!
+          this.sendToHomeCell( numberCardNode, false );
+
+          // TODO: Do we still need this??
+          numberCardNode.positionProperty.value = numberCardNode.translation;
 
           // Animate all displaced cards
-          // currentOccupant.animateTo( new Vector2( getCardPositionX( originalCell ), 0 ), 0.5 );
           for ( let i = targetIndex; i < this.cardNodeCells.length; i++ ) {
-            this.cardNodeCells[ i ].animateTo( new Vector2( getCardPositionX( i ), 0 ), 0.5 );
+            this.sendToHomeCell( this.cardNodeCells[ i ] );
           }
-
-          numberCardNode.positionProperty.value = numberCardNode.translation;
 
           // Only create the card once, then no need to listen further
           casObject.valueProperty.unlink( listener );
@@ -153,6 +152,18 @@ class NumberCardContainer extends Node {
     } );
   }
 
+  sendToHomeCell( numberCardNode: NumberCardNode, animate: boolean = true ) {
+    const homeIndex = this.cardNodeCells.indexOf( numberCardNode );
+    const homePosition = new Vector2( getCardPositionX( homeIndex ), 0 );
+
+    if ( animate ) {
+      numberCardNode.animateTo( homePosition, 0.5 );
+    }
+    else {
+      numberCardNode.positionProperty.value = homePosition;
+    }
+  }
+
   getClosestCell( x: number ) {
 
     // Find the spot the dragged card is closest to
@@ -182,16 +193,9 @@ class NumberCardContainer extends Node {
     this.cardNodeCells.length = 0;
     this.cardNodeCells.push( ...sorted );
 
-    for ( let i = 0; i < sorted.length; i++ ) {
-      const cardNode = sorted[ i ];
-
-      const destination = new Vector2( getCardPositionX( i ), 0 );
-
-      // speed = distance/time
-      // time = distance/speed
-      const time = 0.4;
-      cardNode.animateTo( destination, time );
-    }
+    this.cardNodeCells.forEach( numberCardNode => {
+      this.sendToHomeCell( numberCardNode );
+    } );
   }
 
   getDragRange() {
