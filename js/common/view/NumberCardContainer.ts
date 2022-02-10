@@ -20,6 +20,7 @@ import Range from '../../../../dot/js/Range.js';
 
 // constants
 const CARD_SPACING = 10;
+const getCardPositionX = ( index: number ) => index * ( NumberCardNode.CARD_WIDTH + CARD_SPACING );
 
 type NumberCardContainerSelfOptions = {};
 export type NumberCardOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
@@ -54,7 +55,7 @@ class NumberCardContainer extends Node {
 
       const listener = ( value: number | null ) => {
 
-        if ( value !== null && !this.getCardNode( casObject ) ) {
+        if ( value !== null && !this.getNumberCardNode( casObject ) ) {
 
           // TODO: Get rid of type annotation once PhetioGroup is TS
           const numberCardNode: NumberCardNode = numberCardGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject );
@@ -129,16 +130,16 @@ class NumberCardContainer extends Node {
     model.objectGroup.elementCreatedEmitter.addListener( objectCreatedListener );
 
     model.objectGroup.elementDisposedEmitter.addListener( casObject => {
-      const viewNode = this.getCardNode( casObject );
+      const numberCardNode = this.getNumberCardNode( casObject );
 
       // TODO: This is failing in the PhET-iO state wrapper.
       // TODO: Solve this by creating CardModelElements which are stateful.  This will solve the problem
       // because the state-setting order defers all properties until after groups are set.
       // TODO: We tried workarounds in PropertyStateHandler#61 with dontDefer, but that isn't general
 
-      // viewNode may not exist if the ball was still in the air
-      if ( viewNode ) {
-        numberCardGroup.disposeElement( viewNode );
+      // numberCardNode may not exist if the ball was still in the air
+      if ( numberCardNode ) {
+        numberCardGroup.disposeElement( numberCardNode );
       }
     } );
 
@@ -149,7 +150,7 @@ class NumberCardContainer extends Node {
     } );
   }
 
-  sendToHomeCell( numberCardNode: NumberCardNode, animate: boolean = true ) {
+  sendToHomeCell( numberCardNode: NumberCardNode, animate: boolean = true ): void {
     const homeIndex = this.cardNodeCells.indexOf( numberCardNode );
     const homePosition = new Vector2( getCardPositionX( homeIndex ), 0 );
 
@@ -161,29 +162,31 @@ class NumberCardContainer extends Node {
     }
   }
 
-  getClosestCell( x: number ) {
+  /**
+   * Find the cell the dragged card is closest to
+   */
+  getClosestCell( x: number ): number {
 
-    // Find the spot the dragged card is closest to
-    let bestMatch = 0;
-    let bestDistance = Number.POSITIVE_INFINITY;
+    let closestCell = 0;
+    let closestDistance = Number.POSITIVE_INFINITY;
 
     for ( let i = 0; i < this.cardNodeCells.length; i++ ) {
       const proposedX = getCardPositionX( i );
       const distance = Math.abs( x - proposedX );
-      if ( distance < bestDistance ) {
-        bestMatch = i;
-        bestDistance = distance;
+      if ( distance < closestDistance ) {
+        closestCell = i;
+        closestDistance = distance;
       }
     }
 
-    return bestMatch;
+    return closestCell;
   }
 
-  getCardNode( casObject: CASObject ) {
-    return this.cardNodeCells.find( cardNode => cardNode.casObject === casObject );
+  getNumberCardNode( casObject: CASObject ): NumberCardNode | null {
+    return this.cardNodeCells.find( cardNode => cardNode.casObject === casObject ) || null;
   }
 
-  sortData() {
+  sortData(): void {
 
     // If the card is visible, the value property should be non-null
     const sorted = _.sortBy( this.cardNodeCells, cardNode => cardNode.casObject.valueProperty.value );
@@ -195,18 +198,15 @@ class NumberCardContainer extends Node {
     } );
   }
 
-  getDragRange() {
+  getDragRange(): Range {
     const maxX = this.cardNodeCells.length > 0 ? getCardPositionX( this.cardNodeCells.length - 1 ) : 0;
     return new Range( 0, maxX );
   }
 
-  reset() {
+  reset(): void {
     this.cardNodeCells.length = 0;
   }
 }
-
-const distanceBetweenCards = NumberCardNode.CARD_WIDTH + CARD_SPACING;
-const getCardPositionX = ( index: number ) => index * distanceBetweenCards;
 
 centerAndSpread.register( 'NumberCardContainer', NumberCardContainer );
 export default NumberCardContainer;
