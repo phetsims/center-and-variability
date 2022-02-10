@@ -35,9 +35,11 @@ export type CASObjectOptions =
 
 class CASObject extends PhetioObject {
 
-  // When dragging, the object snaps to each tickmark
+  // Continuous value for the drag listener. When dragging, the object snaps to each tickmark
   readonly dragPositionProperty: Vector2Property;
-  readonly positionProperty: Vector2Property; // in model coordinates
+
+  // Continuous position during animation. After landing, it's discrete.
+  readonly positionProperty: Vector2Property;
   readonly velocityProperty: Vector2Property;
   readonly isAnimatingProperty: BooleanProperty;
   static CASObjectIO: IOType;
