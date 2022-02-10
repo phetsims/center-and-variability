@@ -14,15 +14,15 @@ import { NodeOptions, Text } from '../../../../scenery/js/imports.js';
 import CASModel from '../model/CASModel.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 
-type TopRepresentationCheckboxPanelSelfOptions = {};
+type TopRepresentationCheckboxGroupSelfOptions = {};
 type VerticalCheckboxGroupOptions = NodeOptions; // TODO: Add Options in VerticalCheckboxGroup
-export type TopRepresentationCheckboxPanelOptions = TopRepresentationCheckboxPanelSelfOptions & VerticalCheckboxGroupOptions;
+export type TopRepresentationCheckboxGroupOptions = TopRepresentationCheckboxGroupSelfOptions & VerticalCheckboxGroupOptions;
 
-class TopRepresentationCheckboxPanel extends VerticalCheckboxGroup {
+class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
-  constructor( model: CASModel, providedOptions?: TopRepresentationCheckboxPanelOptions ) {
+  constructor( model: CASModel, providedOptions?: TopRepresentationCheckboxGroupOptions ) {
 
-    const options = optionize<TopRepresentationCheckboxPanelOptions, TopRepresentationCheckboxPanelSelfOptions, VerticalCheckboxGroupOptions>( {}, providedOptions );
+    const options = optionize<TopRepresentationCheckboxGroupOptions, TopRepresentationCheckboxGroupSelfOptions, VerticalCheckboxGroupOptions>( {}, providedOptions );
 
     const items = [ {
       node: new Text( centerAndSpreadStrings.sortData ),
@@ -32,5 +32,5 @@ class TopRepresentationCheckboxPanel extends VerticalCheckboxGroup {
   }
 }
 
-centerAndSpread.register( 'TopRepresentationCheckboxPanel', TopRepresentationCheckboxPanel );
-export default TopRepresentationCheckboxPanel;
+centerAndSpread.register( 'TopRepresentationCheckboxGroup', TopRepresentationCheckboxGroup );
+export default TopRepresentationCheckboxGroup;

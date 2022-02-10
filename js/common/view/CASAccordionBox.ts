@@ -17,7 +17,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import centerAndSpread from '../../centerAndSpread.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import TopRepresentationCheckboxPanel from './TopRepresentationCheckboxPanel.js';
+import TopRepresentationCheckboxGroup from './TopRepresentationCheckboxGroup.js';
 import CASModel from '../model/CASModel.js';
 
 // types
@@ -60,7 +60,7 @@ class CASAccordionBox extends AccordionBox {
     } );
 
     // TODO: Does this belong here, or move it to the call site?
-    const checkboxPanel = new TopRepresentationCheckboxPanel( model );
+    const checkboxPanel = new TopRepresentationCheckboxGroup( model );
     checkboxPanel.right = backgroundRectangle.right;
 
     backgroundRectangle.addChild( checkboxPanel );
