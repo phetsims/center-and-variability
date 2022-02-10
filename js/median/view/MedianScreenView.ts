@@ -57,7 +57,12 @@ class MedianScreenView extends SoccerScreenView {
     this.addChild( this.objectsLayer );
   }
 
-  reset() {
+  step( dt: number ): void {
+    super.step( dt );
+    this.numberCardContainer.step( dt );
+  }
+
+  reset(): void {
     super.reset();
     this.numberCardContainer.reset();
     this.dataAccordionBox.reset();

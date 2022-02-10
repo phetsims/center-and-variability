@@ -8,7 +8,7 @@
  */
 
 import centerAndSpread from '../../centerAndSpread.js';
-import { Node, NodeOptions } from '../../../../scenery/js/imports.js';
+import { Color, Node, NodeOptions, Rectangle } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CASModel from '../model/CASModel.js';
@@ -17,6 +17,8 @@ import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
 import NumberCardNode from './NumberCardNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Range from '../../../../dot/js/Range.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import Utils from '../../../../dot/js/Utils.js';
 
 // constants
 const CARD_SPACING = 10;
@@ -29,6 +31,8 @@ class NumberCardContainer extends Node {
   private readonly cardNodeCells: NumberCardNode[];
   private readonly model: CASModel;
   private readonly numberCardGroup: PhetioGroup<NumberCardNode>;
+  private readonly areCardsSortedProperty: BooleanProperty;
+  private readonly medianBarsNode: Node;
 
   constructor( model: CASModel, providedOptions?: NumberCardOptions ) {
 
@@ -44,6 +48,8 @@ class NumberCardContainer extends Node {
     // The cells linearly map to locations across the screen.
     this.cardNodeCells = [];
 
+    this.areCardsSortedProperty = new BooleanProperty( false );
+
     this.numberCardGroup = new PhetioGroup<NumberCardNode>( ( tandem, casObject ) => {
       return new NumberCardNode( casObject, new Vector2( 0, 0 ), () => this.getDragRange(), {
         tandem: tandem
@@ -53,6 +59,12 @@ class NumberCardContainer extends Node {
       tandem: options.tandem.createTandem( 'numberCardNodeGroup' ),
       supportsDynamicState: false
     } );
+
+    // TODO: Redraw as real u bars
+    this.medianBarsNode = new Rectangle( 0, 0, 200, 10, {
+      fill: Color.RED
+    } );
+    this.addChild( this.medianBarsNode );
 
     // TODO: If we eventually have a model PhetioGroup for the cards, we will listen to them instead.
     const objectCreatedListener = this.createObjectCreatedListener();
@@ -135,8 +147,17 @@ class NumberCardContainer extends Node {
     return objectCreatedListener;
   }
 
+  step( dt: number ): void {
+    this.medianBarsNode.visible = this.isDataSorted() && this.cardNodeCells.length > 0;
+
+    if ( this.medianBarsNode.visible ) {
+      this.medianBarsNode.center =
+        this.cardNodeCells[ Utils.roundSymmetric( this.cardNodeCells.length / 2 ) ].centerBottom.plusXY( 0, 10 );
+    }
+  }
+
   // The listener which is linked to the numberCardNode.positionProperty
-  createDragPositionListener( numberCardNode: NumberCardNode ) {
+  createDragPositionListener( numberCardNode: NumberCardNode ): ( position: Vector2 ) => void {
     return ( position: Vector2 ) => {
       if ( numberCardNode.dragListener.isPressedProperty.value ) {
 

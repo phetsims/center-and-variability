@@ -16,7 +16,9 @@ import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 
 type TopRepresentationCheckboxGroupSelfOptions = {};
 type VerticalCheckboxGroupOptions = NodeOptions; // TODO: Add Options in VerticalCheckboxGroup
-export type TopRepresentationCheckboxGroupOptions = TopRepresentationCheckboxGroupSelfOptions & VerticalCheckboxGroupOptions;
+export type TopRepresentationCheckboxGroupOptions =
+  TopRepresentationCheckboxGroupSelfOptions
+  & VerticalCheckboxGroupOptions;
 
 class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
@@ -24,9 +26,13 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
     const options = optionize<TopRepresentationCheckboxGroupOptions, TopRepresentationCheckboxGroupSelfOptions, VerticalCheckboxGroupOptions>( {}, providedOptions );
 
+    // TODO: Checkbox font should be bigger.
     const items = [ {
       node: new Text( centerAndSpreadStrings.sortData ),
       property: model.isSortingDataProperty
+    }, {
+      node: new Text( 'Show Median' ),
+      property: model.isShowingMedianProperty
     } ];
     super( items, options );
   }

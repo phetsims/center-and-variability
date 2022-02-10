@@ -32,6 +32,7 @@ class CASModel {
   readonly objectType: CASObjectType;
   readonly rangeProperty: Property<Range>;
   readonly isSortingDataProperty: BooleanProperty;
+  readonly isShowingMedianProperty: BooleanProperty;
 
   constructor( objectType: CASObjectType, providedOptions: CASModelOptions ) {
 
@@ -56,6 +57,9 @@ class CASModel {
 
     this.isSortingDataProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isSortingDataProperty' )
+    } );
+    this.isShowingMedianProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isShowingMedianProperty' )
     } );
 
     // Populate with initial objects for debugging
