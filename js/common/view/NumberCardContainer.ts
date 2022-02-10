@@ -159,9 +159,31 @@ class NumberCardContainer extends Node {
 
           // Just animated the displaced occupant
           this.sendToHomeCell( currentOccupant, true );
+
+          // See if the user unsorted the data.  If so, uncheck the "Sort Data" checkbox
+          if ( this.model.isSortingDataProperty.value && !this.isDataSorted() ) {
+            this.model.isSortingDataProperty.value = false;
+          }
         }
       }
     };
+  }
+
+  /**
+   * Check if all of the data is in order, by using the cells associated with the card node.  Note that means
+   * it is using the cell the card may be animating to.
+   */
+  isDataSorted() {
+    let lastValue = null;
+    for ( let i = 0; i < this.cardNodeCells.length; i++ ) {
+      const value = this.cardNodeCells[ i ].casObject.valueProperty.value!;
+
+      if ( lastValue !== null && value < lastValue ) {
+        return false;
+      }
+      lastValue = value;
+    }
+    return true;
   }
 
   sendToHomeCell( numberCardNode: NumberCardNode, animate = true, duration = 0.3 ): void {

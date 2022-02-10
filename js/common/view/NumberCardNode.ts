@@ -22,6 +22,7 @@ import Easing from '../../../../twixt/js/Easing.js';
 type NumberCardSelfOptions = {};
 export type NumberCardOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
 
+// TODO: Rename to CardNode
 class NumberCardNode extends Node {
   readonly positionProperty: Vector2Property;
   readonly dragListener: DragListener;
