@@ -81,7 +81,7 @@ class NumberCardContainer extends Node {
                 this.cardNodeCells[ originalCell ] = currentOccupant;
 
                 // Just animated the displaced occupant
-                this.sendToHomeCell( currentOccupant );
+                this.sendToHomeCell( currentOccupant, true );
               }
             }
           } );
@@ -89,7 +89,7 @@ class NumberCardContainer extends Node {
           // When a card is dropped, send it to its home cell
           numberCardNode.dragListener.isPressedProperty.link( isPressed => {
             if ( !isPressed ) {
-              this.sendToHomeCell( numberCardNode );
+              this.sendToHomeCell( numberCardNode, true, 0.2 );
             }
           } );
 
@@ -150,12 +150,12 @@ class NumberCardContainer extends Node {
     } );
   }
 
-  sendToHomeCell( numberCardNode: NumberCardNode, animate: boolean = true ): void {
+  sendToHomeCell( numberCardNode: NumberCardNode, animate = true, duration = 0.3 ): void {
     const homeIndex = this.cardNodeCells.indexOf( numberCardNode );
     const homePosition = new Vector2( getCardPositionX( homeIndex ), 0 );
 
     if ( animate ) {
-      numberCardNode.animateTo( homePosition, 0.5 );
+      numberCardNode.animateTo( homePosition, duration );
     }
     else {
       numberCardNode.positionProperty.value = homePosition;
@@ -194,7 +194,7 @@ class NumberCardContainer extends Node {
     this.cardNodeCells.push( ...sorted );
 
     this.cardNodeCells.forEach( numberCardNode => {
-      this.sendToHomeCell( numberCardNode );
+      this.sendToHomeCell( numberCardNode, true, 0.5 );
     } );
   }
 
