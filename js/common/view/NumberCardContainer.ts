@@ -57,11 +57,11 @@ class NumberCardContainer extends Node {
         if ( value !== null && !this.getCardNode( casObject ) ) {
 
           // TODO: Get rid of type annotation once PhetioGroup is TS
-          // TODO: Compute the correct cell index on init
           const numberCardNode: NumberCardNode = numberCardGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject );
           this.addChild( numberCardNode );
 
           // Update the position of all cards (via animation) whenever any card is dragged
+          // TODO question from CK: would it be nicer if this linked to numberCardNode.dragPositionProperty?
           numberCardNode.positionProperty.link( position => {
             if ( numberCardNode.dragListener.isPressedProperty.value ) {
 
@@ -91,9 +91,6 @@ class NumberCardContainer extends Node {
               this.sendToHomeCell( numberCardNode );
             }
           } );
-
-          // TODO: Better logic around this positioning.  This is so it sorts last.
-          // TODO: It would be better to sort it into the nearest open spot, even if the user dragged a card far to the right.
 
           let targetIndex = this.cardNodeCells.length;
           if ( model.isSortingDataProperty.value ) {
