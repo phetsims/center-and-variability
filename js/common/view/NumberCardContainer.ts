@@ -64,7 +64,7 @@ class NumberCardContainer extends Node {
     this.medianBarsNode = new Rectangle( 0, 0, 200, 10, {
       fill: Color.RED
     } );
-    this.addChild( this.medianBarsNode );
+    // this.addChild( this.medianBarsNode );
 
     // TODO: If we eventually have a model PhetioGroup for the cards, we will listen to them instead.
     const objectCreatedListener = this.createObjectCreatedListener();
@@ -148,12 +148,14 @@ class NumberCardContainer extends Node {
   }
 
   step( dt: number ): void {
-    this.medianBarsNode.visible = this.isDataSorted() && this.cardNodeCells.length > 0;
 
-    if ( this.medianBarsNode.visible ) {
-      this.medianBarsNode.center =
-        this.cardNodeCells[ Utils.roundSymmetric( this.cardNodeCells.length / 2 ) ].centerBottom.plusXY( 0, 10 );
-    }
+    // TODO: the median bars working
+    // this.medianBarsNode.visible = this.isDataSorted() && this.cardNodeCells.length > 0;
+    //
+    // if ( this.medianBarsNode.visible ) {
+    //   this.medianBarsNode.center =
+    //     this.cardNodeCells[ Utils.roundSymmetric( this.cardNodeCells.length / 2 ) ].centerBottom.plusXY( 0, 10 );
+    // }
   }
 
   // The listener which is linked to the numberCardNode.positionProperty
