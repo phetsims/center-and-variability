@@ -86,13 +86,12 @@ class NumberCardContainer extends Node {
             }
           } );
 
-          // TODO: NEXT, drop a card into its spot
-          // When a card is dropped, update all the card positions
-          // numberCardNode.dragListener.isPressedProperty.link( isPressed => {
-          //   if ( !isPressed ) {
-          //     this.updateDroppedCardPositions();
-          //   }
-          // } );
+          // When a card is dropped, send it to its home cell
+          numberCardNode.dragListener.isPressedProperty.link( isPressed => {
+            if ( !isPressed ) {
+              numberCardNode.animateTo( new Vector2( getCardPositionX( this.cardNodeCells.indexOf( numberCardNode ) ), 0 ), 0.5 );
+            }
+          } );
 
           // TODO: Better logic around this positioning.  This is so it sorts last.
           // TODO: It would be better to sort it into the nearest open spot, even if the user dragged a card far to the right.
