@@ -25,7 +25,7 @@ type NumberCardContainerSelfOptions = {};
 export type NumberCardOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
 
 class NumberCardContainer extends Node {
-  private readonly cardNodeMap: Map<CASObject, NumberCardNode>;
+  private cardNodeCells: NumberCardNode[];
 
   constructor( model: CASModel, providedOptions?: NumberCardOptions ) {
 
@@ -35,16 +35,12 @@ class NumberCardContainer extends Node {
 
     super( options );
 
-    this.cardNodeMap = new Map<CASObject, NumberCardNode>();
-
-    const getDragRange = () => {
-      const numberCardNodes = this.getVisibleNumberCardNodes();
-      const maxX = numberCardNodes.length > 0 ? getCardPositionX( numberCardNodes.length - 1 ) : 0;
-      return new Range( 0, maxX );
-    };
+    // Each card is associated with one "cell", no two cards can be associated with the same cell.  The leftmost cell is 0.
+    // The cells linearly map to locations across the screen.
+    this.cardNodeCells = [];
 
     const numberCardGroup = new PhetioGroup<NumberCardNode>( ( tandem, casObject ) => {
-      return new NumberCardNode( casObject, new Vector2( 0, 0 ), getDragRange, {
+      return new NumberCardNode( casObject, new Vector2( 0, 0 ), () => this.getDragRange(), {
         tandem: tandem
       } );
     }, [ model.objectGroup.archetype ], {
@@ -56,57 +52,81 @@ class NumberCardContainer extends Node {
     // TODO: If we eventually have a model PhetioGroup for the cards, we will listen to them instead.
     const objectCreatedListener = ( casObject: CASObject ) => {
 
-      // TODO: Get rid of type annotation once PhetioGroup is TS
-      const numberCardNode: NumberCardNode = numberCardGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject );
-      numberCardNode.visible = false;
-      this.addChild( numberCardNode );
-      this.cardNodeMap.set( casObject, numberCardNode );
-
-      numberCardNode.positionProperty.link( position => {
-
-        // Update the position of all cards (via animation) whenever any card is dragged
-        numberCardNode.dragListener.isPressedProperty.value && this.updateDroppedCardPositions();
-      } );
-      numberCardNode.dragListener.isPressedProperty.link( isPressed => {
-        if ( !isPressed ) {
-          this.updateDroppedCardPositions();
-        }
-      } );
-
       const listener = ( value: number | null ) => {
-        if ( value !== null ) {
+
+        if ( value !== null && !this.getCardNode( casObject ) ) {
+
+          // TODO: Get rid of type annotation once PhetioGroup is TS
+          // TODO: Compute the correct cell index on init
+          const numberCardNode: NumberCardNode = numberCardGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject );
+          this.addChild( numberCardNode );
+
+          // Update the position of all cards (via animation) whenever any card is dragged
+          numberCardNode.positionProperty.link( position => {
+            // numberCardNode.dragListener.isPressedProperty.value && this.updateDroppedCardPositions();
+            if ( numberCardNode.dragListener.isPressedProperty.value ) {
+
+              const originalCell = this.cardNodeCells.indexOf( numberCardNode );
+
+              // Find the closest cell to the dragged card
+              const closestCell = this.getClosestCell( position.x );
+
+              const currentOccupant = this.cardNodeCells[ closestCell ];
+
+              // No-op if the dragged card is near its home cell
+              if ( currentOccupant !== numberCardNode ) {
+
+                // it's just a pairwise swap
+                this.cardNodeCells[ closestCell ] = numberCardNode;
+                this.cardNodeCells[ originalCell ] = currentOccupant;
+
+                // Just animated the displaced occupant
+                currentOccupant.animateTo( new Vector2( getCardPositionX( originalCell ), 0 ), 0.5 );
+              }
+            }
+          } );
+
+          // TODO: NEXT, drop a card into its spot
+          // When a card is dropped, update all the card positions
+          // numberCardNode.dragListener.isPressedProperty.link( isPressed => {
+          //   if ( !isPressed ) {
+          //     this.updateDroppedCardPositions();
+          //   }
+          // } );
 
           // TODO: Better logic around this positioning.  This is so it sorts last.
           // TODO: It would be better to sort it into the nearest open spot, even if the user dragged a card far to the right.
 
-          let positionX = getCardPositionX( this.getVisibleNumberCardNodes().length ) + distanceBetweenCards / 2;
+          let targetIndex = this.cardNodeCells.length;
           if ( model.isSortingDataProperty.value ) {
             const newValue = numberCardNode.casObject.valueProperty.value!;
-            const existingCardNodesWithValue = this.getVisibleNumberCardNodes().filter(
-              cardNode => cardNode.casObject.valueProperty.value! <= newValue );
+            const existingLowerCardNodes = this.cardNodeCells.filter( cardNode => cardNode.casObject.valueProperty.value! <= newValue );
 
-            const sameValueCards = existingCardNodesWithValue.map( cardNode => cardNode.positionProperty.value.x );
-            const largestXValue = sameValueCards.length > 0 ? _.max( sameValueCards ) : -10000;
-
-            positionX = largestXValue! + distanceBetweenCards / 2;
+            const lowerNeighborCardNode = _.maxBy( existingLowerCardNodes, cardNode => this.cardNodeCells.indexOf( cardNode ) );
+            targetIndex = lowerNeighborCardNode ? this.cardNodeCells.indexOf( lowerNeighborCardNode ) + 1 : 0;
           }
-          numberCardNode.positionProperty.value = new Vector2( positionX, 0 );
 
-          numberCardNode.visible = true;
-          this.updateDroppedCardPositions( [ numberCardNode ] );
+          this.cardNodeCells.splice( targetIndex, 0, numberCardNode );
+          numberCardNode.positionProperty.value = new Vector2( getCardPositionX( this.cardNodeCells.indexOf( numberCardNode ) ), 0 ); // TODO copied from 125!!!
+
+          // Animate all displaced cards
+          // currentOccupant.animateTo( new Vector2( getCardPositionX( originalCell ), 0 ), 0.5 );
+          for ( let i = targetIndex; i < this.cardNodeCells.length; i++ ) {
+            this.cardNodeCells[ i ].animateTo( new Vector2( getCardPositionX( i ), 0 ), 0.5 );
+          }
+
           numberCardNode.positionProperty.value = numberCardNode.translation;
 
-          // Only show the card at the moment valueProperty becomes non-null.  After that, the card updates but is
-          // always visible.
+          // Only create the card once, then no need to listen further
           casObject.valueProperty.unlink( listener );
         }
       };
       casObject.valueProperty.link( listener );
 
       // A ball landed OR a value changed
-      numberCardNode.casObject.valueProperty.link( value => {
+      casObject.valueProperty.link( value => {
         if ( model.isSortingDataProperty.value && value !== null ) {
-          sortData();
+          this.sortData();
         }
       } );
     };
@@ -114,7 +134,7 @@ class NumberCardContainer extends Node {
     model.objectGroup.elementCreatedEmitter.addListener( objectCreatedListener );
 
     model.objectGroup.elementDisposedEmitter.addListener( casObject => {
-      const viewNode = this.cardNodeMap.get( casObject )!;
+      const viewNode = this.getCardNode( casObject );
 
       // TODO: This is failing in the PhET-iO state wrapper.
       // TODO: Solve this by creating CardModelElements which are stateful.  This will solve the problem
@@ -127,112 +147,61 @@ class NumberCardContainer extends Node {
       }
     } );
 
-    const sortData = () => {
-      const visibleCardNodes = this.getVisibleNumberCardNodes();
-
-      // If the card is visible, the value property should be non-null
-      const sorted = _.sortBy( visibleCardNodes, cardNode => cardNode.casObject.valueProperty.value );
-
-      for ( let i = 0; i < sorted.length; i++ ) {
-        const cardNode = sorted[ i ];
-
-        const destination = new Vector2( getCardPositionX( i ), 0 );
-
-        // speed = distance/time
-        // time = distance/speed
-        const time = 0.4;
-        cardNode.animateTo( destination, time );
-      }
-    };
-
     model.isSortingDataProperty.link( isSortingData => {
       if ( isSortingData ) {
-        sortData();
+        this.sortData();
       }
     } );
   }
 
-  // TODO: Improve handling around "cells" -- NumberCards knowing which spot each card occupies
-  /**
-   * Animate all non-dragged cards to the nearest open cell, while leaving the spot closest to any dragged cards 
-   * available.
-   * 
-   * @param cardsToImmediatelyMove
-   */
-  updateDroppedCardPositions( cardsToImmediatelyMove: NumberCardNode[] = [] ) {
+  getClosestCell( x: number ) {
 
-    // Only consider the visible cards
-    const numberCardNodes = this.getVisibleNumberCardNodes();
-    if ( numberCardNodes.length > 0 ) {
+    // Find the spot the dragged card is closest to
+    let bestMatch = 0;
+    let bestDistance = Number.POSITIVE_INFINITY;
 
-      const sorted = _.sortBy( numberCardNodes, this.sortRule.bind( this ) );
-      for ( let i = 0; i < sorted.length; i++ ) {
-        if ( !sorted[ i ].dragListener.isPressed ) {
-
-          const cardNode = sorted[ i ];
-
-          const destination = new Vector2( getCardPositionX( i ), 0 );
-
-          if ( cardsToImmediatelyMove.includes( cardNode ) ) {
-            cardNode.positionProperty.value = destination;
-          }
-          else {
-            cardNode.animateTo( destination, 0.3 );
-          }
-        }
+    for ( let i = 0; i < this.cardNodeCells.length; i++ ) {
+      const proposedX = getCardPositionX( i );
+      const distance = Math.abs( x - proposedX );
+      if ( distance < bestDistance ) {
+        bestMatch = i;
+        bestDistance = distance;
       }
+    }
+
+    return bestMatch;
+  }
+
+  getCardNode( casObject: CASObject ) {
+    return this.cardNodeCells.find( cardNode => cardNode.casObject === casObject );
+  }
+
+  sortData() {
+
+    // If the card is visible, the value property should be non-null
+    const sorted = _.sortBy( this.cardNodeCells, cardNode => cardNode.casObject.valueProperty.value );
+    this.cardNodeCells.length = 0;
+    this.cardNodeCells.push( ...sorted );
+
+    for ( let i = 0; i < sorted.length; i++ ) {
+      const cardNode = sorted[ i ];
+
+      const destination = new Vector2( getCardPositionX( i ), 0 );
+
+      // speed = distance/time
+      // time = distance/speed
+      const time = 0.4;
+      cardNode.animateTo( destination, time );
     }
   }
 
-  getVisibleNumberCardNodes() {
-    return Array.from( this.cardNodeMap.values() ).filter( cardNode => cardNode.casObject.valueProperty.value !== null );
-  }
-
-  sortRule( cardNode: NumberCardNode ) {
-
-    if ( cardNode.dragListener.isPressed ) {
-
-      // Find the spot the dragged card is closest to
-      let bestMatch = 0;
-      let bestDistance = Number.POSITIVE_INFINITY;
-
-      for ( let i = 0; i < this.getVisibleNumberCardNodes().length; i++ ) {
-        const proposedX = getCardPositionX( i );
-        const distance = Math.abs( cardNode.positionProperty.value.x - proposedX );
-        if ( distance < bestDistance ) {
-          bestMatch = proposedX;
-          bestDistance = distance;
-        }
-      }
-
-      if ( cardNode.dragListener.isPressed ) {
-
-        // Dragging to the right
-        if ( cardNode.positionProperty.value.x < bestMatch ) {
-
-          // To break the tie, give precedence to the dragged card
-          bestMatch += 1E-6;
-        }
-        else {
-
-          // dragging to the left
-          bestMatch -= 1E-6;
-        }
-      }
-      return bestMatch;
-    }
-    else {
-      if ( cardNode.animationTo ) {
-        return cardNode.animationTo.x;
-      }
-      else {
-        return cardNode.positionProperty.value.x;
-      }
-    }
+  getDragRange() {
+    const maxX = this.cardNodeCells.length > 0 ? getCardPositionX( this.cardNodeCells.length - 1 ) : 0;
+    return new Range( 0, maxX );
   }
 
   reset() {
-    this.cardNodeMap.clear();
+    this.cardNodeCells.length = 0;
   }
 }
 
