@@ -18,6 +18,10 @@ import NumberCardNode from './NumberCardNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Range from '../../../../dot/js/Range.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import IOType from '../../../../tandem/js/types/IOType.js';
+import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
+import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
+import CardModel from '../model/CardModel.js';
 
 // constants
 const CARD_SPACING = 10;
@@ -27,16 +31,19 @@ type NumberCardContainerSelfOptions = {};
 export type NumberCardOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
 
 class NumberCardContainer extends Node {
-  private readonly cardNodeCells: NumberCardNode[];
+  public readonly cardNodeCells: NumberCardNode[];
   private readonly model: CASModel;
   private readonly numberCardGroup: PhetioGroup<NumberCardNode>;
   private readonly areCardsSortedProperty: BooleanProperty;
   private readonly medianBarsNode: Node;
+  private readonly cardModelGroup: PhetioGroup<CardModel>;
 
   constructor( model: CASModel, providedOptions?: NumberCardOptions ) {
 
     const options = optionize<NumberCardOptions, NumberCardContainerSelfOptions, NodeOptions>( {
-      tandem: Tandem.REQUIRED
+      tandem: Tandem.REQUIRED,
+      phetioType: NumberCardContainerIO,
+      phetioState: true
     }, providedOptions );
 
     super( options );
@@ -49,8 +56,20 @@ class NumberCardContainer extends Node {
 
     this.areCardsSortedProperty = new BooleanProperty( false );
 
-    this.numberCardGroup = new PhetioGroup<NumberCardNode>( ( tandem, casObject ) => {
-      return new NumberCardNode( casObject, new Vector2( 0, 0 ), () => this.getDragRange(), {
+    // For PhET-iO State, it is difficult to power 2 views from one model, see https://github.com/phetsims/phet-io/issues/1688#issuecomment-1032967603
+    // Therefore, we introduce a minimial model element for the cards, so they can be managed by the state
+    this.cardModelGroup = new PhetioGroup<CardModel>( ( tandem, casObject ) => {
+      assert && assert( casObject, 'casObject should be defined' );
+      return new CardModel( casObject, {
+        tandem: tandem
+      } );
+    }, [ model.objectGroup.archetype ], {
+      phetioType: PhetioGroup.PhetioGroupIO( CardModel.CardModelIO ),
+      tandem: options.tandem.createTandem( 'cardModelGroup' )
+    } );
+
+    this.numberCardGroup = new PhetioGroup<NumberCardNode>( ( tandem, cardModel ) => {
+      return new NumberCardNode( cardModel.casObject, new Vector2( 0, 0 ), () => this.getDragRange(), {
         tandem: tandem
       } );
     }, [ model.objectGroup.archetype ], {
@@ -70,13 +89,8 @@ class NumberCardContainer extends Node {
     model.objectGroup.forEach( objectCreatedListener );
     model.objectGroup.elementCreatedEmitter.addListener( objectCreatedListener );
 
-    model.objectGroup.elementDisposedEmitter.addListener( casObject => {
-      const numberCardNode = this.getNumberCardNode( casObject );
-
-      // TODO: This is failing in the PhET-iO state wrapper.
-      // TODO: Solve this by creating CardModelElements which are stateful.  This will solve the problem
-      // because the state-setting order defers all properties until after groups are set.
-      // TODO: We tried workarounds in PropertyStateHandler#61 with dontDefer, but that isn't general
+    this.cardModelGroup.elementDisposedEmitter.addListener( cardModel => {
+      const numberCardNode = this.getNumberCardNode( cardModel.casObject );
 
       // numberCardNode may not exist if the ball was still in the air
       if ( numberCardNode ) {
@@ -89,6 +103,42 @@ class NumberCardContainer extends Node {
         this.sortData();
       }
     } );
+
+    this.cardModelGroup.elementCreatedEmitter.addListener( cardModel => {
+
+      // TODO: Get rid of type annotation once PhetioGroup is TS
+      const numberCardNode: NumberCardNode = this.numberCardGroup.createCorrespondingGroupElement( cardModel.tandem.name, cardModel );
+      this.addChild( numberCardNode );
+
+      // Update the position of all cards (via animation) whenever any card is dragged
+      numberCardNode.positionProperty.link( this.createDragPositionListener( numberCardNode ) );
+
+      // When a card is dropped, send it to its home cell
+      numberCardNode.dragListener.isPressedProperty.link( isPressed => {
+        if ( !isPressed && !phet.joist.sim.isSettingPhetioStateProperty.value ) {
+          this.sendToHomeCell( numberCardNode, true, 0.2 );
+        }
+      } );
+
+      let targetIndex = this.cardNodeCells.length;
+      if ( this.model.isSortingDataProperty.value ) {
+        const newValue = numberCardNode.casObject.valueProperty.value!;
+        const existingLowerCardNodes = this.cardNodeCells.filter( cardNode => cardNode.casObject.valueProperty.value! <= newValue );
+
+        const lowerNeighborCardNode = _.maxBy( existingLowerCardNodes, cardNode => this.cardNodeCells.indexOf( cardNode ) );
+        targetIndex = lowerNeighborCardNode ? this.cardNodeCells.indexOf( lowerNeighborCardNode ) + 1 : 0;
+      }
+
+      if ( !phet.joist.sim.isSettingPhetioStateProperty.value ) {
+        this.cardNodeCells.splice( targetIndex, 0, numberCardNode );
+        this.sendToHomeCell( numberCardNode, false );
+
+        // Animate all displaced cards
+        for ( let i = targetIndex; i < this.cardNodeCells.length; i++ ) {
+          this.sendToHomeCell( this.cardNodeCells[ i ] );
+        }
+      }
+    } );
   }
 
   // Listen for when objects are created, also called for pre-existing objects.
@@ -99,39 +149,12 @@ class NumberCardContainer extends Node {
 
         if ( value !== null && !this.getNumberCardNode( casObject ) ) {
 
-          // TODO: Get rid of type annotation once PhetioGroup is TS
-          const numberCardNode: NumberCardNode = this.numberCardGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject );
-          this.addChild( numberCardNode );
-
-          // Update the position of all cards (via animation) whenever any card is dragged
-          numberCardNode.positionProperty.link( this.createDragPositionListener( numberCardNode ) );
-
-          // When a card is dropped, send it to its home cell
-          numberCardNode.dragListener.isPressedProperty.link( isPressed => {
-            if ( !isPressed ) {
-              this.sendToHomeCell( numberCardNode, true, 0.2 );
-            }
-          } );
-
-          let targetIndex = this.cardNodeCells.length;
-          if ( this.model.isSortingDataProperty.value ) {
-            const newValue = numberCardNode.casObject.valueProperty.value!;
-            const existingLowerCardNodes = this.cardNodeCells.filter( cardNode => cardNode.casObject.valueProperty.value! <= newValue );
-
-            const lowerNeighborCardNode = _.maxBy( existingLowerCardNodes, cardNode => this.cardNodeCells.indexOf( cardNode ) );
-            targetIndex = lowerNeighborCardNode ? this.cardNodeCells.indexOf( lowerNeighborCardNode ) + 1 : 0;
-          }
-
-          this.cardNodeCells.splice( targetIndex, 0, numberCardNode );
-          this.sendToHomeCell( numberCardNode, false );
-
-          // Animate all displaced cards
-          for ( let i = targetIndex; i < this.cardNodeCells.length; i++ ) {
-            this.sendToHomeCell( this.cardNodeCells[ i ] );
-          }
+          // if ( !phet.joist.sim.isSettingPhetioStateProperty.value ) {
+          this.cardModelGroup.createNextElement( casObject );
 
           // Only create the card once, then no need to listen further
           casObject.valueProperty.unlink( listener );
+          // }
         }
       };
       casObject.valueProperty.link( listener );
@@ -253,8 +276,32 @@ class NumberCardContainer extends Node {
 
   reset(): void {
     this.cardNodeCells.length = 0;
+    this.numberCardGroup.clear();
+    this.cardModelGroup.clear();
   }
 }
+
+// Track the order of the cards as self-state, so that the downstream sim can get the cards in the desired cells
+const CardNodeReferenceIO = ReferenceIO( Node.NodeIO );
+const NumberCardContainerIO = new IOType( 'NumberCardContainerIO', {
+  valueType: NumberCardContainer,
+  toStateObject: ( n: NumberCardContainer ) => {
+    return {
+      cardNodes: n.cardNodeCells.map( cardNode => CardNodeReferenceIO.toStateObject( cardNode ) )
+    };
+  },
+  applyState: ( n: NumberCardContainer, state: any ) => {
+    const cardNodes = state.cardNodes.map( ( element: any ) => CardNodeReferenceIO.fromStateObject( element ) );
+    n.cardNodeCells.length = 0;
+    n.cardNodeCells.push( ...cardNodes );
+    n.cardNodeCells.forEach( numberCardNode => {
+      n.sendToHomeCell( numberCardNode, false );
+    } );
+  },
+  stateSchema: {
+    cardNodes: ArrayIO( ReferenceIO( CardNodeReferenceIO ) )
+  }
+} );
 
 centerAndSpread.register( 'NumberCardContainer', NumberCardContainer );
 export default NumberCardContainer;
