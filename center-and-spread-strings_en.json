@@ -15,7 +15,7 @@
     "value": "Lab"
   },
   "medianQuestion": {
-    "value": "What is the typical ball distance?"
+    "value": "What is the typical kick distance?"
   },
   "meanAndMedianQuestion": {
     "value": "How does each kick influence the mean and median?"
@@ -30,7 +30,7 @@
     "value": "Kick 5"
   },
   "data": {
-    "value": "Data (in meters)"
+    "value": "Distance (in meters)"
   },
   "sortData": {
     "value": "Sort Data"
