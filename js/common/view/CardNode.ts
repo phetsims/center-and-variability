@@ -22,8 +22,7 @@ import Easing from '../../../../twixt/js/Easing.js';
 type NumberCardSelfOptions = {};
 export type NumberCardOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
 
-// TODO: Rename to CardNode
-class NumberCardNode extends Node {
+class CardNode extends Node {
   readonly positionProperty: Vector2Property;
   readonly dragListener: DragListener;
   readonly casObject: CASObject;
@@ -35,7 +34,7 @@ class NumberCardNode extends Node {
   constructor( casObject: CASObject, position: Vector2, getDragRange: () => Range, providedOptions?: NumberCardOptions ) {
 
     const cornerRadius = 10;
-    const rectangle = new Rectangle( 0, 0, NumberCardNode.CARD_WIDTH, NumberCardNode.CARD_WIDTH, cornerRadius, cornerRadius, {
+    const rectangle = new Rectangle( 0, 0, CardNode.CARD_WIDTH, CardNode.CARD_WIDTH, cornerRadius, cornerRadius, {
       stroke: 'black',
       lineWidth: 1,
       fill: 'white'
@@ -124,5 +123,5 @@ class NumberCardNode extends Node {
   }
 }
 
-centerAndSpread.register( 'NumberCardNode', NumberCardNode );
-export default NumberCardNode;
+centerAndSpread.register( 'CardNode', CardNode );
+export default CardNode;

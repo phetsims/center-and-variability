@@ -1,7 +1,7 @@
 // Copyright 2022, University of Colorado Boulder
 
 /**
- * Manages creation, dragging, positioning of NumberCardNode instances.
+ * Manages creation, dragging, positioning of CardNode instances.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
@@ -14,7 +14,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import CASModel from '../model/CASModel.js';
 import CASObject from '../model/CASObject.js';
 import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
-import NumberCardNode from './NumberCardNode.js';
+import CardNode from './CardNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Range from '../../../../dot/js/Range.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
@@ -25,15 +25,15 @@ import CardModel from '../model/CardModel.js';
 
 // constants
 const CARD_SPACING = 10;
-const getCardPositionX = ( index: number ) => index * ( NumberCardNode.CARD_WIDTH + CARD_SPACING );
+const getCardPositionX = ( index: number ) => index * ( CardNode.CARD_WIDTH + CARD_SPACING );
 
 type NumberCardContainerSelfOptions = {};
 export type NumberCardOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
 
 class NumberCardContainer extends Node {
-  public readonly cardNodeCells: NumberCardNode[];
+  public readonly cardNodeCells: CardNode[];
   private readonly model: CASModel;
-  private readonly numberCardGroup: PhetioGroup<NumberCardNode>;
+  private readonly numberCardGroup: PhetioGroup<CardNode>;
   private readonly areCardsSortedProperty: BooleanProperty;
   private readonly medianBarsNode: Node;
   private readonly cardModelGroup: PhetioGroup<CardModel>;
@@ -68,8 +68,8 @@ class NumberCardContainer extends Node {
       tandem: options.tandem.createTandem( 'cardModelGroup' )
     } );
 
-    this.numberCardGroup = new PhetioGroup<NumberCardNode>( ( tandem, cardModel ) => {
-      return new NumberCardNode( cardModel.casObject, new Vector2( 0, 0 ), () => this.getDragRange(), {
+    this.numberCardGroup = new PhetioGroup<CardNode>( ( tandem, cardModel ) => {
+      return new CardNode( cardModel.casObject, new Vector2( 0, 0 ), () => this.getDragRange(), {
         tandem: tandem
       } );
     }, [ model.objectGroup.archetype ], {
@@ -90,11 +90,11 @@ class NumberCardContainer extends Node {
     model.objectGroup.elementCreatedEmitter.addListener( objectCreatedListener );
 
     this.cardModelGroup.elementDisposedEmitter.addListener( cardModel => {
-      const numberCardNode = this.getNumberCardNode( cardModel.casObject );
+      const cardNode = this.getNumberCardNode( cardModel.casObject );
 
-      // numberCardNode may not exist if the ball was still in the air
-      if ( numberCardNode ) {
-        this.numberCardGroup.disposeElement( numberCardNode );
+      // cardNode may not exist if the ball was still in the air
+      if ( cardNode ) {
+        this.numberCardGroup.disposeElement( cardNode );
       }
     } );
 
@@ -107,22 +107,22 @@ class NumberCardContainer extends Node {
     this.cardModelGroup.elementCreatedEmitter.addListener( cardModel => {
 
       // TODO: Get rid of type annotation once PhetioGroup is TS
-      const numberCardNode: NumberCardNode = this.numberCardGroup.createCorrespondingGroupElement( cardModel.tandem.name, cardModel );
-      this.addChild( numberCardNode );
+      const cardNode: CardNode = this.numberCardGroup.createCorrespondingGroupElement( cardModel.tandem.name, cardModel );
+      this.addChild( cardNode );
 
       // Update the position of all cards (via animation) whenever any card is dragged
-      numberCardNode.positionProperty.link( this.createDragPositionListener( numberCardNode ) );
+      cardNode.positionProperty.link( this.createDragPositionListener( cardNode ) );
 
       // When a card is dropped, send it to its home cell
-      numberCardNode.dragListener.isPressedProperty.link( isPressed => {
+      cardNode.dragListener.isPressedProperty.link( isPressed => {
         if ( !isPressed && !phet.joist.sim.isSettingPhetioStateProperty.value ) {
-          this.sendToHomeCell( numberCardNode, true, 0.2 );
+          this.sendToHomeCell( cardNode, true, 0.2 );
         }
       } );
 
       let targetIndex = this.cardNodeCells.length;
       if ( this.model.isSortingDataProperty.value ) {
-        const newValue = numberCardNode.casObject.valueProperty.value!;
+        const newValue = cardNode.casObject.valueProperty.value!;
         const existingLowerCardNodes = this.cardNodeCells.filter( cardNode => cardNode.casObject.valueProperty.value! <= newValue );
 
         const lowerNeighborCardNode = _.maxBy( existingLowerCardNodes, cardNode => this.cardNodeCells.indexOf( cardNode ) );
@@ -130,8 +130,8 @@ class NumberCardContainer extends Node {
       }
 
       if ( !phet.joist.sim.isSettingPhetioStateProperty.value ) {
-        this.cardNodeCells.splice( targetIndex, 0, numberCardNode );
-        this.sendToHomeCell( numberCardNode, false );
+        this.cardNodeCells.splice( targetIndex, 0, cardNode );
+        this.sendToHomeCell( cardNode, false );
 
         // Animate all displaced cards
         for ( let i = targetIndex; i < this.cardNodeCells.length; i++ ) {
@@ -180,12 +180,12 @@ class NumberCardContainer extends Node {
     // }
   }
 
-  // The listener which is linked to the numberCardNode.positionProperty
-  createDragPositionListener( numberCardNode: NumberCardNode ): ( position: Vector2 ) => void {
+  // The listener which is linked to the cardNode.positionProperty
+  createDragPositionListener( cardNode: CardNode ): ( position: Vector2 ) => void {
     return ( position: Vector2 ) => {
-      if ( numberCardNode.dragListener.isPressedProperty.value ) {
+      if ( cardNode.dragListener.isPressedProperty.value ) {
 
-        const originalCell = this.cardNodeCells.indexOf( numberCardNode );
+        const originalCell = this.cardNodeCells.indexOf( cardNode );
 
         // Find the closest cell to the dragged card
         const closestCell = this.getClosestCell( position.x );
@@ -193,10 +193,10 @@ class NumberCardContainer extends Node {
         const currentOccupant = this.cardNodeCells[ closestCell ];
 
         // No-op if the dragged card is near its home cell
-        if ( currentOccupant !== numberCardNode ) {
+        if ( currentOccupant !== cardNode ) {
 
           // it's just a pairwise swap
-          this.cardNodeCells[ closestCell ] = numberCardNode;
+          this.cardNodeCells[ closestCell ] = cardNode;
           this.cardNodeCells[ originalCell ] = currentOccupant;
 
           // Just animated the displaced occupant
@@ -228,15 +228,15 @@ class NumberCardContainer extends Node {
     return true;
   }
 
-  sendToHomeCell( numberCardNode: NumberCardNode, animate = true, duration = 0.3 ): void {
-    const homeIndex = this.cardNodeCells.indexOf( numberCardNode );
+  sendToHomeCell( cardNode: CardNode, animate = true, duration = 0.3 ): void {
+    const homeIndex = this.cardNodeCells.indexOf( cardNode );
     const homePosition = new Vector2( getCardPositionX( homeIndex ), 0 );
 
     if ( animate ) {
-      numberCardNode.animateTo( homePosition, duration );
+      cardNode.animateTo( homePosition, duration );
     }
     else {
-      numberCardNode.positionProperty.value = homePosition;
+      cardNode.positionProperty.value = homePosition;
     }
   }
 
@@ -253,7 +253,7 @@ class NumberCardContainer extends Node {
     }
   }
 
-  getNumberCardNode( casObject: CASObject ): NumberCardNode | null {
+  getNumberCardNode( casObject: CASObject ): CardNode | null {
     return this.cardNodeCells.find( cardNode => cardNode.casObject === casObject ) || null;
   }
 
@@ -264,8 +264,8 @@ class NumberCardContainer extends Node {
     this.cardNodeCells.length = 0;
     this.cardNodeCells.push( ...sorted );
 
-    this.cardNodeCells.forEach( numberCardNode => {
-      this.sendToHomeCell( numberCardNode, true, 0.5 );
+    this.cardNodeCells.forEach( cardNode => {
+      this.sendToHomeCell( cardNode, true, 0.5 );
     } );
   }
 
@@ -294,8 +294,8 @@ const NumberCardContainerIO = new IOType( 'NumberCardContainerIO', {
     const cardNodes = state.cardNodes.map( ( element: any ) => CardNodeReferenceIO.fromStateObject( element ) );
     n.cardNodeCells.length = 0;
     n.cardNodeCells.push( ...cardNodes );
-    n.cardNodeCells.forEach( numberCardNode => {
-      n.sendToHomeCell( numberCardNode, false );
+    n.cardNodeCells.forEach( cardNode => {
+      n.sendToHomeCell( cardNode, false );
     } );
   },
   stateSchema: {
