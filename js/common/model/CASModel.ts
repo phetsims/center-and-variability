@@ -11,7 +11,7 @@ import centerAndSpread from '../../centerAndSpread.js';
 import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import CASObject from './CASObject.js';
+import CASObject, { CASObjectOptions } from './CASObject.js';
 import CASObjectType from './CASObjectType.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -28,7 +28,7 @@ type CASModelSelfOptions = {
 export type CASModelOptions = CASModelSelfOptions & {};
 
 class CASModel {
-  readonly objectGroup: PhetioGroup<CASObject>;
+  readonly objectGroup: PhetioGroup<CASObject, CASObjectType, any>;
   readonly objectType: CASObjectType;
   readonly rangeProperty: Property<Range>;
   readonly isSortingDataProperty: BooleanProperty;
@@ -42,11 +42,13 @@ class CASModel {
 
     this.objectType = objectType;
 
-    this.objectGroup = new PhetioGroup( ( tandem, objectType: CASObjectType, providedOptions ) => {
+    this.objectGroup = new PhetioGroup<CASObject, CASObjectType, CASObjectOptions>( ( tandem, objectType: CASObjectType, providedOptions ) => {
 
       // TODO: Optionize
       const options = merge( { tandem: tandem }, providedOptions );
       return new CASObject( objectType, options );
+
+      // @ts-ignore // TODO
     }, [ objectType, {} ], {
       phetioType: PhetioGroup.PhetioGroupIO( CASObject.CASObjectIO ),
       tandem: options.tandem.createTandem( objectType === CASObjectType.SOCCER_BALL ? 'soccerBallGroup' : 'dataPointGroup' )

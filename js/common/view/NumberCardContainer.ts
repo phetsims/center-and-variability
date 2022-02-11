@@ -33,10 +33,12 @@ export type NumberCardOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem
 class NumberCardContainer extends Node {
   public readonly cardNodeCells: CardNode[];
   private readonly model: CASModel;
-  private readonly numberCardGroup: PhetioGroup<CardNode>;
+  private readonly numberCardGroup: PhetioGroup<CardNode, CardModel>;
   private readonly areCardsSortedProperty: BooleanProperty;
   private readonly medianBarsNode: Node;
-  private readonly cardModelGroup: PhetioGroup<CardModel>;
+
+  // TODO: Move this to the model
+  private readonly cardModelGroup: PhetioGroup<CardModel, CASObject>;
 
   constructor( model: CASModel, providedOptions?: NumberCardOptions ) {
 
@@ -58,7 +60,7 @@ class NumberCardContainer extends Node {
 
     // For PhET-iO State, it is difficult to power 2 views from one model, see https://github.com/phetsims/phet-io/issues/1688#issuecomment-1032967603
     // Therefore, we introduce a minimial model element for the cards, so they can be managed by the state
-    this.cardModelGroup = new PhetioGroup<CardModel>( ( tandem, casObject ) => {
+    this.cardModelGroup = new PhetioGroup<CardModel, CASObject>( ( tandem, casObject ) => {
       assert && assert( casObject, 'casObject should be defined' );
       return new CardModel( casObject, {
         tandem: tandem
@@ -68,11 +70,11 @@ class NumberCardContainer extends Node {
       tandem: options.tandem.createTandem( 'cardModelGroup' )
     } );
 
-    this.numberCardGroup = new PhetioGroup<CardNode>( ( tandem, cardModel ) => {
+    this.numberCardGroup = new PhetioGroup<CardNode, CardModel>( ( tandem, cardModel ) => {
       return new CardNode( cardModel.casObject, new Vector2( 0, 0 ), () => this.getDragRange(), {
         tandem: tandem
       } );
-    }, [ model.objectGroup.archetype ], {
+    }, [ this.cardModelGroup.archetype ], {
       phetioType: PhetioGroup.PhetioGroupIO( Node.NodeIO ),
       tandem: options.tandem.createTandem( 'numberCardNodeGroup' ),
       supportsDynamicState: false
@@ -84,7 +86,6 @@ class NumberCardContainer extends Node {
     } );
     // this.addChild( this.medianBarsNode );
 
-    // TODO: If we eventually have a model PhetioGroup for the cards, we will listen to them instead.
     const objectCreatedListener = this.createObjectCreatedListener();
     model.objectGroup.forEach( objectCreatedListener );
     model.objectGroup.elementCreatedEmitter.addListener( objectCreatedListener );
@@ -106,8 +107,7 @@ class NumberCardContainer extends Node {
 
     this.cardModelGroup.elementCreatedEmitter.addListener( cardModel => {
 
-      // TODO: Get rid of type annotation once PhetioGroup is TS
-      const cardNode: CardNode = this.numberCardGroup.createCorrespondingGroupElement( cardModel.tandem.name, cardModel );
+      const cardNode = this.numberCardGroup.createCorrespondingGroupElement( cardModel.tandem.name, cardModel );
       this.addChild( cardNode );
 
       // Update the position of all cards (via animation) whenever any card is dragged
@@ -142,13 +142,14 @@ class NumberCardContainer extends Node {
   }
 
   // Listen for when objects are created, also called for pre-existing objects.
-  createObjectCreatedListener() {
+  createObjectCreatedListener(): ( c: CASObject ) => void {
     const objectCreatedListener = ( casObject: CASObject ) => {
 
       const listener = ( value: number | null ) => {
 
         if ( value !== null && !this.getNumberCardNode( casObject ) ) {
 
+          // TODO: Can this commented out guard be deleted?
           // if ( !phet.joist.sim.isSettingPhetioStateProperty.value ) {
           this.cardModelGroup.createNextElement( casObject );
 
