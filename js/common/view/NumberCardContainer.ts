@@ -18,7 +18,6 @@ import NumberCardNode from './NumberCardNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Range from '../../../../dot/js/Range.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import Utils from '../../../../dot/js/Utils.js';
 
 // constants
 const CARD_SPACING = 10;

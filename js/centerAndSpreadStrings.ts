@@ -21,7 +21,7 @@ type StringsType = {
   'meanAndMedianQuestion': string,
   'spreadQuestion': string,
   'kick1': string,
-  'kick10': string,
+  'kick5': string,
   'data': string,
   'sortData': string
 };

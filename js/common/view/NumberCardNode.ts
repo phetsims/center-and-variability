@@ -1,7 +1,7 @@
 // Copyright 2022, University of Colorado Boulder
 
 /**
- * Shows the "Kick 1" and "Kick 10" buttons in the soccer screens.
+ * Draggable node that shows a single number on a card.  The number can change if the corresponding ball is dragged.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

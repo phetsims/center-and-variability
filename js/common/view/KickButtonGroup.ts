@@ -1,7 +1,7 @@
 // Copyright 2022, University of Colorado Boulder
 
 /**
- * Shows the "Kick 1" and "Kick 10" buttons in the soccer screens.
+ * Shows the "Kick 1" and "Kick 5" buttons in the soccer screens.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
@@ -53,15 +53,15 @@ class KickButtonGroup extends VBox {
 
     // Create tandems so the labels can appear at the proper place in the tandem tree
     const kick1ButtonTandem = options.tandem.createTandem( 'kickOneButton' );
-    const kick10ButtonTandem = options.tandem.createTandem( 'kickTenButton' );
+    const kick5ButtonTandem = options.tandem.createTandem( 'kickFiveButton' );
 
     // Create labels first so their sizes can be aligned
     const kick1Label = createLabel( centerAndSpreadStrings.kick1, kick1ButtonTandem.createTandem( 'labelNode' ) );
-    const kick10Label = createLabel( centerAndSpreadStrings.kick10, kick10ButtonTandem.createTandem( 'labelNode' ) );
+    const kick5Label = createLabel( centerAndSpreadStrings.kick5, kick5ButtonTandem.createTandem( 'labelNode' ) );
 
     options.children = [
       createKickButton( kick1Label, kick1ButtonTandem, () => model.kick( 1 ) ),
-      createKickButton( kick10Label, kick10ButtonTandem, () => model.kick( 10 ) )
+      createKickButton( kick5Label, kick5ButtonTandem, () => model.kick( 5 ) )
     ];
 
     super( options );
