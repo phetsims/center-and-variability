@@ -28,7 +28,7 @@ type CASModelSelfOptions = {
 export type CASModelOptions = CASModelSelfOptions & {};
 
 class CASModel {
-  readonly objectGroup: PhetioGroup<CASObject, CASObjectType, any>;
+  readonly objectGroup: PhetioGroup<CASObject, [ CASObjectType, CASObjectOptions ]>;
   readonly objectType: CASObjectType;
   readonly rangeProperty: Property<Range>;
   readonly isSortingDataProperty: BooleanProperty;
@@ -42,10 +42,12 @@ class CASModel {
 
     this.objectType = objectType;
 
-    this.objectGroup = new PhetioGroup<CASObject, CASObjectType, CASObjectOptions>( ( tandem, objectType: CASObjectType, providedOptions ) => {
+    this.objectGroup = new PhetioGroup( ( tandem, objectType: CASObjectType, providedOptions ) => {
 
       // TODO: Optionize
       const options = merge( { tandem: tandem }, providedOptions );
+
+      // @ts-ignore
       return new CASObject( objectType, options );
 
       // @ts-ignore // TODO

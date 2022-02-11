@@ -33,12 +33,12 @@ export type NumberCardOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem
 class NumberCardContainer extends Node {
   public readonly cardNodeCells: CardNode[];
   private readonly model: CASModel;
-  private readonly numberCardGroup: PhetioGroup<CardNode, CardModel>;
+  private readonly numberCardGroup: PhetioGroup<CardNode, [ CardModel ]>;
   private readonly areCardsSortedProperty: BooleanProperty;
   private readonly medianBarsNode: Node;
 
   // TODO: Move this to the model
-  private readonly cardModelGroup: PhetioGroup<CardModel, CASObject>;
+  private readonly cardModelGroup: PhetioGroup<CardModel, [ CASObject ]>;
 
   constructor( model: CASModel, providedOptions?: NumberCardOptions ) {
 
@@ -60,7 +60,7 @@ class NumberCardContainer extends Node {
 
     // For PhET-iO State, it is difficult to power 2 views from one model, see https://github.com/phetsims/phet-io/issues/1688#issuecomment-1032967603
     // Therefore, we introduce a minimial model element for the cards, so they can be managed by the state
-    this.cardModelGroup = new PhetioGroup<CardModel, CASObject>( ( tandem, casObject ) => {
+    this.cardModelGroup = new PhetioGroup( ( tandem, casObject ) => {
       assert && assert( casObject, 'casObject should be defined' );
       return new CardModel( casObject, {
         tandem: tandem
@@ -70,7 +70,7 @@ class NumberCardContainer extends Node {
       tandem: options.tandem.createTandem( 'cardModelGroup' )
     } );
 
-    this.numberCardGroup = new PhetioGroup<CardNode, CardModel>( ( tandem, cardModel ) => {
+    this.numberCardGroup = new PhetioGroup( ( tandem, cardModel ) => {
       return new CardNode( cardModel.casObject, new Vector2( 0, 0 ), () => this.getDragRange(), {
         tandem: tandem
       } );

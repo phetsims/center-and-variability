@@ -39,7 +39,7 @@ class CASScreenView extends ScreenView {
     this.modelViewTransform = modelViewTransform;
     this.model = model;
 
-    const objectNodeGroup = new PhetioGroup( ( tandem, casObject ) => {
+    const objectNodeGroup = new PhetioGroup<CASObjectNode, [ CASObject ]>( ( tandem, casObject ) => {
       return new CASObjectNode( casObject, modelViewTransform, {
         tandem: tandem
       } );
@@ -55,7 +55,7 @@ class CASScreenView extends ScreenView {
     const map = new Map<CASObject, CASObjectNode>();
 
     const createObjectNode = ( casObject: CASObject ) => {
-      const casObjectNode = objectNodeGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject, {} );
+      const casObjectNode = objectNodeGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject );
       this.objectsLayer.addChild( casObjectNode );
       map.set( casObject, casObjectNode );
     };
