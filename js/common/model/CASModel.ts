@@ -53,7 +53,7 @@ class CASModel {
       tandem: options.tandem.createTandem( objectType === CASObjectType.SOCCER_BALL ? 'soccerBallGroup' : 'dataPointGroup' )
     } );
 
-    // TODO: min and max should be constructor options
+    // TODO: Do different screens have different ranges?  See https://github.com/phetsims/center-and-spread/issues/28
     this.rangeProperty = new Property<Range>( new Range( 1, 16 ) );
 
     this.isSortingDataProperty = new BooleanProperty( false, {
