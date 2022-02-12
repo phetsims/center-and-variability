@@ -58,8 +58,7 @@ class CardNode extends Node {
 
     this.positionProperty = new Vector2Property( position, {
       tandem: options.tandem.createTandem( 'positionProperty' ),
-      useDeepEquality: true,
-      reentrant: true // TODO: Why????
+      useDeepEquality: true
     } );
 
     this.casObject = casObject;
