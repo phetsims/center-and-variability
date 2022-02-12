@@ -69,7 +69,6 @@ class CASModel {
       tandem: options.includeCards ? options.tandem.createTandem( 'cardModelGroup' ) : Tandem.OPT_OUT
     } );
 
-    // TODO: Do different screens have different ranges?  See https://github.com/phetsims/center-and-spread/issues/28
     this.rangeProperty = new Property<Range>( new Range( 1, 16 ) );
 
     this.isSortingDataProperty = new BooleanProperty( false, {
