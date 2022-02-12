@@ -35,7 +35,7 @@ class CASModel {
   readonly rangeProperty: Property<Range>;
   readonly isSortingDataProperty: BooleanProperty;
   readonly isShowingMedianProperty: BooleanProperty;
-  readonly cardModelGroup: PhetioGroup<CardModel, [ CASObject ]>; // TODO: Shouldn't be in every screen
+  readonly cardModelGroup: PhetioGroup<CardModel, [ CASObject ]>; // Only instrumented and enabled if includeCards === true
   readonly includeCards: boolean;
 
   constructor( objectType: CASObjectType, providedOptions: CASModelOptions ) {
