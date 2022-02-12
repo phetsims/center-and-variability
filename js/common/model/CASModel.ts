@@ -24,7 +24,8 @@ import merge from '../../../../phet-core/js/merge.js';
 import CardModel from './CardModel.js';
 
 type CASModelSelfOptions = {
-  tandem: Tandem
+  tandem: Tandem,
+  includeCards: boolean
 };
 export type CASModelOptions = CASModelSelfOptions & {};
 
@@ -35,6 +36,7 @@ class CASModel {
   readonly isSortingDataProperty: BooleanProperty;
   readonly isShowingMedianProperty: BooleanProperty;
   readonly cardModelGroup: PhetioGroup<CardModel, [ CASObject ]>; // TODO: Shouldn't be in every screen
+  readonly includeCards: boolean;
 
   constructor( objectType: CASObjectType, providedOptions: CASModelOptions ) {
 
@@ -64,7 +66,7 @@ class CASModel {
       } );
     }, [ this.objectGroup.archetype ], {
       phetioType: PhetioGroup.PhetioGroupIO( CardModel.CardModelIO ),
-      tandem: options.tandem.createTandem( 'cardModelGroup' )
+      tandem: options.includeCards ? options.tandem.createTandem( 'cardModelGroup' ) : Tandem.OPT_OUT
     } );
 
     // TODO: Do different screens have different ranges?  See https://github.com/phetsims/center-and-spread/issues/28
@@ -78,17 +80,21 @@ class CASModel {
     } );
 
     // Trigger CardModel creation when a ball lands.
-    const objectCreatedListener = ( casObject: CASObject ) => {
-      const listener = ( value: number | null ) => {
-        if ( value !== null && !phet.joist.sim.isSettingPhetioStateProperty.value ) {
-          this.cardModelGroup.createNextElement( casObject );
-          casObject.valueProperty.unlink( listener ); // Only create the card once, then no need to listen further
-        }
+    if ( options.includeCards ) {
+      const objectCreatedListener = ( casObject: CASObject ) => {
+        const listener = ( value: number | null ) => {
+          if ( value !== null && !phet.joist.sim.isSettingPhetioStateProperty.value ) {
+            this.cardModelGroup.createNextElement( casObject );
+            casObject.valueProperty.unlink( listener ); // Only create the card once, then no need to listen further
+          }
+        };
+        casObject.valueProperty.link( listener );
       };
-      casObject.valueProperty.link( listener );
-    };
-    this.objectGroup.forEach( objectCreatedListener );
-    this.objectGroup.elementCreatedEmitter.addListener( objectCreatedListener );
+      this.objectGroup.forEach( objectCreatedListener );
+      this.objectGroup.elementCreatedEmitter.addListener( objectCreatedListener );
+    }
+
+    this.includeCards = options.includeCards;
 
     // Populate with initial objects for debugging
     for ( let i = 0; i < CASQueryParameters.objects; i++ ) {

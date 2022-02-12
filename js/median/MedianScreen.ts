@@ -29,7 +29,7 @@ class MedianScreen extends CASScreen<MedianModel, MedianScreenView> {
     }, providedOptions );
 
     super(
-      () => new MedianModel( { tandem: options.tandem.createTandem( 'model' ) } ),
+      () => new MedianModel( { includeCards: true, tandem: options.tandem.createTandem( 'model' ) } ),
       ( model: MedianModel ) => new MedianScreenView( model, { tandem: options.tandem.createTandem( 'view' ) } ),
       options
     );

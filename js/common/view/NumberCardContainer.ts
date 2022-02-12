@@ -33,7 +33,7 @@ export type NumberCardOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem
 class NumberCardContainer extends Node {
   public readonly cardNodeCells: CardNode[];
   private readonly model: CASModel;
-  private readonly numberCardGroup: PhetioGroup<CardNode, [ CardModel ]>;
+  private readonly cardNodeGroup: PhetioGroup<CardNode, [ CardModel ]>;
   private readonly areCardsSortedProperty: BooleanProperty;
   private readonly medianBarsNode: Node;
 
@@ -55,13 +55,13 @@ class NumberCardContainer extends Node {
 
     this.areCardsSortedProperty = new BooleanProperty( false );
 
-    this.numberCardGroup = new PhetioGroup( ( tandem, cardModel ) => {
+    this.cardNodeGroup = new PhetioGroup( ( tandem, cardModel ) => {
       return new CardNode( cardModel, new Vector2( 0, 0 ), () => this.getDragRange(), {
         tandem: tandem
       } );
     }, [ model.cardModelGroup.archetype ], {
       phetioType: PhetioGroup.PhetioGroupIO( Node.NodeIO ),
-      tandem: options.tandem.createTandem( 'numberCardNodeGroup' ),
+      tandem: model.includeCards ? options.tandem.createTandem( 'cardNodeGroup' ) : Tandem.OPT_OUT,
       supportsDynamicState: false
     } );
 
@@ -92,7 +92,7 @@ class NumberCardContainer extends Node {
 
       // cardNode may not exist if the ball was still in the air
       if ( cardNode ) {
-        this.numberCardGroup.disposeElement( cardNode );
+        this.cardNodeGroup.disposeElement( cardNode );
       }
     } );
 
@@ -104,7 +104,7 @@ class NumberCardContainer extends Node {
 
     model.cardModelGroup.elementCreatedEmitter.addListener( cardModel => {
 
-      const cardNode = this.numberCardGroup.createCorrespondingGroupElement( cardModel.tandem.name, cardModel );
+      const cardNode = this.cardNodeGroup.createCorrespondingGroupElement( cardModel.tandem.name, cardModel );
       this.addChild( cardNode );
 
       // Update the position of all cards (via animation) whenever any card is dragged
@@ -245,7 +245,7 @@ class NumberCardContainer extends Node {
 
   reset(): void {
     this.cardNodeCells.length = 0;
-    this.numberCardGroup.clear();
+    this.cardNodeGroup.clear();
   }
 }
 

@@ -29,7 +29,7 @@ class SpreadScreen extends CASScreen<SpreadModel, SpreadScreenView> {
     }, providedOptions );
 
     super(
-      () => new SpreadModel( { tandem: options.tandem.createTandem( 'model' ) } ),
+      () => new SpreadModel( { includeCards: false, tandem: options.tandem.createTandem( 'model' ) } ),
       ( model: SpreadModel ) => new SpreadScreenView( model, { tandem: options.tandem.createTandem( 'view' ) } ),
       options
     );
