@@ -13,7 +13,6 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CASObject, { CASObjectOptions } from './CASObject.js';
 import CASObjectType from './CASObjectType.js';
-import merge from '../../../../phet-core/js/merge.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Range from '../../../../dot/js/Range.js';
 import CASQueryParameters from '../CASQueryParameters.js';
@@ -21,6 +20,7 @@ import Property from '../../../../axon/js/Property.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Utils from '../../../../dot/js/Utils.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import merge from '../../../../phet-core/js/merge.js';
 
 type CASModelSelfOptions = {
   tandem: Tandem
@@ -28,7 +28,7 @@ type CASModelSelfOptions = {
 export type CASModelOptions = CASModelSelfOptions & {};
 
 class CASModel {
-  readonly objectGroup: PhetioGroup<CASObject, [ CASObjectType, CASObjectOptions ]>;
+  readonly objectGroup: PhetioGroup<CASObject, [ CASObjectType, Omit<CASObjectOptions, 'tandem'> ]>;
   readonly objectType: CASObjectType;
   readonly rangeProperty: Property<Range>;
   readonly isSortingDataProperty: BooleanProperty;
@@ -44,14 +44,11 @@ class CASModel {
 
     this.objectGroup = new PhetioGroup( ( tandem, objectType: CASObjectType, providedOptions ) => {
 
-      // TODO: Optionize
-      const options = merge( { tandem: tandem }, providedOptions );
+      // Assign the tandem to the options
+      const options = merge( {}, providedOptions, { tandem: tandem } );
 
-      // @ts-ignore
       return new CASObject( objectType, options );
-
-      // @ts-ignore // TODO
-    }, [ objectType, {} ], {
+    }, [ objectType, { targetX: 0 } ], {
       phetioType: PhetioGroup.PhetioGroupIO( CASObject.CASObjectIO ),
       tandem: options.tandem.createTandem( objectType === CASObjectType.SOCCER_BALL ? 'soccerBallGroup' : 'dataPointGroup' )
     } );
@@ -79,8 +76,7 @@ class CASModel {
     this.objectGroup.forEach( object => this.moveToTop( object ) );
   }
 
-  // TODO: need options type for CASObject that doesn't include phetio things
-  protected createObject( options: any ): CASObject {
+  protected createObject( options: Omit<CASObjectOptions, 'tandem'> ): CASObject {
     const casObject = this.objectGroup.createNextElement( this.objectType, options );
 
     // TODO: when the positionProperty changes from animation, sync the dragPositionProperty to it
