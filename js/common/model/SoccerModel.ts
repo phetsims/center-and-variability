@@ -15,6 +15,7 @@ import CASObjectType from '../../common/model/CASObjectType.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import CASConstants from '../CASConstants.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 
 type SoccerModelSelfOptions = {};
 type SoccerModelOptions = SoccerModelSelfOptions & CASModelOptions;
@@ -23,9 +24,9 @@ type SoccerModelOptions = SoccerModelSelfOptions & CASModelOptions;
 const TIME_BETWEEN_RAPID_KICKS = 0.1; // in seconds
 
 class SoccerModel extends CASModel {
-  private remainingNumberOfBallsToMultiKick: number;
-  private timeWhenLastBallWasKicked: number;
-  private time: number;
+  private remainingNumberOfBallsToMultiKickProperty: NumberProperty;
+  private timeWhenLastBallWasKickedProperty: NumberProperty;
+  private timeProperty: NumberProperty;
 
   constructor( options: SoccerModelOptions ) {
 
@@ -35,11 +36,15 @@ class SoccerModel extends CASModel {
 
     super( CASObjectType.SOCCER_BALL, options );
 
-    // TODO: support state with these! Likely as instrumented NumberProperties
-    // TODO: handle reset case
-    this.remainingNumberOfBallsToMultiKick = 0;
-    this.time = 0;
-    this.timeWhenLastBallWasKicked = 0;
+    this.remainingNumberOfBallsToMultiKickProperty = new NumberProperty( 0, {
+      tandem: options.tandem.createTandem( 'remainingNumberOfBallsToMultiKickProperty' )
+    } );
+    this.timeProperty = new NumberProperty( 0, {
+      tandem: options.tandem.createTandem( 'timeProperty' )
+    } );
+    this.timeWhenLastBallWasKickedProperty = new NumberProperty( 0, {
+      tandem: options.tandem.createTandem( 'timeWhenLastBallWasKickedProperty' )
+    } );
   }
 
   /**
@@ -65,8 +70,8 @@ class SoccerModel extends CASModel {
       targetX: x1
     } );
     casObject.isAnimatingProperty.value = true;
-    this.timeWhenLastBallWasKicked = this.time;
-    this.remainingNumberOfBallsToMultiKick--;
+    this.timeWhenLastBallWasKickedProperty.value = this.timeProperty.value;
+    this.remainingNumberOfBallsToMultiKickProperty.value--;
 
     // TODO: Listen for when the valueProperty becomes non-null
     const isAnimatingListener = ( isAnimating: boolean ) => {
@@ -88,18 +93,26 @@ class SoccerModel extends CASModel {
    * Adds the provided number of balls to the scheduled balls to kick
    */
   kick( numberOfBallsToKick: number ): void {
-    this.remainingNumberOfBallsToMultiKick += numberOfBallsToKick;
+    this.remainingNumberOfBallsToMultiKickProperty.value += numberOfBallsToKick;
     this.createBall();
   }
 
   step( dt: number ): void {
     super.step( dt );
 
-    this.time += dt;
+    this.timeProperty.value += dt;
 
-    if ( this.remainingNumberOfBallsToMultiKick > 0 && this.time >= this.timeWhenLastBallWasKicked + TIME_BETWEEN_RAPID_KICKS ) {
+    if ( this.remainingNumberOfBallsToMultiKickProperty.value > 0 &&
+         this.timeProperty.value >= this.timeWhenLastBallWasKickedProperty.value + TIME_BETWEEN_RAPID_KICKS ) {
       this.createBall();
     }
+  }
+
+  reset(): void {
+    this.remainingNumberOfBallsToMultiKickProperty.reset();
+    this.timeProperty.reset();
+    this.timeWhenLastBallWasKickedProperty.reset();
+    super.reset();
   }
 }
 
