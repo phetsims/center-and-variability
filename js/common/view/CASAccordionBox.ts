@@ -32,8 +32,10 @@ class CASAccordionBox extends AccordionBox {
 
   constructor( model: CASModel, contents: Node, layoutBounds: Bounds2, providedOptions: CASAccordionBoxOptions ) {
 
-    const options = optionize<CASAccordionBoxOptions>( {
+    const options = optionize<CASAccordionBoxOptions, CASAccordionBoxSelfOptions, NodeOptions>( {
       tandem: Tandem.REQUIRED,
+
+      // @ts-ignore
       titleAlignX: 'left',
       titleXSpacing: 8,
       cornerRadius: 6,

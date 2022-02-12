@@ -9,7 +9,7 @@
 
 import centerAndSpread from '../../centerAndSpread.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
-import { AlignGroup, Node, NodeOptions, Text, VBox } from '../../../../scenery/js/imports.js';
+import { AlignGroup, Node, Text, VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -17,8 +17,8 @@ import CASColors from '../CASColors.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import SoccerModel from '../model/SoccerModel.js';
 
-// TODO: VBox/LayoutBox could use TS options
-export type KickButtonGroupOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
+type KickButtonGroupSelfOptions = {};
+export type KickButtonGroupOptions = KickButtonGroupSelfOptions & VBoxOptions & Required<Pick<VBoxOptions, 'tandem'>>;
 
 // constants
 const TEXT_MAX_WIDTH = 80;
@@ -27,7 +27,7 @@ class KickButtonGroup extends VBox {
 
   constructor( model: SoccerModel, providedOptions?: KickButtonGroupOptions ) {
 
-    const options = optionize<KickButtonGroupOptions>( {
+    const options = optionize<KickButtonGroupOptions, KickButtonGroupSelfOptions, VBoxOptions>( {
       spacing: 2,
       tandem: Tandem.REQUIRED
     }, providedOptions );

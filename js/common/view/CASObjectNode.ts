@@ -40,7 +40,7 @@ class CASObjectNode extends Node {
     // Center the nested Node for compatibility with DragListener
     childNode.center = Vector2.ZERO;
 
-    // TODO: Better comment that explains why this nested layer is necessary
+    // TODO: CK: Better comment that explains why this nested layer is necessary
     this.addChild( childNode );
 
     this.addLinkedElement( casObject, {
@@ -58,7 +58,8 @@ class CASObjectNode extends Node {
     } ) );
 
     // expand the horizontal touch areas but don't overlap with the neighboring columns.
-    // TODO: do we want to expand the vertical touch areas for the top and bottom ball in a stack?
+    // TODO: do we want to expand the vertical touch areas for the top and bottom ball in a stack?  It may depend on
+    // whether the Spread screen reduces the size of the balls, see https://github.com/phetsims/center-and-spread/issues/28
     this.touchArea = this.localBounds.dilatedX( 10 );
 
     // Prevent dragging or interaction while the object is animating
