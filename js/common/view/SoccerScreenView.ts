@@ -57,8 +57,9 @@ class SoccerScreenView extends CASScreenView {
 
     this.addChild( new BackgroundNode( GROUND_POSITION_Y, this.visibleBoundsProperty ) );
 
-    // TODO: instrument number line, maybe the whole node or just the tick labels?
-    const numberLineNode = new Node();
+    const numberLineNode = new Node( {
+      tandem: options.tandem.createTandem( 'numberLineNode' )
+    } );
     const chartTransform = new ChartTransform( {
       viewWidth: chartViewWidth,
       modelXRange: new Range( 1, 16 )
