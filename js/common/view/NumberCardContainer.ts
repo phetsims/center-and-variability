@@ -37,9 +37,6 @@ class NumberCardContainer extends Node {
   private readonly areCardsSortedProperty: BooleanProperty;
   private readonly medianBarsNode: Node;
 
-  // TODO: Move this to the model
-  private readonly cardModelGroup: PhetioGroup<CardModel, [ CASObject ]>;
-
   constructor( model: CASModel, providedOptions?: NumberCardOptions ) {
 
     const options = optionize<NumberCardOptions, NumberCardContainerSelfOptions, NodeOptions>( {
@@ -58,23 +55,11 @@ class NumberCardContainer extends Node {
 
     this.areCardsSortedProperty = new BooleanProperty( false );
 
-    // For PhET-iO State, it is difficult to power 2 views from one model, see https://github.com/phetsims/phet-io/issues/1688#issuecomment-1032967603
-    // Therefore, we introduce a minimial model element for the cards, so they can be managed by the state
-    this.cardModelGroup = new PhetioGroup( ( tandem, casObject ) => {
-      assert && assert( casObject, 'casObject should be defined' );
-      return new CardModel( casObject, {
-        tandem: tandem
-      } );
-    }, [ model.objectGroup.archetype ], {
-      phetioType: PhetioGroup.PhetioGroupIO( CardModel.CardModelIO ),
-      tandem: options.tandem.createTandem( 'cardModelGroup' )
-    } );
-
     this.numberCardGroup = new PhetioGroup( ( tandem, cardModel ) => {
       return new CardNode( cardModel.casObject, new Vector2( 0, 0 ), () => this.getDragRange(), {
         tandem: tandem
       } );
-    }, [ this.cardModelGroup.archetype ], {
+    }, [ model.cardModelGroup.archetype ], {
       phetioType: PhetioGroup.PhetioGroupIO( Node.NodeIO ),
       tandem: options.tandem.createTandem( 'numberCardNodeGroup' ),
       supportsDynamicState: false
@@ -86,11 +71,23 @@ class NumberCardContainer extends Node {
     } );
     // this.addChild( this.medianBarsNode );
 
-    const objectCreatedListener = this.createObjectCreatedListener();
+    const objectCreatedListener = ( casObject: CASObject ) => {
+
+      // A ball landed OR a value changed
+      casObject.valueProperty.link( value => {
+        if ( this.model.isSortingDataProperty.value && value !== null ) {
+
+          // TODO: Much of this listener code moved to the CASModel. Should this move there as well?  We could make
+          // the model track cardModelCells instead of the view tracking cardNodeCells
+          this.sortData();
+        }
+      } );
+    };
+
     model.objectGroup.forEach( objectCreatedListener );
     model.objectGroup.elementCreatedEmitter.addListener( objectCreatedListener );
 
-    this.cardModelGroup.elementDisposedEmitter.addListener( cardModel => {
+    model.cardModelGroup.elementDisposedEmitter.addListener( cardModel => {
       const cardNode = this.getNumberCardNode( cardModel.casObject );
 
       // cardNode may not exist if the ball was still in the air
@@ -105,7 +102,7 @@ class NumberCardContainer extends Node {
       }
     } );
 
-    this.cardModelGroup.elementCreatedEmitter.addListener( cardModel => {
+    model.cardModelGroup.elementCreatedEmitter.addListener( cardModel => {
 
       const cardNode = this.numberCardGroup.createCorrespondingGroupElement( cardModel.tandem.name, cardModel );
       this.addChild( cardNode );
@@ -139,35 +136,6 @@ class NumberCardContainer extends Node {
         }
       }
     } );
-  }
-
-  // Listen for when objects are created, also called for pre-existing objects.
-  createObjectCreatedListener(): ( c: CASObject ) => void {
-    const objectCreatedListener = ( casObject: CASObject ) => {
-
-      const listener = ( value: number | null ) => {
-
-        if ( value !== null && !this.getNumberCardNode( casObject ) ) {
-
-          // TODO: Can this commented out guard be deleted?
-          // if ( !phet.joist.sim.isSettingPhetioStateProperty.value ) {
-          this.cardModelGroup.createNextElement( casObject );
-
-          // Only create the card once, then no need to listen further
-          casObject.valueProperty.unlink( listener );
-          // }
-        }
-      };
-      casObject.valueProperty.link( listener );
-
-      // A ball landed OR a value changed
-      casObject.valueProperty.link( value => {
-        if ( this.model.isSortingDataProperty.value && value !== null ) {
-          this.sortData();
-        }
-      } );
-    };
-    return objectCreatedListener;
   }
 
   step( dt: number ): void {
@@ -278,7 +246,6 @@ class NumberCardContainer extends Node {
   reset(): void {
     this.cardNodeCells.length = 0;
     this.numberCardGroup.clear();
-    this.cardModelGroup.clear();
   }
 }
 
