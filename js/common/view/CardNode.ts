@@ -18,6 +18,7 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Range from '../../../../dot/js/Range.js';
 import Easing from '../../../../twixt/js/Easing.js';
+import CardModel from '../model/CardModel.js';
 
 type NumberCardSelfOptions = {};
 export type NumberCardOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
@@ -31,7 +32,7 @@ class CardNode extends Node {
 
   static readonly CARD_WIDTH = 50;
 
-  constructor( casObject: CASObject, position: Vector2, getDragRange: () => Range, providedOptions?: NumberCardOptions ) {
+  constructor( cardModel: CardModel, position: Vector2, getDragRange: () => Range, providedOptions?: NumberCardOptions ) {
 
     const cornerRadius = 10;
     const rectangle = new Rectangle( 0, 0, CardNode.CARD_WIDTH, CardNode.CARD_WIDTH, cornerRadius, cornerRadius, {
@@ -43,7 +44,7 @@ class CardNode extends Node {
       font: new PhetFont( 24 )
     } );
 
-    casObject.valueProperty.link( value => {
+    cardModel.casObject.valueProperty.link( value => {
       text.text = value + '';
       text.center = rectangle.center;
     } );
@@ -61,7 +62,7 @@ class CardNode extends Node {
       useDeepEquality: true
     } );
 
-    this.casObject = casObject;
+    this.casObject = cardModel.casObject;
 
     this.animation = null;
 
@@ -79,6 +80,10 @@ class CardNode extends Node {
     this.addInputListener( this.dragListener );
 
     this.animationTo = null;
+
+    this.addLinkedElement( cardModel, {
+      tandem: options.tandem.createTandem( 'cardModel' )
+    } );
   }
 
   animateTo( destination: Vector2, duration: number ) {

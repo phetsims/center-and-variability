@@ -56,7 +56,7 @@ class NumberCardContainer extends Node {
     this.areCardsSortedProperty = new BooleanProperty( false );
 
     this.numberCardGroup = new PhetioGroup( ( tandem, cardModel ) => {
-      return new CardNode( cardModel.casObject, new Vector2( 0, 0 ), () => this.getDragRange(), {
+      return new CardNode( cardModel, new Vector2( 0, 0 ), () => this.getDragRange(), {
         tandem: tandem
       } );
     }, [ model.cardModelGroup.archetype ], {

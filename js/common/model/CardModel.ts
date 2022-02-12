@@ -8,25 +8,35 @@
  */
 import CASObject from './CASObject.js';
 import centerAndSpread from '../../centerAndSpread.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
-import PhetioObject from '../../../../tandem/js/PhetioObject.js';
+import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import CASObjectType from './CASObjectType.js';
 
 const CASObjectReferenceIO = ReferenceIO( CASObject.CASObjectIO );
+
+type CardModelSelfOptions = {};
+type CardModelOptions = CardModelSelfOptions & PhetioObjectOptions & Required<Pick<PhetioObjectOptions, 'tandem'>>;
 
 class CardModel extends PhetioObject {
 
   casObject: CASObject;
   static CardModelIO: IOType;
 
-  constructor( casObject: CASObject, options?: { tandem: Tandem } ) {
+  constructor( casObject: CASObject, providedOptions?: CardModelOptions ) {
 
-    // @ts-ignore
-    options.phetioType = CardModel.CardModelIO;
+    const options = optionize<CardModelOptions, CardModelSelfOptions, PhetioObjectOptions>( {
+      phetioType: CardModel.CardModelIO
+    }, providedOptions );
+
     super( options );
     this.casObject = casObject;
+
+    this.addLinkedElement( casObject, {
+      tandem: options.tandem.createTandem( casObject.objectType === CASObjectType.SOCCER_BALL ? 'soccerBall' : 'dataPoint' )
+    } );
   }
 }
 
