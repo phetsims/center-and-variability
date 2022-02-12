@@ -7,25 +7,22 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import Screen from '../../../joist/js/Screen.js';
+import Screen, { ScreenOptions } from '../../../joist/js/Screen.js';
 import optionize from '../../../phet-core/js/optionize.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import CASColors from '../common/CASColors.js';
 import centerAndSpread from '../centerAndSpread.js';
 import CASModel from './model/CASModel.js';
 import CASScreenView from './view/CASScreenView.js';
-import { PhetioObjectOptions } from '../../../tandem/js/PhetioObject.js';
 
 type CASScreenSelfOptions = {};
-export type CASScreenOptions = CASScreenSelfOptions & PhetioObjectOptions & Required<Pick<PhetioObjectOptions, 'tandem'>>;
+export type CASScreenOptions = CASScreenSelfOptions & ScreenOptions & Required<Pick<ScreenOptions, 'tandem'>>;
 
-class CASScreen<T extends CASModel> extends Screen {
+class CASScreen<M extends CASModel, V extends CASScreenView> extends Screen<M, V> {
 
-  constructor( createModel: () => T, createView: ( m: T ) => CASScreenView, providedOptions?: CASScreenOptions ) {
+  constructor( createModel: () => M, createView: ( m: M ) => V, providedOptions?: CASScreenOptions ) {
 
-    const options = optionize<CASScreenOptions, CASScreenSelfOptions, PhetioObjectOptions>( {
-
-      // @ts-ignore TODO: convert Screen to TypeScript
+    const options = optionize<CASScreenOptions, CASScreenSelfOptions, ScreenOptions>( {
       backgroundColorProperty: CASColors.screenBackgroundColorProperty,
       tandem: Tandem.REQUIRED
     }, providedOptions );

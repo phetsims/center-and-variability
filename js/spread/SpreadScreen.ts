@@ -18,7 +18,7 @@ import centerAndSpreadStrings from '../centerAndSpreadStrings.js';
 
 type SpreadScreenOptions = CASScreenOptions;
 
-class SpreadScreen extends CASScreen<SpreadModel> {
+class SpreadScreen extends CASScreen<SpreadModel, SpreadScreenView> {
 
   constructor( providedOptions: SpreadScreenOptions ) {
 

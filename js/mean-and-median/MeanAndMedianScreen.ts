@@ -18,7 +18,7 @@ import centerAndSpreadStrings from '../centerAndSpreadStrings.js';
 
 type MeanAndMedianScreenOptions = CASScreenOptions;
 
-class MeanAndMedianScreen extends CASScreen<MeanAndMedianModel> {
+class MeanAndMedianScreen extends CASScreen<MeanAndMedianModel, MeanAndMedianScreenView> {
 
   constructor( providedOptions: MeanAndMedianScreenOptions ) {
 
@@ -30,7 +30,7 @@ class MeanAndMedianScreen extends CASScreen<MeanAndMedianModel> {
 
     super(
       () => new MeanAndMedianModel( { tandem: options.tandem.createTandem( 'model' ) } ),
-      ( model: MeanAndMedianModel ) => new MeanAndMedianScreenView( model, { tandem: options.tandem.createTandem( 'view' ) } ),
+      model => new MeanAndMedianScreenView( model, { tandem: options.tandem.createTandem( 'view' ) } ),
       options
     );
   }

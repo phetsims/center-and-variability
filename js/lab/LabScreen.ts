@@ -18,7 +18,7 @@ import centerAndSpreadStrings from '../centerAndSpreadStrings.js';
 
 type LabScreenOptions = CASScreenOptions;
 
-class LabScreen extends CASScreen<LabModel> {
+class LabScreen extends CASScreen<LabModel, LabScreenView> {
 
   constructor( providedOptions: LabScreenOptions ) {
 
@@ -30,7 +30,7 @@ class LabScreen extends CASScreen<LabModel> {
 
     super(
       () => new LabModel( { tandem: options.tandem.createTandem( 'model' ) } ),
-      ( model: LabModel ) => new LabScreenView( model, { tandem: options.tandem.createTandem( 'view' ) } ),
+      model => new LabScreenView( model, { tandem: options.tandem.createTandem( 'view' ) } ),
       options
     );
   }
