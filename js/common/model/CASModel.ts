@@ -72,7 +72,9 @@ class CASModel {
       } );
     }
 
-    // Stack the objects. TODO: A simpler way?
+    // Stack the objects. This is a brute force algorithm that duplicates effort, but ends up with the objects
+    // correctly stacked.  Since this is only used for development with ?objects=... we decided it does not
+    // need to be rewritten.
     this.objectGroup.forEach( object => this.moveToTop( object ) );
   }
 
