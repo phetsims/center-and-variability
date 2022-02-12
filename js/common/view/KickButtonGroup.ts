@@ -14,8 +14,8 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CASColors from '../CASColors.js';
-import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import SoccerModel from '../model/SoccerModel.js';
+import CASConstants from '../CASConstants.js';
 
 type KickButtonGroupSelfOptions = {};
 export type KickButtonGroupOptions = KickButtonGroupSelfOptions & VBoxOptions & Required<Pick<VBoxOptions, 'tandem'>>;
@@ -36,7 +36,7 @@ class KickButtonGroup extends VBox {
 
     const createLabel = ( label: string, tandem: Tandem ) => alignGroup.createBox( new Text( label, {
       maxWidth: TEXT_MAX_WIDTH,
-      font: new PhetFont( 16 ),
+      font: CASConstants.BUTTON_FONT,
       tandem: tandem
     } ) );
 

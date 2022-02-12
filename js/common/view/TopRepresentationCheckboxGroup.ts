@@ -13,6 +13,7 @@ import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 import { NodeOptions, Text } from '../../../../scenery/js/imports.js';
 import CASModel from '../model/CASModel.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
+import CASConstants from '../CASConstants.js';
 
 type TopRepresentationCheckboxGroupSelfOptions = {};
 type VerticalCheckboxGroupOptions = NodeOptions; // TODO: Add Options in VerticalCheckboxGroup
@@ -26,12 +27,14 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
     const options = optionize<TopRepresentationCheckboxGroupOptions, TopRepresentationCheckboxGroupSelfOptions, VerticalCheckboxGroupOptions>( {}, providedOptions );
 
-    // TODO: Checkbox font should be bigger.
+    const TEXT_OPTIONS = {
+      font: CASConstants.BUTTON_FONT
+    };
     const items = [ {
-      node: new Text( centerAndSpreadStrings.sortData ),
+      node: new Text( centerAndSpreadStrings.sortData, TEXT_OPTIONS ),
       property: model.isSortingDataProperty
     }, {
-      node: new Text( 'Show Median' ),
+      node: new Text( 'Show Median', TEXT_OPTIONS ),
       property: model.isShowingMedianProperty
     } ];
     super( items, options );
