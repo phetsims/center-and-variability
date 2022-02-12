@@ -1,7 +1,7 @@
 // Copyright 2022, University of Colorado Boulder
 
 /**
- * TODO Describe this class and its responsibilities.
+ * The "Median" screen
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
@@ -24,7 +24,6 @@ class MedianScreen extends CASScreen<MedianModel, MedianScreenView> {
 
     const options = optionize<MedianScreenOptions>( {
       name: centerAndSpreadStrings.screen.median,
-      //TODO if you include homeScreenIcon or navigationBarIcon, use JOIST/ScreenIcon
       backgroundColorProperty: CASColors.screenBackgroundColorProperty,
       tandem: Tandem.REQUIRED
     }, providedOptions );
