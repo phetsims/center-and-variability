@@ -41,7 +41,7 @@ class MedianScreenView extends SoccerScreenView {
 
     this.numberCardContainer = new NumberCardContainer( this.model, {
 
-      // TODO: Should we expose this intermediate layer?
+      // Expose this intermediate layer to make it so that clients can hide the number cards with one call
       tandem: accordionBoxTandem.createTandem( 'numberCardContainer' )
     } );
 
