@@ -23,7 +23,7 @@ const simOptions = {
     leadDesign: 'Amanda McGarry',
     softwareDevelopment: 'Chris Klusendorf, Sam Reid',
     team: 'Kelly Findley, Marilyn Hartzell, Ariel Paul, Kathy Perkins, David Webb',
-    qualityAssurance: 'Logan Bray, Clifford Hardin, Brooklyn Lash, Emily Miller, Nancy Salpepi, Kathryn Woessner',
+    qualityAssurance: '',
     graphicArts: 'Mariah Hermsmeyer'
   }
 };
