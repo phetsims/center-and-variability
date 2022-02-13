@@ -73,18 +73,17 @@ class SoccerModel extends CASModel {
     this.timeWhenLastBallWasKickedProperty.value = this.timeProperty.value;
     this.remainingNumberOfBallsToMultiKickProperty.value--;
 
-    // TODO: Listen for when the valueProperty becomes non-null
-    const isAnimatingListener = ( isAnimating: boolean ) => {
-      if ( !isAnimating ) {
+    const valueListener = ( value: number | null ) => {
+      if ( value !== null ) {
         this.moveToTop( casObject );
       }
     };
-    casObject.isAnimatingProperty.lazyLink( isAnimatingListener );
+    casObject.valueProperty.link( valueListener );
 
     // this is an n^2 operation, but that is okay because n small.
     this.objectGroup.elementDisposedEmitter.addListener( o => {
       if ( o === casObject ) {
-        o.isAnimatingProperty.unlink( isAnimatingListener );
+        o.valueProperty.unlink( valueListener );
       }
     } );
   }
