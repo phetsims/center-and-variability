@@ -102,7 +102,6 @@ class CardNode extends Node {
       }
     }
 
-    // this.moveToFront(); TODO: If we keep this, we need to move any cards being dragged to the front
     this.animation = new Animation( {
       duration: duration,
       targets: [ {
