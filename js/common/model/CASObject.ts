@@ -91,11 +91,14 @@ class CASObject extends PhetioObject {
   step( dt: number ): void {
     if ( this.isAnimatingProperty.value ) {
 
-      // TODO: sometimes the ball seems to "hitch" a little bit.  Averaging old and new velocities doesn't correct the problem.
-      // It seems like the ball lands a little too early
-      this.velocityProperty.value = this.velocityProperty.value.plusXY( 0, CASConstants.GRAVITY * dt );
-      let x = this.positionProperty.value.x + this.velocityProperty.value.x * dt;
-      let y = this.positionProperty.value.y + this.velocityProperty.value.y * dt;
+      const xCoordinates = rk4( this.positionProperty.value.x, this.velocityProperty.value.x, 0, dt );
+      const yCoordinates = rk4( this.positionProperty.value.y, this.velocityProperty.value.y, CASConstants.GRAVITY, dt );
+
+      let x = xCoordinates[ 0 ];
+      let y = yCoordinates[ 0 ];
+
+      this.velocityProperty.value.x = xCoordinates[ 1 ];
+      this.velocityProperty.value.y = yCoordinates[ 1 ];
 
       let landed = false;
 
@@ -130,6 +133,22 @@ class CASObject extends PhetioObject {
     };
   }
 }
+
+/**
+ * 4th order Runge Kutte integration under constant acceleration.  We use this more sophisticated algorithm instead of
+ * x=x0+v0t+1/2at^2 because that looked too much like the ball ended a little to the left of the target location,
+ * and jumped slightly to the side.
+ * See https://mtdevans.com/2013/05/fourth-order-runge-kutta-algorithm-in-javascript-with-demo/
+ */
+const rk4 = ( x: number, v: number, a: number, dt: number ) => {
+  const v2 = v + a * dt / 2;
+  const v4 = v + a * dt;
+
+  const xResult = x + dt * ( v + 4 * v2 + v4 ) / 6;
+  const vResult = v + a * dt;
+
+  return [ xResult, vResult ];
+};
 
 CASObject.CASObjectIO = new IOType( 'CASObjectIO', {
   valueType: CASObject,
