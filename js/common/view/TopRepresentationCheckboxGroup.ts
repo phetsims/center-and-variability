@@ -9,17 +9,14 @@
 
 import optionize from '../../../../phet-core/js/optionize.js';
 import centerAndSpread from '../../centerAndSpread.js';
-import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
-import { NodeOptions, Text } from '../../../../scenery/js/imports.js';
+import VerticalCheckboxGroup, { VerticalCheckboxGroupOptions } from '../../../../sun/js/VerticalCheckboxGroup.js';
+import { Text } from '../../../../scenery/js/imports.js';
 import CASModel from '../model/CASModel.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 import CASConstants from '../CASConstants.js';
 
 type TopRepresentationCheckboxGroupSelfOptions = {};
-type VerticalCheckboxGroupOptions = NodeOptions; // TODO: Add Options in VerticalCheckboxGroup
-export type TopRepresentationCheckboxGroupOptions =
-  TopRepresentationCheckboxGroupSelfOptions
-  & VerticalCheckboxGroupOptions;
+export type TopRepresentationCheckboxGroupOptions = TopRepresentationCheckboxGroupSelfOptions & VerticalCheckboxGroupOptions;
 
 class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
