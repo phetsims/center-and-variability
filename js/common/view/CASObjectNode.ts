@@ -57,9 +57,6 @@ class CASObjectNode extends Node {
       transform: modelViewTransform
     } ) );
 
-    // expand the horizontal touch areas but don't overlap with the neighboring columns.
-    // TODO: do we want to expand the vertical touch areas for the top and bottom ball in a stack?  It may depend on
-    // whether the Spread screen reduces the size of the balls, see https://github.com/phetsims/center-and-spread/issues/28
     this.touchArea = this.localBounds.dilatedX( 10 );
 
     // Prevent dragging or interaction while the object is animating
