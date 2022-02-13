@@ -49,7 +49,7 @@ class CASScreenView extends ScreenView {
       supportsDynamicState: false
     } );
 
-    // Added by the child ScreenView so it is in the correct z-ordering TODO: question from CK: do we like this?
+    // Added by the child ScreenView so it is in the correct z-ordering
     this.objectsLayer = new Node();
 
     const map = new Map<CASObject, CASObjectNode>();
