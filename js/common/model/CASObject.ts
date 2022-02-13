@@ -110,6 +110,7 @@ class CASObject extends PhetioObject {
 
       if ( landed ) {
         this.isAnimatingProperty.value = false;
+        this.dragPositionProperty.value = this.positionProperty.value;
       }
     }
   }

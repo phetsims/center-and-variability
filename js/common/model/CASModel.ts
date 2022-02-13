@@ -113,7 +113,6 @@ class CASModel {
   protected createObject( options: Omit<CASObjectOptions, 'tandem'> ): CASObject {
     const casObject = this.objectGroup.createNextElement( this.objectType, options );
 
-    // TODO: when the positionProperty changes from animation, sync the dragPositionProperty to it
     const dragPositionListener = ( dragPosition: Vector2, oldPosition: Vector2 ) => {
       casObject.valueProperty.value = Utils.roundSymmetric( this.rangeProperty.value.constrainValue( dragPosition.x ) );
 
