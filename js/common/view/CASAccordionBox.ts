@@ -8,15 +8,13 @@
  */
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import merge from '../../../../phet-core/js/merge.js';
 import { NodeOptions, Rectangle, Text, Node } from '../../../../scenery/js/imports.js';
-import AccordionBox from '../../../../sun/js/AccordionBox.js';
+import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import CASConstants from '../CASConstants.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import centerAndSpread from '../../centerAndSpread.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import TopRepresentationCheckboxGroup from './TopRepresentationCheckboxGroup.js';
 import CASModel from '../model/CASModel.js';
 
@@ -24,18 +22,14 @@ import CASModel from '../model/CASModel.js';
 type CASAccordionBoxSelfOptions = {
   titleString: string
 };
-// TODO: Get AccordionBox options
-export type CASAccordionBoxOptions = CASAccordionBoxSelfOptions & {} & NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
+export type CASAccordionBoxOptions = CASAccordionBoxSelfOptions & Omit<AccordionBoxOptions, 'titleNode' | 'expandedProperty'> & Required<Pick<NodeOptions, 'tandem'>>;
 
 class CASAccordionBox extends AccordionBox {
-  private readonly isExpandedProperty: BooleanProperty;
 
   constructor( model: CASModel, contents: Node, layoutBounds: Bounds2, providedOptions: CASAccordionBoxOptions ) {
 
-    const options = optionize<CASAccordionBoxOptions, CASAccordionBoxSelfOptions, NodeOptions>( {
+    const options = optionize<CASAccordionBoxOptions, CASAccordionBoxSelfOptions, AccordionBoxOptions>( {
       tandem: Tandem.REQUIRED,
-
-      // @ts-ignore
       titleAlignX: 'left',
       titleXSpacing: 8,
       cornerRadius: 6,
@@ -48,12 +42,12 @@ class CASAccordionBox extends AccordionBox {
       contentAlign: 'left',
       expandCollapseButtonOptions: {
         sideLength: 20
-      }
+      },
+      titleNode: new Text( providedOptions.titleString, {
+        font: new PhetFont( 16 ),
+        maxWidth: 300
+      } )
     }, providedOptions );
-
-    const isExpandedProperty = new BooleanProperty( true, {
-      tandem: options.tandem.createTandem( 'isExpandedProperty' )
-    } );
 
     const backgroundRectangle = new Rectangle( {
       rectHeight: 160,
@@ -73,20 +67,7 @@ class CASAccordionBox extends AccordionBox {
     // TODO: CK: make it possible to put things above the background rectangle
     // backgroundRectangle.localBounds = backgroundRectangle.bounds;
 
-    // TODO: optionize
-    super( backgroundRectangle, merge( {
-      titleNode: new Text( options.titleString, {
-        font: new PhetFont( 16 ),
-        maxWidth: 300
-      } ),
-      expandedProperty: isExpandedProperty
-    }, options ) );
-
-    this.isExpandedProperty = isExpandedProperty;
-  }
-
-  reset() {
-    this.isExpandedProperty.reset();
+    super( backgroundRectangle, options );
   }
 }
 
