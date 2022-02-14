@@ -44,15 +44,13 @@ class KickButtonGroup extends VBox {
 
     const createKickButton = ( content: Node, tandem: Tandem, listener: () => void ) => {
 
-      // TODO: Do we need all of these parameters?
-      const enabledProperty = new DerivedProperty<boolean, [ number, number, number, CASObject | null ]>(
-        [ model.numberOfRemainingObjectsProperty, model.objectGroup.countProperty, model.remainingNumberOfBallsToMultiKickProperty,
+      const enabledProperty = new DerivedProperty<boolean, [ number, number, CASObject | null ]>(
+        [ model.objectGroup.countProperty, model.remainingNumberOfBallsToMultiKickProperty,
           model.nextBallToKickProperty ],
-        ( numberOfRemainingObjects, count, remainingNumberOfBallsToMultiKick, nextBallToKick ) => {
+        ( count, remainingNumberOfBallsToMultiKick, nextBallToKick ) => {
 
-          // TODO: Account for the remainingNumberOfBallsToMultiKick
           const numberBallsThatExistButHaventBeenKicked = nextBallToKick === null ? 0 : 1;
-          return count - numberBallsThatExistButHaventBeenKicked < model.maxNumberOfObjects;
+          return count - numberBallsThatExistButHaventBeenKicked + remainingNumberOfBallsToMultiKick < model.maxNumberOfObjects;
         }
       );
       return new RectangularPushButton( {
