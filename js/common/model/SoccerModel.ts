@@ -26,11 +26,12 @@ type SoccerModelOptions = SoccerModelSelfOptions & CASModelOptions;
 const TIME_BETWEEN_RAPID_KICKS = 0.1; // in seconds
 
 class SoccerModel extends CASModel {
+  readonly soccerPlayers: SoccerPlayer[];
+  readonly soccerPlayerIndexProperty: NumberProperty;
+
   private readonly remainingNumberOfBallsToMultiKickProperty: NumberProperty;
   private readonly timeWhenLastBallWasKickedProperty: NumberProperty;
   private readonly timeProperty: NumberProperty;
-  public readonly soccerPlayers: SoccerPlayer[];
-  public readonly soccerPlayerIndexProperty: NumberProperty;
 
   constructor( maxNumberOfBalls: number, options: SoccerModelOptions ) {
 

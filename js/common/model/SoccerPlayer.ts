@@ -11,7 +11,7 @@ import centerAndSpread from '../../centerAndSpread.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 
 class SoccerPlayer {
-  public readonly isKickingProperty: BooleanProperty;
+  readonly isKickingProperty: BooleanProperty;
 
   constructor() {
     this.isKickingProperty = new BooleanProperty( false );

@@ -31,7 +31,8 @@ type NumberCardContainerSelfOptions = {};
 export type NumberCardOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
 
 class NumberCardContainer extends Node {
-  public readonly cardNodeCells: CardNode[];
+  readonly cardNodeCells: CardNode[];
+
   private readonly model: CASModel;
   private readonly cardNodeGroup: PhetioGroup<CardNode, [ CardModel ]>;
   private readonly areCardsSortedProperty: BooleanProperty;
