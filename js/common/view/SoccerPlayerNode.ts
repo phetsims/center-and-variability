@@ -8,14 +8,18 @@
  */
 
 import centerAndSpread from '../../centerAndSpread.js';
-import { Image, Node } from '../../../../scenery/js/imports.js';
+import { Image, Node, NodeOptions } from '../../../../scenery/js/imports.js';
 import player01Standing_png from '../../../images/player01Standing_png.js';
 import player01Kicking_png from '../../../images/player01Kicking_png.js';
 import SoccerPlayer from '../model/SoccerPlayer.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+
+type SoccerPlayerNodeSelfOptions = {};
+type SoccerPlayerNodeOptions = SoccerPlayerNodeSelfOptions & NodeOptions;
 
 class SoccerPlayerNode extends Node {
 
-  constructor( soccerPlayer: SoccerPlayer ) {
+  constructor( soccerPlayer: SoccerPlayer, providedOptions?: SoccerPlayerNodeOptions ) {
     super();
 
     const standingNode = new Image( player01Standing_png, {
@@ -32,6 +36,9 @@ class SoccerPlayerNode extends Node {
       standingNode.visible = !isKicking;
       kickingNode.visible = isKicking;
     } );
+    const options = optionize<SoccerPlayerNodeOptions, SoccerPlayerNodeSelfOptions, NodeOptions>( {}, providedOptions );
+
+    this.mutate( options );
   }
 }
 
