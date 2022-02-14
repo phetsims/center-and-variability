@@ -18,22 +18,20 @@ class SoccerPlayerNode extends Node {
   constructor( soccerPlayer: SoccerPlayer ) {
     super();
 
-    const playerStandingNode = new Image( player01Standing_png, {
+    const standingNode = new Image( player01Standing_png, {
       maxHeight: 100
     } );
-    this.addChild( playerStandingNode );
+    this.addChild( standingNode );
 
-    const playerKickingNode = new Image( player01Kicking_png, {
+    const kickingNode = new Image( player01Kicking_png, {
       maxHeight: 100
     } );
-    playerKickingNode.visible = false;
-    this.addChild( playerKickingNode );
+    this.addChild( kickingNode );
 
-    soccerPlayer.isKickingProperty.lazyLink( isKicking => {
-      playerStandingNode.visible = !isKicking;
-      playerKickingNode.visible = isKicking;
+    soccerPlayer.isKickingProperty.link( isKicking => {
+      standingNode.visible = !isKicking;
+      kickingNode.visible = isKicking;
     } );
-
   }
 }
 
