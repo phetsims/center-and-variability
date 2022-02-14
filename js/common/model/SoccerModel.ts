@@ -149,13 +149,6 @@ class SoccerModel extends CASModel {
 
     this.timeProperty.value += dt;
 
-    if ( this.numberOfRemainingObjectsProperty.value > 0 &&
-         this.timeProperty.value >= this.timeWhenLastBallWasKickedProperty.value + TIME_BETWEEN_BALL_CREATION && this.nextBallToKickProperty.value === null ) {
-
-      // Create the next ball. TODO: Is this distracting?
-      this.nextBallToKickProperty.value = this.createBall();
-    }
-
     // Scheduled kicks from the "Kick 5" button
     if ( this.remainingNumberOfBallsToMultiKickProperty.value > 0 && this.numberOfRemainingObjectsProperty.value > 0 &&
          this.timeProperty.value >= this.timeWhenLastBallWasKickedProperty.value + TIME_BETWEEN_RAPID_KICKS ) {
@@ -164,6 +157,14 @@ class SoccerModel extends CASModel {
         this.nextBallToKickProperty.value = this.createBall();
       }
       this.kickBall();
+    }
+  }
+
+  objectValueBecameNonNull() {
+    if ( this.numberOfRemainingObjectsProperty.value > 0 && this.nextBallToKickProperty.value === null ) {
+
+      // Create the next ball.
+      this.nextBallToKickProperty.value = this.createBall();
     }
   }
 

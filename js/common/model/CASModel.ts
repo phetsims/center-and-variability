@@ -85,11 +85,13 @@ class CASModel {
     } );
 
     // Trigger CardModel creation when a ball lands.
-    if ( options.includeCards ) {
       const objectCreatedListener = ( casObject: CASObject ) => {
         const listener = ( value: number | null ) => {
           if ( value !== null && !phet.joist.sim.isSettingPhetioStateProperty.value ) {
-            this.cardModelGroup.createNextElement( casObject );
+            if ( options.includeCards ) {
+              this.cardModelGroup.createNextElement( casObject );
+            }
+            this.objectValueBecameNonNull();
             casObject.valueProperty.unlink( listener ); // Only create the card once, then no need to listen further
           }
         };
@@ -97,7 +99,6 @@ class CASModel {
       };
       this.objectGroup.forEach( objectCreatedListener );
       this.objectGroup.elementCreatedEmitter.addListener( objectCreatedListener );
-    }
 
     this.includeCards = options.includeCards;
 
@@ -165,6 +166,8 @@ class CASModel {
       position += object.objectType.radius * 2;
     } );
   }
+
+  protected objectValueBecameNonNull(): void {}
 
   /**
    * Resets the model.

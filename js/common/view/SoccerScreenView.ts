@@ -81,7 +81,6 @@ class SoccerScreenView extends CASScreenView {
     numberLineNode.x = NUMBER_LINE_MARGIN_X;
     this.addChild( numberLineNode );
 
-    // TODO: Position players
     const soccerPlayerNodes: SoccerPlayerNode[] = [];
     model.soccerPlayers.forEach( ( soccerPlayer, index ) => {
       const SPACING = 5;
