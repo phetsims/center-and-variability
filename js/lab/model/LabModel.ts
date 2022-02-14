@@ -12,6 +12,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndSpread from '../../centerAndSpread.js';
 import CASModel, { CASModelOptions } from '../../common/model/CASModel.js';
 import CASObjectType from '../../common/model/CASObjectType.js';
+import CASConstants from '../../common/CASConstants.js';
 
 type LabModelSelfOptions = {};
 type LabModelOptions = LabModelSelfOptions & CASModelOptions;
@@ -24,7 +25,7 @@ class LabModel extends CASModel {
       tandem: Tandem.REQUIRED
     }, options );
 
-    super( CASObjectType.DATA_POINT, options );
+    super( CASObjectType.DATA_POINT, CASConstants.NUMBER_OF_OBJECTS_LARGE, options );
   }
 
   /**

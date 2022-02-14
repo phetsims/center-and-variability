@@ -25,6 +25,7 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import SoccerModel from '../model/SoccerModel.js';
+import SoccerPlayerNode from './SoccerPlayerNode.js';
 
 type SoccerScreenViewSelfOptions = {
   questionBarOptions: QuestionBarOptions
@@ -78,6 +79,19 @@ class SoccerScreenView extends CASScreenView {
     numberLineNode.top = GROUND_POSITION_Y;
     numberLineNode.x = NUMBER_LINE_MARGIN_X;
     this.addChild( numberLineNode );
+
+    // // const kickerContainerNode = new SoccerPlayerNode(  );
+    // kickerContainerNode.left = CASConstants.SCREEN_VIEW_X_MARGIN;
+    // kickerContainerNode.bottom = GROUND_POSITION_Y;
+    // this.addChild( kickerContainerNode );
+
+    // TODO: Position players
+    const soccerPlayerNodes = [];
+    model.soccerPlayers.forEach( soccerPlayer => {
+      const soccerPlayerNode = new SoccerPlayerNode( soccerPlayer );
+      soccerPlayerNodes.push( soccerPlayerNode );
+      this.addChild( soccerPlayerNode );
+    } );
 
     this.questionBar = new QuestionBar( this.layoutBounds, this.visibleBoundsProperty, options.questionBarOptions );
     this.addChild( this.questionBar );

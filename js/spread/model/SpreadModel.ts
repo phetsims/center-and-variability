@@ -12,6 +12,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndSpread from '../../centerAndSpread.js';
 import { CASModelOptions } from '../../common/model/CASModel.js';
 import SoccerModel from '../../common/model/SoccerModel.js';
+import CASConstants from '../../common/CASConstants.js';
 
 type SpreadModelSelfOptions = {};
 type SpreadModelOptions = SpreadModelSelfOptions & CASModelOptions;
@@ -24,7 +25,7 @@ class SpreadModel extends SoccerModel {
       tandem: Tandem.REQUIRED
     }, options );
 
-    super( options );
+    super( CASConstants.NUMBER_OF_OBJECTS_LARGE, options );
   }
 }
 

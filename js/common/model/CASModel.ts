@@ -32,19 +32,23 @@ export type CASModelOptions = CASModelSelfOptions & {};
 class CASModel {
   readonly objectGroup: PhetioGroup<CASObject, [ CASObjectType, Omit<CASObjectOptions, 'tandem'> ]>;
   readonly objectType: CASObjectType;
+  readonly maxNumberOfObjects: number;
   readonly rangeProperty: Property<Range>;
   readonly isSortingDataProperty: BooleanProperty;
   readonly isShowingMedianProperty: BooleanProperty;
   readonly cardModelGroup: PhetioGroup<CardModel, [ CASObject ]>; // Only instrumented and enabled if includeCards === true
   readonly includeCards: boolean;
 
-  constructor( objectType: CASObjectType, providedOptions: CASModelOptions ) {
+  constructor( objectType: CASObjectType, maxNumberOfObjects: number, providedOptions: CASModelOptions ) {
 
     const options = optionize<CASModelOptions, CASModelSelfOptions, {}>( {
       tandem: Tandem.REQUIRED
     }, providedOptions );
 
     this.objectType = objectType;
+
+    // TODO: Actually respect this constraint
+    this.maxNumberOfObjects = maxNumberOfObjects;
 
     this.objectGroup = new PhetioGroup( ( tandem, objectType: CASObjectType, providedOptions ) => {
 

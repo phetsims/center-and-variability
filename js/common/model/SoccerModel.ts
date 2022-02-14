@@ -16,6 +16,8 @@ import dotRandom from '../../../../dot/js/dotRandom.js';
 import CASConstants from '../CASConstants.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import SoccerPlayer from './SoccerPlayer.js';
+import Range from '../../../../dot/js/Range.js';
 
 type SoccerModelSelfOptions = {};
 type SoccerModelOptions = SoccerModelSelfOptions & CASModelOptions;
@@ -27,14 +29,16 @@ class SoccerModel extends CASModel {
   private readonly remainingNumberOfBallsToMultiKickProperty: NumberProperty;
   private readonly timeWhenLastBallWasKickedProperty: NumberProperty;
   private readonly timeProperty: NumberProperty;
+  public readonly soccerPlayers: SoccerPlayer[];
+  public readonly soccerPlayerIndexProperty: NumberProperty;
 
-  constructor( options: SoccerModelOptions ) {
+  constructor( maxNumberOfBalls: number, options: SoccerModelOptions ) {
 
     options = optionize<SoccerModelOptions, SoccerModelSelfOptions, CASModelOptions>( {
       tandem: Tandem.REQUIRED
     }, options );
 
-    super( CASObjectType.SOCCER_BALL, options );
+    super( CASObjectType.SOCCER_BALL, maxNumberOfBalls, options );
 
     this.remainingNumberOfBallsToMultiKickProperty = new NumberProperty( 0, {
       tandem: options.tandem.createTandem( 'remainingNumberOfBallsToMultiKickProperty' )
@@ -45,12 +49,24 @@ class SoccerModel extends CASModel {
     this.timeWhenLastBallWasKickedProperty = new NumberProperty( 0, {
       tandem: options.tandem.createTandem( 'timeWhenLastBallWasKickedProperty' )
     } );
+
+    this.soccerPlayers = [];
+    _.times( this.maxNumberOfObjects, () => {
+      this.soccerPlayers.push( new SoccerPlayer() );
+    } );
+    this.soccerPlayerIndexProperty = new NumberProperty( 0, {
+      range: new Range( 0, this.maxNumberOfObjects ),
+      tandem: options.tandem.createTandem( 'soccerPlayerIndexProperty' )
+    } );
   }
 
   /**
    * Creates a ball at the starting kick position and kicks off an animation to its target location.
    */
   private createBall(): void {
+
+    // TODO: How long should a kicker be kicking? When do we turn them off and set the next kicker index?
+    this.soccerPlayers[ this.soccerPlayerIndexProperty.value ].isKickingProperty.value = true;
 
     const y0 = this.objectType.radius;
     const x1 = dotRandom.nextIntBetween( this.rangeProperty.value.min, this.rangeProperty.value.max );

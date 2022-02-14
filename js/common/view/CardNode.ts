@@ -20,6 +20,7 @@ import Range from '../../../../dot/js/Range.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import CardModel from '../model/CardModel.js';
 
+// TODO: Rename options
 type NumberCardSelfOptions = {};
 export type NumberCardOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
 
