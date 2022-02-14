@@ -32,12 +32,13 @@ export type CASModelOptions = CASModelSelfOptions & {};
 class CASModel {
   readonly objectGroup: PhetioGroup<CASObject, [ CASObjectType, Omit<CASObjectOptions, 'tandem'> ]>;
   readonly objectType: CASObjectType;
-  readonly maxNumberOfObjects: number;
-  readonly rangeProperty: Property<Range>;
   readonly isSortingDataProperty: BooleanProperty;
   readonly isShowingMedianProperty: BooleanProperty;
   readonly cardModelGroup: PhetioGroup<CardModel, [ CASObject ]>; // Only instrumented and enabled if includeCards === true
   readonly includeCards: boolean;
+
+  protected readonly maxNumberOfObjects: number;
+  protected readonly rangeProperty: Property<Range>;
 
   constructor( objectType: CASObjectType, maxNumberOfObjects: number, providedOptions: CASModelOptions ) {
 
