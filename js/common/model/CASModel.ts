@@ -22,6 +22,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import merge from '../../../../phet-core/js/merge.js';
 import CardModel from './CardModel.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 type CASModelSelfOptions = {
   tandem: Tandem,
@@ -37,8 +38,9 @@ class CASModel {
   readonly cardModelGroup: PhetioGroup<CardModel, [ CASObject ]>; // Only instrumented and enabled if includeCards === true
   readonly includeCards: boolean;
 
-  protected readonly maxNumberOfObjects: number;
+  readonly maxNumberOfObjects: number;
   protected readonly rangeProperty: Property<Range>;
+  readonly numberOfRemainingObjectsProperty: DerivedProperty<number, [ count: number ]>;
 
   constructor( objectType: CASObjectType, maxNumberOfObjects: number, providedOptions: CASModelOptions ) {
 
@@ -48,7 +50,6 @@ class CASModel {
 
     this.objectType = objectType;
 
-    // TODO: Actually respect this constraint
     this.maxNumberOfObjects = maxNumberOfObjects;
 
     this.objectGroup = new PhetioGroup( ( tandem, objectType: CASObjectType, providedOptions ) => {
@@ -57,7 +58,7 @@ class CASModel {
       const options = merge( {}, providedOptions, { tandem: tandem } );
 
       return new CASObject( objectType, options );
-    }, [ objectType, { targetX: 0 } ], {
+    }, [ objectType, {} ], {
       phetioType: PhetioGroup.PhetioGroupIO( CASObject.CASObjectIO ),
       tandem: options.tandem.createTandem( objectType === CASObjectType.SOCCER_BALL ? 'soccerBallGroup' : 'dataPointGroup' )
     } );
@@ -100,11 +101,14 @@ class CASModel {
 
     this.includeCards = options.includeCards;
 
+    this.numberOfRemainingObjectsProperty = new DerivedProperty( [ this.objectGroup.countProperty ], count => {
+      return this.maxNumberOfObjects - count;
+    } );
+
     // Populate with initial objects for debugging
     for ( let i = 0; i < CASQueryParameters.objects; i++ ) {
       const targetX = dotRandom.nextIntBetween( this.rangeProperty.value.min, this.rangeProperty.value.max );
       this.createObject( {
-        targetX: targetX,
         value: targetX
       } );
     }

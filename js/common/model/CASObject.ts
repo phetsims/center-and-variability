@@ -25,7 +25,6 @@ import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 type CASObjectSelfOptions = {
   position?: Vector2,
   velocity?: Vector2,
-  targetX: number,
   value?: number | null
 };
 export type CASObjectOptions =
@@ -45,8 +44,8 @@ class CASObject extends PhetioObject {
   static CASObjectIO: IOType;
   readonly objectType: CASObjectType;
 
-  // Where the object is animating to
-  private readonly targetX: number;
+  // Where the object is animating to, or null if not yet animating
+  targetX: number | null;
 
   // The value that particpates in the data set.
   valueProperty: Property<number | null>;
@@ -65,8 +64,7 @@ class CASObject extends PhetioObject {
     super( options );
 
     this.objectType = objectType;
-
-    this.targetX = options.targetX;
+    this.targetX = null;
 
     this.positionProperty = new Vector2Property( options.position, {
       tandem: options.tandem.createTandem( 'positionProperty' )
@@ -91,6 +89,8 @@ class CASObject extends PhetioObject {
   step( dt: number ): void {
     if ( this.isAnimatingProperty.value ) {
 
+      assert && assert( this.targetX !== null, 'targetX should be non-null when animating' );
+
       const xCoordinates = rk4( this.positionProperty.value.x, this.velocityProperty.value.x, 0, dt );
       const yCoordinates = rk4( this.positionProperty.value.y, this.velocityProperty.value.y, CASConstants.GRAVITY, dt );
 
@@ -103,10 +103,10 @@ class CASObject extends PhetioObject {
       let landed = false;
 
       if ( y <= this.objectType.radius ) {
-        x = this.targetX;
+        x = this.targetX!;
         y = this.objectType.radius;
         landed = true;
-        this.valueProperty.value = this.targetX;
+        this.valueProperty.value = this.targetX!;
       }
 
       this.positionProperty.value = new Vector2( x, y );

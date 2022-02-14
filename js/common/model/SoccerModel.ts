@@ -18,18 +18,22 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import SoccerPlayer from './SoccerPlayer.js';
 import Range from '../../../../dot/js/Range.js';
+import CASObject from './CASObject.js';
+import Property from '../../../../axon/js/Property.js';
 
 type SoccerModelSelfOptions = {};
 type SoccerModelOptions = SoccerModelSelfOptions & CASModelOptions;
 
 // constants
 const TIME_BETWEEN_RAPID_KICKS = 0.1; // in seconds
+const TIME_BETWEEN_BALL_CREATION = 1.0;
 
 class SoccerModel extends CASModel {
   readonly soccerPlayers: SoccerPlayer[];
   readonly soccerPlayerIndexProperty: NumberProperty;
+  readonly nextBallToKickProperty: Property<CASObject | null>; // Null if there is no more ball to kick
+  readonly remainingNumberOfBallsToMultiKickProperty: NumberProperty;
 
-  private readonly remainingNumberOfBallsToMultiKickProperty: NumberProperty;
   private readonly timeWhenLastBallWasKickedProperty: NumberProperty;
   private readonly timeProperty: NumberProperty;
 
@@ -59,36 +63,25 @@ class SoccerModel extends CASModel {
       range: new Range( 0, this.maxNumberOfObjects ),
       tandem: options.tandem.createTandem( 'soccerPlayerIndexProperty' )
     } );
+
+    // Create an initial ball to show on startup
+    this.nextBallToKickProperty = new Property<CASObject | null>( this.createBall() );
   }
 
   /**
-   * Creates a ball at the starting kick position and kicks off an animation to its target location.
+   * Creates a ball at the starting kick position.
    */
-  private createBall(): void {
-
-    // TODO: How long should a kicker be kicking? When do we turn them off and set the next kicker index?
-    this.soccerPlayers[ this.soccerPlayerIndexProperty.value ].isKickingProperty.value = true;
+  private createBall(): CASObject {
 
     const y0 = this.objectType.radius;
-    const x1 = dotRandom.nextIntBetween( this.rangeProperty.value.min, this.rangeProperty.value.max );
-
-    // Range equation is R=v0^2 sin(2 theta0) / g, see https://openstax.org/books/university-physics-volume-1/pages/4-3-projectile-motion
-    // Equation 4.26
-    const degreesToRadians = ( degrees: number ) => degrees * Math.PI * 2 / 360;
-    const angle = dotRandom.nextDoubleBetween( degreesToRadians( 25 ), degreesToRadians( 70 ) );
-    const v0 = Math.sqrt( Math.abs( x1 * Math.abs( CASConstants.GRAVITY ) / Math.sin( 2 * angle ) ) );
-
-    const velocity = Vector2.createPolar( v0, angle );
     const position = new Vector2( 0, y0 );
 
     const casObject = this.createObject( {
       position: position,
-      velocity: velocity,
-      targetX: x1
+
+      // TODO: should be a default if it isnt already
+      velocity: Vector2.ZERO
     } );
-    casObject.isAnimatingProperty.value = true;
-    this.timeWhenLastBallWasKickedProperty.value = this.timeProperty.value;
-    this.remainingNumberOfBallsToMultiKickProperty.value--;
 
     const valueListener = ( value: number | null ) => {
       if ( value !== null ) {
@@ -103,6 +96,8 @@ class SoccerModel extends CASModel {
         o.valueProperty.unlink( valueListener );
       }
     } );
+
+    return casObject;
   }
 
   /**
@@ -110,7 +105,43 @@ class SoccerModel extends CASModel {
    */
   kick( numberOfBallsToKick: number ): void {
     this.remainingNumberOfBallsToMultiKickProperty.value += numberOfBallsToKick;
-    this.createBall();
+    if ( this.nextBallToKickProperty.value === null ) {
+      this.nextBallToKickProperty.value = this.createBall();
+    }
+    this.kickBall();
+  }
+
+  /**
+   * Select a target location for the nextBallToKick, set its velocity and mark it for animation.
+   */
+  kickBall(): void {
+
+    assert && assert( this.nextBallToKickProperty.value !== null, 'there was no ball to kick' );
+
+    const casObject = this.nextBallToKickProperty.value!;
+
+    // TODO: How long should a kicker be kicking? When do we turn them off and set the next kicker index?
+    this.soccerPlayers[ this.soccerPlayerIndexProperty.value ].isKickingProperty.value = true;
+
+    const x1 = dotRandom.nextIntBetween( this.rangeProperty.value.min, this.rangeProperty.value.max );
+
+    // Range equation is R=v0^2 sin(2 theta0) / g, see https://openstax.org/books/university-physics-volume-1/pages/4-3-projectile-motion
+    // Equation 4.26
+    const degreesToRadians = ( degrees: number ) => degrees * Math.PI * 2 / 360;
+    const angle = dotRandom.nextDoubleBetween( degreesToRadians( 25 ), degreesToRadians( 70 ) );
+    const v0 = Math.sqrt( Math.abs( x1 * Math.abs( CASConstants.GRAVITY ) / Math.sin( 2 * angle ) ) );
+
+    const velocity = Vector2.createPolar( v0, angle );
+    casObject.velocityProperty.value = velocity;
+
+    casObject.targetX = x1;
+
+    casObject.isAnimatingProperty.value = true;
+    this.timeWhenLastBallWasKickedProperty.value = this.timeProperty.value;
+    this.remainingNumberOfBallsToMultiKickProperty.value--;
+
+    // New ball will be created later in step
+    this.nextBallToKickProperty.value = null;
   }
 
   step( dt: number ): void {
@@ -118,9 +149,21 @@ class SoccerModel extends CASModel {
 
     this.timeProperty.value += dt;
 
-    if ( this.remainingNumberOfBallsToMultiKickProperty.value > 0 &&
+    if ( this.numberOfRemainingObjectsProperty.value > 0 &&
+         this.timeProperty.value >= this.timeWhenLastBallWasKickedProperty.value + TIME_BETWEEN_BALL_CREATION && this.nextBallToKickProperty.value === null ) {
+
+      // Create the next ball. TODO: Is this distracting?
+      this.nextBallToKickProperty.value = this.createBall();
+    }
+
+    // Scheduled kicks from the "Kick 5" button
+    if ( this.remainingNumberOfBallsToMultiKickProperty.value > 0 && this.numberOfRemainingObjectsProperty.value > 0 &&
          this.timeProperty.value >= this.timeWhenLastBallWasKickedProperty.value + TIME_BETWEEN_RAPID_KICKS ) {
-      this.createBall();
+
+      if ( this.nextBallToKickProperty.value === null ) {
+        this.nextBallToKickProperty.value = this.createBall();
+      }
+      this.kickBall();
     }
   }
 

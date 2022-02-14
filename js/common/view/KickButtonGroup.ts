@@ -16,6 +16,8 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import CASColors from '../CASColors.js';
 import SoccerModel from '../model/SoccerModel.js';
 import CASConstants from '../CASConstants.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import CASObject from '../model/CASObject.js';
 
 type KickButtonGroupSelfOptions = {};
 export type KickButtonGroupOptions = KickButtonGroupSelfOptions & VBoxOptions & Required<Pick<VBoxOptions, 'tandem'>>;
@@ -41,7 +43,20 @@ class KickButtonGroup extends VBox {
     } ) );
 
     const createKickButton = ( content: Node, tandem: Tandem, listener: () => void ) => {
+
+      // TODO: Do we need all of these parameters?
+      const enabledProperty = new DerivedProperty<boolean, [ number, number, number, CASObject | null ]>(
+        [ model.numberOfRemainingObjectsProperty, model.objectGroup.countProperty, model.remainingNumberOfBallsToMultiKickProperty,
+          model.nextBallToKickProperty ],
+        ( numberOfRemainingObjects, count, remainingNumberOfBallsToMultiKick, nextBallToKick ) => {
+
+          // TODO: Account for the remainingNumberOfBallsToMultiKick
+          const numberBallsThatExistButHaventBeenKicked = nextBallToKick === null ? 0 : 1;
+          return count - numberBallsThatExistButHaventBeenKicked < model.maxNumberOfObjects;
+        }
+      );
       return new RectangularPushButton( {
+        enabledProperty: enabledProperty,
         content: content,
         baseColor: CASColors.kickButtonFillColorProperty,
         xMargin: 12,
