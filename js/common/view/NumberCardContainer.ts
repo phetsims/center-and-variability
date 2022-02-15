@@ -203,7 +203,7 @@ class NumberCardContainer extends Node {
 
       const NOTCH_HEIGHT = 10;
       const MARGIN_X = CARD_SPACING / 2;
-      const MARGIN_Y = 3 + NOTCH_HEIGHT;
+      const MARGIN_Y = 5;
       const HALF_SPLIT_WIDTH = 2;
 
       // Only redraw the shape if the feature is selected
