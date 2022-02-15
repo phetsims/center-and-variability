@@ -85,20 +85,20 @@ class CASModel {
     } );
 
     // Trigger CardModel creation when a ball lands.
-      const objectCreatedListener = ( casObject: CASObject ) => {
-        const listener = ( value: number | null ) => {
-          if ( value !== null && !phet.joist.sim.isSettingPhetioStateProperty.value ) {
-            if ( options.includeCards ) {
-              this.cardModelGroup.createNextElement( casObject );
-            }
-            this.objectValueBecameNonNull();
-            casObject.valueProperty.unlink( listener ); // Only create the card once, then no need to listen further
+    const objectCreatedListener = ( casObject: CASObject ) => {
+      const listener = ( value: number | null ) => {
+        if ( value !== null && !phet.joist.sim.isSettingPhetioStateProperty.value ) {
+          if ( options.includeCards ) {
+            this.cardModelGroup.createNextElement( casObject );
           }
-        };
-        casObject.valueProperty.link( listener );
+          this.objectValueBecameNonNull( casObject );
+          casObject.valueProperty.unlink( listener ); // Only create the card once, then no need to listen further
+        }
       };
-      this.objectGroup.forEach( objectCreatedListener );
-      this.objectGroup.elementCreatedEmitter.addListener( objectCreatedListener );
+      casObject.valueProperty.link( listener );
+    };
+    this.objectGroup.forEach( objectCreatedListener );
+    this.objectGroup.elementCreatedEmitter.addListener( objectCreatedListener );
 
     this.includeCards = options.includeCards;
 
@@ -167,7 +167,7 @@ class CASModel {
     } );
   }
 
-  protected objectValueBecameNonNull(): void {}
+  protected objectValueBecameNonNull( casObject: CASObject ): void {}
 
   /**
    * Resets the model.

@@ -34,6 +34,7 @@ class SoccerModel extends CASModel {
 
   private readonly timeWhenLastBallWasKickedProperty: NumberProperty;
   private readonly timeProperty: NumberProperty;
+  private readonly ballPlayerMap: Map<CASObject, SoccerPlayer>; // TODO: Add to PhET-iO State
 
   constructor( maxNumberOfBalls: number, options: SoccerModelOptions ) {
 
@@ -68,6 +69,8 @@ class SoccerModel extends CASModel {
 
     // Create an initial ball to show on startup
     this.nextBallToKickProperty = new Property<CASObject | null>( this.createBall() );
+
+    this.ballPlayerMap = new Map();
   }
 
   /**
@@ -107,6 +110,7 @@ class SoccerModel extends CASModel {
    */
   kick( numberOfBallsToKick: number ): void {
     this.remainingNumberOfBallsToMultiKickProperty.value += numberOfBallsToKick;
+    this.advanceLine();
     if ( this.nextBallToKickProperty.value === null ) {
       this.nextBallToKickProperty.value = this.createBall();
     }
@@ -123,7 +127,11 @@ class SoccerModel extends CASModel {
     const casObject = this.nextBallToKickProperty.value!;
 
     // TODO: How long should a kicker be kicking? When do we turn them off and set the next kicker index?
-    this.soccerPlayerGroup.getElement( 0 ).isKickingProperty.value = true;
+    // TODO: Choose the player with placeInLineProperty===0
+    const soccerPlayer = this.soccerPlayerGroup.getElement( 0 );
+    soccerPlayer.isKickingProperty.value = true;
+
+    this.ballPlayerMap.set( casObject, soccerPlayer );
 
     const x1 = dotRandom.nextIntBetween( this.rangeProperty.value.min, this.rangeProperty.value.max );
 
@@ -156,41 +164,55 @@ class SoccerModel extends CASModel {
          this.timeProperty.value >= this.timeWhenLastBallWasKickedProperty.value + TIME_BETWEEN_RAPID_KICKS ) {
 
       if ( this.nextBallToKickProperty.value === null ) {
-        this.movePlayersForwardInLine();
+
+        // Create the next ball.
+        this.nextBallToKickProperty.value = this.createBall();
       }
+
+      this.advanceLine();
       this.kickBall();
     }
   }
 
-  objectValueBecameNonNull(): void {
+  protected objectValueBecameNonNull( casObject: CASObject ): void {
+
+    if ( this.soccerPlayerGroup.includes( this.ballPlayerMap.get( casObject )! ) ) {
+      this.advanceLine();
+    }
+
     if ( this.numberOfRemainingObjectsProperty.value > 0 && this.nextBallToKickProperty.value === null ) {
-      this.movePlayersForwardInLine();
+      this.nextBallToKickProperty.value = this.createBall();
     }
   }
 
-  movePlayersForwardInLine(): void {
-    // Create the next ball.
-    this.nextBallToKickProperty.value = this.createBall();
+  private advanceLine(): void {
 
-    const soccerPlayersToDispose: SoccerPlayer[] = [];
+    // if the previous ball was still in the air, we need to move the line forward so the next player can kick
+    const kickingPlayers = this.soccerPlayerGroup.filter( soccerPlayer => soccerPlayer.isKickingProperty.value );
+    assert && assert( kickingPlayers.length === 0 || kickingPlayers.length === 1, 'Too many kickers' );
+    if ( kickingPlayers.length === 1 ) {
 
-    this.soccerPlayerGroup.forEach( soccerPlayer => {
-      if ( soccerPlayer.placeInLineProperty.value === 0 ) {
-        soccerPlayersToDispose.push( soccerPlayer );
-      }
-      else {
-        soccerPlayer.placeInLineProperty.value--;
-      }
-    } );
+      const soccerPlayersToDispose: SoccerPlayer[] = [];
 
-    assert && assert( soccerPlayersToDispose.length === 1, 'should always dispose the front soccer player only' );
-    soccerPlayersToDispose.forEach( soccerPlayer => this.soccerPlayerGroup.disposeElement( soccerPlayer ) );
+      this.soccerPlayerGroup.forEach( soccerPlayer => {
+        if ( soccerPlayer.placeInLineProperty.value === 0 ) {
+          soccerPlayersToDispose.push( soccerPlayer );
+        }
+        else {
+          soccerPlayer.placeInLineProperty.value--;
+        }
+      } );
+
+      assert && assert( soccerPlayersToDispose.length === 1, 'should always dispose the front soccer player only' );
+      soccerPlayersToDispose.forEach( soccerPlayer => this.soccerPlayerGroup.disposeElement( soccerPlayer ) );
+    }
   }
 
   reset(): void {
     this.remainingNumberOfBallsToMultiKickProperty.reset();
     this.timeProperty.reset();
     this.timeWhenLastBallWasKickedProperty.reset();
+    this.ballPlayerMap.clear();
     super.reset();
   }
 }
