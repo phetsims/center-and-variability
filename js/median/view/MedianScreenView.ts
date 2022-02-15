@@ -55,6 +55,9 @@ class MedianScreenView extends SoccerScreenView {
     this.addChild( this.dataAccordionBox );
 
     this.addChild( this.objectsLayer );
+
+    // Last in alternative input focus order
+    this.addChild( this.resetAllButton );
   }
 
   step( dt: number ): void {
