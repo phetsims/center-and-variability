@@ -197,7 +197,6 @@ class NumberCardContainer extends Node {
     this.cardNodeCellsChangedEmitter.addListener( updateDragIndictor );
     this.hasPressedCardProperty.link( updateDragIndictor );
 
-    // TODO: There is a bug when dragging the 2nd card from the edge, to the edge
     // TODO: Move to a separate file (probably)
     const updateMedianBar = () => {
 
@@ -213,18 +212,22 @@ class NumberCardContainer extends Node {
           const rightmostCard = this.cardNodeCells[ this.cardNodeCells.length - 1 ];
           const shape = new Shape();
 
-          const leftCorner = leftmostCard.leftBottom.plusXY( -MARGIN_X, MARGIN_Y );
-          const rightCorner = rightmostCard.rightBottom.plusXY( MARGIN_X, MARGIN_Y );
+          const leftCornerX = getCardPositionX( 0 ) - MARGIN_X;
+          const rightCornerX = getCardPositionX( this.cardNodeCells.length - 1 ) + rightmostCard.width + MARGIN_X;
+          const barY = leftmostCard.bottom + MARGIN_Y;
+
+          const leftCorner = new Vector2( leftCornerX, barY );
+          const rightCorner = new Vector2( rightCornerX, barY );
           const center = leftCorner.average( rightCorner );
 
-          shape.moveToPoint( leftmostCard.leftBottom.plusXY( -MARGIN_X, -NOTCH_HEIGHT ) );
+          shape.moveToPoint( leftCorner.plusXY( 0, -NOTCH_HEIGHT ) );
           shape.lineToPoint( leftCorner );
 
           shape.lineToPoint( center );
           shape.lineToRelative( 0, -NOTCH_HEIGHT );
           shape.moveToRelative( 0, NOTCH_HEIGHT );
           shape.lineToPoint( rightCorner );
-          shape.lineToPoint( rightmostCard.rightBottom.plusXY( MARGIN_X, -NOTCH_HEIGHT ) );
+          shape.lineToPoint( rightCorner.plusXY( 0, -NOTCH_HEIGHT ) );
 
           this.medianBarsNode.shape = shape;
         }
