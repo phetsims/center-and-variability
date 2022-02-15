@@ -92,10 +92,16 @@ class SoccerScreenView extends CASScreenView {
       supportsDynamicState: false
     } );
 
+    // A layer for the soccer players, so we can adjust their z-ordering within that layer
+    const soccerPlayerLayer = new Node();
     const createSoccerPlayerNode = ( soccerPlayer: SoccerPlayer ) => {
       const soccerPlayerNode = soccerPlayerNodeGroup.createCorrespondingGroupElement( soccerPlayer.tandem.name, soccerPlayer );
-      this.addChild( soccerPlayerNode );
+      soccerPlayerLayer.addChild( soccerPlayerNode );
+
+      // TODO: Document why this is correct (since it seems counterintuitive)
+      soccerPlayerNode.moveToBack();
     };
+    this.addChild( soccerPlayerLayer );
     model.soccerPlayerGroup.forEach( createSoccerPlayerNode );
     model.soccerPlayerGroup.elementCreatedEmitter.addListener( createSoccerPlayerNode );
 

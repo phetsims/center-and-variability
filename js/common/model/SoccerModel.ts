@@ -63,9 +63,7 @@ class SoccerModel extends CASModel {
       tandem: options.tandem.createTandem( 'soccerPlayerGroup' )
     } );
 
-    _.times( this.maxNumberOfObjects, index => {
-      this.soccerPlayerGroup.createNextElement( index );
-    } );
+    this.populateSoccerPlayerGroup();
 
     // Create an initial ball to show on startup
     this.nextBallToKickProperty = new Property<CASObject | null>( this.createBall() );
@@ -126,9 +124,9 @@ class SoccerModel extends CASModel {
 
     const casObject = this.nextBallToKickProperty.value!;
 
-    // TODO: How long should a kicker be kicking? When do we turn them off and set the next kicker index?
-    // TODO: Choose the player with placeInLineProperty===0
-    const soccerPlayer = this.soccerPlayerGroup.getElement( 0 );
+    const frontPlayer = this.soccerPlayerGroup.filter( soccerPlayer => soccerPlayer.placeInLineProperty.value === 0 );
+    assert && assert( frontPlayer.length === 1, 'incorrect number of front soccer players: ' + frontPlayer.length );
+    const soccerPlayer = frontPlayer[ 0 ];
     soccerPlayer.isKickingProperty.value = true;
 
     this.ballPlayerMap.set( casObject, soccerPlayer );
@@ -213,7 +211,13 @@ class SoccerModel extends CASModel {
     this.timeProperty.reset();
     this.timeWhenLastBallWasKickedProperty.reset();
     this.ballPlayerMap.clear();
+    this.soccerPlayerGroup.clear();
+    this.populateSoccerPlayerGroup();
     super.reset();
+  }
+
+  private populateSoccerPlayerGroup(): void {
+    _.times( this.maxNumberOfObjects, index => this.soccerPlayerGroup.createNextElement( index ) );
   }
 }
 

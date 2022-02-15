@@ -8,7 +8,7 @@
  */
 
 import centerAndSpread from '../../centerAndSpread.js';
-import { Image, Node, NodeOptions } from '../../../../scenery/js/imports.js';
+import { Text, Image, Node, NodeOptions } from '../../../../scenery/js/imports.js';
 import player01Standing_png from '../../../images/player01Standing_png.js';
 import player01Kicking_png from '../../../images/player01Kicking_png.js';
 import SoccerPlayer from '../model/SoccerPlayer.js';
@@ -36,6 +36,15 @@ class SoccerPlayerNode extends Node {
 
     const kickingNode = new Image( player01Kicking_png );
     this.addChild( kickingNode );
+
+    // Show index when debugging with ?dev
+    if ( phet.chipper.queryParameters.dev ) {
+      this.addChild( new Text( soccerPlayer.initialPlaceInLine, {
+        x: 130,
+        y: 380,
+        scale: 13
+      } ) );
+    }
 
     soccerPlayer.isKickingProperty.link( isKicking => {
       standingNode.visible = !isKicking;

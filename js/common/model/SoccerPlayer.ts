@@ -26,6 +26,7 @@ class SoccerPlayer extends PhetioObject {
   readonly isKickingProperty: BooleanProperty;
   readonly placeInLineProperty: NumberProperty;
   static SoccerPlayerIO: IOType;
+  readonly initialPlaceInLine: number; // For debugging with ?dev
 
   constructor( placeInLine: number, providedOptions: SoccerPlayerOptions ) {
 
@@ -39,6 +40,9 @@ class SoccerPlayer extends PhetioObject {
     // TODO: Instrument for state
     this.placeInLineProperty = new NumberProperty( placeInLine );
     this.isKickingProperty = new BooleanProperty( false );
+
+    // For debugging with ?dev
+    this.initialPlaceInLine = placeInLine;
   }
 
   reset() {
