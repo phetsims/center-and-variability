@@ -1,5 +1,5 @@
 {
-  "comment": "# center-and-spread 1.0.0-dev.3 Tue Feb 15 2022 10:59:52 GMT-0700 (Mountain Standard Time)",
+  "comment": "# center-and-spread 1.0.0-dev.4 Tue Feb 15 2022 11:16:31 GMT-0700 (Mountain Standard Time)",
   "assert": {
     "sha": "767b2f345518ceca5144a152ecf40cd4f9206136",
     "branch": "master"
@@ -17,7 +17,7 @@
     "branch": "master"
   },
   "center-and-spread": {
-    "sha": "aad9342d023ff0cab2a69b4a6b2bbc8320ff47fa",
+    "sha": "b1b58c1a10974cb926fb9c9931af63b55bd5e7b4",
     "branch": "master"
   },
   "chipper": {
