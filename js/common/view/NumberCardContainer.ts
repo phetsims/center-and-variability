@@ -33,6 +33,7 @@ const getCardPositionX = ( index: number ) => index * ( CardNode.CARD_WIDTH + CA
 type NumberCardContainerSelfOptions = {};
 export type NumberCardOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
 
+
 class NumberCardContainer extends Node {
   readonly cardNodeCells: CardNode[];
   readonly cardNodeCellsChangedEmitter: Emitter<[]>;
@@ -231,9 +232,9 @@ class NumberCardContainer extends Node {
 
           this.medianBarsNode.shape = shape;
         }
-        else {
-          this.medianBarsNode.shape = null;
-        }
+      }
+      else {
+        this.medianBarsNode.shape = null;
       }
     };
     this.cardNodeCellsChangedEmitter.addListener( updateMedianBar );

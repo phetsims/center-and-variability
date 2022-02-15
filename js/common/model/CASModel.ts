@@ -174,6 +174,7 @@ class CASModel {
    */
   reset(): void {
     this.isSortingDataProperty.reset();
+    this.isShowingMedianProperty.reset();
     this.objectGroup.clear();
     this.cardModelGroup.clear();
   }
