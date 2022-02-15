@@ -161,7 +161,7 @@ CASObject.CASObjectIO = new IOType( 'CASObjectIO', {
   },
   stateSchema: {
     objectType: EnumerationIO( CASObjectType ),
-    targetX: NumberIO
+    targetX: NullableIO( NumberIO )
   }
 } );
 

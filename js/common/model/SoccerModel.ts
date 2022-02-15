@@ -28,7 +28,7 @@ type SoccerModelOptions = SoccerModelSelfOptions & CASModelOptions;
 const TIME_BETWEEN_RAPID_KICKS = 0.1; // in seconds
 
 class SoccerModel extends CASModel {
-  readonly soccerPlayerGroup: PhetioGroup<SoccerPlayer, []>;
+  readonly soccerPlayerGroup: PhetioGroup<SoccerPlayer, [ number ]>;
   readonly nextBallToKickProperty: Property<CASObject | null>; // Null if there is no more ball to kick
   readonly remainingNumberOfBallsToMultiKickProperty: NumberProperty;
 
@@ -53,16 +53,17 @@ class SoccerModel extends CASModel {
       tandem: options.tandem.createTandem( 'timeWhenLastBallWasKickedProperty' )
     } );
 
-    this.soccerPlayerGroup = new PhetioGroup( tandem => {
-      return new SoccerPlayer( {
+    this.soccerPlayerGroup = new PhetioGroup( ( tandem: Tandem, placeInLine: number ) => {
+      return new SoccerPlayer( placeInLine, {
         tandem: tandem
       } );
-    }, [], {
+    }, [ 0 ], {
+      phetioType: PhetioGroup.PhetioGroupIO( SoccerPlayer.SoccerPlayerIO ),
       tandem: options.tandem.createTandem( 'soccerPlayerGroup' )
     } );
 
-    _.times( this.maxNumberOfObjects, () => {
-      this.soccerPlayerGroup.createNextElement();
+    _.times( this.maxNumberOfObjects, index => {
+      this.soccerPlayerGroup.createNextElement( index );
     } );
 
     // Create an initial ball to show on startup
@@ -155,18 +156,35 @@ class SoccerModel extends CASModel {
          this.timeProperty.value >= this.timeWhenLastBallWasKickedProperty.value + TIME_BETWEEN_RAPID_KICKS ) {
 
       if ( this.nextBallToKickProperty.value === null ) {
-        this.nextBallToKickProperty.value = this.createBall();
+        this.movePlayersForwardInLine();
       }
       this.kickBall();
     }
   }
 
-  objectValueBecameNonNull() {
+  objectValueBecameNonNull(): void {
     if ( this.numberOfRemainingObjectsProperty.value > 0 && this.nextBallToKickProperty.value === null ) {
-
-      // Create the next ball.
-      this.nextBallToKickProperty.value = this.createBall();
+      this.movePlayersForwardInLine();
     }
+  }
+
+  movePlayersForwardInLine(): void {
+    // Create the next ball.
+    this.nextBallToKickProperty.value = this.createBall();
+
+    const soccerPlayersToDispose: SoccerPlayer[] = [];
+
+    this.soccerPlayerGroup.forEach( soccerPlayer => {
+      if ( soccerPlayer.placeInLineProperty.value === 0 ) {
+        soccerPlayersToDispose.push( soccerPlayer );
+      }
+      else {
+        soccerPlayer.placeInLineProperty.value--;
+      }
+    } );
+
+    assert && assert( soccerPlayersToDispose.length === 1, 'should always dispose the front soccer player only' );
+    soccerPlayersToDispose.forEach( soccerPlayer => this.soccerPlayerGroup.disposeElement( soccerPlayer ) );
   }
 
   reset(): void {

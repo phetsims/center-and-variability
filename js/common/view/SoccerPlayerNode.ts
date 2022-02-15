@@ -13,33 +13,41 @@ import player01Standing_png from '../../../images/player01Standing_png.js';
 import player01Kicking_png from '../../../images/player01Kicking_png.js';
 import SoccerPlayer from '../model/SoccerPlayer.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import Utils from '../../../../dot/js/Utils.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 
 type SoccerPlayerNodeSelfOptions = {};
 type SoccerPlayerNodeOptions = SoccerPlayerNodeSelfOptions & NodeOptions;
 
+const SPACING = 3;
+const SCALE = 0.18;
+
 class SoccerPlayerNode extends Node {
   readonly soccerPlayer: SoccerPlayer;
 
-
-  constructor( soccerPlayer: SoccerPlayer, providedOptions?: SoccerPlayerNodeOptions ) {
+  constructor( soccerPlayer: SoccerPlayer, modelViewTransform: ModelViewTransform2, providedOptions?: SoccerPlayerNodeOptions ) {
     super();
 
     this.soccerPlayer = soccerPlayer;
 
-    const standingNode = new Image( player01Standing_png, {
-      maxHeight: 100
-    } );
+    const standingNode = new Image( player01Standing_png );
     this.addChild( standingNode );
 
-    const kickingNode = new Image( player01Kicking_png, {
-      maxHeight: 100
-    } );
+    const kickingNode = new Image( player01Kicking_png );
     this.addChild( kickingNode );
 
     soccerPlayer.isKickingProperty.link( isKicking => {
       standingNode.visible = !isKicking;
       kickingNode.visible = isKicking;
     } );
+
+    soccerPlayer.placeInLineProperty.link( placeInLine => {
+      this.setScaleMagnitude( Utils.linear( 0, 15, 1, 0.7, placeInLine ) * SCALE );
+      this.centerBottom =
+        modelViewTransform.modelToViewPosition( new Vector2( 0, 0 ) ).plusXY( -20 - placeInLine * SPACING, 3 );
+    } );
+
     const options = optionize<SoccerPlayerNodeOptions, SoccerPlayerNodeSelfOptions, NodeOptions>( {}, providedOptions );
 
     this.mutate( options );

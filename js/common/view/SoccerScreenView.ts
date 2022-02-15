@@ -26,7 +26,6 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import SoccerModel from '../model/SoccerModel.js';
 import SoccerPlayerNode from './SoccerPlayerNode.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
 import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
 import SoccerPlayer from '../model/SoccerPlayer.js';
 
@@ -84,7 +83,7 @@ class SoccerScreenView extends CASScreenView {
     this.addChild( numberLineNode );
 
     const soccerPlayerNodeGroup = new PhetioGroup<SoccerPlayerNode, [ SoccerPlayer ]>( ( tandem, soccerPlayer ) => {
-      return new SoccerPlayerNode( soccerPlayer, {
+      return new SoccerPlayerNode( soccerPlayer, modelViewTransform, {
         tandem: tandem
       } );
     }, [ model.soccerPlayerGroup.archetype ], {
@@ -93,17 +92,9 @@ class SoccerScreenView extends CASScreenView {
       supportsDynamicState: false
     } );
 
-    let index = 0; // TODO: Shouldn't PhetioGroup.forEach support index? This current pattern will likely not work for state?
     const createSoccerPlayerNode = ( soccerPlayer: SoccerPlayer ) => {
-      const SPACING = 5;
       const soccerPlayerNode = soccerPlayerNodeGroup.createCorrespondingGroupElement( soccerPlayer.tandem.name, soccerPlayer );
-
-      soccerPlayerNode.setScaleMagnitude( Utils.linear( 0, model.soccerPlayerGroup.countProperty.value - 1, 1, 0.9, index ) );
-      soccerPlayerNode.centerBottom =
-        modelViewTransform.modelToViewPosition( new Vector2( 0, 0 ) ).plusXY( -20 - index * SPACING, 3 );
-
       this.addChild( soccerPlayerNode );
-      index++;
     };
     model.soccerPlayerGroup.forEach( createSoccerPlayerNode );
     model.soccerPlayerGroup.elementCreatedEmitter.addListener( createSoccerPlayerNode );
