@@ -174,6 +174,7 @@ class SoccerModel extends CASModel {
 
   protected objectValueBecameNonNull( casObject: CASObject ): void {
 
+    // If the soccer player that kicked that ball was still in line when the ball lands, they can leave the line now.
     if ( this.soccerPlayerGroup.includes( this.ballPlayerMap.get( casObject )! ) ) {
       this.advanceLine();
     }

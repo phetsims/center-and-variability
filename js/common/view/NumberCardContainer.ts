@@ -8,7 +8,7 @@
  */
 
 import centerAndSpread from '../../centerAndSpread.js';
-import { Color, Node, NodeOptions, Rectangle } from '../../../../scenery/js/imports.js';
+import { Color, Node, NodeOptions, Path } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CASModel from '../model/CASModel.js';
@@ -24,6 +24,7 @@ import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
 import CardModel from '../model/CardModel.js';
 import Emitter from '../../../../axon/js/Emitter.js';
+import Shape from '../../../../kite/js/Shape.js';
 
 // constants
 const CARD_SPACING = 10;
@@ -39,7 +40,7 @@ class NumberCardContainer extends Node {
   private readonly model: CASModel;
   private readonly cardNodeGroup: PhetioGroup<CardNode, [ CardModel ]>;
   private readonly areCardsSortedProperty: BooleanProperty;
-  private readonly medianBarsNode: Node;
+  private readonly medianBarsNode: Path;
   private readonly dragIndicatorArrowNode: ArrowNode;
   private readonly hasPressedCardProperty: BooleanProperty;
   private readonly cardLayer: Node;
@@ -79,11 +80,11 @@ class NumberCardContainer extends Node {
       supportsDynamicState: false
     } );
 
-    // TODO: Redraw as real u bars
-    this.medianBarsNode = new Rectangle( 0, 0, 200, 10, {
-      fill: Color.RED
+    this.medianBarsNode = new Path( null, {
+      lineWidth: 2,
+      stroke: Color.RED
     } );
-    // this.addChild( this.medianBarsNode );
+    this.addChild( this.medianBarsNode );
 
     const objectCreatedListener = ( casObject: CASObject ) => {
 
@@ -195,17 +196,45 @@ class NumberCardContainer extends Node {
     };
     this.cardNodeCellsChangedEmitter.addListener( updateDragIndictor );
     this.hasPressedCardProperty.link( updateDragIndictor );
-  }
 
-  step( dt: number ): void {
+    // TODO: There is a bug when dragging the 2nd card from the edge, to the edge
+    // TODO: Move to a separate file (probably)
+    const updateMedianBar = () => {
 
-    // TODO: the median bars working
-    // this.medianBarsNode.visible = this.isDataSorted() && this.cardNodeCells.length > 0;
-    //
-    // if ( this.medianBarsNode.visible ) {
-    //   this.medianBarsNode.center =
-    //     this.cardNodeCells[ Utils.roundSymmetric( this.cardNodeCells.length / 2 ) ].centerBottom.plusXY( 0, 10 );
-    // }
+      const NOTCH_HEIGHT = 10;
+      const MARGIN_X = CARD_SPACING / 2;
+      const MARGIN_Y = 5;
+
+      // Only redraw the shape if the feature is selected
+      if ( model.isShowingMedianProperty.value ) {
+        const leftmostCard = this.cardNodeCells[ 0 ];
+
+        if ( leftmostCard ) {
+          const rightmostCard = this.cardNodeCells[ this.cardNodeCells.length - 1 ];
+          const shape = new Shape();
+
+          const leftCorner = leftmostCard.leftBottom.plusXY( -MARGIN_X, MARGIN_Y );
+          const rightCorner = rightmostCard.rightBottom.plusXY( MARGIN_X, MARGIN_Y );
+          const center = leftCorner.average( rightCorner );
+
+          shape.moveToPoint( leftmostCard.leftBottom.plusXY( -MARGIN_X, -NOTCH_HEIGHT ) );
+          shape.lineToPoint( leftCorner );
+
+          shape.lineToPoint( center );
+          shape.lineToRelative( 0, -NOTCH_HEIGHT );
+          shape.moveToRelative( 0, NOTCH_HEIGHT );
+          shape.lineToPoint( rightCorner );
+          shape.lineToPoint( rightmostCard.rightBottom.plusXY( MARGIN_X, -NOTCH_HEIGHT ) );
+
+          this.medianBarsNode.shape = shape;
+        }
+        else {
+          this.medianBarsNode.shape = null;
+        }
+      }
+    };
+    this.cardNodeCellsChangedEmitter.addListener( updateMedianBar );
+    model.isShowingMedianProperty.link( updateMedianBar );
   }
 
   // The listener which is linked to the cardNode.positionProperty
