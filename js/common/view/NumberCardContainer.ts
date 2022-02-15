@@ -204,6 +204,7 @@ class NumberCardContainer extends Node {
       const NOTCH_HEIGHT = 10;
       const MARGIN_X = CARD_SPACING / 2;
       const MARGIN_Y = 5;
+      const HALF_SPLIT_WIDTH = 2;
 
       // Only redraw the shape if the feature is selected
       if ( model.isShowingMedianProperty.value ) {
@@ -224,9 +225,11 @@ class NumberCardContainer extends Node {
           shape.moveToPoint( leftCorner.plusXY( 0, -NOTCH_HEIGHT ) );
           shape.lineToPoint( leftCorner );
 
-          shape.lineToPoint( center );
+          shape.lineToPoint( center.plusXY( -HALF_SPLIT_WIDTH, 0 ) );
           shape.lineToRelative( 0, -NOTCH_HEIGHT );
-          shape.moveToRelative( 0, NOTCH_HEIGHT );
+          shape.moveToPoint( center.plusXY( HALF_SPLIT_WIDTH, -NOTCH_HEIGHT ) );
+          shape.lineToRelative( 0, NOTCH_HEIGHT );
+
           shape.lineToPoint( rightCorner );
           shape.lineToPoint( rightCorner.plusXY( 0, -NOTCH_HEIGHT ) );
 
