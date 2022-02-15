@@ -214,6 +214,8 @@ class SoccerModel extends CASModel {
     this.soccerPlayerGroup.clear();
     this.populateSoccerPlayerGroup();
     super.reset();
+
+    this.nextBallToKickProperty.value = this.createBall();
   }
 
   private populateSoccerPlayerGroup(): void {
