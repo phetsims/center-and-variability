@@ -187,8 +187,10 @@ class NumberCardContainer extends Node {
       if ( newChildren.length !== dragIndicatorContainer.children.length ) {
         dragIndicatorContainer.children = newChildren;
 
-        const center = leftCard.bounds.center.average( rightCard.bounds.center );
-        this.dragIndicatorArrowNode.center = center;
+        if ( leftCard && rightCard ) {
+          const center = leftCard.bounds.center.average( rightCard.bounds.center );
+          this.dragIndicatorArrowNode.center = center;
+        }
       }
     };
     this.cardNodeCellsChangedEmitter.addListener( updateDragIndictor );
@@ -306,6 +308,7 @@ class NumberCardContainer extends Node {
 
   reset(): void {
     this.cardNodeCells.length = 0;
+    this.cardNodeCellsChangedEmitter.emit();
     this.cardNodeGroup.clear();
     this.hasPressedCardProperty.reset();
   }
