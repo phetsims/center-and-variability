@@ -31,7 +31,7 @@ class CardNode extends Node {
   animation: Animation | null;
   animationTo: Vector2 | null;
 
-  static readonly CARD_WIDTH = 50;
+  static readonly CARD_WIDTH = 43;
 
   constructor( cardModel: CardModel, position: Vector2, getDragRange: () => Range, providedOptions?: NumberCardOptions ) {
 
