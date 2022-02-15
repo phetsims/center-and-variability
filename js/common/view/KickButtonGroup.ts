@@ -42,15 +42,15 @@ class KickButtonGroup extends VBox {
       tandem: tandem
     } ) );
 
-    const createKickButton = ( content: Node, tandem: Tandem, listener: () => void ) => {
+    const createKickButton = ( content: Node, tandem: Tandem, numberToKick: number ) => {
 
       const enabledProperty = new DerivedProperty<boolean, [ number, number, CASObject | null ]>(
         [ model.objectGroup.countProperty, model.remainingNumberOfBallsToMultiKickProperty,
           model.nextBallToKickProperty ],
         ( count, remainingNumberOfBallsToMultiKick, nextBallToKick ) => {
-
           const numberBallsThatExistButHaventBeenKicked = nextBallToKick === null ? 0 : 1;
-          return count - numberBallsThatExistButHaventBeenKicked + remainingNumberOfBallsToMultiKick < model.maxNumberOfObjects;
+          const remainingBalls = model.maxNumberOfObjects - count - remainingNumberOfBallsToMultiKick + numberBallsThatExistButHaventBeenKicked;
+          return remainingBalls >= numberToKick;
         }
       );
       return new RectangularPushButton( {
@@ -60,7 +60,7 @@ class KickButtonGroup extends VBox {
         xMargin: 12,
         yMargin: 12,
         tandem: tandem,
-        listener: listener
+        listener: () => model.kick( numberToKick )
       } );
     };
 
@@ -73,8 +73,8 @@ class KickButtonGroup extends VBox {
     const kick5Label = createLabel( centerAndSpreadStrings.kick5, kick5ButtonTandem.createTandem( 'labelNode' ) );
 
     options.children = [
-      createKickButton( kick1Label, kick1ButtonTandem, () => model.kick( 1 ) ),
-      createKickButton( kick5Label, kick5ButtonTandem, () => model.kick( 5 ) )
+      createKickButton( kick1Label, kick1ButtonTandem, 1 ),
+      createKickButton( kick5Label, kick5ButtonTandem, 5 )
     ];
 
     super( options );
