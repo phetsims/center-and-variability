@@ -14,6 +14,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import CASModel from '../model/CASModel.js';
 import CASObject from '../model/CASObject.js';
 import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
+import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import CardNode from './CardNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Range from '../../../../dot/js/Range.js';
@@ -22,6 +23,7 @@ import IOType from '../../../../tandem/js/types/IOType.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
 import CardModel from '../model/CardModel.js';
+import Emitter from '../../../../axon/js/Emitter.js';
 
 // constants
 const CARD_SPACING = 10;
@@ -32,11 +34,15 @@ export type NumberCardOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem
 
 class NumberCardContainer extends Node {
   readonly cardNodeCells: CardNode[];
+  readonly cardNodeCellsChangedEmitter: Emitter<[]>;
 
   private readonly model: CASModel;
   private readonly cardNodeGroup: PhetioGroup<CardNode, [ CardModel ]>;
   private readonly areCardsSortedProperty: BooleanProperty;
   private readonly medianBarsNode: Node;
+  private readonly dragIndicatorArrowNode: ArrowNode;
+  private readonly hasPressedCardProperty: BooleanProperty;
+  private readonly cardLayer: Node;
 
   constructor( model: CASModel, providedOptions?: NumberCardOptions ) {
 
@@ -54,7 +60,14 @@ class NumberCardContainer extends Node {
     // The cells linearly map to locations across the screen.
     this.cardNodeCells = [];
 
+    // Fires if the cardNodeCells may have changed
+    this.cardNodeCellsChangedEmitter = new Emitter<[]>();
+
     this.areCardsSortedProperty = new BooleanProperty( false );
+
+    // Indicates whether the user has ever pressed mouseDown on a card. It's used to hide the drag indicator arrow after
+    // the user presses a card
+    this.hasPressedCardProperty = new BooleanProperty( false );
 
     this.cardNodeGroup = new PhetioGroup( ( tandem, cardModel ) => {
       return new CardNode( cardModel, new Vector2( 0, 0 ), () => this.getDragRange(), {
@@ -103,10 +116,13 @@ class NumberCardContainer extends Node {
       }
     } );
 
+    this.cardLayer = new Node();
+    this.addChild( this.cardLayer );
+
     model.cardModelGroup.elementCreatedEmitter.addListener( cardModel => {
 
       const cardNode = this.cardNodeGroup.createCorrespondingGroupElement( cardModel.tandem.name, cardModel );
-      this.addChild( cardNode );
+      this.cardLayer.addChild( cardNode );
 
       // Update the position of all cards (via animation) whenever any card is dragged
       cardNode.positionProperty.link( this.createDragPositionListener( cardNode ) );
@@ -115,6 +131,10 @@ class NumberCardContainer extends Node {
       cardNode.dragListener.isPressedProperty.link( isPressed => {
         if ( !isPressed && !phet.joist.sim.isSettingPhetioStateProperty.value ) {
           this.sendToHomeCell( cardNode, true, 0.2 );
+        }
+
+        if ( isPressed ) {
+          this.hasPressedCardProperty.value = true;
         }
       } );
 
@@ -135,8 +155,44 @@ class NumberCardContainer extends Node {
         for ( let i = targetIndex; i < this.cardNodeCells.length; i++ ) {
           this.sendToHomeCell( this.cardNodeCells[ i ] );
         }
+
+        this.cardNodeCellsChangedEmitter.emit();
       }
     } );
+
+    this.dragIndicatorArrowNode = new ArrowNode( 0, 0, 35, 0, {
+      headHeight: 8,
+      headWidth: 12,
+      tailWidth: 5,
+      pickable: false,
+      doubleHead: true,
+      fill: 'red',
+      stroke: null,
+      tandem: options.tandem.createTandem( 'dragIndicatorArrowNode' )
+    } );
+
+    // Add or remove the arrow node child
+    const dragIndicatorContainer = new Node();
+    this.addChild( dragIndicatorContainer );
+
+    const updateDragIndictor = () => {
+
+      const leftCard = this.cardNodeCells[ 0 ];
+      const rightCard = this.cardNodeCells[ 1 ];
+
+      const hasPressedCard = this.hasPressedCardProperty.value;
+
+      const newChildren = leftCard && rightCard && !hasPressedCard ? [ this.dragIndicatorArrowNode ] : [];
+
+      if ( newChildren.length !== dragIndicatorContainer.children.length ) {
+        dragIndicatorContainer.children = newChildren;
+
+        const center = leftCard.bounds.center.average( rightCard.bounds.center );
+        this.dragIndicatorArrowNode.center = center;
+      }
+    };
+    this.cardNodeCellsChangedEmitter.addListener( updateDragIndictor );
+    this.hasPressedCardProperty.link( updateDragIndictor );
   }
 
   step( dt: number ): void {
@@ -176,6 +232,8 @@ class NumberCardContainer extends Node {
           if ( this.model.isSortingDataProperty.value && !this.isDataSorted() ) {
             this.model.isSortingDataProperty.value = false;
           }
+
+          this.cardNodeCellsChangedEmitter.emit();
         }
       }
     };
@@ -237,6 +295,8 @@ class NumberCardContainer extends Node {
     this.cardNodeCells.forEach( cardNode => {
       this.sendToHomeCell( cardNode, true, 0.5 );
     } );
+
+    this.cardNodeCellsChangedEmitter.emit(); // TODO: OK if this fires false positives?
   }
 
   getDragRange(): Range {
@@ -247,6 +307,7 @@ class NumberCardContainer extends Node {
   reset(): void {
     this.cardNodeCells.length = 0;
     this.cardNodeGroup.clear();
+    this.hasPressedCardProperty.reset();
   }
 }
 
@@ -266,6 +327,8 @@ const NumberCardContainerIO = new IOType( 'NumberCardContainerIO', {
     n.cardNodeCells.forEach( cardNode => {
       n.sendToHomeCell( cardNode, false );
     } );
+
+    n.cardNodeCellsChangedEmitter.emit();
   },
   stateSchema: {
     cardNodes: ArrayIO( ReferenceIO( CardNodeReferenceIO ) )
