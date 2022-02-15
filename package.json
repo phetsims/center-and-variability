@@ -26,7 +26,10 @@
     "phet-io": {
       "validation": false
     },
-    "supportsOutputJS": true
+    "supportsOutputJS": true,
+    "simFeatures": {
+      "supportsInteractiveDescription": true
+    }
   },
   "eslintConfig": {
     "extends": "../chipper/eslint/sim_eslintrc.js"
