@@ -17,9 +17,9 @@ import CASConstants from '../CASConstants.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import SoccerPlayer from './SoccerPlayer.js';
-import Range from '../../../../dot/js/Range.js';
 import CASObject from './CASObject.js';
 import Property from '../../../../axon/js/Property.js';
+import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
 
 type SoccerModelSelfOptions = {};
 type SoccerModelOptions = SoccerModelSelfOptions & CASModelOptions;
@@ -28,8 +28,7 @@ type SoccerModelOptions = SoccerModelSelfOptions & CASModelOptions;
 const TIME_BETWEEN_RAPID_KICKS = 0.1; // in seconds
 
 class SoccerModel extends CASModel {
-  readonly soccerPlayers: SoccerPlayer[];
-  readonly soccerPlayerIndexProperty: NumberProperty;
+  readonly soccerPlayerGroup: PhetioGroup<SoccerPlayer, []>;
   readonly nextBallToKickProperty: Property<CASObject | null>; // Null if there is no more ball to kick
   readonly remainingNumberOfBallsToMultiKickProperty: NumberProperty;
 
@@ -54,13 +53,16 @@ class SoccerModel extends CASModel {
       tandem: options.tandem.createTandem( 'timeWhenLastBallWasKickedProperty' )
     } );
 
-    this.soccerPlayers = [];
-    _.times( this.maxNumberOfObjects, () => {
-      this.soccerPlayers.push( new SoccerPlayer() );
+    this.soccerPlayerGroup = new PhetioGroup( tandem => {
+      return new SoccerPlayer( {
+        tandem: tandem
+      } );
+    }, [], {
+      tandem: options.tandem.createTandem( 'soccerPlayerGroup' )
     } );
-    this.soccerPlayerIndexProperty = new NumberProperty( 0, {
-      range: new Range( 0, this.maxNumberOfObjects ),
-      tandem: options.tandem.createTandem( 'soccerPlayerIndexProperty' )
+
+    _.times( this.maxNumberOfObjects, () => {
+      this.soccerPlayerGroup.createNextElement();
     } );
 
     // Create an initial ball to show on startup
@@ -120,7 +122,7 @@ class SoccerModel extends CASModel {
     const casObject = this.nextBallToKickProperty.value!;
 
     // TODO: How long should a kicker be kicking? When do we turn them off and set the next kicker index?
-    this.soccerPlayers[ this.soccerPlayerIndexProperty.value ].isKickingProperty.value = true;
+    this.soccerPlayerGroup.getElement( 0 ).isKickingProperty.value = true;
 
     const x1 = dotRandom.nextIntBetween( this.rangeProperty.value.min, this.rangeProperty.value.max );
 

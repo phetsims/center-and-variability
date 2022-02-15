@@ -27,6 +27,8 @@ import ScreenView from '../../../../joist/js/ScreenView.js';
 import SoccerModel from '../model/SoccerModel.js';
 import SoccerPlayerNode from './SoccerPlayerNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
+import SoccerPlayer from '../model/SoccerPlayer.js';
 
 type SoccerScreenViewSelfOptions = {
   questionBarOptions: QuestionBarOptions
@@ -81,19 +83,38 @@ class SoccerScreenView extends CASScreenView {
     numberLineNode.x = NUMBER_LINE_MARGIN_X;
     this.addChild( numberLineNode );
 
-    const soccerPlayerNodes: SoccerPlayerNode[] = [];
-    model.soccerPlayers.forEach( ( soccerPlayer, index ) => {
-      const SPACING = 5;
-      const soccerPlayerNode = new SoccerPlayerNode( soccerPlayer, {
-        centerBottom: modelViewTransform.modelToViewPosition( new Vector2( 0, 0 ) ).plusXY( -20 - index * SPACING, 3 ),
-        scale: Utils.linear( 0, model.soccerPlayers.length - 1, 1, 0.9, index )
+    const soccerPlayerNodeGroup = new PhetioGroup<SoccerPlayerNode, [ SoccerPlayer ]>( ( tandem, soccerPlayer ) => {
+      return new SoccerPlayerNode( soccerPlayer, {
+        tandem: tandem
       } );
-      soccerPlayerNodes.push( soccerPlayerNode );
+    }, [ model.soccerPlayerGroup.archetype ], {
+      phetioType: PhetioGroup.PhetioGroupIO( Node.NodeIO ),
+      tandem: options.tandem.createTandem( 'soccerPlayerNodeGroup' ),
+      supportsDynamicState: false
+    } );
+
+    let index = 0; // TODO: Shouldn't PhetioGroup.forEach support index?
+    const createSoccerPlayerNode = ( soccerPlayer: SoccerPlayer ) => {
+      const SPACING = 5;
+      const soccerPlayerNode = soccerPlayerNodeGroup.createCorrespondingGroupElement( soccerPlayer.tandem.name, soccerPlayer );
+
+      soccerPlayerNode.setScaleMagnitude( Utils.linear( 0, model.soccerPlayerGroup.countProperty.value - 1, 1, 0.9, index ) );
+      soccerPlayerNode.centerBottom =
+        modelViewTransform.modelToViewPosition( new Vector2( 0, 0 ) ).plusXY( -20 - index * SPACING, 3 );
+
       this.addChild( soccerPlayerNode );
+      index++;
+    };
+    model.soccerPlayerGroup.forEach( createSoccerPlayerNode );
+    model.soccerPlayerGroup.elementCreatedEmitter.addListener( createSoccerPlayerNode );
+
+    model.soccerPlayerGroup.elementDisposedEmitter.addListener( soccerPlayer => {
+      const viewNode = soccerPlayerNodeGroup.getArray().find( soccerPlayerNode => soccerPlayerNode.soccerPlayer === soccerPlayer )!;
+      soccerPlayerNodeGroup.disposeElement( viewNode );
     } );
 
     // 0th soccer player is at the front of the line, and should also be in the front in z-ordering
-    soccerPlayerNodes.slice().reverse().forEach( soccerPlayerNode => soccerPlayerNode.moveToFront() );
+    soccerPlayerNodeGroup.getArrayCopy().reverse().forEach( soccerPlayerNode => soccerPlayerNode.moveToFront() );
 
     this.questionBar = new QuestionBar( this.layoutBounds, this.visibleBoundsProperty, options.questionBarOptions );
     this.addChild( this.questionBar );

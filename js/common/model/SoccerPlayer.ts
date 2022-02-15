@@ -9,11 +9,17 @@
 
 import centerAndSpread from '../../centerAndSpread.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 
-class SoccerPlayer {
+type SoccerPlayerSelfOptions = {};
+type SoccerPlayerOptions = SoccerPlayerSelfOptions & PhetioObjectOptions & Required<Pick<PhetioObjectOptions, 'tandem'>>;
+
+class SoccerPlayer extends PhetioObject {
   readonly isKickingProperty: BooleanProperty;
 
-  constructor() {
+  constructor( options: SoccerPlayerOptions ) {
+    super( options );
+
     this.isKickingProperty = new BooleanProperty( false );
   }
 

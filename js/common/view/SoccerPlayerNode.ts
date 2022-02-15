@@ -18,9 +18,13 @@ type SoccerPlayerNodeSelfOptions = {};
 type SoccerPlayerNodeOptions = SoccerPlayerNodeSelfOptions & NodeOptions;
 
 class SoccerPlayerNode extends Node {
+  readonly soccerPlayer: SoccerPlayer;
+
 
   constructor( soccerPlayer: SoccerPlayer, providedOptions?: SoccerPlayerNodeOptions ) {
     super();
+
+    this.soccerPlayer = soccerPlayer;
 
     const standingNode = new Image( player01Standing_png, {
       maxHeight: 100
