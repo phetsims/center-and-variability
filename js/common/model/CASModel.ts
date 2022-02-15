@@ -34,7 +34,8 @@ class CASModel {
   readonly objectGroup: PhetioGroup<CASObject, [ CASObjectType, Omit<CASObjectOptions, 'tandem'> ]>;
   readonly objectType: CASObjectType;
   readonly isSortingDataProperty: BooleanProperty;
-  readonly isShowingMedianProperty: BooleanProperty;
+  readonly isShowingTopMedianProperty: BooleanProperty;
+  readonly isShowingBottomMedianProperty: BooleanProperty;
   readonly cardModelGroup: PhetioGroup<CardModel, [ CASObject ]>; // Only instrumented and enabled if includeCards === true
   readonly includeCards: boolean;
 
@@ -80,8 +81,11 @@ class CASModel {
     this.isSortingDataProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isSortingDataProperty' )
     } );
-    this.isShowingMedianProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isShowingMedianProperty' )
+    this.isShowingTopMedianProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isShowingTopMedianProperty' )
+    } );
+    this.isShowingBottomMedianProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isShowingBottomMedianProperty' )
     } );
 
     // Trigger CardModel creation when a ball lands.
@@ -174,7 +178,8 @@ class CASModel {
    */
   reset(): void {
     this.isSortingDataProperty.reset();
-    this.isShowingMedianProperty.reset();
+    this.isShowingTopMedianProperty.reset();
+    this.isShowingBottomMedianProperty.reset();
     this.objectGroup.clear();
     this.cardModelGroup.clear();
   }

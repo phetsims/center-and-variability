@@ -207,7 +207,7 @@ class NumberCardContainer extends Node {
       const HALF_SPLIT_WIDTH = 2;
 
       // Only redraw the shape if the feature is selected
-      if ( model.isShowingMedianProperty.value ) {
+      if ( model.isShowingTopMedianProperty.value ) {
         const leftmostCard = this.cardNodeCells[ 0 ];
 
         if ( leftmostCard ) {
@@ -241,7 +241,7 @@ class NumberCardContainer extends Node {
       }
     };
     this.cardNodeCellsChangedEmitter.addListener( updateMedianBar );
-    model.isShowingMedianProperty.link( updateMedianBar );
+    model.isShowingTopMedianProperty.link( updateMedianBar );
   }
 
   // The listener which is linked to the cardNode.positionProperty

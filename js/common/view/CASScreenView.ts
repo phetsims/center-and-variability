@@ -20,6 +20,8 @@ import CASObjectNode from './CASObjectNode.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import CASObjectType from '../model/CASObjectType.js';
 import CASObject from '../model/CASObject.js';
+import TopRepresentationCheckboxGroup from './TopRepresentationCheckboxGroup.js';
+import BottomRepresentationCheckboxGroup from './BottomRepresentationCheckboxGroup.js';
 
 export type CASScreenViewOptions = ScreenViewOptions;
 
@@ -28,6 +30,8 @@ class CASScreenView extends ScreenView {
   protected readonly modelViewTransform: ModelViewTransform2;
   protected model: CASModel;
   protected readonly objectsLayer: Node;
+  readonly topCheckboxPanel: TopRepresentationCheckboxGroup;
+  readonly bottomCheckboxPanel: BottomRepresentationCheckboxGroup;
 
   constructor( model: CASModel, modelViewTransform: ModelViewTransform2, options: CASScreenViewOptions ) {
     options = optionize<CASScreenViewOptions>( {
@@ -66,6 +70,10 @@ class CASScreenView extends ScreenView {
       const viewNode = map.get( casObject )!;
       objectNodeGroup.disposeElement( viewNode );
     } );
+
+    // TODO: Consider renaming as Group instead of panel (if they only contain checkboxes)
+    this.topCheckboxPanel = new TopRepresentationCheckboxGroup( model );
+    this.bottomCheckboxPanel = new BottomRepresentationCheckboxGroup( model );
 
     // Added by the child ScreenView so it is in the correct z-ordering
     this.resetAllButton = new ResetAllButton( {

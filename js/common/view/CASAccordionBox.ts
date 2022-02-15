@@ -26,7 +26,8 @@ export type CASAccordionBoxOptions = CASAccordionBoxSelfOptions & Omit<Accordion
 
 class CASAccordionBox extends AccordionBox {
 
-  constructor( model: CASModel, contents: Node, layoutBounds: Bounds2, providedOptions: CASAccordionBoxOptions ) {
+  constructor( model: CASModel, contents: Node, checkboxPanel: TopRepresentationCheckboxGroup,
+               layoutBounds: Bounds2, providedOptions: CASAccordionBoxOptions ) {
 
     const options = optionize<CASAccordionBoxOptions, CASAccordionBoxSelfOptions, AccordionBoxOptions>( {
       tandem: Tandem.REQUIRED,
@@ -55,10 +56,7 @@ class CASAccordionBox extends AccordionBox {
       rectWidth: layoutBounds.width - CASConstants.SCREEN_VIEW_X_MARGIN * 2 - 40
     } );
 
-    // TODO: Does this belong here, or move it to the call site?
-    const checkboxPanel = new TopRepresentationCheckboxGroup( model );
     checkboxPanel.right = backgroundRectangle.right;
-
     backgroundRectangle.addChild( checkboxPanel );
 
     contents.centerY = backgroundRectangle.centerY - 24;
@@ -68,6 +66,8 @@ class CASAccordionBox extends AccordionBox {
     // backgroundRectangle.localBounds = backgroundRectangle.bounds;
 
     super( backgroundRectangle, options );
+
+
   }
 }
 

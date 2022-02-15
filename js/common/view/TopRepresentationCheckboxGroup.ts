@@ -31,8 +31,9 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
       node: new Text( centerAndSpreadStrings.sortData, TEXT_OPTIONS ),
       property: model.isSortingDataProperty
     }, {
+      // TODO: i18n
       node: new Text( 'Show Median', TEXT_OPTIONS ),
-      property: model.isShowingMedianProperty
+      property: model.isShowingTopMedianProperty
     } ];
     super( items, options );
   }

@@ -46,13 +46,18 @@ class MedianScreenView extends SoccerScreenView {
     } );
 
     // TODO: CK - float to top of visibleBounds to certain aspect ratio
-    this.dataAccordionBox = new CASAccordionBox( this.model, this.numberCardContainer, this.layoutBounds, {
+    this.dataAccordionBox = new CASAccordionBox( this.model, this.numberCardContainer, this.topCheckboxPanel,
+      this.layoutBounds, {
       tandem: accordionBoxTandem,
       titleString: centerAndSpreadStrings.data,
       centerX: this.layoutBounds.centerX,
       top: this.questionBar.bottom + CASConstants.SCREEN_VIEW_Y_MARGIN
     } );
     this.addChild( this.dataAccordionBox );
+
+    this.bottomCheckboxPanel.left = this.globalToParentBounds( this.topCheckboxPanel.getGlobalBounds() ).left;
+    this.bottomCheckboxPanel.top = this.dataAccordionBox.bottom + 30;
+    this.addChild( this.bottomCheckboxPanel );
 
     this.addChild( this.objectsLayer );
 
