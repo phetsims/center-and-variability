@@ -93,7 +93,7 @@ class SoccerScreenView extends CASScreenView {
       supportsDynamicState: false
     } );
 
-    let index = 0; // TODO: Shouldn't PhetioGroup.forEach support index?
+    let index = 0; // TODO: Shouldn't PhetioGroup.forEach support index? This current pattern will likely not work for state?
     const createSoccerPlayerNode = ( soccerPlayer: SoccerPlayer ) => {
       const SPACING = 5;
       const soccerPlayerNode = soccerPlayerNodeGroup.createCorrespondingGroupElement( soccerPlayer.tandem.name, soccerPlayer );
