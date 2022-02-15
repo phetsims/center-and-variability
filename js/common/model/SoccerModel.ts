@@ -212,9 +212,9 @@ class SoccerModel extends CASModel {
     this.timeWhenLastBallWasKickedProperty.reset();
     this.ballPlayerMap.clear();
     this.soccerPlayerGroup.clear();
-    this.populateSoccerPlayerGroup();
     super.reset();
 
+    this.populateSoccerPlayerGroup();
     this.nextBallToKickProperty.value = this.createBall();
   }
 
