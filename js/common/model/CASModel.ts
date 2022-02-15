@@ -65,7 +65,7 @@ class CASModel {
     } );
 
     // For PhET-iO State, it is difficult to power 2 views from one model, see https://github.com/phetsims/phet-io/issues/1688#issuecomment-1032967603
-    // Therefore, we introduce a minimial model element for the cards, so they can be managed by the state
+    // Therefore, we introduce a minimal model element for the cards, so they can be managed by the state
     this.cardModelGroup = new PhetioGroup( ( tandem, casObject ) => {
       assert && assert( casObject, 'casObject should be defined' );
       return new CardModel( casObject, {
