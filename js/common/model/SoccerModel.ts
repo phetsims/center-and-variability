@@ -26,7 +26,6 @@ type SoccerModelOptions = SoccerModelSelfOptions & CASModelOptions;
 
 // constants
 const TIME_BETWEEN_RAPID_KICKS = 0.1; // in seconds
-const TIME_BETWEEN_BALL_CREATION = 1.0;
 
 class SoccerModel extends CASModel {
   readonly soccerPlayers: SoccerPlayer[];
