@@ -8,7 +8,7 @@
  */
 
 import centerAndSpread from '../../centerAndSpread.js';
-import { Color, Node, NodeOptions, Path } from '../../../../scenery/js/imports.js';
+import { Color, Node, NodeOptions, Path, Text } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CASModel from '../model/CASModel.js';
@@ -25,6 +25,10 @@ import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
 import CardModel from '../model/CardModel.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import Shape from '../../../../kite/js/Shape.js';
+import Panel from '../../../../sun/js/Panel.js';
+import CASConstants from '../CASConstants.js';
+import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
+import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 
 // constants
 const CARD_SPACING = 10;
@@ -33,14 +37,13 @@ const getCardPositionX = ( index: number ) => index * ( CardNode.CARD_WIDTH + CA
 type NumberCardContainerSelfOptions = {};
 export type NumberCardOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
 
-
+// TODO: Rename CardNodeContainer
 class NumberCardContainer extends Node {
   readonly cardNodeCells: CardNode[];
   readonly cardNodeCellsChangedEmitter: Emitter<[]>;
 
   private readonly model: CASModel;
   private readonly cardNodeGroup: PhetioGroup<CardNode, [ CardModel ]>;
-  private readonly areCardsSortedProperty: BooleanProperty;
   private readonly medianBarsNode: Path;
   private readonly dragIndicatorArrowNode: ArrowNode;
   private readonly hasPressedCardProperty: BooleanProperty;
@@ -64,8 +67,6 @@ class NumberCardContainer extends Node {
 
     // Fires if the cardNodeCells may have changed
     this.cardNodeCellsChangedEmitter = new Emitter<[]>();
-
-    this.areCardsSortedProperty = new BooleanProperty( false );
 
     // Indicates whether the user has ever pressed mouseDown on a card. It's used to hide the drag indicator arrow after
     // the user presses a card
@@ -198,50 +199,70 @@ class NumberCardContainer extends Node {
     this.cardNodeCellsChangedEmitter.addListener( updateDragIndictor );
     this.hasPressedCardProperty.link( updateDragIndictor );
 
+    const medianTextNode = new Text( '', {
+      font: CASConstants.BUTTON_FONT
+    } );
+    const medianReadoutPanel = new Panel( medianTextNode, {
+      stroke: 'lightgray',
+      lineWidth: 0.6
+    } );
+    this.addChild( medianReadoutPanel );
+
+    model.medianValueProperty.link( medianValue => {
+      medianTextNode.text = StringUtils.fillIn( centerAndSpreadStrings.medianEqualsValue, { value: model.medianValueProperty.value } );
+    } );
+
     // TODO: Move to a separate file (probably)
-    const updateMedianBar = () => {
+    const updateMedianNode = () => {
 
       const NOTCH_HEIGHT = 10;
       const MARGIN_X = CARD_SPACING / 2;
       const MARGIN_Y = 5;
       const HALF_SPLIT_WIDTH = 2;
+      const leftmostCard = this.cardNodeCells[ 0 ];
 
-      // Only redraw the shape if the feature is selected
-      if ( model.isShowingTopMedianProperty.value ) {
-        const leftmostCard = this.cardNodeCells[ 0 ];
+      // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card
+      if ( model.isShowingTopMedianProperty.value && this.isDataSorted() && leftmostCard ) {
 
-        if ( leftmostCard ) {
-          const rightmostCard = this.cardNodeCells[ this.cardNodeCells.length - 1 ];
-          const shape = new Shape();
+        const rightmostCard = this.cardNodeCells[ this.cardNodeCells.length - 1 ];
+        const shape = new Shape();
 
-          const leftCornerX = getCardPositionX( 0 ) - MARGIN_X;
-          const rightCornerX = getCardPositionX( this.cardNodeCells.length - 1 ) + rightmostCard.width + MARGIN_X;
-          const barY = leftmostCard.bottom + MARGIN_Y;
+        const leftCornerX = getCardPositionX( 0 ) - MARGIN_X;
+        const rightCornerX = getCardPositionX( this.cardNodeCells.length - 1 ) + rightmostCard.width + MARGIN_X;
+        const barY = leftmostCard.bottom + MARGIN_Y;
 
-          const leftCorner = new Vector2( leftCornerX, barY );
-          const rightCorner = new Vector2( rightCornerX, barY );
-          const center = leftCorner.average( rightCorner );
+        const leftCorner = new Vector2( leftCornerX, barY );
+        const rightCorner = new Vector2( rightCornerX, barY );
+        const center = leftCorner.average( rightCorner );
 
-          shape.moveToPoint( leftCorner.plusXY( 0, -NOTCH_HEIGHT ) );
-          shape.lineToPoint( leftCorner );
+        shape.moveToPoint( leftCorner.plusXY( 0, -NOTCH_HEIGHT ) );
+        shape.lineToPoint( leftCorner );
 
-          shape.lineToPoint( center.plusXY( -HALF_SPLIT_WIDTH, 0 ) );
-          shape.lineToRelative( 0, -NOTCH_HEIGHT );
-          shape.moveToPoint( center.plusXY( HALF_SPLIT_WIDTH, -NOTCH_HEIGHT ) );
-          shape.lineToRelative( 0, NOTCH_HEIGHT );
+        shape.lineToPoint( center.plusXY( -HALF_SPLIT_WIDTH, 0 ) );
+        shape.lineToRelative( 0, -NOTCH_HEIGHT );
+        shape.moveToPoint( center.plusXY( HALF_SPLIT_WIDTH, -NOTCH_HEIGHT ) );
+        shape.lineToRelative( 0, NOTCH_HEIGHT );
 
-          shape.lineToPoint( rightCorner );
-          shape.lineToPoint( rightCorner.plusXY( 0, -NOTCH_HEIGHT ) );
+        shape.lineToPoint( rightCorner );
+        shape.lineToPoint( rightCorner.plusXY( 0, -NOTCH_HEIGHT ) );
 
-          this.medianBarsNode.shape = shape;
-        }
+        this.medianBarsNode.shape = shape;
       }
       else {
         this.medianBarsNode.shape = null;
       }
+
+      if ( leftmostCard ) {
+        medianReadoutPanel.centerX = getCardPositionX( ( this.cardNodeCells.length - 1 ) / 2 ) + leftmostCard.width / 2;
+        medianReadoutPanel.top = leftmostCard.bottom + MARGIN_Y + 20;
+        medianReadoutPanel.visible = true;
+      }
+      else {
+        medianReadoutPanel.visible = false;
+      }
     };
-    this.cardNodeCellsChangedEmitter.addListener( updateMedianBar );
-    model.isShowingTopMedianProperty.link( updateMedianBar );
+    this.cardNodeCellsChangedEmitter.addListener( updateMedianNode );
+    model.isShowingTopMedianProperty.link( updateMedianNode );
   }
 
   // The listener which is linked to the cardNode.positionProperty

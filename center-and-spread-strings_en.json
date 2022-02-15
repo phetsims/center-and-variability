@@ -34,5 +34,8 @@
   },
   "sortData": {
     "value": "Sort Data"
+  },
+  "medianEqualsValue": {
+    "value": "Median = {{value}}"
   }
 }
