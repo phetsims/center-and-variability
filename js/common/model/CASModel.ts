@@ -147,25 +147,21 @@ class CASModel {
 
       const medianObjects: CASObject[] = [];
 
-      const takeTopBall = ( median: number ) => {
-        const objectsWithMedianValue = this.objectGroup.filter( casObject =>
-          casObject.valueProperty.value === median );
-        medianObjects.push( _.maxBy( objectsWithMedianValue, casObject => casObject.positionProperty.value.y )! );
+      const takeTopObjects = ( median: number, numberToTake: number ) => {
+        const objectsWithMedianValue = this.objectGroup.filter( casObject => casObject.valueProperty.value === median );
+        const sortedObjects = _.sortBy( objectsWithMedianValue, casObject => casObject.positionProperty.value.y );
+        medianObjects.push( ...sortedObjects.slice( -numberToTake ) );
       };
 
       if ( medianValues.length === 1 ) {
-        takeTopBall( medianValues[ 0 ] );
+        takeTopObjects( medianValues[ 0 ], 1 );
       }
       else if ( medianValues.length === 2 && medianValues[ 0 ] === medianValues[ 1 ] ) {
-        const objectsWithMedianValue = this.objectGroup.filter( casObject =>
-          casObject.valueProperty.value === this.medianValueProperty.value );
-
-        medianObjects.push( ..._.sortBy( objectsWithMedianValue, casObject =>
-          casObject.positionProperty.value.y ).slice( -2 ) );
+        takeTopObjects( medianValues[ 0 ], 2 );
       }
       else {
-        takeTopBall( medianValues[ 0 ] );
-        takeTopBall( medianValues[ 1 ] );
+        takeTopObjects( medianValues[ 0 ], 1 );
+        takeTopObjects( medianValues[ 1 ], 1 );
       }
 
       this.objectGroup.forEach( object => {
