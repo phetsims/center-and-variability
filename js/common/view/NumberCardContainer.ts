@@ -178,7 +178,7 @@ class NumberCardContainer extends Node {
     const dragIndicatorContainer = new Node();
     this.addChild( dragIndicatorContainer );
 
-    const updateDragIndictor = () => {
+    const updateDragIndicator = () => {
 
       const leftCard = this.cardNodeCells[ 0 ];
       const rightCard = this.cardNodeCells[ 1 ];
@@ -196,8 +196,8 @@ class NumberCardContainer extends Node {
         }
       }
     };
-    this.cardNodeCellsChangedEmitter.addListener( updateDragIndictor );
-    this.hasPressedCardProperty.link( updateDragIndictor );
+    this.cardNodeCellsChangedEmitter.addListener( updateDragIndicator );
+    this.hasPressedCardProperty.link( updateDragIndicator );
 
     const medianTextNode = new Text( '', {
       font: CASConstants.BUTTON_FONT
