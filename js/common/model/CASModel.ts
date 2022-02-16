@@ -252,6 +252,8 @@ class CASModel {
     this.isShowingTopMedianProperty.reset();
     this.isShowingBottomMeanProperty.reset();
     this.isShowingBottomMedianProperty.reset();
+    this.isShowingPredictMeanProperty.reset();
+    this.isShowingPredictMedianProperty.reset();
     this.clearData();
   }
 
