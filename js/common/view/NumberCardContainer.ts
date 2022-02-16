@@ -204,7 +204,8 @@ class NumberCardContainer extends Node {
     } );
     const medianReadoutPanel = new Panel( medianTextNode, {
       stroke: 'lightgray',
-      lineWidth: 0.6
+      lineWidth: 0.6,
+      cornerRadius: 4
     } );
     this.addChild( medianReadoutPanel );
 
@@ -254,8 +255,10 @@ class NumberCardContainer extends Node {
 
       // TODO: Better guard on model.isShowingTopMedianProperty.value
       if ( leftmostCard ) {
+
+        // TODO: Can show median label outside of accordion box for small numbers
         medianReadoutPanel.centerX = getCardPositionX( ( this.cardNodeCells.length - 1 ) / 2 ) + leftmostCard.width / 2;
-        medianReadoutPanel.top = leftmostCard.bottom + MARGIN_Y + 20;
+        medianReadoutPanel.top = leftmostCard.bottom + MARGIN_Y + 13;
         medianReadoutPanel.visible = model.isShowingTopMedianProperty.value;
       }
       else {
