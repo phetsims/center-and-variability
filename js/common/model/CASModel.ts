@@ -42,6 +42,7 @@ class CASModel {
   readonly maxNumberOfObjects: number;
   protected readonly rangeProperty: Property<Range>;
   readonly numberOfRemainingObjectsProperty: DerivedProperty<number, [ count: number ]>;
+  readonly medianValueProperty: Property<number | null>;
 
   constructor( objectType: CASObjectType, maxNumberOfObjects: number, providedOptions: CASModelOptions ) {
 
@@ -88,6 +89,32 @@ class CASModel {
       tandem: options.tandem.createTandem( 'isShowingBottomMedianProperty' )
     } );
 
+    this.medianValueProperty = new Property<number | null>( null );
+
+    const updateMedian = () => {
+      const values = this.objectGroup.filter( casObject => casObject.valueProperty.value !== null )
+        .map( casObject => casObject.valueProperty.value! )
+        .sort( ( a: number, b: number ) => a - b );
+
+      // TODO: Why does this print twice at the same time?
+      console.log( values );
+
+      // Odd number of values, take the central value
+      if ( values.length % 2 === 1 ) {
+        const midIndex = ( values.length - 1 ) / 2;
+        this.medianValueProperty.value = values[ midIndex ];
+      }
+      else {
+
+        // Even number of values, average the two middle-most values
+        const mid1Index = ( values.length - 2 ) / 2;
+        const mid2Index = ( values.length - 0 ) / 2;
+        const mid1Value = values[ mid1Index ];
+        const mid2Value = values[ mid2Index ];
+        this.medianValueProperty.value = ( mid1Value + mid2Value ) / 2;
+      }
+    };
+
     // Trigger CardModel creation when a ball lands.
     const objectCreatedListener = ( casObject: CASObject ) => {
       const listener = ( value: number | null ) => {
@@ -100,6 +127,7 @@ class CASModel {
         }
       };
       casObject.valueProperty.link( listener );
+      casObject.valueProperty.link( updateMedian );
     };
     this.objectGroup.forEach( objectCreatedListener );
     this.objectGroup.elementCreatedEmitter.addListener( objectCreatedListener );
