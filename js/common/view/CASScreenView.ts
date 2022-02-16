@@ -54,7 +54,7 @@ class CASScreenView extends ScreenView {
     this.model = model;
 
     const objectNodeGroup = new PhetioGroup<CASObjectNode, [ CASObject ]>( ( tandem, casObject ) => {
-      return new CASObjectNode( casObject, modelViewTransform, {
+      return new CASObjectNode( casObject, model.isShowingBottomMedianProperty, modelViewTransform, {
         tandem: tandem
       } );
     }, [ model.objectGroup.archetype ], {

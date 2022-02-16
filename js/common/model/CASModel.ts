@@ -110,27 +110,33 @@ class CASModel {
     this.medianValueProperty = new Property<number | null>( null );
 
     const updateMedian = () => {
-      const values = this.objectGroup.filter( casObject => casObject.valueProperty.value !== null )
-        .map( casObject => casObject.valueProperty.value! )
-        .sort( ( a: number, b: number ) => a - b );
+      const objectsInDataSet = this.objectGroup.filter( casObject => casObject.valueProperty.value !== null );
+      const sortedObjects = _.sortBy( objectsInDataSet, casObject => casObject.valueProperty.value );
 
       // TODO: Why does this print twice at the same time?
       // console.log( values );
+      const medianValues: number[] = [];
 
       // Odd number of values, take the central value
-      if ( values.length % 2 === 1 ) {
-        const midIndex = ( values.length - 1 ) / 2;
-        this.medianValueProperty.value = values[ midIndex ];
+      if ( sortedObjects.length % 2 === 1 ) {
+        const midIndex = ( sortedObjects.length - 1 ) / 2;
+        this.medianValueProperty.value = sortedObjects[ midIndex ].valueProperty.value!;
+        medianValues.push( this.medianValueProperty.value );
+
         assert && assert( !isNaN( this.medianValueProperty.value ) );
       }
-      else if ( values.length % 2 === 0 && values.length >= 2 ) {
+      else if ( sortedObjects.length % 2 === 0 && sortedObjects.length >= 2 ) {
 
         // Even number of values, average the two middle-most values
-        const mid1Index = ( values.length - 2 ) / 2;
-        const mid2Index = ( values.length - 0 ) / 2;
-        const mid1Value = values[ mid1Index ];
-        const mid2Value = values[ mid2Index ];
+        const mid1Index = ( sortedObjects.length - 2 ) / 2;
+        const mid2Index = ( sortedObjects.length - 0 ) / 2;
+        const mid1Value = sortedObjects[ mid1Index ].valueProperty.value!;
+        const mid2Value = sortedObjects[ mid2Index ].valueProperty.value!;
         this.medianValueProperty.value = ( mid1Value + mid2Value ) / 2;
+
+        medianValues.push( mid1Value );
+        medianValues.push( mid2Value );
+
         assert && assert( !isNaN( this.medianValueProperty.value ) );
       }
       else {
@@ -138,7 +144,36 @@ class CASModel {
         // Not enough values for the median to be defined
         this.medianValueProperty.value = null;
       }
+
+      const medianObjects: CASObject[] = [];
+
+      const takeTopBall = ( median: number ) => {
+        const objectsWithMedianValue = this.objectGroup.filter( casObject =>
+          casObject.valueProperty.value === median );
+        medianObjects.push( _.maxBy( objectsWithMedianValue, casObject => casObject.positionProperty.value.y )! );
+      };
+
+      if ( medianValues.length === 1 ) {
+        takeTopBall( medianValues[ 0 ] );
+      }
+      else if ( medianValues.length === 2 && medianValues[ 0 ] === medianValues[ 1 ] ) {
+        const objectsWithMedianValue = this.objectGroup.filter( casObject =>
+          casObject.valueProperty.value === this.medianValueProperty.value );
+
+        medianObjects.push( ..._.sortBy( objectsWithMedianValue, casObject =>
+          casObject.positionProperty.value.y ).slice( -2 ) );
+      }
+      else {
+        takeTopBall( medianValues[ 0 ] );
+        takeTopBall( medianValues[ 1 ] );
+      }
+
+      this.objectGroup.forEach( object => {
+        object.isMedianObjectProperty.value = medianObjects.includes( object );
+      } );
     };
+
+    this.isShowingBottomMedianProperty.link( updateMedian );
 
     // Trigger CardModel creation when a ball lands.
     const objectCreatedListener = ( casObject: CASObject ) => {
@@ -153,6 +188,7 @@ class CASModel {
       };
       casObject.valueProperty.link( listener );
       casObject.valueProperty.link( updateMedian );
+      casObject.positionProperty.link( updateMedian );
 
       // Signal to listeners that a value changed
       // TODO: Maybe should combine with temporary listener for one permanent one

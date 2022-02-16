@@ -9,13 +9,15 @@
 
 import optionize from '../../../../phet-core/js/optionize.js';
 import centerAndSpread from '../../centerAndSpread.js';
-import { DragListener, Image, Node, NodeOptions } from '../../../../scenery/js/imports.js';
+import { Circle, Color, DragListener, Image, Node, NodeOptions } from '../../../../scenery/js/imports.js';
 import CASObject from '../model/CASObject.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import CASObjectType from '../model/CASObjectType.js';
 import ball_png from '../../../images/ball_png.js';
 import ShadedSphereNode from '../../../../scenery-phet/js/ShadedSphereNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
+import Property from '../../../../axon/js/Property.js';
 
 type CASObjectNodeSelfOptions = {};
 export type CASObjectNodeOptions = CASObjectNodeSelfOptions & NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
@@ -23,16 +25,24 @@ export type CASObjectNodeOptions = CASObjectNodeSelfOptions & NodeOptions & Requ
 // TODO: the initial ball can be dragged, but it is buggy because it can also be kicked after dragging
 class CASObjectNode extends Node {
 
-  constructor( casObject: CASObject, modelViewTransform: ModelViewTransform2, providedOptions?: CASObjectNodeOptions ) {
+  constructor( casObject: CASObject, isShowingBottomMedianProperty: IReadOnlyProperty<boolean>,
+               modelViewTransform: ModelViewTransform2, providedOptions?: CASObjectNodeOptions ) {
 
     const options = optionize<CASObjectNodeOptions>( {
       phetioDynamicElement: true
     }, providedOptions );
     super( options );
 
+    const viewRadius = modelViewTransform.modelToViewDeltaX( casObject.objectType.radius );
+
+    const medianHighlight = new Circle( viewRadius + 1.75, {
+      fill: Color.RED
+    } );
+    this.addChild( medianHighlight );
+
     const childNode = casObject.objectType === CASObjectType.SOCCER_BALL ? new Image( ball_png ) :
                       new ShadedSphereNode( casObject.objectType.radius * 2 );
-    childNode.maxWidth = modelViewTransform.modelToViewDeltaX( casObject.objectType.radius * 2 );
+    childNode.maxWidth = viewRadius * 2;
 
     // if the child node is non-square, it should still fit within specified dimensions. Note: this does not change the
     // aspect ratio.
@@ -65,6 +75,12 @@ class CASObjectNode extends Node {
       this.cursor = isAnimating ? null : 'pointer';
       this.pickable = !isAnimating;
     } );
+
+    // show or hide the median highlight
+    Property.multilink( [ casObject.isMedianObjectProperty, isShowingBottomMedianProperty ],
+      ( isMedianObject, isShowingBottomMedian ) => {
+        medianHighlight.visible = isMedianObject && isShowingBottomMedian;
+      } );
   }
 }
 

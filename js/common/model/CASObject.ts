@@ -41,13 +41,14 @@ class CASObject extends PhetioObject {
   readonly positionProperty: Vector2Property;
   readonly velocityProperty: Vector2Property;
   readonly isAnimatingProperty: BooleanProperty;
+  readonly isMedianObjectProperty: BooleanProperty;
   static CASObjectIO: IOType;
   readonly objectType: CASObjectType;
 
   // Where the object is animating to, or null if not yet animating
   targetX: number | null;
 
-  // The value that particpates in the data set.
+  // The value that participates in the data set.
   valueProperty: Property<number | null>;
 
   constructor( objectType: CASObjectType, providedOptions: CASObjectOptions ) {
@@ -83,6 +84,9 @@ class CASObject extends PhetioObject {
     this.valueProperty = new Property<number | null>( options.value, {
       tandem: options.tandem.createTandem( 'valueProperty' ),
       phetioType: Property.PropertyIO( NullableIO( NumberIO ) )
+    } );
+    this.isMedianObjectProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isMedianObjectProperty' )
     } );
   }
 
