@@ -37,5 +37,20 @@
   },
   "medianEqualsValue": {
     "value": "Median = {{value}}"
+  },
+  "dotPlot": {
+    "value": "Dot Plot"
+  },
+  "showMedian": {
+    "value": "Show Median"
+  },
+  "median": {
+    "value": "Median"
+  },
+  "showMean": {
+  "value": "Show Mean"
+},
+  "mean": {
+    "value": "Mean"
   }
 }

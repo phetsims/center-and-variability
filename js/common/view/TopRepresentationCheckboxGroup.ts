@@ -15,26 +15,41 @@ import CASModel from '../model/CASModel.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 import CASConstants from '../CASConstants.js';
 
-type TopRepresentationCheckboxGroupSelfOptions = {};
+type TopRepresentationCheckboxGroupSelfOptions = {
+  includeSortData?: boolean,
+  includeShowMedian?: boolean,
+  includeShowMean?: boolean
+};
 export type TopRepresentationCheckboxGroupOptions = TopRepresentationCheckboxGroupSelfOptions & VerticalCheckboxGroupOptions;
+
+// constants
+const TEXT_OPTIONS = {
+  font: CASConstants.BUTTON_FONT
+};
 
 class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
   constructor( model: CASModel, providedOptions?: TopRepresentationCheckboxGroupOptions ) {
 
-    const options = optionize<TopRepresentationCheckboxGroupOptions, TopRepresentationCheckboxGroupSelfOptions, VerticalCheckboxGroupOptions>( {}, providedOptions );
+    const options = optionize<TopRepresentationCheckboxGroupOptions, TopRepresentationCheckboxGroupSelfOptions, VerticalCheckboxGroupOptions>( {
+      includeSortData: false,
+      includeShowMean: true,
+      includeShowMedian: true
+    }, providedOptions );
 
-    const TEXT_OPTIONS = {
-      font: CASConstants.BUTTON_FONT
-    };
-    const items = [ {
+    const items = [];
+    options.includeSortData && items.push( {
       node: new Text( centerAndSpreadStrings.sortData, TEXT_OPTIONS ),
       property: model.isSortingDataProperty
-    }, {
-      // TODO: i18n
-      node: new Text( 'Show Median', TEXT_OPTIONS ),
+    } );
+    options.includeShowMean && items.push( {
+      node: new Text( centerAndSpreadStrings.showMean, TEXT_OPTIONS ),
+      property: model.isShowingTopMeanProperty
+    } );
+    options.includeShowMedian && items.push( {
+      node: new Text( centerAndSpreadStrings.showMedian, TEXT_OPTIONS ),
       property: model.isShowingTopMedianProperty
-    } ];
+    } );
     super( items, options );
   }
 }

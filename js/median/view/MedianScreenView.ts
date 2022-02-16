@@ -32,6 +32,13 @@ class MedianScreenView extends SoccerScreenView {
         barFill: CASColors.medianQuestionBarFillColorProperty,
         labelText: centerAndSpreadStrings.medianQuestion
       },
+      topCheckboxPanelOptions: {
+        includeSortData: true,
+        includeShowMean: false
+      },
+      bottomCheckboxPanelOptions: {
+        includeMean: false
+      },
       tandem: Tandem.REQUIRED
     }, providedOptions );
 

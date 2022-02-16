@@ -13,26 +13,39 @@ import VerticalCheckboxGroup, { VerticalCheckboxGroupOptions } from '../../../..
 import { Text } from '../../../../scenery/js/imports.js';
 import CASModel from '../model/CASModel.js';
 import CASConstants from '../CASConstants.js';
+import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 
-type BottomRepresentationCheckboxGroupSelfOptions = {};
+type BottomRepresentationCheckboxGroupSelfOptions = {
+  includeMedian?: boolean,
+  includeMean?: boolean
+};
 export type BottomRepresentationCheckboxGroupOptions =
   BottomRepresentationCheckboxGroupSelfOptions
   & VerticalCheckboxGroupOptions;
+
+// constants
+const TEXT_OPTIONS = {
+  font: CASConstants.BUTTON_FONT
+};
 
 class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
   constructor( model: CASModel, providedOptions?: BottomRepresentationCheckboxGroupOptions ) {
 
-    const options = optionize<BottomRepresentationCheckboxGroupOptions, BottomRepresentationCheckboxGroupSelfOptions, VerticalCheckboxGroupOptions>( {}, providedOptions );
+    const options = optionize<BottomRepresentationCheckboxGroupOptions, BottomRepresentationCheckboxGroupSelfOptions, VerticalCheckboxGroupOptions>( {
+      includeMean: true,
+      includeMedian: true
+    }, providedOptions );
 
-    const TEXT_OPTIONS = {
-      font: CASConstants.BUTTON_FONT
-    };
-    const items = [ {
-      // TODO: i18n
-      node: new Text( 'Median', TEXT_OPTIONS ),
+    const items = [];
+    options.includeMean && items.push( {
+      node: new Text( centerAndSpreadStrings.mean, TEXT_OPTIONS ),
+      property: model.isShowingBottomMeanProperty
+    } );
+    options.includeMedian && items.push( {
+      node: new Text( centerAndSpreadStrings.median, TEXT_OPTIONS ),
       property: model.isShowingBottomMedianProperty
-    } ];
+    } );
     super( items, options );
   }
 }

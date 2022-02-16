@@ -24,7 +24,12 @@ type StringsType = {
   'kick5': string,
   'data': string,
   'sortData': string,
-  'medianEqualsValue': string
+  'medianEqualsValue': string,
+  'dotPlot': string,
+  'showMedian': string,
+  'median': string,
+  'showMean': string,
+  'mean': string
 };
 
 const centerAndSpreadStrings = getStringModule( 'CENTER_AND_SPREAD' ) as StringsType;

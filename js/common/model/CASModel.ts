@@ -35,8 +35,10 @@ class CASModel {
   readonly objectGroup: PhetioGroup<CASObject, [ CASObjectType, Omit<CASObjectOptions, 'tandem'> ]>;
   readonly objectType: CASObjectType;
   readonly isSortingDataProperty: BooleanProperty;
+  readonly isShowingTopMeanProperty: BooleanProperty;
   readonly isShowingTopMedianProperty: BooleanProperty;
   readonly isShowingBottomMedianProperty: BooleanProperty; // TODO: Rename isShowingPlayAreaMedianProperty?
+  readonly isShowingBottomMeanProperty: BooleanProperty; // TODO: Rename isShowingPlayAreaMeanProperty?
   readonly cardModelGroup: PhetioGroup<CardModel, [ CASObject ]>; // Only instrumented and enabled if includeCards === true
   readonly includeCards: boolean;
 
@@ -84,8 +86,14 @@ class CASModel {
     this.isSortingDataProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isSortingDataProperty' )
     } );
+    this.isShowingTopMeanProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isShowingTopMeanProperty' )
+    } );
     this.isShowingTopMedianProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isShowingTopMedianProperty' )
+    } );
+    this.isShowingBottomMeanProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isShowingBottomMeanProperty' )
     } );
     this.isShowingBottomMedianProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isShowingBottomMedianProperty' )
@@ -224,7 +232,9 @@ class CASModel {
    */
   reset(): void {
     this.isSortingDataProperty.reset();
+    this.isShowingTopMeanProperty.reset();
     this.isShowingTopMedianProperty.reset();
+    this.isShowingBottomMeanProperty.reset();
     this.isShowingBottomMedianProperty.reset();
     this.objectGroup.clear();
     this.cardModelGroup.clear();

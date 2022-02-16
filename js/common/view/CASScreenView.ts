@@ -24,7 +24,11 @@ import TopRepresentationCheckboxGroup from './TopRepresentationCheckboxGroup.js'
 import BottomRepresentationCheckboxGroup from './BottomRepresentationCheckboxGroup.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 
-export type CASScreenViewOptions = ScreenViewOptions;
+type CASScreenViewSelfOptions = {
+  topCheckboxPanelOptions?: boolean,
+  bottomCheckboxPanelOptions?: boolean
+};
+export type CASScreenViewOptions = CASScreenViewSelfOptions & ScreenViewOptions;
 
 class CASScreenView extends ScreenView {
 
@@ -76,8 +80,8 @@ class CASScreenView extends ScreenView {
     } );
 
     // TODO: Consider renaming as Group instead of panel (if they only contain checkboxes)
-    this.topCheckboxPanel = new TopRepresentationCheckboxGroup( model );
-    this.bottomCheckboxPanel = new BottomRepresentationCheckboxGroup( model );
+    this.topCheckboxPanel = new TopRepresentationCheckboxGroup( model, options.topCheckboxPanelOptions );
+    this.bottomCheckboxPanel = new BottomRepresentationCheckboxGroup( model, options.bottomCheckboxPanelOptions );
 
     // Play area median indicator.  TODO: Separate class?
     this.playAreaMedianIndicatorNode = new ArrowNode( 0, 0, 0, 35, { fill: 'red', stroke: null } );
