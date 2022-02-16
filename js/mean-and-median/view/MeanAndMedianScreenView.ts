@@ -35,6 +35,7 @@ class MeanAndMedianScreenView extends SoccerScreenView {
 
     super( model, options );
 
+    // TODO: this is somewhat duplicated with the MedianScreenView
     const accordionBoxTandem = options.tandem.createTandem( 'dataAccordionBox' );
 
     this.dataAccordionBox = new CASAccordionBox( this.model, new Node(), this.topCheckboxPanel, this.layoutBounds, {

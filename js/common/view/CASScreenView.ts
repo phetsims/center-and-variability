@@ -26,8 +26,8 @@ import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 
 type CASScreenViewSelfOptions = {
-  topCheckboxPanelOptions?: boolean,
-  bottomCheckboxPanelOptions?: boolean
+  topCheckboxPanelOptions?: boolean;
+  bottomCheckboxPanelOptions?: boolean;
 };
 export type CASScreenViewOptions = CASScreenViewSelfOptions & ScreenViewOptions;
 
@@ -124,7 +124,10 @@ class CASScreenView extends ScreenView {
     // Added by the child ScreenView so it is in the correct z-ordering
     this.eraserButton = new EraserButton( {
       listener: () => {
+
+        // Interrupt dragging of existing objects
         this.interruptSubtreeInput();
+
         model.clearData();
         this.clearData();
       },

@@ -75,6 +75,7 @@ class MedianScreenView extends SoccerScreenView {
   }
 
   clearData(): void {
+    super.clearData();
     this.numberCardContainer.reset();
   }
 

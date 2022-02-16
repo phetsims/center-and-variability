@@ -16,10 +16,10 @@ import CASConstants from '../CASConstants.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 
 type BottomRepresentationCheckboxGroupSelfOptions = {
-  includeMedian?: boolean,
-  includeMean?: boolean,
-  includePredictMean?: true,
-  includePredictMedian?: true
+  includeMedian?: boolean;
+  includeMean?: boolean;
+  includePredictMean?: boolean;
+  includePredictMedian?: boolean;
 };
 export type BottomRepresentationCheckboxGroupOptions =
   BottomRepresentationCheckboxGroupSelfOptions
@@ -30,6 +30,7 @@ const TEXT_OPTIONS = {
   font: CASConstants.BUTTON_FONT
 };
 
+// TODO: VerticalCheckboxGroup should be TypeScript
 class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
   constructor( model: CASModel, providedOptions?: BottomRepresentationCheckboxGroupOptions ) {

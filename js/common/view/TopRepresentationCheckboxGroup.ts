@@ -16,9 +16,9 @@ import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 import CASConstants from '../CASConstants.js';
 
 type TopRepresentationCheckboxGroupSelfOptions = {
-  includeSortData?: boolean,
-  includeShowMedian?: boolean,
-  includeShowMean?: boolean
+  includeSortData?: boolean;
+  includeShowMedian?: boolean;
+  includeShowMean?: boolean;
 };
 export type TopRepresentationCheckboxGroupOptions = TopRepresentationCheckboxGroupSelfOptions & VerticalCheckboxGroupOptions;
 
