@@ -155,6 +155,7 @@ class CASModel {
       casObject.valueProperty.link( updateMedian );
 
       // Signal to listeners that a value changed
+      // TODO: Maybe should combine with temporary listener for one permanent one
       casObject.valueProperty.link( () => this.objectValueChangedEmitter.emit( casObject ) );
     };
     this.objectGroup.forEach( objectCreatedListener );
