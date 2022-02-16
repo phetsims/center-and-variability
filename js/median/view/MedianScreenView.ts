@@ -56,11 +56,11 @@ class MedianScreenView extends SoccerScreenView {
     // TODO: CK - float to top of visibleBounds to certain aspect ratio
     this.dataAccordionBox = new CASAccordionBox( this.model, this.numberCardContainer, this.topCheckboxPanel,
       this.layoutBounds, {
-      tandem: accordionBoxTandem,
-      titleString: centerAndSpreadStrings.data,
-      centerX: this.layoutBounds.centerX,
-      top: this.questionBar.bottom + CASConstants.SCREEN_VIEW_Y_MARGIN
-    } );
+        tandem: accordionBoxTandem,
+        titleString: centerAndSpreadStrings.data,
+        centerX: this.layoutBounds.centerX,
+        top: this.questionBar.bottom + CASConstants.SCREEN_VIEW_Y_MARGIN
+      } );
     this.addChild( this.dataAccordionBox );
 
     this.bottomCheckboxPanel.left = this.globalToParentBounds( this.topCheckboxPanel.getGlobalBounds() ).left;
@@ -72,6 +72,9 @@ class MedianScreenView extends SoccerScreenView {
 
     // Last in alternative input focus order
     this.addChild( this.resetAllButton );
+
+    // TODO: It's becoming a code smell to add everything here.  Can we have an intermediate layer that has most things?
+    this.addChild( this.medianPredictionNode );
   }
 
   clearData(): void {

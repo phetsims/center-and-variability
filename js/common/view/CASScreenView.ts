@@ -24,6 +24,7 @@ import TopRepresentationCheckboxGroup from './TopRepresentationCheckboxGroup.js'
 import BottomRepresentationCheckboxGroup from './BottomRepresentationCheckboxGroup.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
+import PredictionNode from './PredictionNode.js';
 
 type CASScreenViewSelfOptions = {
   topCheckboxPanelOptions?: boolean;
@@ -42,6 +43,7 @@ class CASScreenView extends ScreenView {
   protected readonly objectsLayer: Node;
   protected readonly playAreaMedianIndicatorNode: ArrowNode;
   protected readonly eraserButton: EraserButton;
+  protected readonly medianPredictionNode: PredictionNode;
 
   constructor( model: CASModel, modelViewTransform: ModelViewTransform2, options: CASScreenViewOptions ) {
     options = optionize<CASScreenViewOptions>( {
@@ -108,6 +110,15 @@ class CASScreenView extends ScreenView {
     model.medianValueProperty.link( updateMedianNode );
     model.objectValueChangedEmitter.addListener( updateMedianNode );
     model.isShowingBottomMedianProperty.link( updateMedianNode );
+
+    this.medianPredictionNode = new PredictionNode( model.medianPredictionProperty, this.modelViewTransform, model.rangeProperty, {
+      center: this.layoutBounds.center,
+      tandem: options.tandem.createTandem( 'medianPredictionNode' )
+    } );
+
+    model.isShowingMedianPredictionProperty.link( isShowingMedianPrediction => {
+      this.medianPredictionNode.visible = isShowingMedianPrediction;
+    } );
 
     // Added by the child ScreenView so it is in the correct z-ordering
     this.resetAllButton = new ResetAllButton( {

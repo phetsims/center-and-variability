@@ -17,6 +17,7 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import Range from '../../../../dot/js/Range.js';
 import CASQueryParameters from '../CASQueryParameters.js';
 import Property from '../../../../axon/js/Property.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Utils from '../../../../dot/js/Utils.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
@@ -40,15 +41,20 @@ class CASModel {
   readonly isShowingBottomMedianProperty: BooleanProperty; // TODO: Rename isShowingPlayAreaMedianProperty?
   readonly isShowingBottomMeanProperty: BooleanProperty; // TODO: Rename isShowingPlayAreaMeanProperty?
   readonly isShowingPredictMeanProperty: BooleanProperty;
-  readonly isShowingPredictMedianProperty: BooleanProperty;
+  readonly isShowingMedianPredictionProperty: BooleanProperty;
   readonly cardModelGroup: PhetioGroup<CardModel, [ CASObject ]>; // Only instrumented and enabled if includeCards === true
   readonly includeCards: boolean;
 
   readonly maxNumberOfObjects: number;
-  protected readonly rangeProperty: Property<Range>;
+
+  // TODO: Should this be a Property?
+  readonly rangeProperty: Property<Range>;
   readonly numberOfRemainingObjectsProperty: DerivedProperty<number, [ count: number ]>;
   readonly medianValueProperty: Property<number | null>;
   readonly objectValueChangedEmitter: Emitter<[ CASObject ]>;
+
+  // Null until the user has made a prediction.
+  readonly medianPredictionProperty: Property<number>;
 
   constructor( objectType: CASObjectType, maxNumberOfObjects: number, providedOptions: CASModelOptions ) {
 
@@ -103,11 +109,12 @@ class CASModel {
     this.isShowingPredictMeanProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isShowingPredictMeanProperty' )
     } );
-    this.isShowingPredictMedianProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isShowingPredictMedianProperty' )
+    this.isShowingMedianPredictionProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isShowingMedianPredictionProperty' )
     } );
 
     this.medianValueProperty = new Property<number | null>( null );
+    this.medianPredictionProperty = new NumberProperty( 1 );
 
     const updateMedian = () => {
       const objectsInDataSet = this.objectGroup.filter( casObject => casObject.valueProperty.value !== null );
@@ -286,7 +293,7 @@ class CASModel {
     this.isShowingBottomMeanProperty.reset();
     this.isShowingBottomMedianProperty.reset();
     this.isShowingPredictMeanProperty.reset();
-    this.isShowingPredictMedianProperty.reset();
+    this.isShowingMedianPredictionProperty.reset();
     this.clearData();
   }
 
