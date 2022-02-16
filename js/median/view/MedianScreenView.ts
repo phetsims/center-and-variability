@@ -37,7 +37,8 @@ class MedianScreenView extends SoccerScreenView {
         includeShowMean: false
       },
       bottomCheckboxPanelOptions: {
-        includeMean: false
+        includeMean: false,
+        includePredictMean: false
       },
       tandem: Tandem.REQUIRED
     }, providedOptions );

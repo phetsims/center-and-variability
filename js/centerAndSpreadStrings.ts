@@ -29,7 +29,8 @@ type StringsType = {
   'showMedian': string,
   'median': string,
   'showMean': string,
-  'mean': string
+  'mean': string,
+  'predict': string
 };
 
 const centerAndSpreadStrings = getStringModule( 'CENTER_AND_SPREAD' ) as StringsType;

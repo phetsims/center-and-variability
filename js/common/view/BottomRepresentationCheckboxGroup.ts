@@ -17,7 +17,9 @@ import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 
 type BottomRepresentationCheckboxGroupSelfOptions = {
   includeMedian?: boolean,
-  includeMean?: boolean
+  includeMean?: boolean,
+  includePredictMean?: true,
+  includePredictMedian?: true
 };
 export type BottomRepresentationCheckboxGroupOptions =
   BottomRepresentationCheckboxGroupSelfOptions
@@ -34,7 +36,9 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
     const options = optionize<BottomRepresentationCheckboxGroupOptions, BottomRepresentationCheckboxGroupSelfOptions, VerticalCheckboxGroupOptions>( {
       includeMean: true,
-      includeMedian: true
+      includeMedian: true,
+      includePredictMean: true,
+      includePredictMedian: true
     }, providedOptions );
 
     const items = [];
@@ -45,6 +49,14 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
     options.includeMedian && items.push( {
       node: new Text( centerAndSpreadStrings.median, TEXT_OPTIONS ),
       property: model.isShowingBottomMedianProperty
+    } );
+    options.includePredictMean && items.push( {
+      node: new Text( centerAndSpreadStrings.predict, TEXT_OPTIONS ),
+      property: model.isShowingPredictMeanProperty
+    } );
+    options.includePredictMedian && items.push( {
+      node: new Text( centerAndSpreadStrings.predict, TEXT_OPTIONS ),
+      property: model.isShowingPredictMedianProperty
     } );
     super( items, options );
   }

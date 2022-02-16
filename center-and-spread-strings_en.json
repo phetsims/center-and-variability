@@ -48,9 +48,12 @@
     "value": "Median"
   },
   "showMean": {
-  "value": "Show Mean"
-},
+    "value": "Show Mean"
+  },
   "mean": {
     "value": "Mean"
+  },
+  "predict": {
+    "value": "Predict"
   }
 }

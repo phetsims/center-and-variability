@@ -39,6 +39,8 @@ class CASModel {
   readonly isShowingTopMedianProperty: BooleanProperty;
   readonly isShowingBottomMedianProperty: BooleanProperty; // TODO: Rename isShowingPlayAreaMedianProperty?
   readonly isShowingBottomMeanProperty: BooleanProperty; // TODO: Rename isShowingPlayAreaMeanProperty?
+  readonly isShowingPredictMeanProperty: BooleanProperty;
+  readonly isShowingPredictMedianProperty: BooleanProperty;
   readonly cardModelGroup: PhetioGroup<CardModel, [ CASObject ]>; // Only instrumented and enabled if includeCards === true
   readonly includeCards: boolean;
 
@@ -97,6 +99,12 @@ class CASModel {
     } );
     this.isShowingBottomMedianProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isShowingBottomMedianProperty' )
+    } );
+    this.isShowingPredictMeanProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isShowingPredictMeanProperty' )
+    } );
+    this.isShowingPredictMedianProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isShowingPredictMedianProperty' )
     } );
 
     this.medianValueProperty = new Property<number | null>( null );
