@@ -36,7 +36,7 @@ export type SoccerScreenViewOptions = SoccerScreenViewSelfOptions & CASScreenVie
 
 // constants
 const GROUND_POSITION_Y = 490;
-const NUMBER_LINE_MARGIN_X = 140;
+const NUMBER_LINE_MARGIN_X = 185;
 const TICK_MARK_EXTENT = 18;
 
 class SoccerScreenView extends CASScreenView {

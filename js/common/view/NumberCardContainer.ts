@@ -210,6 +210,8 @@ class NumberCardContainer extends Node {
     this.addChild( medianReadoutPanel );
 
     model.medianValueProperty.link( medianValue => {
+
+      // TODO: Re-center when the text changes since it could have a different width
       medianTextNode.text = StringUtils.fillIn( centerAndSpreadStrings.medianEqualsValue, { value: model.medianValueProperty.value } );
     } );
 

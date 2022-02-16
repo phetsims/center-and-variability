@@ -20,7 +20,7 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 type SoccerPlayerNodeSelfOptions = {};
 type SoccerPlayerNodeOptions = SoccerPlayerNodeSelfOptions & NodeOptions;
 
-const SPACING = 3;
+const SPACING = 5.5;
 const SCALE = 0.18;
 
 class SoccerPlayerNode extends Node {
@@ -52,7 +52,7 @@ class SoccerPlayerNode extends Node {
     } );
 
     soccerPlayer.placeInLineProperty.link( placeInLine => {
-      this.setScaleMagnitude( Utils.linear( 0, 15, 1, 0.7, placeInLine ) * SCALE );
+      this.setScaleMagnitude( Utils.linear( 0, 15, 1, 0.8, placeInLine ) * SCALE );
       this.centerBottom =
         modelViewTransform.modelToViewPosition( new Vector2( 0, 0 ) ).plusXY( -20 - placeInLine * SPACING, 3 );
     } );
