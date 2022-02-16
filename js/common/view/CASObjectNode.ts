@@ -35,6 +35,7 @@ class CASObjectNode extends Node {
 
     const viewRadius = modelViewTransform.modelToViewDeltaX( casObject.objectType.radius );
 
+    // TODO: These should be edge to edge
     const medianHighlight = new Circle( viewRadius + 1.75, {
       fill: Color.RED
     } );
