@@ -8,12 +8,18 @@
  */
 
 import optionize from '../../../../phet-core/js/optionize.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import Range from '../../../../dot/js/Range.js';
+import Property from '../../../../axon/js/Property.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
+import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import centerAndSpread from '../../centerAndSpread.js';
 import VerticalCheckboxGroup, { VerticalCheckboxGroupOptions } from '../../../../sun/js/VerticalCheckboxGroup.js';
-import { Text } from '../../../../scenery/js/imports.js';
+import { Text, HBox } from '../../../../scenery/js/imports.js';
 import CASModel from '../model/CASModel.js';
 import CASConstants from '../CASConstants.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
+import PredictionNode from './PredictionNode.js';
 
 type BottomRepresentationCheckboxGroupSelfOptions = {
   includeMedian?: boolean;
@@ -48,7 +54,16 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
       property: model.isShowingBottomMeanProperty
     } );
     options.includeMedian && items.push( {
-      node: new Text( centerAndSpreadStrings.median, TEXT_OPTIONS ),
+
+      // TODO: Align group to center align the icons
+      node: new HBox( {
+        spacing: 17,
+        children: [
+          new Text( centerAndSpreadStrings.median, TEXT_OPTIONS ),
+
+          // TODO: Factor out?
+          new ArrowNode( 0, 0, 0, 35, { fill: 'red', stroke: null, maxHeight: 20 } ) ]
+      } ),
       property: model.isShowingBottomMedianProperty
     } );
     options.includePredictMean && items.push( {
@@ -56,7 +71,17 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
       property: model.isShowingPredictMeanProperty
     } );
     options.includePredictMedian && items.push( {
-      node: new Text( centerAndSpreadStrings.predict, TEXT_OPTIONS ),
+      node: new HBox( {
+        spacing: 20,
+        children: [
+          new Text( centerAndSpreadStrings.predict, TEXT_OPTIONS ),
+          new PredictionNode( new Property<number>( 1 ), ModelViewTransform2.createIdentity(), new Property<Range>( new Range( 1, 16 ) ), {
+            pickable: false,
+            maxHeight: 20,
+            tandem: Tandem.OPT_OUT
+          } )
+        ]
+      } ),
       property: model.isShowingMedianPredictionProperty
     } );
     super( items, options );
