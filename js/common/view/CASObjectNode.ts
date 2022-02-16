@@ -22,7 +22,6 @@ import Property from '../../../../axon/js/Property.js';
 type CASObjectNodeSelfOptions = {};
 export type CASObjectNodeOptions = CASObjectNodeSelfOptions & NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
 
-// TODO: the initial ball can be dragged, but it is buggy because it can also be kicked after dragging
 class CASObjectNode extends Node {
 
   constructor( casObject: CASObject, isShowingBottomMedianProperty: IReadOnlyProperty<boolean>,
@@ -82,6 +81,13 @@ class CASObjectNode extends Node {
       ( isMedianObject, isShowingBottomMedian ) => {
         medianHighlight.visible = isMedianObject && isShowingBottomMedian;
       } );
+
+    // TODO: The initial ball should be draggable, remember that should move it into the data set, and
+    // when dropped, a new ball should be created.
+    // TODO-DESIGN: Should the ball enter the data set once dragged, or only after dropped?
+    casObject.valueProperty.link( value => {
+      this.pickable = value !== null;
+    } );
   }
 }
 

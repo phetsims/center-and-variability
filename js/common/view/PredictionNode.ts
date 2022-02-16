@@ -30,13 +30,13 @@ class PredictionNode extends Node {
     const shadedSphereNode = new ShadedSphereNode( 20, {
 
       // TODO: Add more colors to the color profile editor
-      // TODO: This looks more orange in the mockup
-      // TODO: Colorblind red?
+      // TODO-DESIGN: This looks more orange in the mockup
+      // TODO-DESIGN: Colorblind red?
       // TODO: This should be passed in the options
       mainColor: 'red'
     } );
 
-    // TODO: The mockup shows different arrowheads.
+    // TODO-DESIGN: The mockup shows different arrowheads.
     const arrowNode = new ArrowNode( 0, 0, 0, -50, {
       headHeight: 14,
       headWidth: 14,
