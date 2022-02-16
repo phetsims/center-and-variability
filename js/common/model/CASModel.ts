@@ -23,6 +23,7 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import merge from '../../../../phet-core/js/merge.js';
 import CardModel from './CardModel.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import Emitter from '../../../../axon/js/Emitter.js';
 
 type CASModelSelfOptions = {
   tandem: Tandem,
@@ -35,7 +36,7 @@ class CASModel {
   readonly objectType: CASObjectType;
   readonly isSortingDataProperty: BooleanProperty;
   readonly isShowingTopMedianProperty: BooleanProperty;
-  readonly isShowingBottomMedianProperty: BooleanProperty;
+  readonly isShowingBottomMedianProperty: BooleanProperty; // TODO: Rename isShowingPlayAreaMedianProperty?
   readonly cardModelGroup: PhetioGroup<CardModel, [ CASObject ]>; // Only instrumented and enabled if includeCards === true
   readonly includeCards: boolean;
 
@@ -43,6 +44,7 @@ class CASModel {
   protected readonly rangeProperty: Property<Range>;
   readonly numberOfRemainingObjectsProperty: DerivedProperty<number, [ count: number ]>;
   readonly medianValueProperty: Property<number | null>;
+  readonly objectValueChangedEmitter: Emitter<[ CASObject ]>;
 
   constructor( objectType: CASObjectType, maxNumberOfObjects: number, providedOptions: CASModelOptions ) {
 
@@ -97,14 +99,15 @@ class CASModel {
         .sort( ( a: number, b: number ) => a - b );
 
       // TODO: Why does this print twice at the same time?
-      console.log( values );
+      // console.log( values );
 
       // Odd number of values, take the central value
       if ( values.length % 2 === 1 ) {
         const midIndex = ( values.length - 1 ) / 2;
         this.medianValueProperty.value = values[ midIndex ];
+        assert && assert( !isNaN( this.medianValueProperty.value ) );
       }
-      else {
+      else if ( values.length % 2 === 0 && values.length >= 2 ) {
 
         // Even number of values, average the two middle-most values
         const mid1Index = ( values.length - 2 ) / 2;
@@ -112,6 +115,12 @@ class CASModel {
         const mid1Value = values[ mid1Index ];
         const mid2Value = values[ mid2Index ];
         this.medianValueProperty.value = ( mid1Value + mid2Value ) / 2;
+        assert && assert( !isNaN( this.medianValueProperty.value ) );
+      }
+      else {
+
+        // Not enough values for the median to be defined
+        this.medianValueProperty.value = null;
       }
     };
 
@@ -128,6 +137,9 @@ class CASModel {
       };
       casObject.valueProperty.link( listener );
       casObject.valueProperty.link( updateMedian );
+
+      // Signal to listeners that a value changed
+      casObject.valueProperty.link( () => this.objectValueChangedEmitter.emit( casObject ) );
     };
     this.objectGroup.forEach( objectCreatedListener );
     this.objectGroup.elementCreatedEmitter.addListener( objectCreatedListener );
@@ -150,6 +162,11 @@ class CASModel {
     // correctly stacked.  Since this is only used for development with ?objects=... we decided it does not
     // need to be rewritten.
     this.objectGroup.forEach( object => this.moveToTop( object ) );
+
+    // Signify whenever any object's value changes
+    this.objectValueChangedEmitter = new Emitter<[ CASObject ]>( {
+      parameters: [ { valueType: CASObject } ]
+    } );
   }
 
   protected createObject( options: Omit<CASObjectOptions, 'tandem'> ): CASObject {
@@ -199,7 +216,8 @@ class CASModel {
     } );
   }
 
-  protected objectValueBecameNonNull( casObject: CASObject ): void {}
+  protected objectValueBecameNonNull( casObject: CASObject ): void {
+  }
 
   /**
    * Resets the model.

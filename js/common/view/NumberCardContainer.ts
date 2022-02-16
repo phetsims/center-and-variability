@@ -252,10 +252,11 @@ class NumberCardContainer extends Node {
         this.medianBarsNode.shape = null;
       }
 
+      // TODO: Better guard on model.isShowingTopMedianProperty.value
       if ( leftmostCard ) {
         medianReadoutPanel.centerX = getCardPositionX( ( this.cardNodeCells.length - 1 ) / 2 ) + leftmostCard.width / 2;
         medianReadoutPanel.top = leftmostCard.bottom + MARGIN_Y + 20;
-        medianReadoutPanel.visible = true;
+        medianReadoutPanel.visible = model.isShowingTopMedianProperty.value;
       }
       else {
         medianReadoutPanel.visible = false;

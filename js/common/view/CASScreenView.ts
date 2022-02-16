@@ -22,16 +22,20 @@ import CASObjectType from '../model/CASObjectType.js';
 import CASObject from '../model/CASObject.js';
 import TopRepresentationCheckboxGroup from './TopRepresentationCheckboxGroup.js';
 import BottomRepresentationCheckboxGroup from './BottomRepresentationCheckboxGroup.js';
+import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 
 export type CASScreenViewOptions = ScreenViewOptions;
 
 class CASScreenView extends ScreenView {
+
+  readonly topCheckboxPanel: TopRepresentationCheckboxGroup; // TODO: can these be private or protected?
+  readonly bottomCheckboxPanel: BottomRepresentationCheckboxGroup;
+
   protected readonly resetAllButton: ResetAllButton;
   protected readonly modelViewTransform: ModelViewTransform2;
-  protected model: CASModel;
+  protected readonly model: CASModel;
   protected readonly objectsLayer: Node;
-  readonly topCheckboxPanel: TopRepresentationCheckboxGroup;
-  readonly bottomCheckboxPanel: BottomRepresentationCheckboxGroup;
+  protected readonly playAreaMedianIndicatorNode: ArrowNode;
 
   constructor( model: CASModel, modelViewTransform: ModelViewTransform2, options: CASScreenViewOptions ) {
     options = optionize<CASScreenViewOptions>( {
@@ -74,6 +78,30 @@ class CASScreenView extends ScreenView {
     // TODO: Consider renaming as Group instead of panel (if they only contain checkboxes)
     this.topCheckboxPanel = new TopRepresentationCheckboxGroup( model );
     this.bottomCheckboxPanel = new BottomRepresentationCheckboxGroup( model );
+
+    // Play area median indicator.  TODO: Separate class?
+    this.playAreaMedianIndicatorNode = new ArrowNode( 0, 0, 0, 35, { fill: 'red', stroke: null } );
+
+    const updateMedianNode = () => {
+      const medianValue = model.medianValueProperty.value;
+      const visible = medianValue !== null && model.isShowingBottomMedianProperty.value;
+
+      if ( visible ) {
+
+        // if there is a ball at that location, go above the ball
+        const ballsAtLocation = model.objectGroup.filter( casObject => casObject.valueProperty.value === medianValue );
+        const modelHeight = ballsAtLocation.length * model.objectType.radius * 2; // assumes no spacing
+
+        const viewHeight = this.modelViewTransform.modelToViewDeltaY( modelHeight );
+
+        this.playAreaMedianIndicatorNode.centerX = this.modelViewTransform.modelToViewX( medianValue );
+        this.playAreaMedianIndicatorNode.bottom = this.modelViewTransform.modelToViewY( 0 ) + viewHeight;
+      }
+      this.playAreaMedianIndicatorNode.visible = visible;
+    };
+    model.medianValueProperty.link( updateMedianNode );
+    model.objectValueChangedEmitter.addListener( updateMedianNode );
+    model.isShowingBottomMedianProperty.link( updateMedianNode );
 
     // Added by the child ScreenView so it is in the correct z-ordering
     this.resetAllButton = new ResetAllButton( {

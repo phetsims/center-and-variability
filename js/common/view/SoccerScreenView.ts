@@ -120,6 +120,9 @@ class SoccerScreenView extends CASScreenView {
       bottom: this.layoutBounds.bottom - 8,
       tandem: options.tandem.createTandem( 'kickButtonGroup' )
     } ) );
+
+    // Add the child in the subclass to control z-ordering
+    this.addChild( this.playAreaMedianIndicatorNode );
   }
 }
 

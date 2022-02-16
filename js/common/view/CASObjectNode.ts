@@ -20,6 +20,7 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 type CASObjectNodeSelfOptions = {};
 export type CASObjectNodeOptions = CASObjectNodeSelfOptions & NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
 
+// TODO: the initial ball can be dragged, but it is buggy because it can also be kicked after dragging
 class CASObjectNode extends Node {
 
   constructor( casObject: CASObject, modelViewTransform: ModelViewTransform2, providedOptions?: CASObjectNodeOptions ) {
