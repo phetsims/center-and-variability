@@ -221,8 +221,8 @@ class SoccerModel extends CASModel {
   }
 
   reset(): void {
-    this.clearData();
     super.reset();
+    this.clearData();
   }
 
   private populateSoccerPlayerGroup(): void {
