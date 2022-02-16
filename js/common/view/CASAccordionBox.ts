@@ -8,7 +8,7 @@
  */
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import { NodeOptions, Rectangle, Text, Node } from '../../../../scenery/js/imports.js';
+import { Node, NodeOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import CASConstants from '../CASConstants.js';
 import optionize from '../../../../phet-core/js/optionize.js';
@@ -18,11 +18,17 @@ import centerAndSpread from '../../centerAndSpread.js';
 import TopRepresentationCheckboxGroup from './TopRepresentationCheckboxGroup.js';
 import CASModel from '../model/CASModel.js';
 
-// types
 type CASAccordionBoxSelfOptions = {
   titleString: string
 };
-export type CASAccordionBoxOptions = CASAccordionBoxSelfOptions & Omit<AccordionBoxOptions, 'titleNode' | 'expandedProperty'> & Required<Pick<NodeOptions, 'tandem'>>;
+export type CASAccordionBoxOptions =
+  CASAccordionBoxSelfOptions
+  & Omit<AccordionBoxOptions, 'titleNode' | 'expandedProperty'>
+  & Required<Pick<NodeOptions, 'tandem'>>;
+
+// constants
+const CONTENT_MARGIN = 10;
+const BUTTON_SIDE_LENGTH = 20;
 
 class CASAccordionBox extends AccordionBox {
 
@@ -34,15 +40,15 @@ class CASAccordionBox extends AccordionBox {
       titleAlignX: 'left',
       titleXSpacing: 8,
       cornerRadius: 6,
-      titleYMargin: 10,
-      buttonXMargin: 10,
-      buttonYMargin: 10,
-      contentXMargin: 10,
+      titleYMargin: CONTENT_MARGIN,
+      buttonXMargin: CONTENT_MARGIN,
+      buttonYMargin: CONTENT_MARGIN,
+      contentXMargin: CONTENT_MARGIN,
       contentYMargin: 0,
-      contentXSpacing: 0,
+      contentYSpacing: 0,
       contentAlign: 'left',
       expandCollapseButtonOptions: {
-        sideLength: 20
+        sideLength: BUTTON_SIDE_LENGTH
       },
       titleNode: new Text( providedOptions.titleString, {
         font: new PhetFont( 16 ),
@@ -50,24 +56,25 @@ class CASAccordionBox extends AccordionBox {
       } )
     }, providedOptions );
 
-    const backgroundRectangle = new Rectangle( {
-      rectHeight: 160,
-      // TODO: CK - figure out precise size desired and document size calculation
-      rectWidth: layoutBounds.width - CASConstants.SCREEN_VIEW_X_MARGIN * 2 - 40
+    const backgroundNode = new Rectangle( {
+      rectHeight: 140,
+      rectWidth: layoutBounds.width - CASConstants.SCREEN_VIEW_X_MARGIN * 2 - CONTENT_MARGIN * 2
     } );
 
-    checkboxPanel.right = backgroundRectangle.right;
-    backgroundRectangle.addChild( checkboxPanel );
+    // Since the title is visible while the accordion box is open, this background will not any area above the bottom of
+    // the expand/collapse button. To vertically-center things, make a new set of bounds that includes the missing space.
+    // Values come from the height of the expand/collapse button plus the y margin above and below it.
+    const fullHeightBackgroundBounds = backgroundNode.getRectBounds().withOffsets( 0, CONTENT_MARGIN * 2 + BUTTON_SIDE_LENGTH, 0, 0 );
 
-    contents.centerY = backgroundRectangle.centerY - 24;
-    backgroundRectangle.addChild( contents );
+    checkboxPanel.right = backgroundNode.right;
+    checkboxPanel.centerY = fullHeightBackgroundBounds.centerY;
+    backgroundNode.addChild( checkboxPanel );
 
-    // TODO: CK: make it possible to put things above the background rectangle
-    // backgroundRectangle.localBounds = backgroundRectangle.bounds;
+    // TODO for CK: content has no height at time of instantiation, so does not end up in the correct place.
+    contents.centerY = fullHeightBackgroundBounds.centerY;
+    backgroundNode.addChild( contents );
 
-    super( backgroundRectangle, options );
-
-
+    super( backgroundNode, options );
   }
 }
 
