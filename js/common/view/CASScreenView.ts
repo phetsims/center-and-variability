@@ -23,6 +23,7 @@ import CASObject from '../model/CASObject.js';
 import TopRepresentationCheckboxGroup from './TopRepresentationCheckboxGroup.js';
 import BottomRepresentationCheckboxGroup from './BottomRepresentationCheckboxGroup.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
+import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 
 type CASScreenViewSelfOptions = {
   topCheckboxPanelOptions?: boolean,
@@ -40,6 +41,7 @@ class CASScreenView extends ScreenView {
   protected readonly model: CASModel;
   protected readonly objectsLayer: Node;
   protected readonly playAreaMedianIndicatorNode: ArrowNode;
+  protected readonly eraserButton: EraserButton;
 
   constructor( model: CASModel, modelViewTransform: ModelViewTransform2, options: CASScreenViewOptions ) {
     options = optionize<CASScreenViewOptions>( {
@@ -118,12 +120,30 @@ class CASScreenView extends ScreenView {
       bottom: this.layoutBounds.maxY - CASConstants.SCREEN_VIEW_Y_MARGIN,
       tandem: options.tandem.createTandem( 'resetAllButton' )
     } );
+
+    // Added by the child ScreenView so it is in the correct z-ordering
+    this.eraserButton = new EraserButton( {
+      listener: () => {
+        this.interruptSubtreeInput();
+        model.clearData();
+        this.clearData();
+      },
+      iconWidth: 26,
+      right: this.resetAllButton.left - CASConstants.SCREEN_VIEW_X_MARGIN,
+      centerY: this.resetAllButton.centerY
+    } );
   }
 
   /**
    * Resets the view.
    */
   reset(): void {
+  }
+
+  /**
+   * Resets the view for the data.
+   */
+  clearData(): void {
   }
 
   /**

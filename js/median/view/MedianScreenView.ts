@@ -68,9 +68,14 @@ class MedianScreenView extends SoccerScreenView {
     this.addChild( this.bottomCheckboxPanel );
 
     this.addChild( this.objectsLayer );
+    this.addChild( this.eraserButton );
 
     // Last in alternative input focus order
     this.addChild( this.resetAllButton );
+  }
+
+  clearData(): void {
+    this.numberCardContainer.reset();
   }
 
   reset(): void {

@@ -208,16 +208,21 @@ class SoccerModel extends CASModel {
     }
   }
 
-  reset(): void {
+  clearData(): void {
     this.remainingNumberOfBallsToMultiKickProperty.reset();
     this.timeProperty.reset();
     this.timeWhenLastBallWasKickedProperty.reset();
     this.ballPlayerMap.clear();
     this.soccerPlayerGroup.clear();
-    super.reset();
+    super.clearData(); // TODO: super.clearData() is called multiple times from reset
 
     this.populateSoccerPlayerGroup();
     this.nextBallToKickProperty.value = this.createBall();
+  }
+
+  reset(): void {
+    this.clearData();
+    super.reset();
   }
 
   private populateSoccerPlayerGroup(): void {

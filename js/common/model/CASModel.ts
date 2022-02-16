@@ -236,6 +236,14 @@ class CASModel {
   }
 
   /**
+   * Clears out the data and the cards
+   */
+  clearData(): void {
+    this.objectGroup.clear();
+    this.cardModelGroup.clear();
+  }
+
+  /**
    * Resets the model.
    */
   reset(): void {
@@ -244,8 +252,7 @@ class CASModel {
     this.isShowingTopMedianProperty.reset();
     this.isShowingBottomMeanProperty.reset();
     this.isShowingBottomMedianProperty.reset();
-    this.objectGroup.clear();
-    this.cardModelGroup.clear();
+    this.clearData();
   }
 
   /**

@@ -50,9 +50,15 @@ class MeanAndMedianScreenView extends SoccerScreenView {
     this.addChild( this.bottomCheckboxPanel );
 
     this.addChild( this.objectsLayer );
+    this.addChild( this.eraserButton );
 
     // Last in alternative input focus order
     this.addChild( this.resetAllButton );
+  }
+
+  reset(): void {
+    super.reset();
+    this.dataAccordionBox.reset();
   }
 }
 
