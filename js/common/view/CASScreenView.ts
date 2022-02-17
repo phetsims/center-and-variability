@@ -111,7 +111,7 @@ class CASScreenView extends ScreenView {
     model.objectValueChangedEmitter.addListener( updateMedianNode );
     model.isShowingBottomMedianProperty.link( updateMedianNode );
 
-    this.medianPredictionNode = new PredictionNode( model.medianPredictionProperty, this.modelViewTransform, model.rangeProperty, {
+    this.medianPredictionNode = new PredictionNode( model.medianPredictionProperty, this.modelViewTransform, model.range, {
       center: this.layoutBounds.center,
       tandem: options.tandem.createTandem( 'medianPredictionNode' )
     } );

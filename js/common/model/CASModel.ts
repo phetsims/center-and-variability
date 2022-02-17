@@ -46,9 +46,7 @@ class CASModel {
   readonly includeCards: boolean;
 
   readonly maxNumberOfObjects: number;
-
-  // TODO: Should this be a Property?
-  readonly rangeProperty: Property<Range>;
+  readonly range: Range;
   readonly numberOfRemainingObjectsProperty: DerivedProperty<number, [ count: number ]>;
   readonly medianValueProperty: Property<number | null>;
   readonly objectValueChangedEmitter: Emitter<[ CASObject ]>;
@@ -89,7 +87,7 @@ class CASModel {
       tandem: options.includeCards ? options.tandem.createTandem( 'cardModelGroup' ) : Tandem.OPT_OUT
     } );
 
-    this.rangeProperty = new Property<Range>( new Range( 1, 16 ) );
+    this.range = new Range( 1, 16 );
 
     this.isSortingDataProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isSortingDataProperty' )
@@ -208,7 +206,7 @@ class CASModel {
 
     // Populate with initial objects for debugging
     for ( let i = 0; i < CASQueryParameters.objects; i++ ) {
-      const targetX = dotRandom.nextIntBetween( this.rangeProperty.value.min, this.rangeProperty.value.max );
+      const targetX = dotRandom.nextIntBetween( this.range.min, this.range.max );
       this.createObject( {
         value: targetX
       } );
@@ -229,7 +227,7 @@ class CASModel {
     const casObject = this.objectGroup.createNextElement( this.objectType, options );
 
     const dragPositionListener = ( dragPosition: Vector2, oldPosition: Vector2 ) => {
-      casObject.valueProperty.value = Utils.roundSymmetric( this.rangeProperty.value.constrainValue( dragPosition.x ) );
+      casObject.valueProperty.value = Utils.roundSymmetric( this.range.constrainValue( dragPosition.x ) );
 
       this.moveToTop( casObject );
     };

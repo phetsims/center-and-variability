@@ -131,7 +131,7 @@ class SoccerModel extends CASModel {
 
     this.ballPlayerMap.set( casObject, soccerPlayer );
 
-    const x1 = dotRandom.nextIntBetween( this.rangeProperty.value.min, this.rangeProperty.value.max );
+    const x1 = dotRandom.nextIntBetween( this.range.min, this.range.max );
 
     // Range equation is R=v0^2 sin(2 theta0) / g, see https://openstax.org/books/university-physics-volume-1/pages/4-3-projectile-motion
     // Equation 4.26

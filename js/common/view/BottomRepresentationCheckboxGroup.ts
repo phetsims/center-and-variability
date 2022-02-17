@@ -75,7 +75,7 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
         spacing: 20,
         children: [
           new Text( centerAndSpreadStrings.predict, TEXT_OPTIONS ),
-          new PredictionNode( new Property<number>( 1 ), ModelViewTransform2.createIdentity(), new Property<Range>( new Range( 1, 16 ) ), {
+          new PredictionNode( new Property<number>( 1 ), ModelViewTransform2.createIdentity(), new Range( 1, 16 ), {
             pickable: false,
             maxHeight: 20,
             tandem: Tandem.OPT_OUT

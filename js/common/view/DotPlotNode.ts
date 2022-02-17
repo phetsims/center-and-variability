@@ -47,17 +47,15 @@ class DotPlotNode extends Node {
 
     const numberLinePositionY = 143;
 
-    const range = model.rangeProperty.value;
-
     // scale down in the y direction to support smaller object nodes
     const yScale = model.objectType.radius / CASObjectType.DOT.radius;
 
     const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
-      new Bounds2( range.min, 0, range.max, range.getLength() * yScale ),
+      new Bounds2( model.range.min, 0, model.range.max, model.range.getLength() * yScale ),
       new Bounds2( 0, numberLinePositionY - numberLineWidth, 0 + numberLineWidth, numberLinePositionY )
     );
 
-    const numberLineNode = new NumberLineNode( model.rangeProperty.value, numberLineWidth, {
+    const numberLineNode = new NumberLineNode( model.range, numberLineWidth, {
       color: Color.BLACK,
       includeXAxis: true,
       tandem: options.tandem.createTandem( 'numberLineNode' ),

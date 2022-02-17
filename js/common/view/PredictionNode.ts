@@ -25,7 +25,8 @@ export type PredictionNodeOptions = NodeOptions & Required<Pick<NodeOptions, 'ta
 
 class PredictionNode extends Node {
 
-  constructor( predictionProperty: Property<number>, modelViewTransform: ModelViewTransform2, dragRange: Property<Range>, providedOptions?: PredictionNodeOptions ) {
+  constructor( predictionProperty: Property<number>, modelViewTransform: ModelViewTransform2, dragRange: Range,
+               providedOptions?: PredictionNodeOptions ) {
 
     const shadedSphereNode = new ShadedSphereNode( 20, {
 
@@ -63,7 +64,7 @@ class PredictionNode extends Node {
     const dragPositionProperty = new Vector2Property( modelViewTransform.modelToViewXY( predictionProperty.value, 0 ) );
 
     dragPositionProperty.lazyLink( dragPosition => {
-      const constrainedValue = dragRange.value.constrainValue( modelViewTransform.viewToModelX( dragPosition.x ) );
+      const constrainedValue = dragRange.constrainValue( modelViewTransform.viewToModelX( dragPosition.x ) );
 
       // TODO: Dragging seems to lag and is sluggish.  Maybe rasterize the node?????
       predictionProperty.value = Utils.roundToInterval( constrainedValue, 0.5 );

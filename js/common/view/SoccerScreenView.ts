@@ -45,11 +45,10 @@ class SoccerScreenView extends CASScreenView {
     }, providedOptions );
 
     const chartViewWidth = ScreenView.DEFAULT_LAYOUT_BOUNDS.width - NUMBER_LINE_MARGIN_X * 2;
-    const range = model.rangeProperty.value;
 
     // The ground is at y=0
     const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
-      new Bounds2( range.min, 0, range.max, range.getLength() ),
+      new Bounds2( model.range.min, 0, model.range.max, model.range.getLength() ),
       new Bounds2( NUMBER_LINE_MARGIN_X, GROUND_POSITION_Y - chartViewWidth, NUMBER_LINE_MARGIN_X + chartViewWidth, GROUND_POSITION_Y )
     );
 
@@ -59,7 +58,7 @@ class SoccerScreenView extends CASScreenView {
 
     this.addChild( new BackgroundNode( GROUND_POSITION_Y, this.visibleBoundsProperty ) );
 
-    this.playAreaNumberLineNode = new NumberLineNode( model.rangeProperty.value, chartViewWidth, {
+    this.playAreaNumberLineNode = new NumberLineNode( model.range, chartViewWidth, {
       tandem: options.tandem.createTandem( 'playAreaNumberLineNode' )
     } );
     this.addChild( this.playAreaNumberLineNode );
