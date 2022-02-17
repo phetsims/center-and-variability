@@ -48,7 +48,7 @@ class DotPlotNode extends Node {
     backgroundNode.localBounds = backgroundNode.getRectBounds();
     this.addChild( backgroundNode );
 
-    const numberLinePositionY = 138;
+    const numberLinePositionY = 143;
 
     const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
       new Bounds2( 1, 0, 16, 15 ),
@@ -68,6 +68,7 @@ class DotPlotNode extends Node {
 
     const objectNodeGroup = new PhetioGroup<CASObjectNode, [ CASObject ]>( ( tandem, casObject ) => {
       return new CASObjectNode( casObject, model.isShowingBottomMedianProperty, modelViewTransform, {
+        objectViewType: CASObjectType.DOT,
         tandem: tandem
       } );
     }, [ model.objectGroup.archetype ], {

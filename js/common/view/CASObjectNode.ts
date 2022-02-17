@@ -19,7 +19,9 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
 import Property from '../../../../axon/js/Property.js';
 
-type CASObjectNodeSelfOptions = {};
+type CASObjectNodeSelfOptions = {
+  objectViewType?: CASObjectType
+};
 export type CASObjectNodeOptions = CASObjectNodeSelfOptions & NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
 
 class CASObjectNode extends Node {
@@ -27,12 +29,13 @@ class CASObjectNode extends Node {
   constructor( casObject: CASObject, isShowingBottomMedianProperty: IReadOnlyProperty<boolean>,
                modelViewTransform: ModelViewTransform2, providedOptions?: CASObjectNodeOptions ) {
 
-    const options = optionize<CASObjectNodeOptions>( {
+    const options = optionize<CASObjectNodeOptions, CASObjectNodeSelfOptions, NodeOptions>( {
+      objectViewType: casObject.objectType,
       phetioDynamicElement: true
     }, providedOptions );
     super( options );
 
-    const viewRadius = modelViewTransform.modelToViewDeltaX( casObject.objectType.radius );
+    const viewRadius = modelViewTransform.modelToViewDeltaX( options.objectViewType.radius );
 
     // TODO: These should be edge to edge
     const medianHighlight = new Circle( viewRadius + 1.75, {
@@ -40,8 +43,9 @@ class CASObjectNode extends Node {
     } );
     this.addChild( medianHighlight );
 
-    const childNode = casObject.objectType === CASObjectType.SOCCER_BALL ? new Image( ball_png ) :
-                      new ShadedSphereNode( casObject.objectType.radius * 2 );
+    const childNode = options.objectViewType === CASObjectType.SOCCER_BALL ? new Image( ball_png ) :
+                      options.objectViewType === CASObjectType.DOT ? new Circle( viewRadius, { fill: Color.BLACK } ) :
+                      new ShadedSphereNode( options.objectViewType.radius * 2 );
     childNode.maxWidth = viewRadius * 2;
 
     // if the child node is non-square, it should still fit within specified dimensions. Note: this does not change the

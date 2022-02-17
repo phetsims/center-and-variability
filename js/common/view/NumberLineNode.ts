@@ -50,15 +50,6 @@ class NumberLineNode extends Node {
     } );
     this.addChild( tickMarkSet );
 
-    if ( options.includeXAxis ) {
-      const xAxisNode = new Path( new Shape()
-        .moveTo( tickMarkSet.left, tickMarkSet.centerY )
-        .lineTo( tickMarkSet.right, tickMarkSet.centerY ), {
-        stroke: options.color
-      } );
-      this.addChild( xAxisNode );
-    }
-
     const tickLabelSet = new TickLabelSet( chartTransform, Orientation.HORIZONTAL, 1, {
       extent: TICK_MARK_EXTENT + 12,
       createLabel: ( value: number ) => new Text( Utils.toFixed( value, 0 ), {
@@ -67,6 +58,22 @@ class NumberLineNode extends Node {
       } )
     } );
     this.addChild( tickLabelSet );
+
+    if ( options.includeXAxis ) {
+
+      // TODO from CK: this feels like the wrong way to do this
+      // shift the number line up so 0 is on the x-axis
+      this.localBounds = this.localBounds.copy();
+      tickMarkSet.y = -TICK_MARK_EXTENT / 2;
+      tickLabelSet.y = -TICK_MARK_EXTENT / 2;
+
+      const xAxisNode = new Path( new Shape()
+        .moveTo( tickMarkSet.left, tickMarkSet.centerY )
+        .lineTo( tickMarkSet.right, tickMarkSet.centerY ), {
+        stroke: options.color
+      } );
+      this.addChild( xAxisNode );
+    }
 
     this.mutate( options );
   }
