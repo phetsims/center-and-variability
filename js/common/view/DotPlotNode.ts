@@ -28,7 +28,6 @@ export type DotPlotNodeOptions = NodeOptions & Required<Pick<NodeOptions, 'tande
 
 class DotPlotNode extends Node {
 
-  private readonly model: CASModel;
   private readonly dotLayer: Node;
 
   constructor( model: CASModel, numberLineWidth: number, providedOptions?: DotPlotNodeOptions ) {
@@ -39,8 +38,6 @@ class DotPlotNode extends Node {
 
     super( options );
 
-    this.model = model;
-
     // TODO: Factor out height with accordion box height
     const backgroundNode = new Rectangle( 0, 0, numberLineWidth, 180 );
 
@@ -50,8 +47,13 @@ class DotPlotNode extends Node {
 
     const numberLinePositionY = 143;
 
+    const range = model.rangeProperty.value;
+
+    // scale down in the y direction to support smaller object nodes
+    const yScale = model.objectType.radius / CASObjectType.DOT.radius;
+
     const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
-      new Bounds2( 1, 0, 16, 15 ),
+      new Bounds2( range.min, 0, range.max, range.getLength() * yScale ),
       new Bounds2( 0, numberLinePositionY - numberLineWidth, 0 + numberLineWidth, numberLinePositionY )
     );
 

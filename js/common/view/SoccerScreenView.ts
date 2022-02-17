@@ -45,10 +45,11 @@ class SoccerScreenView extends CASScreenView {
     }, providedOptions );
 
     const chartViewWidth = ScreenView.DEFAULT_LAYOUT_BOUNDS.width - NUMBER_LINE_MARGIN_X * 2;
+    const range = model.rangeProperty.value;
 
     // The ground is at y=0
     const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
-      new Bounds2( 1, 0, 16, 15 ),
+      new Bounds2( range.min, 0, range.max, range.getLength() ),
       new Bounds2( NUMBER_LINE_MARGIN_X, GROUND_POSITION_Y - chartViewWidth, NUMBER_LINE_MARGIN_X + chartViewWidth, GROUND_POSITION_Y )
     );
 
