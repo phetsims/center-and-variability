@@ -17,6 +17,7 @@ import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 import CASAccordionBox from '../../common/view/CASAccordionBox.js';
 import CASConstants from '../../common/CASConstants.js';
 import DotPlotNode from '../../common/view/DotPlotNode.js';
+import { ManualConstraint } from '../../../../scenery/js/imports.js';
 
 type MeanAndMedianScreenViewOptions = SoccerScreenViewOptions;
 
@@ -50,6 +51,11 @@ class MeanAndMedianScreenView extends SoccerScreenView {
       top: this.questionBar.bottom + CASConstants.SCREEN_VIEW_Y_MARGIN
     } );
     this.addChild( this.dataAccordionBox );
+
+    ManualConstraint.create( this, [ this.playAreaNumberLineNode, this.dotPlotNode ],
+      ( lowerNumberLineWrapper, dotPlotNodeWrapper ) => {
+      dotPlotNodeWrapper.left = lowerNumberLineWrapper.left;
+    } );
 
     this.bottomCheckboxPanel.left = this.globalToParentBounds( this.topCheckboxPanel.getGlobalBounds() ).left;
     this.bottomCheckboxPanel.top = this.dataAccordionBox.bottom + 30;

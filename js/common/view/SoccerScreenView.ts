@@ -14,7 +14,7 @@ import CASScreenView, { CASScreenViewOptions } from './CASScreenView.js';
 import QuestionBar, { QuestionBarOptions } from './QuestionBar.js';
 import KickButtonGroup from './KickButtonGroup.js';
 import BackgroundNode from './BackgroundNode.js';
-import { Node } from '../../../../scenery/js/imports.js';
+import { ManualConstraint, Node } from '../../../../scenery/js/imports.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
@@ -36,6 +36,7 @@ const NUMBER_LINE_MARGIN_X = 185;
 class SoccerScreenView extends CASScreenView {
   protected readonly questionBar: QuestionBar;
   protected readonly chartViewWidth: number;
+  protected readonly playAreaNumberLineNode: NumberLineNode;
 
   constructor( model: SoccerModel, providedOptions: SoccerScreenViewOptions ) {
 
@@ -57,12 +58,15 @@ class SoccerScreenView extends CASScreenView {
 
     this.addChild( new BackgroundNode( GROUND_POSITION_Y, this.visibleBoundsProperty ) );
 
-    const numberLineNode = new NumberLineNode( model.rangeProperty.value, chartViewWidth, {
-      tandem: options.tandem.createTandem( 'numberLineNode' ),
-      x: NUMBER_LINE_MARGIN_X,
-      top: GROUND_POSITION_Y
+    this.playAreaNumberLineNode = new NumberLineNode( model.rangeProperty.value, chartViewWidth, {
+      tandem: options.tandem.createTandem( 'playAreaNumberLineNode' )
     } );
-    this.addChild( numberLineNode );
+    this.addChild( this.playAreaNumberLineNode );
+
+    ManualConstraint.create( this, [ this.playAreaNumberLineNode ], playAreaNumberLineNodeWrapper => {
+      playAreaNumberLineNodeWrapper.x = NUMBER_LINE_MARGIN_X;
+      playAreaNumberLineNodeWrapper.top = GROUND_POSITION_Y;
+    } );
 
     const soccerPlayerNodeGroup = new PhetioGroup<SoccerPlayerNode, [ SoccerPlayer ]>( ( tandem, soccerPlayer ) => {
       return new SoccerPlayerNode( soccerPlayer, this.modelViewTransform, {
