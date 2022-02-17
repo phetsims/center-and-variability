@@ -73,7 +73,7 @@ class DotPlotNode extends Node {
       } );
     }, [ model.objectGroup.archetype ], {
       phetioType: PhetioGroup.PhetioGroupIO( Node.NodeIO ),
-      tandem: options.tandem.createTandem( model.objectType === CASObjectType.SOCCER_BALL ? 'soccerBallNodeGroup' : 'dataPointNodeGroup' ),
+      tandem: options.tandem.createTandem( 'dotNodeGroup' ),
       supportsDynamicState: false
     } );
 
