@@ -60,11 +60,15 @@ class CASAccordionBox extends AccordionBox {
       rectHeight: 140,
       rectWidth: layoutBounds.width - CASConstants.SCREEN_VIEW_X_MARGIN * 2 - CONTENT_MARGIN * 2
     } );
+    const backgroundNodeBounds = backgroundNode.getRectBounds();
+
+    // explicitly set the local bounds so they don't change
+    backgroundNode.localBounds = backgroundNodeBounds;
 
     // Since the title is visible while the accordion box is open, this background will not any area above the bottom of
     // the expand/collapse button. To vertically-center things, make a new set of bounds that includes the missing space.
     // Values come from the height of the expand/collapse button plus the y margin above and below it.
-    const fullHeightBackgroundBounds = backgroundNode.getRectBounds().withOffsets( 0, CONTENT_MARGIN * 2 + BUTTON_SIDE_LENGTH, 0, 0 );
+    const fullHeightBackgroundBounds = backgroundNodeBounds.withOffsets( 0, CONTENT_MARGIN * 2 + BUTTON_SIDE_LENGTH, 0, 0 );
 
     checkboxPanel.right = backgroundNode.right;
     checkboxPanel.centerY = fullHeightBackgroundBounds.centerY;

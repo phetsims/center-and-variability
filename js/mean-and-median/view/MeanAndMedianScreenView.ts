@@ -16,12 +16,13 @@ import CASColors from '../../common/CASColors.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 import CASAccordionBox from '../../common/view/CASAccordionBox.js';
 import CASConstants from '../../common/CASConstants.js';
-import { Node } from '../../../../scenery/js/imports.js';
+import DotPlotNode from '../../common/view/DotPlotNode.js';
 
 type MeanAndMedianScreenViewOptions = SoccerScreenViewOptions;
 
 class MeanAndMedianScreenView extends SoccerScreenView {
   readonly dataAccordionBox: CASAccordionBox;
+  readonly dotPlotNode: DotPlotNode;
 
   constructor( model: MeanAndMedianModel, providedOptions: MeanAndMedianScreenViewOptions ) {
 
@@ -38,12 +39,16 @@ class MeanAndMedianScreenView extends SoccerScreenView {
     // TODO: this is somewhat duplicated with the MedianScreenView
     const accordionBoxTandem = options.tandem.createTandem( 'dataAccordionBox' );
 
-    this.dataAccordionBox = new CASAccordionBox( this.model, new Node(), this.topCheckboxPanel, this.layoutBounds, {
-        tandem: accordionBoxTandem,
-        titleString: centerAndSpreadStrings.dotPlot,
-        centerX: this.layoutBounds.centerX,
-        top: this.questionBar.bottom + CASConstants.SCREEN_VIEW_Y_MARGIN
-      } );
+    this.dotPlotNode = new DotPlotNode( this.model, this.chartViewWidth, {
+      tandem: accordionBoxTandem.createTandem( 'dotPlotNode' )
+    } );
+
+    this.dataAccordionBox = new CASAccordionBox( this.model, this.dotPlotNode, this.topCheckboxPanel, this.layoutBounds, {
+      tandem: accordionBoxTandem,
+      titleString: centerAndSpreadStrings.dotPlot,
+      centerX: this.layoutBounds.centerX,
+      top: this.questionBar.bottom + CASConstants.SCREEN_VIEW_Y_MARGIN
+    } );
     this.addChild( this.dataAccordionBox );
 
     this.bottomCheckboxPanel.left = this.globalToParentBounds( this.topCheckboxPanel.getGlobalBounds() ).left;
