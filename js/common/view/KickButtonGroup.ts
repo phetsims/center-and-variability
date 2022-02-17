@@ -36,26 +36,43 @@ class KickButtonGroup extends VBox {
 
     const alignGroup = new AlignGroup();
 
-    const createLabel = ( label: string, tandem: Tandem ) => alignGroup.createBox( new Text( label, {
-      maxWidth: TEXT_MAX_WIDTH,
-      font: CASConstants.BUTTON_FONT,
-      tandem: tandem
-    } ) );
+    const createLabel = ( label: string, tandem: Tandem ) => {
+      const text = new Text( label, {
+        maxWidth: TEXT_MAX_WIDTH,
+        font: CASConstants.BUTTON_FONT,
+        tandem: tandem
+      } );
+      return {
+        label: alignGroup.createBox( text ),
+        text: text
+      };
+    };
 
-    const createKickButton = ( content: Node, tandem: Tandem, numberToKick: number ) => {
+    const createKickButton = ( content: { label: Node, text: Text }, tandem: Tandem, numberToKick: number, multikick: boolean ) => {
 
-      const enabledProperty = new DerivedProperty<boolean, [ number, number, CASObject | null ]>(
+      const visibleProperty = new DerivedProperty<boolean, [ number, number, CASObject | null ]>(
         [ model.objectGroup.countProperty, model.remainingNumberOfBallsToMultiKickProperty,
           model.nextBallToKickProperty ],
         ( count, remainingNumberOfBallsToMultiKick, nextBallToKick ) => {
           const numberBallsThatExistButHaventBeenKicked = nextBallToKick === null ? 0 : 1;
           const remainingBalls = model.maxNumberOfObjects - count - remainingNumberOfBallsToMultiKick + numberBallsThatExistButHaventBeenKicked;
-          return remainingBalls >= numberToKick;
+
+          if ( ( numberBallsThatExistButHaventBeenKicked < numberToKick ) && multikick ) {
+            content.text.text = 'Kick ' + Math.max( Math.min( remainingBalls, numberToKick ), 1 );
+          }
+          if ( multikick ) {
+            return remainingBalls > 0;
+          }
+          else {
+            return remainingBalls >= numberToKick;
+          }
         }
       );
+
       return new RectangularPushButton( {
-        enabledProperty: enabledProperty,
-        content: content,
+        visibleProperty: visibleProperty,
+        // enabledProperty: enabledProperty,
+        content: content.label,
         baseColor: CASColors.kickButtonFillColorProperty,
         xMargin: 12,
         yMargin: 12,
@@ -73,8 +90,8 @@ class KickButtonGroup extends VBox {
     const kick5Label = createLabel( centerAndSpreadStrings.kick5, kick5ButtonTandem.createTandem( 'labelNode' ) );
 
     options.children = [
-      createKickButton( kick1Label, kick1ButtonTandem, 1 ),
-      createKickButton( kick5Label, kick5ButtonTandem, 5 )
+      createKickButton( kick1Label, kick1ButtonTandem, 1, false ),
+      createKickButton( kick5Label, kick5ButtonTandem, 5, true )
     ];
 
     super( options );
