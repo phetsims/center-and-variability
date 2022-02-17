@@ -43,9 +43,12 @@ class DotPlotNode extends Node {
 
     // TODO: Factor out height with accordion box height
     const backgroundNode = new Rectangle( 0, 0, numberLineWidth, 180 );
+
+    // explicitly set the local bounds so they don't change
+    backgroundNode.localBounds = backgroundNode.getRectBounds();
     this.addChild( backgroundNode );
 
-    const numberLinePositionY = 130;
+    const numberLinePositionY = 138;
 
     const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
       new Bounds2( 1, 0, 16, 15 ),
