@@ -9,7 +9,7 @@
  */
 
 import centerAndSpread from '../../centerAndSpread.js';
-import { Node, NodeOptions, Rectangle } from '../../../../scenery/js/imports.js';
+import { Color, Node, NodeOptions, Rectangle } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CASModel from '../model/CASModel.js';
@@ -53,6 +53,7 @@ class DotPlotNode extends Node {
     );
 
     const numberLineNode = new NumberLineNode( model.rangeProperty.value, numberLineWidth, {
+      color: Color.BLACK,
       tandem: options.tandem.createTandem( 'numberLineNode' ),
       top: numberLinePositionY
     } );

@@ -21,14 +21,17 @@ import Utils from '../../../../dot/js/Utils.js';
 // constants
 const TICK_MARK_EXTENT = 18;
 
-type NumberLineNodeSelfOptions = {};
-export type NumberLineNodeOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
+type NumberLineNodeSelfOptions = {
+  color?: PaintDef
+};
+export type NumberLineNodeOptions = NumberLineNodeSelfOptions & NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
 
 class NumberLineNode extends Node {
 
   constructor( range: Range, width: number, providedOptions?: NumberLineNodeOptions ) {
 
     const options = optionize<NumberLineNodeOptions, NumberLineNodeSelfOptions, NodeOptions>( {
+      color: Color.WHITE,
       tandem: Tandem.REQUIRED
     }, providedOptions );
 
@@ -39,14 +42,17 @@ class NumberLineNode extends Node {
       modelXRange: range
     } );
     const tickMarkSet = new TickMarkSet( chartTransform, Orientation.HORIZONTAL, 1, {
-      stroke: Color.WHITE,
+      stroke: options.color,
       extent: TICK_MARK_EXTENT
     } );
     this.addChild( tickMarkSet );
 
     const tickLabelSet = new TickLabelSet( chartTransform, Orientation.HORIZONTAL, 1, {
       extent: TICK_MARK_EXTENT + 12,
-      createLabel: ( value: number ) => new Text( Utils.toFixed( value, 0 ), { fontSize: 16 } )
+      createLabel: ( value: number ) => new Text( Utils.toFixed( value, 0 ), {
+        fontSize: 16,
+        fill: options.color
+      } )
     } );
     this.addChild( tickLabelSet );
 
