@@ -8,7 +8,7 @@
  */
 
 import centerAndSpread from '../../centerAndSpread.js';
-import { Color, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
+import { Color, Node, NodeOptions, Path, Text } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
@@ -17,12 +17,14 @@ import TickMarkSet from '../../../../bamboo/js/TickMarkSet.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import TickLabelSet from '../../../../bamboo/js/TickLabelSet.js';
 import Utils from '../../../../dot/js/Utils.js';
+import Shape from '../../../../kite/js/Shape.js';
 
 // constants
 const TICK_MARK_EXTENT = 18;
 
 type NumberLineNodeSelfOptions = {
-  color?: PaintDef
+  color?: PaintDef;
+  includeXAxis?: boolean;
 };
 export type NumberLineNodeOptions = NumberLineNodeSelfOptions & NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
 
@@ -32,6 +34,7 @@ class NumberLineNode extends Node {
 
     const options = optionize<NumberLineNodeOptions, NumberLineNodeSelfOptions, NodeOptions>( {
       color: Color.WHITE,
+      includeXAxis: false,
       tandem: Tandem.REQUIRED
     }, providedOptions );
 
@@ -46,6 +49,15 @@ class NumberLineNode extends Node {
       extent: TICK_MARK_EXTENT
     } );
     this.addChild( tickMarkSet );
+
+    if ( options.includeXAxis ) {
+      const xAxisNode = new Path( new Shape()
+        .moveTo( tickMarkSet.left, tickMarkSet.centerY )
+        .lineTo( tickMarkSet.right, tickMarkSet.centerY ), {
+        stroke: options.color
+      } );
+      this.addChild( xAxisNode );
+    }
 
     const tickLabelSet = new TickLabelSet( chartTransform, Orientation.HORIZONTAL, 1, {
       extent: TICK_MARK_EXTENT + 12,

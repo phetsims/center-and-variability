@@ -54,6 +54,7 @@ class DotPlotNode extends Node {
 
     const numberLineNode = new NumberLineNode( model.rangeProperty.value, numberLineWidth, {
       color: Color.BLACK,
+      includeXAxis: true,
       tandem: options.tandem.createTandem( 'numberLineNode' ),
       top: numberLinePositionY
     } );
