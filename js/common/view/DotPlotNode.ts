@@ -69,6 +69,7 @@ class DotPlotNode extends Node {
     const objectNodeGroup = new PhetioGroup<CASObjectNode, [ CASObject ]>( ( tandem, casObject ) => {
       return new CASObjectNode( casObject, model.isShowingBottomMedianProperty, modelViewTransform, {
         objectViewType: CASObjectType.DOT,
+        draggingEnabled: false,
         tandem: tandem
       } );
     }, [ model.objectGroup.archetype ], {

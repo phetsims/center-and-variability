@@ -20,7 +20,8 @@ import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
 import Property from '../../../../axon/js/Property.js';
 
 type CASObjectNodeSelfOptions = {
-  objectViewType?: CASObjectType
+  objectViewType?: CASObjectType;
+  draggingEnabled?: boolean;
 };
 export type CASObjectNodeOptions = CASObjectNodeSelfOptions & NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
 
@@ -31,6 +32,7 @@ class CASObjectNode extends Node {
 
     const options = optionize<CASObjectNodeOptions, CASObjectNodeSelfOptions, NodeOptions>( {
       objectViewType: casObject.objectType,
+      draggingEnabled: true,
       phetioDynamicElement: true
     }, providedOptions );
     super( options );
@@ -67,31 +69,33 @@ class CASObjectNode extends Node {
       this.translation = modelViewTransform.modelToViewPosition( position );
     } );
 
-    this.addInputListener( new DragListener( {
-      positionProperty: casObject.dragPositionProperty,
-      transform: modelViewTransform
-    } ) );
+    // only setup input-related things if dragging is enabled
+    if ( options.draggingEnabled ) {
+      this.addInputListener( new DragListener( {
+        positionProperty: casObject.dragPositionProperty,
+        transform: modelViewTransform
+      } ) );
+      this.touchArea = this.localBounds.dilatedX( 10 );
 
-    this.touchArea = this.localBounds.dilatedX( 10 );
+      // Prevent dragging or interaction while the object is animating
+      casObject.isAnimatingProperty.link( isAnimating => {
+        this.cursor = isAnimating ? null : 'pointer';
+        this.pickable = !isAnimating;
+      } );
 
-    // Prevent dragging or interaction while the object is animating
-    casObject.isAnimatingProperty.link( isAnimating => {
-      this.cursor = isAnimating ? null : 'pointer';
-      this.pickable = !isAnimating;
-    } );
+      // TODO: The initial ball should be draggable, remember that should move it into the data set, and
+      // when dropped, a new ball should be created.
+      // TODO-DESIGN: Should the ball enter the data set once dragged, or only after dropped?
+      casObject.valueProperty.link( value => {
+        this.pickable = value !== null;
+      } );
+    }
 
     // show or hide the median highlight
     Property.multilink( [ casObject.isMedianObjectProperty, isShowingBottomMedianProperty ],
       ( isMedianObject, isShowingBottomMedian ) => {
         medianHighlight.visible = isMedianObject && isShowingBottomMedian;
       } );
-
-    // TODO: The initial ball should be draggable, remember that should move it into the data set, and
-    // when dropped, a new ball should be created.
-    // TODO-DESIGN: Should the ball enter the data set once dragged, or only after dropped?
-    casObject.valueProperty.link( value => {
-      this.pickable = value !== null;
-    } );
   }
 }
 
