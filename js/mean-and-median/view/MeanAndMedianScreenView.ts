@@ -52,6 +52,7 @@ class MeanAndMedianScreenView extends SoccerScreenView {
     } );
     this.addChild( this.dataAccordionBox );
 
+    // TODO from CK: Just realized the number lines are close but not quite aligned
     ManualConstraint.create( this, [ this.playAreaNumberLineNode, this.dotPlotNode ],
       ( lowerNumberLineWrapper, dotPlotNodeWrapper ) => {
       dotPlotNodeWrapper.left = lowerNumberLineWrapper.left;
