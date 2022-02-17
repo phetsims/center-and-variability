@@ -20,7 +20,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import Shape from '../../../../kite/js/Shape.js';
 
 // constants
-const TICK_MARK_EXTENT = 18;
+const TICK_MARK_EXTENT = 10;
 
 type NumberLineNodeSelfOptions = {
   color?: PaintDef;
