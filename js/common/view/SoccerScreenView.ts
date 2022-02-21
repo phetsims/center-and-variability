@@ -14,7 +14,7 @@ import CASScreenView, { CASScreenViewOptions } from './CASScreenView.js';
 import QuestionBar, { QuestionBarOptions } from './QuestionBar.js';
 import KickButtonGroup from './KickButtonGroup.js';
 import BackgroundNode from './BackgroundNode.js';
-import { ManualConstraint, Node } from '../../../../scenery/js/imports.js';
+import { Node } from '../../../../scenery/js/imports.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
@@ -59,14 +59,11 @@ class SoccerScreenView extends CASScreenView {
     this.addChild( new BackgroundNode( GROUND_POSITION_Y, this.visibleBoundsProperty ) );
 
     this.playAreaNumberLineNode = new NumberLineNode( model.range, chartViewWidth, {
-      tandem: options.tandem.createTandem( 'playAreaNumberLineNode' )
+      tandem: options.tandem.createTandem( 'playAreaNumberLineNode' ),
+      x: NUMBER_LINE_MARGIN_X,
+      top: GROUND_POSITION_Y
     } );
     this.addChild( this.playAreaNumberLineNode );
-
-    ManualConstraint.create( this, [ this.playAreaNumberLineNode ], playAreaNumberLineNodeWrapper => {
-      playAreaNumberLineNodeWrapper.x = NUMBER_LINE_MARGIN_X;
-      playAreaNumberLineNodeWrapper.top = GROUND_POSITION_Y;
-    } );
 
     const soccerPlayerNodeGroup = new PhetioGroup<SoccerPlayerNode, [ SoccerPlayer ]>( ( tandem, soccerPlayer ) => {
       return new SoccerPlayerNode( soccerPlayer, this.modelViewTransform, {

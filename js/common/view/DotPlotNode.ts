@@ -41,7 +41,9 @@ class DotPlotNode extends Node {
     // TODO: Factor out height with accordion box height
     const backgroundNode = new Rectangle( 0, 0, numberLineWidth, 180 );
 
-    // explicitly set the local bounds so they don't change
+    // explicitly set the local bounds so they don't change. Without this, a ball appearing at the left edge during the runtime
+    // could mess up the layout.
+    // TODO: Review how the bounds are handled here.
     backgroundNode.localBounds = backgroundNode.getRectBounds();
     this.addChild( backgroundNode );
 
@@ -51,6 +53,8 @@ class DotPlotNode extends Node {
     const yScale = model.objectType.radius / CASObjectType.DOT.radius;
 
     const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
+
+      // TODO: Should we scale down the view instead of scaling up the model?
       new Bounds2( model.range.min, 0, model.range.max, model.range.getLength() * yScale ),
       new Bounds2( 0, numberLinePositionY - numberLineWidth, 0 + numberLineWidth, numberLinePositionY )
     );
@@ -66,7 +70,7 @@ class DotPlotNode extends Node {
     this.dotLayer = new Node();
     backgroundNode.addChild( this.dotLayer );
 
-    const objectNodeGroup = new PhetioGroup<CASObjectNode, [ CASObject ]>( ( tandem, casObject ) => {
+    const dotNodeGroup = new PhetioGroup<CASObjectNode, [ CASObject ]>( ( tandem, casObject ) => {
       return new CASObjectNode( casObject, model.isShowingBottomMedianProperty, modelViewTransform, {
         objectViewType: CASObjectType.DOT,
         draggingEnabled: false,
@@ -80,23 +84,23 @@ class DotPlotNode extends Node {
 
     const map = new Map<CASObject, CASObjectNode>();
 
-    const createObjectNode = ( casObject: CASObject ) => {
-      const casObjectNode = objectNodeGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject );
+    const createDotNode = ( casObject: CASObject ) => {
+      const dotNode = dotNodeGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject );
 
       casObject.valueProperty.link( value => {
-        casObjectNode.setVisible( value !== null );
-        if ( value !== null && !this.dotLayer.hasChild( casObjectNode ) ) {
-          this.dotLayer.addChild( casObjectNode );
+        dotNode.setVisible( value !== null );
+        if ( value !== null && !this.dotLayer.hasChild( dotNode ) ) {
+          this.dotLayer.addChild( dotNode );
         }
       } );
-      map.set( casObject, casObjectNode );
+      map.set( casObject, dotNode );
     };
-    model.objectGroup.forEach( createObjectNode );
-    model.objectGroup.elementCreatedEmitter.addListener( createObjectNode );
+    model.objectGroup.forEach( createDotNode );
+    model.objectGroup.elementCreatedEmitter.addListener( createDotNode );
 
     model.objectGroup.elementDisposedEmitter.addListener( casObject => {
       const viewNode = map.get( casObject )!;
-      objectNodeGroup.disposeElement( viewNode );
+      dotNodeGroup.disposeElement( viewNode );
     } );
   }
 }

@@ -31,6 +31,9 @@ class CASObjectNode extends Node {
                modelViewTransform: ModelViewTransform2, providedOptions?: CASObjectNodeOptions ) {
 
     const options = optionize<CASObjectNodeOptions, CASObjectNodeSelfOptions, NodeOptions>( {
+
+      // In the Mean & Median screen and Spread screen, the objectType is SOCCER_BALL, but we render the dot plot
+      // with DOT views
       objectViewType: casObject.objectType,
       draggingEnabled: true,
       phetioDynamicElement: true

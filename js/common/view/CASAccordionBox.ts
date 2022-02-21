@@ -60,9 +60,12 @@ class CASAccordionBox extends AccordionBox {
       rectHeight: 140,
       rectWidth: layoutBounds.width - CASConstants.SCREEN_VIEW_X_MARGIN * 2 - CONTENT_MARGIN * 2
     } );
+
+    // TODO: Let's review how the bounds are being used here.
     const backgroundNodeBounds = backgroundNode.getRectBounds();
 
-    // explicitly set the local bounds so they don't change
+    // Explicitly set the local bounds so they don't change. This lets content appear next to the accordion box title.
+    // TODO: Note this is the same as backgroundNode.localBounds = backgroundNode.localBounds but that would be a lint error since it seems buggy
     backgroundNode.localBounds = backgroundNodeBounds;
 
     // Since the title is visible while the accordion box is open, this background will not any area above the bottom of
