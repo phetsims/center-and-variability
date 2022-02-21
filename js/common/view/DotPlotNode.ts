@@ -20,6 +20,7 @@ import CASObjectType from '../model/CASObjectType.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import NumberLineNode from './NumberLineNode.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import MedianBarsNode from './MedianBarsNode.js';
 
 // constants
 
@@ -29,6 +30,7 @@ export type DotPlotNodeOptions = NodeOptions & Required<Pick<NodeOptions, 'tande
 class DotPlotNode extends Node {
 
   private readonly dotLayer: Node;
+  private readonly medianBarsNode: MedianBarsNode;
 
   constructor( model: CASModel, numberLineWidth: number, providedOptions?: DotPlotNodeOptions ) {
 
@@ -53,7 +55,6 @@ class DotPlotNode extends Node {
     const yScale = model.objectType.radius / CASObjectType.DOT.radius;
 
     const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
-
       // TODO: Should we scale down the view instead of scaling up the model?
       new Bounds2( model.range.min, 0, model.range.max, model.range.getLength() * yScale ),
       new Bounds2( 0, numberLinePositionY - numberLineWidth, 0 + numberLineWidth, numberLinePositionY )
@@ -102,6 +103,46 @@ class DotPlotNode extends Node {
       const viewNode = map.get( casObject )!;
       dotNodeGroup.disposeElement( viewNode );
     } );
+
+    this.medianBarsNode = new MedianBarsNode( {
+      notchDirection: 'down'
+    } );
+    this.addChild( this.medianBarsNode );
+
+    const updateMedianNode = () => {
+
+      const sortedDots = _.sortBy( model.objectGroup.getArrayCopy().filter( object => object.valueProperty.value !== null ),
+        object => object.valueProperty.value );
+      const leftmostDot = sortedDots[ 0 ];
+
+      const medianValue = model.medianValueProperty.value;
+
+      const MARGIN_Y = 5;
+
+      // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card
+
+      if ( model.isShowingTopMedianProperty.value && leftmostDot ) {
+        const highestDot = _.maxBy( sortedDots, object => object.positionProperty.value.y );
+        const dotRadius = Math.abs( modelViewTransform.modelToViewDeltaY( leftmostDot.objectType.radius ) );
+
+        // assumes all of the dots have the same radius
+        // TODO: do we need to know notch height here?
+        const barY = modelViewTransform.modelToViewY( highestDot!.positionProperty.value.y ) -
+                     dotRadius - MARGIN_Y - MedianBarsNode.NOTCH_HEIGHT;
+
+        const rightmostDot = sortedDots[ sortedDots.length - 1 ];
+        const left = modelViewTransform.modelToViewX( leftmostDot.valueProperty.value );
+        const right = modelViewTransform.modelToViewX( rightmostDot.valueProperty.value );
+        const medianPositionX = modelViewTransform.modelToViewX( medianValue );
+
+        this.medianBarsNode.setMedianBarsShape( barY, left, medianPositionX, right );
+      }
+      else {
+        this.medianBarsNode.clear();
+      }
+    };
+    model.objectValueChangedEmitter.addListener( updateMedianNode );
+    model.isShowingTopMedianProperty.link( updateMedianNode );
   }
 }
 

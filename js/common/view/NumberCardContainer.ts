@@ -82,7 +82,9 @@ class NumberCardContainer extends Node {
       supportsDynamicState: false
     } );
 
-    this.medianBarsNode = new MedianBarsNode();
+    this.medianBarsNode = new MedianBarsNode( {
+      notchDirection: 'up'
+    } );
     this.addChild( this.medianBarsNode );
 
     const objectCreatedListener = ( casObject: CASObject ) => {
