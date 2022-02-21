@@ -8,7 +8,7 @@
  */
 
 import centerAndSpread from '../../centerAndSpread.js';
-import { Color, Node, NodeOptions, Path, Text } from '../../../../scenery/js/imports.js';
+import { Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CASModel from '../model/CASModel.js';
@@ -24,11 +24,11 @@ import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
 import CardModel from '../model/CardModel.js';
 import Emitter from '../../../../axon/js/Emitter.js';
-import Shape from '../../../../kite/js/Shape.js';
 import Panel from '../../../../sun/js/Panel.js';
 import CASConstants from '../CASConstants.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
+import MedianBarsNode from './MedianBarsNode.js';
 
 // constants
 const CARD_SPACING = 10;
@@ -44,7 +44,7 @@ class NumberCardContainer extends Node {
 
   private readonly model: CASModel;
   private readonly cardNodeGroup: PhetioGroup<CardNode, [ CardModel ]>;
-  private readonly medianBarsNode: Path;
+  private readonly medianBarsNode: MedianBarsNode;
   private readonly dragIndicatorArrowNode: ArrowNode;
   private readonly hasPressedCardProperty: BooleanProperty;
   private readonly cardLayer: Node;
@@ -82,10 +82,7 @@ class NumberCardContainer extends Node {
       supportsDynamicState: false
     } );
 
-    this.medianBarsNode = new Path( null, {
-      lineWidth: 2,
-      stroke: Color.RED
-    } );
+    this.medianBarsNode = new MedianBarsNode();
     this.addChild( this.medianBarsNode );
 
     const objectCreatedListener = ( casObject: CASObject ) => {
@@ -215,44 +212,26 @@ class NumberCardContainer extends Node {
       medianTextNode.text = StringUtils.fillIn( centerAndSpreadStrings.medianEqualsValue, { value: model.medianValueProperty.value } );
     } );
 
-    // TODO: Move to a separate file (probably)
     const updateMedianNode = () => {
 
-      const NOTCH_HEIGHT = 10;
-      const MARGIN_X = CARD_SPACING / 2;
-      const MARGIN_Y = 5;
-      const HALF_SPLIT_WIDTH = 2;
       const leftmostCard = this.cardNodeCells[ 0 ];
 
+      const MARGIN_X = CARD_SPACING / 2;
+      const MARGIN_Y = 5;
+
       // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card
+
       if ( model.isShowingTopMedianProperty.value && this.isDataSorted() && leftmostCard ) {
-
-        const rightmostCard = this.cardNodeCells[ this.cardNodeCells.length - 1 ];
-        const shape = new Shape();
-
-        const leftCornerX = getCardPositionX( 0 ) - MARGIN_X;
-        const rightCornerX = getCardPositionX( this.cardNodeCells.length - 1 ) + rightmostCard.width + MARGIN_X;
         const barY = leftmostCard.bottom + MARGIN_Y;
 
-        const leftCorner = new Vector2( leftCornerX, barY );
-        const rightCorner = new Vector2( rightCornerX, barY );
-        const center = leftCorner.average( rightCorner );
+        const rightmostCard = this.cardNodeCells[ this.cardNodeCells.length - 1 ];
+        const left = getCardPositionX( 0 ) - MARGIN_X;
+        const right = getCardPositionX( this.cardNodeCells.length - 1 ) + rightmostCard.width + MARGIN_X;
 
-        shape.moveToPoint( leftCorner.plusXY( 0, -NOTCH_HEIGHT ) );
-        shape.lineToPoint( leftCorner );
-
-        shape.lineToPoint( center.plusXY( -HALF_SPLIT_WIDTH, 0 ) );
-        shape.lineToRelative( 0, -NOTCH_HEIGHT );
-        shape.moveToPoint( center.plusXY( HALF_SPLIT_WIDTH, -NOTCH_HEIGHT ) );
-        shape.lineToRelative( 0, NOTCH_HEIGHT );
-
-        shape.lineToPoint( rightCorner );
-        shape.lineToPoint( rightCorner.plusXY( 0, -NOTCH_HEIGHT ) );
-
-        this.medianBarsNode.shape = shape;
+        this.medianBarsNode.setMedianBarsShape( barY, left, ( left + right ) / 2, right );
       }
       else {
-        this.medianBarsNode.shape = null;
+        this.medianBarsNode.clear();
       }
 
       // TODO: Better guard on model.isShowingTopMedianProperty.value
