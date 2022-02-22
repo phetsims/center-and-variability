@@ -58,11 +58,15 @@ class SoccerScreenView extends CASScreenView {
 
     this.contentLayer.addChild( new BackgroundNode( GROUND_POSITION_Y, this.visibleBoundsProperty ) );
 
-    this.playAreaNumberLineNode = new NumberLineNode( model.range, chartViewWidth, {
-      tandem: options.tandem.createTandem( 'playAreaNumberLineNode' ),
-      x: NUMBER_LINE_MARGIN_X,
-      top: GROUND_POSITION_Y
-    } );
+    this.playAreaNumberLineNode = new NumberLineNode(
+      model.range,
+      chartViewWidth,
+      model.meanValueProperty,
+      model.isShowingBottomMeanProperty, {
+        tandem: options.tandem.createTandem( 'playAreaNumberLineNode' ),
+        x: NUMBER_LINE_MARGIN_X,
+        top: GROUND_POSITION_Y
+      } );
     this.contentLayer.addChild( this.playAreaNumberLineNode );
 
     const soccerPlayerNodeGroup = new PhetioGroup<SoccerPlayerNode, [ SoccerPlayer ]>( ( tandem, soccerPlayer ) => {

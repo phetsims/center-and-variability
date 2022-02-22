@@ -18,6 +18,7 @@ import Orientation from '../../../../phet-core/js/Orientation.js';
 import TickLabelSet from '../../../../bamboo/js/TickLabelSet.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Shape from '../../../../kite/js/Shape.js';
+import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
 
 // constants
 const TICK_MARK_EXTENT = 10;
@@ -30,7 +31,7 @@ export type NumberLineNodeOptions = NumberLineNodeSelfOptions & NodeOptions & Re
 
 class NumberLineNode extends Node {
 
-  constructor( range: Range, width: number, providedOptions?: NumberLineNodeOptions ) {
+  constructor( range: Range, width: number, meanValueProperty: IReadOnlyProperty<number | null>, isShowingMeanIndicator: IReadOnlyProperty<boolean>, providedOptions?: NumberLineNodeOptions ) {
 
     const options = optionize<NumberLineNodeOptions, NumberLineNodeSelfOptions, NodeOptions>( {
       color: Color.WHITE,

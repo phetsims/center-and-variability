@@ -62,12 +62,16 @@ class DotPlotNode extends Node {
       new Bounds2( 0, numberLinePositionY - numberLineWidth, 0 + numberLineWidth, numberLinePositionY )
     );
 
-    const numberLineNode = new NumberLineNode( model.range, numberLineWidth, {
-      color: Color.BLACK,
-      includeXAxis: true,
-      tandem: options.tandem.createTandem( 'numberLineNode' ),
-      top: numberLinePositionY
-    } );
+    const numberLineNode = new NumberLineNode(
+      model.range,
+      numberLineWidth,
+      model.meanValueProperty,
+      model.isShowingTopMeanProperty, {
+        color: Color.BLACK,
+        includeXAxis: true,
+        tandem: options.tandem.createTandem( 'numberLineNode' ),
+        top: numberLinePositionY
+      } );
     backgroundNode.addChild( numberLineNode );
 
     this.dotLayer = new Node();
