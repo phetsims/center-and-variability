@@ -49,7 +49,8 @@ class CASModel {
   readonly range: Range;
   readonly numberOfRemainingObjectsProperty: DerivedProperty<number, [ count: number ]>;
   readonly medianValueProperty: Property<number | null>;
-  readonly objectValueChangedEmitter: Emitter<[ CASObject ]>;
+  readonly meanValueProperty: Property<number | null>;
+  readonly objectChangedEmitter: Emitter<[ CASObject ]>;
 
   // Null until the user has made a prediction.
   readonly medianPredictionProperty: NumberProperty;
@@ -113,10 +114,11 @@ class CASModel {
     } );
 
     this.medianValueProperty = new Property<number | null>( null );
+    this.meanValueProperty = new Property<number | null>( null );
     this.medianPredictionProperty = new NumberProperty( 1 );
     this.meanPredictionProperty = new NumberProperty( 1 );
 
-    const updateMedian = () => {
+    const updateMeanAndMedian = () => {
       const objectsInDataSet = this.objectGroup.filter( casObject => casObject.valueProperty.value !== null );
       const sortedObjects = _.sortBy( objectsInDataSet, casObject => casObject.valueProperty.value );
 
@@ -176,7 +178,7 @@ class CASModel {
       } );
     };
 
-    this.isShowingBottomMedianProperty.link( updateMedian );
+    this.isShowingBottomMedianProperty.link( updateMeanAndMedian );
 
     // Trigger CardModel creation when a ball lands.
     const objectCreatedListener = ( casObject: CASObject ) => {
@@ -190,15 +192,13 @@ class CASModel {
         }
       };
       casObject.valueProperty.link( listener );
-      casObject.valueProperty.link( updateMedian );
-      casObject.positionProperty.link( updateMedian );
+      casObject.valueProperty.link( updateMeanAndMedian );
+      casObject.positionProperty.link( updateMeanAndMedian );
 
       // Signal to listeners that a value changed
       // TODO: Maybe should combine with temporary listener for one permanent one
-      casObject.valueProperty.link( () => this.objectValueChangedEmitter.emit( casObject ) );
-
-      // TODO: Should this stay or is it a workaround?
-      casObject.positionProperty.link( () => this.objectValueChangedEmitter.emit( casObject ) );
+      casObject.valueProperty.link( () => this.objectChangedEmitter.emit( casObject ) );
+      casObject.positionProperty.link( () => this.objectChangedEmitter.emit( casObject ) );
     };
     this.objectGroup.forEach( objectCreatedListener );
     this.objectGroup.elementCreatedEmitter.addListener( objectCreatedListener );
@@ -222,8 +222,8 @@ class CASModel {
     // need to be rewritten.
     this.objectGroup.forEach( object => this.moveToTop( object ) );
 
-    // Signify whenever any object's value changes
-    this.objectValueChangedEmitter = new Emitter<[ CASObject ]>( {
+    // Signify whenever any object's value or position changes
+    this.objectChangedEmitter = new Emitter<[ CASObject ]>( {
       parameters: [ { valueType: CASObject } ]
     } );
   }

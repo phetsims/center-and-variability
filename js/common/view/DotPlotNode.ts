@@ -4,6 +4,8 @@
  * Shows the dot plot on the "Mean & Median" Screen, including the legends/readouts to the left.
  * The plot is non-interactive.
  *
+ * TODO: If the median bar shows at min=median=max=1, the dot plot shifts
+ *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */
@@ -141,7 +143,7 @@ class DotPlotNode extends Node {
         this.medianBarsNode.clear();
       }
     };
-    model.objectValueChangedEmitter.addListener( updateMedianNode );
+    model.objectChangedEmitter.addListener( updateMedianNode );
     model.isShowingTopMedianProperty.link( updateMedianNode );
   }
 
