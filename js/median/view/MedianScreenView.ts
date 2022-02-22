@@ -11,23 +11,19 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndSpread from '../../centerAndSpread.js';
 import MedianModel from '../model/MedianModel.js';
-import { CASScreenViewOptions } from '../../common/view/CASScreenView.js';
-import SoccerScreenView from '../../common/view/SoccerScreenView.js';
 import CASColors from '../../common/CASColors.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
-import CASAccordionBox from '../../common/view/CASAccordionBox.js';
-import CASConstants from '../../common/CASConstants.js';
-import NumberCardContainer from '../../common/view/NumberCardContainer.js';
+import MeanOrMedianScreenView, { MeanOrMedianScreenViewOptions } from '../../common/view/MeanOrMedianScreenView.js';
 
-type MedianScreenViewOptions = CASScreenViewOptions;
+type MedianScreenViewOptions = MeanOrMedianScreenViewOptions;
 
-class MedianScreenView extends SoccerScreenView {
-  readonly dataAccordionBox: CASAccordionBox;
-  private readonly numberCardContainer: NumberCardContainer;
+class MedianScreenView extends MeanOrMedianScreenView {
 
   constructor( model: MedianModel, providedOptions: MedianScreenViewOptions ) {
 
     const options = optionize<MedianScreenViewOptions>( {
+      // TODO: TypeScript is okay with not including isMedianScreen, why?
+      isMedianScreen: true,
       questionBarOptions: {
         barFill: CASColors.medianQuestionBarFillColorProperty,
         labelText: centerAndSpreadStrings.medianQuestion
@@ -44,48 +40,6 @@ class MedianScreenView extends SoccerScreenView {
     }, providedOptions );
 
     super( model, options );
-
-    const accordionBoxTandem = options.tandem.createTandem( 'dataAccordionBox' );
-
-    this.numberCardContainer = new NumberCardContainer( this.model, {
-
-      // Expose this intermediate layer to make it so that clients can hide the number cards with one call
-      tandem: accordionBoxTandem.createTandem( 'numberCardContainer' )
-    } );
-
-    // TODO: CK - float to top of visibleBounds to certain aspect ratio
-    this.dataAccordionBox = new CASAccordionBox( this.model, this.numberCardContainer, this.topCheckboxPanel,
-      this.layoutBounds, {
-        tandem: accordionBoxTandem,
-        titleString: centerAndSpreadStrings.data,
-        centerX: this.layoutBounds.centerX,
-        top: this.questionBar.bottom + CASConstants.SCREEN_VIEW_Y_MARGIN
-      } );
-    this.addChild( this.dataAccordionBox );
-
-    this.bottomCheckboxPanel.left = this.globalToParentBounds( this.topCheckboxPanel.getGlobalBounds() ).left;
-    this.bottomCheckboxPanel.top = this.dataAccordionBox.bottom + 30;
-    this.addChild( this.bottomCheckboxPanel );
-
-    this.addChild( this.objectsLayer );
-    this.addChild( this.eraserButton );
-
-    // Last in alternative input focus order
-    this.addChild( this.resetAllButton );
-
-    // TODO: It's becoming a code smell to add everything here.  Can we have an intermediate layer that has most things?
-    this.addChild( this.medianPredictionNode );
-  }
-
-  clearData(): void {
-    super.clearData();
-    this.numberCardContainer.reset();
-  }
-
-  reset(): void {
-    super.reset();
-    this.numberCardContainer.reset();
-    this.dataAccordionBox.reset();
   }
 }
 

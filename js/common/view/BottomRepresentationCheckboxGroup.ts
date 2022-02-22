@@ -68,7 +68,7 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
     } );
     options.includePredictMean && items.push( {
       node: new Text( centerAndSpreadStrings.predict, TEXT_OPTIONS ),
-      property: model.isShowingPredictMeanProperty
+      property: model.isShowingMeanPredictionProperty
     } );
     options.includePredictMedian && items.push( {
       node: new HBox( {

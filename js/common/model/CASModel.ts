@@ -40,7 +40,7 @@ class CASModel {
   readonly isShowingTopMedianProperty: BooleanProperty;
   readonly isShowingBottomMedianProperty: BooleanProperty; // TODO: Rename isShowingPlayAreaMedianProperty?
   readonly isShowingBottomMeanProperty: BooleanProperty; // TODO: Rename isShowingPlayAreaMeanProperty?
-  readonly isShowingPredictMeanProperty: BooleanProperty;
+  readonly isShowingMeanPredictionProperty: BooleanProperty;
   readonly isShowingMedianPredictionProperty: BooleanProperty;
   readonly cardModelGroup: PhetioGroup<CardModel, [ CASObject ]>; // Only instrumented and enabled if includeCards === true
   readonly includeCards: boolean;
@@ -52,7 +52,8 @@ class CASModel {
   readonly objectValueChangedEmitter: Emitter<[ CASObject ]>;
 
   // Null until the user has made a prediction.
-  readonly medianPredictionProperty: Property<number>;
+  readonly medianPredictionProperty: NumberProperty;
+  readonly meanPredictionProperty: NumberProperty;
 
   constructor( objectType: CASObjectType, maxNumberOfObjects: number, providedOptions: CASModelOptions ) {
 
@@ -104,8 +105,8 @@ class CASModel {
     this.isShowingBottomMedianProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isShowingBottomMedianProperty' )
     } );
-    this.isShowingPredictMeanProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isShowingPredictMeanProperty' )
+    this.isShowingMeanPredictionProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isShowingMeanPredictionProperty' )
     } );
     this.isShowingMedianPredictionProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isShowingMedianPredictionProperty' )
@@ -113,6 +114,7 @@ class CASModel {
 
     this.medianValueProperty = new Property<number | null>( null );
     this.medianPredictionProperty = new NumberProperty( 1 );
+    this.meanPredictionProperty = new NumberProperty( 1 );
 
     const updateMedian = () => {
       const objectsInDataSet = this.objectGroup.filter( casObject => casObject.valueProperty.value !== null );
@@ -288,12 +290,14 @@ class CASModel {
    * Resets the model.
    */
   reset(): void {
+    this.medianPredictionProperty.reset();
+    this.meanPredictionProperty.reset();
     this.isSortingDataProperty.reset();
     this.isShowingTopMeanProperty.reset();
     this.isShowingTopMedianProperty.reset();
     this.isShowingBottomMeanProperty.reset();
     this.isShowingBottomMedianProperty.reset();
-    this.isShowingPredictMeanProperty.reset();
+    this.isShowingMeanPredictionProperty.reset();
     this.isShowingMedianPredictionProperty.reset();
     this.clearData();
   }

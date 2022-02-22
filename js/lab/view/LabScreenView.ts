@@ -25,8 +25,6 @@ class LabScreenView extends CASScreenView {
     }, providedOptions );
 
     super( model, ModelViewTransform2.createIdentity(), options );
-
-    this.addChild( this.resetAllButton );
   }
 
   /**

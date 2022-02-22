@@ -43,7 +43,9 @@ class CASScreenView extends ScreenView {
   protected readonly objectsLayer: Node;
   protected readonly playAreaMedianIndicatorNode: ArrowNode;
   protected readonly eraserButton: EraserButton;
+  protected readonly contentLayer: Node;
   protected readonly medianPredictionNode: PredictionNode;
+  protected readonly meanPredictionNode: PredictionNode;
 
   constructor( model: CASModel, modelViewTransform: ModelViewTransform2, options: CASScreenViewOptions ) {
     options = optionize<CASScreenViewOptions>( {
@@ -65,8 +67,13 @@ class CASScreenView extends ScreenView {
       supportsDynamicState: false
     } );
 
-    // Added by the child ScreenView so it is in the correct z-ordering
+    // Subclasses use this to add to for correct z-ordering and correct tab navigation order
+    // TODO: investigate if this is needed
+    this.contentLayer = new Node();
+    this.addChild( this.contentLayer );
+
     this.objectsLayer = new Node();
+    this.addChild( this.objectsLayer );
 
     const map = new Map<CASObject, CASObjectNode>();
 
@@ -86,9 +93,11 @@ class CASScreenView extends ScreenView {
     // TODO: Consider renaming as Group instead of panel (if they only contain checkboxes)
     this.topCheckboxPanel = new TopRepresentationCheckboxGroup( model, options.topCheckboxPanelOptions );
     this.bottomCheckboxPanel = new BottomRepresentationCheckboxGroup( model, options.bottomCheckboxPanelOptions );
+    this.addChild( this.bottomCheckboxPanel );
 
     // Play area median indicator.  TODO: Separate class?
     this.playAreaMedianIndicatorNode = new ArrowNode( 0, 0, 0, 35, { fill: 'red', stroke: null } );
+    this.addChild( this.playAreaMedianIndicatorNode );
 
     const updateMedianNode = () => {
       const medianValue = model.medianValueProperty.value;
@@ -115,12 +124,18 @@ class CASScreenView extends ScreenView {
       center: this.layoutBounds.center,
       tandem: options.tandem.createTandem( 'medianPredictionNode' )
     } );
+    this.meanPredictionNode = new PredictionNode( model.meanPredictionProperty, this.modelViewTransform, model.range, {
+      center: this.layoutBounds.center,
+      tandem: options.tandem.createTandem( 'meanPredictionNode' )
+    } );
 
     model.isShowingMedianPredictionProperty.link( isShowingMedianPrediction => {
       this.medianPredictionNode.visible = isShowingMedianPrediction;
     } );
+    model.isShowingMeanPredictionProperty.link( isShowingMeanPrediction => {
+      this.meanPredictionNode.visible = isShowingMeanPrediction;
+    } );
 
-    // Added by the child ScreenView so it is in the correct z-ordering
     this.resetAllButton = new ResetAllButton( {
       listener: () => {
         this.interruptSubtreeInput(); // cancel interactions that may be in progress
@@ -132,7 +147,6 @@ class CASScreenView extends ScreenView {
       tandem: options.tandem.createTandem( 'resetAllButton' )
     } );
 
-    // Added by the child ScreenView so it is in the correct z-ordering
     this.eraserButton = new EraserButton( {
       listener: () => {
 
@@ -140,12 +154,14 @@ class CASScreenView extends ScreenView {
         this.interruptSubtreeInput();
 
         model.clearData();
-        this.clearData();
+        this.clearData(); // TODO: observe model clearing?
       },
       iconWidth: 26,
       right: this.resetAllButton.left - CASConstants.SCREEN_VIEW_X_MARGIN,
       centerY: this.resetAllButton.centerY
     } );
+    this.addChild( this.eraserButton );
+    this.addChild( this.resetAllButton );
   }
 
   /**

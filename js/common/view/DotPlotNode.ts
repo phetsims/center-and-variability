@@ -144,6 +144,11 @@ class DotPlotNode extends Node {
     model.objectValueChangedEmitter.addListener( updateMedianNode );
     model.isShowingTopMedianProperty.link( updateMedianNode );
   }
+
+  /**
+   * No implementation because this node is powered by the model. Reset needed for uniformity with NumberCardContainer.
+   */
+  reset() {}
 }
 
 centerAndSpread.register( 'DotPlotNode', DotPlotNode );

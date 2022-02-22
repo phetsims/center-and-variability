@@ -56,14 +56,14 @@ class SoccerScreenView extends CASScreenView {
 
     this.chartViewWidth = chartViewWidth;
 
-    this.addChild( new BackgroundNode( GROUND_POSITION_Y, this.visibleBoundsProperty ) );
+    this.contentLayer.addChild( new BackgroundNode( GROUND_POSITION_Y, this.visibleBoundsProperty ) );
 
     this.playAreaNumberLineNode = new NumberLineNode( model.range, chartViewWidth, {
       tandem: options.tandem.createTandem( 'playAreaNumberLineNode' ),
       x: NUMBER_LINE_MARGIN_X,
       top: GROUND_POSITION_Y
     } );
-    this.addChild( this.playAreaNumberLineNode );
+    this.contentLayer.addChild( this.playAreaNumberLineNode );
 
     const soccerPlayerNodeGroup = new PhetioGroup<SoccerPlayerNode, [ SoccerPlayer ]>( ( tandem, soccerPlayer ) => {
       return new SoccerPlayerNode( soccerPlayer, this.modelViewTransform, {
@@ -84,7 +84,7 @@ class SoccerScreenView extends CASScreenView {
       // TODO: Document why this is correct (since it seems counterintuitive)
       soccerPlayerNode.moveToBack();
     };
-    this.addChild( soccerPlayerLayer );
+    this.contentLayer.addChild( soccerPlayerLayer );
     model.soccerPlayerGroup.forEach( createSoccerPlayerNode );
     model.soccerPlayerGroup.elementCreatedEmitter.addListener( createSoccerPlayerNode );
 
@@ -97,15 +97,12 @@ class SoccerScreenView extends CASScreenView {
     soccerPlayerNodeGroup.getArrayCopy().reverse().forEach( soccerPlayerNode => soccerPlayerNode.moveToFront() );
 
     this.questionBar = new QuestionBar( this.layoutBounds, this.visibleBoundsProperty, options.questionBarOptions );
-    this.addChild( this.questionBar );
-    this.addChild( new KickButtonGroup( model, {
+    this.contentLayer.addChild( this.questionBar );
+    this.contentLayer.addChild( new KickButtonGroup( model, {
       left: 25,
       bottom: this.layoutBounds.bottom - 8,
       tandem: options.tandem.createTandem( 'kickButtonGroup' )
     } ) );
-
-    // Add the child in the subclass to control z-ordering
-    this.addChild( this.playAreaMedianIndicatorNode );
   }
 }
 
