@@ -176,6 +176,10 @@ class CASModel {
       this.objectGroup.forEach( object => {
         object.isMedianObjectProperty.value = medianObjects.includes( object );
       } );
+
+      this.meanValueProperty.value = objectsInDataSet.length > 0 ?
+                                     _.mean( objectsInDataSet.map( casObject => casObject.valueProperty.value ) ) :
+                                     null;
     };
 
     this.isShowingBottomMedianProperty.link( updateMeanAndMedian );
