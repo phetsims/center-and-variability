@@ -43,7 +43,10 @@ const CASColors = {
   skyGradientBottomColorProperty: new ProfileColorProperty( centerAndSpread, 'skyGradientBottom', { default: '#c9d9ef' } ),
 
   // the ground
-  groundColorProperty: new ProfileColorProperty( centerAndSpread, 'groundColorProperty', { default: '#468a41' } )
+  groundColorProperty: new ProfileColorProperty( centerAndSpread, 'groundColor', { default: '#468a41' } ),
+
+  medianColorProperty: new ProfileColorProperty( centerAndSpread, 'medianColor', { default: 'red' } ),
+  meanColorProperty: new ProfileColorProperty( centerAndSpread, 'meanColor', { default: 'purple' } )
 };
 
 centerAndSpread.register( 'CASColors', CASColors );

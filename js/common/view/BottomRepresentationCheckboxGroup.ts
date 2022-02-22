@@ -20,6 +20,7 @@ import CASModel from '../model/CASModel.js';
 import CASConstants from '../CASConstants.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 import PredictionNode from './PredictionNode.js';
+import CASColors from '../CASColors.js';
 
 type BottomRepresentationCheckboxGroupSelfOptions = {
   includeMedian?: boolean;
@@ -61,29 +62,34 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
         children: [
           new Text( centerAndSpreadStrings.median, TEXT_OPTIONS ),
 
-          // TODO: Factor out?
-          new ArrowNode( 0, 0, 0, 35, { fill: 'red', stroke: null, maxHeight: 20 } ) ]
+          // TODO: Factor out?  See playAreaMedianIndicatorNode
+          new ArrowNode( 0, 0, 0, 35, { fill: CASColors.medianColorProperty, stroke: null, maxHeight: 20 } ) ]
       } ),
       property: model.isShowingBottomMedianProperty
     } );
-    options.includePredictMean && items.push( {
-      node: new Text( centerAndSpreadStrings.predict, TEXT_OPTIONS ),
-      property: model.isShowingMeanPredictionProperty
-    } );
-    options.includePredictMedian && items.push( {
-      node: new HBox( {
-        spacing: 20,
-        children: [
-          new Text( centerAndSpreadStrings.predict, TEXT_OPTIONS ),
-          new PredictionNode( new Property<number>( 1 ), ModelViewTransform2.createIdentity(), new Range( 1, 16 ), {
-            pickable: false,
-            maxHeight: 20,
-            tandem: Tandem.OPT_OUT
-          } )
-        ]
-      } ),
-      property: model.isShowingMedianPredictionProperty
-    } );
+
+    const createPredictionItem = ( property: Property<boolean>, color: ColorDef ) => {
+      return {
+        node: new HBox( {
+          spacing: 20,
+          children: [
+
+            // TODO: this will be odd to a11y because both buttons have the same text.  Do we have alt text for the icons?  Or maybe we need alt text for the entire checkbox?
+            new Text( centerAndSpreadStrings.predict, TEXT_OPTIONS ),
+            new PredictionNode( new Property<number>( 1 ), ModelViewTransform2.createIdentity(), new Range( 1, 16 ), {
+              pickable: false,
+              maxHeight: 20,
+              tandem: Tandem.OPT_OUT,
+              color: color
+            } )
+          ]
+        } ),
+        property: property
+      };
+    };
+
+    options.includePredictMedian && items.push( createPredictionItem( model.isShowingMedianPredictionProperty, CASColors.medianColorProperty ) );
+    options.includePredictMean && items.push( createPredictionItem( model.isShowingMeanPredictionProperty, CASColors.meanColorProperty ) );
     super( items, options );
   }
 }

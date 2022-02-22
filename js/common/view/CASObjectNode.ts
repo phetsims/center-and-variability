@@ -18,6 +18,7 @@ import ShadedSphereNode from '../../../../scenery-phet/js/ShadedSphereNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
 import Property from '../../../../axon/js/Property.js';
+import CASColors from '../CASColors.js';
 
 type CASObjectNodeSelfOptions = {
   objectViewType?: CASObjectType;
@@ -44,7 +45,7 @@ class CASObjectNode extends Node {
 
     // TODO: These should be edge to edge
     const medianHighlight = new Circle( viewRadius + 1.75, {
-      fill: Color.RED
+      fill: CASColors.medianColorProperty
     } );
     this.addChild( medianHighlight );
 

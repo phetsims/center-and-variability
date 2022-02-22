@@ -9,7 +9,7 @@
  */
 
 import centerAndSpread from '../../centerAndSpread.js';
-import { DragListener, Node, NodeOptions } from '../../../../scenery/js/imports.js';
+import { ColorDef, DragListener, Node, NodeOptions } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import Property from '../../../../axon/js/Property.js';
@@ -20,21 +20,23 @@ import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
 
-type PredictionNodeSelfOptions = {};
-export type PredictionNodeOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
+type PredictionNodeSelfOptions = {
+  color: ColorDef
+};
+
+export type PredictionNodeOptions = PredictionNodeSelfOptions & NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
 
 class PredictionNode extends Node {
 
   constructor( predictionProperty: Property<number>, modelViewTransform: ModelViewTransform2, dragRange: Range,
-               providedOptions?: PredictionNodeOptions ) {
+               providedOptions: PredictionNodeOptions ) {
 
     const shadedSphereNode = new ShadedSphereNode( 20, {
 
       // TODO: Add more colors to the color profile editor
       // TODO-DESIGN: This looks more orange in the mockup
       // TODO-DESIGN: Colorblind red?
-      // TODO: This should be passed in the options
-      mainColor: 'red'
+      mainColor: providedOptions.color
     } );
 
     // TODO-DESIGN: The mockup shows different arrowheads.
@@ -42,7 +44,7 @@ class PredictionNode extends Node {
       headHeight: 14,
       headWidth: 14,
       tailWidth: 2,
-      fill: 'red',
+      fill: providedOptions.color,
       stroke: null,
       bottomCenter: shadedSphereNode.center
     } );

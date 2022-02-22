@@ -9,11 +9,12 @@
  */
 
 import centerAndSpread from '../../centerAndSpread.js';
-import { Color, Path, PathOptions } from '../../../../scenery/js/imports.js';
+import { Path, PathOptions } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import CASColors from '../CASColors.js';
 
 type NotchDirection = 'up' | 'down';
 type MedianBarsNodeSelfOptions = {
@@ -33,7 +34,7 @@ class MedianBarsNode extends Path {
     const options = optionize<MedianBarsNodeOptions, MedianBarsNodeSelfOptions, PathOptions>( {
       tandem: Tandem.REQUIRED,
       lineWidth: 2,
-      stroke: Color.RED
+      stroke: CASColors.medianColorProperty
     }, providedOptions );
 
     super( null, options );

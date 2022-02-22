@@ -25,6 +25,7 @@ import BottomRepresentationCheckboxGroup from './BottomRepresentationCheckboxGro
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import PredictionNode from './PredictionNode.js';
+import CASColors from '../CASColors.js';
 
 type CASScreenViewSelfOptions = {
   topCheckboxPanelOptions?: boolean;
@@ -96,7 +97,7 @@ class CASScreenView extends ScreenView {
     this.addChild( this.bottomCheckboxPanel );
 
     // Play area median indicator.  TODO: Separate class?
-    this.playAreaMedianIndicatorNode = new ArrowNode( 0, 0, 0, 35, { fill: 'red', stroke: null } );
+    this.playAreaMedianIndicatorNode = new ArrowNode( 0, 0, 0, 35, { fill: CASColors.medianColorProperty, stroke: null } );
     this.addChild( this.playAreaMedianIndicatorNode );
 
     const updateMedianNode = () => {
@@ -122,11 +123,13 @@ class CASScreenView extends ScreenView {
 
     this.medianPredictionNode = new PredictionNode( model.medianPredictionProperty, this.modelViewTransform, model.range, {
       center: this.layoutBounds.center,
-      tandem: options.tandem.createTandem( 'medianPredictionNode' )
+      tandem: options.tandem.createTandem( 'medianPredictionNode' ),
+      color: CASColors.medianColorProperty
     } );
     this.meanPredictionNode = new PredictionNode( model.meanPredictionProperty, this.modelViewTransform, model.range, {
       center: this.layoutBounds.center,
-      tandem: options.tandem.createTandem( 'meanPredictionNode' )
+      tandem: options.tandem.createTandem( 'meanPredictionNode' ),
+      color: CASColors.meanColorProperty
     } );
 
     model.isShowingMedianPredictionProperty.link( isShowingMedianPrediction => {
