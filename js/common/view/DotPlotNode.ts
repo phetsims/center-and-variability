@@ -81,7 +81,7 @@ class DotPlotNode extends Node {
       // TODO: This may be asymmetrical if it accounts for edge labels
       centerX: numberLineNode.centerX,
 
-      top: numberLineNode.bottom - 3,
+      top: numberLineNode.bottom - 2,
       font: new PhetFont( 15 )
     } ) );
     this.dotLayer = new Node();
