@@ -17,9 +17,11 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import centerAndSpread from '../../centerAndSpread.js';
 import TopRepresentationCheckboxGroup from './TopRepresentationCheckboxGroup.js';
 import CASModel from '../model/CASModel.js';
+import ValueReadoutsNode from './ValueReadoutsNode.js';
 
 type CASAccordionBoxSelfOptions = {
-  titleString: string
+  titleString: string;
+  valueReadoutsNode: ValueReadoutsNode | null;
 };
 export type CASAccordionBoxOptions =
   CASAccordionBoxSelfOptions
@@ -32,7 +34,10 @@ const BUTTON_SIDE_LENGTH = 20;
 
 class CASAccordionBox extends AccordionBox {
 
-  constructor( model: CASModel, contents: Node, checkboxPanel: TopRepresentationCheckboxGroup,
+  // TODO: In order to support the accordion box (screen 2) and panel (screen 3) with similar layouts,
+  // consider a panel that puts readouts on the left, data + number line in the middle, and
+  // checkboxes on the right.  Rather than duplicating that here is accordion box and the screen 3 panel.
+  constructor( model: CASModel, contentNode: Node, checkboxPanel: TopRepresentationCheckboxGroup,
                layoutBounds: Bounds2, providedOptions: CASAccordionBoxOptions ) {
 
     const options = optionize<CASAccordionBoxOptions, CASAccordionBoxSelfOptions, AccordionBoxOptions>( {
@@ -78,8 +83,12 @@ class CASAccordionBox extends AccordionBox {
     backgroundNode.addChild( checkboxPanel );
 
     // TODO for CK: content has no height at time of instantiation, so does not end up in the correct place.
-    contents.centerY = fullHeightBackgroundBounds.centerY;
-    backgroundNode.addChild( contents );
+    contentNode.centerY = fullHeightBackgroundBounds.centerY;
+    backgroundNode.addChild( contentNode );
+
+    if ( options.valueReadoutsNode ) {
+      backgroundNode.addChild( options.valueReadoutsNode );
+    }
 
     super( backgroundNode, options );
   }

@@ -24,6 +24,7 @@ type StringsType = {
   'kick5': string,
   'distanceInMeters': string,
   'sortData': string,
+  'meanEqualsValue': string,
   'medianEqualsValue': string,
   'dotPlot': string,
   'median': string,

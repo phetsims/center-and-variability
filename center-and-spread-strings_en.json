@@ -35,6 +35,9 @@
   "sortData": {
     "value": "Sort Data"
   },
+  "meanEqualsValue": {
+    "value": "Mean = {{value}}"
+  },
   "medianEqualsValue": {
     "value": "Median = {{value}}"
   },

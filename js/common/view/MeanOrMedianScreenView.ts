@@ -17,6 +17,7 @@ import CASConstants from '../../common/CASConstants.js';
 import NumberCardContainer from '../../common/view/NumberCardContainer.js';
 import DotPlotNode from './DotPlotNode.js';
 import SoccerModel from '../model/SoccerModel.js';
+import ValueReadoutsNode from './ValueReadoutsNode.js';
 
 type MeanOrMedianScreenSelfOptions = {
   isMedianScreen: boolean;
@@ -58,7 +59,10 @@ class MeanOrMedianScreenView extends SoccerScreenView {
         tandem: accordionBoxTandem,
         titleString: options.isMedianScreen ? centerAndSpreadStrings.distanceInMeters : centerAndSpreadStrings.dotPlot,
         centerX: this.layoutBounds.centerX,
-        top: this.questionBar.bottom + CASConstants.SCREEN_VIEW_Y_MARGIN
+        top: this.questionBar.bottom + CASConstants.SCREEN_VIEW_Y_MARGIN,
+
+        // TODO: Better pattern for this
+        valueReadoutsNode: options.isMedianScreen ? null : new ValueReadoutsNode( model )
       } );
     this.contentLayer.addChild( this.accordionBox );
 
