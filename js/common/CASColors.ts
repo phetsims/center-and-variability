@@ -46,7 +46,7 @@ const CASColors = {
   groundColorProperty: new ProfileColorProperty( centerAndSpread, 'groundColor', { default: '#468a41' } ),
 
   medianColorProperty: new ProfileColorProperty( centerAndSpread, 'medianColor', { default: 'red' } ),
-  meanColorProperty: new ProfileColorProperty( centerAndSpread, 'meanColor', { default: 'purple' } )
+  meanColorProperty: new ProfileColorProperty( centerAndSpread, 'meanColor', { default: '#7916b6' } )
 };
 
 centerAndSpread.register( 'CASColors', CASColors );

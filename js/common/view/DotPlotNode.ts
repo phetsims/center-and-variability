@@ -65,7 +65,8 @@ class DotPlotNode extends Node {
       model.range,
       numberLineWidth,
       model.meanValueProperty,
-      model.isShowingTopMeanProperty, {
+      model.isShowingTopMeanProperty,
+      model.dataRangeProperty, {
         color: Color.BLACK,
         includeXAxis: true,
         tandem: options.tandem.createTandem( 'numberLineNode' ),

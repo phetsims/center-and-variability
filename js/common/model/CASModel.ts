@@ -46,10 +46,15 @@ class CASModel {
   readonly includeCards: boolean;
 
   readonly maxNumberOfObjects: number;
+
+  // TODO: rename to allowRange or something
   readonly range: Range;
   readonly numberOfRemainingObjectsProperty: DerivedProperty<number, [ count: number ]>;
   readonly medianValueProperty: Property<number | null>;
   readonly meanValueProperty: Property<number | null>;
+
+  // TODO: Rename to rangeProperty
+  readonly dataRangeProperty: Property<Range | null>;
   readonly objectChangedEmitter: Emitter<[ CASObject ]>;
 
   // Null until the user has made a prediction.
@@ -115,9 +120,11 @@ class CASModel {
 
     this.medianValueProperty = new Property<number | null>( null );
     this.meanValueProperty = new Property<number | null>( null );
+    this.dataRangeProperty = new Property<Range | null>( null );
     this.medianPredictionProperty = new NumberProperty( 1 );
     this.meanPredictionProperty = new NumberProperty( 1 );
 
+    // TODO: This should be on the prototype
     const updateMeanAndMedian = () => {
       const objectsInDataSet = this.objectGroup.filter( casObject => casObject.valueProperty.value !== null );
       const sortedObjects = _.sortBy( objectsInDataSet, casObject => casObject.valueProperty.value );
@@ -177,9 +184,17 @@ class CASModel {
         object.isMedianObjectProperty.value = medianObjects.includes( object );
       } );
 
-      this.meanValueProperty.value = objectsInDataSet.length > 0 ?
-                                     _.mean( objectsInDataSet.map( casObject => casObject.valueProperty.value ) ) :
-                                     null;
+      if ( objectsInDataSet.length > 0 ) {
+        this.meanValueProperty.value = _.mean( objectsInDataSet.map( casObject => casObject.valueProperty.value ) );
+
+        const min = sortedObjects[ 0 ].valueProperty.value!;
+        const max = sortedObjects[ sortedObjects.length - 1 ].valueProperty.value!;
+        this.dataRangeProperty.value = new Range( min, max );
+      }
+      else {
+        this.meanValueProperty.value = null;
+        this.dataRangeProperty.value = null;
+      }
     };
 
     this.isShowingBottomMedianProperty.link( updateMeanAndMedian );

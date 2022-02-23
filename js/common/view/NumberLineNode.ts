@@ -36,8 +36,14 @@ export type NumberLineNodeOptions = NumberLineNodeSelfOptions & NodeOptions & Re
 
 class NumberLineNode extends Node {
 
-  constructor( range: Range, width: number, meanValueProperty: IReadOnlyProperty<number | null>,
-               isShowingMeanIndicatorProperty: IReadOnlyProperty<boolean>, providedOptions?: NumberLineNodeOptions ) {
+  constructor(
+    range: Range,
+    width: number,
+    meanValueProperty: IReadOnlyProperty<number | null>,
+    isShowingMeanIndicatorProperty: IReadOnlyProperty<boolean>,
+    rangeProperty: IReadOnlyProperty<Range | null>,
+    providedOptions?: NumberLineNodeOptions
+  ) {
 
     const options = optionize<NumberLineNodeOptions, NumberLineNodeSelfOptions, NodeOptions>( {
       color: Color.WHITE,
@@ -87,6 +93,25 @@ class NumberLineNode extends Node {
         stroke: options.color
       } );
       this.addChild( xAxisNode );
+
+      // For the dot plot, when "mean" is selected, there is a purple overlay on the x-axis (if there is an x-axis)
+      const rangeNode = new Path( new Shape().moveTo( 0, originY ).lineToRelative( 100, 0 ), {
+        stroke: CASColors.meanColorProperty,
+        lineWidth: 3.2
+      } );
+      Property.multilink( [ rangeProperty, isShowingMeanIndicatorProperty ],
+        ( range: Range | null, isShowingMeanIndicator: boolean ) => {
+          if ( range !== null ) {
+
+            // TODO: What to do if the range is 0???
+            rangeNode.shape = new Shape()
+              .moveTo( modelViewTransform.modelToViewX( range.min ), originY )
+              .lineTo( modelViewTransform.modelToViewX( range.max ), originY );
+          }
+          rangeNode.visible = isShowingMeanIndicator && range !== null;
+        } );
+
+      this.addChild( rangeNode );
     }
 
     // TODO: Can we make a 1d MVT since that's all that's needed here?
