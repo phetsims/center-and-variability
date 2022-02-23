@@ -10,10 +10,12 @@
 import optionize from '../../../../phet-core/js/optionize.js';
 import centerAndSpread from '../../centerAndSpread.js';
 import VerticalCheckboxGroup, { VerticalCheckboxGroupOptions } from '../../../../sun/js/VerticalCheckboxGroup.js';
-import { Text } from '../../../../scenery/js/imports.js';
+import { HBox, Text } from '../../../../scenery/js/imports.js';
 import CASModel from '../model/CASModel.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 import CASConstants from '../CASConstants.js';
+import NumberLineNode from './NumberLineNode.js';
+import MedianBarsNode from './MedianBarsNode.js';
 
 type TopRepresentationCheckboxGroupSelfOptions = {
   includeSortData?: boolean;
@@ -43,11 +45,26 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
       property: model.isSortingDataProperty
     } );
     options.includeShowMean && items.push( {
-      node: new Text( centerAndSpreadStrings.showMean, TEXT_OPTIONS ),
+      node: new HBox( {
+        // TODO: align icons
+        spacing: 24.5,
+        children: [
+          new Text( centerAndSpreadStrings.mean, TEXT_OPTIONS ),
+          NumberLineNode.createMeanIndicatorNode()
+        ]
+      } ),
       property: model.isShowingTopMeanProperty
     } );
     options.includeShowMedian && items.push( {
-      node: new Text( centerAndSpreadStrings.showMedian, TEXT_OPTIONS ),
+      node: new HBox( {
+        spacing: 14,
+        children: [
+          new Text( centerAndSpreadStrings.median, TEXT_OPTIONS ),
+          new MedianBarsNode( {
+            notchDirection: 'down'
+          } ).setMedianBarsShape( 0, 0, 5, 10 )
+        ]
+      } ),
       property: model.isShowingTopMedianProperty
     } );
     super( items, options );

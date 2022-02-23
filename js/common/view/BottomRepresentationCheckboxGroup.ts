@@ -21,6 +21,7 @@ import CASConstants from '../CASConstants.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 import PredictionNode from './PredictionNode.js';
 import CASColors from '../CASColors.js';
+import NumberLineNode from './NumberLineNode.js';
 
 type BottomRepresentationCheckboxGroupSelfOptions = {
   includeMedian?: boolean;
@@ -51,7 +52,15 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
     const items = [];
     options.includeMean && items.push( {
-      node: new Text( centerAndSpreadStrings.mean, TEXT_OPTIONS ),
+
+      // TODO: Align group to center align the icons
+      node: new HBox( {
+        spacing: 24.5,
+        children: [
+          new Text( centerAndSpreadStrings.mean, TEXT_OPTIONS ),
+          NumberLineNode.createMeanIndicatorNode()
+        ]
+      } ),
       property: model.isShowingBottomMeanProperty
     } );
     options.includeMedian && items.push( {
@@ -63,7 +72,8 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
           new Text( centerAndSpreadStrings.median, TEXT_OPTIONS ),
 
           // TODO: Factor out?  See playAreaMedianIndicatorNode
-          new ArrowNode( 0, 0, 0, 35, { fill: CASColors.medianColorProperty, stroke: null, maxHeight: 20 } ) ]
+          new ArrowNode( 0, 0, 0, 35, { fill: CASColors.medianColorProperty, stroke: null, maxHeight: 20 } )
+        ]
       } ),
       property: model.isShowingBottomMedianProperty
     } );

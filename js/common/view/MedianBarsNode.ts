@@ -42,7 +42,7 @@ class MedianBarsNode extends Path {
     this.notchDirection = options.notchDirection;
   }
 
-  setMedianBarsShape( y: number, left: number, center: number, right: number ) {
+  setMedianBarsShape( y: number, left: number, center: number, right: number ): this {
     const shape = new Shape();
 
     const notchSign = this.notchDirection === 'up' ? -1 : 1;
@@ -62,6 +62,8 @@ class MedianBarsNode extends Path {
     shape.lineToPoint( rightCorner.plusXY( 0, MedianBarsNode.NOTCH_HEIGHT * notchSign ) );
 
     this.shape = shape;
+
+    return this;
   }
 
   clear() {
