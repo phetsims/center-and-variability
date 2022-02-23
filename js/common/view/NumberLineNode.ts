@@ -88,7 +88,7 @@ class NumberLineNode extends Node {
       this.addChild( xAxisNode );
     }
 
-    // TODO: Can we make a 2d MVT since that's all that's needed here?
+    // TODO: Can we make a 1d MVT since that's all that's needed here?
     const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
       new Bounds2( range.min, 0, range.max, range.getLength() ),
       new Bounds2( 0, originY - width, width, width )
