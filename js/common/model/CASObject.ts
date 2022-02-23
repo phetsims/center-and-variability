@@ -42,6 +42,7 @@ class CASObject extends PhetioObject {
   readonly velocityProperty: Vector2Property;
   readonly isAnimatingProperty: BooleanProperty;
   readonly isMedianObjectProperty: BooleanProperty;
+  readonly isShowingAnimationHighlightProperty: BooleanProperty;
   static CASObjectIO: IOType;
   readonly objectType: CASObjectType;
 
@@ -87,6 +88,9 @@ class CASObject extends PhetioObject {
     } );
     this.isMedianObjectProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isMedianObjectProperty' )
+    } );
+    this.isShowingAnimationHighlightProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isShowingAnimationHighlightProperty' )
     } );
   }
 

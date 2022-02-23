@@ -33,7 +33,6 @@ class SoccerModel extends CASModel {
   readonly remainingNumberOfBallsToMultiKickProperty: NumberProperty;
 
   private readonly timeWhenLastBallWasKickedProperty: NumberProperty;
-  private readonly timeProperty: NumberProperty;
   private readonly ballPlayerMap: Map<CASObject, SoccerPlayer>; // TODO: Add to PhET-iO State
 
   constructor( maxNumberOfBalls: number, options: SoccerModelOptions ) {
@@ -46,9 +45,6 @@ class SoccerModel extends CASModel {
 
     this.remainingNumberOfBallsToMultiKickProperty = new NumberProperty( 0, {
       tandem: options.tandem.createTandem( 'remainingNumberOfBallsToMultiKickProperty' )
-    } );
-    this.timeProperty = new NumberProperty( 0, {
-      tandem: options.tandem.createTandem( 'timeProperty' )
     } );
     this.timeWhenLastBallWasKickedProperty = new NumberProperty( 0, {
       tandem: options.tandem.createTandem( 'timeWhenLastBallWasKickedProperty' )
@@ -154,8 +150,6 @@ class SoccerModel extends CASModel {
 
   step( dt: number ): void {
     super.step( dt );
-
-    this.timeProperty.value += dt;
 
     // Scheduled kicks from the "Kick 5" button
     if ( this.remainingNumberOfBallsToMultiKickProperty.value > 0 && this.numberOfRemainingObjectsProperty.value > 0 &&

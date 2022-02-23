@@ -32,6 +32,9 @@ type CASModelSelfOptions = {
 };
 export type CASModelOptions = CASModelSelfOptions & {};
 
+// constants
+const HIGHLIGHT_ANIMATION_TIME_STEP = 0.5; // in seconds
+
 class CASModel {
   readonly objectGroup: PhetioGroup<CASObject, [ CASObjectType, Omit<CASObjectOptions, 'tandem'> ]>;
   readonly objectType: CASObjectType;
@@ -60,6 +63,10 @@ class CASModel {
   // Null until the user has made a prediction.
   readonly medianPredictionProperty: NumberProperty;
   readonly meanPredictionProperty: NumberProperty;
+
+  protected readonly timeProperty: NumberProperty;
+  readonly highlightAnimationIndexProperty: Property<number | null>;
+  private lastHighlightAnimationStepTime: number;
 
   constructor( objectType: CASObjectType, maxNumberOfObjects: number, providedOptions: CASModelOptions ) {
 
@@ -123,6 +130,12 @@ class CASModel {
     this.dataRangeProperty = new Property<Range | null>( null );
     this.medianPredictionProperty = new NumberProperty( 1 );
     this.meanPredictionProperty = new NumberProperty( 1 );
+
+    this.timeProperty = new NumberProperty( 0, {
+      tandem: options.tandem.createTandem( 'timeProperty' )
+    } );
+    this.highlightAnimationIndexProperty = new Property<number | null>( null );
+    this.lastHighlightAnimationStepTime = 0;
 
     // TODO: This should be on the prototype
     const updateMeanAndMedian = () => {
@@ -326,6 +339,25 @@ class CASModel {
    * @param dt - time step, in seconds
    */
   step( dt: number ): void {
+    this.timeProperty.value += dt;
+
+    if ( this.highlightAnimationIndexProperty.value !== null &&
+         this.timeProperty.value > this.lastHighlightAnimationStepTime + HIGHLIGHT_ANIMATION_TIME_STEP ) {
+
+      // TODO: copied from updateMeanAndMedian
+      const objectsInDataSet = this.objectGroup.filter( casObject => casObject.valueProperty.value !== null );
+      const sortedObjects = _.sortBy( objectsInDataSet, casObject => casObject.valueProperty.value );
+
+      // TODO: Check if this max check is correct
+      if ( this.highlightAnimationIndexProperty.value >= sortedObjects.length / 2 - 2 ) {
+        this.highlightAnimationIndexProperty.value = null;
+      }
+      else {
+        this.highlightAnimationIndexProperty.value++;
+        this.lastHighlightAnimationStepTime = this.timeProperty.value;
+      }
+    }
+
     this.objectGroup.forEach( casObject => casObject.step( dt ) );
   }
 }
