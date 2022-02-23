@@ -23,6 +23,7 @@ import CASColors from '../CASColors.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Property from '../../../../axon/js/Property.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 
 // constants
 const TICK_MARK_EXTENT = 10;
@@ -36,8 +37,7 @@ export type NumberLineNodeOptions = NumberLineNodeSelfOptions & NodeOptions & Re
 class NumberLineNode extends Node {
 
   constructor( range: Range, width: number, meanValueProperty: IReadOnlyProperty<number | null>,
-               isShowingMeanIndicatorProperty: IReadOnlyProperty<boolean>, modelViewTransform: ModelViewTransform2,
-               providedOptions?: NumberLineNodeOptions ) {
+               isShowingMeanIndicatorProperty: IReadOnlyProperty<boolean>, providedOptions?: NumberLineNodeOptions ) {
 
     const options = optionize<NumberLineNodeOptions, NumberLineNodeSelfOptions, NodeOptions>( {
       color: Color.WHITE,
@@ -68,11 +68,14 @@ class NumberLineNode extends Node {
 
     let originY = tickMarkSet.top;
 
+    // override our localBounds so they don't change since moving the tick marks/labels for the x-axis or adding the
+    // mean triangle can cause visual shifting from changing bounds
+    this.localBounds = this.localBounds.copy();
+
     if ( options.includeXAxis ) {
 
       // TODO from CK: this feels like the wrong way to do this
       // shift the number line up so 0 is on the x-axis
-      this.localBounds = this.localBounds.copy();
       tickMarkSet.y = -TICK_MARK_EXTENT / 2;
       tickLabelSet.y = -TICK_MARK_EXTENT / 2;
       originY = tickMarkSet.centerY;
@@ -85,14 +88,20 @@ class NumberLineNode extends Node {
       this.addChild( xAxisNode );
     }
 
-    // TODO: This is moving the number line down
+    // TODO: Can we make a 2d MVT since that's all that's needed here?
+    const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
+      new Bounds2( range.min, 0, range.max, range.getLength() ),
+      new Bounds2( 0, originY - width, width, width )
+    );
+
     const meanIndicatorNode = NumberLineNode.createMeanIndicatorNode();
     this.addChild( meanIndicatorNode );
 
     Property.multilink( [ meanValueProperty, isShowingMeanIndicatorProperty ],
       ( meanValue: number | null, isShowingMeanIndicator: boolean ) => {
-        // TODO: the MVT from SoccerScreenView puts the x in the wrong place because it's relative to the whole screen view
-        meanIndicatorNode.translation = new Vector2( modelViewTransform.modelToViewX( meanValue ), originY );
+        if ( meanValue !== null ) {
+          meanIndicatorNode.translation = new Vector2( modelViewTransform.modelToViewX( meanValue ), originY );
+        }
         meanIndicatorNode.visible = isShowingMeanIndicator && meanValue !== null;
       } );
 
