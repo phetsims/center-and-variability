@@ -15,12 +15,13 @@ import CASModel from '../model/CASModel.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 import CASConstants from '../CASConstants.js';
 import NumberLineNode from './NumberLineNode.js';
-import MedianBarsNode from './MedianBarsNode.js';
+import MedianBarsNode, { MedianBarsNodeOptions } from './MedianBarsNode.js';
 
 type TopRepresentationCheckboxGroupSelfOptions = {
   includeSortData?: boolean;
-  includeShowMedian?: boolean;
-  includeShowMean?: boolean;
+  includeMedian?: boolean;
+  includeMean?: boolean;
+  medianBarIconOptions: MedianBarsNodeOptions;
 };
 export type TopRepresentationCheckboxGroupOptions = TopRepresentationCheckboxGroupSelfOptions & VerticalCheckboxGroupOptions;
 
@@ -35,8 +36,8 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
     const options = optionize<TopRepresentationCheckboxGroupOptions, TopRepresentationCheckboxGroupSelfOptions, VerticalCheckboxGroupOptions>( {
       includeSortData: false,
-      includeShowMean: true,
-      includeShowMedian: true
+      includeMean: true,
+      includeMedian: true
     }, providedOptions );
 
     const items = [];
@@ -44,7 +45,7 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
       node: new Text( centerAndSpreadStrings.sortData, TEXT_OPTIONS ),
       property: model.isSortingDataProperty
     } );
-    options.includeShowMean && items.push( {
+    options.includeMean && items.push( {
       node: new HBox( {
         // TODO: align icons
         spacing: 24.5,
@@ -55,15 +56,12 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
       } ),
       property: model.isShowingTopMeanProperty
     } );
-    options.includeShowMedian && items.push( {
+    options.includeMedian && items.push( {
       node: new HBox( {
         spacing: 14,
         children: [
           new Text( centerAndSpreadStrings.median, TEXT_OPTIONS ),
-          new MedianBarsNode( {
-            notchDirection: 'down',
-            barStyle: 'continuous'
-          } ).setMedianBarsShape( 0, 0, 5, 10 )
+          new MedianBarsNode( options.medianBarIconOptions ).setMedianBarsShape( 0, 0, 5, 10 )
         ]
       } ),
       property: model.isShowingTopMedianProperty

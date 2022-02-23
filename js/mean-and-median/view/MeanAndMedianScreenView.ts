@@ -29,6 +29,12 @@ class MeanAndMedianScreenView extends MeanOrMedianScreenView {
         barFill: CASColors.meanAndMedianQuestionBarFillColorProperty,
         labelText: centerAndSpreadStrings.meanAndMedianQuestion
       },
+      topCheckboxPanelOptions: {
+        medianBarIconOptions: {
+          notchDirection: 'down',
+          barStyle: 'continuous'
+        }
+      },
       tandem: Tandem.REQUIRED
     }, providedOptions );
 
