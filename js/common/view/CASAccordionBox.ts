@@ -78,6 +78,8 @@ class CASAccordionBox extends AccordionBox {
     // Values come from the height of the expand/collapse button plus the y margin above and below it.
     const fullHeightBackgroundBounds = backgroundNodeBounds.withOffsets( 0, CONTENT_MARGIN * 2 + BUTTON_SIDE_LENGTH, 0, 0 );
 
+    // TODO: we are mutating the position of things being passed in
+
     checkboxPanel.right = backgroundNode.right;
     checkboxPanel.centerY = fullHeightBackgroundBounds.centerY;
     backgroundNode.addChild( checkboxPanel );
@@ -87,6 +89,7 @@ class CASAccordionBox extends AccordionBox {
     backgroundNode.addChild( contentNode );
 
     if ( options.valueReadoutsNode ) {
+      options.valueReadoutsNode.centerY = fullHeightBackgroundBounds.centerY;
       backgroundNode.addChild( options.valueReadoutsNode );
     }
 

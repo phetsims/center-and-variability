@@ -14,6 +14,9 @@ import CASModel from '../model/CASModel.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import Utils from '../../../../dot/js/Utils.js';
+import CASColors from '../CASColors.js';
+import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 
 type ValueReadoutsNodeSelfOptions = {};
 export type ValueReadoutNodeOptions = ValueReadoutsNodeSelfOptions & VBoxOptions;
@@ -22,19 +25,40 @@ class ValueReadoutsNode extends VBox {
 
   constructor( model: CASModel, providedOptions?: ValueReadoutNodeOptions ) {
 
-    const meanText = new Text( '' );
-    model.meanValueProperty.link( meanValue => {
-      meanText.text = StringUtils.fillIn( centerAndSpreadStrings.meanEqualsValue, {
-        value: meanValue === null ? '?' : Utils.toFixed( meanValue, 1 )
+    const createReadoutText = ( valueProperty: IReadOnlyProperty<number | null>, visibleProperty: IReadOnlyProperty<boolean>,
+                                stringTemplate: string, fill: ColorDef ) => {
+      const text = new Text( '', {
+        fill: fill,
+        font: new PhetFont( 14 )
       } );
-    } );
+      valueProperty.link( value => {
+        text.text = StringUtils.fillIn( stringTemplate, {
 
-    const options = optionize<ValueReadoutNodeOptions, ValueReadoutsNodeSelfOptions, VBoxOptions, 'children'>( {
+          // TODO-DESIGN: Should we keep this '?'? If so, i18n it.
+          value: value === null ? '?' : Utils.toFixed( value, 1 )
+        } );
+      } );
+
+      visibleProperty.link( visible => { text.visible = visible; } );
+
+      return text;
+    };
+
+    const meanText = createReadoutText( model.meanValueProperty, model.isShowingTopMeanProperty,
+      centerAndSpreadStrings.meanEqualsValue, CASColors.meanColorProperty );
+
+    const medianText = createReadoutText( model.medianValueProperty, model.isShowingTopMedianProperty,
+      centerAndSpreadStrings.medianEqualsValue, CASColors.medianColorProperty );
+
+    const options = optionize<ValueReadoutNodeOptions, ValueReadoutsNodeSelfOptions, VBoxOptions>( {
+      align: 'left',
+      spacing: 4,
+      excludeInvisibleChildrenFromBounds: false,
       children: [
-        meanText
+        meanText,
+        medianText
       ]
     }, providedOptions );
-
 
     super( options );
   }
