@@ -56,7 +56,7 @@ class MeanOrMedianScreenView extends SoccerScreenView {
     this.accordionBox = new CASAccordionBox( this.model, this.accordionBoxContents, this.topCheckboxPanel,
       this.layoutBounds, {
         tandem: accordionBoxTandem,
-        titleString: centerAndSpreadStrings.data,
+        titleString: options.isMedianScreen ? centerAndSpreadStrings.data : centerAndSpreadStrings.dotPlot,
         centerX: this.layoutBounds.centerX,
         top: this.questionBar.bottom + CASConstants.SCREEN_VIEW_Y_MARGIN
       } );
