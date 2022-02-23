@@ -120,6 +120,10 @@ class DotPlotNode extends Node {
       dotNodeGroup.disposeElement( viewNode );
     } );
 
+    // TODO from CK: Sorry for another one Sam! Design meeting is starting shortly and this was to fix the buggy
+    // shifting number line from when the median bars extend to 0 and
+    this.localBounds = this.localBounds.copy();
+
     this.medianBarsNode = new MedianBarsNode( {
       notchDirection: 'down',
       barStyle: 'continuous'
