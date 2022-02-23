@@ -83,7 +83,8 @@ class NumberCardContainer extends Node {
     } );
 
     this.medianBarsNode = new MedianBarsNode( {
-      notchDirection: 'up'
+      notchDirection: 'up',
+      barStyle: 'split'
     } );
     this.addChild( this.medianBarsNode );
 

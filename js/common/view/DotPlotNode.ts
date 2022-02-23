@@ -121,7 +121,8 @@ class DotPlotNode extends Node {
     } );
 
     this.medianBarsNode = new MedianBarsNode( {
-      notchDirection: 'down'
+      notchDirection: 'down',
+      barStyle: 'continuous'
     } );
     this.addChild( this.medianBarsNode );
 
