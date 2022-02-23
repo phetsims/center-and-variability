@@ -55,7 +55,9 @@ class NumberLineNode extends Node {
 
     const chartTransform = new ChartTransform( {
       viewWidth: width,
-      modelXRange: range
+      modelXRange: range,
+      viewHeight: options.includeXAxis ? 0 : TICK_MARK_EXTENT / 2,
+      modelYRange: new Range( 0, 1 )
     } );
     const tickMarkSet = new TickMarkSet( chartTransform, Orientation.HORIZONTAL, 1, {
       stroke: options.color,
@@ -74,17 +76,18 @@ class NumberLineNode extends Node {
 
     let originY = tickMarkSet.top;
 
-    // override our localBounds so they don't change since moving the tick marks/labels for the x-axis or adding the
-    // mean triangle can cause visual shifting from changing bounds
-    // TODO: setting localBounds seems suspicious
-    this.localBounds = this.localBounds.copy();
-
     if ( options.includeXAxis ) {
 
       // TODO from CK: this feels like the wrong way to do this
       // shift the number line up so 0 is on the x-axis
-      tickMarkSet.y = -TICK_MARK_EXTENT / 2;
-      tickLabelSet.y = -TICK_MARK_EXTENT / 2;
+
+      // override our localBounds so they don't change since moving the tick marks/labels for the x-axis or adding the
+      // mean triangle can cause visual shifting from changing bounds
+      // TODO: setting localBounds seems suspicious
+      // this.localBounds = this.localBounds.copy();
+
+      // tickMarkSet.y = -TICK_MARK_EXTENT / 2;
+      // tickLabelSet.y = -TICK_MARK_EXTENT / 2;
       originY = tickMarkSet.centerY;
 
       const xAxisNode = new Path( new Shape()

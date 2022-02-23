@@ -46,11 +46,6 @@ class DotPlotNode extends Node {
 
     // TODO: Factor out height with accordion box height
     const backgroundNode = new Rectangle( 0, 0, numberLineWidth, 180 );
-
-    // explicitly set the local bounds so they don't change. Without this, a ball appearing at the left edge during the runtime
-    // could mess up the layout.
-    // TODO: Review how the bounds are handled here.
-    backgroundNode.localBounds = backgroundNode.getRectBounds();
     this.addChild( backgroundNode );
 
     const numberLinePositionY = 124;
@@ -119,10 +114,6 @@ class DotPlotNode extends Node {
       const viewNode = map.get( casObject )!;
       dotNodeGroup.disposeElement( viewNode );
     } );
-
-    // TODO from CK: Sorry for another one Sam! Design meeting is starting shortly and this was to fix the buggy
-    // shifting number line from when the median bars extend to 0 and
-    this.localBounds = this.localBounds.copy();
 
     this.medianBarsNode = new MedianBarsNode( {
       notchDirection: 'down',

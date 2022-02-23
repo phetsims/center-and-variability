@@ -40,10 +40,14 @@ class MeanAndMedianScreenView extends MeanOrMedianScreenView {
 
     super( model, options );
 
-    // TODO from CK: Just realized the number lines are close but not quite aligned
+    // NOTE: This assumes that the NumberLineNode in the play area and in the dot plot have the same characteristics:
+    // * Same font
+    // * Same offset and scale
+    // But given those assumptions, this code moves the dot plot so that its number line matches the play area one.
+    // TODO: Consider something more robust.  Using globalToLocal to exactly align based on the position of the tick marks
     ManualConstraint.create( this, [ this.playAreaNumberLineNode, this.accordionBoxContents ],
       ( lowerNumberLineWrapper, dotPlotNodeWrapper ) => {
-        dotPlotNodeWrapper.left = lowerNumberLineWrapper.left;
+        dotPlotNodeWrapper.x = lowerNumberLineWrapper.x;
       } );
   }
 }

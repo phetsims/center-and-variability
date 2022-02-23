@@ -66,7 +66,7 @@ class SoccerScreenView extends CASScreenView {
       model.dataRangeProperty, {
         tandem: options.tandem.createTandem( 'playAreaNumberLineNode' ),
         x: NUMBER_LINE_MARGIN_X,
-        top: GROUND_POSITION_Y
+        y: GROUND_POSITION_Y
       } );
     this.contentLayer.addChild( this.playAreaNumberLineNode );
 
