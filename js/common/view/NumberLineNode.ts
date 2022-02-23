@@ -66,6 +66,8 @@ class NumberLineNode extends Node {
     } );
     this.addChild( tickLabelSet );
 
+    let originY = tickMarkSet.top;
+
     if ( options.includeXAxis ) {
 
       // TODO from CK: this feels like the wrong way to do this
@@ -73,10 +75,11 @@ class NumberLineNode extends Node {
       this.localBounds = this.localBounds.copy();
       tickMarkSet.y = -TICK_MARK_EXTENT / 2;
       tickLabelSet.y = -TICK_MARK_EXTENT / 2;
+      originY = tickMarkSet.centerY;
 
       const xAxisNode = new Path( new Shape()
-        .moveTo( tickMarkSet.left, tickMarkSet.centerY )
-        .lineTo( tickMarkSet.right, tickMarkSet.centerY ), {
+        .moveTo( tickMarkSet.left, originY )
+        .lineTo( tickMarkSet.right, originY ), {
         stroke: options.color
       } );
       this.addChild( xAxisNode );
@@ -88,9 +91,8 @@ class NumberLineNode extends Node {
 
     Property.multilink( [ meanValueProperty, isShowingMeanIndicatorProperty ],
       ( meanValue: number | null, isShowingMeanIndicator: boolean ) => {
-        // TODO: The triangle is not in the right y place
         // TODO: the MVT from SoccerScreenView puts the x in the wrong place because it's relative to the whole screen view
-        meanIndicatorNode.center = new Vector2( modelViewTransform.modelToViewX( meanValue ), tickMarkSet.top );
+        meanIndicatorNode.translation = new Vector2( modelViewTransform.modelToViewX( meanValue ), originY );
         meanIndicatorNode.visible = isShowingMeanIndicator && meanValue !== null;
       } );
 
@@ -98,8 +100,8 @@ class NumberLineNode extends Node {
   }
 
   static createMeanIndicatorNode() {
-    const TRIANGLE_LENGTH = 17;
-    const TRIANGLE_ALTITUDE = 14;
+    const TRIANGLE_LENGTH = 15;
+    const TRIANGLE_ALTITUDE = 13;
     const TRIANGLE_SHAPE = new Shape().moveTo( 0, 0 )
       .lineTo( -TRIANGLE_LENGTH / 2, TRIANGLE_ALTITUDE )
       .lineToRelative( TRIANGLE_LENGTH, 0 )
