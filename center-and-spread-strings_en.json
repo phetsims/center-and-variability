@@ -29,7 +29,7 @@
   "kick5": {
     "value": "Kick 5"
   },
-  "data": {
+  "distanceInMeters": {
     "value": "Distance (in meters)"
   },
   "sortData": {

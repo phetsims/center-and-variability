@@ -11,7 +11,7 @@
  */
 
 import centerAndSpread from '../../centerAndSpread.js';
-import { Color, Node, NodeOptions, Rectangle } from '../../../../scenery/js/imports.js';
+import { Color, Node, NodeOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CASModel from '../model/CASModel.js';
@@ -23,6 +23,8 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import NumberLineNode from './NumberLineNode.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import MedianBarsNode from './MedianBarsNode.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 
 // constants
 
@@ -51,7 +53,7 @@ class DotPlotNode extends Node {
     backgroundNode.localBounds = backgroundNode.getRectBounds();
     this.addChild( backgroundNode );
 
-    const numberLinePositionY = 143;
+    const numberLinePositionY = 124;
 
     // scale down in the y direction to support smaller object nodes
     const yScale = CASObjectType.DOT.radius / model.objectType.radius;
@@ -74,6 +76,14 @@ class DotPlotNode extends Node {
       } );
     backgroundNode.addChild( numberLineNode );
 
+    backgroundNode.addChild( new Text( centerAndSpreadStrings.distanceInMeters, {
+
+      // TODO: This may be asymmetrical if it accounts for edge labels
+      centerX: numberLineNode.centerX,
+
+      top: numberLineNode.bottom - 3,
+      font: new PhetFont( 15 )
+    } ) );
     this.dotLayer = new Node();
     backgroundNode.addChild( this.dotLayer );
 

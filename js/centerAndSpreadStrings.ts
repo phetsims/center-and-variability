@@ -22,7 +22,7 @@ type StringsType = {
   'spreadQuestion': string,
   'kick1': string,
   'kick5': string,
-  'data': string,
+  'distanceInMeters': string,
   'sortData': string,
   'medianEqualsValue': string,
   'dotPlot': string,
