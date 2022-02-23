@@ -19,6 +19,10 @@ import TickLabelSet from '../../../../bamboo/js/TickLabelSet.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Shape from '../../../../kite/js/Shape.js';
 import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
+import CASColors from '../CASColors.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import Property from '../../../../axon/js/Property.js';
 
 // constants
 const TICK_MARK_EXTENT = 10;
@@ -31,7 +35,9 @@ export type NumberLineNodeOptions = NumberLineNodeSelfOptions & NodeOptions & Re
 
 class NumberLineNode extends Node {
 
-  constructor( range: Range, width: number, meanValueProperty: IReadOnlyProperty<number | null>, isShowingMeanIndicator: IReadOnlyProperty<boolean>, providedOptions?: NumberLineNodeOptions ) {
+  constructor( range: Range, width: number, meanValueProperty: IReadOnlyProperty<number | null>,
+               isShowingMeanIndicatorProperty: IReadOnlyProperty<boolean>, modelViewTransform: ModelViewTransform2,
+               providedOptions?: NumberLineNodeOptions ) {
 
     const options = optionize<NumberLineNodeOptions, NumberLineNodeSelfOptions, NodeOptions>( {
       color: Color.WHITE,
@@ -76,7 +82,32 @@ class NumberLineNode extends Node {
       this.addChild( xAxisNode );
     }
 
+    // TODO: This is moving the number line down
+    const meanIndicatorNode = NumberLineNode.createMeanIndicatorNode();
+    this.addChild( meanIndicatorNode );
+
+    Property.multilink( [ meanValueProperty, isShowingMeanIndicatorProperty ],
+      ( meanValue: number | null, isShowingMeanIndicator: boolean ) => {
+        // TODO: The triangle is not in the right y place
+        // TODO: the MVT from SoccerScreenView puts the x in the wrong place because it's relative to the whole screen view
+        meanIndicatorNode.center = new Vector2( modelViewTransform.modelToViewX( meanValue ), tickMarkSet.top );
+        meanIndicatorNode.visible = isShowingMeanIndicator && meanValue !== null;
+      } );
+
     this.mutate( options );
+  }
+
+  static createMeanIndicatorNode() {
+    const TRIANGLE_LENGTH = 17;
+    const TRIANGLE_ALTITUDE = 14;
+    const TRIANGLE_SHAPE = new Shape().moveTo( 0, 0 )
+      .lineTo( -TRIANGLE_LENGTH / 2, TRIANGLE_ALTITUDE )
+      .lineToRelative( TRIANGLE_LENGTH, 0 )
+      .lineTo( 0, 0 );
+
+    return new Path( TRIANGLE_SHAPE, {
+      fill: CASColors.meanColorProperty
+    } );
   }
 }
 
