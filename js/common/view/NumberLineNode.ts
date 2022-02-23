@@ -70,6 +70,7 @@ class NumberLineNode extends Node {
 
     // override our localBounds so they don't change since moving the tick marks/labels for the x-axis or adding the
     // mean triangle can cause visual shifting from changing bounds
+    // TODO: setting localBounds seems suspicious
     this.localBounds = this.localBounds.copy();
 
     if ( options.includeXAxis ) {
@@ -89,6 +90,8 @@ class NumberLineNode extends Node {
     }
 
     // TODO: Can we make a 1d MVT since that's all that's needed here?
+    // TODO: Or should this be using the same MVT as the outer MVT?  Like the one that positions the number line node
+    // and puts objects in the right spots.
     const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
       new Bounds2( range.min, 0, range.max, range.getLength() ),
       new Bounds2( 0, originY - width, width, width )
@@ -100,7 +103,7 @@ class NumberLineNode extends Node {
     Property.multilink( [ meanValueProperty, isShowingMeanIndicatorProperty ],
       ( meanValue: number | null, isShowingMeanIndicator: boolean ) => {
         if ( meanValue !== null ) {
-          meanIndicatorNode.translation = new Vector2( modelViewTransform.modelToViewX( meanValue ), originY );
+          meanIndicatorNode.centerTop = new Vector2( modelViewTransform.modelToViewX( meanValue ), originY );
         }
         meanIndicatorNode.visible = isShowingMeanIndicator && meanValue !== null;
       } );
@@ -108,13 +111,17 @@ class NumberLineNode extends Node {
     this.mutate( options );
   }
 
-  static createMeanIndicatorNode() {
+  static createMeanIndicatorNode(): Node {
     const TRIANGLE_LENGTH = 15;
     const TRIANGLE_ALTITUDE = 13;
+
+    // This is a triangle that points up.  Start at the top center tip.
     const TRIANGLE_SHAPE = new Shape().moveTo( 0, 0 )
+
+      // Moving counterclockwise
       .lineTo( -TRIANGLE_LENGTH / 2, TRIANGLE_ALTITUDE )
       .lineToRelative( TRIANGLE_LENGTH, 0 )
-      .lineTo( 0, 0 );
+      .close();
 
     return new Path( TRIANGLE_SHAPE, {
       fill: CASColors.meanColorProperty
