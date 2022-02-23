@@ -54,12 +54,11 @@ class DotPlotNode extends Node {
     const numberLinePositionY = 143;
 
     // scale down in the y direction to support smaller object nodes
-    const yScale = model.objectType.radius / CASObjectType.DOT.radius;
+    const yScale = 1 / model.objectType.radius * CASObjectType.DOT.radius;
 
     const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
-      // TODO: Should we scale down the view instead of scaling up the model?
-      new Bounds2( model.range.min, 0, model.range.max, model.range.getLength() * yScale ),
-      new Bounds2( 0, numberLinePositionY - numberLineWidth, 0 + numberLineWidth, numberLinePositionY )
+      new Bounds2( model.range.min, 0, model.range.max, model.range.getLength() ),
+      new Bounds2( 0, numberLinePositionY - numberLineWidth * yScale, 0 + numberLineWidth, numberLinePositionY )
     );
 
     const numberLineNode = new NumberLineNode(
