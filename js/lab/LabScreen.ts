@@ -22,7 +22,7 @@ class LabScreen extends CASScreen<LabModel, LabScreenView> {
 
   constructor( providedOptions: LabScreenOptions ) {
 
-    const options = optionize<LabScreenOptions>( {
+    const options = optionize<LabScreenOptions, {}>( {
       name: centerAndSpreadStrings.screen.lab,
       backgroundColorProperty: CASColors.screenBackgroundColorProperty,
       tandem: Tandem.REQUIRED

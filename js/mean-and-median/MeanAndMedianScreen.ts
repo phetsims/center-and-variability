@@ -22,7 +22,7 @@ class MeanAndMedianScreen extends CASScreen<MeanAndMedianModel, MeanAndMedianScr
 
   constructor( providedOptions: MeanAndMedianScreenOptions ) {
 
-    const options = optionize<MeanAndMedianScreenOptions>( {
+    const options = optionize<MeanAndMedianScreenOptions, {}>( {
       name: centerAndSpreadStrings.screen.meanAndMedian,
       backgroundColorProperty: CASColors.screenBackgroundColorProperty,
       tandem: Tandem.REQUIRED

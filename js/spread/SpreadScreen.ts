@@ -22,7 +22,7 @@ class SpreadScreen extends CASScreen<SpreadModel, SpreadScreenView> {
 
   constructor( providedOptions: SpreadScreenOptions ) {
 
-    const options = optionize<SpreadScreenOptions>( {
+    const options = optionize<SpreadScreenOptions, {}>( {
       name: centerAndSpreadStrings.screen.spread,
       backgroundColorProperty: CASColors.screenBackgroundColorProperty,
       tandem: Tandem.REQUIRED

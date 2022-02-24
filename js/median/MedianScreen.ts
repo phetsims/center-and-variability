@@ -22,7 +22,7 @@ class MedianScreen extends CASScreen<MedianModel, MedianScreenView> {
 
   constructor( providedOptions: MedianScreenOptions ) {
 
-    const options = optionize<MedianScreenOptions>( {
+    const options = optionize<MedianScreenOptions, {}>( {
       name: centerAndSpreadStrings.screen.median,
       backgroundColorProperty: CASColors.screenBackgroundColorProperty,
       tandem: Tandem.REQUIRED
