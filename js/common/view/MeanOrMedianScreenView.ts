@@ -18,6 +18,7 @@ import NumberCardContainer from '../../common/view/NumberCardContainer.js';
 import DotPlotNode from './DotPlotNode.js';
 import SoccerModel from '../model/SoccerModel.js';
 import ValueReadoutsNode from './ValueReadoutsNode.js';
+import { ManualConstraint } from '../../../../scenery/js/imports.js';
 
 type MeanOrMedianScreenSelfOptions = {
   isMedianScreen: boolean;
@@ -66,8 +67,13 @@ class MeanOrMedianScreenView extends SoccerScreenView {
       } );
     this.contentLayer.addChild( this.accordionBox );
 
-    this.bottomCheckboxPanel.left = this.globalToParentBounds( this.topCheckboxPanel.getGlobalBounds() ).left;
+    this.bottomCheckboxPanel.left = this.playAreaNumberLineNode.right + 12.5;
     this.bottomCheckboxPanel.top = this.accordionBox.bottom + 30;
+
+    ManualConstraint.create( this, [ this.bottomCheckboxPanel, this.topCheckboxPanel ],
+      ( bottomCheckboxPanelWrapper, topCheckboxPanelWrapper ) => {
+        topCheckboxPanelWrapper.x = bottomCheckboxPanelWrapper.x;
+      } );
 
     this.contentLayer.addChild( this.medianPredictionNode );
 
