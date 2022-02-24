@@ -91,7 +91,7 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
               maxHeight: 20,
               tandem: Tandem.OPT_OUT,
               color: color,
-              roundToInterval: null  // TODO: Move to optional?
+              roundToInterval: null
             } )
           ]
         } ),

@@ -21,6 +21,8 @@ import Utils from '../../../../dot/js/Utils.js';
 
 type PredictionNodeSelfOptions = {
   color: ColorDef,
+
+  // Round to the nearest specified number, or, if null, there is no rounding. Mean is continuous, median is rounded to 0.5
   roundToInterval: number | null
 };
 
