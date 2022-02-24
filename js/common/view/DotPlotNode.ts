@@ -53,6 +53,13 @@ class DotPlotNode extends Node {
     // scale down in the y direction to support smaller object nodes
     const yScale = CASObjectType.DOT.radius / model.objectType.radius;
 
+    // const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
+    //   new Bounds2( model.range.min, 0, model.range.max, 1 ),
+    //   new Bounds2( 0, numberLinePositionY - 14.84, 0 + numberLineWidth, numberLinePositionY )
+    // );
+    // TODO: we currently define the y range with the x width because we are thinking of it as a square, with a stack of
+    //  15 balls as the high point. Consider instead something like above, where we just base the y scaling on the height
+    // of one ball.
     const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
       new Bounds2( model.range.min, 0, model.range.max, model.range.getLength() ),
       new Bounds2( 0, numberLinePositionY - numberLineWidth * yScale, 0 + numberLineWidth, numberLinePositionY )
@@ -67,7 +74,7 @@ class DotPlotNode extends Node {
         color: Color.BLACK,
         includeXAxis: true,
         tandem: options.tandem.createTandem( 'numberLineNode' ),
-        top: numberLinePositionY
+        y: numberLinePositionY
       } );
     backgroundNode.addChild( numberLineNode );
 
@@ -75,8 +82,7 @@ class DotPlotNode extends Node {
 
       // TODO: This may be asymmetrical if it accounts for edge labels
       centerX: numberLineNode.centerX,
-
-      top: numberLineNode.bottom - 2,
+      top: numberLineNode.bottom + 3,
       font: new PhetFont( 15 )
     } ) );
     this.dotLayer = new Node();

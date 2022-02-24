@@ -74,31 +74,16 @@ class NumberLineNode extends Node {
     } );
     this.addChild( tickLabelSet );
 
-    let originY = tickMarkSet.top;
-
     if ( options.includeXAxis ) {
-
-      // TODO from CK: this feels like the wrong way to do this
-      // shift the number line up so 0 is on the x-axis
-
-      // override our localBounds so they don't change since moving the tick marks/labels for the x-axis or adding the
-      // mean triangle can cause visual shifting from changing bounds
-      // TODO: setting localBounds seems suspicious
-      // this.localBounds = this.localBounds.copy();
-
-      // tickMarkSet.y = -TICK_MARK_EXTENT / 2;
-      // tickLabelSet.y = -TICK_MARK_EXTENT / 2;
-      originY = tickMarkSet.centerY;
-
       const xAxisNode = new Path( new Shape()
-        .moveTo( tickMarkSet.left, originY )
-        .lineTo( tickMarkSet.right, originY ), {
+        .moveTo( tickMarkSet.left, 0 )
+        .lineTo( tickMarkSet.right, 0 ), {
         stroke: options.color
       } );
       this.addChild( xAxisNode );
 
       // For the dot plot, when "mean" is selected, there is a purple overlay on the x-axis (if there is an x-axis)
-      const rangeNode = new Path( new Shape().moveTo( 0, originY ).lineToRelative( 100, 0 ), {
+      const rangeNode = new Path( new Shape().moveTo( 0, 0 ).lineToRelative( 100, 0 ), {
         stroke: CASColors.meanColorProperty,
         lineWidth: 3.2
       } );
@@ -108,8 +93,8 @@ class NumberLineNode extends Node {
 
             // TODO: What to do if the range is 0???
             rangeNode.shape = new Shape()
-              .moveTo( modelViewTransform.modelToViewX( range.min ), originY )
-              .lineTo( modelViewTransform.modelToViewX( range.max ), originY );
+              .moveTo( modelViewTransform.modelToViewX( range.min ), 0 )
+              .lineTo( modelViewTransform.modelToViewX( range.max ), 0 );
           }
           rangeNode.visible = isShowingMeanIndicator && range !== null;
         } );
@@ -122,7 +107,7 @@ class NumberLineNode extends Node {
     // and puts objects in the right spots.
     const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
       new Bounds2( range.min, 0, range.max, range.getLength() ),
-      new Bounds2( 0, originY - width, width, width )
+      new Bounds2( 0, -width, width, width )
     );
 
     const meanIndicatorNode = NumberLineNode.createMeanIndicatorNode();
@@ -131,7 +116,7 @@ class NumberLineNode extends Node {
     Property.multilink( [ meanValueProperty, isShowingMeanIndicatorProperty ],
       ( meanValue: number | null, isShowingMeanIndicator: boolean ) => {
         if ( meanValue !== null ) {
-          meanIndicatorNode.centerTop = new Vector2( modelViewTransform.modelToViewX( meanValue ), originY );
+          meanIndicatorNode.centerTop = new Vector2( modelViewTransform.modelToViewX( meanValue ), 0 );
         }
         meanIndicatorNode.visible = isShowingMeanIndicator && meanValue !== null;
       } );
