@@ -77,7 +77,6 @@ class CASAccordionBox extends AccordionBox {
 
     // TODO: we are mutating the position of things being passed in
 
-    checkboxPanel.right = backgroundNode.right;
     checkboxPanel.centerY = fullHeightBackgroundBounds.centerY;
     backgroundNode.addChild( checkboxPanel );
 
