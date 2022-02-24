@@ -10,12 +10,13 @@
 import optionize from '../../../../phet-core/js/optionize.js';
 import centerAndSpread from '../../centerAndSpread.js';
 import VerticalCheckboxGroup, { VerticalCheckboxGroupOptions } from '../../../../sun/js/VerticalCheckboxGroup.js';
-import { HBox, Text } from '../../../../scenery/js/imports.js';
+import { HBox, Line, Node, Text } from '../../../../scenery/js/imports.js';
 import CASModel from '../model/CASModel.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 import CASConstants from '../CASConstants.js';
 import NumberLineNode from './NumberLineNode.js';
 import MedianBarsNode, { MedianBarsNodeOptions } from './MedianBarsNode.js';
+import CASColors from '../CASColors.js';
 
 type TopRepresentationCheckboxGroupSelfOptions = {
   includeSortData?: boolean;
@@ -51,7 +52,19 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
         spacing: 24.5,
         children: [
           new Text( centerAndSpreadStrings.mean, TEXT_OPTIONS ),
-          NumberLineNode.createMeanIndicatorNode()
+          new Node( {
+            children: [
+
+              // Horizontal line above the triangle
+              new Line( -12, -1, 12, -1, {
+                stroke: CASColors.meanColorProperty,
+                lineWidth: 2
+              } ),
+
+              // Triangle
+              NumberLineNode.createMeanIndicatorNode()
+            ]
+          } )
         ]
       } ),
       property: model.isShowingTopMeanProperty
