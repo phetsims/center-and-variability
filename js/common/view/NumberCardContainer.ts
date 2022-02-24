@@ -29,13 +29,14 @@ import CASConstants from '../CASConstants.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import MedianBarsNode from './MedianBarsNode.js';
+import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 
 // constants
 const CARD_SPACING = 10;
 const getCardPositionX = ( index: number ) => index * ( CardNode.CARD_WIDTH + CARD_SPACING );
 
 type NumberCardContainerSelfOptions = {};
-export type NumberCardOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
+export type NumberCardOptions = NodeOptions & RequiredTandem<NodeOptions>;
 
 // TODO: Rename CardNodeContainer
 class NumberCardContainer extends Node {

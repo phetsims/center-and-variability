@@ -19,10 +19,11 @@ import Animation from '../../../../twixt/js/Animation.js';
 import Range from '../../../../dot/js/Range.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import CardModel from '../model/CardModel.js';
+import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 
 // TODO: Rename options
 type NumberCardSelfOptions = {};
-export type NumberCardOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
+export type NumberCardOptions = NodeOptions & RequiredTandem<NodeOptions>;
 
 class CardNode extends Node {
   readonly positionProperty: Vector2Property;

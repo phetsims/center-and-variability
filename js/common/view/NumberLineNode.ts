@@ -24,6 +24,7 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 
 // constants
 const TICK_MARK_EXTENT = 10;
@@ -32,7 +33,7 @@ type NumberLineNodeSelfOptions = {
   color?: PaintDef;
   includeXAxis?: boolean;
 };
-export type NumberLineNodeOptions = NumberLineNodeSelfOptions & NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
+export type NumberLineNodeOptions = NumberLineNodeSelfOptions & NodeOptions & RequiredTandem<NodeOptions>;
 
 class NumberLineNode extends Node {
 

@@ -25,11 +25,12 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import MedianBarsNode from './MedianBarsNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
+import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 
 // constants
 
 type DotPlotNodeSelfOptions = {};
-export type DotPlotNodeOptions = NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
+export type DotPlotNodeOptions = NodeOptions & RequiredTandem<NodeOptions>;
 
 class DotPlotNode extends Node {
 

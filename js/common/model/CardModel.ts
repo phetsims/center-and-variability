@@ -8,7 +8,7 @@
  */
 import CASObject from './CASObject.js';
 import centerAndSpread from '../../centerAndSpread.js';
-import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import PhetioObject, { PhetioObjectOptions, RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
@@ -18,7 +18,7 @@ import CASObjectType from './CASObjectType.js';
 const CASObjectReferenceIO = ReferenceIO( CASObject.CASObjectIO );
 
 type CardModelSelfOptions = {};
-type CardModelOptions = CardModelSelfOptions & PhetioObjectOptions & Required<Pick<PhetioObjectOptions, 'tandem'>>;
+type CardModelOptions = CardModelSelfOptions & PhetioObjectOptions & RequiredTandem<PhetioObjectOptions>;
 
 class CardModel extends PhetioObject {
 

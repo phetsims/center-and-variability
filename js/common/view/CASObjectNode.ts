@@ -19,12 +19,13 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import CASColors from '../CASColors.js';
+import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 
 type CASObjectNodeSelfOptions = {
   objectViewType?: CASObjectType;
   draggingEnabled?: boolean;
 };
-export type CASObjectNodeOptions = CASObjectNodeSelfOptions & NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
+export type CASObjectNodeOptions = CASObjectNodeSelfOptions & NodeOptions & RequiredTandem<NodeOptions>;
 
 class CASObjectNode extends Node {
 

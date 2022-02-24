@@ -18,9 +18,10 @@ import SoccerModel from '../model/SoccerModel.js';
 import CASConstants from '../CASConstants.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import CASObject from '../model/CASObject.js';
+import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 
 type KickButtonGroupSelfOptions = {};
-export type KickButtonGroupOptions = KickButtonGroupSelfOptions & VBoxOptions & Required<Pick<VBoxOptions, 'tandem'>>;
+export type KickButtonGroupOptions = KickButtonGroupSelfOptions & VBoxOptions & RequiredTandem<VBoxOptions>;
 
 // constants
 const TEXT_MAX_WIDTH = 80;

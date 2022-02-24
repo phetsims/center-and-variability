@@ -9,7 +9,7 @@
 
 import centerAndSpread from '../../centerAndSpread.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
-import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import PhetioObject, { PhetioObjectOptions, RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
@@ -30,7 +30,7 @@ type CASObjectSelfOptions = {
 export type CASObjectOptions =
   CASObjectSelfOptions
   & PhetioObjectOptions
-  & Required<Pick<PhetioObjectOptions, 'tandem'>>;
+  & RequiredTandem<PhetioObjectOptions>;
 
 class CASObject extends PhetioObject {
 

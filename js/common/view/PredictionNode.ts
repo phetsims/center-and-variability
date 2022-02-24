@@ -18,6 +18,7 @@ import ShadedSphereNode from '../../../../scenery-phet/js/ShadedSphereNode.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
+import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 
 type PredictionNodeSelfOptions = {
   color: ColorDef,
@@ -26,7 +27,7 @@ type PredictionNodeSelfOptions = {
   roundToInterval: number | null
 };
 
-export type PredictionNodeOptions = PredictionNodeSelfOptions & NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
+export type PredictionNodeOptions = PredictionNodeSelfOptions & NodeOptions & RequiredTandem<NodeOptions>;
 
 class PredictionNode extends Node {
 

@@ -9,7 +9,7 @@
 
 import centerAndSpread from '../../centerAndSpread.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import PhetioObject, { PhetioObjectOptions, RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
@@ -20,7 +20,7 @@ type SoccerPlayerSelfOptions = {};
 type SoccerPlayerOptions =
   SoccerPlayerSelfOptions
   & PhetioObjectOptions
-  & Required<Pick<PhetioObjectOptions, 'tandem'>>;
+  & RequiredTandem<PhetioObjectOptions>;
 
 class SoccerPlayer extends PhetioObject {
   readonly isKickingProperty: BooleanProperty;

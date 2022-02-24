@@ -14,9 +14,10 @@ import CASColors from '../common/CASColors.js';
 import centerAndSpread from '../centerAndSpread.js';
 import CASModel from './model/CASModel.js';
 import CASScreenView from './view/CASScreenView.js';
+import { RequiredTandem } from '../../../tandem/js/PhetioObject.js';
 
 type CASScreenSelfOptions = {};
-export type CASScreenOptions = CASScreenSelfOptions & ScreenOptions & Required<Pick<ScreenOptions, 'tandem'>>;
+export type CASScreenOptions = CASScreenSelfOptions & ScreenOptions & RequiredTandem<ScreenOptions>;
 
 class CASScreen<M extends CASModel, V extends CASScreenView> extends Screen<M, V> {
 

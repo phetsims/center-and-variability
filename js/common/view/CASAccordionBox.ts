@@ -18,6 +18,7 @@ import centerAndSpread from '../../centerAndSpread.js';
 import TopRepresentationCheckboxGroup from './TopRepresentationCheckboxGroup.js';
 import CASModel from '../model/CASModel.js';
 import ValueReadoutsNode from './ValueReadoutsNode.js';
+import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 
 type CASAccordionBoxSelfOptions = {
   titleString: string;
@@ -26,7 +27,7 @@ type CASAccordionBoxSelfOptions = {
 export type CASAccordionBoxOptions =
   CASAccordionBoxSelfOptions
   & Omit<AccordionBoxOptions, 'titleNode' | 'expandedProperty'>
-  & Required<Pick<NodeOptions, 'tandem'>>;
+  & RequiredTandem<NodeOptions>;
 
 // constants
 const CONTENT_MARGIN = 10;
