@@ -48,7 +48,7 @@ class DotPlotNode extends Node {
     const backgroundNode = new Rectangle( 0, 0, numberLineWidth, 180 );
     this.addChild( backgroundNode );
 
-    const numberLinePositionY = 124;
+    const numberLinePositionY = 127;
 
     // scale down in the y direction to support smaller object nodes
     const yScale = CASObjectType.DOT.radius / model.objectType.radius;
@@ -82,8 +82,8 @@ class DotPlotNode extends Node {
 
       // TODO: This may be asymmetrical if it accounts for edge labels
       centerX: numberLineNode.centerX,
-      top: numberLineNode.bottom + 3,
-      font: new PhetFont( 15 )
+      top: numberLineNode.bottom + 2,
+      font: new PhetFont( 13 )
     } ) );
     this.dotLayer = new Node();
     backgroundNode.addChild( this.dotLayer );
