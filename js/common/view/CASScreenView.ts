@@ -41,7 +41,10 @@ class CASScreenView extends ScreenView {
   protected readonly resetAllButton: ResetAllButton;
   protected readonly modelViewTransform: ModelViewTransform2;
   protected readonly model: CASModel;
-  protected readonly objectsLayer: Node;
+  protected readonly frontObjectLayer: Node;
+
+  // TODO: We haven't enforced the "exactly half a ball should be occluded if anything is occluded" idea.
+  protected readonly backObjectLayer: Node;
   protected readonly playAreaMedianIndicatorNode: ArrowNode;
   protected readonly eraserButton: EraserButton;
   protected readonly contentLayer: Node;
@@ -71,16 +74,26 @@ class CASScreenView extends ScreenView {
     // Subclasses use this to add to for correct z-ordering and correct tab navigation order
     // TODO: investigate if this is needed
     this.contentLayer = new Node();
+    this.backObjectLayer = new Node();
+
     this.addChild( this.contentLayer );
 
-    this.objectsLayer = new Node();
-    this.addChild( this.objectsLayer );
+    this.frontObjectLayer = new Node();
+    this.addChild( this.frontObjectLayer );
 
     const map = new Map<CASObject, CASObjectNode>();
 
     const createObjectNode = ( casObject: CASObject ) => {
       const casObjectNode = objectNodeGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject );
-      this.objectsLayer.addChild( casObjectNode );
+      this.frontObjectLayer.addChild( casObjectNode );
+
+      casObject.valueProperty.link( value => {
+        if ( value !== null && this.frontObjectLayer.hasChild( casObjectNode ) ) {
+          this.frontObjectLayer.removeChild( casObjectNode );
+          this.backObjectLayer.addChild( casObjectNode );
+        }
+      } );
+
       map.set( casObject, casObjectNode );
     };
     model.objectGroup.forEach( createObjectNode );
