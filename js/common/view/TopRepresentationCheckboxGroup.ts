@@ -23,6 +23,7 @@ type TopRepresentationCheckboxGroupSelfOptions = {
   includeMedian?: boolean;
   includeMean?: boolean;
   medianBarIconOptions: MedianBarsNodeOptions;
+  showMedianCheckboxIcon: boolean;
 };
 export type TopRepresentationCheckboxGroupOptions = TopRepresentationCheckboxGroupSelfOptions & VerticalCheckboxGroupOptions;
 
@@ -74,7 +75,9 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
         spacing: 14,
         children: [
           new Text( centerAndSpreadStrings.median, TEXT_OPTIONS ),
-          new MedianBarsNode( options.medianBarIconOptions ).setMedianBarsShape( 0, 0, 5, 10 )
+          ...options.showMedianCheckboxIcon ? [
+            new MedianBarsNode( options.medianBarIconOptions ).setMedianBarsShape( 0, 0, 5, 10 )
+          ] : []
         ]
       } ),
       property: model.isShowingTopMedianProperty

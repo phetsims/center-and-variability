@@ -33,7 +33,8 @@ class MeanAndMedianScreenView extends MeanOrMedianScreenView {
         medianBarIconOptions: {
           notchDirection: 'down',
           barStyle: 'continuous'
-        }
+        },
+        showMedianCheckboxIcon: true
       },
       tandem: Tandem.REQUIRED
     }, providedOptions );
