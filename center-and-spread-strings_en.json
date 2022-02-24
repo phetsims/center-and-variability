@@ -50,7 +50,10 @@
   "mean": {
     "value": "Mean"
   },
-  "predict": {
-    "value": "Predict"
+  "predictMean": {
+    "value": "Predict Mean"
+  },
+  "predictMedian": {
+    "value": "Predict Median"
   }
 }

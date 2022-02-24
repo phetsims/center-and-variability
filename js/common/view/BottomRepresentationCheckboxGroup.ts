@@ -15,7 +15,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import centerAndSpread from '../../centerAndSpread.js';
 import VerticalCheckboxGroup, { VerticalCheckboxGroupOptions } from '../../../../sun/js/VerticalCheckboxGroup.js';
-import { Text, HBox } from '../../../../scenery/js/imports.js';
+import { HBox, Text } from '../../../../scenery/js/imports.js';
 import CASModel from '../model/CASModel.js';
 import CASConstants from '../CASConstants.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
@@ -78,14 +78,14 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
       property: model.isShowingBottomMedianProperty
     } );
 
-    const createPredictionItem = ( property: Property<boolean>, color: ColorDef ) => {
+    const createPredictionItem = ( property: Property<boolean>, string: string, color: ColorDef ) => {
       return {
         node: new HBox( {
           spacing: 20,
           children: [
 
             // TODO: this will be odd to a11y because both buttons have the same text.  Do we have alt text for the icons?  Or maybe we need alt text for the entire checkbox?
-            new Text( centerAndSpreadStrings.predict, TEXT_OPTIONS ),
+            new Text( string, TEXT_OPTIONS ),
             new PredictionNode( new Property<number>( 1 ), ModelViewTransform2.createIdentity(), new Range( 1, 16 ), {
               pickable: false,
               maxHeight: 20,
@@ -98,8 +98,12 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
       };
     };
 
-    options.includePredictMean && items.push( createPredictionItem( model.isShowingMeanPredictionProperty, CASColors.meanColorProperty ) );
-    options.includePredictMedian && items.push( createPredictionItem( model.isShowingMedianPredictionProperty, CASColors.medianColorProperty ) );
+    options.includePredictMean && items.push( createPredictionItem(
+      model.isShowingMeanPredictionProperty, centerAndSpreadStrings.predictMean, CASColors.meanColorProperty
+    ) );
+    options.includePredictMedian && items.push( createPredictionItem(
+      model.isShowingMedianPredictionProperty, centerAndSpreadStrings.predictMedian, CASColors.medianColorProperty
+    ) );
     super( items, options );
   }
 }

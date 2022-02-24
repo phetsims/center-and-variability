@@ -29,7 +29,8 @@ type StringsType = {
   'dotPlot': string,
   'median': string,
   'mean': string,
-  'predict': string
+  'predictMean': string,
+  'predictMedian': string
 };
 
 const centerAndSpreadStrings = getStringModule( 'CENTER_AND_SPREAD' ) as StringsType;
