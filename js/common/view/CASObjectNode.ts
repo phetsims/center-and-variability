@@ -98,7 +98,7 @@ class CASObjectNode extends Node {
     // show or hide the median highlight
     Property.multilink( [ casObject.isMedianObjectProperty, isShowingBottomMedianProperty ],
       ( isMedianObject, isShowingBottomMedian ) => {
-        medianHighlight.visible = isMedianObject && isShowingBottomMedian;
+        medianHighlight.visible = isMedianObject && isShowingBottomMedian && options.objectViewType !== CASObjectType.DOT;
       } );
   }
 }
