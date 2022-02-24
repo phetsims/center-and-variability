@@ -124,12 +124,14 @@ class CASScreenView extends ScreenView {
     this.medianPredictionNode = new PredictionNode( model.medianPredictionProperty, this.modelViewTransform, model.range, {
       center: this.layoutBounds.center,
       tandem: options.tandem.createTandem( 'medianPredictionNode' ),
-      color: CASColors.medianColorProperty
+      color: CASColors.medianColorProperty,
+      roundToInterval: 0.5
     } );
     this.meanPredictionNode = new PredictionNode( model.meanPredictionProperty, this.modelViewTransform, model.range, {
       center: this.layoutBounds.center,
       tandem: options.tandem.createTandem( 'meanPredictionNode' ),
-      color: CASColors.meanColorProperty
+      color: CASColors.meanColorProperty,
+      roundToInterval: null // continuous
     } );
 
     model.isShowingMedianPredictionProperty.link( isShowingMedianPrediction => {

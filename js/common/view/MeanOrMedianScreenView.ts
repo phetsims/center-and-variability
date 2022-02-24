@@ -75,11 +75,12 @@ class MeanOrMedianScreenView extends SoccerScreenView {
         topCheckboxPanelWrapper.x = bottomCheckboxPanelWrapper.x;
       } );
 
-    this.contentLayer.addChild( this.medianPredictionNode );
-
+    // Add in the same order as the checkboxes, so the z-order matches the checkbox order
     if ( !options.isMedianScreen ) {
       this.contentLayer.addChild( this.meanPredictionNode );
     }
+
+    this.contentLayer.addChild( this.medianPredictionNode );
   }
 
   clearData(): void {

@@ -2,7 +2,6 @@
 
 /**
  * Shows a shaded sphere and arrow pointing up, to show where the user predicts a median value.
- * Snaps to 0.5 increments.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
@@ -21,7 +20,8 @@ import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
 
 type PredictionNodeSelfOptions = {
-  color: ColorDef
+  color: ColorDef,
+  roundToInterval: number | null
 };
 
 export type PredictionNodeOptions = PredictionNodeSelfOptions & NodeOptions & Required<Pick<NodeOptions, 'tandem'>>;
@@ -69,7 +69,9 @@ class PredictionNode extends Node {
       const constrainedValue = dragRange.constrainValue( modelViewTransform.viewToModelX( dragPosition.x ) );
 
       // TODO: Dragging seems to lag and is sluggish.  Maybe rasterize the node?????
-      predictionProperty.value = Utils.roundToInterval( constrainedValue, 0.5 );
+      predictionProperty.value = options.roundToInterval === null ?
+                                 constrainedValue :
+                                 Utils.roundToInterval( constrainedValue, options.roundToInterval );
     } );
 
     predictionProperty.link( prediction => {
