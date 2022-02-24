@@ -98,8 +98,8 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
       };
     };
 
-    options.includePredictMedian && items.push( createPredictionItem( model.isShowingMedianPredictionProperty, CASColors.medianColorProperty ) );
     options.includePredictMean && items.push( createPredictionItem( model.isShowingMeanPredictionProperty, CASColors.meanColorProperty ) );
+    options.includePredictMedian && items.push( createPredictionItem( model.isShowingMedianPredictionProperty, CASColors.medianColorProperty ) );
     super( items, options );
   }
 }
