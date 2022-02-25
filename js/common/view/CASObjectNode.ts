@@ -45,6 +45,9 @@ class CASObjectNode extends Node {
     const viewRadius = modelViewTransform.modelToViewDeltaX( options.objectViewType.radius );
 
     // TODO: These should be edge to edge
+    // TODO: For small dots, there is an optical illusion or rasterizing/roundoff/aliasing issue that makes it
+    // look lopsided (heavier on the left)
+    // TODO-DESIGN: This highlight is difficult to see
     const medianHighlight = new Circle( viewRadius + 1.75, {
       fill: CASColors.medianColorProperty
     } );
@@ -107,6 +110,12 @@ class CASObjectNode extends Node {
     Property.multilink( [ casObject.valueProperty, casObject.isAnimatingProperty ],
       ( value: number | null, isAnimating: boolean ) => {
         this.opacity = value === null && !isAnimating && !casObject.isFirstObject ? 0.4 : 1;
+      } );
+
+    // isShowingAnimationHighlightProperty
+    Property.multilink( [ casObject.isShowingAnimationHighlightProperty ],
+      ( isShowingAnimationHighlight: boolean ) => {
+        medianHighlight.visible = isShowingAnimationHighlight && options.objectViewType === CASObjectType.DOT;
       } );
   }
 }

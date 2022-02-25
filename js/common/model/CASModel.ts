@@ -33,7 +33,7 @@ type CASModelSelfOptions = {
 export type CASModelOptions = CASModelSelfOptions & {};
 
 // constants
-const HIGHLIGHT_ANIMATION_TIME_STEP = 0.5; // in seconds
+const HIGHLIGHT_ANIMATION_TIME_STEP = 0.25; // in seconds
 
 class CASModel {
   readonly objectGroup: PhetioGroup<CASObject, [ CASObjectType, Omit<CASObjectOptions, 'tandem'> ]>;
@@ -137,6 +137,8 @@ class CASModel {
     this.timeProperty = new NumberProperty( 0, {
       tandem: options.tandem.createTandem( 'timeProperty' )
     } );
+
+    // TODO: Instrument for PhET-iO or convert to number.  Should it be phet-io instrumented for the state wrapper?
     this.highlightAnimationIndexProperty = new Property<number | null>( null );
     this.lastHighlightAnimationStepTime = 0;
 
@@ -262,6 +264,17 @@ class CASModel {
     this.objectChangedEmitter = new Emitter<[ CASObject ]>( {
       parameters: [ { valueType: CASObject } ]
     } );
+
+    // Don't show animation on startup
+    this.isShowingTopMedianProperty.lazyLink( isShowingTopMedian => {
+      if ( isShowingTopMedian ) {
+        this.highlightAnimationIndexProperty.value = 0;
+        this.lastHighlightAnimationStepTime = this.timeProperty.value;
+      }
+      else {
+        this.clearAnimation();
+      }
+    } );
   }
 
   protected createObject( options: Omit<CASObjectOptions, 'tandem'> ): CASObject {
@@ -311,7 +324,9 @@ class CASModel {
     } );
   }
 
+  // TODO: Should this be an emitter.  We say yes.
   protected objectValueBecameNonNull( casObject: CASObject ): void {
+    this.updateAnimation();
   }
 
   /**
@@ -338,29 +353,47 @@ class CASModel {
     this.clearData();
   }
 
-  /**
-   * Steps the model.
-   * @param dt - time step, in seconds
-   */
-  step( dt: number ): void {
-    this.timeProperty.value += dt;
+  clearAnimation() {
+    this.highlightAnimationIndexProperty.value = null;
+    this.objectGroup.forEach( casObject => casObject.isShowingAnimationHighlightProperty.set( false ) );
+  }
+
+  updateAnimation() {
+
+    // TODO: copied from updateMeanAndMedian
+    const objectsInDataSet = this.objectGroup.filter( casObject => casObject.valueProperty.value !== null );
+    const sortedObjects = _.sortBy( objectsInDataSet, [ casObject => casObject.valueProperty.value, casObject => casObject.positionProperty.value.y ] );
+
+    for ( let i = 0; i < sortedObjects.length / 2; i++ ) {
+      const isHighlighted = i === this.highlightAnimationIndexProperty.value;
+      sortedObjects[ i ].isShowingAnimationHighlightProperty.value = isHighlighted;
+
+      const upperIndex = sortedObjects.length - 1 - i;
+      sortedObjects[ upperIndex ].isShowingAnimationHighlightProperty.value = isHighlighted;
+    }
 
     if ( this.highlightAnimationIndexProperty.value !== null &&
          this.timeProperty.value > this.lastHighlightAnimationStepTime + HIGHLIGHT_ANIMATION_TIME_STEP ) {
 
-      // TODO: copied from updateMeanAndMedian
-      const objectsInDataSet = this.objectGroup.filter( casObject => casObject.valueProperty.value !== null );
-      const sortedObjects = _.sortBy( objectsInDataSet, casObject => casObject.valueProperty.value );
-
-      // TODO: Check if this max check is correct
-      if ( this.highlightAnimationIndexProperty.value >= sortedObjects.length / 2 - 2 ) {
-        this.highlightAnimationIndexProperty.value = null;
+      if ( this.highlightAnimationIndexProperty.value >= sortedObjects.length / 2 ) {
+        this.clearAnimation();
       }
       else {
         this.highlightAnimationIndexProperty.value++;
         this.lastHighlightAnimationStepTime = this.timeProperty.value;
       }
     }
+  }
+
+  /**
+   * Steps the model.
+   *
+   * @param dt - time step, in seconds
+   */
+  step( dt: number ): void {
+    this.timeProperty.value += dt;
+
+    this.updateAnimation();
 
     this.objectGroup.forEach( casObject => casObject.step( dt ) );
   }
