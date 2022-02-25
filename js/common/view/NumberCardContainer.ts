@@ -30,6 +30,7 @@ import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import MedianBarsNode from './MedianBarsNode.js';
 import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
+import CASColors from '../CASColors.js';
 
 // constants
 const CARD_SPACING = 10;
@@ -170,7 +171,7 @@ class NumberCardContainer extends Node {
       tailWidth: 5,
       pickable: false,
       doubleHead: true,
-      fill: 'red',
+      fill: CASColors.dragIndicatorColorProperty,
       stroke: null,
       tandem: options.tandem.createTandem( 'dragIndicatorArrowNode' )
     } );

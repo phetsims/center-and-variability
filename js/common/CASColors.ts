@@ -36,6 +36,9 @@ const CASColors = {
   kickButtonFillColorProperty: new ProfileColorProperty( centerAndSpread, 'kickButtonFillColor', {
     default: Color.WHITE
   } ),
+  dragIndicatorColorProperty: new ProfileColorProperty( centerAndSpread, 'dragIndicatorColor', {
+    default: Color.RED
+  } ),
 
   // sky gradient, sampled from a screenshot
   skyGradientTopColorProperty: new ProfileColorProperty( centerAndSpread, 'skyGradientTop', { default: '#2e4f8a' } ),
