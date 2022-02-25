@@ -31,7 +31,7 @@ type CASObjectSelfOptions = {
 export type CASObjectOptions =
   CASObjectSelfOptions
   & PhetioObjectOptions
-  & RequiredTandem<PhetioObjectOptions>;
+  & RequiredTandem;
 
 class CASObject extends PhetioObject {
 

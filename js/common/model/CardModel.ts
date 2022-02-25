@@ -18,7 +18,7 @@ import CASObjectType from './CASObjectType.js';
 const CASObjectReferenceIO = ReferenceIO( CASObject.CASObjectIO );
 
 type CardModelSelfOptions = {};
-type CardModelOptions = CardModelSelfOptions & PhetioObjectOptions & RequiredTandem<PhetioObjectOptions>;
+type CardModelOptions = CardModelSelfOptions & PhetioObjectOptions & RequiredTandem;
 
 class CardModel extends PhetioObject {
 

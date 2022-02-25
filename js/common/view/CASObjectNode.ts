@@ -25,7 +25,7 @@ type CASObjectNodeSelfOptions = {
   objectViewType?: CASObjectType;
   draggingEnabled?: boolean;
 };
-export type CASObjectNodeOptions = CASObjectNodeSelfOptions & NodeOptions & RequiredTandem<NodeOptions>;
+export type CASObjectNodeOptions = CASObjectNodeSelfOptions & NodeOptions & RequiredTandem;
 
 class CASObjectNode extends Node {
 

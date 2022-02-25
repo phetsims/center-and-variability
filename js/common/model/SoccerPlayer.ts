@@ -20,7 +20,7 @@ type SoccerPlayerSelfOptions = {};
 type SoccerPlayerOptions =
   SoccerPlayerSelfOptions
   & PhetioObjectOptions
-  & RequiredTandem<PhetioObjectOptions>;
+  & RequiredTandem;
 
 class SoccerPlayer extends PhetioObject {
   readonly isKickingProperty: BooleanProperty;

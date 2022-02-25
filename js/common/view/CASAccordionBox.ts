@@ -8,7 +8,7 @@
  */
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import { Node, NodeOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import CASConstants from '../CASConstants.js';
 import optionize from '../../../../phet-core/js/optionize.js';
@@ -28,7 +28,7 @@ type CASAccordionBoxSelfOptions = {
 export type CASAccordionBoxOptions =
   CASAccordionBoxSelfOptions
   & Omit<AccordionBoxOptions, 'titleNode' | 'expandedProperty'>
-  & RequiredTandem<NodeOptions>;
+  & RequiredTandem;
 
 // constants
 const CONTENT_MARGIN = 10;

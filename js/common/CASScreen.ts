@@ -17,7 +17,7 @@ import CASScreenView from './view/CASScreenView.js';
 import { RequiredTandem } from '../../../tandem/js/PhetioObject.js';
 
 type CASScreenSelfOptions = {};
-export type CASScreenOptions = CASScreenSelfOptions & ScreenOptions & RequiredTandem<ScreenOptions>;
+export type CASScreenOptions = CASScreenSelfOptions & ScreenOptions & RequiredTandem;
 
 class CASScreen<M extends CASModel, V extends CASScreenView> extends Screen<M, V> {
 

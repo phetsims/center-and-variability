@@ -27,7 +27,7 @@ type PredictionNodeSelfOptions = {
   roundToInterval: number | null
 };
 
-export type PredictionNodeOptions = PredictionNodeSelfOptions & NodeOptions & RequiredTandem<NodeOptions>;
+export type PredictionNodeOptions = PredictionNodeSelfOptions & NodeOptions & RequiredTandem;
 
 class PredictionNode extends Node {
 

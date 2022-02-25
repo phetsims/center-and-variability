@@ -23,7 +23,7 @@ import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 
 // TODO: Rename options
 type NumberCardSelfOptions = {};
-export type NumberCardOptions = NodeOptions & RequiredTandem<NodeOptions>;
+export type NumberCardOptions = NodeOptions & RequiredTandem;
 
 class CardNode extends Node {
   readonly positionProperty: Vector2Property;

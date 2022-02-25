@@ -21,7 +21,7 @@ import CASObject from '../model/CASObject.js';
 import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 
 type KickButtonGroupSelfOptions = {};
-export type KickButtonGroupOptions = KickButtonGroupSelfOptions & VBoxOptions & RequiredTandem<VBoxOptions>;
+export type KickButtonGroupOptions = KickButtonGroupSelfOptions & VBoxOptions & RequiredTandem;
 
 // constants
 const TEXT_MAX_WIDTH = 80;

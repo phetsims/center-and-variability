@@ -33,7 +33,7 @@ type NumberLineNodeSelfOptions = {
   color?: PaintDef;
   includeXAxis?: boolean;
 };
-export type NumberLineNodeOptions = NumberLineNodeSelfOptions & NodeOptions & RequiredTandem<NodeOptions>;
+export type NumberLineNodeOptions = NumberLineNodeSelfOptions & NodeOptions & RequiredTandem;
 
 class NumberLineNode extends Node {
 

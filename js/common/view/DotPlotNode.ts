@@ -30,7 +30,7 @@ import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 // constants
 
 type DotPlotNodeSelfOptions = {};
-export type DotPlotNodeOptions = NodeOptions & RequiredTandem<NodeOptions>;
+export type DotPlotNodeOptions = NodeOptions & RequiredTandem;
 
 class DotPlotNode extends Node {
 

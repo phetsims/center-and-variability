@@ -36,7 +36,7 @@ const CARD_SPACING = 10;
 const getCardPositionX = ( index: number ) => index * ( CardNode.CARD_WIDTH + CARD_SPACING );
 
 type NumberCardContainerSelfOptions = {};
-export type NumberCardOptions = NodeOptions & RequiredTandem<NodeOptions>;
+export type NumberCardOptions = NodeOptions & RequiredTandem;
 
 // TODO: Rename CardNodeContainer
 class NumberCardContainer extends Node {
