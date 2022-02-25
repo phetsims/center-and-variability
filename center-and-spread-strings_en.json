@@ -55,5 +55,8 @@
   },
   "predictMedian": {
     "value": "Predict Median"
+  },
+  "valueUnknown": {
+    "value": "?"
   }
 }

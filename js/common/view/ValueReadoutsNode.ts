@@ -33,9 +33,7 @@ class ValueReadoutsNode extends VBox {
       } );
       valueProperty.link( value => {
         text.text = StringUtils.fillIn( stringTemplate, {
-
-          // TODO-DESIGN: Should we keep this '?'? If so, i18n it.
-          value: value === null ? '?' : Utils.toFixed( value, 1 )
+          value: value === null ? centerAndSpreadStrings.valueUnknown : Utils.toFixed( value, 1 )
         } );
       } );
 
