@@ -242,6 +242,7 @@ class CASModel {
     } );
 
     // Populate with initial objects for debugging
+    // TODO: Let's omit this query parameter
     for ( let i = 0; i < CASQueryParameters.objects; i++ ) {
       const targetX = dotRandom.nextIntBetween( this.range.min, this.range.max );
       this.createObject( {

@@ -19,6 +19,7 @@ import TopRepresentationCheckboxGroup from './TopRepresentationCheckboxGroup.js'
 import CASModel from '../model/CASModel.js';
 import ValueReadoutsNode from './ValueReadoutsNode.js';
 import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
+import Shape from '../../../../kite/js/Shape.js';
 
 type CASAccordionBoxSelfOptions = {
   titleString: string;
@@ -75,6 +76,9 @@ class CASAccordionBox extends AccordionBox {
     // the expand/collapse button. To vertically-center things, make a new set of bounds that includes the missing space.
     // Values come from the height of the expand/collapse button plus the y margin above and below it.
     const fullHeightBackgroundBounds = backgroundNode.localBounds.withOffsets( 0, CONTENT_MARGIN * 2 + BUTTON_SIDE_LENGTH, 0, 0 );
+
+    // add clip area so dot stacks that are taller than the accordion box are clipped appropriately
+    backgroundNode.clipArea = Shape.bounds( fullHeightBackgroundBounds );
 
     // TODO: we are mutating the position of things being passed in
 
