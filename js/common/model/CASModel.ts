@@ -15,10 +15,8 @@ import CASObject, { CASObjectOptions } from './CASObject.js';
 import CASObjectType from './CASObjectType.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Range from '../../../../dot/js/Range.js';
-import CASQueryParameters from '../CASQueryParameters.js';
 import Property from '../../../../axon/js/Property.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import dotRandom from '../../../../dot/js/dotRandom.js';
 import Utils from '../../../../dot/js/Utils.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import merge from '../../../../phet-core/js/merge.js';
@@ -245,20 +243,6 @@ class CASModel {
     this.numberOfRemainingObjectsProperty = new DerivedProperty( [ this.objectGroup.countProperty ], count => {
       return this.maxNumberOfObjects - count;
     } );
-
-    // Populate with initial objects for debugging
-    // TODO: Let's omit this query parameter
-    for ( let i = 0; i < CASQueryParameters.objects; i++ ) {
-      const targetX = dotRandom.nextIntBetween( this.range.min, this.range.max );
-      this.createObject( {
-        value: targetX
-      } );
-    }
-
-    // Stack the objects. This is a brute force algorithm that duplicates effort, but ends up with the objects
-    // correctly stacked.  Since this is only used for development with ?objects=... we decided it does not
-    // need to be rewritten.
-    this.objectGroup.forEach( object => this.moveToTop( object ) );
 
     // Signify whenever any object's value or position changes
     this.objectChangedEmitter = new Emitter<[ CASObject ]>( {
