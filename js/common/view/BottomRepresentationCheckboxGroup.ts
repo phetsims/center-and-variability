@@ -78,10 +78,10 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
       property: model.isShowingBottomMedianProperty
     } );
 
-    const createPredictionItem = ( property: Property<boolean>, string: string, color: ColorDef ) => {
+    const createPredictionItem = ( property: Property<boolean>, string: string, color: ColorDef, spacing: number ) => {
       return {
         node: new HBox( {
-          spacing: 20,
+          spacing: spacing,
           children: [
 
             // TODO: this will be odd to a11y because both buttons have the same text.  Do we have alt text for the icons?  Or maybe we need alt text for the entire checkbox?
@@ -100,10 +100,10 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
     };
 
     options.includePredictMean && items.push( createPredictionItem(
-      model.isShowingMeanPredictionProperty, centerAndSpreadStrings.predictMean, CASColors.meanColorProperty
+      model.isShowingMeanPredictionProperty, centerAndSpreadStrings.predictMean, CASColors.meanColorProperty, 20.3
     ) );
     options.includePredictMedian && items.push( createPredictionItem(
-      model.isShowingMedianPredictionProperty, centerAndSpreadStrings.predictMedian, CASColors.medianColorProperty
+      model.isShowingMedianPredictionProperty, centerAndSpreadStrings.predictMedian, CASColors.medianColorProperty, 8
     ) );
     super( items, options );
   }
