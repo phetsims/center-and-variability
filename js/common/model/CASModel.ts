@@ -81,7 +81,10 @@ class CASModel {
     this.objectGroup = new PhetioGroup( ( tandem, objectType: CASObjectType, providedOptions ) => {
 
       // Assign the tandem to the options
-      const options = merge( {}, providedOptions, { tandem: tandem } );
+      const options = merge( providedOptions, {
+        isFirstObject: this.objectGroup.count === 0,
+        tandem: tandem
+      } );
 
       return new CASObject( objectType, options );
     }, [ objectType, {} ], {

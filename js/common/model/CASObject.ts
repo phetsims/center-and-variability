@@ -23,9 +23,10 @@ import Property from '../../../../axon/js/Property.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 
 type CASObjectSelfOptions = {
-  position?: Vector2,
-  velocity?: Vector2,
-  value?: number | null
+  position?: Vector2;
+  velocity?: Vector2;
+  value?: number | null;
+  isFirstObject?: boolean;
 };
 export type CASObjectOptions =
   CASObjectSelfOptions
@@ -43,14 +44,16 @@ class CASObject extends PhetioObject {
   readonly isAnimatingProperty: BooleanProperty;
   readonly isMedianObjectProperty: BooleanProperty;
   readonly isShowingAnimationHighlightProperty: BooleanProperty;
-  static CASObjectIO: IOType;
   readonly objectType: CASObjectType;
+  readonly isFirstObject: boolean;
 
   // Where the object is animating to, or null if not yet animating
   targetX: number | null;
 
   // The value that participates in the data set.
   valueProperty: Property<number | null>;
+
+  static CASObjectIO: IOType;
 
   constructor( objectType: CASObjectType, providedOptions: CASObjectOptions ) {
 
@@ -60,13 +63,15 @@ class CASObject extends PhetioObject {
       tandem: Tandem.REQUIRED,
       phetioType: CASObject.CASObjectIO,
       phetioDynamicElement: true,
-      value: null
+      value: null,
+      isFirstObject: false
     }, providedOptions );
 
     super( options );
 
     this.objectType = objectType;
     this.targetX = null;
+    this.isFirstObject = options.isFirstObject;
 
     this.positionProperty = new Vector2Property( options.position, {
       tandem: options.tandem.createTandem( 'positionProperty' )

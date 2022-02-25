@@ -89,7 +89,7 @@ class CASObjectNode extends Node {
       } );
 
       // TODO: The initial ball should be draggable, remember that should move it into the data set, and
-      // when dropped, a new ball should be created.
+      // When dropped, a new ball should be created.
       // TODO-DESIGN: Should the ball enter the data set once dragged, or only after dropped?
       casObject.valueProperty.link( value => {
         this.pickable = value !== null;
@@ -100,6 +100,13 @@ class CASObjectNode extends Node {
     Property.multilink( [ casObject.isMedianObjectProperty, isShowingBottomMedianProperty ],
       ( isMedianObject, isShowingBottomMedian ) => {
         medianHighlight.visible = isMedianObject && isShowingBottomMedian && options.objectViewType !== CASObjectType.DOT;
+      } );
+
+    // The initial ready-to-kick ball is full opacity. The rest of the balls waiting to be kicked are lower opacity so
+    // they don't look like part of the data set, but still look kickable.
+    Property.multilink( [ casObject.valueProperty, casObject.isAnimatingProperty ],
+      ( value: number | null, isAnimating: boolean ) => {
+        this.opacity = value === null && !isAnimating && !casObject.isFirstObject ? 0.4 : 1;
       } );
   }
 }
