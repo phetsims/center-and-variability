@@ -128,9 +128,9 @@ class SoccerModel extends CASModel {
     this.ballPlayerMap.set( casObject, soccerPlayer );
 
     // TODO: Cleanup and choose distribution, see https://github.com/phetsims/center-and-spread/issues/11
-    // const weights1 = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ];
-    // const weights2 = [ 100, 100, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
-    const weights3 = [
+    // const weights = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ];
+    // const weights = [ 100, 100, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
+    const weights = [
       1, 1, 1, 1,
       1, 1, 1, 1,
       1, 1, 1, 1,
@@ -153,7 +153,8 @@ class SoccerModel extends CASModel {
     // console.log( inputNormalized );
     // console.log( resultNormalized );
 
-    const x1 = dotRandom.sampleProbabilities( weights3 ) + 1;
+    assert && assert( weights.length === this.range.getLength() + 1, 'weight array should match the model range' );
+    const x1 = dotRandom.sampleProbabilities( weights ) + 1;
 
     // Range equation is R=v0^2 sin(2 theta0) / g, see https://openstax.org/books/university-physics-volume-1/pages/4-3-projectile-motion
     // Equation 4.26
