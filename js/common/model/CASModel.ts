@@ -67,6 +67,7 @@ class CASModel {
   protected readonly timeProperty: NumberProperty;
   readonly highlightAnimationIndexProperty: Property<number | null>;
   private lastHighlightAnimationStepTime: number;
+  readonly isMedianAnimationCompleteProperty: BooleanProperty;
 
   constructor( objectType: CASObjectType, maxNumberOfObjects: number, providedOptions: CASModelOptions ) {
 
@@ -141,6 +142,7 @@ class CASModel {
     // TODO: Instrument for PhET-iO or convert to number.  Should it be phet-io instrumented for the state wrapper?
     this.highlightAnimationIndexProperty = new Property<number | null>( null );
     this.lastHighlightAnimationStepTime = 0;
+    this.isMedianAnimationCompleteProperty = new BooleanProperty( false );
 
     // TODO: This should be on the prototype
     const updateMeanAndMedian = () => {
@@ -372,16 +374,19 @@ class CASModel {
       sortedObjects[ upperIndex ].isShowingAnimationHighlightProperty.value = isHighlighted;
     }
 
-    if ( this.highlightAnimationIndexProperty.value !== null &&
+    const isAnimationFinished = this.highlightAnimationIndexProperty.value !== null &&
+                                this.highlightAnimationIndexProperty.value >= sortedObjects.length / 2;
+
+    if ( isAnimationFinished ) {
+      this.clearAnimation();
+      this.isMedianAnimationCompleteProperty.value = true;
+    }
+    else if ( this.highlightAnimationIndexProperty.value !== null &&
          this.timeProperty.value > this.lastHighlightAnimationStepTime + HIGHLIGHT_ANIMATION_TIME_STEP ) {
 
-      if ( this.highlightAnimationIndexProperty.value >= sortedObjects.length / 2 ) {
-        this.clearAnimation();
-      }
-      else {
-        this.highlightAnimationIndexProperty.value++;
-        this.lastHighlightAnimationStepTime = this.timeProperty.value;
-      }
+      // if the animation has already started, step it to the next animation index
+      this.highlightAnimationIndexProperty.value++;
+      this.lastHighlightAnimationStepTime = this.timeProperty.value;
     }
   }
 

@@ -76,7 +76,7 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
         children: [
           new Text( centerAndSpreadStrings.median, TEXT_OPTIONS ),
           ...options.showMedianCheckboxIcon ? [
-            new MedianBarsNode( options.medianBarIconOptions ).setMedianBarsShape( 0, 0, 5, 10 )
+            new MedianBarsNode( options.medianBarIconOptions ).setMedianBarsShape( 0, 0, 5, 10, true )
           ] : []
         ]
       } ),

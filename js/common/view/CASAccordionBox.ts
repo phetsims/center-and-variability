@@ -74,23 +74,25 @@ class CASAccordionBox extends AccordionBox {
 
     // Since the title is visible while the accordion box is open, this background will not any area above the bottom of
     // the expand/collapse button. To vertically-center things, make a new set of bounds that includes the missing space.
-    // Values come from the height of the expand/collapse button plus the y margin above and below it.
-    const fullHeightBackgroundBounds = backgroundNode.localBounds.withOffsets( 0, CONTENT_MARGIN * 2 + BUTTON_SIDE_LENGTH, 0, 0 );
+    // Values come from the height of the expand/collapse button plus the y margin above and below it. Also add the
+    // horizontal content margin that is not part of backgroundNode so these bounds are the full area of the accordion box.
+    const fullBackgroundBounds =
+      backgroundNode.localBounds.withOffsets( CONTENT_MARGIN, CONTENT_MARGIN * 2 + BUTTON_SIDE_LENGTH, CONTENT_MARGIN, 0 );
 
     // add clip area so dot stacks that are taller than the accordion box are clipped appropriately
-    backgroundNode.clipArea = Shape.bounds( fullHeightBackgroundBounds );
+    backgroundNode.clipArea = Shape.bounds( fullBackgroundBounds );
 
     // TODO: we are mutating the position of things being passed in
 
-    checkboxPanel.centerY = fullHeightBackgroundBounds.centerY;
+    checkboxPanel.centerY = fullBackgroundBounds.centerY;
     backgroundNode.addChild( checkboxPanel );
 
     // TODO for CK: content has no height at time of instantiation, so does not end up in the correct place.
-    contentNode.centerY = fullHeightBackgroundBounds.centerY;
+    contentNode.centerY = fullBackgroundBounds.centerY;
     backgroundNode.addChild( contentNode );
 
     if ( options.valueReadoutsNode ) {
-      options.valueReadoutsNode.centerY = fullHeightBackgroundBounds.centerY;
+      options.valueReadoutsNode.centerY = fullBackgroundBounds.centerY;
       backgroundNode.addChild( options.valueReadoutsNode );
     }
 

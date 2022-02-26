@@ -128,7 +128,7 @@ class DotPlotNode extends Node {
     } );
     this.addChild( this.medianBarsNode );
 
-    const updateMedianNode = () => {
+    const updateMedianBarNode = () => {
 
       const sortedDots = _.sortBy( model.objectGroup.getArrayCopy().filter( object => object.valueProperty.value !== null ),
         object => object.valueProperty.value );
@@ -154,14 +154,15 @@ class DotPlotNode extends Node {
         const right = modelViewTransform.modelToViewX( rightmostDot.valueProperty.value );
         const medianPositionX = modelViewTransform.modelToViewX( medianValue );
 
-        this.medianBarsNode.setMedianBarsShape( barY, left, medianPositionX, right );
+        this.medianBarsNode.setMedianBarsShape( barY, left, medianPositionX, right, model.isMedianAnimationCompleteProperty.value );
       }
       else {
         this.medianBarsNode.clear();
       }
     };
-    model.objectChangedEmitter.addListener( updateMedianNode );
-    model.isShowingTopMedianProperty.link( updateMedianNode );
+    model.objectChangedEmitter.addListener( updateMedianBarNode );
+    model.isShowingTopMedianProperty.link( updateMedianBarNode );
+    model.isMedianAnimationCompleteProperty.link( updateMedianBarNode );
   }
 
   /**

@@ -233,7 +233,7 @@ class NumberCardContainer extends Node {
         const left = getCardPositionX( 0 ) - MARGIN_X;
         const right = getCardPositionX( this.cardNodeCells.length - 1 ) + rightmostCard.width + MARGIN_X;
 
-        this.medianBarsNode.setMedianBarsShape( barY, left, ( left + right ) / 2, right );
+        this.medianBarsNode.setMedianBarsShape( barY, left, ( left + right ) / 2, right, false );
       }
       else {
         this.medianBarsNode.clear();
