@@ -140,6 +140,8 @@ class CASModel {
     // TODO: Instrument for PhET-iO or convert to number.  Should it be phet-io instrumented for the state wrapper?
     this.highlightAnimationIndexProperty = new Property<number | null>( null );
     this.lastHighlightAnimationStepTime = 0;
+
+    // TODO: Would an enum like 'not-yet-started' vs 'in-progress' vs 'complete' be clearer?
     this.isMedianAnimationCompleteProperty = new BooleanProperty( false );
 
     // TODO: This should be on the prototype
@@ -259,6 +261,7 @@ class CASModel {
       }
       else {
         this.clearAnimation();
+        this.isMedianAnimationCompleteProperty.value = false;
       }
     } );
   }
@@ -336,6 +339,9 @@ class CASModel {
     this.isShowingBottomMedianProperty.reset();
     this.isShowingMeanPredictionProperty.reset();
     this.isShowingMedianPredictionProperty.reset();
+    this.highlightAnimationIndexProperty.reset();
+    this.timeProperty.reset();
+    this.isMedianAnimationCompleteProperty.reset();
     this.clearData();
   }
 
