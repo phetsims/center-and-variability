@@ -58,6 +58,7 @@ class KickButtonGroup extends VBox {
           const numberBallsThatExistButHaventBeenKicked = nextBallToKick === null ? 0 : 1;
           const remainingBalls = model.maxNumberOfObjects - count - remainingNumberOfBallsToMultiKick + numberBallsThatExistButHaventBeenKicked;
 
+          // TODO: It is a code smell that the DerivedProperty has side effects other than returning a value.
           if ( ( numberBallsThatExistButHaventBeenKicked < numberToKick ) && multikick ) {
             content.text.text = 'Kick ' + Math.max( Math.min( remainingBalls, numberToKick ), 1 );
           }
@@ -72,13 +73,17 @@ class KickButtonGroup extends VBox {
 
       return new RectangularPushButton( {
         visibleProperty: visibleProperty,
-        // enabledProperty: enabledProperty,
         content: content.label,
         baseColor: CASColors.kickButtonFillColorProperty,
         xMargin: 12,
         yMargin: 12,
         tandem: tandem,
-        listener: () => model.kick( numberToKick )
+
+        // Use the same logic for determining whether any balls are left to kick, to allow the fire on hold behavior
+        listener: () => visibleProperty.value && model.kick( numberToKick ),
+        fireOnHold: true,
+        fireOnHoldDelay: 750,
+        fireOnHoldInterval: 250
       } );
     };
 
