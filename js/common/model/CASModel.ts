@@ -48,7 +48,7 @@ class CASModel {
 
   readonly maxNumberOfObjects: number;
 
-  // TODO: rename to allowRange or something
+  // TODO: rename to allowedRange or something
   readonly range: Range;
   readonly numberOfRemainingObjectsProperty: DerivedProperty<number, [ count: number ]>;
   readonly medianValueProperty: Property<number | null>;
@@ -316,7 +316,7 @@ class CASModel {
     } );
   }
 
-  // TODO: Should this be an emitter.  We say yes.
+  // TODO: Should this be an emitter?  We say yes.
   protected objectValueBecameNonNull( casObject: CASObject ): void {
     this.updateAnimation();
   }

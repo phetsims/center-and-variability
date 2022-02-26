@@ -36,9 +36,7 @@ class PredictionNode extends Node {
 
     const shadedSphereNode = new ShadedSphereNode( 20, {
 
-      // TODO: Add more colors to the color profile editor
-      // TODO-DESIGN: This looks more orange in the mockup
-      // TODO-DESIGN: Colorblind red?
+      // TODO-DESIGN: This looks more orange in the mockup.  Use colorblind red?
       mainColor: providedOptions.color
     } );
 
@@ -55,7 +53,7 @@ class PredictionNode extends Node {
       tandem: Tandem.REQUIRED,
       children: [ arrowNode, shadedSphereNode ],
 
-      // TODO: Touch area
+      // TODO-UX: Touch area
       cursor: 'pointer'
     }, providedOptions );
 
@@ -71,7 +69,7 @@ class PredictionNode extends Node {
     dragPositionProperty.lazyLink( dragPosition => {
       const constrainedValue = dragRange.constrainValue( modelViewTransform.viewToModelX( dragPosition.x ) );
 
-      // TODO: Dragging seems to lag and is sluggish.  Maybe rasterize the node?????
+      // TODO-UX: Dragging seems to lag and is sluggish.  Maybe rasterize the node?????
       predictionProperty.value = options.roundToInterval === null ?
                                  constrainedValue :
                                  Utils.roundToInterval( constrainedValue, options.roundToInterval );

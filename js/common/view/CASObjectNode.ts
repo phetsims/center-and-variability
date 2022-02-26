@@ -44,8 +44,8 @@ class CASObjectNode extends Node {
 
     const viewRadius = modelViewTransform.modelToViewDeltaX( options.objectViewType.radius );
 
-    // TODO: These should be edge to edge
-    // TODO: For small dots, there is an optical illusion or rasterizing/roundoff/aliasing issue that makes it
+    // TODO-UX: These should be edge to edge
+    // TODO-UX: For small dots, there is an optical illusion or rasterizing/roundoff/aliasing issue that makes it
     // look lopsided (heavier on the left)
     // TODO-DESIGN: This highlight is difficult to see
     const medianHighlight = new Circle( viewRadius + 1.75, {
@@ -91,9 +91,6 @@ class CASObjectNode extends Node {
         this.pickable = !isAnimating;
       } );
 
-      // TODO: The initial ball should be draggable, remember that should move it into the data set, and
-      // When dropped, a new ball should be created.
-      // TODO-DESIGN: Should the ball enter the data set once dragged, or only after dropped?
       casObject.valueProperty.link( value => {
         this.pickable = value !== null;
       } );

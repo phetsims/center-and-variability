@@ -213,7 +213,7 @@ class NumberCardContainer extends Node {
 
     model.medianValueProperty.link( medianValue => {
 
-      // TODO: Re-center when the text changes since it could have a different width
+      // TODO-PHET_IO: Re-center when the text changes since it could have a different width
       medianTextNode.text = StringUtils.fillIn( centerAndSpreadStrings.medianEqualsValue, { value: model.medianValueProperty.value } );
     } );
 
@@ -242,7 +242,7 @@ class NumberCardContainer extends Node {
       // TODO: Better guard on model.isShowingTopMedianProperty.value
       if ( leftmostCard ) {
 
-        // TODO: Can show median label outside of accordion box for small numbers
+        // TODO-UX: Can show median label outside of accordion box for small numbers
         medianReadoutPanel.centerX = getCardPositionX( ( this.cardNodeCells.length - 1 ) / 2 ) + leftmostCard.width / 2;
         medianReadoutPanel.top = leftmostCard.bottom + MARGIN_Y + 13;
         medianReadoutPanel.visible = model.isShowingTopMedianProperty.value;
