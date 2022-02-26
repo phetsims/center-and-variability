@@ -12,12 +12,6 @@ import centerAndSpread from '../centerAndSpread.js';
 const CASQueryParameters = QueryStringMachine.getAll( {
 
   // Internal use only
-
-  // Populate on startup to facilitate iteration
-  objects: {
-    type: 'number',
-    defaultValue: 0
-  }
 } );
 
 centerAndSpread.register( 'CASQueryParameters', CASQueryParameters );
