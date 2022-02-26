@@ -137,6 +137,9 @@ class CASObject extends PhetioObject {
     this.velocityProperty.dispose();
     this.isAnimatingProperty.dispose();
     this.valueProperty.dispose();
+    this.dragPositionProperty.dispose();
+    this.isMedianObjectProperty.dispose();
+    this.isShowingAnimationHighlightProperty.dispose();
   }
 
   toStateObject() {
