@@ -172,7 +172,8 @@ class NumberCardContainer extends Node {
       pickable: false,
       doubleHead: true,
       fill: CASColors.dragIndicatorColorProperty,
-      stroke: null,
+      stroke: 'black',
+      lineWidth: 1,
       tandem: options.tandem.createTandem( 'dragIndicatorArrowNode' )
     } );
 
@@ -193,8 +194,7 @@ class NumberCardContainer extends Node {
         dragIndicatorContainer.children = newChildren;
 
         if ( leftCard && rightCard ) {
-          const center = leftCard.bounds.center.average( rightCard.bounds.center );
-          this.dragIndicatorArrowNode.center = center;
+          this.dragIndicatorArrowNode.centerBottom = leftCard.bounds.centerTop.plusXY( 0, -10 );
         }
       }
     };
