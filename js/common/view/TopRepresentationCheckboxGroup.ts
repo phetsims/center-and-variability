@@ -25,9 +25,15 @@ type TopRepresentationCheckboxGroupSelfOptions = {
   medianBarIconOptions: MedianBarsNodeOptions;
   showMedianCheckboxIcon: boolean;
 };
-export type TopRepresentationCheckboxGroupOptions = TopRepresentationCheckboxGroupSelfOptions & VerticalCheckboxGroupOptions;
+export type TopRepresentationCheckboxGroupOptions =
+  TopRepresentationCheckboxGroupSelfOptions
+  & VerticalCheckboxGroupOptions;
 
 // constants
+const ICON_WIDTH = 24;
+
+// TODO: Unify with line with in MedianBarsNode?
+const LINE_WIDTH = 2;
 const TEXT_OPTIONS = {
   font: CASConstants.BUTTON_FONT
 };
@@ -57,9 +63,9 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
             children: [
 
               // Horizontal line above the triangle
-              new Line( -12, -1, 12, -1, {
+              new Line( -ICON_WIDTH / 2, -LINE_WIDTH / 2, ICON_WIDTH / 2, -LINE_WIDTH / 2, {
                 stroke: CASColors.meanColorProperty,
-                lineWidth: 2
+                lineWidth: LINE_WIDTH
               } ),
 
               // Triangle
@@ -72,11 +78,12 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
     } );
     options.includeMedian && items.push( {
       node: new HBox( {
-        spacing: 14,
+        spacing: 12,
         children: [
           new Text( centerAndSpreadStrings.median, TEXT_OPTIONS ),
           ...options.showMedianCheckboxIcon ? [
-            new MedianBarsNode( options.medianBarIconOptions ).setMedianBarsShape( 0, 0, 5, 10, true )
+            new MedianBarsNode( options.medianBarIconOptions )
+              .setMedianBarsShape( 0, 0, ICON_WIDTH / 2 - LINE_WIDTH / 2, ICON_WIDTH - LINE_WIDTH, true )
           ] : []
         ]
       } ),
