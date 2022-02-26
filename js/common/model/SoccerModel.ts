@@ -127,7 +127,33 @@ class SoccerModel extends CASModel {
 
     this.ballPlayerMap.set( casObject, soccerPlayer );
 
-    const x1 = dotRandom.nextIntBetween( this.range.min, this.range.max );
+    // TODO: Cleanup and choose distribution, see https://github.com/phetsims/center-and-spread/issues/11
+    // const weights1 = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ];
+    // const weights2 = [ 100, 100, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
+    const weights3 = [
+      1, 1, 1, 1,
+      1, 1, 1, 1,
+      1, 1, 1, 1,
+      1, 1, 1, 1
+    ];
+
+    // Test that the sampling engine is working properly
+    // TODO: Move to unit tests in dot?
+    // const array = new Array( weights.length );
+    // _.fill( array, 0, 0, array.length );
+    // for ( let i = 0; i < 1000000; i++ ) {
+    //   const index = dotRandom.sampleProbabilities( weights );
+    //   array[ index ]++;
+    // }
+    //
+
+    // const inputNormalized = weights.map( element => ( element / _.sum( weights ) ) );
+    // const resultNormalized = array.map( element => ( element / _.sum( array ) ) );
+    // console.log( '....' );
+    // console.log( inputNormalized );
+    // console.log( resultNormalized );
+
+    const x1 = dotRandom.sampleProbabilities( weights3 ) + 1;
 
     // Range equation is R=v0^2 sin(2 theta0) / g, see https://openstax.org/books/university-physics-volume-1/pages/4-3-projectile-motion
     // Equation 4.26
