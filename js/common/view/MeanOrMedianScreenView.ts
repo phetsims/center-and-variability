@@ -85,7 +85,7 @@ class MeanOrMedianScreenView extends SoccerScreenView {
 
   clearData(): void {
     super.clearData();
-    this.accordionBoxContents.reset();
+    this.accordionBoxContents.clear();
   }
 
   reset(): void {

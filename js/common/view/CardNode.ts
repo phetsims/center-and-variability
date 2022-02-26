@@ -20,6 +20,7 @@ import Range from '../../../../dot/js/Range.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import CardModel from '../model/CardModel.js';
 import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
+import Emitter from '../../../../axon/js/Emitter.js';
 
 // TODO: Rename options
 type NumberCardSelfOptions = {};
@@ -28,6 +29,7 @@ export type NumberCardOptions = NodeOptions & RequiredTandem;
 class CardNode extends Node {
   readonly positionProperty: Vector2Property;
   readonly dragListener: DragListener;
+  readonly dragDistanceEmitter: Emitter<[ number ]>;
   readonly casObject: CASObject;
   animation: Animation | null;
   animationTo: Vector2 | null;
@@ -73,11 +75,18 @@ class CardNode extends Node {
       this.translation = new Vector2( range.constrainValue( position.x ), 0 );
     } );
 
+    // Emit how far the card has been dragged for purposes of hiding the drag indicator arrow when the user
+    // has dragged a sufficient amount
+    this.dragDistanceEmitter = new Emitter<[ number ]>( {
+      parameters: [ { valueType: 'number' } ]
+    } );
+
     this.dragListener = new DragListener( {
       positionProperty: this.positionProperty,
       start: () => {
         this.moveToFront();
-      }
+      },
+      drag: ( event, listener ) => this.dragDistanceEmitter.emit( Math.abs( listener.modelDelta.x ) )
     } );
     this.addInputListener( this.dragListener );
 

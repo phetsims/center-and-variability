@@ -18,7 +18,6 @@ import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import CardNode from './CardNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Range from '../../../../dot/js/Range.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
@@ -31,6 +30,9 @@ import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import MedianBarsNode from './MedianBarsNode.js';
 import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 import CASColors from '../CASColors.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
 
 // constants
 const CARD_SPACING = 10;
@@ -48,7 +50,8 @@ class NumberCardContainer extends Node {
   private readonly cardNodeGroup: PhetioGroup<CardNode, [ CardModel ]>;
   private readonly medianBarsNode: MedianBarsNode;
   private readonly dragIndicatorArrowNode: ArrowNode;
-  private readonly hasPressedCardProperty: BooleanProperty;
+  private readonly totalDragDistanceProperty: NumberProperty;
+  private readonly hasDraggedCardProperty: IReadOnlyProperty<boolean>;
   private readonly cardLayer: Node;
 
   constructor( model: CASModel, providedOptions?: NumberCardOptions ) {
@@ -70,9 +73,14 @@ class NumberCardContainer extends Node {
     // Fires if the cardNodeCells may have changed
     this.cardNodeCellsChangedEmitter = new Emitter<[]>();
 
-    // Indicates whether the user has ever pressed mouseDown on a card. It's used to hide the drag indicator arrow after
-    // the user presses a card
-    this.hasPressedCardProperty = new BooleanProperty( false );
+    // Accumulated card drag distance, for purposes of hiding the drag indicator node
+    this.totalDragDistanceProperty = new NumberProperty( 0 );
+
+    // Indicates whether the user has ever dragged a card. It's used to hide the drag indicator arrow after
+    // the user dragged a card
+    this.hasDraggedCardProperty = new DerivedProperty( [ this.totalDragDistanceProperty ], totalDragDistance => {
+      return totalDragDistance > 15;
+    } );
 
     this.cardNodeGroup = new PhetioGroup( ( tandem, cardModel ) => {
       return new CardNode( cardModel, new Vector2( 0, 0 ), () => this.getDragRange(), {
@@ -137,10 +145,11 @@ class NumberCardContainer extends Node {
         if ( !isPressed && !phet.joist.sim.isSettingPhetioStateProperty.value ) {
           this.sendToHomeCell( cardNode, true, 0.2 );
         }
+      } );
 
-        if ( isPressed ) {
-          this.hasPressedCardProperty.value = true;
-        }
+      // Accumulate drag distance
+      cardNode.dragDistanceEmitter.addListener( distance => {
+        this.totalDragDistanceProperty.value += distance;
       } );
 
       let targetIndex = this.cardNodeCells.length;
@@ -186,7 +195,7 @@ class NumberCardContainer extends Node {
       const leftCard = this.cardNodeCells[ 0 ];
       const rightCard = this.cardNodeCells[ 1 ];
 
-      const hasPressedCard = this.hasPressedCardProperty.value;
+      const hasPressedCard = this.hasDraggedCardProperty.value;
 
       const newChildren = leftCard && rightCard && !hasPressedCard ? [ this.dragIndicatorArrowNode ] : [];
 
@@ -199,7 +208,7 @@ class NumberCardContainer extends Node {
       }
     };
     this.cardNodeCellsChangedEmitter.addListener( updateDragIndicator );
-    this.hasPressedCardProperty.link( updateDragIndicator );
+    this.hasDraggedCardProperty.link( updateDragIndicator );
 
     const medianTextNode = new Text( '', {
       font: CASConstants.BUTTON_FONT
@@ -353,11 +362,15 @@ class NumberCardContainer extends Node {
     return new Range( 0, maxX );
   }
 
-  reset(): void {
+  clear(): void {
     this.cardNodeCells.length = 0;
     this.cardNodeCellsChangedEmitter.emit();
     this.cardNodeGroup.clear();
-    this.hasPressedCardProperty.reset();
+  }
+
+  reset(): void {
+    this.clear();
+    this.totalDragDistanceProperty.reset();
   }
 }
 
