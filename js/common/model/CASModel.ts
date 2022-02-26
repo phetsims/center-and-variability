@@ -81,7 +81,10 @@ class CASModel {
 
       // Assign the tandem to the options
       const options = merge( providedOptions, {
-        isFirstObject: this.objectGroup.count === 0,
+
+        // If it's the first element in the group, mark as isFirstObject. For creating archetype, the objectGroup does
+        // not yet exist, so just mark it as first
+        isFirstObject: this.objectGroup && this.objectGroup.count === 0,
         tandem: tandem
       } );
 
@@ -372,7 +375,7 @@ class CASModel {
       this.isMedianAnimationCompleteProperty.value = true;
     }
     else if ( this.highlightAnimationIndexProperty.value !== null &&
-         this.timeProperty.value > this.lastHighlightAnimationStepTime + HIGHLIGHT_ANIMATION_TIME_STEP ) {
+              this.timeProperty.value > this.lastHighlightAnimationStepTime + HIGHLIGHT_ANIMATION_TIME_STEP ) {
 
       // if the animation has already started, step it to the next animation index
       this.highlightAnimationIndexProperty.value++;
