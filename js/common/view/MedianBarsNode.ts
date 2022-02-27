@@ -26,7 +26,6 @@ type MedianBarsNodeSelfOptions = {
 export type MedianBarsNodeOptions = MedianBarsNodeSelfOptions & PathOptions;
 
 // constants
-const HALF_SPLIT_WIDTH = 2;
 const LINE_WIDTH = 2;
 
 // TODO: Consider renaming as MedianBarNode
@@ -35,6 +34,7 @@ class MedianBarsNode extends Path {
   private readonly barStyle: BarStyle;
   private readonly medianArrowNode: ArrowNode;
   static NOTCH_HEIGHT = 10;
+  static HALF_SPLIT_WIDTH = 2;
 
   constructor( providedOptions: MedianBarsNodeOptions ) {
 
@@ -71,9 +71,9 @@ class MedianBarsNode extends Path {
     shape.lineToPoint( leftCorner );
 
     if ( this.barStyle === 'split' ) {
-      shape.lineToPoint( medianVector.plusXY( -HALF_SPLIT_WIDTH, 0 ) );
+      shape.lineToPoint( medianVector.plusXY( -MedianBarsNode.HALF_SPLIT_WIDTH, 0 ) );
       shape.lineToRelative( 0, MedianBarsNode.NOTCH_HEIGHT * notchSign );
-      shape.moveToPoint( medianVector.plusXY( HALF_SPLIT_WIDTH, MedianBarsNode.NOTCH_HEIGHT * notchSign ) );
+      shape.moveToPoint( medianVector.plusXY( MedianBarsNode.HALF_SPLIT_WIDTH, MedianBarsNode.NOTCH_HEIGHT * notchSign ) );
       shape.lineToRelative( 0, -MedianBarsNode.NOTCH_HEIGHT * notchSign );
     }
 

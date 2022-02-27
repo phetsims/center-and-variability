@@ -231,7 +231,7 @@ class NumberCardContainer extends Node {
 
       const leftmostCard = this.cardNodeCells[ 0 ];
 
-      const MARGIN_X = CARD_SPACING / 2;
+      const MARGIN_X = CARD_SPACING / 2 - MedianBarsNode.HALF_SPLIT_WIDTH;
       const MARGIN_Y = 5;
 
       // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card
