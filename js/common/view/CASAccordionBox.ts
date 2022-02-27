@@ -22,6 +22,7 @@ import Shape from '../../../../kite/js/Shape.js';
 
 type CASAccordionBoxSelfOptions = {
   valueReadoutsNode: ValueReadoutsNode | null;
+  contentNodeOffsetY: number;
 };
 export type CASAccordionBoxOptions =
   CASAccordionBoxSelfOptions
@@ -41,7 +42,6 @@ class CASAccordionBox extends AccordionBox {
                titleNode: Node, layoutBounds: Bounds2, providedOptions: CASAccordionBoxOptions ) {
 
     const options = optionize<CASAccordionBoxOptions, CASAccordionBoxSelfOptions, AccordionBoxOptions>( {
-      tandem: Tandem.REQUIRED,
       titleAlignX: 'left',
       titleXSpacing: 8,
       cornerRadius: 6,
@@ -55,7 +55,8 @@ class CASAccordionBox extends AccordionBox {
       expandCollapseButtonOptions: {
         sideLength: BUTTON_SIDE_LENGTH
       },
-      titleNode: titleNode
+      titleNode: titleNode,
+      tandem: Tandem.REQUIRED
     }, providedOptions );
 
     const backgroundNode = new Rectangle( {
@@ -82,9 +83,9 @@ class CASAccordionBox extends AccordionBox {
     checkboxPanel.centerY = fullBackgroundBounds.centerY;
     backgroundNode.addChild( checkboxPanel );
 
-    // TODO for CK: content has no height at time of instantiation, so does not end up in the correct place.
-    // TODO-UX: SR says: Perhaps use x and y instead of center which requires bounds
-    contentNode.centerY = fullBackgroundBounds.centerY;
+    // TODO: SR says: Perhaps use x and y instead of center in order to vertically center the content, then
+    // options.contentNodeOffsetY should be omitted
+    contentNode.centerY = fullBackgroundBounds.centerY + options.contentNodeOffsetY;
     backgroundNode.addChild( contentNode );
 
     if ( options.valueReadoutsNode ) {

@@ -75,6 +75,7 @@ class MeanOrMedianScreenView extends SoccerScreenView {
       titleNode,
       this.layoutBounds, {
         tandem: accordionBoxTandem,
+        contentNodeOffsetY: options.isMedianScreen ? -8 : 0,
         centerX: this.layoutBounds.centerX,
         top: this.questionBar.bottom + CASConstants.SCREEN_VIEW_Y_MARGIN,
 
