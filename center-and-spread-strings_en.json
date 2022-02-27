@@ -44,6 +44,9 @@
   "dotPlot": {
     "value": "Dot Plot"
   },
+  "linePlot": {
+    "value": "Line Plot"
+  },
   "median": {
     "value": "Median"
   },

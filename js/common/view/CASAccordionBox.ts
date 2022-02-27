@@ -8,12 +8,11 @@
  */
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import { Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { Node, Rectangle } from '../../../../scenery/js/imports.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import CASConstants from '../CASConstants.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import centerAndSpread from '../../centerAndSpread.js';
 import TopRepresentationCheckboxGroup from './TopRepresentationCheckboxGroup.js';
 import CASModel from '../model/CASModel.js';
@@ -22,7 +21,6 @@ import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 import Shape from '../../../../kite/js/Shape.js';
 
 type CASAccordionBoxSelfOptions = {
-  titleString: string;
   valueReadoutsNode: ValueReadoutsNode | null;
 };
 export type CASAccordionBoxOptions =
@@ -40,7 +38,7 @@ class CASAccordionBox extends AccordionBox {
   // consider a panel that puts readouts on the left, data + number line in the middle, and
   // checkboxes on the right.  Rather than duplicating that here is accordion box and the screen 3 panel.
   constructor( model: CASModel, contentNode: Node, checkboxPanel: TopRepresentationCheckboxGroup,
-               layoutBounds: Bounds2, providedOptions: CASAccordionBoxOptions ) {
+               titleNode: Node, layoutBounds: Bounds2, providedOptions: CASAccordionBoxOptions ) {
 
     const options = optionize<CASAccordionBoxOptions, CASAccordionBoxSelfOptions, AccordionBoxOptions>( {
       tandem: Tandem.REQUIRED,
@@ -57,10 +55,7 @@ class CASAccordionBox extends AccordionBox {
       expandCollapseButtonOptions: {
         sideLength: BUTTON_SIDE_LENGTH
       },
-      titleNode: new Text( providedOptions.titleString, {
-        font: new PhetFont( 16 ),
-        maxWidth: 300
-      } )
+      titleNode: titleNode
     }, providedOptions );
 
     const backgroundNode = new Rectangle( {

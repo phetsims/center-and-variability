@@ -18,7 +18,9 @@ import NumberCardContainer from '../../common/view/NumberCardContainer.js';
 import DotPlotNode from './DotPlotNode.js';
 import SoccerModel from '../model/SoccerModel.js';
 import ValueReadoutsNode from './ValueReadoutsNode.js';
-import { ManualConstraint } from '../../../../scenery/js/imports.js';
+import { ManualConstraint, Text } from '../../../../scenery/js/imports.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import PlotType from '../model/PlotType.js';
 
 type MeanOrMedianScreenSelfOptions = {
   isMedianScreen: boolean;
@@ -54,11 +56,26 @@ class MeanOrMedianScreenView extends SoccerScreenView {
       } );
     }
 
+    const titleNode = new Text( '', {
+      font: new PhetFont( 16 ),
+      maxWidth: 300
+    } );
+
+    // TODO: medianScreen should not need a link here
+    CASConstants.PLOT_TYPE_PROPERTY.link( plotType => {
+      if ( options.isMedianScreen ) {
+        titleNode.text = centerAndSpreadStrings.distanceInMeters;
+      }
+      else {
+        titleNode.text = plotType === PlotType.LINE_PLOT ? centerAndSpreadStrings.linePlot : centerAndSpreadStrings.dotPlot;
+      }
+    } );
+
     // TODO: CK - float to top of visibleBounds to certain aspect ratio, see https://github.com/phetsims/center-and-spread/issues/50
     this.accordionBox = new CASAccordionBox( this.model, this.accordionBoxContents, this.topCheckboxPanel,
+      titleNode,
       this.layoutBounds, {
         tandem: accordionBoxTandem,
-        titleString: options.isMedianScreen ? centerAndSpreadStrings.distanceInMeters : centerAndSpreadStrings.dotPlot,
         centerX: this.layoutBounds.centerX,
         top: this.questionBar.bottom + CASConstants.SCREEN_VIEW_Y_MARGIN,
 

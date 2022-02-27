@@ -11,7 +11,13 @@ import centerAndSpread from '../centerAndSpread.js';
 
 const CASQueryParameters = QueryStringMachine.getAll( {
 
-  // Internal use only
+  // TODO: It would be nice if QueryStringMachine supported mapping to EnumerationValue
+  plotType: {
+    type: 'string',
+    validValues: [ 'dotPlot', 'linePlot' ],
+    defaultValue: 'dotPlot',
+    public: true
+  }
 } );
 
 centerAndSpread.register( 'CASQueryParameters', CASQueryParameters );

@@ -14,9 +14,11 @@ import Tandem from '../../tandem/js/Tandem.js';
 import centerAndSpreadStrings from './centerAndSpreadStrings.js';
 import MedianScreen from './median/MedianScreen.js';
 import MeanAndMedianScreen from './mean-and-median/MeanAndMedianScreen.js';
+import GlobalOptionsNode from './common/view/GlobalOptionsNode.js';
 // import LabScreen from './lab/LabScreen.js';
 
 const centerAndSpreadTitleString = centerAndSpreadStrings[ 'center-and-spread' ].title;
+
 
 const simOptions = {
   credits: {
@@ -25,7 +27,8 @@ const simOptions = {
     team: 'Kelly Findley, Marilyn Hartzell, Ariel Paul, Kathy Perkins, David Webb',
     qualityAssurance: '',
     graphicArts: 'Mariah Hermsmeyer'
-  }
+  },
+  createOptionsDialogContent: ( tandem: Tandem ) => new GlobalOptionsNode( tandem )
 };
 
 // launch the sim - beware that scenery Image nodes created outside of simLauncher.launch() will have zero bounds

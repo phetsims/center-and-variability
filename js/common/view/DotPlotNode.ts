@@ -32,6 +32,8 @@ import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 type DotPlotNodeSelfOptions = {};
 export type DotPlotNodeOptions = NodeOptions & RequiredTandem;
 
+// TODO: Name needs to be inclusive of line plots too
+// TODO-UX: The tick marks interfere with the Xs on the plot
 class DotPlotNode extends Node {
 
   private readonly dotLayer: Node;

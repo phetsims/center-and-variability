@@ -7,8 +7,11 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import EnumerationProperty from '../../../axon/js/EnumerationProperty.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import centerAndSpread from '../centerAndSpread.js';
+import CASQueryParameters from './CASQueryParameters.js';
+import PlotType from './model/PlotType.js';
 
 const CASConstants = {
   SCREEN_VIEW_X_MARGIN: 15,
@@ -16,7 +19,10 @@ const CASConstants = {
   GRAVITY: -9.8, // in meters/second^2
   BUTTON_FONT: new PhetFont( 16 ),
   NUMBER_OF_OBJECTS_SMALL: 15, // the number of objects used on the Median and Mean & Median screens
-  NUMBER_OF_OBJECTS_LARGE: 20 // the number of objects used on the Spread and Lab screens
+  NUMBER_OF_OBJECTS_LARGE: 20, // the number of objects used on the Spread and Lab screens
+
+  // TODO: Should this be declared in main and passed through?
+  PLOT_TYPE_PROPERTY: new EnumerationProperty( CASQueryParameters.plotType === 'dotPlot' ? PlotType.DOT_PLOT : PlotType.LINE_PLOT )
 };
 
 centerAndSpread.register( 'CASConstants', CASConstants );

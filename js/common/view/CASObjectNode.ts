@@ -9,7 +9,7 @@
 
 import optionize from '../../../../phet-core/js/optionize.js';
 import centerAndSpread from '../../centerAndSpread.js';
-import { Circle, Color, DragListener, Image, Node, NodeOptions } from '../../../../scenery/js/imports.js';
+import { Circle, Color, DragListener, Image, Node, NodeOptions, Path } from '../../../../scenery/js/imports.js';
 import CASObject from '../model/CASObject.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import CASObjectType from '../model/CASObjectType.js';
@@ -20,6 +20,9 @@ import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import CASColors from '../CASColors.js';
 import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
+import PlotType from '../model/PlotType.js';
+import timesSolidShape from '../../../../sherpa/js/fontawesome-5/timesSolidShape.js';
+import CASConstants from '../CASConstants.js';
 
 type CASObjectNodeSelfOptions = {
   objectViewType?: CASObjectType;
@@ -53,8 +56,27 @@ class CASObjectNode extends Node {
     } );
     this.addChild( medianHighlight );
 
+    const createPlotMarker = () => {
+      const circle = new Circle( viewRadius, {
+        fill: Color.BLACK,
+        center: Vector2.ZERO
+      } );
+      const cross = new Path( timesSolidShape, {
+        fill: Color.BLACK, maxWidth: viewRadius * 2,
+        center: Vector2.ZERO
+      } );
+      CASConstants.PLOT_TYPE_PROPERTY.link( plotType => {
+        circle.visible = plotType === PlotType.DOT_PLOT;
+        cross.visible = plotType === PlotType.LINE_PLOT;
+      } );
+      const node = new Node( {
+        children: [ circle, cross ]
+      } );
+      return node;
+    };
+
     const childNode = options.objectViewType === CASObjectType.SOCCER_BALL ? new Image( ball_png ) :
-                      options.objectViewType === CASObjectType.DOT ? new Circle( viewRadius, { fill: Color.BLACK } ) :
+                      options.objectViewType === CASObjectType.DOT ? createPlotMarker() :
                       new ShadedSphereNode( options.objectViewType.radius * 2 );
     childNode.maxWidth = viewRadius * 2;
 

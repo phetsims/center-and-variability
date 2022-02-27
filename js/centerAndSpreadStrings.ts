@@ -27,6 +27,7 @@ type StringsType = {
   'meanEqualsValue': string,
   'medianEqualsValue': string,
   'dotPlot': string,
+  'linePlot': string,
   'median': string,
   'mean': string,
   'predictMean': string,
