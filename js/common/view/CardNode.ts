@@ -86,6 +86,7 @@ class CardNode extends Node {
       start: () => {
         this.moveToFront();
       },
+      // TODO-UX: This emits for dragging the leftmost card to the left
       drag: ( event, listener ) => this.dragDistanceEmitter.emit( Math.abs( listener.modelDelta.x ) )
     } );
     this.addInputListener( this.dragListener );

@@ -83,7 +83,7 @@ class CASAccordionBox extends AccordionBox {
     backgroundNode.addChild( checkboxPanel );
 
     // TODO for CK: content has no height at time of instantiation, so does not end up in the correct place.
-    // TODO: SR says: Perhaps use x and y instead of center which requires bounds
+    // TODO-UX: SR says: Perhaps use x and y instead of center which requires bounds
     contentNode.centerY = fullBackgroundBounds.centerY;
     backgroundNode.addChild( contentNode );
 

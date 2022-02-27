@@ -73,6 +73,7 @@ class NumberCardContainer extends Node {
     // Fires if the cardNodeCells may have changed
     this.cardNodeCellsChangedEmitter = new Emitter<[]>();
 
+    // TODO-UX: maybe this should be converted to track distance for individual cards
     // Accumulated card drag distance, for purposes of hiding the drag indicator node
     this.totalDragDistanceProperty = new NumberProperty( 0 );
 

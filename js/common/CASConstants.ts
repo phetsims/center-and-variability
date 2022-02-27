@@ -22,6 +22,7 @@ const CASConstants = {
   NUMBER_OF_OBJECTS_LARGE: 20, // the number of objects used on the Spread and Lab screens
 
   // TODO: Should this be declared in main and passed through?
+  // TODO: This should be instrumented
   PLOT_TYPE_PROPERTY: new EnumerationProperty( CASQueryParameters.plotType === 'dotPlot' ? PlotType.DOT_PLOT : PlotType.LINE_PLOT )
 };
 

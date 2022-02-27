@@ -22,6 +22,7 @@ class GlobalOptionsNode extends VBox {
   // TODO: Tandem in the options?
   constructor( tandem: Tandem ) {
 
+    // TODO: Use translated strings
     const title = new Text( 'Plot Type', {
       font: new PhetFont( 24 )
     } );
@@ -29,6 +30,7 @@ class GlobalOptionsNode extends VBox {
     const TEXT_OPTIONS = {
       font: new PhetFont( 18 )
     };
+    // TODO: Use translated strings
     const radioButtonGroup = new VerticalAquaRadioButtonGroup<PlotType>( CASConstants.PLOT_TYPE_PROPERTY, [ {
       node: new Text( 'Line Plot', TEXT_OPTIONS ),
       value: PlotType.LINE_PLOT
@@ -44,16 +46,9 @@ class GlobalOptionsNode extends VBox {
       align: 'left'
     } );
 
-    // @private
-    this.disposeGlobalOptionsNode = () => {
-      radioButtonGroup.dispose();
-    };
+    this.disposeGlobalOptionsNode = () => radioButtonGroup.dispose();
   }
 
-  /**
-   * @public
-   * @override
-   */
   dispose() {
     this.disposeGlobalOptionsNode();
     super.dispose();

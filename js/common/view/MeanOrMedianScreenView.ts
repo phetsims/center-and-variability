@@ -71,7 +71,6 @@ class MeanOrMedianScreenView extends SoccerScreenView {
       }
     } );
 
-    // TODO: CK - float to top of visibleBounds to certain aspect ratio, see https://github.com/phetsims/center-and-spread/issues/50
     this.accordionBox = new CASAccordionBox( this.model, this.accordionBoxContents, this.topCheckboxPanel,
       titleNode,
       this.layoutBounds, {
