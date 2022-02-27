@@ -116,7 +116,6 @@ class CardNode extends Node {
       }
     }
 
-    // TODO-UX: Sometimes cards need to be in front when animating, see dragging balls while sorting is on
     this.animation = new Animation( {
       duration: duration,
       targets: [ {
