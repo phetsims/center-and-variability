@@ -249,11 +249,11 @@ class NumberCardContainer extends Node {
         this.medianBarsNode.clear();
       }
 
-      // TODO: Better guard on model.isShowingTopMedianProperty.value
       if ( leftmostCard ) {
-
-        // TODO-UX: Can show median label outside of accordion box for small numbers
         medianReadoutPanel.centerX = getCardPositionX( ( this.cardNodeCells.length - 1 ) / 2 ) + leftmostCard.width / 2;
+        if ( medianReadoutPanel.left < 0 ) {
+          medianReadoutPanel.left = 0;
+        }
         medianReadoutPanel.top = leftmostCard.bottom + MARGIN_Y + 13;
         medianReadoutPanel.visible = model.isShowingTopMedianProperty.value;
       }
@@ -262,6 +262,7 @@ class NumberCardContainer extends Node {
       }
     };
     this.cardNodeCellsChangedEmitter.addListener( updateMedianNode );
+    model.medianValueProperty.link( updateMedianNode );
     model.isShowingTopMedianProperty.link( updateMedianNode );
   }
 

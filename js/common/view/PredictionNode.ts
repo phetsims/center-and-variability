@@ -52,8 +52,6 @@ class PredictionNode extends Node {
     const options = optionize<PredictionNodeOptions, PredictionNodeSelfOptions, NodeOptions>( {
       tandem: Tandem.REQUIRED,
       children: [ arrowNode, shadedSphereNode ],
-
-      // TODO-UX: Touch area
       cursor: 'pointer'
     }, providedOptions );
 
