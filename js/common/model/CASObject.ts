@@ -21,6 +21,7 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import CASConstants from '../CASConstants.js';
 import Property from '../../../../axon/js/Property.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
+import Emitter from '../../../../axon/js/Emitter.js';
 
 type CASObjectSelfOptions = {
   position?: Vector2;
@@ -54,6 +55,7 @@ class CASObject extends PhetioObject {
   valueProperty: Property<number | null>;
 
   static CASObjectIO: IOType;
+  readonly dragStartedEmitter: Emitter;
 
   constructor( objectType: CASObjectType, providedOptions: CASObjectOptions ) {
 
@@ -97,6 +99,7 @@ class CASObject extends PhetioObject {
     this.isShowingAnimationHighlightProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isShowingAnimationHighlightProperty' )
     } );
+    this.dragStartedEmitter = new Emitter();
   }
 
   step( dt: number ): void {

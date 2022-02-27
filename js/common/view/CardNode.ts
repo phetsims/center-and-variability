@@ -91,6 +91,8 @@ class CardNode extends Node {
     } );
     this.addInputListener( this.dragListener );
 
+    this.casObject.dragStartedEmitter.addListener( () => this.moveToFront() );
+
     this.animationTo = null;
 
     this.addLinkedElement( cardModel, {
@@ -129,7 +131,6 @@ class CardNode extends Node {
     this.animation.finishEmitter.addListener( () => {
       this.animation = null;
       this.animationTo = null;
-      this.moveToBack();
     } );
   }
 

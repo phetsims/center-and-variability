@@ -103,7 +103,8 @@ class CASObjectNode extends Node {
     if ( options.draggingEnabled ) {
       this.addInputListener( new DragListener( {
         positionProperty: casObject.dragPositionProperty,
-        transform: modelViewTransform
+        transform: modelViewTransform,
+        start: () => casObject.dragStartedEmitter.emit()
       } ) );
       this.touchArea = this.localBounds.dilatedX( 10 );
 
