@@ -80,8 +80,12 @@ class KickButtonGroup extends VBox {
         tandem: tandem,
 
         // Use the same logic for determining whether any balls are left to kick, to allow the fire on hold behavior
+        // TODO: We saw incorrect behavior on multi-kick that we couldn't reproduce with single kick, so there may still
+        // be a latent problem
         listener: () => visibleProperty.value && model.kick( numberToKick ),
-        fireOnHold: true,
+
+        // TODO-DESIGN: It feels asymmetrical that holding down "kick 1" fires soccer balls but holding down "kick 5" does nothing
+        fireOnHold: !multikick,
         fireOnHoldDelay: 750,
         fireOnHoldInterval: 250
       } );
