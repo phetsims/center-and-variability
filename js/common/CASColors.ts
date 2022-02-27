@@ -37,7 +37,7 @@ const CASColors = {
     default: Color.WHITE
   } ),
   dragIndicatorColorProperty: new ProfileColorProperty( centerAndSpread, 'dragIndicatorColor', {
-    default: '#0A12FF'
+    default: '#0AA1FF'
   } ),
 
   // sky gradient, sampled from a screenshot

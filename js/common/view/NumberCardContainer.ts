@@ -204,7 +204,7 @@ class NumberCardContainer extends Node {
         dragIndicatorContainer.children = newChildren;
 
         if ( leftCard && rightCard ) {
-          this.dragIndicatorArrowNode.centerBottom = leftCard.bounds.centerTop.plusXY( 0, -10 );
+          this.dragIndicatorArrowNode.centerBottom = leftCard.bounds.centerTop.plusXY( 0, -8 );
         }
       }
     };
