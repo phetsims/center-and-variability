@@ -84,7 +84,7 @@ class CASModel {
 
         // If it's the first element in the group, mark as isFirstObject. For creating archetype, the objectGroup does
         // not yet exist, so just mark it as first
-        isFirstObject: this.objectGroup && this.objectGroup.count === 0,
+        isFirstObject: this.objectGroup ? this.objectGroup.count === 0 : true,
         tandem: tandem
       } );
 
