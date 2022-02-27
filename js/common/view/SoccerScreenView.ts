@@ -30,7 +30,7 @@ type SoccerScreenViewSelfOptions = {
 export type SoccerScreenViewOptions = SoccerScreenViewSelfOptions & CASScreenViewOptions;
 
 // constants
-const GROUND_POSITION_Y = 490;
+const GROUND_POSITION_Y = 500;
 const NUMBER_LINE_MARGIN_X = 185;
 
 class SoccerScreenView extends CASScreenView {
@@ -105,7 +105,10 @@ class SoccerScreenView extends CASScreenView {
     this.contentLayer.addChild( this.questionBar );
     this.contentLayer.addChild( new KickButtonGroup( model, {
       left: 25,
-      bottom: this.layoutBounds.bottom - 8,
+
+      // Center between the ground and the bottom of the layout bounds.  Adjust because of the asymmetries:
+      // the soccer player foot falls beneath the ground, and the shading of the buttons.
+      centerY: ( GROUND_POSITION_Y + this.layoutBounds.maxY ) / 2 + 2,
       tandem: options.tandem.createTandem( 'kickButtonGroup' )
     } ) );
 
