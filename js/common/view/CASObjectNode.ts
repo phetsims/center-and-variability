@@ -62,7 +62,7 @@ class CASObjectNode extends Node {
         center: Vector2.ZERO
       } );
       const cross = new Path( timesSolidShape, {
-        fill: Color.BLACK, maxWidth: viewRadius * 2,
+        fill: Color.BLACK, maxWidth: viewRadius * 2 * 0.8,
         center: Vector2.ZERO
       } );
       CASConstants.PLOT_TYPE_PROPERTY.link( plotType => {
