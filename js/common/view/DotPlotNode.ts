@@ -165,7 +165,7 @@ class DotPlotNode extends Node {
   }
 
   /**
-   * No implementation because this node is powered by the model. Reset needed for uniformity with NumberCardContainer.
+   * No implementation because this node is powered by the model. Reset needed for uniformity with CardNodeContainer.
    */
   reset() {}
 

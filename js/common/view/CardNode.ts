@@ -22,9 +22,8 @@ import CardModel from '../model/CardModel.js';
 import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 
-// TODO: Rename options
-type NumberCardSelfOptions = {};
-export type NumberCardOptions = NodeOptions & RequiredTandem;
+type CardNodeSelfOptions = {};
+export type CardNodeOptions = CardNodeSelfOptions & NodeOptions & RequiredTandem;
 
 class CardNode extends Node {
   readonly positionProperty: Vector2Property;
@@ -36,7 +35,7 @@ class CardNode extends Node {
 
   static readonly CARD_WIDTH = 43;
 
-  constructor( cardModel: CardModel, position: Vector2, getDragRange: () => Range, providedOptions?: NumberCardOptions ) {
+  constructor( cardModel: CardModel, position: Vector2, getDragRange: () => Range, providedOptions: CardNodeOptions ) {
 
     const cornerRadius = 10;
     const rectangle = new Rectangle( 0, 0, CardNode.CARD_WIDTH, CardNode.CARD_WIDTH, cornerRadius, cornerRadius, {
@@ -53,7 +52,7 @@ class CardNode extends Node {
       text.center = rectangle.center;
     } );
 
-    const options = optionize<NumberCardOptions, NumberCardSelfOptions, NodeOptions>( {
+    const options = optionize<CardNodeOptions, CardNodeSelfOptions, NodeOptions>( {
       tandem: Tandem.REQUIRED,
       children: [ rectangle, text ],
       cursor: 'pointer'

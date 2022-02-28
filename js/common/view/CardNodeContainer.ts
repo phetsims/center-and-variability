@@ -40,11 +40,10 @@ import stepTimer from '../../../../axon/js/stepTimer.js';
 const CARD_SPACING = 10;
 const getCardPositionX = ( index: number ) => index * ( CardNode.CARD_WIDTH + CARD_SPACING );
 
-type NumberCardContainerSelfOptions = {};
-export type NumberCardOptions = NodeOptions & RequiredTandem;
+type CardNodeContainerSelfOptions = {};
+export type CardNodeContainerOptions = CardNodeContainerSelfOptions & NodeOptions & RequiredTandem;
 
-// TODO: Rename CardNodeContainer
-class NumberCardContainer extends Node {
+class CardNodeContainer extends Node {
   readonly cardNodeCells: CardNode[];
   readonly cardNodeCellsChangedEmitter: Emitter<[]>;
 
@@ -56,11 +55,11 @@ class NumberCardContainer extends Node {
   private readonly hasDraggedCardProperty: IReadOnlyProperty<boolean>;
   private readonly cardLayer: Node;
 
-  constructor( model: CASModel, providedOptions?: NumberCardOptions ) {
+  constructor( model: CASModel, providedOptions: CardNodeContainerOptions ) {
 
-    const options = optionize<NumberCardOptions, NumberCardContainerSelfOptions, NodeOptions>( {
+    const options = optionize<CardNodeContainerOptions, CardNodeContainerSelfOptions, NodeOptions>( {
       tandem: Tandem.REQUIRED,
-      phetioType: NumberCardContainerIO,
+      phetioType: CardNodeContainerIO,
       phetioState: true
     }, providedOptions );
 
@@ -118,7 +117,7 @@ class NumberCardContainer extends Node {
     model.objectGroup.elementCreatedEmitter.addListener( objectCreatedListener );
 
     model.cardModelGroup.elementDisposedEmitter.addListener( cardModel => {
-      const cardNode = this.getNumberCardNode( cardModel.casObject );
+      const cardNode = this.getCardNode( cardModel.casObject );
 
       // cardNode may not exist if the ball was still in the air
       if ( cardNode ) {
@@ -346,7 +345,7 @@ class NumberCardContainer extends Node {
     }
   }
 
-  getNumberCardNode( casObject: CASObject ): CardNode | null {
+  getCardNode( casObject: CASObject ): CardNode | null {
     return this.cardNodeCells.find( cardNode => cardNode.casObject === casObject ) || null;
   }
 
@@ -421,14 +420,14 @@ class NumberCardContainer extends Node {
 
 // Track the order of the cards as self-state, so that the downstream sim can get the cards in the desired cells
 const CardNodeReferenceIO = ReferenceIO( Node.NodeIO );
-const NumberCardContainerIO = new IOType( 'NumberCardContainerIO', {
-  valueType: NumberCardContainer,
-  toStateObject: ( n: NumberCardContainer ) => {
+const CardNodeContainerIO = new IOType( 'CardNodeContainerIO', {
+  valueType: CardNodeContainer,
+  toStateObject: ( n: CardNodeContainer ) => {
     return {
       cardNodes: n.cardNodeCells.map( cardNode => CardNodeReferenceIO.toStateObject( cardNode ) )
     };
   },
-  applyState: ( n: NumberCardContainer, state: any ) => {
+  applyState: ( n: CardNodeContainer, state: any ) => {
     const cardNodes = state.cardNodes.map( ( element: any ) => CardNodeReferenceIO.fromStateObject( element ) );
     n.cardNodeCells.length = 0;
     n.cardNodeCells.push( ...cardNodes );
@@ -443,5 +442,5 @@ const NumberCardContainerIO = new IOType( 'NumberCardContainerIO', {
   }
 } );
 
-centerAndSpread.register( 'NumberCardContainer', NumberCardContainer );
-export default NumberCardContainer;
+centerAndSpread.register( 'CardNodeContainer', CardNodeContainer );
+export default CardNodeContainer;

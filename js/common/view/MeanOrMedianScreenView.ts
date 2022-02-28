@@ -14,7 +14,7 @@ import SoccerScreenView, { SoccerScreenViewOptions } from '../../common/view/Soc
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 import CASAccordionBox from '../../common/view/CASAccordionBox.js';
 import CASConstants from '../../common/CASConstants.js';
-import NumberCardContainer from '../../common/view/NumberCardContainer.js';
+import CardNodeContainer from '../../common/view/CardNodeContainer.js';
 import DotPlotNode from './DotPlotNode.js';
 import SoccerModel from '../model/SoccerModel.js';
 import ValueReadoutsNode from './ValueReadoutsNode.js';
@@ -31,7 +31,7 @@ class MeanOrMedianScreenView extends SoccerScreenView {
   private readonly accordionBox: CASAccordionBox;
 
   // TODO: need reset, but may want to make an interface for a resettable Node
-  protected readonly accordionBoxContents: NumberCardContainer | DotPlotNode;
+  protected readonly accordionBoxContents: CardNodeContainer | DotPlotNode;
 
   constructor( model: SoccerModel, providedOptions: MeanOrMedianScreenViewOptions ) {
 
@@ -44,10 +44,10 @@ class MeanOrMedianScreenView extends SoccerScreenView {
     const accordionBoxTandem = options.tandem.createTandem( 'accordionBox' );
 
     if ( options.isMedianScreen ) {
-      this.accordionBoxContents = new NumberCardContainer( this.model, {
+      this.accordionBoxContents = new CardNodeContainer( this.model, {
 
         // Expose this intermediate layer to make it so that clients can hide the number cards with one call
-        tandem: accordionBoxTandem.createTandem( 'numberCardContainer' )
+        tandem: accordionBoxTandem.createTandem( 'cardNodeContainer' )
       } );
     }
     else {

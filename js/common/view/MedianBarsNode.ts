@@ -2,7 +2,7 @@
 
 /**
  * Renders non-interactive red bars that show how the median splits up into the lower and upper groups.
- * This appears within the NumberCardContainer and in the DotPlotNode
+ * This appears within the CardNodeContainer and in the DotPlotNode
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
