@@ -100,7 +100,7 @@ class CardNode extends Node {
     } );
   }
 
-  animateTo( destination: Vector2, duration: number ) {
+  animateTo( destination: Vector2, duration: number, callback = () => {} ) {
 
     if ( this.animation ) {
 
@@ -109,10 +109,19 @@ class CardNode extends Node {
       if ( destination.equals( this.animationTo! ) ) {
 
         // Already moving to the desired destination.
+        callback();
         return;
       }
       else {
         this.animation.stop();
+      }
+    }
+    else {
+      if ( destination.equals( this.positionProperty.value! ) ) {
+
+        // Already at the desired destination.
+        callback();
+        return;
       }
     }
 
@@ -126,11 +135,13 @@ class CardNode extends Node {
     } );
     this.animationTo = destination;
 
-    this.animation.start();
-    this.animation.finishEmitter.addListener( () => {
+    this.animation.endedEmitter.addListener( () => {
+      callback();
       this.animation = null;
       this.animationTo = null;
     } );
+
+    this.animation.start();
   }
 
   dispose() {

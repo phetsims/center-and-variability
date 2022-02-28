@@ -33,6 +33,8 @@ import CASColors from '../CASColors.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
+import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
+import stepTimer from '../../../../axon/js/stepTimer.js';
 
 // constants
 const CARD_SPACING = 10;
@@ -316,15 +318,18 @@ class NumberCardContainer extends Node {
     return true;
   }
 
-  sendToHomeCell( cardNode: CardNode, animate = true, duration = 0.3 ): void {
+  // TODO: Do we like the way these are optional?
+  // TODO: Separate into two methods: animateToHomeCell vs setAtHomeCell
+  sendToHomeCell( cardNode: CardNode, animate = true, duration = 0.3, callback = () => {} ): void {
     const homeIndex = this.cardNodeCells.indexOf( cardNode );
     const homePosition = new Vector2( getCardPositionX( homeIndex ), 0 );
 
     if ( animate ) {
-      cardNode.animateTo( homePosition, duration );
+      cardNode.animateTo( homePosition, duration, callback );
     }
     else {
       cardNode.positionProperty.value = homePosition;
+      callback();
     }
   }
 
@@ -347,16 +352,54 @@ class NumberCardContainer extends Node {
 
   sortData(): void {
 
-    // If the card is visible, the value property should be non-null
-    const sorted = _.sortBy( this.cardNodeCells, cardNode => cardNode.casObject.valueProperty.value );
-    this.cardNodeCells.length = 0;
-    this.cardNodeCells.push( ...sorted );
+    // Base case, nothing to sort
+    if ( this.cardNodeCells.length === 0 ) {
+      return;
+    }
 
-    this.cardNodeCells.forEach( cardNode => {
-      this.sendToHomeCell( cardNode, true, 0.5 );
-    } );
+    const visit = () => {
+      for ( let i = 0; i < this.cardNodeCells.length; i++ ) {
+        const currentCard = this.cardNodeCells[ i ];
+        const currentValue = currentCard.casObject.valueProperty.value!;
 
-    this.cardNodeCellsChangedEmitter.emit(); // TODO: OK if this fires false positives?
+        // Another loop to find where to insert it, or not at all
+        for ( let k = 0; k < i; k++ ) {
+          const checkCard = this.cardNodeCells[ k ];
+          const checkValue = checkCard.casObject.valueProperty.value!;
+
+          if ( currentValue < checkValue ) {
+
+            // Remove the out of order card
+            // TODO: arrayRemove should be in TypeScript
+            arrayRemove( this.cardNodeCells, currentCard );
+
+            // Insert it at the desired point.  NOTE the index doesn't need to be recomputed after removal above since
+            // the removal was at a higher index
+            this.cardNodeCells.splice( k, 0, currentCard );
+
+            let count = 0;
+            let complete = false;
+            const callback = () => {
+              count++;
+              if ( count >= this.cardNodeCells.length ) {
+
+                assert && assert( complete === false, 'Too many completions' );
+                complete = true;
+                stepTimer.setTimeout( () => visit(), 200 ); //
+              }
+            };
+
+            this.cardNodeCells.forEach( cardNode => this.sendToHomeCell( cardNode, true, 0.5, callback ) );
+            this.cardNodeCellsChangedEmitter.emit(); // TODO: OK if this fires false positives?
+
+            // Exit all loops and wait for next recursive visit() after animation completes
+            return;
+          }
+        }
+      }
+    };
+
+    visit();
   }
 
   getDragRange(): Range {
