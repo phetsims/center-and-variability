@@ -26,9 +26,6 @@ import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 
-// constants
-const TICK_MARK_EXTENT = 10;
-
 type NumberLineNodeSelfOptions = {
   color?: PaintDef;
   includeXAxis?: boolean;
@@ -54,20 +51,23 @@ class NumberLineNode extends Node {
 
     super();
 
+    // Tick marks on the dot plot are a little shorter than in the play area
+    const tickMarkExtent = options.includeXAxis ? 7 : 10;
+
     const chartTransform = new ChartTransform( {
       viewWidth: width,
       modelXRange: range,
-      viewHeight: options.includeXAxis ? 0 : TICK_MARK_EXTENT / 2,
+      viewHeight: tickMarkExtent / 2,
       modelYRange: new Range( 0, 1 )
     } );
     const tickMarkSet = new TickMarkSet( chartTransform, Orientation.HORIZONTAL, 1, {
       stroke: options.color,
-      extent: TICK_MARK_EXTENT
+      extent: tickMarkExtent
     } );
     this.addChild( tickMarkSet );
 
     const tickLabelSet = new TickLabelSet( chartTransform, Orientation.HORIZONTAL, 1, {
-      extent: TICK_MARK_EXTENT + 12,
+      extent: tickMarkExtent + 12,
       createLabel: ( value: number ) => new Text( Utils.toFixed( value, 0 ), {
         fontSize: 16,
         fill: options.color
