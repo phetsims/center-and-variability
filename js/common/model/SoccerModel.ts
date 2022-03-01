@@ -105,7 +105,7 @@ class SoccerModel extends CASModel {
    */
   scheduleKicks( numberOfBallsToKick: number ): void {
 
-    // TODO: Guard the max number, see https://github.com/phetsims/center-and-spread/issues/12
+    // TODO: Guard the max number, see https://github.com/phetsims/center-and-spread/issues/59
     this.remainingNumberOfBallsToMultiKickProperty.value += numberOfBallsToKick;
   }
 
@@ -186,7 +186,7 @@ class SoccerModel extends CASModel {
           this.nextBallToKickProperty.value = this.createBall();
         }
 
-        // TODO: Why is this called here? https://github.com/phetsims/center-and-spread/issues/12
+        // TODO: Why is this called here? https://github.com/phetsims/center-and-spread/issues/59
         this.advanceLine();
 
         assert && assert( this.nextBallToKickProperty.value !== null, 'there was no ball to kick' );
@@ -204,7 +204,7 @@ class SoccerModel extends CASModel {
         const elapsedTime = this.timeProperty.value - frontPlayer.timestampWhenPoisedBegan;
         if ( elapsedTime > 0.3 ) {
 
-          const casObject = this.nextBallToKickProperty.value!; // TODO: Probably? See https://github.com/phetsims/center-and-spread/issues/12
+          const casObject = this.nextBallToKickProperty.value!; // TODO: Probably? See https://github.com/phetsims/center-and-spread/issues/59
           this.kickBall( frontPlayer, casObject );
         }
       }

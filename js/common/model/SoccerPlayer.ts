@@ -48,7 +48,7 @@ class SoccerPlayer extends PhetioObject {
 
     this.initialPlaceInLine = placeInLine;
 
-    this.timestampWhenPoisedBegan = -1;  // Not yet poised.  TODO: use null for this case?  See https://github.com/phetsims/center-and-spread/issues/12
+    this.timestampWhenPoisedBegan = -1;  // Not yet poised.  TODO: use null for this case?  See https://github.com/phetsims/center-and-spread/issues/59
   }
 
   reset() {
