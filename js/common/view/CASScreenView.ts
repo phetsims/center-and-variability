@@ -159,8 +159,8 @@ class CASScreenView extends ScreenView {
         this.interruptSubtreeInput(); // cancel interactions that may be in progress
 
         // TODO: Model should be resetting first, see TODO for this.eraserButton
-        this.reset();
         model.reset();
+        this.reset();
       },
       right: this.layoutBounds.maxX - CASConstants.SCREEN_VIEW_X_MARGIN,
       bottom: this.layoutBounds.maxY - CASConstants.SCREEN_VIEW_Y_MARGIN,
@@ -176,10 +176,12 @@ class CASScreenView extends ScreenView {
         // TODO: Model should be clearing first but there is currently an order dependency because this.clearData() is
         // initializing new data (the new ball to kick) before the view has reset, and the view is currently is storing
         // model information in CardNodeContainer.
-        this.clearData(); // TODO: observe model clearing? CK: Yes, i think we should do this. We either need a
+
         // CardModelContainer to track model state, or an Emitter from the CASModel to CardNodeContainer.clear(). Then
         // we can omit all view clearData calls.
         model.clearData();
+
+        this.clearData(); // TODO: observe model clearing? CK: Yes, i think we should do this. We either need a
       },
       iconWidth: 26,
       right: this.resetAllButton.left - CASConstants.SCREEN_VIEW_X_MARGIN,

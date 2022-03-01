@@ -117,12 +117,13 @@ class CardNodeContainer extends Node {
     model.objectGroup.elementCreatedEmitter.addListener( objectCreatedListener );
 
     model.cardModelGroup.elementDisposedEmitter.addListener( cardModel => {
-      const cardNode = this.getCardNode( cardModel.casObject );
+      const cardNode = this.getCardNode( cardModel.casObject )!;
+      assert && assert( cardNode, 'card node should exist' );
 
-      // cardNode may not exist if the ball was still in the air
-      if ( cardNode ) {
-        this.cardNodeGroup.disposeElement( cardNode );
-      }
+      arrayRemove( this.cardNodeCells, cardNode );
+
+      this.cardNodeGroup.disposeElement( cardNode );
+      this.cardNodeCellsChangedEmitter.emit();
     } );
 
     model.isSortingDataProperty.link( isSortingData => {
