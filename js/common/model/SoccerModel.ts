@@ -20,6 +20,7 @@ import SoccerPlayer from './SoccerPlayer.js';
 import CASObject from './CASObject.js';
 import Property from '../../../../axon/js/Property.js';
 import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
+import Pose from './Pose.js';
 
 type SoccerModelSelfOptions = {};
 type SoccerModelOptions = SoccerModelSelfOptions & CASModelOptions;
@@ -102,28 +103,17 @@ class SoccerModel extends CASModel {
   /**
    * Adds the provided number of balls to the scheduled balls to kick
    */
-  kick( numberOfBallsToKick: number ): void {
+  scheduleKicks( numberOfBallsToKick: number ): void {
+
+    // TODO: Guard the max number, see https://github.com/phetsims/center-and-spread/issues/12
     this.remainingNumberOfBallsToMultiKickProperty.value += numberOfBallsToKick;
-    this.advanceLine();
-    if ( this.nextBallToKickProperty.value === null ) {
-      this.nextBallToKickProperty.value = this.createBall();
-    }
-    this.kickBall();
   }
 
   /**
    * Select a target location for the nextBallToKick, set its velocity and mark it for animation.
    */
-  kickBall(): void {
-
-    assert && assert( this.nextBallToKickProperty.value !== null, 'there was no ball to kick' );
-
-    const casObject = this.nextBallToKickProperty.value!;
-
-    const frontPlayer = this.soccerPlayerGroup.filter( soccerPlayer => soccerPlayer.placeInLineProperty.value === 0 );
-    assert && assert( frontPlayer.length === 1, 'incorrect number of front soccer players: ' + frontPlayer.length );
-    const soccerPlayer = frontPlayer[ 0 ];
-    soccerPlayer.isKickingProperty.value = true;
+  private kickBall( soccerPlayer: SoccerPlayer, casObject: CASObject ) {
+    soccerPlayer.poseProperty.value = Pose.KICKING;
 
     this.ballPlayerMap.set( casObject, soccerPlayer );
 
@@ -169,7 +159,6 @@ class SoccerModel extends CASModel {
 
     casObject.isAnimatingProperty.value = true;
     this.timeWhenLastBallWasKickedProperty.value = this.timeProperty.value;
-    this.remainingNumberOfBallsToMultiKickProperty.value--;
 
     // New ball will be created later in step
     this.nextBallToKickProperty.value = null;
@@ -178,18 +167,47 @@ class SoccerModel extends CASModel {
   step( dt: number ): void {
     super.step( dt );
 
-    // Scheduled kicks from the "Kick 5" button
-    if ( this.remainingNumberOfBallsToMultiKickProperty.value > 0 && this.numberOfRemainingObjectsProperty.value > 0 &&
-         this.timeProperty.value >= this.timeWhenLastBallWasKickedProperty.value + TIME_BETWEEN_RAPID_KICKS ) {
+    const frontPlayerList = this.soccerPlayerGroup.filter( soccerPlayer => soccerPlayer.placeInLineProperty.value === 0 );
 
-      if ( this.nextBallToKickProperty.value === null ) {
+    if ( frontPlayerList.length > 0 ) {
 
-        // Create the next ball.
-        this.nextBallToKickProperty.value = this.createBall();
+      assert && assert( frontPlayerList.length === 1, 'incorrect number of front soccer players: ' + frontPlayerList.length );
+      const frontPlayer = frontPlayerList[ 0 ];
+
+      // TODO: number of balls that exist but haven't been kicked???  See KickButtonGroup.
+      const numberBallsThatExistButHaventBeenKicked = this.nextBallToKickProperty.value === null ? 0 : 1;
+      if ( this.remainingNumberOfBallsToMultiKickProperty.value > 0 &&
+           this.numberOfRemainingObjectsProperty.value + numberBallsThatExistButHaventBeenKicked > 0 &&
+           this.timeProperty.value >= this.timeWhenLastBallWasKickedProperty.value + TIME_BETWEEN_RAPID_KICKS ) {
+
+        if ( this.nextBallToKickProperty.value === null ) {
+
+          // Create the next ball.
+          this.nextBallToKickProperty.value = this.createBall();
+        }
+
+        // TODO: Why is this called here? https://github.com/phetsims/center-and-spread/issues/12
+        this.advanceLine();
+
+        assert && assert( this.nextBallToKickProperty.value !== null, 'there was no ball to kick' );
+
+        if ( frontPlayer.poseProperty.value === Pose.STANDING ) {
+          frontPlayer.poseProperty.value = Pose.POISED_TO_KICK;
+          frontPlayer.timestampWhenPoisedBegan = this.timeProperty.value;
+
+          this.remainingNumberOfBallsToMultiKickProperty.value--;
+        }
       }
 
-      this.advanceLine();
-      this.kickBall();
+      // How long has the front player been poised?
+      if ( frontPlayer.poseProperty.value === Pose.POISED_TO_KICK ) {
+        const elapsedTime = this.timeProperty.value - frontPlayer.timestampWhenPoisedBegan;
+        if ( elapsedTime > 0.3 ) {
+
+          const casObject = this.nextBallToKickProperty.value!; // TODO: Probably? See https://github.com/phetsims/center-and-spread/issues/12
+          this.kickBall( frontPlayer, casObject );
+        }
+      }
     }
   }
 
@@ -206,10 +224,11 @@ class SoccerModel extends CASModel {
     }
   }
 
+  // When a ball lands, or when the next player is supposed to kick (before the ball lands), move the line forward
   private advanceLine(): void {
 
     // if the previous ball was still in the air, we need to move the line forward so the next player can kick
-    const kickingPlayers = this.soccerPlayerGroup.filter( soccerPlayer => soccerPlayer.isKickingProperty.value );
+    const kickingPlayers = this.soccerPlayerGroup.filter( soccerPlayer => soccerPlayer.poseProperty.value === Pose.KICKING );
     assert && assert( kickingPlayers.length === 0 || kickingPlayers.length === 1, 'Too many kickers' );
     if ( kickingPlayers.length === 1 ) {
 

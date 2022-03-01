@@ -8,13 +8,14 @@
  */
 
 import centerAndSpread from '../../centerAndSpread.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import PhetioObject, { PhetioObjectOptions, RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import Property from '../../../../axon/js/Property.js';
+import Pose from './Pose.js';
 
 type SoccerPlayerSelfOptions = {};
 type SoccerPlayerOptions =
@@ -23,10 +24,14 @@ type SoccerPlayerOptions =
   & RequiredTandem;
 
 class SoccerPlayer extends PhetioObject {
-  readonly isKickingProperty: BooleanProperty;
+  readonly poseProperty: Property<Pose>;
   readonly placeInLineProperty: NumberProperty;
   static SoccerPlayerIO: IOType;
-  readonly initialPlaceInLine: number; // For debugging with ?dev
+
+  // Also used to determine the artwork for rendering the SoccerPlayerNode
+  readonly initialPlaceInLine: number;
+
+  timestampWhenPoisedBegan: number;
 
   constructor( placeInLine: number, providedOptions: SoccerPlayerOptions ) {
 
@@ -39,14 +44,15 @@ class SoccerPlayer extends PhetioObject {
 
     // TODO: Instrument for state
     this.placeInLineProperty = new NumberProperty( placeInLine );
-    this.isKickingProperty = new BooleanProperty( false );
+    this.poseProperty = new Property<Pose>( Pose.STANDING );
 
-    // For debugging with ?dev
     this.initialPlaceInLine = placeInLine;
+
+    this.timestampWhenPoisedBegan = -1;  // Not yet poised.  TODO: use null for this case?  See https://github.com/phetsims/center-and-spread/issues/12
   }
 
   reset() {
-    this.isKickingProperty.reset();
+    this.poseProperty.reset();
   }
 }
 

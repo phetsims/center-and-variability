@@ -9,16 +9,54 @@
 
 import centerAndSpread from '../../centerAndSpread.js';
 import { Text, Image, Node, NodeOptions } from '../../../../scenery/js/imports.js';
+
+// TODO: Rename the images around STANDING, POISED_TO_KICK and KICKING.  https://github.com/phetsims/center-and-spread/issues/12
+import player01Resting_png from '../../../images/player01Resting_png.js';
 import player01Standing_png from '../../../images/player01Standing_png.js';
 import player01Kicking_png from '../../../images/player01Kicking_png.js';
+import player02Resting_png from '../../../images/player02Resting_png.js';
+import player02Standing_png from '../../../images/player02Standing_png.js';
+import player02Kicking_png from '../../../images/player02Kicking_png.js';
+import player03Resting_png from '../../../images/player03Resting_png.js';
+import player03Standing_png from '../../../images/player03Standing_png.js';
+import player03Kicking_png from '../../../images/player03Kicking_png.js';
+import player04Resting_png from '../../../images/player04Resting_png.js';
+import player04Standing_png from '../../../images/player04Standing_png.js';
+import player04Kicking_png from '../../../images/player04Kicking_png.js';
+import player05Resting_png from '../../../images/player05Resting_png.js';
+import player05Standing_png from '../../../images/player05Standing_png.js';
+import player05Kicking_png from '../../../images/player05Kicking_png.js';
 import SoccerPlayer from '../model/SoccerPlayer.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import Pose from '../model/Pose.js';
 
 type SoccerPlayerNodeSelfOptions = {};
 type SoccerPlayerNodeOptions = SoccerPlayerNodeSelfOptions & NodeOptions;
+
+const playerGroups = [ {
+  standing: player01Resting_png,
+  poisedToKick: player01Standing_png,
+  kicking: player01Kicking_png
+}, {
+  standing: player02Resting_png,
+  poisedToKick: player02Standing_png,
+  kicking: player02Kicking_png
+}, {
+  standing: player03Resting_png,
+  poisedToKick: player03Standing_png,
+  kicking: player03Kicking_png
+}, {
+  standing: player04Resting_png,
+  poisedToKick: player04Standing_png,
+  kicking: player04Kicking_png
+}, {
+  standing: player05Resting_png,
+  poisedToKick: player05Standing_png,
+  kicking: player05Kicking_png
+} ];
 
 const SPACING = 5.5;
 const SCALE = 0.18;
@@ -31,10 +69,15 @@ class SoccerPlayerNode extends Node {
 
     this.soccerPlayer = soccerPlayer;
 
-    const standingNode = new Image( player01Standing_png );
+    const imageNumber = soccerPlayer.initialPlaceInLine % playerGroups.length;
+
+    const restingNode = new Image( playerGroups[ imageNumber ].standing );
+    this.addChild( restingNode );
+
+    const standingNode = new Image( playerGroups[ imageNumber ].poisedToKick );
     this.addChild( standingNode );
 
-    const kickingNode = new Image( player01Kicking_png );
+    const kickingNode = new Image( playerGroups[ imageNumber ].kicking );
     this.addChild( kickingNode );
 
     // Show index when debugging with ?dev
@@ -46,9 +89,10 @@ class SoccerPlayerNode extends Node {
       } ) );
     }
 
-    soccerPlayer.isKickingProperty.link( isKicking => {
-      standingNode.visible = !isKicking;
-      kickingNode.visible = isKicking;
+    soccerPlayer.poseProperty.link( pose => {
+      restingNode.visible = pose === Pose.STANDING;
+      standingNode.visible = pose === Pose.POISED_TO_KICK;
+      kickingNode.visible = pose === Pose.KICKING;
     } );
 
     soccerPlayer.placeInLineProperty.link( placeInLine => {
