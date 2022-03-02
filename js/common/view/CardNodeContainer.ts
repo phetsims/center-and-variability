@@ -338,6 +338,9 @@ class CardNodeContainer extends Node {
   }
 
   animateCelebration1( callback: () => void ) {
+
+    const asyncCounter = new AsyncCounter( this.cardNodeCells.length, callback );
+
     this.cardNodeCells.forEach( cardNode => {
 
       const initialScale = cardNode.getScaleVector().x;
@@ -346,42 +349,32 @@ class CardNodeContainer extends Node {
       const scaleProperty = new NumberProperty( initialScale );
       scaleProperty.link( scale => cardNode.setScaleMagnitude( scale ) );
 
-      const animation = new Animation( {
+      const scaleUpAnimation = new Animation( {
         duration: 0.2,
-        targets: [
-          {
-            property: scaleProperty,
-            to: initialScale * 1.2,
-            easing: Easing.QUADRATIC_IN_OUT
-          }
-        ]
+        targets: [ {
+          property: scaleProperty,
+          to: initialScale * 1.2,
+          easing: Easing.QUADRATIC_IN_OUT
+        } ]
       } );
       const updatePosition = () => {
         cardNode.center = center;
       };
-      animation.updateEmitter.addListener( updatePosition );
-      animation.start();
+      scaleUpAnimation.updateEmitter.addListener( updatePosition );
+      scaleUpAnimation.start();
 
-      animation.endedEmitter.addListener( () => {
-        const animation = new Animation( {
+      scaleUpAnimation.endedEmitter.addListener( () => {
+        const scaleDownAnimation = new Animation( {
           duration: 0.2,
-          targets: [
-            {
-              property: scaleProperty,
-              to: initialScale,
-              easing: Easing.QUADRATIC_IN_OUT
-            }
-          ]
+          targets: [ {
+            property: scaleProperty,
+            to: initialScale,
+            easing: Easing.QUADRATIC_IN_OUT
+          } ]
         } );
-        animation.updateEmitter.addListener( updatePosition );
-        animation.endedEmitter.addListener( () => {
-          callback();
-
-          // Correct for any errors
-          // TODO: But why were they off in the first place?
-          this.cardNodeCells.forEach( cardNode => this.sendToHomeCell( cardNode, false ) );
-        } );
-        animation.start();
+        scaleDownAnimation.updateEmitter.addListener( updatePosition );
+        scaleDownAnimation.endedEmitter.addListener( () => asyncCounter.increment() );
+        scaleDownAnimation.start();
       } );
     } );
   }
