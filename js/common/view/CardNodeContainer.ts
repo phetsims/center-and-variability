@@ -374,6 +374,7 @@ class CardNodeContainer extends Node {
       const scaleProperty = new NumberProperty( initialScale );
       scaleProperty.link( scale => cardNode.setScaleMagnitude( scale ) );
 
+      // TODO: Use Animation.then
       const scaleUpAnimation = new Animation( {
         duration: 0.2,
         targets: [ {
@@ -535,12 +536,6 @@ class CardNodeContainer extends Node {
 
     const visit = () => {
 
-      // Setup asyncCounter, which sets off the next visit() when all cards from the current visit() have finished
-      // animating
-      const asyncCounter = new AsyncCounter( this.cardNodeCells.length, () => {
-        stepTimer.setTimeout( () => visit(), 100 );
-      } );
-
       for ( let i = 0; i < this.cardNodeCells.length; i++ ) {
         const currentCard = this.cardNodeCells[ i ];
         const currentValue = currentCard.casObject.valueProperty.value!;
@@ -560,11 +555,17 @@ class CardNodeContainer extends Node {
             // the removal was at a higher index
             this.cardNodeCells.splice( k, 0, currentCard );
 
+            // Setup asyncCounter, which sets off the next visit() when all cards from the current visit() have finished
+            // animating
+            const asyncCounter = new AsyncCounter( this.cardNodeCells.length, () => {
+              stepTimer.setTimeout( () => visit(), 100 );
+            } );
+
             // Send all cards to their correct spot to accommodate the newly inserted card, and have each card notify
             // the asyncCounter when in the correct spot
-            this.cardNodeCells.forEach( cardNode => this.sendToHomeCell( cardNode, true, 0.3, () => {
-              asyncCounter.increment();
-            } ) );
+            this.cardNodeCells.forEach( cardNode => {
+              this.sendToHomeCell( cardNode, true, 0.3, () => asyncCounter.increment() );
+            } );
             this.cardNodeCellsChangedEmitter.emit(); // TODO: OK if this fires false positives?
 
             // Exit all loops and wait for next recursive visit() after animation completes
