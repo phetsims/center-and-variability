@@ -10,7 +10,7 @@
 import centerAndSpread from '../../centerAndSpread.js';
 import { Text, Image, Node, NodeOptions } from '../../../../scenery/js/imports.js';
 
-// TODO: Rename the images around STANDING, POISED_TO_KICK and KICKING.  https://github.com/phetsims/center-and-spread/issues/12
+// TODO: Rename the images around STANDING, POISED_TO_KICK and KICKING. https://github.com/phetsims/center-and-spread/issues/59
 import player01Resting_png from '../../../images/player01Resting_png.js';
 import player01Standing_png from '../../../images/player01Standing_png.js';
 import player01Kicking_png from '../../../images/player01Kicking_png.js';

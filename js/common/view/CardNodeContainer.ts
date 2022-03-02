@@ -491,11 +491,11 @@ class CardNodeContainer extends Node {
 
                 assert && assert( complete === false, 'Too many completions' );
                 complete = true;
-                stepTimer.setTimeout( () => visit(), 200 ); //
+                stepTimer.setTimeout( () => visit(), 100 ); //
               }
             };
 
-            this.cardNodeCells.forEach( cardNode => this.sendToHomeCell( cardNode, true, 0.5, callback ) );
+            this.cardNodeCells.forEach( cardNode => this.sendToHomeCell( cardNode, true, 0.3, callback ) );
             this.cardNodeCellsChangedEmitter.emit(); // TODO: OK if this fires false positives?
 
             // Exit all loops and wait for next recursive visit() after animation completes
