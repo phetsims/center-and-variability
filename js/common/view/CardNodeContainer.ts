@@ -37,6 +37,7 @@ import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
 import stepTimer from '../../../../axon/js/stepTimer.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import Animation from '../../../../twixt/js/Animation.js';
+import dotRandom from '../../../../dot/js/dotRandom.js';
 
 // constants
 const CARD_SPACING = 10;
@@ -155,7 +156,8 @@ class CardNodeContainer extends Node {
               const numberDragging = this.cardNodeCells.filter( cardNode => cardNode.dragListener.isPressed ).length;
               if ( numberDragging === 0 ) {
                 this.pickable = false;
-                this.animateCelebration3( () => {
+
+                this.startRandomCelebration( () => {
 
                   this.isReadyForCelebration = false;
                   this.pickable = true;
@@ -322,6 +324,16 @@ class CardNodeContainer extends Node {
         }
       }
     };
+  }
+
+  startRandomCelebration( callback: () => void ): void {
+    const animations = [
+      () => this.animateCelebration1( callback ),
+      () => this.animateCelebration2( callback ),
+      () => this.animateCelebration3( callback )
+    ];
+    const animation = dotRandom.sample( animations );
+    animation();
   }
 
   animateCelebration1( callback: () => void ) {
