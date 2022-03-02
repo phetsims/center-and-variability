@@ -16,7 +16,6 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import CASColors from '../CASColors.js';
 import SoccerModel from '../model/SoccerModel.js';
 import CASConstants from '../CASConstants.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 
 type KickButtonGroupSelfOptions = {};
@@ -50,34 +49,20 @@ class KickButtonGroup extends VBox {
 
     const createKickButton = ( content: { label: Node, text: Text }, tandem: Tandem, numberToKick: number, multikick: boolean ) => {
 
-      const visibleProperty = new DerivedProperty<boolean, [ number, number ]>(
-        [ model.objectGroup.countProperty, model.remainingNumberOfBallsToMultiKickProperty ],
-        ( count, remainingNumberOfBallsToMultiKick ) => {
-          const remainingBalls = model.maxNumberOfObjects - count - remainingNumberOfBallsToMultiKick;
-
-          // TODO: It is a code smell that the DerivedProperty has side effects other than returning a value.
-          if ( multikick ) {
-            content.text.text = 'Kick ' + Math.max( Math.min( remainingBalls, numberToKick ), 1 );
-          }
-          if ( multikick ) {
-            return remainingBalls > 0;
-          }
-          else {
-            return remainingBalls >= numberToKick;
-          }
-        }
-      );
+      if ( multikick ) {
+        model.numberOfRemainingKickableSoccerBallsProperty.link( numberOfRemainingKickableObjects => {
+          content.text.text = 'Kick ' + Math.max( Math.min( numberOfRemainingKickableObjects, numberToKick ), 1 );
+        } );
+      }
 
       return new RectangularPushButton( {
-        visibleProperty: visibleProperty,
+        visibleProperty: model.hasKickableSoccerBallsProperty,
         content: content.label,
         baseColor: CASColors.kickButtonFillColorProperty,
         xMargin: 12,
         yMargin: 12,
         tandem: tandem,
-
-        // Use the same logic for determining whether any balls are left to kick, to allow the fire on hold behavior
-        listener: () => visibleProperty.value && model.scheduleKicks( numberToKick ),
+        listener: () => model.scheduleKicks( numberToKick ),
 
         // TODO-DESIGN: It feels asymmetrical that holding down "kick 1" fires soccer balls but holding down "kick 5" does nothing
         fireOnHold: !multikick,

@@ -23,6 +23,8 @@ import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
 import Pose from './Pose.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
+import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 type SoccerModelSelfOptions = {};
 type SoccerModelOptions = SoccerModelSelfOptions & CASModelOptions;
@@ -33,7 +35,9 @@ const TIME_BETWEEN_RAPID_KICKS = 0.1; // in seconds
 class SoccerModel extends CASModel {
   readonly soccerPlayerGroup: PhetioGroup<SoccerPlayer, [ number ]>;
   readonly nextBallToKickProperty: Property<CASObject | null>; // Null if there is no more ball to kick
-  readonly remainingNumberOfBallsToMultiKickProperty: NumberProperty;
+  private readonly numberOfScheduledSoccerBallsToKickProperty: NumberProperty;
+  readonly numberOfRemainingKickableSoccerBallsProperty: IReadOnlyProperty<number>;
+  readonly hasKickableSoccerBallsProperty: IReadOnlyProperty<boolean>;
 
   private readonly timeWhenLastBallWasKickedProperty: NumberProperty;
   private readonly ballPlayerMap: Map<CASObject, SoccerPlayer>; // TODO: Add to PhET-iO State
@@ -46,8 +50,8 @@ class SoccerModel extends CASModel {
 
     super( CASObjectType.SOCCER_BALL, maxNumberOfBalls, options );
 
-    this.remainingNumberOfBallsToMultiKickProperty = new NumberProperty( 0, {
-      tandem: options.tandem.createTandem( 'remainingNumberOfBallsToMultiKickProperty' )
+    this.numberOfScheduledSoccerBallsToKickProperty = new NumberProperty( 0, {
+      tandem: options.tandem.createTandem( 'numberOfScheduledSoccerBallsToKickProperty' )
     } );
     this.timeWhenLastBallWasKickedProperty = new NumberProperty( 0, {
       tandem: options.tandem.createTandem( 'timeWhenLastBallWasKickedProperty' )
@@ -68,6 +72,20 @@ class SoccerModel extends CASModel {
     this.nextBallToKickProperty = new Property<CASObject | null>( this.createBall() );
 
     this.ballPlayerMap = new Map();
+
+    this.numberOfRemainingKickableSoccerBallsProperty = new DerivedProperty<number, [ number, number, CASObject | null ]>( [
+      this.numberOfRemainingObjectsProperty,
+      this.numberOfScheduledSoccerBallsToKickProperty,
+      this.nextBallToKickProperty ], ( numberOfRemainingObjects,
+                                       numberOfScheduledBallsToKick,
+                                       nextBallToKick ) => {
+
+      const numberOfCreatedButKickableBalls = nextBallToKick === null ? 0 : 1;
+      return numberOfRemainingObjects - numberOfScheduledBallsToKick + numberOfCreatedButKickableBalls;
+    } );
+
+    this.hasKickableSoccerBallsProperty = new DerivedProperty( [ this.numberOfRemainingKickableSoccerBallsProperty ],
+      numberOfRemainingKickableObjects => numberOfRemainingKickableObjects > 0 );
   }
 
   /**
@@ -135,9 +153,8 @@ class SoccerModel extends CASModel {
    * Adds the provided number of balls to the scheduled balls to kick
    */
   scheduleKicks( numberOfBallsToKick: number ): void {
-
-    // TODO: Guard the max number, see https://github.com/phetsims/center-and-spread/issues/59
-    this.remainingNumberOfBallsToMultiKickProperty.value += numberOfBallsToKick;
+    this.numberOfScheduledSoccerBallsToKickProperty.value +=
+      Math.min( numberOfBallsToKick, this.numberOfRemainingKickableSoccerBallsProperty.value );
   }
 
   /**
@@ -207,13 +224,15 @@ class SoccerModel extends CASModel {
 
       // TODO: number of balls that exist but haven't been kicked???  See KickButtonGroup.
       const numberBallsThatExistButHaventBeenKicked = this.nextBallToKickProperty.value === null ? 0 : 1;
-      if ( this.remainingNumberOfBallsToMultiKickProperty.value > 0 &&
+      if ( this.numberOfScheduledSoccerBallsToKickProperty.value > 0 &&
            this.numberOfRemainingObjectsProperty.value + numberBallsThatExistButHaventBeenKicked > 0 &&
            this.timeProperty.value >= this.timeWhenLastBallWasKickedProperty.value + TIME_BETWEEN_RAPID_KICKS ) {
 
         if ( this.nextBallToKickProperty.value === null ) {
 
           // Create the next ball.
+
+          // TODO-UX-HIGH: A ball is being created too soon, when using the multikick button
           this.nextBallToKickProperty.value = this.createBall();
         }
 
@@ -225,8 +244,6 @@ class SoccerModel extends CASModel {
         if ( frontPlayer.poseProperty.value === Pose.STANDING ) {
           frontPlayer.poseProperty.value = Pose.POISED_TO_KICK;
           frontPlayer.timestampWhenPoisedBegan = this.timeProperty.value;
-
-          this.remainingNumberOfBallsToMultiKickProperty.value--;
         }
       }
 
@@ -237,6 +254,7 @@ class SoccerModel extends CASModel {
 
           const casObject = this.nextBallToKickProperty.value!; // TODO: Probably? See https://github.com/phetsims/center-and-spread/issues/59
           this.kickBall( frontPlayer, casObject );
+          this.numberOfScheduledSoccerBallsToKickProperty.value--;
         }
       }
     }
@@ -280,7 +298,7 @@ class SoccerModel extends CASModel {
   }
 
   clearData(): void {
-    this.remainingNumberOfBallsToMultiKickProperty.reset();
+    this.numberOfScheduledSoccerBallsToKickProperty.reset();
     this.timeProperty.reset();
     this.timeWhenLastBallWasKickedProperty.reset();
     this.ballPlayerMap.clear();

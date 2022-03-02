@@ -50,6 +50,8 @@ class CASModel {
 
   // TODO: rename to allowedRange or something
   readonly range: Range;
+
+  // This is the number that we can still add to the PhetioGroup
   readonly numberOfRemainingObjectsProperty: DerivedProperty<number, [ count: number ]>;
   readonly medianValueProperty: Property<number | null>;
   readonly meanValueProperty: Property<number | null>;
