@@ -334,7 +334,8 @@ class CardNodeContainer extends Node {
       () => this.animateCelebration3( callback )
     ];
     const animation = dotRandom.sample( animations );
-    animation();
+    // animation();
+    this.animateCelebration2( callback );
   }
 
   animateCelebration1( callback: () => void ) {
@@ -380,6 +381,9 @@ class CardNodeContainer extends Node {
   }
 
   animateCelebration2( callback: () => void ) {
+
+    const asyncCounter = new AsyncCounter( this.cardNodeCells.length, callback );
+
     this.cardNodeCells.forEach( cardNode => {
 
       const center = cardNode.center.copy();
@@ -389,27 +393,18 @@ class CardNodeContainer extends Node {
 
       const animation = new Animation( {
         duration: 0.6,
-        targets: [
-          {
-            property: rotationProperty,
-            to: 2 * Math.PI,
-            easing: Easing.QUADRATIC_IN_OUT
-          }
-        ]
+        targets: [ {
+          property: rotationProperty,
+          to: 2 * Math.PI,
+          easing: Easing.QUADRATIC_IN_OUT
+        } ]
       } );
       const updatePosition = () => {
         cardNode.center = center;
       };
       animation.updateEmitter.addListener( updatePosition );
+      animation.endedEmitter.addListener( () => asyncCounter.increment() );
       animation.start();
-
-      animation.endedEmitter.addListener( () => {
-        callback();
-
-        // Correct for any errors
-        // TODO: But why were they off in the first place?
-        this.cardNodeCells.forEach( cardNode => this.sendToHomeCell( cardNode, false ) );
-      } );
     } );
   }
 
