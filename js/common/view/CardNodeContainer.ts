@@ -155,7 +155,7 @@ class CardNodeContainer extends Node {
               const numberDragging = this.cardNodeCells.filter( cardNode => cardNode.dragListener.isPressed ).length;
               if ( numberDragging === 0 ) {
                 this.pickable = false;
-                this.animateCelebration1( () => {
+                this.animateCelebration3( () => {
 
                   this.isReadyForCelebration = false;
                   this.pickable = true;
@@ -404,6 +404,55 @@ class CardNodeContainer extends Node {
         // TODO: But why were they off in the first place?
         this.cardNodeCells.forEach( cardNode => this.sendToHomeCell( cardNode, false ) );
       } );
+    } );
+  }
+
+  /**
+   * The cards do the "wave' from left to right.
+   */
+  animateCelebration3( callback: () => void ): void {
+    this.cardNodeCells.forEach( ( cardNode, index ) => {
+
+      stepTimer.setTimeout( () => {
+        const initialPositionY = cardNode.y;
+        const jumpHeight = 30;
+        const positionYProperty = new NumberProperty( initialPositionY );
+        positionYProperty.link( positionY => { cardNode.y = positionY; } );
+
+        const animation = new Animation( {
+          duration: 0.2,
+          targets: [
+            {
+              property: positionYProperty,
+              to: initialPositionY - jumpHeight,
+              easing: Easing.QUADRATIC_IN_OUT
+            }
+          ]
+        } );
+        animation.start();
+
+        animation.endedEmitter.addListener( () => {
+          const animation = new Animation( {
+            duration: 0.2,
+            targets: [
+              {
+                property: positionYProperty,
+                to: initialPositionY,
+                easing: Easing.QUADRATIC_IN_OUT
+              }
+            ]
+          } );
+          animation.endedEmitter.addListener( () => {
+            callback();
+
+            // Correct for any errors
+            // TODO: But why were they off in the first place?
+            this.cardNodeCells.forEach( cardNode => this.sendToHomeCell( cardNode, false ) );
+          } );
+          animation.start();
+        } );
+      }, index * 60 );
+
     } );
   }
 
