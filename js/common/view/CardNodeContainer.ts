@@ -38,6 +38,7 @@ import stepTimer from '../../../../axon/js/stepTimer.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
+import AsyncCounter from '../model/AsyncCounter.js';
 
 // constants
 const CARD_SPACING = 10;
@@ -525,6 +526,13 @@ class CardNodeContainer extends Node {
     }
 
     const visit = () => {
+
+      // Setup asyncCounter, which sets off the next visit() when all cards from the current visit() have finished
+      // animating
+      const asyncCounter = new AsyncCounter( this.cardNodeCells.length, () => {
+        stepTimer.setTimeout( () => visit(), 100 );
+      } );
+
       for ( let i = 0; i < this.cardNodeCells.length; i++ ) {
         const currentCard = this.cardNodeCells[ i ];
         const currentValue = currentCard.casObject.valueProperty.value!;
@@ -544,19 +552,11 @@ class CardNodeContainer extends Node {
             // the removal was at a higher index
             this.cardNodeCells.splice( k, 0, currentCard );
 
-            let count = 0;
-            let complete = false;
-            const callback = () => {
-              count++;
-              if ( count >= this.cardNodeCells.length ) {
-
-                assert && assert( complete === false, 'Too many completions' );
-                complete = true;
-                stepTimer.setTimeout( () => visit(), 100 ); //
-              }
-            };
-
-            this.cardNodeCells.forEach( cardNode => this.sendToHomeCell( cardNode, true, 0.3, callback ) );
+            // Send all cards to their correct spot to accommodate the newly inserted card, and have each card notify
+            // the asyncCounter when in the correct spot
+            this.cardNodeCells.forEach( cardNode => this.sendToHomeCell( cardNode, true, 0.3, () => {
+              asyncCounter.increment();
+            } ) );
             this.cardNodeCellsChangedEmitter.emit(); // TODO: OK if this fires false positives?
 
             // Exit all loops and wait for next recursive visit() after animation completes
