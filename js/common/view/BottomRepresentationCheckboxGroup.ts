@@ -51,32 +51,6 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
     }, providedOptions );
 
     const items = [];
-    options.includeMean && items.push( {
-
-      // TODO: Align group to center align the icons
-      node: new HBox( {
-        spacing: 24.5,
-        children: [
-          new Text( centerAndSpreadStrings.mean, TEXT_OPTIONS ),
-          NumberLineNode.createMeanIndicatorNode()
-        ]
-      } ),
-      property: model.isShowingBottomMeanProperty
-    } );
-    options.includeMedian && items.push( {
-
-      // TODO: Align group to center align the icons
-      node: new HBox( {
-        spacing: 17,
-        children: [
-          new Text( centerAndSpreadStrings.median, TEXT_OPTIONS ),
-
-          // TODO: Factor out?  See playAreaMedianIndicatorNode
-          new ArrowNode( 0, 0, 0, 35, { fill: CASColors.medianColorProperty, stroke: null, maxHeight: 20 } )
-        ]
-      } ),
-      property: model.isShowingBottomMedianProperty
-    } );
 
     const createPredictionItem = ( property: Property<boolean>, string: string, color: ColorDef, spacing: number ) => {
       return {
@@ -105,6 +79,34 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
     options.includePredictMedian && items.push( createPredictionItem(
       model.isShowingMedianPredictionProperty, centerAndSpreadStrings.predictMedian, CASColors.medianColorProperty, 8
     ) );
+
+    options.includeMean && items.push( {
+
+      // TODO: Align group to center align the icons
+      node: new HBox( {
+        spacing: 24.5,
+        children: [
+          new Text( centerAndSpreadStrings.mean, TEXT_OPTIONS ),
+          NumberLineNode.createMeanIndicatorNode()
+        ]
+      } ),
+      property: model.isShowingBottomMeanProperty
+    } );
+    options.includeMedian && items.push( {
+
+      // TODO: Align group to center align the icons
+      node: new HBox( {
+        spacing: 17,
+        children: [
+          new Text( centerAndSpreadStrings.median, TEXT_OPTIONS ),
+
+          // TODO: Factor out?  See playAreaMedianIndicatorNode
+          new ArrowNode( 0, 0, 0, 35, { fill: CASColors.medianColorProperty, stroke: null, maxHeight: 20 } )
+        ]
+      } ),
+      property: model.isShowingBottomMedianProperty
+    } );
+
     super( items, options );
   }
 }
