@@ -35,6 +35,8 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
 import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
 import stepTimer from '../../../../axon/js/stepTimer.js';
+import Easing from '../../../../twixt/js/Easing.js';
+import Animation from '../../../../twixt/js/Animation.js';
 
 // constants
 const CARD_SPACING = 10;
@@ -54,6 +56,7 @@ class CardNodeContainer extends Node {
   private readonly totalDragDistanceProperty: NumberProperty;
   private readonly hasDraggedCardProperty: IReadOnlyProperty<boolean>;
   private readonly cardLayer: Node;
+  private isReadyForCelebration: boolean;
 
   constructor( model: CASModel, providedOptions: CardNodeContainerOptions ) {
 
@@ -146,7 +149,20 @@ class CardNodeContainer extends Node {
       // When a card is dropped, send it to its home cell
       cardNode.dragListener.isPressedProperty.link( isPressed => {
         if ( !isPressed && !phet.joist.sim.isSettingPhetioStateProperty.value ) {
-          this.sendToHomeCell( cardNode, true, 0.2 );
+          this.sendToHomeCell( cardNode, true, 0.2, () => {
+            if ( this.isReadyForCelebration ) {
+
+              const numberDragging = this.cardNodeCells.filter( cardNode => cardNode.dragListener.isPressed ).length;
+              if ( numberDragging === 0 ) {
+                this.pickable = false;
+                this.animateCelebration1( () => {
+
+                  this.isReadyForCelebration = false;
+                  this.pickable = true;
+                } );
+              }
+            }
+          } );
         }
       } );
 
@@ -266,6 +282,8 @@ class CardNodeContainer extends Node {
     this.cardNodeCellsChangedEmitter.addListener( updateMedianNode );
     model.medianValueProperty.link( updateMedianNode );
     model.isShowingTopMedianProperty.link( updateMedianNode );
+
+    this.isReadyForCelebration = false;
   }
 
   // The listener which is linked to the cardNode.positionProperty
@@ -283,6 +301,8 @@ class CardNodeContainer extends Node {
         // No-op if the dragged card is near its home cell
         if ( currentOccupant !== cardNode ) {
 
+          const wasSortedBefore = this.isDataSorted();
+
           // it's just a pairwise swap
           this.cardNodeCells[ closestCell ] = cardNode;
           this.cardNodeCells[ originalCell ] = currentOccupant;
@@ -295,10 +315,96 @@ class CardNodeContainer extends Node {
             this.model.isSortingDataProperty.value = false;
           }
 
+          // celebrate after the card was dropped and gets to its home
+          this.isReadyForCelebration = this.isDataSorted() && !wasSortedBefore;
+
           this.cardNodeCellsChangedEmitter.emit();
         }
       }
     };
+  }
+
+  animateCelebration1( callback: () => void ) {
+    this.cardNodeCells.forEach( cardNode => {
+
+      const initialScale = cardNode.getScaleVector().x;
+      const center = cardNode.center.copy();
+
+      const scaleProperty = new NumberProperty( initialScale );
+      scaleProperty.link( scale => cardNode.setScaleMagnitude( scale ) );
+
+      const animation = new Animation( {
+        duration: 0.2,
+        targets: [
+          {
+            property: scaleProperty,
+            to: initialScale * 1.2,
+            easing: Easing.QUADRATIC_IN_OUT
+          }
+        ]
+      } );
+      const updatePosition = () => {
+        cardNode.center = center;
+      };
+      animation.updateEmitter.addListener( updatePosition );
+      animation.start();
+
+      animation.endedEmitter.addListener( () => {
+        const animation = new Animation( {
+          duration: 0.2,
+          targets: [
+            {
+              property: scaleProperty,
+              to: initialScale,
+              easing: Easing.QUADRATIC_IN_OUT
+            }
+          ]
+        } );
+        animation.updateEmitter.addListener( updatePosition );
+        animation.endedEmitter.addListener( () => {
+          callback();
+
+          // Correct for any errors
+          // TODO: But why were they off in the first place?
+          this.cardNodeCells.forEach( cardNode => this.sendToHomeCell( cardNode, false ) );
+        } );
+        animation.start();
+      } );
+    } );
+  }
+
+  animateCelebration2( callback: () => void ) {
+    this.cardNodeCells.forEach( cardNode => {
+
+      const center = cardNode.center.copy();
+
+      const rotationProperty = new NumberProperty( 0 );
+      rotationProperty.link( rotation => cardNode.setRotation( rotation ) );
+
+      const animation = new Animation( {
+        duration: 0.6,
+        targets: [
+          {
+            property: rotationProperty,
+            to: 2 * Math.PI,
+            easing: Easing.QUADRATIC_IN_OUT
+          }
+        ]
+      } );
+      const updatePosition = () => {
+        cardNode.center = center;
+      };
+      animation.updateEmitter.addListener( updatePosition );
+      animation.start();
+
+      animation.endedEmitter.addListener( () => {
+        callback();
+
+        // Correct for any errors
+        // TODO: But why were they off in the first place?
+        this.cardNodeCells.forEach( cardNode => this.sendToHomeCell( cardNode, false ) );
+      } );
+    } );
   }
 
   /**
