@@ -10,21 +10,20 @@
 import centerAndSpread from '../../centerAndSpread.js';
 import { Text, Image, Node, NodeOptions } from '../../../../scenery/js/imports.js';
 
-// TODO: Rename the images around STANDING, POISED_TO_KICK and KICKING. https://github.com/phetsims/center-and-spread/issues/59
-import player01Resting_png from '../../../images/player01Resting_png.js';
 import player01Standing_png from '../../../images/player01Standing_png.js';
+import player01PoisedToKick_png from '../../../images/player01PoisedToKick_png.js';
 import player01Kicking_png from '../../../images/player01Kicking_png.js';
-import player02Resting_png from '../../../images/player02Resting_png.js';
 import player02Standing_png from '../../../images/player02Standing_png.js';
+import player02PoisedToKick_png from '../../../images/player02PoisedToKick_png.js';
 import player02Kicking_png from '../../../images/player02Kicking_png.js';
-import player03Resting_png from '../../../images/player03Resting_png.js';
 import player03Standing_png from '../../../images/player03Standing_png.js';
+import player03PoisedToKick_png from '../../../images/player03PoisedToKick_png.js';
 import player03Kicking_png from '../../../images/player03Kicking_png.js';
-import player04Resting_png from '../../../images/player04Resting_png.js';
 import player04Standing_png from '../../../images/player04Standing_png.js';
+import player04PoisedToKick_png from '../../../images/player04PoisedToKick_png.js';
 import player04Kicking_png from '../../../images/player04Kicking_png.js';
-import player05Resting_png from '../../../images/player05Resting_png.js';
 import player05Standing_png from '../../../images/player05Standing_png.js';
+import player05PoisedToKick_png from '../../../images/player05PoisedToKick_png.js';
 import player05Kicking_png from '../../../images/player05Kicking_png.js';
 import SoccerPlayer from '../model/SoccerPlayer.js';
 import optionize from '../../../../phet-core/js/optionize.js';
@@ -37,24 +36,24 @@ type SoccerPlayerNodeSelfOptions = {};
 type SoccerPlayerNodeOptions = SoccerPlayerNodeSelfOptions & NodeOptions;
 
 const playerGroups = [ {
-  standing: player01Resting_png,
-  poisedToKick: player01Standing_png,
+  standing: player01Standing_png,
+  poisedToKick: player01PoisedToKick_png,
   kicking: player01Kicking_png
 }, {
-  standing: player02Resting_png,
-  poisedToKick: player02Standing_png,
+  standing: player02Standing_png,
+  poisedToKick: player02PoisedToKick_png,
   kicking: player02Kicking_png
 }, {
-  standing: player03Resting_png,
-  poisedToKick: player03Standing_png,
+  standing: player03Standing_png,
+  poisedToKick: player03PoisedToKick_png,
   kicking: player03Kicking_png
 }, {
-  standing: player04Resting_png,
-  poisedToKick: player04Standing_png,
+  standing: player04Standing_png,
+  poisedToKick: player04PoisedToKick_png,
   kicking: player04Kicking_png
 }, {
-  standing: player05Resting_png,
-  poisedToKick: player05Standing_png,
+  standing: player05Standing_png,
+  poisedToKick: player05PoisedToKick_png,
   kicking: player05Kicking_png
 } ];
 
