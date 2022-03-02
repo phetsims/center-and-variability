@@ -7,6 +7,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import Animation from '../../../../twixt/js/Animation.js';
 import centerAndSpread from '../../centerAndSpread.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import PhetioObject, { PhetioObjectOptions, RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
@@ -22,6 +23,7 @@ import CASConstants from '../CASConstants.js';
 import Property from '../../../../axon/js/Property.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import Emitter from '../../../../axon/js/Emitter.js';
+import { AnimationMode } from './AnimationMode.js';
 
 type CASObjectSelfOptions = {
   position?: Vector2;
@@ -42,7 +44,7 @@ class CASObject extends PhetioObject {
   // Continuous position during animation. After landing, it's discrete.
   readonly positionProperty: Vector2Property;
   readonly velocityProperty: Vector2Property;
-  readonly isAnimatingProperty: BooleanProperty;
+  animationModeProperty: Property<AnimationMode>;
   readonly isMedianObjectProperty: BooleanProperty;
   readonly isShowingAnimationHighlightProperty: BooleanProperty;
   readonly objectType: CASObjectType;
@@ -56,6 +58,7 @@ class CASObject extends PhetioObject {
 
   static CASObjectIO: IOType;
   readonly dragStartedEmitter: Emitter;
+  animation: Animation | null;
 
   constructor( objectType: CASObjectType, providedOptions: CASObjectOptions ) {
 
@@ -74,6 +77,7 @@ class CASObject extends PhetioObject {
     this.objectType = objectType;
     this.targetX = null;
     this.isFirstObject = options.isFirstObject;
+    this.animation = null;
 
     this.positionProperty = new Vector2Property( options.position, {
       tandem: options.tandem.createTandem( 'positionProperty' )
@@ -83,10 +87,8 @@ class CASObject extends PhetioObject {
               options.tandem.createTandem( 'velocityProperty' ) :
               Tandem.OPT_OUT
     } );
-    this.isAnimatingProperty = new BooleanProperty( false, {
-      tandem: objectType === CASObjectType.SOCCER_BALL ?
-              options.tandem.createTandem( 'isAnimatingProperty' ) :
-              Tandem.OPT_OUT
+    this.animationModeProperty = new Property<AnimationMode>( 'none', {
+      tandem: options.tandem.createTandem( 'animationModeProperty' )
     } );
     this.dragPositionProperty = new Vector2Property( options.position );
     this.valueProperty = new Property<number | null>( options.value, {
@@ -103,7 +105,7 @@ class CASObject extends PhetioObject {
   }
 
   step( dt: number ): void {
-    if ( this.isAnimatingProperty.value ) {
+    if ( this.animationModeProperty.value === 'flying' ) {
 
       assert && assert( this.targetX !== null, 'targetX should be non-null when animating' );
 
@@ -128,8 +130,7 @@ class CASObject extends PhetioObject {
       this.positionProperty.value = new Vector2( x, y );
 
       if ( landed ) {
-        this.isAnimatingProperty.value = false;
-        this.dragPositionProperty.value = this.positionProperty.value;
+        this.animationModeProperty.value = 'none';
       }
     }
   }
@@ -138,7 +139,7 @@ class CASObject extends PhetioObject {
     super.dispose();
     this.positionProperty.dispose();
     this.velocityProperty.dispose();
-    this.isAnimatingProperty.dispose();
+    this.animationModeProperty.dispose();
     this.valueProperty.dispose();
     this.dragPositionProperty.dispose();
     this.isMedianObjectProperty.dispose();

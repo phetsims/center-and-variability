@@ -294,7 +294,7 @@ class CASModel {
    */
   protected getOtherObjectsAtTarget( casObject: CASObject ): CASObject[] {
     return this.objectGroup.filter( ( o: CASObject ) => {
-      return !o.isAnimatingProperty.value && o.valueProperty.value === casObject.valueProperty.value && casObject !== o;
+      return o.valueProperty.value === casObject.valueProperty.value && casObject !== o;
     } );
   }
 

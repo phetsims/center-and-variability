@@ -16,6 +16,7 @@ import CASObjectType from '../model/CASObjectType.js';
 import ball_png from '../../../images/ball_png.js';
 import ShadedSphereNode from '../../../../scenery-phet/js/ShadedSphereNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import { AnimationMode } from '../model/AnimationMode.js';
 import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import CASColors from '../CASColors.js';
@@ -107,22 +108,27 @@ class CASObjectNode extends Node {
 
     // only setup input-related things if dragging is enabled
     if ( options.draggingEnabled ) {
-      this.addInputListener( new DragListener( {
+      const dragListener = new DragListener( {
         positionProperty: casObject.dragPositionProperty,
         transform: modelViewTransform,
-        start: () => casObject.dragStartedEmitter.emit()
-      } ) );
+        start: () => {
+
+          // if the user presses an object that's animating, allow it to keep animating up in the stack
+          casObject.dragStartedEmitter.emit();
+        },
+        drag: () => {
+          casObject.animation && casObject.animation.stop();
+        }
+      } );
+      this.addInputListener( dragListener );
       this.touchArea = this.localBounds.dilatedX( 10 );
 
       // Prevent dragging or interaction while the object is animating
-      casObject.isAnimatingProperty.link( isAnimating => {
-        this.cursor = isAnimating ? null : 'pointer';
-        this.pickable = !isAnimating;
-      } );
-
-      casObject.valueProperty.link( value => {
-        this.pickable = value !== null;
-      } );
+      Property.multilink( [ casObject.animationModeProperty, casObject.valueProperty ], ( mode, value ) => {
+        const isPickable = value !== null && mode === 'none';
+        this.cursor = isPickable ? 'pointer' : null;
+        this.pickable = isPickable;
+        } );
     }
 
     // show or hide the median highlight
@@ -133,9 +139,9 @@ class CASObjectNode extends Node {
 
     // The initial ready-to-kick ball is full opacity. The rest of the balls waiting to be kicked are lower opacity so
     // they don't look like part of the data set, but still look kickable.
-    Property.multilink( [ casObject.valueProperty, casObject.isAnimatingProperty ],
-      ( value: number | null, isAnimating: boolean ) => {
-        this.opacity = value === null && !isAnimating && !casObject.isFirstObject ? 0.4 : 1;
+    Property.multilink( [ casObject.valueProperty, casObject.animationModeProperty ],
+      ( value: number | null, animationMode: AnimationMode ) => {
+        this.opacity = value === null && animationMode === 'none' && !casObject.isFirstObject ? 0.4 : 1;
       } );
 
     // isShowingAnimationHighlightProperty

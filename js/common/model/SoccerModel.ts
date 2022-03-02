@@ -21,6 +21,8 @@ import CASObject from './CASObject.js';
 import Property from '../../../../axon/js/Property.js';
 import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
 import Pose from './Pose.js';
+import Animation from '../../../../twixt/js/Animation.js';
+import Easing from '../../../../twixt/js/Easing.js';
 
 type SoccerModelSelfOptions = {};
 type SoccerModelOptions = SoccerModelSelfOptions & CASModelOptions;
@@ -83,21 +85,50 @@ class SoccerModel extends CASModel {
       velocity: Vector2.ZERO
     } );
 
-    const valueListener = ( value: number | null ) => {
-      if ( value !== null ) {
-        this.moveToTop( casObject );
-      }
-    };
-    casObject.valueProperty.link( valueListener );
-
-    // this is an n^2 operation, but that is okay because n small.
-    this.objectGroup.elementDisposedEmitter.addListener( o => {
-      if ( o === casObject ) {
-        o.valueProperty.unlink( valueListener );
+    casObject.valueProperty.link( ( value, oldValue ) => {
+      if ( value !== null && oldValue === null ) {
+        this.soccerBallLandedListener( casObject, value );
       }
     } );
 
     return casObject;
+  }
+
+  /**
+   * When a ball lands on the ground, animate all other balls that were at this location above the landed ball.
+   */
+  soccerBallLandedListener( casObject: CASObject, value: number ) {
+    const otherObjectsInStack = this.objectGroup.filter( x => x.valueProperty.value === value && x !== casObject );
+    const sortedOthers = _.sortBy( otherObjectsInStack, object => object.positionProperty.value.y );
+
+    sortedOthers.forEach( ( casObject, index ) => {
+
+      const diameter = casObject.objectType.radius * 2;
+      const targetPositionY = ( index + 1 ) * diameter + casObject.objectType.radius;
+      const positionYProperty = new NumberProperty( casObject.positionProperty.value.y );
+
+      // TODO: Use casObject.positionProperty in the Animation
+      positionYProperty.link( positionY => {
+        casObject.positionProperty.value = new Vector2( casObject.positionProperty.value.x, positionY );
+      } );
+
+      if ( casObject.animation ) {
+        casObject.animation.stop();
+      }
+      casObject.animation = new Animation( {
+        duration: 0.15,
+        targets: [ {
+          property: positionYProperty,
+          to: targetPositionY,
+          easing: Easing.QUADRATIC_IN_OUT
+        } ]
+      } );
+
+      casObject.animation.endedEmitter.addListener( () => {
+        casObject.animation = null;
+      } );
+      casObject.animation.start();
+    } );
   }
 
   /**
@@ -122,7 +153,7 @@ class SoccerModel extends CASModel {
     // const weights = [ 100, 100, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
     const weights = [
       1, 1, 1, 1,
-      1, 1, 1, 1,
+      1, 10000, 1, 1,
       1, 1, 1, 1,
       1, 1, 1, 1
     ];
@@ -157,7 +188,7 @@ class SoccerModel extends CASModel {
 
     casObject.targetX = x1;
 
-    casObject.isAnimatingProperty.value = true;
+    casObject.animationModeProperty.value = 'flying';
     this.timeWhenLastBallWasKickedProperty.value = this.timeProperty.value;
 
     // New ball will be created later in step
