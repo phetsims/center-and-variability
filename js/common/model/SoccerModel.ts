@@ -153,7 +153,7 @@ class SoccerModel extends CASModel {
     // const weights = [ 100, 100, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
     const weights = [
       1, 1, 1, 1,
-      1, 10000, 1, 1,
+      1, 1, 1, 1,
       1, 1, 1, 1,
       1, 1, 1, 1
     ];
