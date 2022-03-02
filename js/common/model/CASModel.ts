@@ -108,7 +108,7 @@ class CASModel {
       tandem: options.includeCards ? options.tandem.createTandem( 'cardModelGroup' ) : Tandem.OPT_OUT
     } );
 
-    this.range = new Range( 1, 16 );
+    this.range = new Range( 1, 15 );
 
     this.isSortingDataProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isSortingDataProperty' )
