@@ -32,6 +32,13 @@ type SoccerModelOptions = SoccerModelSelfOptions & CASModelOptions;
 // constants
 const TIME_BETWEEN_RAPID_KICKS = 0.05; // in seconds
 
+const SKEWED_LEFT = [
+  0.01832, 0.07326, 0.14653, 0.19537, 0.19537,
+  0.15629, 0.1042, 0.05954, 0.02977, 0.01323,
+  0.00529, 0.00192, 0.00064, 0.0002, 0.00007
+];
+const SKEWED_RIGHT = SKEWED_LEFT.slice().reverse();
+
 class SoccerModel extends CASModel {
   readonly soccerPlayerGroup: PhetioGroup<SoccerPlayer, [ number ]>;
   readonly nextBallToKickProperty: Property<CASObject | null>; // Null if there is no more ball to kick
@@ -41,6 +48,7 @@ class SoccerModel extends CASModel {
 
   private readonly timeWhenLastBallWasKickedProperty: NumberProperty;
   private readonly ballPlayerMap: Map<CASObject, SoccerPlayer>; // TODO: Add to PhET-iO State
+  currentDistribution: number[];
 
   constructor( maxNumberOfBalls: number, options: SoccerModelOptions ) {
 
@@ -86,6 +94,12 @@ class SoccerModel extends CASModel {
 
     this.hasKickableSoccerBallsProperty = new DerivedProperty( [ this.numberOfRemainingKickableSoccerBallsProperty ],
       numberOfRemainingKickableObjects => numberOfRemainingKickableObjects > 0 );
+
+    this.currentDistribution = SoccerModel.chooseDistribution();
+  }
+
+  static chooseDistribution(): number[] {
+    return dotRandom.nextBoolean() ? SKEWED_LEFT : SKEWED_RIGHT;
   }
 
   /**
@@ -165,16 +179,6 @@ class SoccerModel extends CASModel {
 
     this.ballPlayerMap.set( casObject, soccerPlayer );
 
-    // TODO: Cleanup and choose distribution, see https://github.com/phetsims/center-and-spread/issues/11
-    // const weights = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ];
-    // const weights = [ 100, 100, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
-    const weights = [
-      1, 1, 1, 1,
-      1, 1, 1, 1,
-      1, 1, 1, 1,
-      1, 1, 1, 1
-    ];
-
     // Test that the sampling engine is working properly
     // TODO: Move to unit tests in dot?
     // const array = new Array( weights.length );
@@ -190,6 +194,8 @@ class SoccerModel extends CASModel {
     // console.log( '....' );
     // console.log( inputNormalized );
     // console.log( resultNormalized );
+
+    const weights = this.currentDistribution;
 
     assert && assert( weights.length === this.range.getLength() + 1, 'weight array should match the model range' );
     const x1 = dotRandom.sampleProbabilities( weights ) + 1;
@@ -312,6 +318,7 @@ class SoccerModel extends CASModel {
   reset(): void {
     super.reset();
     this.clearData();
+    this.currentDistribution = SoccerModel.chooseDistribution();
   }
 
   private populateSoccerPlayerGroup(): void {
