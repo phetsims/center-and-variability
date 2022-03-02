@@ -306,7 +306,8 @@ class CASModel {
     const objectsAtTarget = this.getOtherObjectsAtTarget( casObject );
 
     // Sort from bottom to top, so they can be re-stacked. The specified object will appear at the top.
-    const sorted = [ ...objectsAtTarget.sort( object => object.positionProperty.value.y ), casObject ];
+    const sortedOthers = _.sortBy( objectsAtTarget, object => object.positionProperty.value.y );
+    const sorted = [ ...sortedOthers, casObject ];
 
     // collapse the rest of the stack. NOTE: This assumes the radii are the same.
     let position = casObject.objectType.radius;
