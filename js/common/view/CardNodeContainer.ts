@@ -158,7 +158,7 @@ class CardNodeContainer extends Node {
               if ( numberDragging === 0 ) {
                 this.pickable = false;
 
-                this.startRandomCelebration( () => {
+                this.animateRandomCelebration( () => {
 
                   this.isReadyForCelebration = false;
                   this.pickable = true;
@@ -327,7 +327,7 @@ class CardNodeContainer extends Node {
     };
   }
 
-  startRandomCelebration( callback: () => void ): void {
+  private animateRandomCelebration( callback: () => void ): void {
     const animations = [
       () => this.animateCelebration1( callback ),
       () => this.animateCelebration2( callback ),
@@ -337,12 +337,14 @@ class CardNodeContainer extends Node {
     animation();
   }
 
-  animateCelebration1( callback: () => void ) {
+  /**
+   * The cards grow and then shrink back to normal size.
+   */
+  private animateCelebration1( callback: () => void ): void {
 
     const asyncCounter = new AsyncCounter( this.cardNodeCells.length, callback );
 
     this.cardNodeCells.forEach( cardNode => {
-
       const initialScale = cardNode.getScaleVector().x;
       const center = cardNode.center.copy();
 
@@ -357,11 +359,11 @@ class CardNodeContainer extends Node {
           easing: Easing.QUADRATIC_IN_OUT
         } ]
       } );
+
       const updatePosition = () => {
         cardNode.center = center;
       };
       scaleUpAnimation.updateEmitter.addListener( updatePosition );
-      scaleUpAnimation.start();
 
       scaleUpAnimation.endedEmitter.addListener( () => {
         const scaleDownAnimation = new Animation( {
@@ -376,15 +378,19 @@ class CardNodeContainer extends Node {
         scaleDownAnimation.endedEmitter.addListener( () => asyncCounter.increment() );
         scaleDownAnimation.start();
       } );
+
+      scaleUpAnimation.start();
     } );
   }
 
-  animateCelebration2( callback: () => void ) {
+  /**
+   * The cards do one clockwise rotation.
+   */
+  private animateCelebration2( callback: () => void ): void {
 
     const asyncCounter = new AsyncCounter( this.cardNodeCells.length, callback );
 
     this.cardNodeCells.forEach( cardNode => {
-
       const center = cardNode.center.copy();
 
       const rotationProperty = new NumberProperty( 0 );
@@ -410,7 +416,7 @@ class CardNodeContainer extends Node {
   /**
    * The cards do the "wave" from left to right.
    */
-  animateCelebration3( callback: () => void ): void {
+  private animateCelebration3( callback: () => void ): void {
     const asyncCounter = new AsyncCounter( this.cardNodeCells.length, callback );
 
     this.cardNodeCells.forEach( ( cardNode, index ) => {
