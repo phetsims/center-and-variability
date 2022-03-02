@@ -84,8 +84,9 @@ class MeanOrMedianScreenView extends SoccerScreenView {
       } );
     this.contentLayer.addChild( this.accordionBox );
 
-    this.bottomCheckboxPanel.left = this.playAreaNumberLineNode.right + 12.5;
-    this.bottomCheckboxPanel.top = this.accordionBox.bottom + 30;
+    const BOTTOM_CHECKBOX_PANEL_MARGIN = 12.5;
+    this.bottomCheckboxPanel.left = this.playAreaNumberLineNode.right + BOTTOM_CHECKBOX_PANEL_MARGIN;
+    this.bottomCheckboxPanel.bottom = this.modelViewTransform.modelToViewY( 0 ) - BOTTOM_CHECKBOX_PANEL_MARGIN;
 
     ManualConstraint.create( this, [ this.bottomCheckboxPanel, this.topCheckboxPanel ],
       ( bottomCheckboxPanelWrapper, topCheckboxPanelWrapper ) => {
