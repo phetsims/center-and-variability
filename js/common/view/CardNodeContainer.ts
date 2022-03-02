@@ -334,8 +334,7 @@ class CardNodeContainer extends Node {
       () => this.animateCelebration3( callback )
     ];
     const animation = dotRandom.sample( animations );
-    // animation();
-    this.animateCelebration2( callback );
+    animation();
   }
 
   animateCelebration1( callback: () => void ) {
@@ -409,51 +408,43 @@ class CardNodeContainer extends Node {
   }
 
   /**
-   * The cards do the "wave' from left to right.
+   * The cards do the "wave" from left to right.
    */
   animateCelebration3( callback: () => void ): void {
+    const asyncCounter = new AsyncCounter( this.cardNodeCells.length, callback );
+
     this.cardNodeCells.forEach( ( cardNode, index ) => {
+      const initialPositionY = cardNode.y;
+      const jumpHeight = 30;
+      const positionYProperty = new NumberProperty( initialPositionY );
+      positionYProperty.link( positionY => { cardNode.y = positionY; } );
 
-      stepTimer.setTimeout( () => {
-        const initialPositionY = cardNode.y;
-        const jumpHeight = 30;
-        const positionYProperty = new NumberProperty( initialPositionY );
-        positionYProperty.link( positionY => { cardNode.y = positionY; } );
+      const goUpAnimation = new Animation( {
+        duration: 0.2,
+        targets: [ {
+          property: positionYProperty,
+          to: initialPositionY - jumpHeight,
+          easing: Easing.QUADRATIC_IN_OUT
+        } ]
+      } );
 
-        const animation = new Animation( {
+      goUpAnimation.endedEmitter.addListener( () => {
+        const goDownAnimation = new Animation( {
           duration: 0.2,
-          targets: [
-            {
-              property: positionYProperty,
-              to: initialPositionY - jumpHeight,
-              easing: Easing.QUADRATIC_IN_OUT
-            }
-          ]
+          targets: [ {
+            property: positionYProperty,
+            to: initialPositionY,
+            easing: Easing.QUADRATIC_IN_OUT
+          } ]
         } );
-        animation.start();
+        goDownAnimation.endedEmitter.addListener( () => asyncCounter.increment() );
+        goDownAnimation.start();
+      } );
 
-        animation.endedEmitter.addListener( () => {
-          const animation = new Animation( {
-            duration: 0.2,
-            targets: [
-              {
-                property: positionYProperty,
-                to: initialPositionY,
-                easing: Easing.QUADRATIC_IN_OUT
-              }
-            ]
-          } );
-          animation.endedEmitter.addListener( () => {
-            callback();
-
-            // Correct for any errors
-            // TODO: But why were they off in the first place?
-            this.cardNodeCells.forEach( cardNode => this.sendToHomeCell( cardNode, false ) );
-          } );
-          animation.start();
-        } );
+      // offset starting the animation for each card
+      stepTimer.setTimeout( () => {
+        goUpAnimation.start();
       }, index * 60 );
-
     } );
   }
 
