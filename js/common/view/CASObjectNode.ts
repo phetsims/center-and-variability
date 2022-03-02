@@ -9,7 +9,7 @@
 
 import optionize from '../../../../phet-core/js/optionize.js';
 import centerAndSpread from '../../centerAndSpread.js';
-import { Circle, Color, DragListener, Image, Node, NodeOptions, Path } from '../../../../scenery/js/imports.js';
+import { Circle, Color, DragListener, Image, Node, NodeOptions, Path, Text } from '../../../../scenery/js/imports.js';
 import CASObject from '../model/CASObject.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import CASObjectType from '../model/CASObjectType.js';
@@ -23,12 +23,16 @@ import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 import PlotType from '../model/PlotType.js';
 import timesSolidShape from '../../../../sherpa/js/fontawesome-5/timesSolidShape.js';
 import CASConstants from '../CASConstants.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 
 type CASObjectNodeSelfOptions = {
   objectViewType?: CASObjectType;
   draggingEnabled?: boolean;
 };
 export type CASObjectNodeOptions = CASObjectNodeSelfOptions & NodeOptions & RequiredTandem;
+
+// for debugging with ?dev
+let index = 0;
 
 class CASObjectNode extends Node {
 
@@ -139,6 +143,15 @@ class CASObjectNode extends Node {
       ( isShowingAnimationHighlight: boolean ) => {
         medianHighlight.visible = isShowingAnimationHighlight && options.objectViewType === CASObjectType.DOT;
       } );
+
+    // Show index when debugging with ?dev
+    if ( phet.chipper.queryParameters.dev ) {
+      this.addChild( new Text( index++ + '', {
+        font: new PhetFont( 14 ),
+        fill: 'red',
+        x: this.width / 2 + 1
+      } ) );
+    }
   }
 }
 
