@@ -30,7 +30,7 @@ type SoccerModelSelfOptions = {};
 type SoccerModelOptions = SoccerModelSelfOptions & CASModelOptions;
 
 // constants
-const TIME_BETWEEN_RAPID_KICKS = 0.1; // in seconds
+const TIME_BETWEEN_RAPID_KICKS = 0.05; // in seconds
 
 class SoccerModel extends CASModel {
   readonly soccerPlayerGroup: PhetioGroup<SoccerPlayer, [ number ]>;
@@ -250,7 +250,7 @@ class SoccerModel extends CASModel {
       // How long has the front player been poised?
       if ( frontPlayer.poseProperty.value === Pose.POISED_TO_KICK ) {
         const elapsedTime = this.timeProperty.value - frontPlayer.timestampWhenPoisedBegan;
-        if ( elapsedTime > 0.3 ) {
+        if ( elapsedTime > 0.075 ) {
 
           const casObject = this.nextBallToKickProperty.value!; // TODO: Probably? See https://github.com/phetsims/center-and-spread/issues/59
           this.kickBall( frontPlayer, casObject );
