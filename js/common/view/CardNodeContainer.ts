@@ -59,6 +59,7 @@ class CardNodeContainer extends Node {
   private readonly hasDraggedCardProperty: IReadOnlyProperty<boolean>;
   private readonly cardLayer: Node;
   private isReadyForCelebration: boolean;
+  private remainingCelebrationAnimations: ( () => void )[]
 
   constructor( model: CASModel, providedOptions: CardNodeContainerOptions ) {
 
@@ -88,6 +89,8 @@ class CardNodeContainer extends Node {
     this.hasDraggedCardProperty = new DerivedProperty( [ this.totalDragDistanceProperty ], totalDragDistance => {
       return totalDragDistance > 15;
     } );
+
+    this.remainingCelebrationAnimations = [];
 
     this.cardNodeGroup = new PhetioGroup( ( tandem, cardModel ) => {
       return new CardNode( cardModel, new Vector2( 0, 0 ), () => this.getDragRange(), {
@@ -328,12 +331,18 @@ class CardNodeContainer extends Node {
   }
 
   private animateRandomCelebration( callback: () => void ): void {
-    const animations = [
-      () => this.animateCelebration1( callback ),
-      () => this.animateCelebration2( callback ),
-      () => this.animateCelebration3( callback )
-    ];
-    const animation = dotRandom.sample( animations );
+    if ( this.remainingCelebrationAnimations.length === 0 ) {
+      const animations = [
+        () => this.animateCelebration1( callback ),
+        () => this.animateCelebration2( callback ),
+        () => this.animateCelebration3( callback )
+      ];
+
+      this.remainingCelebrationAnimations.push( ...animations );
+    }
+
+    const animation = dotRandom.sample( this.remainingCelebrationAnimations );
+    arrayRemove( this.remainingCelebrationAnimations, animation );
     animation();
   }
 
