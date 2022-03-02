@@ -108,6 +108,7 @@ class CardNode extends Node {
       if ( destination.equals( this.animationTo! ) ) {
 
         // Already moving to the desired destination.
+        // TODO: should this callback be called from the finishEmitter of the existing animation?
         callback();
         return;
       }

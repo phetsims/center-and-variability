@@ -154,11 +154,20 @@ class CardNodeContainer extends Node {
       // When a card is dropped, send it to its home cell
       cardNode.dragListener.isPressedProperty.link( isPressed => {
         if ( !isPressed && !phet.joist.sim.isSettingPhetioStateProperty.value ) {
-          this.sendToHomeCell( cardNode, true, 0.2, () => {
-            if ( this.isReadyForCelebration ) {
 
-              const numberDragging = this.cardNodeCells.filter( cardNode => cardNode.dragListener.isPressed ).length;
-              if ( numberDragging === 0 ) {
+          // Animate the dropped card home
+          this.sendToHomeCell( cardNode, true, 0.2 );
+
+          if ( this.isReadyForCelebration ) {
+            const inProgressAnimations = this.cardNodeCells.filter( cardNode => cardNode.animation )
+              .map( cardNode => cardNode.animation! );
+
+            // Setup a callback for  animation when all current animations finish
+            const asyncCounter = new AsyncCounter( inProgressAnimations.length, () => {
+
+              const cardBeingDragged = this.cardNodeCells.filter( cardNode => cardNode.dragListener.isPressed ).length;
+              const cardsAnimating = this.cardNodeCells.filter( cardNode => cardNode.animation ).length;
+              if ( cardBeingDragged === 0 && cardsAnimating === 0 ) {
                 this.pickable = false;
 
                 this.animateRandomCelebration( () => {
@@ -167,8 +176,13 @@ class CardNodeContainer extends Node {
                   this.pickable = true;
                 } );
               }
-            }
-          } );
+            } );
+
+            // Notify the asyncCounter when any in-progress animation finishes
+            inProgressAnimations.forEach( animation => {
+              animation.endedEmitter.addListener( () => asyncCounter.increment() );
+            } );
+          }
         }
       } );
 
