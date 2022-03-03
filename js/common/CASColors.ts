@@ -25,19 +25,19 @@ const CASColors = {
     default: 'white'
   } ),
   medianQuestionBarFillColorProperty: new ProfileColorProperty( centerAndSpread, 'medianQuestionBarFill', {
-    default: '#75c35a'
+    default: '#58c662'
   } ),
   meanAndMedianQuestionBarFillColorProperty: new ProfileColorProperty( centerAndSpread, 'meanAndMedianQuestionBarFill', {
-    default: '#8c5dbd'
+    default: '#955fc4'
   } ),
   spreadQuestionBarFillColorProperty: new ProfileColorProperty( centerAndSpread, 'spreadQuestionBarFill', {
-    default: '#f7d148'
+    default: '#fdd10b'
   } ),
   kickButtonFillColorProperty: new ProfileColorProperty( centerAndSpread, 'kickButtonFillColor', {
     default: Color.WHITE
   } ),
   dragIndicatorColorProperty: new ProfileColorProperty( centerAndSpread, 'dragIndicatorColor', {
-    default: '#0AA1FF'
+    default: '#6bc6ff'
   } ),
 
   // sky gradient, sampled from a screenshot
@@ -46,10 +46,10 @@ const CASColors = {
   skyGradientBottomColorProperty: new ProfileColorProperty( centerAndSpread, 'skyGradientBottom', { default: '#c9d9ef' } ),
 
   // the ground
-  groundColorProperty: new ProfileColorProperty( centerAndSpread, 'groundColor', { default: '#468a41' } ),
+  groundColorProperty: new ProfileColorProperty( centerAndSpread, 'groundColor', { default: '#009245' } ),
 
-  medianColorProperty: new ProfileColorProperty( centerAndSpread, 'medianColor', { default: '#e10f4d' } ),
-  meanColorProperty: new ProfileColorProperty( centerAndSpread, 'meanColor', { default: '#7916b6' } )
+  medianColorProperty: new ProfileColorProperty( centerAndSpread, 'medianColor', { default: '#f03000' } ),
+  meanColorProperty: new ProfileColorProperty( centerAndSpread, 'meanColor', { default: '#8500bd' } )
 };
 
 centerAndSpread.register( 'CASColors', CASColors );
