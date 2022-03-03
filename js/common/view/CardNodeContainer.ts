@@ -529,53 +529,12 @@ class CardNodeContainer extends Node {
 
   sortData(): void {
 
-    // Base case, nothing to sort
-    if ( this.cardNodeCells.length === 0 ) {
-      return;
-    }
-
-    const visit = () => {
-
-      for ( let i = 0; i < this.cardNodeCells.length; i++ ) {
-        const currentCard = this.cardNodeCells[ i ];
-        const currentValue = currentCard.casObject.valueProperty.value!;
-
-        // Another loop to find where to insert it, or not at all
-        for ( let k = 0; k < i; k++ ) {
-          const checkCard = this.cardNodeCells[ k ];
-          const checkValue = checkCard.casObject.valueProperty.value!;
-
-          if ( currentValue < checkValue ) {
-
-            // Remove the out of order card
-            // TODO: arrayRemove should be in TypeScript
-            arrayRemove( this.cardNodeCells, currentCard );
-
-            // Insert it at the desired point.  NOTE the index doesn't need to be recomputed after removal above since
-            // the removal was at a higher index
-            this.cardNodeCells.splice( k, 0, currentCard );
-
-            // Setup asyncCounter, which sets off the next visit() when all cards from the current visit() have finished
-            // animating
-            const asyncCounter = new AsyncCounter( this.cardNodeCells.length, () => {
-              stepTimer.setTimeout( () => visit(), 100 );
-            } );
-
-            // Send all cards to their correct spot to accommodate the newly inserted card, and have each card notify
-            // the asyncCounter when in the correct spot
-            this.cardNodeCells.forEach( cardNode => {
-              this.sendToHomeCell( cardNode, true, 0.3, () => asyncCounter.increment() );
-            } );
-            this.cardNodeCellsChangedEmitter.emit(); // TODO: OK if this fires false positives?
-
-            // Exit all loops and wait for next recursive visit() after animation completes
-            return;
-          }
-        }
-      }
-    };
-
-    visit();
+    // If the card is visible, the value property should be non-null
+    const sorted = _.sortBy( this.cardNodeCells, cardNode => cardNode.casObject.valueProperty.value );
+    this.cardNodeCells.length = 0;
+    this.cardNodeCells.push( ...sorted );
+    this.cardNodeCells.forEach( cardNode => this.sendToHomeCell( cardNode, true, 0.5 ) );
+    this.cardNodeCellsChangedEmitter.emit(); // TODO: OK if this fires false positives?
   }
 
   getDragRange(): Range {
