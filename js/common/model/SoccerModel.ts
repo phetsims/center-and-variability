@@ -33,9 +33,9 @@ type SoccerModelOptions = SoccerModelSelfOptions & CASModelOptions;
 const TIME_BETWEEN_RAPID_KICKS = 0.05; // in seconds
 
 const SKEWED_LEFT = [
-  0.01832, 0.07326, 0.14653, 0.19537, 0.19537,
-  0.15629, 0.1042, 0.05954, 0.02977, 0.01323,
-  0.00529, 0.00192, 0.00064, 0.0002, 0.00007
+  4, 8, 12, 16, 13,
+  11, 9, 7, 6, 5,
+  4, 3, 1, 0.5, 0.5
 ];
 const SKEWED_RIGHT = SKEWED_LEFT.slice().reverse();
 
