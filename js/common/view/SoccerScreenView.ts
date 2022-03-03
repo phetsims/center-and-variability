@@ -31,7 +31,7 @@ export type SoccerScreenViewOptions = SoccerScreenViewSelfOptions & CASScreenVie
 
 // constants
 const GROUND_POSITION_Y = 500;
-const NUMBER_LINE_MARGIN_X = 185;
+const NUMBER_LINE_MARGIN_X = 207;
 
 class SoccerScreenView extends CASScreenView {
   protected readonly questionBar: QuestionBar;
