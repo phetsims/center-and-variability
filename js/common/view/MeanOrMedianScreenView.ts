@@ -85,7 +85,9 @@ class MeanOrMedianScreenView extends SoccerScreenView {
     this.contentLayer.addChild( this.accordionBox );
 
     const BOTTOM_CHECKBOX_PANEL_MARGIN = 12.5;
-    this.bottomCheckboxPanel.left = this.playAreaNumberLineNode.right + BOTTOM_CHECKBOX_PANEL_MARGIN;
+
+    // TODO: What if positioning the bottomCheckboxPanel.right forces the topCheckboxPanel to the right of the accordion box bounds?
+    this.bottomCheckboxPanel.right = this.layoutBounds.right - BOTTOM_CHECKBOX_PANEL_MARGIN;
     this.bottomCheckboxPanel.bottom = this.modelViewTransform.modelToViewY( 0 ) - BOTTOM_CHECKBOX_PANEL_MARGIN;
 
     ManualConstraint.create( this, [ this.bottomCheckboxPanel, this.topCheckboxPanel ],
