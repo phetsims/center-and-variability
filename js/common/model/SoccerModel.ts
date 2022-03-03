@@ -30,7 +30,7 @@ type SoccerModelSelfOptions = {};
 type SoccerModelOptions = SoccerModelSelfOptions & CASModelOptions;
 
 // constants
-const TIME_BETWEEN_RAPID_KICKS = 0.05; // in seconds
+const TIME_BETWEEN_RAPID_KICKS = 0.5; // in seconds
 
 const SKEWED_LEFT = [
   4, 8, 12, 16, 13,
