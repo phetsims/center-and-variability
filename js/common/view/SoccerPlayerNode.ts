@@ -57,8 +57,8 @@ const playerGroups = [ {
   kicking: player05Kicking_png
 } ];
 
-const SPACING = 5.5;
-const SCALE = 0.18;
+const SPACING = 6.2;
+const SCALE = 0.15;
 
 class SoccerPlayerNode extends Node {
   readonly soccerPlayer: SoccerPlayer;
@@ -97,7 +97,7 @@ class SoccerPlayerNode extends Node {
     soccerPlayer.placeInLineProperty.link( placeInLine => {
       this.setScaleMagnitude( Utils.linear( 0, 15, 1, 0.8, placeInLine ) * SCALE );
       this.centerBottom =
-        modelViewTransform.modelToViewPosition( new Vector2( 0, 0 ) ).plusXY( -20 - placeInLine * SPACING, 3 );
+        modelViewTransform.modelToViewPosition( new Vector2( 0, 0 ) ).plusXY( -20 - placeInLine * SPACING, 7 );
     } );
 
     const options = optionize<SoccerPlayerNodeOptions, SoccerPlayerNodeSelfOptions, NodeOptions>( {}, providedOptions );
