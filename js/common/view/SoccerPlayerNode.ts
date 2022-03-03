@@ -95,9 +95,15 @@ class SoccerPlayerNode extends Node {
     } );
 
     soccerPlayer.placeInLineProperty.link( placeInLine => {
+
       this.setScaleMagnitude( Utils.linear( 0, 15, 1, 0.8, placeInLine ) * SCALE );
+
+      // Since the images have a margin/padding below the foot, scaling the image also changes the relative distance
+      // from the foot to the bottom of the image.  So we have to accommodate that if using centerBottom positioning
+      const verticalAdjustment = Utils.linear( 0, 15, 0, -1, placeInLine );
+
       this.centerBottom =
-        modelViewTransform.modelToViewPosition( new Vector2( 0, 0 ) ).plusXY( -20 - placeInLine * SPACING, 5 );
+        modelViewTransform.modelToViewPosition( new Vector2( 0, 0 ) ).plusXY( -20 - placeInLine * SPACING, 5 + verticalAdjustment );
     } );
 
     const options = optionize<SoccerPlayerNodeOptions, SoccerPlayerNodeSelfOptions, NodeOptions>( {}, providedOptions );
