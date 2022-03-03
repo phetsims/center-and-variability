@@ -15,7 +15,7 @@ const CASQueryParameters = QueryStringMachine.getAll( {
   plotType: {
     type: 'string',
     validValues: [ 'dotPlot', 'linePlot' ],
-    defaultValue: 'dotPlot',
+    defaultValue: 'linePlot',
     public: true
   }
 } );
