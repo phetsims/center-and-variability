@@ -23,6 +23,8 @@ import merge from '../../../../phet-core/js/merge.js';
 import CardModel from './CardModel.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
+import NullableIO from '../../../../tandem/js/types/NullableIO.js';
+import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 
 type CASModelSelfOptions = {
   tandem: Tandem,
@@ -132,11 +134,25 @@ class CASModel {
       tandem: options.tandem.createTandem( 'isShowingMedianPredictionProperty' )
     } );
 
-    this.medianValueProperty = new Property<number | null>( null );
-    this.meanValueProperty = new Property<number | null>( null );
+    this.medianValueProperty = new Property<number | null>( null, {
+      tandem: options.tandem.createTandem( 'medianValueProperty' ),
+      phetioType: Property.PropertyIO( NullableIO( NumberIO ) ),
+      phetioReadOnly: true
+    } );
+    this.meanValueProperty = new Property<number | null>( null, {
+      tandem: options.tandem.createTandem( 'meanValueProperty' ),
+      phetioType: Property.PropertyIO( NullableIO( NumberIO ) ),
+      phetioReadOnly: true
+    } );
     this.dataRangeProperty = new Property<Range | null>( null );
-    this.medianPredictionProperty = new NumberProperty( 1 );
-    this.meanPredictionProperty = new NumberProperty( 1 );
+    this.medianPredictionProperty = new NumberProperty( 1, {
+      range: this.range,
+      tandem: options.tandem.createTandem( 'medianPredictionProperty' )
+    } );
+    this.meanPredictionProperty = new NumberProperty( 1, {
+      range: this.range,
+      tandem: options.tandem.createTandem( 'meanPredictionProperty' )
+    } );
 
     this.timeProperty = new NumberProperty( 0, {
       tandem: options.tandem.createTandem( 'timeProperty' )

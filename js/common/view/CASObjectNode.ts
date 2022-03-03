@@ -125,10 +125,10 @@ class CASObjectNode extends Node {
 
       // Prevent dragging or interaction while the object is animating
       Property.multilink( [ casObject.animationModeProperty, casObject.valueProperty ], ( mode, value ) => {
-        const isPickable = value !== null && mode === 'none';
+        const isPickable = value !== null && mode === AnimationMode.NONE;
         this.cursor = isPickable ? 'pointer' : null;
         this.pickable = isPickable;
-        } );
+      } );
     }
 
     // show or hide the median highlight
@@ -141,7 +141,7 @@ class CASObjectNode extends Node {
     // they don't look like part of the data set, but still look kickable.
     Property.multilink( [ casObject.valueProperty, casObject.animationModeProperty ],
       ( value: number | null, animationMode: AnimationMode ) => {
-        this.opacity = value === null && animationMode === 'none' && !casObject.isFirstObject ? 0.4 : 1;
+        this.opacity = value === null && animationMode === AnimationMode.NONE && !casObject.isFirstObject ? 0.4 : 1;
       } );
 
     // isShowingAnimationHighlightProperty

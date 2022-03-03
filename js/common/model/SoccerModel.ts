@@ -25,6 +25,7 @@ import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import { AnimationMode } from './AnimationMode.js';
 
 type SoccerModelSelfOptions = {};
 type SoccerModelOptions = SoccerModelSelfOptions & CASModelOptions;
@@ -211,7 +212,7 @@ class SoccerModel extends CASModel {
 
     casObject.targetX = x1;
 
-    casObject.animationModeProperty.value = 'flying';
+    casObject.animationModeProperty.value = AnimationMode.FLYING;
     this.timeWhenLastBallWasKickedProperty.value = this.timeProperty.value;
 
     // New ball will be created later in step
