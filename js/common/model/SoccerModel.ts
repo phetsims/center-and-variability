@@ -124,10 +124,7 @@ class SoccerModel extends CASModel {
     const position = new Vector2( 0, y0 );
 
     const casObject = this.createObject( {
-      position: position,
-
-      // TODO: should be a default if it isnt already
-      velocity: Vector2.ZERO
+      position: position
     } );
 
     casObject.valueProperty.link( ( value, oldValue ) => {
