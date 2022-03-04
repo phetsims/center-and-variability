@@ -20,14 +20,16 @@ class BackgroundNode extends Rectangle {
 
     Property.multilink( [
       CASColors.skyGradientTopColorProperty,
+      CASColors.skyGradientMiddleColorProperty,
       CASColors.skyGradientBottomColorProperty,
       CASColors.groundColorProperty,
       visibleBoundsProperty
-    ], ( skyGradientTopColor: Color, skyGradientBottomColor: Color, groundColor: Color, visibleBounds: Bounds2 ) => {
+    ], ( skyGradientTopColor: Color, skyGradientMiddleColor: Color, skyGradientBottomColor: Color, groundColor: Color, visibleBounds: Bounds2 ) => {
       const gradient = new LinearGradient( visibleBounds.centerX, visibleBounds.top, visibleBounds.centerX, bottomY );
 
       // sky gradient, sampled from a screenshot
       gradient.addColorStop( 0.0, CASColors.skyGradientTopColorProperty.value );
+      gradient.addColorStop( 0.5, CASColors.skyGradientMiddleColorProperty.value );
       gradient.addColorStop( 1.0, CASColors.skyGradientBottomColorProperty.value );
 
       // The ground
