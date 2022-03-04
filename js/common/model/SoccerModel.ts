@@ -149,7 +149,7 @@ class SoccerModel extends CASModel {
       const targetPositionY = ( index + 1 ) * diameter + casObject.objectType.radius;
       const positionYProperty = new NumberProperty( casObject.positionProperty.value.y );
 
-      // TODO: Use casObject.positionProperty in the Animation
+      // TODO: Use casObject.positionProperty in the Animation?
       positionYProperty.link( positionY => {
         casObject.positionProperty.value = new Vector2( casObject.positionProperty.value.x, positionY );
       } );
@@ -306,7 +306,10 @@ class SoccerModel extends CASModel {
     this.timeWhenLastBallWasKickedProperty.reset();
     this.ballPlayerMap.clear();
     this.soccerPlayerGroup.clear();
-    super.clearData(); // TODO: SR: super.clearData() is called multiple times from reset.
+
+    // TODO: SR: super.clearData() is called multiple times from reset.
+    // SR: This could be split up, but in my opinion it is clear and safe.  Maybe best to call it twice
+    super.clearData();
 
     this.populateSoccerPlayerGroup();
     this.nextBallToKickProperty.value = this.createBall();

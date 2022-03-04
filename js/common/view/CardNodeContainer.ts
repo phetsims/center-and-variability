@@ -389,19 +389,18 @@ class CardNodeContainer extends Node {
       };
       scaleUpAnimation.updateEmitter.addListener( updatePosition );
 
-      scaleUpAnimation.endedEmitter.addListener( () => {
-        const scaleDownAnimation = new Animation( {
-          duration: 0.2,
-          targets: [ {
-            property: scaleProperty,
-            to: initialScale,
-            easing: Easing.QUADRATIC_IN_OUT
-          } ]
-        } );
-        scaleDownAnimation.updateEmitter.addListener( updatePosition );
-        scaleDownAnimation.endedEmitter.addListener( () => asyncCounter.increment() );
-        scaleDownAnimation.start();
+      const scaleDownAnimation = new Animation( {
+        duration: 0.2,
+        targets: [ {
+          property: scaleProperty,
+          to: initialScale,
+          easing: Easing.QUADRATIC_IN_OUT
+        } ]
       } );
+      scaleDownAnimation.updateEmitter.addListener( updatePosition );
+      scaleDownAnimation.endedEmitter.addListener( () => asyncCounter.increment() );
+
+      scaleUpAnimation.then( scaleDownAnimation );
 
       scaleUpAnimation.start();
     } );

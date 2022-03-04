@@ -39,7 +39,6 @@ const TEXT_OPTIONS = {
   maxWidth: CASConstants.CHECKBOX_TEXT_MAX_WIDTH
 };
 
-// TODO: VerticalCheckboxGroup should be TypeScript
 class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
   constructor( model: CASModel, providedOptions?: BottomRepresentationCheckboxGroupOptions ) {
