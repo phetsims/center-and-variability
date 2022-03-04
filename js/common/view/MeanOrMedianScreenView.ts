@@ -63,15 +63,14 @@ class MeanOrMedianScreenView extends SoccerScreenView {
       maxWidth: 300
     } );
 
-    // TODO: medianScreen should not need a link here
-    CASConstants.PLOT_TYPE_PROPERTY.link( plotType => {
-      if ( options.isMedianScreen ) {
-        titleNode.text = centerAndSpreadStrings.distanceInMeters;
-      }
-      else {
+    if ( options.isMedianScreen ) {
+      titleNode.text = centerAndSpreadStrings.distanceInMeters;
+    }
+    else {
+      CASConstants.PLOT_TYPE_PROPERTY.link( plotType => {
         titleNode.text = plotType === PlotType.LINE_PLOT ? centerAndSpreadStrings.linePlot : centerAndSpreadStrings.dotPlot;
-      }
-    } );
+      } );
+    }
 
     this.accordionBox = new CASAccordionBox( this.model, this.accordionBoxContents, this.topCheckboxPanel,
       titleNode,
