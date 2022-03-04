@@ -94,6 +94,8 @@ class CASAccordionBox extends AccordionBox {
     }
 
     super( backgroundNode, options );
+
+    model.resetEmitter.addListener( () => this.reset() );
   }
 }
 

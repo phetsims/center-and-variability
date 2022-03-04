@@ -167,7 +167,6 @@ class CASScreenView extends ScreenView {
         this.interruptSubtreeInput(); // cancel interactions that may be in progress
 
         model.reset();
-        this.reset();
       },
       right: this.layoutBounds.maxX - CASConstants.SCREEN_VIEW_X_MARGIN,
       bottom: this.layoutBounds.maxY - CASConstants.SCREEN_VIEW_Y_MARGIN,
@@ -188,12 +187,6 @@ class CASScreenView extends ScreenView {
     } );
     this.addChild( this.eraserButton );
     this.addChild( this.resetAllButton );
-  }
-
-  /**
-   * Resets the view.
-   */
-  reset(): void {
   }
 
   /**

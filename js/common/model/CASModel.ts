@@ -84,6 +84,7 @@ class CASModel {
 
   // TODO: See if TypeScript 4.6 will let us initialize more things here
   protected readonly objectValueBecameNonNullEmitter: Emitter<[ CASObject ]>;
+  readonly resetEmitter: Emitter;
 
   constructor( objectType: CASObjectType, maxNumberOfObjects: number, providedOptions: CASModelOptions ) {
 
@@ -227,6 +228,8 @@ class CASModel {
       parameters: [ { valueType: CASObject } ]
     } );
     this.objectValueBecameNonNullEmitter.addListener( () => this.updateAnimation() );
+
+    this.resetEmitter = new Emitter();
   }
 
   updateMeanAndMedian(): void {
@@ -374,6 +377,7 @@ class CASModel {
     this.timeProperty.reset();
     this.isMedianAnimationCompleteProperty.reset();
     this.clearData();
+    this.resetEmitter.emit();
   }
 
   clearAnimation() {

@@ -61,10 +61,6 @@ class CardNodeContainer extends Node {
   private readonly medianBarNode: MedianBarNode;
   private readonly dragIndicatorArrowNode: ArrowNode;
 
-  // TODO-UX: maybe this should be converted to track distance for individual cards
-  // Accumulated card drag distance, for purposes of hiding the drag indicator node
-  private readonly totalDragDistanceProperty: NumberProperty;
-
   // Indicates whether the user has ever dragged a card. It's used to hide the drag indicator arrow after
   // the user dragged a card
   private readonly hasDraggedCardProperty: IReadOnlyProperty<boolean>;
@@ -85,8 +81,11 @@ class CardNodeContainer extends Node {
     this.model = model;
     this.cardNodeCells = [];
     this.cardNodeCellsChangedEmitter = new Emitter<[]>();
-    this.totalDragDistanceProperty = new NumberProperty( 0 );
-    this.hasDraggedCardProperty = new DerivedProperty( [ this.totalDragDistanceProperty ], totalDragDistance => {
+
+    // TODO-UX: maybe this should be converted to track distance for individual cards
+    // Accumulated card drag distance, for purposes of hiding the drag indicator node
+    const totalDragDistanceProperty = new NumberProperty( 0 );
+    this.hasDraggedCardProperty = new DerivedProperty( [ totalDragDistanceProperty ], totalDragDistance => {
       return totalDragDistance > 15;
     } );
 
@@ -188,7 +187,7 @@ class CardNodeContainer extends Node {
 
       // Accumulate drag distance
       cardNode.dragDistanceEmitter.addListener( distance => {
-        this.totalDragDistanceProperty.value += distance;
+        totalDragDistanceProperty.value += distance;
       } );
 
       let targetIndex = this.cardNodeCells.length;
@@ -303,6 +302,8 @@ class CardNodeContainer extends Node {
     model.isShowingTopMedianProperty.link( updateMedianNode );
 
     this.isReadyForCelebration = false;
+
+    this.model.resetEmitter.addListener( () => totalDragDistanceProperty.reset() );
   }
 
   // The listener which is linked to the cardNode.positionProperty
@@ -537,10 +538,6 @@ class CardNodeContainer extends Node {
   getDragRange(): Range {
     const maxX = this.cardNodeCells.length > 0 ? getCardPositionX( this.cardNodeCells.length - 1 ) : 0;
     return new Range( 0, maxX );
-  }
-
-  reset(): void {
-    this.totalDragDistanceProperty.reset();
   }
 }
 
