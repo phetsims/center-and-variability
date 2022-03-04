@@ -66,7 +66,10 @@ class CASModel {
   readonly meanPredictionProperty: NumberProperty;
 
   protected readonly timeProperty: NumberProperty;
-  readonly highlightAnimationIndexProperty: Property<number | null>;
+
+  // Indicates how far the show median animation has progressed, or null if not animating. Not PhET-iO instrumented since
+  // it represents a transient value.
+  private highlightAnimationIndex: number | null;
   private lastHighlightAnimationStepTime: number;
   readonly isMedianAnimationCompleteProperty: BooleanProperty;
 
@@ -157,8 +160,7 @@ class CASModel {
       tandem: options.tandem.createTandem( 'timeProperty' )
     } );
 
-    // TODO: Instrument for PhET-iO or convert to number.  Should it be phet-io instrumented for the state wrapper?
-    this.highlightAnimationIndexProperty = new Property<number | null>( null );
+    this.highlightAnimationIndex = null;
     this.lastHighlightAnimationStepTime = 0;
 
     // TODO: Would an enum like 'not-yet-started' vs 'in-progress' vs 'complete' be clearer?
@@ -276,7 +278,7 @@ class CASModel {
     // Don't show animation on startup
     this.isShowingTopMedianProperty.lazyLink( isShowingTopMedian => {
       if ( isShowingTopMedian ) {
-        this.highlightAnimationIndexProperty.value = 0;
+        this.highlightAnimationIndex = 0;
         this.lastHighlightAnimationStepTime = this.timeProperty.value;
       }
       else {
@@ -360,14 +362,14 @@ class CASModel {
     this.isShowingPlayAreaMedianProperty.reset();
     this.isShowingMeanPredictionProperty.reset();
     this.isShowingMedianPredictionProperty.reset();
-    this.highlightAnimationIndexProperty.reset();
+    this.highlightAnimationIndex = null;
     this.timeProperty.reset();
     this.isMedianAnimationCompleteProperty.reset();
     this.clearData();
   }
 
   clearAnimation() {
-    this.highlightAnimationIndexProperty.value = null;
+    this.highlightAnimationIndex = null;
     this.objectGroup.forEach( casObject => casObject.isShowingAnimationHighlightProperty.set( false ) );
   }
 
@@ -378,25 +380,25 @@ class CASModel {
     const sortedObjects = _.sortBy( objectsInDataSet, [ casObject => casObject.valueProperty.value, casObject => casObject.positionProperty.value.y ] );
 
     for ( let i = 0; i < sortedObjects.length / 2; i++ ) {
-      const isHighlighted = i === this.highlightAnimationIndexProperty.value;
+      const isHighlighted = i === this.highlightAnimationIndex;
       sortedObjects[ i ].isShowingAnimationHighlightProperty.value = isHighlighted;
 
       const upperIndex = sortedObjects.length - 1 - i;
       sortedObjects[ upperIndex ].isShowingAnimationHighlightProperty.value = isHighlighted;
     }
 
-    const isAnimationFinished = this.highlightAnimationIndexProperty.value !== null &&
-                                this.highlightAnimationIndexProperty.value >= sortedObjects.length / 2;
+    const isAnimationFinished = this.highlightAnimationIndex !== null &&
+                                this.highlightAnimationIndex >= sortedObjects.length / 2;
 
     if ( isAnimationFinished ) {
       this.clearAnimation();
       this.isMedianAnimationCompleteProperty.value = true;
     }
-    else if ( this.highlightAnimationIndexProperty.value !== null &&
+    else if ( this.highlightAnimationIndex !== null &&
               this.timeProperty.value > this.lastHighlightAnimationStepTime + HIGHLIGHT_ANIMATION_TIME_STEP ) {
 
       // if the animation has already started, step it to the next animation index
-      this.highlightAnimationIndexProperty.value++;
+      this.highlightAnimationIndex++;
       this.lastHighlightAnimationStepTime = this.timeProperty.value;
     }
   }
