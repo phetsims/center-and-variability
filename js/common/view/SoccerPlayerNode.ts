@@ -57,7 +57,8 @@ const playerGroups = [ {
   kicking: player05Kicking_png
 } ];
 
-const SPACING = 6.2;
+// TODO: If the team approves this design, then we can change the architecture to reflect the decision
+const SPACING = 5000;
 const SCALE = 0.15;
 
 class SoccerPlayerNode extends Node {
