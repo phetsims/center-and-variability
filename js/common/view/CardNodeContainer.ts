@@ -27,7 +27,7 @@ import Panel from '../../../../sun/js/Panel.js';
 import CASConstants from '../CASConstants.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
-import MedianBarsNode from './MedianBarsNode.js';
+import MedianBarNode from './MedianBarNode.js';
 import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 import CASColors from '../CASColors.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
@@ -53,7 +53,7 @@ class CardNodeContainer extends Node {
 
   private readonly model: CASModel;
   private readonly cardNodeGroup: PhetioGroup<CardNode, [ CardModel ]>;
-  private readonly medianBarsNode: MedianBarsNode;
+  private readonly medianBarNode: MedianBarNode;
   private readonly dragIndicatorArrowNode: ArrowNode;
   private readonly totalDragDistanceProperty: NumberProperty;
   private readonly hasDraggedCardProperty: IReadOnlyProperty<boolean>;
@@ -102,11 +102,11 @@ class CardNodeContainer extends Node {
       supportsDynamicState: false
     } );
 
-    this.medianBarsNode = new MedianBarsNode( {
+    this.medianBarNode = new MedianBarNode( {
       notchDirection: 'up',
       barStyle: 'split'
     } );
-    this.addChild( this.medianBarsNode );
+    this.addChild( this.medianBarNode );
 
     const objectCreatedListener = ( casObject: CASObject ) => {
 
@@ -269,7 +269,7 @@ class CardNodeContainer extends Node {
 
       const leftmostCard = this.cardNodeCells[ 0 ];
 
-      const MARGIN_X = CARD_SPACING / 2 - MedianBarsNode.HALF_SPLIT_WIDTH;
+      const MARGIN_X = CARD_SPACING / 2 - MedianBarNode.HALF_SPLIT_WIDTH;
       const MARGIN_Y = 5;
 
       // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card
@@ -281,10 +281,10 @@ class CardNodeContainer extends Node {
         const left = getCardPositionX( 0 ) - MARGIN_X;
         const right = getCardPositionX( this.cardNodeCells.length - 1 ) + rightmostCard.width + MARGIN_X;
 
-        this.medianBarsNode.setMedianBarsShape( barY, left, ( left + right ) / 2, right, false );
+        this.medianBarNode.setMedianBarShape( barY, left, ( left + right ) / 2, right, false );
       }
       else {
-        this.medianBarsNode.clear();
+        this.medianBarNode.clear();
       }
 
       if ( leftmostCard ) {

@@ -20,7 +20,7 @@ import CASObjectType from '../model/CASObjectType.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import NumberLineNode from './NumberLineNode.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import MedianBarsNode from './MedianBarsNode.js';
+import MedianBarNode from './MedianBarNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
@@ -33,7 +33,7 @@ export type CASPlotOptions = NodeOptions & RequiredTandem;
 class CASPlotNode extends Node {
 
   private readonly dotLayer: Node;
-  private readonly medianBarsNode: MedianBarsNode;
+  private readonly medianBarNode: MedianBarNode;
 
   constructor( model: CASModel, numberLineWidth: number, providedOptions?: CASPlotOptions ) {
 
@@ -120,11 +120,11 @@ class CASPlotNode extends Node {
       dotNodeGroup.disposeElement( viewNode );
     } );
 
-    this.medianBarsNode = new MedianBarsNode( {
+    this.medianBarNode = new MedianBarNode( {
       notchDirection: 'down',
       barStyle: 'continuous'
     } );
-    this.addChild( this.medianBarsNode );
+    this.addChild( this.medianBarNode );
 
     const updateMedianBarNode = () => {
 
@@ -145,17 +145,17 @@ class CASPlotNode extends Node {
         // assumes all of the dots have the same radius
         // TODO: do we need to know notch height here?
         const barY = modelViewTransform.modelToViewY( highestDot!.positionProperty.value.y ) -
-                     dotRadius - MARGIN_Y - MedianBarsNode.NOTCH_HEIGHT;
+                     dotRadius - MARGIN_Y - MedianBarNode.NOTCH_HEIGHT;
 
         const rightmostDot = sortedDots[ sortedDots.length - 1 ];
         const left = modelViewTransform.modelToViewX( leftmostDot.valueProperty.value );
         const right = modelViewTransform.modelToViewX( rightmostDot.valueProperty.value );
         const medianPositionX = modelViewTransform.modelToViewX( medianValue );
 
-        this.medianBarsNode.setMedianBarsShape( barY, left, medianPositionX, right, model.isMedianAnimationCompleteProperty.value );
+        this.medianBarNode.setMedianBarShape( barY, left, medianPositionX, right, model.isMedianAnimationCompleteProperty.value );
       }
       else {
-        this.medianBarsNode.clear();
+        this.medianBarNode.clear();
       }
     };
     model.objectChangedEmitter.addListener( updateMedianBarNode );

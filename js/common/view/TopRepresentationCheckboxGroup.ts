@@ -15,14 +15,14 @@ import CASModel from '../model/CASModel.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 import CASConstants from '../CASConstants.js';
 import NumberLineNode from './NumberLineNode.js';
-import MedianBarsNode, { MedianBarsNodeOptions } from './MedianBarsNode.js';
+import MedianBarNode, { MedianBarNodeOptions } from './MedianBarNode.js';
 import CASColors from '../CASColors.js';
 
 type TopRepresentationCheckboxGroupSelfOptions = {
   includeSortData?: boolean;
   includeMedian?: boolean;
   includeMean?: boolean;
-  medianBarIconOptions: MedianBarsNodeOptions;
+  medianBarIconOptions: MedianBarNodeOptions;
   showMedianCheckboxIcon: boolean;
 };
 export type TopRepresentationCheckboxGroupOptions =
@@ -32,7 +32,7 @@ export type TopRepresentationCheckboxGroupOptions =
 // constants
 const ICON_WIDTH = 24;
 
-// TODO: Unify with line with in MedianBarsNode?
+// TODO: Unify with line with in MedianBarNode?
 const LINE_WIDTH = 2;
 const TEXT_OPTIONS = {
   font: CASConstants.BUTTON_FONT,
@@ -83,8 +83,8 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
         children: [
           new Text( centerAndSpreadStrings.median, TEXT_OPTIONS ),
           ...options.showMedianCheckboxIcon ? [
-            new MedianBarsNode( options.medianBarIconOptions )
-              .setMedianBarsShape( 0, 0, ICON_WIDTH / 2 - LINE_WIDTH / 2, ICON_WIDTH - LINE_WIDTH, true )
+            new MedianBarNode( options.medianBarIconOptions )
+              .setMedianBarShape( 0, 0, ICON_WIDTH / 2 - LINE_WIDTH / 2, ICON_WIDTH - LINE_WIDTH, true )
           ] : []
         ]
       } ),

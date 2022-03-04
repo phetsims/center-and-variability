@@ -20,26 +20,25 @@ import CASConstants from '../CASConstants.js';
 
 type NotchDirection = 'up' | 'down';
 type BarStyle = 'continuous' | 'split';
-type MedianBarsNodeSelfOptions = {
+type MedianBarNodeSelfOptions = {
   notchDirection: NotchDirection;
   barStyle: BarStyle;
 };
-export type MedianBarsNodeOptions = MedianBarsNodeSelfOptions & PathOptions;
+export type MedianBarNodeOptions = MedianBarNodeSelfOptions & PathOptions;
 
 // constants
 const LINE_WIDTH = 2;
 
-// TODO: Consider renaming as MedianBarNode
-class MedianBarsNode extends Path {
+class MedianBarNode extends Path {
   private readonly notchDirection: NotchDirection;
   private readonly barStyle: BarStyle;
   private readonly medianArrowNode: ArrowNode;
   static NOTCH_HEIGHT = 10;
   static HALF_SPLIT_WIDTH = 2;
 
-  constructor( providedOptions: MedianBarsNodeOptions ) {
+  constructor( providedOptions: MedianBarNodeOptions ) {
 
-    const options = optionize<MedianBarsNodeOptions, MedianBarsNodeSelfOptions, PathOptions>( {
+    const options = optionize<MedianBarNodeOptions, MedianBarNodeSelfOptions, PathOptions>( {
       tandem: Tandem.REQUIRED,
       lineWidth: LINE_WIDTH,
       stroke: CASColors.medianColorProperty
@@ -49,7 +48,7 @@ class MedianBarsNode extends Path {
 
     this.notchDirection = options.notchDirection;
     this.barStyle = options.barStyle;
-    this.medianArrowNode = new ArrowNode( 0, 0, 0, MedianBarsNode.NOTCH_HEIGHT + 3, {
+    this.medianArrowNode = new ArrowNode( 0, 0, 0, MedianBarNode.NOTCH_HEIGHT + 3, {
       headHeight: 8,
       headWidth: 9,
       tailWidth: LINE_WIDTH,
@@ -61,7 +60,7 @@ class MedianBarsNode extends Path {
     this.addChild( this.medianArrowNode );
   }
 
-  setMedianBarsShape( y: number, left: number, median: number, right: number, includeMedianArrow: boolean ): this {
+  setMedianBarShape( y: number, left: number, median: number, right: number, includeMedianArrow: boolean ): this {
     const shape = new Shape();
 
     const notchSign = this.notchDirection === 'up' ? -1 : 1;
@@ -69,18 +68,18 @@ class MedianBarsNode extends Path {
     const rightCorner = new Vector2( right, y );
     const medianVector = new Vector2( median, y );
 
-    shape.moveToPoint( leftCorner.plusXY( 0, MedianBarsNode.NOTCH_HEIGHT * notchSign ) );
+    shape.moveToPoint( leftCorner.plusXY( 0, MedianBarNode.NOTCH_HEIGHT * notchSign ) );
     shape.lineToPoint( leftCorner );
 
     if ( this.barStyle === 'split' ) {
-      shape.lineToPoint( medianVector.plusXY( -MedianBarsNode.HALF_SPLIT_WIDTH, 0 ) );
-      shape.lineToRelative( 0, MedianBarsNode.NOTCH_HEIGHT * notchSign );
-      shape.moveToPoint( medianVector.plusXY( MedianBarsNode.HALF_SPLIT_WIDTH, MedianBarsNode.NOTCH_HEIGHT * notchSign ) );
-      shape.lineToRelative( 0, -MedianBarsNode.NOTCH_HEIGHT * notchSign );
+      shape.lineToPoint( medianVector.plusXY( -MedianBarNode.HALF_SPLIT_WIDTH, 0 ) );
+      shape.lineToRelative( 0, MedianBarNode.NOTCH_HEIGHT * notchSign );
+      shape.moveToPoint( medianVector.plusXY( MedianBarNode.HALF_SPLIT_WIDTH, MedianBarNode.NOTCH_HEIGHT * notchSign ) );
+      shape.lineToRelative( 0, -MedianBarNode.NOTCH_HEIGHT * notchSign );
     }
 
     shape.lineToPoint( rightCorner );
-    shape.lineToPoint( rightCorner.plusXY( 0, MedianBarsNode.NOTCH_HEIGHT * notchSign ) );
+    shape.lineToPoint( rightCorner.plusXY( 0, MedianBarNode.NOTCH_HEIGHT * notchSign ) );
 
     this.shape = shape;
 
@@ -96,5 +95,5 @@ class MedianBarsNode extends Path {
   }
 }
 
-centerAndSpread.register( 'MedianBarsNode', MedianBarsNode );
-export default MedianBarsNode;
+centerAndSpread.register( 'MedianBarNode', MedianBarNode );
+export default MedianBarNode;
