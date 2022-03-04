@@ -35,8 +35,8 @@ export type CASScreenViewOptions = CASScreenViewSelfOptions & ScreenViewOptions;
 
 class CASScreenView extends ScreenView {
 
-  readonly topCheckboxPanel: TopRepresentationCheckboxGroup; // TODO: can these be private or protected?
-  readonly bottomCheckboxPanel: BottomRepresentationCheckboxGroup;
+  protected readonly topCheckboxPanel: TopRepresentationCheckboxGroup;
+  protected readonly bottomCheckboxPanel: BottomRepresentationCheckboxGroup;
 
   protected readonly resetAllButton: ResetAllButton;
   protected readonly modelViewTransform: ModelViewTransform2;
