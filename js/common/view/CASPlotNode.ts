@@ -1,7 +1,7 @@
 // Copyright 2022, University of Colorado Boulder
 
 /**
- * Shows the dot plot on the "Mean & Median" Screen, including the legends/readouts to the left.
+ * Shows the dot plot or line plot on the "Mean & Median" Screen, including the legends/readouts to the left.
  * The plot is non-interactive.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
@@ -27,18 +27,17 @@ import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 
 // constants
 
-type DotPlotNodeSelfOptions = {};
-export type DotPlotNodeOptions = NodeOptions & RequiredTandem;
+type CASPlotNodeSelfOptions = {};
+export type CASPlotOptions = NodeOptions & RequiredTandem;
 
-// TODO: Name needs to be inclusive of line plots too
-class DotPlotNode extends Node {
+class CASPlotNode extends Node {
 
   private readonly dotLayer: Node;
   private readonly medianBarsNode: MedianBarsNode;
 
-  constructor( model: CASModel, numberLineWidth: number, providedOptions?: DotPlotNodeOptions ) {
+  constructor( model: CASModel, numberLineWidth: number, providedOptions?: CASPlotOptions ) {
 
-    const options = optionize<DotPlotNodeOptions, DotPlotNodeSelfOptions, NodeOptions>( {
+    const options = optionize<CASPlotOptions, CASPlotNodeSelfOptions, NodeOptions>( {
       tandem: Tandem.REQUIRED
     }, providedOptions );
 
@@ -172,5 +171,5 @@ class DotPlotNode extends Node {
   clear() {}
 }
 
-centerAndSpread.register( 'DotPlotNode', DotPlotNode );
-export default DotPlotNode;
+centerAndSpread.register( 'CASPlotNode', CASPlotNode );
+export default CASPlotNode;

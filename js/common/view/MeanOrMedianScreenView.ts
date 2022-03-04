@@ -15,7 +15,7 @@ import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 import CASAccordionBox from '../../common/view/CASAccordionBox.js';
 import CASConstants from '../../common/CASConstants.js';
 import CardNodeContainer from '../../common/view/CardNodeContainer.js';
-import DotPlotNode from './DotPlotNode.js';
+import CASPlotNode from './CASPlotNode.js';
 import SoccerModel from '../model/SoccerModel.js';
 import ValueReadoutsNode from './ValueReadoutsNode.js';
 import { ManualConstraint, Text } from '../../../../scenery/js/imports.js';
@@ -33,7 +33,7 @@ class MeanOrMedianScreenView extends SoccerScreenView {
   private readonly accordionBox: CASAccordionBox;
 
   // TODO: need reset, but may want to make an interface for a resettable Node
-  protected readonly accordionBoxContents: CardNodeContainer | DotPlotNode;
+  protected readonly accordionBoxContents: CardNodeContainer | CASPlotNode;
 
   constructor( model: SoccerModel, providedOptions: MeanOrMedianScreenViewOptions ) {
 
@@ -53,8 +53,8 @@ class MeanOrMedianScreenView extends SoccerScreenView {
       } );
     }
     else {
-      this.accordionBoxContents = new DotPlotNode( this.model, this.chartViewWidth, {
-        tandem: accordionBoxTandem.createTandem( 'dotPlotNode' )
+      this.accordionBoxContents = new CASPlotNode( this.model, this.chartViewWidth, {
+        tandem: accordionBoxTandem.createTandem( 'plotNode' )
       } );
     }
 
