@@ -33,7 +33,7 @@ class MeanOrMedianScreenView extends SoccerScreenView {
   private readonly accordionBox: CASAccordionBox;
 
   // TODO: SR asks: is this pattern OK for indicating a node that can be cleared and reset?
-  protected readonly accordionBoxContents: Node & { clear: () => void; reset: () => void; };
+  protected readonly accordionBoxContents: Node & { reset: () => void; };
 
   constructor( model: SoccerModel, providedOptions: MeanOrMedianScreenViewOptions ) {
 
@@ -102,11 +102,6 @@ class MeanOrMedianScreenView extends SoccerScreenView {
     }
 
     this.contentLayer.addChild( this.medianPredictionNode );
-  }
-
-  clearData(): void {
-    super.clearData();
-    this.accordionBoxContents.clear();
   }
 
   reset(): void {
