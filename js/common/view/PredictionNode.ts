@@ -19,6 +19,8 @@ import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
 import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
+import CASColors from '../CASColors.js';
+import CASConstants from '../CASConstants.js';
 
 type PredictionNodeSelfOptions = {
   color: ColorDef,
@@ -46,7 +48,8 @@ class PredictionNode extends Node {
       headWidth: 14,
       tailWidth: 2,
       fill: providedOptions.color,
-      stroke: null,
+      stroke: CASColors.arrowStrokeProperty,
+      lineWidth: CASConstants.ARROW_LINE_WIDTH,
       bottomCenter: shadedSphereNode.center
     } );
     const options = optionize<PredictionNodeOptions, PredictionNodeSelfOptions, NodeOptions>( {

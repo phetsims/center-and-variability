@@ -23,7 +23,8 @@ const CASConstants = {
 
   // TODO: Should this be declared in main and passed through?
   // TODO: This should be instrumented
-  PLOT_TYPE_PROPERTY: new EnumerationProperty( CASQueryParameters.plotType === 'dotPlot' ? PlotType.DOT_PLOT : PlotType.LINE_PLOT )
+  PLOT_TYPE_PROPERTY: new EnumerationProperty( CASQueryParameters.plotType === 'dotPlot' ? PlotType.DOT_PLOT : PlotType.LINE_PLOT ),
+  ARROW_LINE_WIDTH: 0.25
 };
 
 centerAndSpread.register( 'CASConstants', CASConstants );

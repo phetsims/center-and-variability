@@ -16,6 +16,7 @@ import { Shape } from '../../../../kite/js/imports.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import CASColors from '../CASColors.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
+import CASConstants from '../CASConstants.js';
 
 type NotchDirection = 'up' | 'down';
 type BarStyle = 'continuous' | 'split';
@@ -53,7 +54,8 @@ class MedianBarsNode extends Path {
       headWidth: 9,
       tailWidth: LINE_WIDTH,
       fill: CASColors.medianColorProperty,
-      stroke: null,
+      stroke: CASColors.arrowStrokeProperty,
+      lineWidth: CASConstants.ARROW_LINE_WIDTH,
       visible: false
     } );
     this.addChild( this.medianArrowNode );

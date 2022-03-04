@@ -110,7 +110,11 @@ class CASScreenView extends ScreenView {
     this.addChild( this.bottomCheckboxPanel );
 
     // Play area median indicator.  TODO: Separate class?
-    this.playAreaMedianIndicatorNode = new ArrowNode( 0, 0, 0, 35, { fill: CASColors.medianColorProperty, stroke: null } );
+    this.playAreaMedianIndicatorNode = new ArrowNode( 0, 0, 0, 35, {
+      fill: CASColors.medianColorProperty,
+      stroke: CASColors.arrowStrokeProperty,
+      lineWidth: CASConstants.ARROW_LINE_WIDTH
+    } );
     this.addChild( this.playAreaMedianIndicatorNode );
 
     const updateMedianNode = () => {

@@ -25,6 +25,7 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
+import CASConstants from '../CASConstants.js';
 
 type NumberLineNodeSelfOptions = {
   color?: PaintDef;
@@ -138,7 +139,9 @@ class NumberLineNode extends Node {
       .close();
 
     return new Path( TRIANGLE_SHAPE, {
-      fill: CASColors.meanColorProperty
+      fill: CASColors.meanColorProperty,
+      stroke: CASColors.arrowStrokeProperty,
+      lineWidth: CASConstants.ARROW_LINE_WIDTH
     } );
   }
 }

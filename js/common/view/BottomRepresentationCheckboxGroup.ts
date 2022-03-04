@@ -101,7 +101,12 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
           new Text( centerAndSpreadStrings.median, TEXT_OPTIONS ),
 
           // TODO: Factor out?  See playAreaMedianIndicatorNode
-          new ArrowNode( 0, 0, 0, 35, { fill: CASColors.medianColorProperty, stroke: null, maxHeight: 20 } )
+          new ArrowNode( 0, 0, 0, 35, {
+            fill: CASColors.medianColorProperty,
+            stroke: CASColors.arrowStrokeProperty,
+            lineWidth: CASConstants.ARROW_LINE_WIDTH,
+            maxHeight: 20
+          } )
         ]
       } ),
       property: model.isShowingBottomMedianProperty
