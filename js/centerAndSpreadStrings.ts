@@ -25,6 +25,7 @@ type StringsType = {
   'sortData': string,
   'meanEqualsValue': string,
   'medianEqualsValue': string,
+  'plotType': string,
   'dotPlot': string,
   'linePlot': string,
   'median': string,

@@ -38,6 +38,9 @@
   "medianEqualsValue": {
     "value": "Median = {{value}}"
   },
+  "plotType": {
+    "value": "Plot Type"
+  },
   "dotPlot": {
     "value": "Dot Plot"
   },
