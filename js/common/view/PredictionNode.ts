@@ -36,7 +36,7 @@ class PredictionNode extends Node {
   constructor( predictionProperty: Property<number>, modelViewTransform: ModelViewTransform2, dragRange: Range,
                providedOptions: PredictionNodeOptions ) {
 
-    const shadedSphereNode = new ShadedSphereNode( 20, {
+    const shadedSphereNode = new ShadedSphereNode( 16, {
 
       // TODO-DESIGN: This looks more orange in the mockup.  Use colorblind red?
       mainColor: providedOptions.color,
