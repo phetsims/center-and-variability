@@ -20,6 +20,7 @@ const CASConstants = {
   BUTTON_FONT: new PhetFont( 16 ),
   NUMBER_OF_OBJECTS_SMALL: 15, // the number of objects used on the Median and Mean & Median screens
   NUMBER_OF_OBJECTS_LARGE: 20, // the number of objects used on the Spread and Lab screens
+  CHECKBOX_TEXT_MAX_WIDTH: 120,
 
   // TODO: Should this be declared in main and passed through?
   // TODO: This should be instrumented

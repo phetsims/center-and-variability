@@ -23,11 +23,8 @@
   "spreadQuestion": {
     "value": "How consistent is ball distance?"
   },
-  "kick1": {
-    "value": "Kick 1"
-  },
-  "kick5": {
-    "value": "Kick 5"
+  "kickValue": {
+    "value": "Kick {{value}}"
   },
   "distanceInMeters": {
     "value": "Distance (in meters)"

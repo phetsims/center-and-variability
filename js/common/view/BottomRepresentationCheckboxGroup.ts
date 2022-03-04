@@ -35,7 +35,8 @@ export type BottomRepresentationCheckboxGroupOptions =
 
 // constants
 const TEXT_OPTIONS = {
-  font: CASConstants.BUTTON_FONT
+  font: CASConstants.BUTTON_FONT,
+  maxWidth: CASConstants.CHECKBOX_TEXT_MAX_WIDTH
 };
 
 // TODO: VerticalCheckboxGroup should be TypeScript

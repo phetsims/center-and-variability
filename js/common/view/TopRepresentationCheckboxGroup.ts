@@ -35,7 +35,8 @@ const ICON_WIDTH = 24;
 // TODO: Unify with line with in MedianBarsNode?
 const LINE_WIDTH = 2;
 const TEXT_OPTIONS = {
-  font: CASConstants.BUTTON_FONT
+  font: CASConstants.BUTTON_FONT,
+  maxWidth: CASConstants.CHECKBOX_TEXT_MAX_WIDTH
 };
 
 class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
