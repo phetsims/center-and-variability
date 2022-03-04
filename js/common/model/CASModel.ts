@@ -55,9 +55,7 @@ class CASModel {
   readonly medianValueProperty: Property<number | null>;
   readonly meanValueProperty: Property<number | null>;
 
-  // TODO: Rename to rangeProperty
-  // SR: Actually dataRangeProperty seems clearer to me, since it indicates the range of data points
-  // SR: And we don't want users to get confused about whether it is the physical range of data
+  // Indicates the max and min values in the data set, or null if there are no values in the data set
   readonly dataRangeProperty: Property<Range | null>;
   readonly objectChangedEmitter: Emitter<[ CASObject ]>;
 
