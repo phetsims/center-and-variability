@@ -22,6 +22,7 @@ type BarStyle = 'continuous' | 'split';
 type SelfOptions = {
   notchDirection: NotchDirection;
   barStyle: BarStyle;
+  arrowScale?: number;
 };
 export type MedianBarNodeOptions = SelfOptions & PathOptions;
 
@@ -40,14 +41,17 @@ class MedianBarNode extends Path {
     const options = optionize<MedianBarNodeOptions, SelfOptions, PathOptions>( {
       tandem: Tandem.REQUIRED,
       lineWidth: LINE_WIDTH,
-      stroke: CASColors.medianColorProperty
+      stroke: CASColors.medianColorProperty,
+      arrowScale: 1
     }, providedOptions );
 
     super( null, options );
 
     this.notchDirection = options.notchDirection;
     this.barStyle = options.barStyle;
+
     this.medianArrowNode = new ArrowNode( 0, 0, 0, MedianBarNode.NOTCH_HEIGHT + 3, {
+      scale: options.arrowScale,
       headHeight: 8,
       headWidth: 9,
       tailWidth: LINE_WIDTH,

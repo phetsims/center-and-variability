@@ -33,7 +33,8 @@ class MeanAndMedianScreenView extends MeanOrMedianScreenView {
       topCheckboxPanelOptions: {
         medianBarIconOptions: {
           notchDirection: 'down',
-          barStyle: 'continuous'
+          barStyle: 'continuous',
+          arrowScale: 0.75
         },
         showMedianCheckboxIcon: true
       },
