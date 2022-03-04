@@ -46,7 +46,7 @@ class PredictionNode extends Node {
 
     // TODO-DESIGN: The mockup shows different arrowheads.
     const arrowNode = new ArrowNode( 0, 0, 0, -50, {
-      headHeight: 14,
+      headHeight: 10,
       headWidth: 14,
       tailWidth: 2,
       fill: providedOptions.color,
