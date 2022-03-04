@@ -91,7 +91,7 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
           NumberLineNode.createMeanIndicatorNode()
         ]
       } ),
-      property: model.isShowingBottomMeanProperty
+      property: model.isShowingPlayAreaMeanProperty
     } );
     options.includeMedian && items.push( {
 
@@ -112,7 +112,7 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
           } )
         ]
       } ),
-      property: model.isShowingBottomMedianProperty
+      property: model.isShowingPlayAreaMedianProperty
     } );
 
     super( items, options );

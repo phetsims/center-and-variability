@@ -41,8 +41,8 @@ class CASModel {
   readonly isSortingDataProperty: BooleanProperty;
   readonly isShowingTopMeanProperty: BooleanProperty;
   readonly isShowingTopMedianProperty: BooleanProperty;
-  readonly isShowingBottomMedianProperty: BooleanProperty; // TODO: Rename isShowingPlayAreaMedianProperty?
-  readonly isShowingBottomMeanProperty: BooleanProperty; // TODO: Rename isShowingPlayAreaMeanProperty?
+  readonly isShowingPlayAreaMedianProperty: BooleanProperty;
+  readonly isShowingPlayAreaMeanProperty: BooleanProperty;
   readonly isShowingMeanPredictionProperty: BooleanProperty;
   readonly isShowingMedianPredictionProperty: BooleanProperty;
   readonly cardModelGroup: PhetioGroup<CardModel, [ CASObject ]>; // Only instrumented and enabled if includeCards === true
@@ -121,11 +121,11 @@ class CASModel {
     this.isShowingTopMedianProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isShowingTopMedianProperty' )
     } );
-    this.isShowingBottomMeanProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isShowingBottomMeanProperty' )
+    this.isShowingPlayAreaMeanProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isShowingPlayAreaMeanProperty' )
     } );
-    this.isShowingBottomMedianProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isShowingBottomMedianProperty' )
+    this.isShowingPlayAreaMedianProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isShowingPlayAreaMedianProperty' )
     } );
     this.isShowingMeanPredictionProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isShowingMeanPredictionProperty' )
@@ -238,7 +238,7 @@ class CASModel {
       }
     };
 
-    this.isShowingBottomMedianProperty.link( updateMeanAndMedian );
+    this.isShowingPlayAreaMedianProperty.link( updateMeanAndMedian );
 
     // Trigger CardModel creation when a ball lands.
     const objectCreatedListener = ( casObject: CASObject ) => {
@@ -357,8 +357,8 @@ class CASModel {
     this.isSortingDataProperty.reset();
     this.isShowingTopMeanProperty.reset();
     this.isShowingTopMedianProperty.reset();
-    this.isShowingBottomMeanProperty.reset();
-    this.isShowingBottomMedianProperty.reset();
+    this.isShowingPlayAreaMeanProperty.reset();
+    this.isShowingPlayAreaMedianProperty.reset();
     this.isShowingMeanPredictionProperty.reset();
     this.isShowingMedianPredictionProperty.reset();
     this.highlightAnimationIndexProperty.reset();

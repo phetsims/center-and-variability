@@ -37,7 +37,7 @@ let index = 0;
 
 class CASObjectNode extends Node {
 
-  constructor( casObject: CASObject, isShowingBottomMedianProperty: IReadOnlyProperty<boolean>,
+  constructor( casObject: CASObject, isShowingPlayAreaMedianProperty: IReadOnlyProperty<boolean>,
                modelViewTransform: ModelViewTransform2, providedOptions?: CASObjectNodeOptions ) {
 
     const options = optionize<CASObjectNodeOptions, CASObjectNodeSelfOptions, NodeOptions>( {
@@ -132,7 +132,7 @@ class CASObjectNode extends Node {
     }
 
     // show or hide the median highlight
-    Property.multilink( [ casObject.isMedianObjectProperty, isShowingBottomMedianProperty ],
+    Property.multilink( [ casObject.isMedianObjectProperty, isShowingPlayAreaMedianProperty ],
       ( isMedianObject, isShowingBottomMedian ) => {
         medianHighlight.visible = isMedianObject && isShowingBottomMedian && options.objectViewType !== CASObjectType.DOT;
       } );

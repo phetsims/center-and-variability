@@ -62,7 +62,7 @@ class CASScreenView extends ScreenView {
     this.model = model;
 
     const objectNodeGroup = new PhetioGroup<CASObjectNode, [ CASObject ]>( ( tandem, casObject ) => {
-      return new CASObjectNode( casObject, model.isShowingBottomMedianProperty, modelViewTransform, {
+      return new CASObjectNode( casObject, model.isShowingPlayAreaMedianProperty, modelViewTransform, {
         tandem: tandem
       } );
     }, [ model.objectGroup.archetype ], {
@@ -121,7 +121,7 @@ class CASScreenView extends ScreenView {
 
     const updateMedianNode = () => {
       const medianValue = model.medianValueProperty.value;
-      const visible = medianValue !== null && model.isShowingBottomMedianProperty.value;
+      const visible = medianValue !== null && model.isShowingPlayAreaMedianProperty.value;
 
       if ( visible ) {
 
@@ -138,7 +138,7 @@ class CASScreenView extends ScreenView {
     };
     model.medianValueProperty.link( updateMedianNode );
     model.objectChangedEmitter.addListener( updateMedianNode );
-    model.isShowingBottomMedianProperty.link( updateMedianNode );
+    model.isShowingPlayAreaMedianProperty.link( updateMedianNode );
 
     this.medianPredictionNode = new PredictionNode( model.medianPredictionProperty, this.modelViewTransform, model.range, {
       center: this.layoutBounds.center,
