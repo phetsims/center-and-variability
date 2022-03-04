@@ -374,7 +374,6 @@ class CardNodeContainer extends Node {
       const scaleProperty = new NumberProperty( initialScale );
       scaleProperty.link( scale => cardNode.setScaleMagnitude( scale ) );
 
-      // TODO: Use Animation.then
       const scaleUpAnimation = new Animation( {
         duration: 0.2,
         targets: [ {
