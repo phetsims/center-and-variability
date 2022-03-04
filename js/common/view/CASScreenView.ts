@@ -140,13 +140,13 @@ class CASScreenView extends ScreenView {
     model.objectChangedEmitter.addListener( updateMedianNode );
     model.isShowingPlayAreaMedianProperty.link( updateMedianNode );
 
-    this.medianPredictionNode = new PredictionNode( model.medianPredictionProperty, this.modelViewTransform, model.range, {
+    this.medianPredictionNode = new PredictionNode( model.medianPredictionProperty, this.modelViewTransform, model.physicalRange, {
       center: this.layoutBounds.center,
       tandem: options.tandem.createTandem( 'medianPredictionNode' ),
       color: CASColors.medianColorProperty,
       roundToInterval: 0.5
     } );
-    this.meanPredictionNode = new PredictionNode( model.meanPredictionProperty, this.modelViewTransform, model.range, {
+    this.meanPredictionNode = new PredictionNode( model.meanPredictionProperty, this.modelViewTransform, model.physicalRange, {
       center: this.layoutBounds.center,
       tandem: options.tandem.createTandem( 'meanPredictionNode' ),
       color: CASColors.meanColorProperty,

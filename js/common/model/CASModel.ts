@@ -51,7 +51,7 @@ class CASModel {
   readonly maxNumberOfObjects: number;
 
   // TODO: rename to allowedRange or something
-  readonly range: Range;
+  readonly physicalRange: Range;
 
   // This is the number that we can still add to the PhetioGroup
   readonly numberOfRemainingObjectsProperty: DerivedProperty<number, [ count: number ]>;
@@ -110,7 +110,7 @@ class CASModel {
       tandem: options.includeCards ? options.tandem.createTandem( 'cardModelGroup' ) : Tandem.OPT_OUT
     } );
 
-    this.range = new Range( 1, 15 );
+    this.physicalRange = new Range( 1, 15 );
 
     this.isSortingDataProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isSortingDataProperty' )
@@ -146,11 +146,11 @@ class CASModel {
     } );
     this.dataRangeProperty = new Property<Range | null>( null );
     this.medianPredictionProperty = new NumberProperty( 1, {
-      range: this.range,
+      range: this.physicalRange,
       tandem: options.tandem.createTandem( 'medianPredictionProperty' )
     } );
     this.meanPredictionProperty = new NumberProperty( 1, {
-      range: this.range,
+      range: this.physicalRange,
       tandem: options.tandem.createTandem( 'meanPredictionProperty' )
     } );
 
@@ -291,7 +291,7 @@ class CASModel {
     const casObject = this.objectGroup.createNextElement( this.objectType, options );
 
     const dragPositionListener = ( dragPosition: Vector2, oldPosition: Vector2 ) => {
-      casObject.valueProperty.value = Utils.roundSymmetric( this.range.constrainValue( dragPosition.x ) );
+      casObject.valueProperty.value = Utils.roundSymmetric( this.physicalRange.constrainValue( dragPosition.x ) );
 
       this.moveToTop( casObject );
     };

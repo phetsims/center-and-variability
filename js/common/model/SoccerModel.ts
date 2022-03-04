@@ -198,7 +198,7 @@ class SoccerModel extends CASModel {
 
     const weights = this.currentDistribution;
 
-    assert && assert( weights.length === this.range.getLength() + 1, 'weight array should match the model range' );
+    assert && assert( weights.length === this.physicalRange.getLength() + 1, 'weight array should match the model range' );
     const x1 = dotRandom.sampleProbabilities( weights ) + 1;
 
     // Range equation is R=v0^2 sin(2 theta0) / g, see https://openstax.org/books/university-physics-volume-1/pages/4-3-projectile-motion

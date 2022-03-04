@@ -12,7 +12,8 @@ import centerAndSpread from '../centerAndSpread.js';
 const CASQueryParameters = QueryStringMachine.getAll( {
 
   // TODO: It would be nice if QueryStringMachine supported mapping to EnumerationValue
-  // TODO: Or should we bring back StringEnumerationProperty in https://github.com/phetsims/axon/issues/373?
+  // SR: Or should we bring back StringEnumerationProperty in https://github.com/phetsims/axon/issues/373?
+  // SR: Or both?
   plotType: {
     type: 'string',
     validValues: [ 'dotPlot', 'linePlot' ],

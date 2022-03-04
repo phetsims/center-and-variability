@@ -61,12 +61,12 @@ class DotPlotNode extends Node {
     //  15 balls as the high point. Consider instead something like above, where we just base the y scaling on the height
     // of one ball.
     const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
-      new Bounds2( model.range.min, 0, model.range.max, model.range.getLength() ),
+      new Bounds2( model.physicalRange.min, 0, model.physicalRange.max, model.physicalRange.getLength() ),
       new Bounds2( 0, numberLinePositionY - numberLineWidth * yScale, 0 + numberLineWidth, numberLinePositionY )
     );
 
     const numberLineNode = new NumberLineNode(
-      model.range,
+      model.physicalRange,
       numberLineWidth,
       model.meanValueProperty,
       model.isShowingTopMeanProperty,

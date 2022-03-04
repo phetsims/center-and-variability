@@ -14,7 +14,7 @@ import centerAndSpread from '../../centerAndSpread.js';
 export class AnimationMode extends EnumerationValue {
 
   // TODO: SR would like to re-evaluate StringEnumerationValue, see https://github.com/phetsims/axon/issues/373
-  // TODO: But more importantly, this sim should be consistent.
+  // SR: But more importantly, this sim should be consistent.
   static FLYING = new AnimationMode();
   static STACKING = new AnimationMode();
   static RETURNING = new AnimationMode();
