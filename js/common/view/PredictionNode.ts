@@ -39,7 +39,9 @@ class PredictionNode extends Node {
     const shadedSphereNode = new ShadedSphereNode( 20, {
 
       // TODO-DESIGN: This looks more orange in the mockup.  Use colorblind red?
-      mainColor: providedOptions.color
+      mainColor: providedOptions.color,
+      stroke: CASColors.arrowStrokeProperty,
+      lineWidth: CASConstants.ARROW_LINE_WIDTH
     } );
 
     // TODO-DESIGN: The mockup shows different arrowheads.
