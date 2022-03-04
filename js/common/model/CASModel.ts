@@ -162,81 +162,11 @@ class CASModel {
     this.lastHighlightAnimationStepTime = 0;
 
     // TODO: Would an enum like 'not-yet-started' vs 'in-progress' vs 'complete' be clearer?
+    // SR: But it seems like we wouldn't use one of those states, or 2 are redundant for our current purposes.
+    // SR: But maybe it would be clearer anyways?
     this.isMedianAnimationCompleteProperty = new BooleanProperty( false );
 
-    // TODO: This should be on the prototype
-    const updateMeanAndMedian = () => {
-      const objectsInDataSet = this.objectGroup.filter( casObject => casObject.valueProperty.value !== null );
-      const sortedObjects = _.sortBy( objectsInDataSet, casObject => casObject.valueProperty.value );
-
-      // TODO: Why does this print twice at the same time?
-      // console.log( values );
-      const medianValues: number[] = [];
-
-      // Odd number of values, take the central value
-      if ( sortedObjects.length % 2 === 1 ) {
-        const midIndex = ( sortedObjects.length - 1 ) / 2;
-        this.medianValueProperty.value = sortedObjects[ midIndex ].valueProperty.value!;
-        medianValues.push( this.medianValueProperty.value );
-
-        assert && assert( !isNaN( this.medianValueProperty.value ) );
-      }
-      else if ( sortedObjects.length % 2 === 0 && sortedObjects.length >= 2 ) {
-
-        // Even number of values, average the two middle-most values
-        const mid1Index = ( sortedObjects.length - 2 ) / 2;
-        const mid2Index = ( sortedObjects.length - 0 ) / 2;
-        const mid1Value = sortedObjects[ mid1Index ].valueProperty.value!;
-        const mid2Value = sortedObjects[ mid2Index ].valueProperty.value!;
-        this.medianValueProperty.value = ( mid1Value + mid2Value ) / 2;
-
-        medianValues.push( mid1Value );
-        medianValues.push( mid2Value );
-
-        assert && assert( !isNaN( this.medianValueProperty.value ) );
-      }
-      else {
-
-        // Not enough values for the median to be defined
-        this.medianValueProperty.value = null;
-      }
-
-      const medianObjects: CASObject[] = [];
-
-      const takeTopObjects = ( median: number, numberToTake: number ) => {
-        const objectsWithMedianValue = this.objectGroup.filter( casObject => casObject.valueProperty.value === median );
-        const sortedObjects = _.sortBy( objectsWithMedianValue, casObject => casObject.positionProperty.value.y );
-        medianObjects.push( ...sortedObjects.slice( -numberToTake ) );
-      };
-
-      if ( medianValues.length === 1 ) {
-        takeTopObjects( medianValues[ 0 ], 1 );
-      }
-      else if ( medianValues.length === 2 && medianValues[ 0 ] === medianValues[ 1 ] ) {
-        takeTopObjects( medianValues[ 0 ], 2 );
-      }
-      else {
-        takeTopObjects( medianValues[ 0 ], 1 );
-        takeTopObjects( medianValues[ 1 ], 1 );
-      }
-
-      this.objectGroup.forEach( object => {
-        object.isMedianObjectProperty.value = medianObjects.includes( object );
-      } );
-
-      if ( objectsInDataSet.length > 0 ) {
-        this.meanValueProperty.value = _.mean( objectsInDataSet.map( casObject => casObject.valueProperty.value ) );
-
-        const min = sortedObjects[ 0 ].valueProperty.value!;
-        const max = sortedObjects[ sortedObjects.length - 1 ].valueProperty.value!;
-        this.dataRangeProperty.value = new Range( min, max );
-      }
-      else {
-        this.meanValueProperty.value = null;
-        this.dataRangeProperty.value = null;
-      }
-    };
-
+    const updateMeanAndMedian = () => this.updateMeanAndMedian();
     this.isShowingPlayAreaMedianProperty.link( updateMeanAndMedian );
 
     // Trigger CardModel creation when a ball lands.
@@ -284,6 +214,78 @@ class CASModel {
         this.isMedianAnimationCompleteProperty.value = false;
       }
     } );
+  }
+
+  updateMeanAndMedian(): void {
+    const objectsInDataSet = this.objectGroup.filter( casObject => casObject.valueProperty.value !== null );
+    const sortedObjects = _.sortBy( objectsInDataSet, casObject => casObject.valueProperty.value );
+
+    // TODO: Why does this print twice at the same time?
+    // console.log( values );
+    const medianValues: number[] = [];
+
+    // Odd number of values, take the central value
+    if ( sortedObjects.length % 2 === 1 ) {
+      const midIndex = ( sortedObjects.length - 1 ) / 2;
+      this.medianValueProperty.value = sortedObjects[ midIndex ].valueProperty.value!;
+      medianValues.push( this.medianValueProperty.value );
+
+      assert && assert( !isNaN( this.medianValueProperty.value ) );
+    }
+    else if ( sortedObjects.length % 2 === 0 && sortedObjects.length >= 2 ) {
+
+      // Even number of values, average the two middle-most values
+      const mid1Index = ( sortedObjects.length - 2 ) / 2;
+      const mid2Index = ( sortedObjects.length - 0 ) / 2;
+      const mid1Value = sortedObjects[ mid1Index ].valueProperty.value!;
+      const mid2Value = sortedObjects[ mid2Index ].valueProperty.value!;
+      this.medianValueProperty.value = ( mid1Value + mid2Value ) / 2;
+
+      medianValues.push( mid1Value );
+      medianValues.push( mid2Value );
+
+      assert && assert( !isNaN( this.medianValueProperty.value ) );
+    }
+    else {
+
+      // Not enough values for the median to be defined
+      this.medianValueProperty.value = null;
+    }
+
+    const medianObjects: CASObject[] = [];
+
+    const takeTopObjects = ( median: number, numberToTake: number ) => {
+      const objectsWithMedianValue = this.objectGroup.filter( casObject => casObject.valueProperty.value === median );
+      const sortedObjects = _.sortBy( objectsWithMedianValue, casObject => casObject.positionProperty.value.y );
+      medianObjects.push( ...sortedObjects.slice( -numberToTake ) );
+    };
+
+    if ( medianValues.length === 1 ) {
+      takeTopObjects( medianValues[ 0 ], 1 );
+    }
+    else if ( medianValues.length === 2 && medianValues[ 0 ] === medianValues[ 1 ] ) {
+      takeTopObjects( medianValues[ 0 ], 2 );
+    }
+    else {
+      takeTopObjects( medianValues[ 0 ], 1 );
+      takeTopObjects( medianValues[ 1 ], 1 );
+    }
+
+    this.objectGroup.forEach( object => {
+      object.isMedianObjectProperty.value = medianObjects.includes( object );
+    } );
+
+    if ( objectsInDataSet.length > 0 ) {
+      this.meanValueProperty.value = _.mean( objectsInDataSet.map( casObject => casObject.valueProperty.value ) );
+
+      const min = sortedObjects[ 0 ].valueProperty.value!;
+      const max = sortedObjects[ sortedObjects.length - 1 ].valueProperty.value!;
+      this.dataRangeProperty.value = new Range( min, max );
+    }
+    else {
+      this.meanValueProperty.value = null;
+      this.dataRangeProperty.value = null;
+    }
   }
 
   protected createObject( options: Omit<CASObjectOptions, 'tandem'> ): CASObject {
