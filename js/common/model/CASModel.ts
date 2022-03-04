@@ -162,7 +162,7 @@ class CASModel {
       range: this.physicalRange,
       tandem: options.tandem.createTandem( 'medianPredictionProperty' )
     } );
-    this.meanPredictionProperty = new NumberProperty( 1, {
+    this.meanPredictionProperty = new NumberProperty( 1.5, {
       range: this.physicalRange,
       tandem: options.tandem.createTandem( 'meanPredictionProperty' )
     } );

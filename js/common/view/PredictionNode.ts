@@ -85,7 +85,8 @@ class PredictionNode extends Node {
     } );
 
     this.addInputListener( new DragListener( {
-      positionProperty: dragPositionProperty
+      positionProperty: dragPositionProperty,
+      start: () => this.moveToFront()
     } ) );
   }
 }
