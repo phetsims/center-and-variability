@@ -18,7 +18,7 @@ import CardNodeContainer from '../../common/view/CardNodeContainer.js';
 import CASPlotNode from './CASPlotNode.js';
 import SoccerModel from '../model/SoccerModel.js';
 import ValueReadoutsNode from './ValueReadoutsNode.js';
-import { ManualConstraint, Text } from '../../../../scenery/js/imports.js';
+import { Node, ManualConstraint, Text } from '../../../../scenery/js/imports.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import PlotType from '../model/PlotType.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
@@ -32,8 +32,8 @@ export type MeanOrMedianScreenViewOptions = MeanOrMedianScreenSelfOptions & Socc
 class MeanOrMedianScreenView extends SoccerScreenView {
   private readonly accordionBox: CASAccordionBox;
 
-  // TODO: need reset, but may want to make an interface for a resettable Node
-  protected readonly accordionBoxContents: CardNodeContainer | CASPlotNode;
+  // TODO: SR asks: is this pattern OK for indicating a node that can be cleared and reset?
+  protected readonly accordionBoxContents: Node & { clear: () => void; reset: () => void; };
 
   constructor( model: SoccerModel, providedOptions: MeanOrMedianScreenViewOptions ) {
 
