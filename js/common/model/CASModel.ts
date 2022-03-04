@@ -45,7 +45,12 @@ class CASModel {
   readonly isShowingPlayAreaMeanProperty: BooleanProperty;
   readonly isShowingMeanPredictionProperty: BooleanProperty;
   readonly isShowingMedianPredictionProperty: BooleanProperty;
-  readonly cardModelGroup: PhetioGroup<CardModel, [ CASObject ]>; // Only instrumented and enabled if includeCards === true
+
+  // For PhET-iO State, it is difficult to power 2 views from one model, see https://github.com/phetsims/phet-io/issues/1688#issuecomment-1032967603
+  // Therefore, we introduce a minimal model element for the cards, so they can be managed by the state
+  // Only instrumented and enabled if includeCards === true
+  readonly cardModelGroup: PhetioGroup<CardModel, [ CASObject ]>;
+
   readonly includeCards: boolean;
   readonly maxNumberOfObjects: number;
   readonly physicalRange: Range;
@@ -57,6 +62,8 @@ class CASModel {
 
   // Indicates the max and min values in the data set, or null if there are no values in the data set
   readonly dataRangeProperty: Property<Range | null>;
+
+  // Signify whenever any object's value or position changes
   readonly objectChangedEmitter: Emitter<[ CASObject ]>;
 
   // Null until the user has made a prediction.
@@ -69,6 +76,10 @@ class CASModel {
   // it represents a transient value.
   private highlightAnimationIndex: number | null;
   private lastHighlightAnimationStepTime: number;
+
+  // TODO: Would an enum like 'not-yet-started' vs 'in-progress' vs 'complete' be clearer?
+  // SR: But it seems like we wouldn't use one of those states, or 2 are redundant for our current purposes.
+  // SR: But maybe it would be clearer anyways?
   readonly isMedianAnimationCompleteProperty: BooleanProperty;
 
   // TODO: See if TypeScript 4.6 will let us initialize more things here
@@ -101,8 +112,6 @@ class CASModel {
       tandem: options.tandem.createTandem( objectType === CASObjectType.SOCCER_BALL ? 'soccerBallGroup' : 'dataPointGroup' )
     } );
 
-    // For PhET-iO State, it is difficult to power 2 views from one model, see https://github.com/phetsims/phet-io/issues/1688#issuecomment-1032967603
-    // Therefore, we introduce a minimal model element for the cards, so they can be managed by the state
     this.cardModelGroup = new PhetioGroup( ( tandem, casObject ) => {
       assert && assert( casObject, 'casObject should be defined' );
       return new CardModel( casObject, {
@@ -164,9 +173,6 @@ class CASModel {
     this.highlightAnimationIndex = null;
     this.lastHighlightAnimationStepTime = 0;
 
-    // TODO: Would an enum like 'not-yet-started' vs 'in-progress' vs 'complete' be clearer?
-    // SR: But it seems like we wouldn't use one of those states, or 2 are redundant for our current purposes.
-    // SR: But maybe it would be clearer anyways?
     this.isMedianAnimationCompleteProperty = new BooleanProperty( false );
 
     const updateMeanAndMedian = () => this.updateMeanAndMedian();
@@ -201,7 +207,6 @@ class CASModel {
       return this.maxNumberOfObjects - count;
     } );
 
-    // Signify whenever any object's value or position changes
     this.objectChangedEmitter = new Emitter<[ CASObject ]>( {
       parameters: [ { valueType: CASObject } ]
     } );

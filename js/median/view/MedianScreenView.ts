@@ -23,6 +23,7 @@ class MedianScreenView extends MeanOrMedianScreenView {
   constructor( model: MedianModel, providedOptions: MedianScreenViewOptions ) {
 
     const options = optionize<MedianScreenViewOptions, SelfOptions, MeanOrMedianScreenViewOptions>( {
+
       // TODO: TypeScript is okay with not including isMedianScreen, why? Severe problem!
       isMedianScreen: true,
       questionBarOptions: {

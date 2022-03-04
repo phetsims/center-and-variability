@@ -115,7 +115,9 @@ class MeanOrMedianScreenView extends SoccerScreenView {
     this.accordionBox.reset();
   }
 
-  // Floating layout that keeps the ground near the ground, and accordion box near the question bar
+  /**
+   * Floating layout that keeps the ground near the ground, and accordion box near the question bar
+   */
   layout( viewBounds: Bounds2 ): void {
 
     // TODO: Duplicates effort with the parent implementation

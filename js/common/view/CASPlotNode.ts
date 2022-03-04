@@ -25,8 +25,6 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 
-// constants
-
 type SelfOptions = {};
 export type CASPlotOptions = NodeOptions & RequiredTandem;
 
@@ -137,7 +135,6 @@ class CASPlotNode extends Node {
       const MARGIN_Y = 5;
 
       // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card
-
       if ( model.isShowingTopMedianProperty.value && leftmostDot ) {
         const highestDot = _.maxBy( sortedDots, object => object.positionProperty.value.y );
         const dotRadius = Math.abs( modelViewTransform.modelToViewDeltaY( leftmostDot.objectType.radius ) );

@@ -54,6 +54,7 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
     } );
     options.includeMean && items.push( {
       node: new HBox( {
+
         // TODO: align icons
         spacing: 24.5,
         children: [

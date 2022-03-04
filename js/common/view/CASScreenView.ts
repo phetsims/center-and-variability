@@ -47,7 +47,11 @@ class CASScreenView extends ScreenView {
   protected readonly backObjectLayer: Node;
   protected readonly playAreaMedianIndicatorNode: ArrowNode;
   protected readonly eraserButton: EraserButton;
+
+  // Subclasses use this to add to for correct z-ordering and correct tab navigation order
+  // TODO: investigate if this is needed
   protected readonly contentLayer: Node;
+
   protected readonly medianPredictionNode: PredictionNode;
   protected readonly meanPredictionNode: PredictionNode;
 
@@ -71,8 +75,6 @@ class CASScreenView extends ScreenView {
       supportsDynamicState: false
     } );
 
-    // Subclasses use this to add to for correct z-ordering and correct tab navigation order
-    // TODO: investigate if this is needed
     this.contentLayer = new Node();
     this.backObjectLayer = new Node();
 
@@ -109,7 +111,7 @@ class CASScreenView extends ScreenView {
     this.bottomCheckboxPanel = new BottomRepresentationCheckboxGroup( model, options.bottomCheckboxPanelOptions );
     this.addChild( this.bottomCheckboxPanel );
 
-    // Play area median indicator.  TODO: Separate class?
+    // TODO: Separate class?
     this.playAreaMedianIndicatorNode = new ArrowNode( 0, 0, 0, 27, {
       fill: CASColors.medianColorProperty,
       stroke: CASColors.arrowStrokeProperty,

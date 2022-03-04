@@ -48,14 +48,25 @@ type SelfOptions = {};
 export type CardNodeContainerOptions = SelfOptions & NodeOptions & RequiredTandem;
 
 class CardNodeContainer extends Node {
+
+  // Each card is associated with one "cell", no two cards can be associated with the same cell.  The leftmost cell is 0.
+  // The cells linearly map to locations across the screen.
   readonly cardNodeCells: CardNode[];
+
+  // Fires if the cardNodeCells may have changed
   readonly cardNodeCellsChangedEmitter: Emitter<[]>;
 
   private readonly model: CASModel;
   private readonly cardNodeGroup: PhetioGroup<CardNode, [ CardModel ]>;
   private readonly medianBarNode: MedianBarNode;
   private readonly dragIndicatorArrowNode: ArrowNode;
+
+  // TODO-UX: maybe this should be converted to track distance for individual cards
+  // Accumulated card drag distance, for purposes of hiding the drag indicator node
   private readonly totalDragDistanceProperty: NumberProperty;
+
+  // Indicates whether the user has ever dragged a card. It's used to hide the drag indicator arrow after
+  // the user dragged a card
   private readonly hasDraggedCardProperty: IReadOnlyProperty<boolean>;
   private readonly cardLayer: Node;
   private isReadyForCelebration: boolean;
@@ -72,20 +83,9 @@ class CardNodeContainer extends Node {
     super( options );
 
     this.model = model;
-
-    // Each card is associated with one "cell", no two cards can be associated with the same cell.  The leftmost cell is 0.
-    // The cells linearly map to locations across the screen.
     this.cardNodeCells = [];
-
-    // Fires if the cardNodeCells may have changed
     this.cardNodeCellsChangedEmitter = new Emitter<[]>();
-
-    // TODO-UX: maybe this should be converted to track distance for individual cards
-    // Accumulated card drag distance, for purposes of hiding the drag indicator node
     this.totalDragDistanceProperty = new NumberProperty( 0 );
-
-    // Indicates whether the user has ever dragged a card. It's used to hide the drag indicator arrow after
-    // the user dragged a card
     this.hasDraggedCardProperty = new DerivedProperty( [ this.totalDragDistanceProperty ], totalDragDistance => {
       return totalDragDistance > 15;
     } );
@@ -273,7 +273,6 @@ class CardNodeContainer extends Node {
       const MARGIN_Y = 5;
 
       // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card
-
       if ( model.isShowingTopMedianProperty.value && this.isDataSorted() && leftmostCard ) {
         const barY = leftmostCard.bottom + MARGIN_Y;
 
