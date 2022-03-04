@@ -97,6 +97,18 @@ class SoccerModel extends CASModel {
       numberOfRemainingKickableObjects => numberOfRemainingKickableObjects > 0 );
 
     this.currentDistribution = SoccerModel.chooseDistribution();
+
+    this.objectValueBecameNonNullEmitter.addListener( casObject => {
+
+      // If the soccer player that kicked that ball was still in line when the ball lands, they can leave the line now.
+      if ( this.soccerPlayerGroup.includes( this.ballPlayerMap.get( casObject )! ) ) {
+        this.advanceLine();
+      }
+
+      if ( this.numberOfRemainingObjectsProperty.value > 0 && this.nextBallToKickProperty.value === null ) {
+        this.nextBallToKickProperty.value = this.createBall();
+      }
+    } );
   }
 
   static chooseDistribution(): number[] {
@@ -264,19 +276,6 @@ class SoccerModel extends CASModel {
           this.numberOfScheduledSoccerBallsToKickProperty.value--;
         }
       }
-    }
-  }
-
-  protected objectValueBecameNonNull( casObject: CASObject ): void {
-    super.objectValueBecameNonNull( casObject );
-
-    // If the soccer player that kicked that ball was still in line when the ball lands, they can leave the line now.
-    if ( this.soccerPlayerGroup.includes( this.ballPlayerMap.get( casObject )! ) ) {
-      this.advanceLine();
-    }
-
-    if ( this.numberOfRemainingObjectsProperty.value > 0 && this.nextBallToKickProperty.value === null ) {
-      this.nextBallToKickProperty.value = this.createBall();
     }
   }
 

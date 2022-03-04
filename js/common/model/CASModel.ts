@@ -71,6 +71,9 @@ class CASModel {
   private lastHighlightAnimationStepTime: number;
   readonly isMedianAnimationCompleteProperty: BooleanProperty;
 
+  // TODO: See if TypeScript 4.6 will let us initialize more things here
+  protected readonly objectValueBecameNonNullEmitter: Emitter<[ CASObject ]>;
+
   constructor( objectType: CASObjectType, maxNumberOfObjects: number, providedOptions: CASModelOptions ) {
 
     const options = optionize<CASModelOptions, CASModelSelfOptions, {}>( {
@@ -176,7 +179,7 @@ class CASModel {
           if ( options.includeCards ) {
             this.cardModelGroup.createNextElement( casObject );
           }
-          this.objectValueBecameNonNull( casObject );
+          this.objectValueBecameNonNullEmitter.emit( casObject );
           casObject.valueProperty.unlink( listener ); // Only create the card once, then no need to listen further
         }
       };
@@ -214,6 +217,11 @@ class CASModel {
         this.isMedianAnimationCompleteProperty.value = false;
       }
     } );
+
+    this.objectValueBecameNonNullEmitter = new Emitter<[ CASObject ]>( {
+      parameters: [ { valueType: CASObject } ]
+    } );
+    this.objectValueBecameNonNullEmitter.addListener( () => this.updateAnimation() );
   }
 
   updateMeanAndMedian(): void {
@@ -334,11 +342,6 @@ class CASModel {
       object.positionProperty.value = new Vector2( casObject.valueProperty.value!, position );
       position += object.objectType.radius * 2;
     } );
-  }
-
-  // TODO: Should this be an emitter?  We say yes.
-  protected objectValueBecameNonNull( casObject: CASObject ): void {
-    this.updateAnimation();
   }
 
   /**
