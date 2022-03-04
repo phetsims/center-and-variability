@@ -47,10 +47,7 @@ class CASModel {
   readonly isShowingMedianPredictionProperty: BooleanProperty;
   readonly cardModelGroup: PhetioGroup<CardModel, [ CASObject ]>; // Only instrumented and enabled if includeCards === true
   readonly includeCards: boolean;
-
   readonly maxNumberOfObjects: number;
-
-  // TODO: rename to allowedRange or something
   readonly physicalRange: Range;
 
   // This is the number that we can still add to the PhetioGroup
@@ -59,6 +56,8 @@ class CASModel {
   readonly meanValueProperty: Property<number | null>;
 
   // TODO: Rename to rangeProperty
+  // SR: Actually dataRangeProperty seems clearer to me, since it indicates the range of data points
+  // SR: And we don't want users to get confused about whether it is the physical range of data
   readonly dataRangeProperty: Property<Range | null>;
   readonly objectChangedEmitter: Emitter<[ CASObject ]>;
 
