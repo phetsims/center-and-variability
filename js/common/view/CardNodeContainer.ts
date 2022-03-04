@@ -220,8 +220,8 @@ class CardNodeContainer extends Node {
       pickable: false,
       doubleHead: true,
       fill: CASColors.dragIndicatorColorProperty,
-      stroke: 'black',
-      lineWidth: 1,
+      stroke: CASColors.arrowStrokeProperty,
+      lineWidth: CASConstants.ARROW_LINE_WIDTH,
       tandem: options.tandem.createTandem( 'dragIndicatorArrowNode' )
     } );
 
