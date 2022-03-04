@@ -21,6 +21,8 @@ import ValueReadoutsNode from './ValueReadoutsNode.js';
 import { ManualConstraint, Text } from '../../../../scenery/js/imports.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import PlotType from '../model/PlotType.js';
+import ScreenView from '../../../../joist/js/ScreenView.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 
 type MeanOrMedianScreenSelfOptions = {
   isMedianScreen: boolean;
@@ -112,6 +114,18 @@ class MeanOrMedianScreenView extends SoccerScreenView {
     super.reset();
     this.accordionBoxContents.reset();
     this.accordionBox.reset();
+  }
+
+  // Floating layout that keeps the ground near the ground, and accordion box near the question bar
+  layout( viewBounds: Bounds2 ): void {
+
+    // TODO: Duplicates effort with the parent implementation
+    this.matrix = ScreenView.getLayoutMatrix( this.layoutBounds, viewBounds, {
+      verticalAlign: 'bottom'
+    } );
+    this.visibleBoundsProperty.value = this.parentToLocalBounds( viewBounds );
+
+    this.accordionBox.top = this.questionBar.bottom + CASConstants.SCREEN_VIEW_Y_MARGIN;
   }
 }
 
