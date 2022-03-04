@@ -22,11 +22,6 @@ const CASConstants = {
   NUMBER_OF_OBJECTS_SMALL: 15, // the number of objects used on the Median and Mean & Median screens
   NUMBER_OF_OBJECTS_LARGE: 20, // the number of objects used on the Spread and Lab screens
   CHECKBOX_TEXT_MAX_WIDTH: 120,
-
-  // TODO: Should this be declared in main and passed through?
-  // SR: I prefer that it is treated like a global.  But in other sims I've advocated for passing it through.  But here,
-  // SR: I tried passing it through and it got ugly because it had to be passed to places that seem like they shouldn't need it
-  // SR: Maybe we should ask dev team?
   PLOT_TYPE_PROPERTY: new EnumerationProperty( CASQueryParameters.plotType === 'dotPlot' ? PlotType.DOT_PLOT : PlotType.LINE_PLOT, {
     tandem: Tandem.GLOBAL_VIEW.createTandem( 'plotTypeProperty' )
   } ),
