@@ -96,15 +96,17 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
       // TODO: Align group to center align the icons
       node: new HBox( {
-        spacing: 17,
+        spacing: 14,
         children: [
           new Text( centerAndSpreadStrings.median, TEXT_OPTIONS ),
 
           // TODO: Factor out?  See playAreaMedianIndicatorNode
-          new ArrowNode( 0, 0, 0, 35, {
+          new ArrowNode( 0, 0, 0, 27, {
             fill: CASColors.medianColorProperty,
             stroke: CASColors.arrowStrokeProperty,
             lineWidth: CASConstants.ARROW_LINE_WIDTH,
+            headHeight: 12,
+            headWidth: 18,
             maxHeight: 20
           } )
         ]
