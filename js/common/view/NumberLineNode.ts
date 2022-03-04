@@ -8,7 +8,7 @@
  */
 
 import centerAndSpread from '../../centerAndSpread.js';
-import { Color, Node, NodeOptions, Path, Text } from '../../../../scenery/js/imports.js';
+import { Node, NodeOptions, Path, Text } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
@@ -45,7 +45,7 @@ class NumberLineNode extends Node {
   ) {
 
     const options = optionize<NumberLineNodeOptions, SelfOptions, NodeOptions>( {
-      color: Color.WHITE,
+      color: 'white',
       includeXAxis: false,
       tandem: Tandem.REQUIRED
     }, providedOptions );

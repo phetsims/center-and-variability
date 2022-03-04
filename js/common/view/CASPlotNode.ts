@@ -9,7 +9,7 @@
  */
 
 import centerAndSpread from '../../centerAndSpread.js';
-import { Color, Node, NodeOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { Node, NodeOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CASModel from '../model/CASModel.js';
@@ -70,7 +70,7 @@ class CASPlotNode extends Node {
       model.meanValueProperty,
       model.isShowingTopMeanProperty,
       model.dataRangeProperty, {
-        color: Color.BLACK,
+        color: 'black',
         includeXAxis: true,
         tandem: options.tandem.createTandem( 'numberLineNode' ),
         y: numberLinePositionY

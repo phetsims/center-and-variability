@@ -9,7 +9,7 @@
 
 import optionize from '../../../../phet-core/js/optionize.js';
 import centerAndSpread from '../../centerAndSpread.js';
-import { Circle, Color, DragListener, Image, Node, NodeOptions, Path, Text } from '../../../../scenery/js/imports.js';
+import { Circle, DragListener, Image, Node, NodeOptions, Path, Text } from '../../../../scenery/js/imports.js';
 import CASObject from '../model/CASObject.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import CASObjectType from '../model/CASObjectType.js';
@@ -63,13 +63,14 @@ class CASObjectNode extends Node {
 
     const createPlotMarker = () => {
       const circle = new Circle( viewRadius, {
-        fill: Color.BLACK,
+        fill: 'black',
         center: Vector2.ZERO
       } );
       const cross = new Path( timesSolidShape, {
 
         // Leave some spacing between the stacked 'x' marks
-        fill: Color.BLACK, maxWidth: viewRadius * 2 * 0.8,
+        fill: 'black',
+        maxWidth: viewRadius * 2 * 0.8,
         center: Vector2.ZERO
       } );
       CASConstants.PLOT_TYPE_PROPERTY.link( plotType => {
