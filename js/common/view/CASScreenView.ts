@@ -181,7 +181,6 @@ class CASScreenView extends ScreenView {
         this.interruptSubtreeInput();
 
         model.clearData();
-        this.clearData(); // TODO: Omit all clearDatas in the view, since they are now powered by the model.
       },
       iconWidth: 26,
       right: this.resetAllButton.left - CASConstants.SCREEN_VIEW_X_MARGIN,
@@ -195,12 +194,6 @@ class CASScreenView extends ScreenView {
    * Resets the view.
    */
   reset(): void {
-  }
-
-  /**
-   * Resets the view for the data.
-   */
-  clearData(): void {
   }
 
   /**

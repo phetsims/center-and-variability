@@ -41,9 +41,8 @@ const CASColors = {
   } ),
 
   // sky gradient, sampled from a screenshot
-  skyGradientTopColorProperty: new ProfileColorProperty( centerAndSpread, 'skyGradientTop', { default: '#2e4f8a' } ),
-  skyGradientMiddleColorProperty: new ProfileColorProperty( centerAndSpread, 'skyGradientMiddle', { default: '#5c98d3' } ),
-  skyGradientBottomColorProperty: new ProfileColorProperty( centerAndSpread, 'skyGradientBottom', { default: '#c9d9ef' } ),
+  skyGradientTopColorProperty: new ProfileColorProperty( centerAndSpread, 'skyGradientTop', { default: '#02ace4' } ),
+  skyGradientBottomColorProperty: new ProfileColorProperty( centerAndSpread, 'skyGradientBottom', { default: '#cfecfc' } ),
 
   // the ground
   groundColorProperty: new ProfileColorProperty( centerAndSpread, 'groundColor', { default: '#009245' } ),

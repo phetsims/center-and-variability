@@ -539,14 +539,7 @@ class CardNodeContainer extends Node {
     return new Range( 0, maxX );
   }
 
-  clear(): void {
-    this.cardNodeCells.length = 0;
-    this.cardNodeCellsChangedEmitter.emit();
-    this.cardNodeGroup.clear();
-  }
-
   reset(): void {
-    this.clear();
     this.totalDragDistanceProperty.reset();
   }
 }
