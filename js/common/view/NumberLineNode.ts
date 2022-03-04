@@ -29,7 +29,8 @@ import CASConstants from '../CASConstants.js';
 
 type SelfOptions = {
   color?: PaintDef;
-  includeXAxis?: boolean;
+  includeXAxis: boolean;
+  includeMeanStroke: boolean;
 };
 export type NumberLineNodeOptions = SelfOptions & NodeOptions & RequiredTandem;
 
@@ -46,7 +47,6 @@ class NumberLineNode extends Node {
 
     const options = optionize<NumberLineNodeOptions, SelfOptions, NodeOptions>( {
       color: 'white',
-      includeXAxis: false,
       tandem: Tandem.REQUIRED
     }, providedOptions );
 
@@ -112,7 +112,7 @@ class NumberLineNode extends Node {
       new Bounds2( 0, -width, width, width )
     );
 
-    const meanIndicatorNode = NumberLineNode.createMeanIndicatorNode();
+    const meanIndicatorNode = NumberLineNode.createMeanIndicatorNode( options.includeMeanStroke );
     this.addChild( meanIndicatorNode );
 
     Property.multilink( [ meanValueProperty, isShowingMeanIndicatorProperty ],
@@ -126,7 +126,7 @@ class NumberLineNode extends Node {
     this.mutate( options );
   }
 
-  static createMeanIndicatorNode(): Node {
+  static createMeanIndicatorNode( includeStroke: boolean ): Node {
     const TRIANGLE_LENGTH = 15;
     const TRIANGLE_ALTITUDE = 13;
 
@@ -140,7 +140,7 @@ class NumberLineNode extends Node {
 
     return new Path( TRIANGLE_SHAPE, {
       fill: CASColors.meanColorProperty,
-      stroke: CASColors.arrowStrokeProperty,
+      stroke: includeStroke ? CASColors.arrowStrokeProperty : null,
       lineWidth: CASConstants.ARROW_LINE_WIDTH
     } );
   }

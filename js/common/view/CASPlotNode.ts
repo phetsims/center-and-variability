@@ -70,6 +70,7 @@ class CASPlotNode extends Node {
       model.dataRangeProperty, {
         color: 'black',
         includeXAxis: true,
+        includeMeanStroke: false,
         tandem: options.tandem.createTandem( 'numberLineNode' ),
         y: numberLinePositionY
       } );

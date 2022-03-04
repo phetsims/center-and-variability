@@ -85,7 +85,7 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
         spacing: 24.5,
         children: [
           new Text( centerAndSpreadStrings.mean, TEXT_OPTIONS ),
-          NumberLineNode.createMeanIndicatorNode()
+          NumberLineNode.createMeanIndicatorNode( true )
         ]
       } ),
       property: model.isShowingPlayAreaMeanProperty

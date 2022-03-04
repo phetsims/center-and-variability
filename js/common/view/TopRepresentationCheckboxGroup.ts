@@ -69,7 +69,7 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
               } ),
 
               // Triangle
-              NumberLineNode.createMeanIndicatorNode()
+              NumberLineNode.createMeanIndicatorNode( false )
             ]
           } )
         ]

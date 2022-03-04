@@ -64,6 +64,8 @@ class SoccerScreenView extends CASScreenView {
       model.meanValueProperty,
       model.isShowingPlayAreaMeanProperty,
       model.dataRangeProperty, {
+        includeXAxis: false,
+        includeMeanStroke: true,
         tandem: options.tandem.createTandem( 'playAreaNumberLineNode' ),
         x: NUMBER_LINE_MARGIN_X,
         y: GROUND_POSITION_Y
