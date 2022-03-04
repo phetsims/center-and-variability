@@ -9,7 +9,7 @@
 
 import optionize from '../../../../phet-core/js/optionize.js';
 import centerAndSpread from '../../centerAndSpread.js';
-import { Circle, Color, DragListener, Image, Node, NodeOptions, Path, Text } from '../../../../scenery/js/imports.js';
+import { Circle, DragListener, Image, Node, NodeOptions, Path, Text } from '../../../../scenery/js/imports.js';
 import CASObject from '../model/CASObject.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import CASObjectType from '../model/CASObjectType.js';
@@ -26,21 +26,21 @@ import timesSolidShape from '../../../../sherpa/js/fontawesome-5/timesSolidShape
 import CASConstants from '../CASConstants.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 
-type CASObjectNodeSelfOptions = {
+type SelfOptions = {
   objectViewType?: CASObjectType;
   draggingEnabled?: boolean;
 };
-export type CASObjectNodeOptions = CASObjectNodeSelfOptions & NodeOptions & RequiredTandem;
+export type CASObjectNodeOptions = SelfOptions & NodeOptions & RequiredTandem;
 
 // for debugging with ?dev
 let index = 0;
 
 class CASObjectNode extends Node {
 
-  constructor( casObject: CASObject, isShowingBottomMedianProperty: IReadOnlyProperty<boolean>,
+  constructor( casObject: CASObject, isShowingPlayAreaMedianProperty: IReadOnlyProperty<boolean>,
                modelViewTransform: ModelViewTransform2, providedOptions?: CASObjectNodeOptions ) {
 
-    const options = optionize<CASObjectNodeOptions, CASObjectNodeSelfOptions, NodeOptions>( {
+    const options = optionize<CASObjectNodeOptions, SelfOptions, NodeOptions>( {
 
       // In the Mean & Median screen and Spread screen, the objectType is SOCCER_BALL, but we render the dot plot
       // with DOT views
@@ -63,13 +63,14 @@ class CASObjectNode extends Node {
 
     const createPlotMarker = () => {
       const circle = new Circle( viewRadius, {
-        fill: Color.BLACK,
+        fill: 'black',
         center: Vector2.ZERO
       } );
       const cross = new Path( timesSolidShape, {
 
         // Leave some spacing between the stacked 'x' marks
-        fill: Color.BLACK, maxWidth: viewRadius * 2 * 0.8,
+        fill: 'black',
+        maxWidth: viewRadius * 2 * 0.8,
         center: Vector2.ZERO
       } );
       CASConstants.PLOT_TYPE_PROPERTY.link( plotType => {
@@ -125,14 +126,14 @@ class CASObjectNode extends Node {
 
       // Prevent dragging or interaction while the object is animating
       Property.multilink( [ casObject.animationModeProperty, casObject.valueProperty ], ( mode, value ) => {
-        const isPickable = value !== null && mode === 'none';
+        const isPickable = value !== null && mode === AnimationMode.NONE;
         this.cursor = isPickable ? 'pointer' : null;
         this.pickable = isPickable;
-        } );
+      } );
     }
 
     // show or hide the median highlight
-    Property.multilink( [ casObject.isMedianObjectProperty, isShowingBottomMedianProperty ],
+    Property.multilink( [ casObject.isMedianObjectProperty, isShowingPlayAreaMedianProperty ],
       ( isMedianObject, isShowingBottomMedian ) => {
         medianHighlight.visible = isMedianObject && isShowingBottomMedian && options.objectViewType !== CASObjectType.DOT;
       } );
@@ -141,7 +142,7 @@ class CASObjectNode extends Node {
     // they don't look like part of the data set, but still look kickable.
     Property.multilink( [ casObject.valueProperty, casObject.animationModeProperty ],
       ( value: number | null, animationMode: AnimationMode ) => {
-        this.opacity = value === null && animationMode === 'none' && !casObject.isFirstObject ? 0.4 : 1;
+        this.opacity = value === null && animationMode === AnimationMode.NONE && !casObject.isFirstObject ? 0.4 : 1;
       } );
 
     // isShowingAnimationHighlightProperty

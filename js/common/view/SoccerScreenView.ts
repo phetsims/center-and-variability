@@ -24,10 +24,10 @@ import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
 import SoccerPlayer from '../model/SoccerPlayer.js';
 import NumberLineNode from './NumberLineNode.js';
 
-type SoccerScreenViewSelfOptions = {
+type SelfOptions = {
   questionBarOptions: QuestionBarOptions
 };
-export type SoccerScreenViewOptions = SoccerScreenViewSelfOptions & CASScreenViewOptions;
+export type SoccerScreenViewOptions = SelfOptions & CASScreenViewOptions;
 
 // constants
 const GROUND_POSITION_Y = 500;
@@ -48,7 +48,7 @@ class SoccerScreenView extends CASScreenView {
 
     // The ground is at y=0
     const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
-      new Bounds2( model.range.min, 0, model.range.max, model.range.getLength() ),
+      new Bounds2( model.physicalRange.min, 0, model.physicalRange.max, model.physicalRange.getLength() ),
       new Bounds2( NUMBER_LINE_MARGIN_X, GROUND_POSITION_Y - chartViewWidth, NUMBER_LINE_MARGIN_X + chartViewWidth, GROUND_POSITION_Y )
     );
 
@@ -59,10 +59,10 @@ class SoccerScreenView extends CASScreenView {
     this.contentLayer.addChild( new BackgroundNode( GROUND_POSITION_Y, this.visibleBoundsProperty ) );
 
     this.playAreaNumberLineNode = new NumberLineNode(
-      model.range,
+      model.physicalRange,
       chartViewWidth,
       model.meanValueProperty,
-      model.isShowingBottomMeanProperty,
+      model.isShowingPlayAreaMeanProperty,
       model.dataRangeProperty, {
         tandem: options.tandem.createTandem( 'playAreaNumberLineNode' ),
         x: NUMBER_LINE_MARGIN_X,

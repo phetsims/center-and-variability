@@ -2,7 +2,6 @@
 
 /**
  * Ways a SoccerPlayer can be posed as part of the animation lifecycle.
- * TODO: The string literal union seems to have better autocomplete.  And doesn't need an import.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

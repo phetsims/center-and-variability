@@ -15,27 +15,26 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import PlotType from '../model/PlotType.js';
 import CASConstants from '../CASConstants.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 
 class GlobalOptionsNode extends VBox {
   private disposeGlobalOptionsNode: () => void;
 
-  // TODO: Tandem in the options?
+  // TODO: Tandem in the options?  And use tandem in the file?
   constructor( tandem: Tandem ) {
 
-    // TODO: Use translated strings
-    const title = new Text( 'Plot Type', {
+    const title = new Text( centerAndSpreadStrings.plotType, {
       font: new PhetFont( 24 )
     } );
 
     const TEXT_OPTIONS = {
       font: new PhetFont( 18 )
     };
-    // TODO: Use translated strings
     const radioButtonGroup = new VerticalAquaRadioButtonGroup<PlotType>( CASConstants.PLOT_TYPE_PROPERTY, [ {
-      node: new Text( 'Line Plot', TEXT_OPTIONS ),
+      node: new Text( centerAndSpreadStrings.linePlot, TEXT_OPTIONS ),
       value: PlotType.LINE_PLOT
     }, {
-      node: new Text( 'Dot Plot', TEXT_OPTIONS ),
+      node: new Text( centerAndSpreadStrings.dotPlot, TEXT_OPTIONS ),
       value: PlotType.DOT_PLOT
     } ] );
 

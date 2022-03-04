@@ -8,7 +8,7 @@
  */
 
 import centerAndSpread from '../../centerAndSpread.js';
-import { Color, Node, NodeOptions, Path, Text } from '../../../../scenery/js/imports.js';
+import { Node, NodeOptions, Path, Text } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
@@ -25,12 +25,13 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
+import CASConstants from '../CASConstants.js';
 
-type NumberLineNodeSelfOptions = {
+type SelfOptions = {
   color?: PaintDef;
   includeXAxis?: boolean;
 };
-export type NumberLineNodeOptions = NumberLineNodeSelfOptions & NodeOptions & RequiredTandem;
+export type NumberLineNodeOptions = SelfOptions & NodeOptions & RequiredTandem;
 
 class NumberLineNode extends Node {
 
@@ -43,8 +44,8 @@ class NumberLineNode extends Node {
     providedOptions?: NumberLineNodeOptions
   ) {
 
-    const options = optionize<NumberLineNodeOptions, NumberLineNodeSelfOptions, NodeOptions>( {
-      color: Color.WHITE,
+    const options = optionize<NumberLineNodeOptions, SelfOptions, NodeOptions>( {
+      color: 'white',
       includeXAxis: false,
       tandem: Tandem.REQUIRED
     }, providedOptions );
@@ -138,7 +139,9 @@ class NumberLineNode extends Node {
       .close();
 
     return new Path( TRIANGLE_SHAPE, {
-      fill: CASColors.meanColorProperty
+      fill: CASColors.meanColorProperty,
+      stroke: CASColors.arrowStrokeProperty,
+      lineWidth: CASConstants.ARROW_LINE_WIDTH
     } );
   }
 }

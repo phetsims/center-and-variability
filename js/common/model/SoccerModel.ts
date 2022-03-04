@@ -25,9 +25,10 @@ import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import { AnimationMode } from './AnimationMode.js';
 
-type SoccerModelSelfOptions = {};
-type SoccerModelOptions = SoccerModelSelfOptions & CASModelOptions;
+type SelfOptions = {};
+type SoccerModelOptions = SelfOptions & CASModelOptions;
 
 // constants
 const TIME_BETWEEN_RAPID_KICKS = 0.5; // in seconds
@@ -52,7 +53,7 @@ class SoccerModel extends CASModel {
 
   constructor( maxNumberOfBalls: number, options: SoccerModelOptions ) {
 
-    options = optionize<SoccerModelOptions, SoccerModelSelfOptions, CASModelOptions>( {
+    options = optionize<SoccerModelOptions, SelfOptions, CASModelOptions>( {
       tandem: Tandem.REQUIRED
     }, options );
 
@@ -96,6 +97,18 @@ class SoccerModel extends CASModel {
       numberOfRemainingKickableObjects => numberOfRemainingKickableObjects > 0 );
 
     this.currentDistribution = SoccerModel.chooseDistribution();
+
+    this.objectValueBecameNonNullEmitter.addListener( casObject => {
+
+      // If the soccer player that kicked that ball was still in line when the ball lands, they can leave the line now.
+      if ( this.soccerPlayerGroup.includes( this.ballPlayerMap.get( casObject )! ) ) {
+        this.advanceLine();
+      }
+
+      if ( this.numberOfRemainingObjectsProperty.value > 0 && this.nextBallToKickProperty.value === null ) {
+        this.nextBallToKickProperty.value = this.createBall();
+      }
+    } );
   }
 
   static chooseDistribution(): number[] {
@@ -111,10 +124,7 @@ class SoccerModel extends CASModel {
     const position = new Vector2( 0, y0 );
 
     const casObject = this.createObject( {
-      position: position,
-
-      // TODO: should be a default if it isnt already
-      velocity: Vector2.ZERO
+      position: position
     } );
 
     casObject.valueProperty.link( ( value, oldValue ) => {
@@ -139,7 +149,7 @@ class SoccerModel extends CASModel {
       const targetPositionY = ( index + 1 ) * diameter + casObject.objectType.radius;
       const positionYProperty = new NumberProperty( casObject.positionProperty.value.y );
 
-      // TODO: Use casObject.positionProperty in the Animation
+      // TODO: Use casObject.positionProperty in the Animation?
       positionYProperty.link( positionY => {
         casObject.positionProperty.value = new Vector2( casObject.positionProperty.value.x, positionY );
       } );
@@ -197,7 +207,7 @@ class SoccerModel extends CASModel {
 
     const weights = this.currentDistribution;
 
-    assert && assert( weights.length === this.range.getLength() + 1, 'weight array should match the model range' );
+    assert && assert( weights.length === this.physicalRange.getLength() + 1, 'weight array should match the model range' );
     const x1 = dotRandom.sampleProbabilities( weights ) + 1;
 
     // Range equation is R=v0^2 sin(2 theta0) / g, see https://openstax.org/books/university-physics-volume-1/pages/4-3-projectile-motion
@@ -211,7 +221,7 @@ class SoccerModel extends CASModel {
 
     casObject.targetX = x1;
 
-    casObject.animationModeProperty.value = 'flying';
+    casObject.animationModeProperty.value = AnimationMode.FLYING;
     this.timeWhenLastBallWasKickedProperty.value = this.timeProperty.value;
 
     // New ball will be created later in step
@@ -266,19 +276,6 @@ class SoccerModel extends CASModel {
     }
   }
 
-  protected objectValueBecameNonNull( casObject: CASObject ): void {
-    super.objectValueBecameNonNull( casObject );
-
-    // If the soccer player that kicked that ball was still in line when the ball lands, they can leave the line now.
-    if ( this.soccerPlayerGroup.includes( this.ballPlayerMap.get( casObject )! ) ) {
-      this.advanceLine();
-    }
-
-    if ( this.numberOfRemainingObjectsProperty.value > 0 && this.nextBallToKickProperty.value === null ) {
-      this.nextBallToKickProperty.value = this.createBall();
-    }
-  }
-
   // When a ball lands, or when the next player is supposed to kick (before the ball lands), move the line forward
   private advanceLine(): void {
 
@@ -309,7 +306,10 @@ class SoccerModel extends CASModel {
     this.timeWhenLastBallWasKickedProperty.reset();
     this.ballPlayerMap.clear();
     this.soccerPlayerGroup.clear();
-    super.clearData(); // TODO: SR: super.clearData() is called multiple times from reset.
+
+    // TODO: SR: super.clearData() is called multiple times from reset.
+    // SR: This could be split up, but in my opinion it is clear and safe.  Maybe best to call it twice
+    super.clearData();
 
     this.populateSoccerPlayerGroup();
     this.nextBallToKickProperty.value = this.createBall();

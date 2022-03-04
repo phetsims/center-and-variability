@@ -27,16 +27,16 @@ import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import PredictionNode from './PredictionNode.js';
 import CASColors from '../CASColors.js';
 
-type CASScreenViewSelfOptions = {
+type SelfOptions = {
   topCheckboxPanelOptions?: boolean;
   bottomCheckboxPanelOptions?: boolean;
 };
-export type CASScreenViewOptions = CASScreenViewSelfOptions & ScreenViewOptions;
+export type CASScreenViewOptions = SelfOptions & ScreenViewOptions;
 
 class CASScreenView extends ScreenView {
 
-  readonly topCheckboxPanel: TopRepresentationCheckboxGroup; // TODO: can these be private or protected?
-  readonly bottomCheckboxPanel: BottomRepresentationCheckboxGroup;
+  protected readonly topCheckboxPanel: TopRepresentationCheckboxGroup;
+  protected readonly bottomCheckboxPanel: BottomRepresentationCheckboxGroup;
 
   protected readonly resetAllButton: ResetAllButton;
   protected readonly modelViewTransform: ModelViewTransform2;
@@ -47,7 +47,11 @@ class CASScreenView extends ScreenView {
   protected readonly backObjectLayer: Node;
   protected readonly playAreaMedianIndicatorNode: ArrowNode;
   protected readonly eraserButton: EraserButton;
+
+  // Subclasses use this to add to for correct z-ordering and correct tab navigation order
+  // TODO: investigate if this is needed
   protected readonly contentLayer: Node;
+
   protected readonly medianPredictionNode: PredictionNode;
   protected readonly meanPredictionNode: PredictionNode;
 
@@ -62,7 +66,7 @@ class CASScreenView extends ScreenView {
     this.model = model;
 
     const objectNodeGroup = new PhetioGroup<CASObjectNode, [ CASObject ]>( ( tandem, casObject ) => {
-      return new CASObjectNode( casObject, model.isShowingBottomMedianProperty, modelViewTransform, {
+      return new CASObjectNode( casObject, model.isShowingPlayAreaMedianProperty, modelViewTransform, {
         tandem: tandem
       } );
     }, [ model.objectGroup.archetype ], {
@@ -71,8 +75,6 @@ class CASScreenView extends ScreenView {
       supportsDynamicState: false
     } );
 
-    // Subclasses use this to add to for correct z-ordering and correct tab navigation order
-    // TODO: investigate if this is needed
     this.contentLayer = new Node();
     this.backObjectLayer = new Node();
 
@@ -109,13 +111,19 @@ class CASScreenView extends ScreenView {
     this.bottomCheckboxPanel = new BottomRepresentationCheckboxGroup( model, options.bottomCheckboxPanelOptions );
     this.addChild( this.bottomCheckboxPanel );
 
-    // Play area median indicator.  TODO: Separate class?
-    this.playAreaMedianIndicatorNode = new ArrowNode( 0, 0, 0, 35, { fill: CASColors.medianColorProperty, stroke: null } );
+    // TODO: Separate class?
+    this.playAreaMedianIndicatorNode = new ArrowNode( 0, 0, 0, 27, {
+      fill: CASColors.medianColorProperty,
+      stroke: CASColors.arrowStrokeProperty,
+      lineWidth: CASConstants.ARROW_LINE_WIDTH,
+      headHeight: 12,
+      headWidth: 18
+    } );
     this.addChild( this.playAreaMedianIndicatorNode );
 
     const updateMedianNode = () => {
       const medianValue = model.medianValueProperty.value;
-      const visible = medianValue !== null && model.isShowingBottomMedianProperty.value;
+      const visible = medianValue !== null && model.isShowingPlayAreaMedianProperty.value;
 
       if ( visible ) {
 
@@ -132,15 +140,15 @@ class CASScreenView extends ScreenView {
     };
     model.medianValueProperty.link( updateMedianNode );
     model.objectChangedEmitter.addListener( updateMedianNode );
-    model.isShowingBottomMedianProperty.link( updateMedianNode );
+    model.isShowingPlayAreaMedianProperty.link( updateMedianNode );
 
-    this.medianPredictionNode = new PredictionNode( model.medianPredictionProperty, this.modelViewTransform, model.range, {
+    this.medianPredictionNode = new PredictionNode( model.medianPredictionProperty, this.modelViewTransform, model.physicalRange, {
       center: this.layoutBounds.center,
       tandem: options.tandem.createTandem( 'medianPredictionNode' ),
       color: CASColors.medianColorProperty,
       roundToInterval: 0.5
     } );
-    this.meanPredictionNode = new PredictionNode( model.meanPredictionProperty, this.modelViewTransform, model.range, {
+    this.meanPredictionNode = new PredictionNode( model.meanPredictionProperty, this.modelViewTransform, model.physicalRange, {
       center: this.layoutBounds.center,
       tandem: options.tandem.createTandem( 'meanPredictionNode' ),
       color: CASColors.meanColorProperty,

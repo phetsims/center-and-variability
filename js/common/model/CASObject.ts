@@ -24,15 +24,16 @@ import Property from '../../../../axon/js/Property.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import { AnimationMode } from './AnimationMode.js';
+import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 
-type CASObjectSelfOptions = {
+type SelfOptions = {
   position?: Vector2;
   velocity?: Vector2;
   value?: number | null;
   isFirstObject?: boolean;
 };
 export type CASObjectOptions =
-  CASObjectSelfOptions
+  SelfOptions
   & PhetioObjectOptions
   & RequiredTandem;
 
@@ -62,7 +63,7 @@ class CASObject extends PhetioObject {
 
   constructor( objectType: CASObjectType, providedOptions: CASObjectOptions ) {
 
-    const options = optionize<CASObjectOptions, CASObjectSelfOptions, PhetioObjectOptions>( {
+    const options = optionize<CASObjectOptions, SelfOptions, PhetioObjectOptions>( {
       position: Vector2.ZERO,
       velocity: Vector2.ZERO,
       tandem: Tandem.REQUIRED,
@@ -87,7 +88,7 @@ class CASObject extends PhetioObject {
               options.tandem.createTandem( 'velocityProperty' ) :
               Tandem.OPT_OUT
     } );
-    this.animationModeProperty = new Property<AnimationMode>( 'none', {
+    this.animationModeProperty = new EnumerationProperty( AnimationMode.NONE, {
       tandem: options.tandem.createTandem( 'animationModeProperty' )
     } );
     this.dragPositionProperty = new Vector2Property( options.position );
@@ -105,7 +106,7 @@ class CASObject extends PhetioObject {
   }
 
   step( dt: number ): void {
-    if ( this.animationModeProperty.value === 'flying' ) {
+    if ( this.animationModeProperty.value === AnimationMode.FLYING ) {
 
       assert && assert( this.targetX !== null, 'targetX should be non-null when animating' );
 
@@ -130,7 +131,7 @@ class CASObject extends PhetioObject {
       this.positionProperty.value = new Vector2( x, y );
 
       if ( landed ) {
-        this.animationModeProperty.value = 'none';
+        this.animationModeProperty.value = AnimationMode.NONE;
       }
     }
   }

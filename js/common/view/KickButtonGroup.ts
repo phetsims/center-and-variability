@@ -17,9 +17,10 @@ import CASColors from '../CASColors.js';
 import SoccerModel from '../model/SoccerModel.js';
 import CASConstants from '../CASConstants.js';
 import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
+import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 
-type KickButtonGroupSelfOptions = {};
-export type KickButtonGroupOptions = KickButtonGroupSelfOptions & VBoxOptions & RequiredTandem;
+type SelfOptions = {};
+export type KickButtonGroupOptions = SelfOptions & VBoxOptions & RequiredTandem;
 
 // constants
 const TEXT_MAX_WIDTH = 80;
@@ -28,7 +29,7 @@ class KickButtonGroup extends VBox {
 
   constructor( model: SoccerModel, providedOptions?: KickButtonGroupOptions ) {
 
-    const options = optionize<KickButtonGroupOptions, KickButtonGroupSelfOptions, VBoxOptions>( {
+    const options = optionize<KickButtonGroupOptions, SelfOptions, VBoxOptions>( {
       spacing: 2,
       tandem: Tandem.REQUIRED
     }, providedOptions );
@@ -51,7 +52,8 @@ class KickButtonGroup extends VBox {
 
       if ( multikick ) {
         model.numberOfRemainingKickableSoccerBallsProperty.link( numberOfRemainingKickableObjects => {
-          content.text.text = 'Kick ' + Math.max( Math.min( numberOfRemainingKickableObjects, numberToKick ), 1 );
+          const value = Math.max( Math.min( numberOfRemainingKickableObjects, numberToKick ), 1 );
+          content.text.text = StringUtils.fillIn( centerAndSpreadStrings.kickValue, { value: value } );
         } );
       }
 
@@ -76,8 +78,8 @@ class KickButtonGroup extends VBox {
     const kick5ButtonTandem = options.tandem.createTandem( 'kickFiveButton' );
 
     // Create labels first so their sizes can be aligned
-    const kick1Label = createLabel( centerAndSpreadStrings.kick1, kick1ButtonTandem.createTandem( 'labelNode' ) );
-    const kick5Label = createLabel( centerAndSpreadStrings.kick5, kick5ButtonTandem.createTandem( 'labelNode' ) );
+    const kick1Label = createLabel( StringUtils.fillIn( centerAndSpreadStrings.kickValue, { value: 1 } ), kick1ButtonTandem.createTandem( 'labelNode' ) );
+    const kick5Label = createLabel( StringUtils.fillIn( centerAndSpreadStrings.kickValue, { value: 5 } ), kick5ButtonTandem.createTandem( 'labelNode' ) );
 
     options.children = [
       createKickButton( kick1Label, kick1ButtonTandem, 1, false ),

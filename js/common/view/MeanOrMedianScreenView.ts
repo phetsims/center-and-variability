@@ -15,23 +15,25 @@ import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 import CASAccordionBox from '../../common/view/CASAccordionBox.js';
 import CASConstants from '../../common/CASConstants.js';
 import CardNodeContainer from '../../common/view/CardNodeContainer.js';
-import DotPlotNode from './DotPlotNode.js';
+import CASPlotNode from './CASPlotNode.js';
 import SoccerModel from '../model/SoccerModel.js';
 import ValueReadoutsNode from './ValueReadoutsNode.js';
-import { ManualConstraint, Text } from '../../../../scenery/js/imports.js';
+import { Node, ManualConstraint, Text } from '../../../../scenery/js/imports.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import PlotType from '../model/PlotType.js';
+import ScreenView from '../../../../joist/js/ScreenView.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 
-type MeanOrMedianScreenSelfOptions = {
+type SelfOptions = {
   isMedianScreen: boolean;
 };
-export type MeanOrMedianScreenViewOptions = MeanOrMedianScreenSelfOptions & SoccerScreenViewOptions;
+export type MeanOrMedianScreenViewOptions = SelfOptions & SoccerScreenViewOptions;
 
 class MeanOrMedianScreenView extends SoccerScreenView {
   private readonly accordionBox: CASAccordionBox;
 
-  // TODO: need reset, but may want to make an interface for a resettable Node
-  protected readonly accordionBoxContents: CardNodeContainer | DotPlotNode;
+  // TODO: SR asks: is this pattern OK for indicating a node that can be cleared and reset?
+  protected readonly accordionBoxContents: Node & { clear: () => void; reset: () => void; };
 
   constructor( model: SoccerModel, providedOptions: MeanOrMedianScreenViewOptions ) {
 
@@ -51,8 +53,8 @@ class MeanOrMedianScreenView extends SoccerScreenView {
       } );
     }
     else {
-      this.accordionBoxContents = new DotPlotNode( this.model, this.chartViewWidth, {
-        tandem: accordionBoxTandem.createTandem( 'dotPlotNode' )
+      this.accordionBoxContents = new CASPlotNode( this.model, this.chartViewWidth, {
+        tandem: accordionBoxTandem.createTandem( 'plotNode' )
       } );
     }
 
@@ -61,15 +63,14 @@ class MeanOrMedianScreenView extends SoccerScreenView {
       maxWidth: 300
     } );
 
-    // TODO: medianScreen should not need a link here
-    CASConstants.PLOT_TYPE_PROPERTY.link( plotType => {
-      if ( options.isMedianScreen ) {
-        titleNode.text = centerAndSpreadStrings.distanceInMeters;
-      }
-      else {
+    if ( options.isMedianScreen ) {
+      titleNode.text = centerAndSpreadStrings.distanceInMeters;
+    }
+    else {
+      CASConstants.PLOT_TYPE_PROPERTY.link( plotType => {
         titleNode.text = plotType === PlotType.LINE_PLOT ? centerAndSpreadStrings.linePlot : centerAndSpreadStrings.dotPlot;
-      }
-    } );
+      } );
+    }
 
     this.accordionBox = new CASAccordionBox( this.model, this.accordionBoxContents, this.topCheckboxPanel,
       titleNode,
@@ -112,6 +113,20 @@ class MeanOrMedianScreenView extends SoccerScreenView {
     super.reset();
     this.accordionBoxContents.reset();
     this.accordionBox.reset();
+  }
+
+  /**
+   * Floating layout that keeps the ground near the ground, and accordion box near the question bar
+   */
+  layout( viewBounds: Bounds2 ): void {
+
+    // TODO: Duplicates effort with the parent implementation
+    this.matrix = ScreenView.getLayoutMatrix( this.layoutBounds, viewBounds, {
+      verticalAlign: 'bottom'
+    } );
+    this.visibleBoundsProperty.value = this.parentToLocalBounds( viewBounds );
+
+    this.accordionBox.top = this.questionBar.bottom + CASConstants.SCREEN_VIEW_Y_MARGIN;
   }
 }
 

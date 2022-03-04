@@ -27,7 +27,7 @@ import Panel from '../../../../sun/js/Panel.js';
 import CASConstants from '../CASConstants.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
-import MedianBarsNode from './MedianBarsNode.js';
+import MedianBarNode from './MedianBarNode.js';
 import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 import CASColors from '../CASColors.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
@@ -44,26 +44,37 @@ import AsyncCounter from '../model/AsyncCounter.js';
 const CARD_SPACING = 10;
 const getCardPositionX = ( index: number ) => index * ( CardNode.CARD_WIDTH + CARD_SPACING );
 
-type CardNodeContainerSelfOptions = {};
-export type CardNodeContainerOptions = CardNodeContainerSelfOptions & NodeOptions & RequiredTandem;
+type SelfOptions = {};
+export type CardNodeContainerOptions = SelfOptions & NodeOptions & RequiredTandem;
 
 class CardNodeContainer extends Node {
+
+  // Each card is associated with one "cell", no two cards can be associated with the same cell.  The leftmost cell is 0.
+  // The cells linearly map to locations across the screen.
   readonly cardNodeCells: CardNode[];
+
+  // Fires if the cardNodeCells may have changed
   readonly cardNodeCellsChangedEmitter: Emitter<[]>;
 
   private readonly model: CASModel;
   private readonly cardNodeGroup: PhetioGroup<CardNode, [ CardModel ]>;
-  private readonly medianBarsNode: MedianBarsNode;
+  private readonly medianBarNode: MedianBarNode;
   private readonly dragIndicatorArrowNode: ArrowNode;
+
+  // TODO-UX: maybe this should be converted to track distance for individual cards
+  // Accumulated card drag distance, for purposes of hiding the drag indicator node
   private readonly totalDragDistanceProperty: NumberProperty;
+
+  // Indicates whether the user has ever dragged a card. It's used to hide the drag indicator arrow after
+  // the user dragged a card
   private readonly hasDraggedCardProperty: IReadOnlyProperty<boolean>;
   private readonly cardLayer: Node;
   private isReadyForCelebration: boolean;
-  private remainingCelebrationAnimations: ( () => void )[]
+  private remainingCelebrationAnimations: ( () => void )[];
 
   constructor( model: CASModel, providedOptions: CardNodeContainerOptions ) {
 
-    const options = optionize<CardNodeContainerOptions, CardNodeContainerSelfOptions, NodeOptions>( {
+    const options = optionize<CardNodeContainerOptions, SelfOptions, NodeOptions>( {
       tandem: Tandem.REQUIRED,
       phetioType: CardNodeContainerIO,
       phetioState: true
@@ -72,20 +83,9 @@ class CardNodeContainer extends Node {
     super( options );
 
     this.model = model;
-
-    // Each card is associated with one "cell", no two cards can be associated with the same cell.  The leftmost cell is 0.
-    // The cells linearly map to locations across the screen.
     this.cardNodeCells = [];
-
-    // Fires if the cardNodeCells may have changed
     this.cardNodeCellsChangedEmitter = new Emitter<[]>();
-
-    // TODO-UX: maybe this should be converted to track distance for individual cards
-    // Accumulated card drag distance, for purposes of hiding the drag indicator node
     this.totalDragDistanceProperty = new NumberProperty( 0 );
-
-    // Indicates whether the user has ever dragged a card. It's used to hide the drag indicator arrow after
-    // the user dragged a card
     this.hasDraggedCardProperty = new DerivedProperty( [ this.totalDragDistanceProperty ], totalDragDistance => {
       return totalDragDistance > 15;
     } );
@@ -102,11 +102,11 @@ class CardNodeContainer extends Node {
       supportsDynamicState: false
     } );
 
-    this.medianBarsNode = new MedianBarsNode( {
+    this.medianBarNode = new MedianBarNode( {
       notchDirection: 'up',
       barStyle: 'split'
     } );
-    this.addChild( this.medianBarsNode );
+    this.addChild( this.medianBarNode );
 
     const objectCreatedListener = ( casObject: CASObject ) => {
 
@@ -220,8 +220,8 @@ class CardNodeContainer extends Node {
       pickable: false,
       doubleHead: true,
       fill: CASColors.dragIndicatorColorProperty,
-      stroke: 'black',
-      lineWidth: 1,
+      stroke: CASColors.arrowStrokeProperty,
+      lineWidth: CASConstants.ARROW_LINE_WIDTH,
       tandem: options.tandem.createTandem( 'dragIndicatorArrowNode' )
     } );
 
@@ -269,11 +269,10 @@ class CardNodeContainer extends Node {
 
       const leftmostCard = this.cardNodeCells[ 0 ];
 
-      const MARGIN_X = CARD_SPACING / 2 - MedianBarsNode.HALF_SPLIT_WIDTH;
+      const MARGIN_X = CARD_SPACING / 2 - MedianBarNode.HALF_SPLIT_WIDTH;
       const MARGIN_Y = 5;
 
       // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card
-
       if ( model.isShowingTopMedianProperty.value && this.isDataSorted() && leftmostCard ) {
         const barY = leftmostCard.bottom + MARGIN_Y;
 
@@ -281,10 +280,10 @@ class CardNodeContainer extends Node {
         const left = getCardPositionX( 0 ) - MARGIN_X;
         const right = getCardPositionX( this.cardNodeCells.length - 1 ) + rightmostCard.width + MARGIN_X;
 
-        this.medianBarsNode.setMedianBarsShape( barY, left, ( left + right ) / 2, right, false );
+        this.medianBarNode.setMedianBarShape( barY, left, ( left + right ) / 2, right, false );
       }
       else {
-        this.medianBarsNode.clear();
+        this.medianBarNode.clear();
       }
 
       if ( leftmostCard ) {
@@ -374,7 +373,6 @@ class CardNodeContainer extends Node {
       const scaleProperty = new NumberProperty( initialScale );
       scaleProperty.link( scale => cardNode.setScaleMagnitude( scale ) );
 
-      // TODO: Use Animation.then
       const scaleUpAnimation = new Animation( {
         duration: 0.2,
         targets: [ {
@@ -389,19 +387,18 @@ class CardNodeContainer extends Node {
       };
       scaleUpAnimation.updateEmitter.addListener( updatePosition );
 
-      scaleUpAnimation.endedEmitter.addListener( () => {
-        const scaleDownAnimation = new Animation( {
-          duration: 0.2,
-          targets: [ {
-            property: scaleProperty,
-            to: initialScale,
-            easing: Easing.QUADRATIC_IN_OUT
-          } ]
-        } );
-        scaleDownAnimation.updateEmitter.addListener( updatePosition );
-        scaleDownAnimation.endedEmitter.addListener( () => asyncCounter.increment() );
-        scaleDownAnimation.start();
+      const scaleDownAnimation = new Animation( {
+        duration: 0.2,
+        targets: [ {
+          property: scaleProperty,
+          to: initialScale,
+          easing: Easing.QUADRATIC_IN_OUT
+        } ]
       } );
+      scaleDownAnimation.updateEmitter.addListener( updatePosition );
+      scaleDownAnimation.endedEmitter.addListener( () => asyncCounter.increment() );
+
+      scaleUpAnimation.then( scaleDownAnimation );
 
       scaleUpAnimation.start();
     } );

@@ -15,34 +15,33 @@ import CASModel from '../model/CASModel.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 import CASConstants from '../CASConstants.js';
 import NumberLineNode from './NumberLineNode.js';
-import MedianBarsNode, { MedianBarsNodeOptions } from './MedianBarsNode.js';
+import MedianBarNode, { MedianBarNodeOptions } from './MedianBarNode.js';
 import CASColors from '../CASColors.js';
 
-type TopRepresentationCheckboxGroupSelfOptions = {
+type SelfOptions = {
   includeSortData?: boolean;
   includeMedian?: boolean;
   includeMean?: boolean;
-  medianBarIconOptions: MedianBarsNodeOptions;
+  medianBarIconOptions: MedianBarNodeOptions;
   showMedianCheckboxIcon: boolean;
 };
-export type TopRepresentationCheckboxGroupOptions =
-  TopRepresentationCheckboxGroupSelfOptions
-  & VerticalCheckboxGroupOptions;
+export type TopRepresentationCheckboxGroupOptions = SelfOptions & VerticalCheckboxGroupOptions;
 
 // constants
 const ICON_WIDTH = 24;
 
-// TODO: Unify with line with in MedianBarsNode?
+// TODO: Unify with line with in MedianBarNode?
 const LINE_WIDTH = 2;
 const TEXT_OPTIONS = {
-  font: CASConstants.BUTTON_FONT
+  font: CASConstants.BUTTON_FONT,
+  maxWidth: CASConstants.CHECKBOX_TEXT_MAX_WIDTH
 };
 
 class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
   constructor( model: CASModel, providedOptions?: TopRepresentationCheckboxGroupOptions ) {
 
-    const options = optionize<TopRepresentationCheckboxGroupOptions, TopRepresentationCheckboxGroupSelfOptions, VerticalCheckboxGroupOptions>( {
+    const options = optionize<TopRepresentationCheckboxGroupOptions, SelfOptions, VerticalCheckboxGroupOptions>( {
       includeSortData: false,
       includeMean: true,
       includeMedian: true
@@ -55,6 +54,7 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
     } );
     options.includeMean && items.push( {
       node: new HBox( {
+
         // TODO: align icons
         spacing: 24.5,
         children: [
@@ -82,8 +82,8 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
         children: [
           new Text( centerAndSpreadStrings.median, TEXT_OPTIONS ),
           ...options.showMedianCheckboxIcon ? [
-            new MedianBarsNode( options.medianBarIconOptions )
-              .setMedianBarsShape( 0, 0, ICON_WIDTH / 2 - LINE_WIDTH / 2, ICON_WIDTH - LINE_WIDTH, true )
+            new MedianBarNode( options.medianBarIconOptions )
+              .setMedianBarShape( 0, 0, ICON_WIDTH / 2 - LINE_WIDTH / 2, ICON_WIDTH - LINE_WIDTH, true )
           ] : []
         ]
       } ),

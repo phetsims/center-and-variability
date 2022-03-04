@@ -1,7 +1,7 @@
 // Copyright 2022, University of Colorado Boulder
 
 /**
- * Shows the dot plot on the "Mean & Median" Screen, including the legends/readouts to the left.
+ * Shows the dot plot or line plot on the "Mean & Median" Screen, including the legends/readouts to the left.
  * The plot is non-interactive.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
@@ -9,7 +9,7 @@
  */
 
 import centerAndSpread from '../../centerAndSpread.js';
-import { Color, Node, NodeOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { Node, NodeOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CASModel from '../model/CASModel.js';
@@ -20,25 +20,22 @@ import CASObjectType from '../model/CASObjectType.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import NumberLineNode from './NumberLineNode.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import MedianBarsNode from './MedianBarsNode.js';
+import MedianBarNode from './MedianBarNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 
-// constants
+type SelfOptions = {};
+export type CASPlotOptions = NodeOptions & RequiredTandem;
 
-type DotPlotNodeSelfOptions = {};
-export type DotPlotNodeOptions = NodeOptions & RequiredTandem;
-
-// TODO: Name needs to be inclusive of line plots too
-class DotPlotNode extends Node {
+class CASPlotNode extends Node {
 
   private readonly dotLayer: Node;
-  private readonly medianBarsNode: MedianBarsNode;
+  private readonly medianBarNode: MedianBarNode;
 
-  constructor( model: CASModel, numberLineWidth: number, providedOptions?: DotPlotNodeOptions ) {
+  constructor( model: CASModel, numberLineWidth: number, providedOptions?: CASPlotOptions ) {
 
-    const options = optionize<DotPlotNodeOptions, DotPlotNodeSelfOptions, NodeOptions>( {
+    const options = optionize<CASPlotOptions, SelfOptions, NodeOptions>( {
       tandem: Tandem.REQUIRED
     }, providedOptions );
 
@@ -61,17 +58,17 @@ class DotPlotNode extends Node {
     //  15 balls as the high point. Consider instead something like above, where we just base the y scaling on the height
     // of one ball.
     const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
-      new Bounds2( model.range.min, 0, model.range.max, model.range.getLength() ),
+      new Bounds2( model.physicalRange.min, 0, model.physicalRange.max, model.physicalRange.getLength() ),
       new Bounds2( 0, numberLinePositionY - numberLineWidth * yScale, 0 + numberLineWidth, numberLinePositionY )
     );
 
     const numberLineNode = new NumberLineNode(
-      model.range,
+      model.physicalRange,
       numberLineWidth,
       model.meanValueProperty,
       model.isShowingTopMeanProperty,
       model.dataRangeProperty, {
-        color: Color.BLACK,
+        color: 'black',
         includeXAxis: true,
         tandem: options.tandem.createTandem( 'numberLineNode' ),
         y: numberLinePositionY
@@ -89,7 +86,7 @@ class DotPlotNode extends Node {
     backgroundNode.addChild( this.dotLayer );
 
     const dotNodeGroup = new PhetioGroup<CASObjectNode, [ CASObject ]>( ( tandem, casObject ) => {
-      return new CASObjectNode( casObject, model.isShowingBottomMedianProperty, modelViewTransform, {
+      return new CASObjectNode( casObject, model.isShowingPlayAreaMedianProperty, modelViewTransform, {
         objectViewType: CASObjectType.DOT,
         draggingEnabled: false,
         tandem: tandem
@@ -121,11 +118,11 @@ class DotPlotNode extends Node {
       dotNodeGroup.disposeElement( viewNode );
     } );
 
-    this.medianBarsNode = new MedianBarsNode( {
+    this.medianBarNode = new MedianBarNode( {
       notchDirection: 'down',
       barStyle: 'continuous'
     } );
-    this.addChild( this.medianBarsNode );
+    this.addChild( this.medianBarNode );
 
     const updateMedianBarNode = () => {
 
@@ -138,7 +135,6 @@ class DotPlotNode extends Node {
       const MARGIN_Y = 5;
 
       // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card
-
       if ( model.isShowingTopMedianProperty.value && leftmostDot ) {
         const highestDot = _.maxBy( sortedDots, object => object.positionProperty.value.y );
         const dotRadius = Math.abs( modelViewTransform.modelToViewDeltaY( leftmostDot.objectType.radius ) );
@@ -146,17 +142,17 @@ class DotPlotNode extends Node {
         // assumes all of the dots have the same radius
         // TODO: do we need to know notch height here?
         const barY = modelViewTransform.modelToViewY( highestDot!.positionProperty.value.y ) -
-                     dotRadius - MARGIN_Y - MedianBarsNode.NOTCH_HEIGHT;
+                     dotRadius - MARGIN_Y - MedianBarNode.NOTCH_HEIGHT;
 
         const rightmostDot = sortedDots[ sortedDots.length - 1 ];
         const left = modelViewTransform.modelToViewX( leftmostDot.valueProperty.value );
         const right = modelViewTransform.modelToViewX( rightmostDot.valueProperty.value );
         const medianPositionX = modelViewTransform.modelToViewX( medianValue );
 
-        this.medianBarsNode.setMedianBarsShape( barY, left, medianPositionX, right, model.isMedianAnimationCompleteProperty.value );
+        this.medianBarNode.setMedianBarShape( barY, left, medianPositionX, right, model.isMedianAnimationCompleteProperty.value );
       }
       else {
-        this.medianBarsNode.clear();
+        this.medianBarNode.clear();
       }
     };
     model.objectChangedEmitter.addListener( updateMedianBarNode );
@@ -172,5 +168,5 @@ class DotPlotNode extends Node {
   clear() {}
 }
 
-centerAndSpread.register( 'DotPlotNode', DotPlotNode );
-export default DotPlotNode;
+centerAndSpread.register( 'CASPlotNode', CASPlotNode );
+export default CASPlotNode;

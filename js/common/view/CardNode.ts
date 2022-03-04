@@ -22,13 +22,17 @@ import CardModel from '../model/CardModel.js';
 import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 
-type CardNodeSelfOptions = {};
-export type CardNodeOptions = CardNodeSelfOptions & NodeOptions & RequiredTandem;
+type SelfOptions = {};
+export type CardNodeOptions = SelfOptions & NodeOptions & RequiredTandem;
 
 class CardNode extends Node {
   readonly positionProperty: Vector2Property;
   readonly dragListener: DragListener;
+
+  // Emit how far the card has been dragged for purposes of hiding the drag indicator arrow when the user
+  // has dragged a sufficient amount
   readonly dragDistanceEmitter: Emitter<[ number ]>;
+
   readonly casObject: CASObject;
   animation: Animation | null;
   animationTo: Vector2 | null;
@@ -52,7 +56,7 @@ class CardNode extends Node {
       text.center = rectangle.center;
     } );
 
-    const options = optionize<CardNodeOptions, CardNodeSelfOptions, NodeOptions>( {
+    const options = optionize<CardNodeOptions, SelfOptions, NodeOptions>( {
       tandem: Tandem.REQUIRED,
       children: [ rectangle, text ],
       cursor: 'pointer'
@@ -74,8 +78,6 @@ class CardNode extends Node {
       this.translation = new Vector2( range.constrainValue( position.x ), 0 );
     } );
 
-    // Emit how far the card has been dragged for purposes of hiding the drag indicator arrow when the user
-    // has dragged a sufficient amount
     this.dragDistanceEmitter = new Emitter<[ number ]>( {
       parameters: [ { valueType: 'number' } ]
     } );

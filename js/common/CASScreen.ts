@@ -16,14 +16,14 @@ import CASModel from './model/CASModel.js';
 import CASScreenView from './view/CASScreenView.js';
 import { RequiredTandem } from '../../../tandem/js/PhetioObject.js';
 
-type CASScreenSelfOptions = {};
-export type CASScreenOptions = CASScreenSelfOptions & ScreenOptions & RequiredTandem;
+type SelfOptions = {};
+export type CASScreenOptions = SelfOptions & ScreenOptions & RequiredTandem;
 
 class CASScreen<M extends CASModel, V extends CASScreenView> extends Screen<M, V> {
 
   constructor( createModel: () => M, createView: ( m: M ) => V, providedOptions?: CASScreenOptions ) {
 
-    const options = optionize<CASScreenOptions, CASScreenSelfOptions, ScreenOptions>( {
+    const options = optionize<CASScreenOptions, SelfOptions, ScreenOptions>( {
       backgroundColorProperty: CASColors.screenBackgroundColorProperty,
       tandem: Tandem.REQUIRED
     }, providedOptions );

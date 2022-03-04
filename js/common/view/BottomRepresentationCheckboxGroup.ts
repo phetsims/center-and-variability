@@ -23,27 +23,25 @@ import PredictionNode from './PredictionNode.js';
 import CASColors from '../CASColors.js';
 import NumberLineNode from './NumberLineNode.js';
 
-type BottomRepresentationCheckboxGroupSelfOptions = {
+type SelfOptions = {
   includeMedian?: boolean;
   includeMean?: boolean;
   includePredictMean?: boolean;
   includePredictMedian?: boolean;
 };
-export type BottomRepresentationCheckboxGroupOptions =
-  BottomRepresentationCheckboxGroupSelfOptions
-  & VerticalCheckboxGroupOptions;
+export type BottomRepresentationCheckboxGroupOptions = SelfOptions & VerticalCheckboxGroupOptions;
 
 // constants
 const TEXT_OPTIONS = {
-  font: CASConstants.BUTTON_FONT
+  font: CASConstants.BUTTON_FONT,
+  maxWidth: CASConstants.CHECKBOX_TEXT_MAX_WIDTH
 };
 
-// TODO: VerticalCheckboxGroup should be TypeScript
 class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
   constructor( model: CASModel, providedOptions?: BottomRepresentationCheckboxGroupOptions ) {
 
-    const options = optionize<BottomRepresentationCheckboxGroupOptions, BottomRepresentationCheckboxGroupSelfOptions, VerticalCheckboxGroupOptions>( {
+    const options = optionize<BottomRepresentationCheckboxGroupOptions, SelfOptions, VerticalCheckboxGroupOptions>( {
       includeMean: true,
       includeMedian: true,
       includePredictMean: true,
@@ -90,21 +88,28 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
           NumberLineNode.createMeanIndicatorNode()
         ]
       } ),
-      property: model.isShowingBottomMeanProperty
+      property: model.isShowingPlayAreaMeanProperty
     } );
     options.includeMedian && items.push( {
 
       // TODO: Align group to center align the icons
       node: new HBox( {
-        spacing: 17,
+        spacing: 14,
         children: [
           new Text( centerAndSpreadStrings.median, TEXT_OPTIONS ),
 
           // TODO: Factor out?  See playAreaMedianIndicatorNode
-          new ArrowNode( 0, 0, 0, 35, { fill: CASColors.medianColorProperty, stroke: null, maxHeight: 20 } )
+          new ArrowNode( 0, 0, 0, 27, {
+            fill: CASColors.medianColorProperty,
+            stroke: CASColors.arrowStrokeProperty,
+            lineWidth: CASConstants.ARROW_LINE_WIDTH,
+            headHeight: 12,
+            headWidth: 18,
+            maxHeight: 20
+          } )
         ]
       } ),
-      property: model.isShowingBottomMedianProperty
+      property: model.isShowingPlayAreaMedianProperty
     } );
 
     super( items, options );

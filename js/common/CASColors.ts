@@ -15,7 +15,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { Color, ProfileColorProperty } from '../../../scenery/js/imports.js';
+import { ProfileColorProperty } from '../../../scenery/js/imports.js';
 import centerAndSpread from '../centerAndSpread.js';
 
 const CASColors = {
@@ -34,7 +34,7 @@ const CASColors = {
     default: '#fdd10b'
   } ),
   kickButtonFillColorProperty: new ProfileColorProperty( centerAndSpread, 'kickButtonFillColor', {
-    default: Color.WHITE
+    default: 'white'
   } ),
   dragIndicatorColorProperty: new ProfileColorProperty( centerAndSpread, 'dragIndicatorColor', {
     default: '#6bc6ff'
@@ -48,7 +48,8 @@ const CASColors = {
   groundColorProperty: new ProfileColorProperty( centerAndSpread, 'groundColor', { default: '#009245' } ),
 
   medianColorProperty: new ProfileColorProperty( centerAndSpread, 'medianColor', { default: '#f03000' } ),
-  meanColorProperty: new ProfileColorProperty( centerAndSpread, 'meanColor', { default: '#8500bd' } )
+  meanColorProperty: new ProfileColorProperty( centerAndSpread, 'meanColor', { default: '#8500bd' } ),
+  arrowStrokeProperty: new ProfileColorProperty( centerAndSpread, 'arrowStroke', { default: 'black' } )
 };
 
 centerAndSpread.register( 'CASColors', CASColors );

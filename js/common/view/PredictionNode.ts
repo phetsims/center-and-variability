@@ -19,37 +19,42 @@ import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
 import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
+import CASColors from '../CASColors.js';
+import CASConstants from '../CASConstants.js';
 
-type PredictionNodeSelfOptions = {
+type SelfOptions = {
   color: ColorDef,
 
   // Round to the nearest specified number, or, if null, there is no rounding. Mean is continuous, median is rounded to 0.5
   roundToInterval: number | null
 };
 
-export type PredictionNodeOptions = PredictionNodeSelfOptions & NodeOptions & RequiredTandem;
+export type PredictionNodeOptions = SelfOptions & NodeOptions & RequiredTandem;
 
 class PredictionNode extends Node {
 
   constructor( predictionProperty: Property<number>, modelViewTransform: ModelViewTransform2, dragRange: Range,
                providedOptions: PredictionNodeOptions ) {
 
-    const shadedSphereNode = new ShadedSphereNode( 20, {
+    const shadedSphereNode = new ShadedSphereNode( 16, {
 
       // TODO-DESIGN: This looks more orange in the mockup.  Use colorblind red?
-      mainColor: providedOptions.color
+      mainColor: providedOptions.color,
+      stroke: CASColors.arrowStrokeProperty,
+      lineWidth: CASConstants.ARROW_LINE_WIDTH
     } );
 
     // TODO-DESIGN: The mockup shows different arrowheads.
     const arrowNode = new ArrowNode( 0, 0, 0, -50, {
-      headHeight: 14,
+      headHeight: 10,
       headWidth: 14,
       tailWidth: 2,
       fill: providedOptions.color,
-      stroke: null,
+      stroke: CASColors.arrowStrokeProperty,
+      lineWidth: CASConstants.ARROW_LINE_WIDTH,
       bottomCenter: shadedSphereNode.center
     } );
-    const options = optionize<PredictionNodeOptions, PredictionNodeSelfOptions, NodeOptions>( {
+    const options = optionize<PredictionNodeOptions, SelfOptions, NodeOptions>( {
       tandem: Tandem.REQUIRED,
       children: [ arrowNode, shadedSphereNode ],
       cursor: 'pointer'
