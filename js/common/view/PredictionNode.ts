@@ -22,14 +22,14 @@ import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 import CASColors from '../CASColors.js';
 import CASConstants from '../CASConstants.js';
 
-type PredictionNodeSelfOptions = {
+type SelfOptions = {
   color: ColorDef,
 
   // Round to the nearest specified number, or, if null, there is no rounding. Mean is continuous, median is rounded to 0.5
   roundToInterval: number | null
 };
 
-export type PredictionNodeOptions = PredictionNodeSelfOptions & NodeOptions & RequiredTandem;
+export type PredictionNodeOptions = SelfOptions & NodeOptions & RequiredTandem;
 
 class PredictionNode extends Node {
 
@@ -54,7 +54,7 @@ class PredictionNode extends Node {
       lineWidth: CASConstants.ARROW_LINE_WIDTH,
       bottomCenter: shadedSphereNode.center
     } );
-    const options = optionize<PredictionNodeOptions, PredictionNodeSelfOptions, NodeOptions>( {
+    const options = optionize<PredictionNodeOptions, SelfOptions, NodeOptions>( {
       tandem: Tandem.REQUIRED,
       children: [ arrowNode, shadedSphereNode ],
       cursor: 'pointer'

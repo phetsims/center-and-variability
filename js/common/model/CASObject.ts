@@ -26,14 +26,14 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import { AnimationMode } from './AnimationMode.js';
 import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 
-type CASObjectSelfOptions = {
+type SelfOptions = {
   position?: Vector2;
   velocity?: Vector2;
   value?: number | null;
   isFirstObject?: boolean;
 };
 export type CASObjectOptions =
-  CASObjectSelfOptions
+  SelfOptions
   & PhetioObjectOptions
   & RequiredTandem;
 
@@ -63,7 +63,7 @@ class CASObject extends PhetioObject {
 
   constructor( objectType: CASObjectType, providedOptions: CASObjectOptions ) {
 
-    const options = optionize<CASObjectOptions, CASObjectSelfOptions, PhetioObjectOptions>( {
+    const options = optionize<CASObjectOptions, SelfOptions, PhetioObjectOptions>( {
       position: Vector2.ZERO,
       velocity: Vector2.ZERO,
       tandem: Tandem.REQUIRED,

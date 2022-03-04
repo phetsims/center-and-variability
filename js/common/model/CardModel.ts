@@ -17,8 +17,8 @@ import CASObjectType from './CASObjectType.js';
 
 const CASObjectReferenceIO = ReferenceIO( CASObject.CASObjectIO );
 
-type CardModelSelfOptions = {};
-type CardModelOptions = CardModelSelfOptions & PhetioObjectOptions & RequiredTandem;
+type SelfOptions = {};
+type CardModelOptions = SelfOptions & PhetioObjectOptions & RequiredTandem;
 
 class CardModel extends PhetioObject {
 
@@ -27,7 +27,7 @@ class CardModel extends PhetioObject {
 
   constructor( casObject: CASObject, providedOptions?: CardModelOptions ) {
 
-    const options = optionize<CardModelOptions, CardModelSelfOptions, PhetioObjectOptions>( {
+    const options = optionize<CardModelOptions, SelfOptions, PhetioObjectOptions>( {
       phetioType: CardModel.CardModelIO
     }, providedOptions );
 

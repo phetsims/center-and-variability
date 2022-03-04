@@ -20,12 +20,12 @@ import ValueReadoutsNode from './ValueReadoutsNode.js';
 import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 import Shape from '../../../../kite/js/Shape.js';
 
-type CASAccordionBoxSelfOptions = {
+type SelfOptions = {
   valueReadoutsNode: ValueReadoutsNode | null;
   contentNodeOffsetY: number;
 };
 export type CASAccordionBoxOptions =
-  CASAccordionBoxSelfOptions
+  SelfOptions
   & Omit<AccordionBoxOptions, 'titleNode' | 'expandedProperty'>
   & RequiredTandem;
 
@@ -41,7 +41,7 @@ class CASAccordionBox extends AccordionBox {
   constructor( model: CASModel, contentNode: Node, checkboxPanel: TopRepresentationCheckboxGroup,
                titleNode: Node, layoutBounds: Bounds2, providedOptions: CASAccordionBoxOptions ) {
 
-    const options = optionize<CASAccordionBoxOptions, CASAccordionBoxSelfOptions, AccordionBoxOptions>( {
+    const options = optionize<CASAccordionBoxOptions, SelfOptions, AccordionBoxOptions>( {
       titleAlignX: 'left',
       titleXSpacing: 8,
       cornerRadius: 6,

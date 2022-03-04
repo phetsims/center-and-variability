@@ -26,11 +26,11 @@ import timesSolidShape from '../../../../sherpa/js/fontawesome-5/timesSolidShape
 import CASConstants from '../CASConstants.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 
-type CASObjectNodeSelfOptions = {
+type SelfOptions = {
   objectViewType?: CASObjectType;
   draggingEnabled?: boolean;
 };
-export type CASObjectNodeOptions = CASObjectNodeSelfOptions & NodeOptions & RequiredTandem;
+export type CASObjectNodeOptions = SelfOptions & NodeOptions & RequiredTandem;
 
 // for debugging with ?dev
 let index = 0;
@@ -40,7 +40,7 @@ class CASObjectNode extends Node {
   constructor( casObject: CASObject, isShowingPlayAreaMedianProperty: IReadOnlyProperty<boolean>,
                modelViewTransform: ModelViewTransform2, providedOptions?: CASObjectNodeOptions ) {
 
-    const options = optionize<CASObjectNodeOptions, CASObjectNodeSelfOptions, NodeOptions>( {
+    const options = optionize<CASObjectNodeOptions, SelfOptions, NodeOptions>( {
 
       // In the Mean & Median screen and Spread screen, the objectType is SOCCER_BALL, but we render the dot plot
       // with DOT views

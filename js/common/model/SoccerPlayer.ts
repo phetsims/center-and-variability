@@ -17,9 +17,9 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import Property from '../../../../axon/js/Property.js';
 import Pose from './Pose.js';
 
-type SoccerPlayerSelfOptions = {};
+type SelfOptions = {};
 type SoccerPlayerOptions =
-  SoccerPlayerSelfOptions
+  SelfOptions
   & PhetioObjectOptions
   & RequiredTandem;
 
@@ -35,7 +35,7 @@ class SoccerPlayer extends PhetioObject {
 
   constructor( placeInLine: number, providedOptions: SoccerPlayerOptions ) {
 
-    const options = optionize<SoccerPlayerOptions, SoccerPlayerSelfOptions, PhetioObjectOptions>( {
+    const options = optionize<SoccerPlayerOptions, SelfOptions, PhetioObjectOptions>( {
       phetioType: SoccerPlayer.SoccerPlayerIO,
       tandem: Tandem.REQUIRED
     }, providedOptions );

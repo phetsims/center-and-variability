@@ -20,11 +20,11 @@ import CASConstants from '../CASConstants.js';
 
 type NotchDirection = 'up' | 'down';
 type BarStyle = 'continuous' | 'split';
-type MedianBarNodeSelfOptions = {
+type SelfOptions = {
   notchDirection: NotchDirection;
   barStyle: BarStyle;
 };
-export type MedianBarNodeOptions = MedianBarNodeSelfOptions & PathOptions;
+export type MedianBarNodeOptions = SelfOptions & PathOptions;
 
 // constants
 const LINE_WIDTH = 2;
@@ -38,7 +38,7 @@ class MedianBarNode extends Path {
 
   constructor( providedOptions: MedianBarNodeOptions ) {
 
-    const options = optionize<MedianBarNodeOptions, MedianBarNodeSelfOptions, PathOptions>( {
+    const options = optionize<MedianBarNodeOptions, SelfOptions, PathOptions>( {
       tandem: Tandem.REQUIRED,
       lineWidth: LINE_WIDTH,
       stroke: CASColors.medianColorProperty

@@ -27,8 +27,8 @@ import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import { AnimationMode } from './AnimationMode.js';
 
-type SoccerModelSelfOptions = {};
-type SoccerModelOptions = SoccerModelSelfOptions & CASModelOptions;
+type SelfOptions = {};
+type SoccerModelOptions = SelfOptions & CASModelOptions;
 
 // constants
 const TIME_BETWEEN_RAPID_KICKS = 0.5; // in seconds
@@ -53,7 +53,7 @@ class SoccerModel extends CASModel {
 
   constructor( maxNumberOfBalls: number, options: SoccerModelOptions ) {
 
-    options = optionize<SoccerModelOptions, SoccerModelSelfOptions, CASModelOptions>( {
+    options = optionize<SoccerModelOptions, SelfOptions, CASModelOptions>( {
       tandem: Tandem.REQUIRED
     }, options );
 

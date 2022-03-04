@@ -14,14 +14,14 @@ import { CASModelOptions } from '../../common/model/CASModel.js';
 import SoccerModel from '../../common/model/SoccerModel.js';
 import CASConstants from '../../common/CASConstants.js';
 
-type SpreadModelSelfOptions = {};
-type SpreadModelOptions = SpreadModelSelfOptions & CASModelOptions;
+type SelfOptions = {};
+type SpreadModelOptions = SelfOptions & CASModelOptions;
 
 class SpreadModel extends SoccerModel {
 
   constructor( options: SpreadModelOptions ) {
 
-    options = optionize<SpreadModelOptions, SpreadModelSelfOptions, CASModelOptions>( {
+    options = optionize<SpreadModelOptions, SelfOptions, CASModelOptions>( {
       tandem: Tandem.REQUIRED
     }, options );
 

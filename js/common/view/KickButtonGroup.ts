@@ -19,8 +19,8 @@ import CASConstants from '../CASConstants.js';
 import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 
-type KickButtonGroupSelfOptions = {};
-export type KickButtonGroupOptions = KickButtonGroupSelfOptions & VBoxOptions & RequiredTandem;
+type SelfOptions = {};
+export type KickButtonGroupOptions = SelfOptions & VBoxOptions & RequiredTandem;
 
 // constants
 const TEXT_MAX_WIDTH = 80;
@@ -29,7 +29,7 @@ class KickButtonGroup extends VBox {
 
   constructor( model: SoccerModel, providedOptions?: KickButtonGroupOptions ) {
 
-    const options = optionize<KickButtonGroupOptions, KickButtonGroupSelfOptions, VBoxOptions>( {
+    const options = optionize<KickButtonGroupOptions, SelfOptions, VBoxOptions>( {
       spacing: 2,
       tandem: Tandem.REQUIRED
     }, providedOptions );

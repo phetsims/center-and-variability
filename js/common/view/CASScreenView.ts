@@ -27,11 +27,11 @@ import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import PredictionNode from './PredictionNode.js';
 import CASColors from '../CASColors.js';
 
-type CASScreenViewSelfOptions = {
+type SelfOptions = {
   topCheckboxPanelOptions?: boolean;
   bottomCheckboxPanelOptions?: boolean;
 };
-export type CASScreenViewOptions = CASScreenViewSelfOptions & ScreenViewOptions;
+export type CASScreenViewOptions = SelfOptions & ScreenViewOptions;
 
 class CASScreenView extends ScreenView {
 

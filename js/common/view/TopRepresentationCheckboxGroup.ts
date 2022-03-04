@@ -18,16 +18,14 @@ import NumberLineNode from './NumberLineNode.js';
 import MedianBarNode, { MedianBarNodeOptions } from './MedianBarNode.js';
 import CASColors from '../CASColors.js';
 
-type TopRepresentationCheckboxGroupSelfOptions = {
+type SelfOptions = {
   includeSortData?: boolean;
   includeMedian?: boolean;
   includeMean?: boolean;
   medianBarIconOptions: MedianBarNodeOptions;
   showMedianCheckboxIcon: boolean;
 };
-export type TopRepresentationCheckboxGroupOptions =
-  TopRepresentationCheckboxGroupSelfOptions
-  & VerticalCheckboxGroupOptions;
+export type TopRepresentationCheckboxGroupOptions = SelfOptions & VerticalCheckboxGroupOptions;
 
 // constants
 const ICON_WIDTH = 24;
@@ -43,7 +41,7 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
   constructor( model: CASModel, providedOptions?: TopRepresentationCheckboxGroupOptions ) {
 
-    const options = optionize<TopRepresentationCheckboxGroupOptions, TopRepresentationCheckboxGroupSelfOptions, VerticalCheckboxGroupOptions>( {
+    const options = optionize<TopRepresentationCheckboxGroupOptions, SelfOptions, VerticalCheckboxGroupOptions>( {
       includeSortData: false,
       includeMean: true,
       includeMedian: true

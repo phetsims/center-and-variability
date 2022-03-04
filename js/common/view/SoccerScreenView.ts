@@ -24,10 +24,10 @@ import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
 import SoccerPlayer from '../model/SoccerPlayer.js';
 import NumberLineNode from './NumberLineNode.js';
 
-type SoccerScreenViewSelfOptions = {
+type SelfOptions = {
   questionBarOptions: QuestionBarOptions
 };
-export type SoccerScreenViewOptions = SoccerScreenViewSelfOptions & CASScreenViewOptions;
+export type SoccerScreenViewOptions = SelfOptions & CASScreenViewOptions;
 
 // constants
 const GROUND_POSITION_Y = 500;

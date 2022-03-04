@@ -14,14 +14,14 @@ import CASModel, { CASModelOptions } from '../../common/model/CASModel.js';
 import CASObjectType from '../../common/model/CASObjectType.js';
 import CASConstants from '../../common/CASConstants.js';
 
-type LabModelSelfOptions = {};
-type LabModelOptions = LabModelSelfOptions & CASModelOptions;
+type SelfOptions = {};
+type LabModelOptions = SelfOptions & CASModelOptions;
 
 class LabModel extends CASModel {
 
   constructor( options: LabModelOptions ) {
 
-    options = optionize<LabModelOptions, LabModelSelfOptions, CASModelOptions>( {
+    options = optionize<LabModelOptions, SelfOptions, CASModelOptions>( {
       tandem: Tandem.REQUIRED
     }, options );
 

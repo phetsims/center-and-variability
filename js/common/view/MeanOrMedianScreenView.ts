@@ -24,10 +24,10 @@ import PlotType from '../model/PlotType.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 
-type MeanOrMedianScreenSelfOptions = {
+type SelfOptions = {
   isMedianScreen: boolean;
 };
-export type MeanOrMedianScreenViewOptions = MeanOrMedianScreenSelfOptions & SoccerScreenViewOptions;
+export type MeanOrMedianScreenViewOptions = SelfOptions & SoccerScreenViewOptions;
 
 class MeanOrMedianScreenView extends SoccerScreenView {
   private readonly accordionBox: CASAccordionBox;

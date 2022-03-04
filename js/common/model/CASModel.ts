@@ -26,11 +26,11 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 
-type CASModelSelfOptions = {
+type SelfOptions = {
   tandem: Tandem,
   includeCards: boolean
 };
-export type CASModelOptions = CASModelSelfOptions & {};
+export type CASModelOptions = SelfOptions & {};
 
 // constants
 const HIGHLIGHT_ANIMATION_TIME_STEP = 0.25; // in seconds
@@ -76,7 +76,7 @@ class CASModel {
 
   constructor( objectType: CASObjectType, maxNumberOfObjects: number, providedOptions: CASModelOptions ) {
 
-    const options = optionize<CASModelOptions, CASModelSelfOptions, {}>( {
+    const options = optionize<CASModelOptions, SelfOptions, {}>( {
       tandem: Tandem.REQUIRED
     }, providedOptions );
 

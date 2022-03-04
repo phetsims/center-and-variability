@@ -32,8 +32,8 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Pose from '../model/Pose.js';
 
-type SoccerPlayerNodeSelfOptions = {};
-type SoccerPlayerNodeOptions = SoccerPlayerNodeSelfOptions & NodeOptions;
+type SelfOptions = {};
+type SoccerPlayerNodeOptions = SelfOptions & NodeOptions;
 
 const playerGroups = [ {
   standing: player01Standing_png,
@@ -106,7 +106,7 @@ class SoccerPlayerNode extends Node {
         modelViewTransform.modelToViewPosition( new Vector2( 0, 0 ) ).plusXY( -20 - placeInLine * SPACING, 5 + verticalAdjustment );
     } );
 
-    const options = optionize<SoccerPlayerNodeOptions, SoccerPlayerNodeSelfOptions, NodeOptions>( {}, providedOptions );
+    const options = optionize<SoccerPlayerNodeOptions, SelfOptions, NodeOptions>( {}, providedOptions );
 
     this.mutate( options );
   }

@@ -22,8 +22,8 @@ import CardModel from '../model/CardModel.js';
 import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 
-type CardNodeSelfOptions = {};
-export type CardNodeOptions = CardNodeSelfOptions & NodeOptions & RequiredTandem;
+type SelfOptions = {};
+export type CardNodeOptions = SelfOptions & NodeOptions & RequiredTandem;
 
 class CardNode extends Node {
   readonly positionProperty: Vector2Property;
@@ -52,7 +52,7 @@ class CardNode extends Node {
       text.center = rectangle.center;
     } );
 
-    const options = optionize<CardNodeOptions, CardNodeSelfOptions, NodeOptions>( {
+    const options = optionize<CardNodeOptions, SelfOptions, NodeOptions>( {
       tandem: Tandem.REQUIRED,
       children: [ rectangle, text ],
       cursor: 'pointer'

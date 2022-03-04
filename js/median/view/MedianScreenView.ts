@@ -13,16 +13,16 @@ import centerAndSpread from '../../centerAndSpread.js';
 import MedianModel from '../model/MedianModel.js';
 import CASColors from '../../common/CASColors.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
-import MeanOrMedianScreenView from '../../common/view/MeanOrMedianScreenView.js';
+import MeanOrMedianScreenView, { MeanOrMedianScreenViewOptions } from '../../common/view/MeanOrMedianScreenView.js';
 
-type MedianScreenViewSelfOptions = {};
-type MedianScreenViewOptions = MedianScreenViewSelfOptions & MedianScreenViewSelfOptions;
+type SelfOptions = {};
+type MedianScreenViewOptions = SelfOptions & MeanOrMedianScreenViewOptions;
 
 class MedianScreenView extends MeanOrMedianScreenView {
 
   constructor( model: MedianModel, providedOptions: MedianScreenViewOptions ) {
 
-    const options = optionize<MedianScreenViewOptions, MedianScreenViewSelfOptions, MedianScreenViewSelfOptions>( {
+    const options = optionize<MedianScreenViewOptions, SelfOptions, MeanOrMedianScreenViewOptions>( {
       // TODO: TypeScript is okay with not including isMedianScreen, why? Severe problem!
       isMedianScreen: true,
       questionBarOptions: {

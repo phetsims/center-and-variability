@@ -27,11 +27,11 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 import CASConstants from '../CASConstants.js';
 
-type NumberLineNodeSelfOptions = {
+type SelfOptions = {
   color?: PaintDef;
   includeXAxis?: boolean;
 };
-export type NumberLineNodeOptions = NumberLineNodeSelfOptions & NodeOptions & RequiredTandem;
+export type NumberLineNodeOptions = SelfOptions & NodeOptions & RequiredTandem;
 
 class NumberLineNode extends Node {
 
@@ -44,7 +44,7 @@ class NumberLineNode extends Node {
     providedOptions?: NumberLineNodeOptions
   ) {
 
-    const options = optionize<NumberLineNodeOptions, NumberLineNodeSelfOptions, NodeOptions>( {
+    const options = optionize<NumberLineNodeOptions, SelfOptions, NodeOptions>( {
       color: Color.WHITE,
       includeXAxis: false,
       tandem: Tandem.REQUIRED

@@ -18,8 +18,8 @@ import CASColors from '../CASColors.js';
 import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 
-type ValueReadoutsNodeSelfOptions = {};
-export type ValueReadoutNodeOptions = ValueReadoutsNodeSelfOptions & VBoxOptions;
+type SelfOptions = {};
+export type ValueReadoutNodeOptions = SelfOptions & VBoxOptions;
 
 class ValueReadoutsNode extends VBox {
 
@@ -48,7 +48,7 @@ class ValueReadoutsNode extends VBox {
     const medianText = createReadoutText( model.medianValueProperty, model.isShowingTopMedianProperty,
       centerAndSpreadStrings.medianEqualsValue, CASColors.medianColorProperty );
 
-    const options = optionize<ValueReadoutNodeOptions, ValueReadoutsNodeSelfOptions, VBoxOptions>( {
+    const options = optionize<ValueReadoutNodeOptions, SelfOptions, VBoxOptions>( {
       align: 'left',
       spacing: 4,
       excludeInvisibleChildrenFromBounds: false,

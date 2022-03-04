@@ -44,8 +44,8 @@ import AsyncCounter from '../model/AsyncCounter.js';
 const CARD_SPACING = 10;
 const getCardPositionX = ( index: number ) => index * ( CardNode.CARD_WIDTH + CARD_SPACING );
 
-type CardNodeContainerSelfOptions = {};
-export type CardNodeContainerOptions = CardNodeContainerSelfOptions & NodeOptions & RequiredTandem;
+type SelfOptions = {};
+export type CardNodeContainerOptions = SelfOptions & NodeOptions & RequiredTandem;
 
 class CardNodeContainer extends Node {
   readonly cardNodeCells: CardNode[];
@@ -59,11 +59,11 @@ class CardNodeContainer extends Node {
   private readonly hasDraggedCardProperty: IReadOnlyProperty<boolean>;
   private readonly cardLayer: Node;
   private isReadyForCelebration: boolean;
-  private remainingCelebrationAnimations: ( () => void )[]
+  private remainingCelebrationAnimations: ( () => void )[];
 
   constructor( model: CASModel, providedOptions: CardNodeContainerOptions ) {
 
-    const options = optionize<CardNodeContainerOptions, CardNodeContainerSelfOptions, NodeOptions>( {
+    const options = optionize<CardNodeContainerOptions, SelfOptions, NodeOptions>( {
       tandem: Tandem.REQUIRED,
       phetioType: CardNodeContainerIO,
       phetioState: true

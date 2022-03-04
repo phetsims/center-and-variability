@@ -14,14 +14,14 @@ import { CASModelOptions } from '../../common/model/CASModel.js';
 import SoccerModel from '../../common/model/SoccerModel.js';
 import CASConstants from '../../common/CASConstants.js';
 
-type MedianModelSelfOptions = {};
-type MedianModelOptions = MedianModelSelfOptions & CASModelOptions;
+type SelfOptions = {};
+type MedianModelOptions = SelfOptions & CASModelOptions;
 
 class MedianModel extends SoccerModel {
 
   constructor( options: MedianModelOptions ) {
 
-    options = optionize<MedianModelOptions, MedianModelSelfOptions, CASModelOptions>( {
+    options = optionize<MedianModelOptions, SelfOptions, CASModelOptions>( {
       tandem: Tandem.REQUIRED
     }, options );
 

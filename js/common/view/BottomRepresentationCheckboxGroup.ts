@@ -23,15 +23,13 @@ import PredictionNode from './PredictionNode.js';
 import CASColors from '../CASColors.js';
 import NumberLineNode from './NumberLineNode.js';
 
-type BottomRepresentationCheckboxGroupSelfOptions = {
+type SelfOptions = {
   includeMedian?: boolean;
   includeMean?: boolean;
   includePredictMean?: boolean;
   includePredictMedian?: boolean;
 };
-export type BottomRepresentationCheckboxGroupOptions =
-  BottomRepresentationCheckboxGroupSelfOptions
-  & VerticalCheckboxGroupOptions;
+export type BottomRepresentationCheckboxGroupOptions = SelfOptions & VerticalCheckboxGroupOptions;
 
 // constants
 const TEXT_OPTIONS = {
@@ -43,7 +41,7 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
   constructor( model: CASModel, providedOptions?: BottomRepresentationCheckboxGroupOptions ) {
 
-    const options = optionize<BottomRepresentationCheckboxGroupOptions, BottomRepresentationCheckboxGroupSelfOptions, VerticalCheckboxGroupOptions>( {
+    const options = optionize<BottomRepresentationCheckboxGroupOptions, SelfOptions, VerticalCheckboxGroupOptions>( {
       includeMean: true,
       includeMedian: true,
       includePredictMean: true,

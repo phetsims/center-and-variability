@@ -27,7 +27,7 @@ import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 
 // constants
 
-type CASPlotNodeSelfOptions = {};
+type SelfOptions = {};
 export type CASPlotOptions = NodeOptions & RequiredTandem;
 
 class CASPlotNode extends Node {
@@ -37,7 +37,7 @@ class CASPlotNode extends Node {
 
   constructor( model: CASModel, numberLineWidth: number, providedOptions?: CASPlotOptions ) {
 
-    const options = optionize<CASPlotOptions, CASPlotNodeSelfOptions, NodeOptions>( {
+    const options = optionize<CASPlotOptions, SelfOptions, NodeOptions>( {
       tandem: Tandem.REQUIRED
     }, providedOptions );
 
