@@ -18,7 +18,7 @@ import TopRepresentationCheckboxGroup from './TopRepresentationCheckboxGroup.js'
 import CASModel from '../model/CASModel.js';
 import ValueReadoutsNode from './ValueReadoutsNode.js';
 import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
-import Shape from '../../../../kite/js/Shape.js';
+import { Shape } from '../../../../kite/js/imports.js';
 
 type SelfOptions = {
   valueReadoutsNode: ValueReadoutsNode | null;
