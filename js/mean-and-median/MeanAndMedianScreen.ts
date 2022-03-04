@@ -29,7 +29,11 @@ class MeanAndMedianScreen extends CASScreen<MeanAndMedianModel, MeanAndMedianScr
     }, providedOptions );
 
     super(
-      () => new MeanAndMedianModel( { includeCards: false, tandem: options.tandem.createTandem( 'model' ) } ),
+      () => new MeanAndMedianModel( {
+        includeCards: false,
+        tandem: options.tandem.createTandem( 'model' ),
+        instrumentMeanPredictionProperty: true
+      } ),
       model => new MeanAndMedianScreenView( model, { tandem: options.tandem.createTandem( 'view' ) } ),
       options
     );

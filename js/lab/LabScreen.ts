@@ -29,7 +29,11 @@ class LabScreen extends CASScreen<LabModel, LabScreenView> {
     }, providedOptions );
 
     super(
-      () => new LabModel( { includeCards: true, tandem: options.tandem.createTandem( 'model' ) } ),
+      () => new LabModel( {
+        includeCards: true,
+        tandem: options.tandem.createTandem( 'model' ),
+        instrumentMeanPredictionProperty: true
+      } ),
       model => new LabScreenView( model, { tandem: options.tandem.createTandem( 'view' ) } ),
       options
     );

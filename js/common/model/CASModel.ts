@@ -27,8 +27,9 @@ import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 
 type SelfOptions = {
-  tandem: Tandem,
-  includeCards: boolean
+  tandem: Tandem;
+  includeCards: boolean;
+  instrumentMeanPredictionProperty: boolean;
 };
 export type CASModelOptions = SelfOptions & {};
 
@@ -129,19 +130,19 @@ class CASModel {
       tandem: options.tandem.createTandem( 'isSortingDataProperty' )
     } );
     this.isShowingTopMeanProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isShowingTopMeanProperty' )
+      tandem: options.instrumentMeanPredictionProperty ? options.tandem.createTandem( 'isShowingTopMeanProperty' ) : Tandem.OPT_OUT
     } );
     this.isShowingTopMedianProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isShowingTopMedianProperty' )
     } );
     this.isShowingPlayAreaMeanProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isShowingPlayAreaMeanProperty' )
+      tandem: options.instrumentMeanPredictionProperty ? options.tandem.createTandem( 'isShowingPlayAreaMeanProperty' ) : Tandem.OPT_OUT
     } );
     this.isShowingPlayAreaMedianProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isShowingPlayAreaMedianProperty' )
     } );
     this.isShowingMeanPredictionProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isShowingMeanPredictionProperty' )
+      tandem: options.instrumentMeanPredictionProperty ? options.tandem.createTandem( 'isShowingMeanPredictionProperty' ) : Tandem.OPT_OUT
     } );
     this.isShowingMedianPredictionProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isShowingMedianPredictionProperty' )
@@ -164,7 +165,7 @@ class CASModel {
     } );
     this.meanPredictionProperty = new NumberProperty( 1.5, {
       range: this.physicalRange,
-      tandem: options.tandem.createTandem( 'meanPredictionProperty' )
+      tandem: options.instrumentMeanPredictionProperty ? options.tandem.createTandem( 'meanPredictionProperty' ) : Tandem.OPT_OUT
     } );
 
     this.timeProperty = new NumberProperty( 0, {
