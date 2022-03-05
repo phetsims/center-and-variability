@@ -45,7 +45,7 @@ class SoccerModel extends CASModel {
   readonly nextBallToKickProperty: Property<CASObject | null>; // Null if there is no more ball to kick
   private readonly numberOfScheduledSoccerBallsToKickProperty: NumberProperty;
   readonly numberOfRemainingKickableSoccerBallsProperty: IReadOnlyProperty<number>;
-  readonly hasKickableSoccerBallsProperty: IReadOnlyProperty<boolean>;
+  readonly hasKickableSoccerBallsProperty: Property<boolean>;
 
   private readonly timeWhenLastBallWasKickedProperty: NumberProperty;
   private readonly ballPlayerMap: Map<CASObject, SoccerPlayer>; // TODO: Add to PhET-iO State
