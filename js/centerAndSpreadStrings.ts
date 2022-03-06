@@ -32,7 +32,8 @@ type StringsType = {
   'mean': string,
   'predictMean': string,
   'predictMedian': string,
-  'valueUnknown': string
+  'valueUnknown': string,
+  'youSortedTheData': string
 };
 
 const centerAndSpreadStrings = getStringModule( 'CENTER_AND_SPREAD' ) as StringsType;

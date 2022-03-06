@@ -8,7 +8,7 @@
  */
 
 import centerAndSpread from '../../centerAndSpread.js';
-import { Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
+import { Node, NodeOptions, RadialGradient, Text } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CASModel from '../model/CASModel.js';
@@ -39,6 +39,7 @@ import Easing from '../../../../twixt/js/Easing.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import AsyncCounter from '../model/AsyncCounter.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 
 // constants
 const CARD_SPACING = 10;
@@ -139,6 +140,39 @@ class CardNodeContainer extends Node {
       }
     } );
 
+    const dataSortedTextNode = new Text( centerAndSpreadStrings.youSortedTheData, {
+      font: new PhetFont( 15 )
+    } );
+    const dataSortedNode = new Panel( dataSortedTextNode, {
+      stroke: null,
+      cornerRadius: 4,
+      visible: false
+    } );
+
+    // create an offset rainbow gradient
+    // TODO: Is there a way to do this with the color stops being pieces of the pie instead of concentric-ish circles?
+    const startPoint = new Vector2( dataSortedNode.left, dataSortedNode.top - 20 );
+    const height = dataSortedNode.width / 2 + 15;
+    const endPoint = new Vector2( dataSortedNode.centerX, dataSortedNode.bottom );
+    const rainbowRadialGradient = new RadialGradient( startPoint.x, startPoint.y, 0, endPoint.x, endPoint.y, height );
+    rainbowRadialGradient.addColorStop( 0, '#fa9696' );
+    rainbowRadialGradient.addColorStop( 0.2, '#f7be8d' );
+    rainbowRadialGradient.addColorStop( 0.4, '#ede195' );
+    rainbowRadialGradient.addColorStop( 0.6, '#8ce685' );
+    rainbowRadialGradient.addColorStop( 0.8, '#7fd7f0' );
+    rainbowRadialGradient.addColorStop( 1, '#927feb' );
+
+    dataSortedNode.stroke = rainbowRadialGradient;
+
+    // TODO: For testing. Remove when finished with gradient work.
+    // const testRec = new Rectangle( dataSortedNode.left, startPoint.y, dataSortedNode.right, endPoint.y, {
+    //   fill: rainbowRadialGradient
+    // } );
+    // dataSortedNode.localBounds = dataSortedNode.localBounds.copy();
+    // dataSortedNode.addChild( testRec );
+
+    this.addChild( dataSortedNode );
+
     this.cardLayer = new Node();
     this.addChild( this.cardLayer );
 
@@ -163,6 +197,21 @@ class CardNodeContainer extends Node {
 
             // Setup a callback for  animation when all current animations finish
             const asyncCounter = new AsyncCounter( inProgressAnimations.length, () => {
+
+              // we know at least one card exists because we're in a dragListener link
+              const leftmostCard = this.cardNodeCells[ 0 ]!;
+              dataSortedNode.centerX = getCardPositionX( ( this.cardNodeCells.length - 1 ) / 2 ) + leftmostCard.width / 2;
+              if ( dataSortedNode.left < 0 ) {
+                dataSortedNode.left = 0;
+              }
+              dataSortedNode.bottom = leftmostCard.top - 7;
+              dataSortedNode.visible = true;
+
+              // TODO: Better way to do this. Maybe with step? Need to account for resetting the time if called again
+              // before previous timeout finished
+              stepTimer.setTimeout( () => {
+                dataSortedNode.visible = false;
+              }, 2000 );
 
               const cardBeingDragged = this.cardNodeCells.filter( cardNode => cardNode.dragListener.isPressed ).length;
               const cardsAnimating = this.cardNodeCells.filter( cardNode => cardNode.animation ).length;
