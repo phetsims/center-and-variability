@@ -52,7 +52,7 @@ class PredictionNode extends Node {
       fill: providedOptions.color,
       stroke: CASColors.arrowStrokeProperty,
       lineWidth: CASConstants.ARROW_LINE_WIDTH,
-      bottomCenter: shadedSphereNode.center
+      centerBottom: shadedSphereNode.center
     } );
     const options = optionize<PredictionNodeOptions, SelfOptions, NodeOptions>( {
       tandem: Tandem.REQUIRED,
