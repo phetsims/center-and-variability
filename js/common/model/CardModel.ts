@@ -8,17 +8,18 @@
  */
 import CASObject from './CASObject.js';
 import centerAndSpread from '../../centerAndSpread.js';
-import PhetioObject, { PhetioObjectOptions, RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
+import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import CASObjectType from './CASObjectType.js';
+import { PickRequired } from '../../../../phet-core/js/types/PickRequired.js';
 
 const CASObjectReferenceIO = ReferenceIO( CASObject.CASObjectIO );
 
 type SelfOptions = {};
-type CardModelOptions = SelfOptions & PhetioObjectOptions & RequiredTandem;
+type CardModelOptions = SelfOptions & PhetioObjectOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
 class CardModel extends PhetioObject {
 

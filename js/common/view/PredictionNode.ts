@@ -18,9 +18,9 @@ import ShadedSphereNode from '../../../../scenery-phet/js/ShadedSphereNode.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
-import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 import CASColors from '../CASColors.js';
 import CASConstants from '../CASConstants.js';
+import { PickRequired } from '../../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = {
   color: ColorDef,
@@ -29,7 +29,7 @@ type SelfOptions = {
   roundToInterval: number | null
 };
 
-export type PredictionNodeOptions = SelfOptions & NodeOptions & RequiredTandem;
+export type PredictionNodeOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
 class PredictionNode extends Node {
 

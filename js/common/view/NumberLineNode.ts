@@ -24,15 +24,15 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 import CASConstants from '../CASConstants.js';
+import { PickRequired } from '../../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = {
   color?: PaintDef;
   includeXAxis: boolean;
   includeMeanStroke: boolean;
 };
-export type NumberLineNodeOptions = SelfOptions & NodeOptions & RequiredTandem;
+export type NumberLineNodeOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
 class NumberLineNode extends Node {
 

@@ -8,7 +8,7 @@
  */
 
 import centerAndSpread from '../../centerAndSpread.js';
-import PhetioObject, { PhetioObjectOptions, RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
+import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
@@ -16,12 +16,13 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import Property from '../../../../axon/js/Property.js';
 import Pose from './Pose.js';
+import { PickRequired } from '../../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = {};
 type SoccerPlayerOptions =
   SelfOptions
   & PhetioObjectOptions
-  & RequiredTandem;
+  & PickRequired<PhetioObjectOptions, 'tandem'>;
 
 class SoccerPlayer extends PhetioObject {
   readonly poseProperty: Property<Pose>;

@@ -23,10 +23,10 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import MedianBarNode from './MedianBarNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
-import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
+import { PickRequired } from '../../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = {};
-export type CASPlotOptions = NodeOptions & RequiredTandem;
+export type CASPlotOptions = NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
 class CASPlotNode extends Node {
 

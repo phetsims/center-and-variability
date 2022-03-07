@@ -14,10 +14,10 @@ import CASColors from '../common/CASColors.js';
 import centerAndSpread from '../centerAndSpread.js';
 import CASModel from './model/CASModel.js';
 import CASScreenView from './view/CASScreenView.js';
-import { RequiredTandem } from '../../../tandem/js/PhetioObject.js';
+import { PickRequired } from '../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = {};
-export type CASScreenOptions = SelfOptions & ScreenOptions & RequiredTandem;
+export type CASScreenOptions = SelfOptions & ScreenOptions & PickRequired<ScreenOptions, 'tandem'>;
 
 class CASScreen<M extends CASModel, V extends CASScreenView> extends Screen<M, V> {
 

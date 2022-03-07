@@ -20,17 +20,17 @@ import { AnimationMode } from '../model/AnimationMode.js';
 import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import CASColors from '../CASColors.js';
-import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 import PlotType from '../model/PlotType.js';
 import timesSolidShape from '../../../../sherpa/js/fontawesome-5/timesSolidShape.js';
 import CASConstants from '../CASConstants.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import { PickRequired } from '../../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = {
   objectViewType?: CASObjectType;
   draggingEnabled?: boolean;
 };
-export type CASObjectNodeOptions = SelfOptions & NodeOptions & RequiredTandem;
+export type CASObjectNodeOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
 // for debugging with ?dev
 let index = 0;

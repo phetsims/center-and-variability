@@ -10,7 +10,7 @@
 import Animation from '../../../../twixt/js/Animation.js';
 import centerAndSpread from '../../centerAndSpread.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
-import PhetioObject, { PhetioObjectOptions, RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
+import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
@@ -25,6 +25,7 @@ import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import { AnimationMode } from './AnimationMode.js';
 import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
+import { PickRequired } from '../../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = {
   position?: Vector2;
@@ -35,7 +36,7 @@ type SelfOptions = {
 export type CASObjectOptions =
   SelfOptions
   & PhetioObjectOptions
-  & RequiredTandem;
+  & PickRequired<PhetioObjectOptions, 'tandem'>;
 
 class CASObject extends PhetioObject {
 

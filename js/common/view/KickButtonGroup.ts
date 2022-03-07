@@ -16,11 +16,11 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import CASColors from '../CASColors.js';
 import SoccerModel from '../model/SoccerModel.js';
 import CASConstants from '../CASConstants.js';
-import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
+import { PickRequired } from '../../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = {};
-export type KickButtonGroupOptions = SelfOptions & VBoxOptions & RequiredTandem;
+export type KickButtonGroupOptions = SelfOptions & VBoxOptions & PickRequired<VBoxOptions, 'tandem'>;
 
 // constants
 const TEXT_MAX_WIDTH = 80;

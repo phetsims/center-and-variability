@@ -17,8 +17,8 @@ import centerAndSpread from '../../centerAndSpread.js';
 import TopRepresentationCheckboxGroup from './TopRepresentationCheckboxGroup.js';
 import CASModel from '../model/CASModel.js';
 import ValueReadoutsNode from './ValueReadoutsNode.js';
-import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 import { Shape } from '../../../../kite/js/imports.js';
+import { PickRequired } from '../../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = {
   valueReadoutsNode: ValueReadoutsNode | null;
@@ -27,7 +27,7 @@ type SelfOptions = {
 export type CASAccordionBoxOptions =
   SelfOptions
   & Omit<AccordionBoxOptions, 'titleNode' | 'expandedProperty'>
-  & RequiredTandem;
+  & PickRequired<AccordionBoxOptions, 'tandem'>;
 
 // constants
 const CONTENT_MARGIN = 10;

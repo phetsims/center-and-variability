@@ -28,7 +28,6 @@ import CASConstants from '../CASConstants.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import MedianBarNode from './MedianBarNode.js';
-import { RequiredTandem } from '../../../../tandem/js/PhetioObject.js';
 import CASColors from '../CASColors.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
@@ -40,13 +39,14 @@ import Animation from '../../../../twixt/js/Animation.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import AsyncCounter from '../model/AsyncCounter.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import { PickRequired } from '../../../../phet-core/js/types/PickRequired.js';
 
 // constants
 const CARD_SPACING = 10;
 const getCardPositionX = ( index: number ) => index * ( CardNode.CARD_WIDTH + CARD_SPACING );
 
 type SelfOptions = {};
-export type CardNodeContainerOptions = SelfOptions & NodeOptions & RequiredTandem;
+export type CardNodeContainerOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
 class CardNodeContainer extends Node {
 
