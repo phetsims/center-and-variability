@@ -68,7 +68,7 @@ class CardNodeContainer extends Node {
   private readonly cardLayer: Node;
   private isReadyForCelebration: boolean;
   private remainingCelebrationAnimations: ( () => void )[];
-  private dataSortedNodeTimerID: ( ( dt: number ) => void ) | null;
+  private dataSortedNodeAnimation: Animation | null;
 
   constructor( model: CASModel, providedOptions: CardNodeContainerOptions ) {
 
@@ -147,6 +147,7 @@ class CardNodeContainer extends Node {
     const dataSortedNode = new Panel( dataSortedTextNode, {
       stroke: null,
       cornerRadius: 4,
+      lineWidth: 2,
       visible: false
     } );
 
@@ -162,22 +163,14 @@ class CardNodeContainer extends Node {
     rainbowRadialGradient.addColorStop( 0.6, '#8ce685' );
     rainbowRadialGradient.addColorStop( 0.8, '#7fd7f0' );
     rainbowRadialGradient.addColorStop( 1, '#927feb' );
-
     dataSortedNode.stroke = rainbowRadialGradient;
-
-    // TODO: For testing. Remove when finished with gradient work.
-    // const testRec = new Rectangle( dataSortedNode.left, startPoint.y, dataSortedNode.right, endPoint.y, {
-    //   fill: rainbowRadialGradient
-    // } );
-    // dataSortedNode.localBounds = dataSortedNode.localBounds.copy();
-    // dataSortedNode.addChild( testRec );
 
     this.addChild( dataSortedNode );
 
     this.cardLayer = new Node();
     this.addChild( this.cardLayer );
 
-    this.dataSortedNodeTimerID = null;
+    this.dataSortedNodeAnimation = null;
 
     model.cardModelGroup.elementCreatedEmitter.addListener( cardModel => {
 
@@ -209,16 +202,28 @@ class CardNodeContainer extends Node {
               }
               dataSortedNode.bottom = leftmostCard.top - 7;
               dataSortedNode.visible = true;
+              dataSortedNode.opacity = 1;
 
               // If the user sorted the data again before the data sorted message was hidden, clear out the timer.
-              if ( this.dataSortedNodeTimerID ) {
-                stepTimer.clearTimeout( this.dataSortedNodeTimerID );
+              if ( this.dataSortedNodeAnimation ) {
+                this.dataSortedNodeAnimation.stop();
               }
 
               // start a timer to hide the data sorted node
-              this.dataSortedNodeTimerID = stepTimer.setTimeout( () => {
+              this.dataSortedNodeAnimation = new Animation( {
+                duration: 0.6,
+                delay: 2,
+                targets: [ {
+                  property: dataSortedNode.opacityProperty,
+                  to: 0,
+                  easing: Easing.QUADRATIC_IN_OUT
+                } ]
+              } );
+              this.dataSortedNodeAnimation.finishEmitter.addListener( () => {
                 dataSortedNode.visible = false;
-              }, 2000 );
+                this.dataSortedNodeAnimation = null;
+              } );
+              this.dataSortedNodeAnimation.start();
 
               const cardBeingDragged = this.cardNodeCells.filter( cardNode => cardNode.dragListener.isPressed ).length;
               const cardsAnimating = this.cardNodeCells.filter( cardNode => cardNode.animation ).length;
@@ -359,7 +364,14 @@ class CardNodeContainer extends Node {
 
     this.isReadyForCelebration = false;
 
-    this.model.resetEmitter.addListener( () => totalDragDistanceProperty.reset() );
+    this.model.resetEmitter.addListener( () => {
+      totalDragDistanceProperty.reset();
+      dataSortedNode.visible = false;
+      if ( this.dataSortedNodeAnimation ) {
+        this.dataSortedNodeAnimation.stop();
+        this.dataSortedNodeAnimation = null;
+      }
+    } );
   }
 
   // The listener which is linked to the cardNode.positionProperty
