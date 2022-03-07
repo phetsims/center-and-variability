@@ -40,7 +40,7 @@ class SoccerScreenView extends CASScreenView {
 
   constructor( model: SoccerModel, providedOptions: SoccerScreenViewOptions ) {
 
-    const options = optionize<SoccerScreenViewOptions>( {
+    const options = optionize<SoccerScreenViewOptions, SelfOptions, CASScreenViewOptions, 'tandem'>( {
       tandem: Tandem.REQUIRED
     }, providedOptions );
 

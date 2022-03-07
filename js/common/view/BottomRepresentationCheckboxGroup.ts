@@ -15,7 +15,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import centerAndSpread from '../../centerAndSpread.js';
 import VerticalCheckboxGroup, { VerticalCheckboxGroupOptions } from '../../../../sun/js/VerticalCheckboxGroup.js';
-import { HBox, Text } from '../../../../scenery/js/imports.js';
+import { HBox, IColor, Text } from '../../../../scenery/js/imports.js';
 import CASModel from '../model/CASModel.js';
 import CASConstants from '../CASConstants.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
@@ -50,7 +50,7 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
     const items = [];
 
-    const createPredictionItem = ( property: Property<boolean>, string: string, color: ColorDef, spacing: number ) => {
+    const createPredictionItem = ( property: Property<boolean>, string: string, color: IColor, spacing: number ) => {
       return {
         node: new HBox( {
           spacing: spacing,

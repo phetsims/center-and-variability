@@ -8,7 +8,7 @@
  */
 
 import centerAndSpread from '../../centerAndSpread.js';
-import { ColorDef, DragListener, Node, NodeOptions } from '../../../../scenery/js/imports.js';
+import { DragListener, IColor, Node, NodeOptions } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import Property from '../../../../axon/js/Property.js';
@@ -23,7 +23,7 @@ import CASConstants from '../CASConstants.js';
 import { PickRequired } from '../../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = {
-  color: ColorDef,
+  color: IColor,
 
   // Round to the nearest specified number, or, if null, there is no rounding. Mean is continuous, median is rounded to 0.5
   roundToInterval: number | null

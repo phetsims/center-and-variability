@@ -20,7 +20,7 @@ class LabScreenView extends CASScreenView {
 
   constructor( model: LabModel, providedOptions: LabScreenViewOptions ) {
 
-    const options = optionize<LabScreenViewOptions>( {
+    const options = optionize<LabScreenViewOptions, {}>( {
       tandem: Tandem.REQUIRED
     }, providedOptions );
 

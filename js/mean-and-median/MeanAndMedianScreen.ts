@@ -34,6 +34,7 @@ class MeanAndMedianScreen extends CASScreen<MeanAndMedianModel, MeanAndMedianScr
         tandem: options.tandem.createTandem( 'model' ),
         instrumentMeanPredictionProperty: true
       } ),
+      // @ts-ignore What is happening here?
       model => new MeanAndMedianScreenView( model, { tandem: options.tandem.createTandem( 'view' ) } ),
       options
     );

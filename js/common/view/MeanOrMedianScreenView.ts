@@ -35,7 +35,7 @@ class MeanOrMedianScreenView extends SoccerScreenView {
 
   constructor( model: SoccerModel, providedOptions: MeanOrMedianScreenViewOptions ) {
 
-    const options = optionize<MeanOrMedianScreenViewOptions>( {
+    const options = optionize<MeanOrMedianScreenViewOptions, {}, SoccerScreenViewOptions, 'tandem'>( {
       tandem: Tandem.REQUIRED
     }, providedOptions );
 

@@ -16,13 +16,13 @@ import SoccerScreenView, { SoccerScreenViewOptions } from '../../common/view/Soc
 import CASColors from '../../common/CASColors.js';
 import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
 
-type SpreadScreenViewOptions = SoccerScreenViewOptions;
+type SpreadScreenViewOptions = Omit<SoccerScreenViewOptions, 'questionBarOptions'>;
 
 class SpreadScreenView extends SoccerScreenView {
 
   constructor( model: SpreadModel, providedOptions: SpreadScreenViewOptions ) {
 
-    const options = optionize<SpreadScreenViewOptions>( {
+    const options = optionize<SpreadScreenViewOptions, {}, SoccerScreenViewOptions>( {
       questionBarOptions: {
         barFill: CASColors.spreadQuestionBarFillColorProperty,
         labelText: centerAndSpreadStrings.spreadQuestion
@@ -30,7 +30,7 @@ class SpreadScreenView extends SoccerScreenView {
       tandem: Tandem.REQUIRED
     }, providedOptions );
 
-    super( model, options );
+    super( model, options as SoccerScreenViewOptions );
   }
 }
 

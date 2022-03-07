@@ -8,7 +8,7 @@
  */
 
 import centerAndSpread from '../../centerAndSpread.js';
-import { Node, NodeOptions, Path, Text } from '../../../../scenery/js/imports.js';
+import { IPaint, Node, NodeOptions, Path, Text } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
@@ -28,7 +28,7 @@ import CASConstants from '../CASConstants.js';
 import { PickRequired } from '../../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = {
-  color?: PaintDef;
+  color?: IPaint;
   includeXAxis: boolean;
   includeMeanStroke: boolean;
 };

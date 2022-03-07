@@ -7,7 +7,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import ScreenView from '../../../../joist/js/ScreenView.js';
+import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndSpread from '../../centerAndSpread.js';
@@ -28,8 +28,19 @@ import PredictionNode from './PredictionNode.js';
 import CASColors from '../CASColors.js';
 
 type SelfOptions = {
-  topCheckboxPanelOptions?: boolean;
-  bottomCheckboxPanelOptions?: boolean;
+  topCheckboxPanelOptions?: {
+    includeSortData: boolean;
+    includeMean: boolean;
+    medianBarIconOptions: {
+      notchDirection: string;
+      barStyle: string;
+    },
+    showMedianCheckboxIcon: boolean;
+  };
+  bottomCheckboxPanelOptions?: {
+    includeMean?: boolean;
+    includePredictMean?: boolean;
+  };
 };
 export type CASScreenViewOptions = SelfOptions & ScreenViewOptions;
 
@@ -55,10 +66,11 @@ class CASScreenView extends ScreenView {
   protected readonly medianPredictionNode: PredictionNode;
   protected readonly meanPredictionNode: PredictionNode;
 
-  constructor( model: CASModel, modelViewTransform: ModelViewTransform2, options: CASScreenViewOptions ) {
-    options = optionize<CASScreenViewOptions>( {
+  constructor( model: CASModel, modelViewTransform: ModelViewTransform2, providedOptions: CASScreenViewOptions ) {
+    // @ts-ignore what was happening here?
+    const options = optionize<CASScreenViewOptions, SelfOptions, ScreenViewOptions, 'tandem'>( {
       tandem: Tandem.REQUIRED
-    }, options );
+    }, providedOptions );
 
     super( options );
 
@@ -107,6 +119,7 @@ class CASScreenView extends ScreenView {
     } );
 
     // TODO: Consider renaming as Group instead of panel (if they only contain checkboxes)
+    // @ts-ignore TODO
     this.topCheckboxPanel = new TopRepresentationCheckboxGroup( model, options.topCheckboxPanelOptions );
     this.bottomCheckboxPanel = new BottomRepresentationCheckboxGroup( model, options.bottomCheckboxPanelOptions );
     this.addChild( this.bottomCheckboxPanel );
