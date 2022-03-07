@@ -68,6 +68,7 @@ class CardNodeContainer extends Node {
   private readonly cardLayer: Node;
   private isReadyForCelebration: boolean;
   private remainingCelebrationAnimations: ( () => void )[];
+  private dataSortedNodeTimerID: ( ( dt: number ) => void ) | null;
 
   constructor( model: CASModel, providedOptions: CardNodeContainerOptions ) {
 
@@ -176,6 +177,8 @@ class CardNodeContainer extends Node {
     this.cardLayer = new Node();
     this.addChild( this.cardLayer );
 
+    this.dataSortedNodeTimerID = null;
+
     model.cardModelGroup.elementCreatedEmitter.addListener( cardModel => {
 
       const cardNode = this.cardNodeGroup.createCorrespondingGroupElement( cardModel.tandem.name, cardModel );
@@ -195,7 +198,7 @@ class CardNodeContainer extends Node {
             const inProgressAnimations = this.cardNodeCells.filter( cardNode => cardNode.animation )
               .map( cardNode => cardNode.animation! );
 
-            // Setup a callback for  animation when all current animations finish
+            // Setup a callback for animation when all current animations finish
             const asyncCounter = new AsyncCounter( inProgressAnimations.length, () => {
 
               // we know at least one card exists because we're in a dragListener link
@@ -207,9 +210,13 @@ class CardNodeContainer extends Node {
               dataSortedNode.bottom = leftmostCard.top - 7;
               dataSortedNode.visible = true;
 
-              // TODO: Better way to do this. Maybe with step? Need to account for resetting the time if called again
-              // before previous timeout finished
-              stepTimer.setTimeout( () => {
+              // If the user sorted the data again before the data sorted message was hidden, clear out the timer.
+              if ( this.dataSortedNodeTimerID ) {
+                stepTimer.clearTimeout( this.dataSortedNodeTimerID );
+              }
+
+              // start a timer to hide the data sorted node
+              this.dataSortedNodeTimerID = stepTimer.setTimeout( () => {
                 dataSortedNode.visible = false;
               }, 2000 );
 
