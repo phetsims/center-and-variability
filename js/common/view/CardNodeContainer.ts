@@ -39,7 +39,7 @@ import Animation from '../../../../twixt/js/Animation.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import AsyncCounter from '../model/AsyncCounter.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { PickRequired } from '../../../../phet-core/js/types/PickRequired.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
 // constants
 const CARD_SPACING = 10;

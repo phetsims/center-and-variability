@@ -25,7 +25,7 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import CASConstants from '../CASConstants.js';
-import { PickRequired } from '../../../../phet-core/js/types/PickRequired.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = {
   color?: IPaint;

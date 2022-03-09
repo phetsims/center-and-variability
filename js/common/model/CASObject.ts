@@ -25,7 +25,7 @@ import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import { AnimationMode } from './AnimationMode.js';
 import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
-import { PickRequired } from '../../../../phet-core/js/types/PickRequired.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = {
   position?: Vector2;

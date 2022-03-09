@@ -20,7 +20,7 @@ import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
 import CASColors from '../CASColors.js';
 import CASConstants from '../CASConstants.js';
-import { PickRequired } from '../../../../phet-core/js/types/PickRequired.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = {
   color: IColor,

@@ -14,7 +14,7 @@ import CASColors from '../common/CASColors.js';
 import centerAndSpread from '../centerAndSpread.js';
 import CASModel from './model/CASModel.js';
 import CASScreenView from './view/CASScreenView.js';
-import { PickRequired } from '../../../phet-core/js/types/PickRequired.js';
+import PickRequired from '../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = {};
 export type CASScreenOptions = SelfOptions & ScreenOptions & PickRequired<ScreenOptions, 'tandem'>;

@@ -24,7 +24,7 @@ import PlotType from '../model/PlotType.js';
 import timesSolidShape from '../../../../sherpa/js/fontawesome-5/timesSolidShape.js';
 import CASConstants from '../CASConstants.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { PickRequired } from '../../../../phet-core/js/types/PickRequired.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = {
   objectViewType?: CASObjectType;

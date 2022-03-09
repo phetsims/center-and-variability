@@ -20,7 +20,7 @@ import Range from '../../../../dot/js/Range.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import CardModel from '../model/CardModel.js';
 import Emitter from '../../../../axon/js/Emitter.js';
-import { PickRequired } from '../../../../phet-core/js/types/PickRequired.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = {};
 export type CardNodeOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;

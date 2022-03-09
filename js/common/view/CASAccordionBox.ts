@@ -18,7 +18,7 @@ import TopRepresentationCheckboxGroup from './TopRepresentationCheckboxGroup.js'
 import CASModel from '../model/CASModel.js';
 import ValueReadoutsNode from './ValueReadoutsNode.js';
 import { Shape } from '../../../../kite/js/imports.js';
-import { PickRequired } from '../../../../phet-core/js/types/PickRequired.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = {
   valueReadoutsNode: ValueReadoutsNode | null;

@@ -14,7 +14,7 @@ import StringIO from '../../../../tandem/js/types/StringIO.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import CASObjectType from './CASObjectType.js';
-import { PickRequired } from '../../../../phet-core/js/types/PickRequired.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
 const CASObjectReferenceIO = ReferenceIO( CASObject.CASObjectIO );
 
