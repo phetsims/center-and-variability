@@ -43,8 +43,9 @@ class SoccerPlayer extends PhetioObject {
 
     super( options );
 
-    // TODO: Instrument for state
-    this.placeInLineProperty = new NumberProperty( placeInLine );
+    this.placeInLineProperty = new NumberProperty( placeInLine, {
+      tandem: options.tandem.createTandem( 'placeInLineProperty' )
+    } );
     this.poseProperty = new Property<Pose>( Pose.STANDING );
 
     this.initialPlaceInLine = placeInLine;
@@ -55,16 +56,21 @@ class SoccerPlayer extends PhetioObject {
   reset() {
     this.poseProperty.reset();
   }
+
+  dispose() {
+    this.placeInLineProperty.dispose();
+    super.dispose();
+  }
 }
 
 SoccerPlayer.SoccerPlayerIO = new IOType( 'SoccerPlayerIO', {
   valueType: SoccerPlayer,
-  toStateObject: ( soccerPlayer: SoccerPlayer ) => ( { placeInLine: soccerPlayer.placeInLineProperty.value } ),
+  toStateObject: ( soccerPlayer: SoccerPlayer ) => ( { initialPlaceInLine: soccerPlayer.initialPlaceInLine } ),
   stateToArgsForConstructor: ( stateObject: any ) => {
-    return [ stateObject.placeInLine ];
+    return [ stateObject.initialPlaceInLine ];
   },
   stateSchema: {
-    placeInLine: NumberIO
+    initialPlaceInLine: NumberIO
   }
 } );
 
