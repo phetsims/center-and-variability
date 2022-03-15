@@ -119,7 +119,7 @@ class CardNode extends Node {
       }
     }
     else {
-      if ( destination.equals( this.positionProperty.value! ) ) {
+      if ( destination.equals( this.positionProperty.value ) ) {
 
         // Already at the desired destination.
         callback();
