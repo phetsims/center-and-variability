@@ -109,6 +109,14 @@ class SoccerModel extends CASModel {
         this.nextBallToKickProperty.value = this.createBall();
       }
     } );
+
+    this.objectGroup.elementCreatedEmitter.addListener( casObject => {
+      casObject.valueProperty.link( ( value, oldValue ) => {
+        if ( value !== null && oldValue === null ) {
+          this.soccerBallLandedListener( casObject, value );
+        }
+      } );
+    } );
   }
 
   static chooseDistribution(): number[] {
@@ -123,17 +131,9 @@ class SoccerModel extends CASModel {
     const y0 = this.objectType.radius;
     const position = new Vector2( 0, y0 );
 
-    const casObject = this.createObject( {
+    return this.objectGroup.createNextElement( this.objectType, {
       position: position
     } );
-
-    casObject.valueProperty.link( ( value, oldValue ) => {
-      if ( value !== null && oldValue === null ) {
-        this.soccerBallLandedListener( casObject, value );
-      }
-    } );
-
-    return casObject;
   }
 
   /**

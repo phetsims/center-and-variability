@@ -108,7 +108,18 @@ class CASModel {
         tandem: tandem
       } );
 
-      return new CASObject( objectType, options );
+      const casObject = new CASObject( objectType, options );
+
+      // TODO: Should some or all of this move into CASObject or CASObjectNode?
+      const dragPositionListener = ( dragPosition: Vector2 ) => {
+        casObject.valueProperty.value = Utils.roundSymmetric( this.physicalRange.constrainValue( dragPosition.x ) );
+
+        this.moveToTop( casObject );
+      };
+      casObject.dragPositionProperty.lazyLink( dragPositionListener );
+      casObject.disposedEmitter.addListener( () => casObject.dragPositionProperty.unlink( dragPositionListener ) );
+
+      return casObject;
     }, [ objectType, {} ], {
       phetioType: PhetioGroup.PhetioGroupIO( CASObject.CASObjectIO ),
       tandem: options.tandem.createTandem( objectType === CASObjectType.SOCCER_BALL ? 'soccerBallGroup' : 'dataPointGroup' )
@@ -303,26 +314,6 @@ class CASModel {
       this.meanValueProperty.value = null;
       this.dataRangeProperty.value = null;
     }
-  }
-
-  protected createObject( options: Omit<CASObjectOptions, 'tandem'> ): CASObject {
-    const casObject = this.objectGroup.createNextElement( this.objectType, options );
-
-    const dragPositionListener = ( dragPosition: Vector2, oldPosition: Vector2 ) => {
-      casObject.valueProperty.value = Utils.roundSymmetric( this.physicalRange.constrainValue( dragPosition.x ) );
-
-      this.moveToTop( casObject );
-    };
-    casObject.dragPositionProperty.lazyLink( dragPositionListener );
-
-    // this is an n^2 operation, but that is okay because n small.
-    this.objectGroup.elementDisposedEmitter.addListener( o => {
-      if ( o === casObject ) {
-        o.dragPositionProperty.unlink( dragPositionListener );
-      }
-    } );
-
-    return casObject;
   }
 
   /**

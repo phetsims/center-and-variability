@@ -51,6 +51,7 @@ class CASObject extends PhetioObject {
   readonly isShowingAnimationHighlightProperty: BooleanProperty;
   readonly objectType: CASObjectType;
   readonly isFirstObject: boolean;
+  readonly disposedEmitter: Emitter
 
   // Where the object is animating to, or null if not yet animating
   targetX: number | null;
@@ -104,6 +105,7 @@ class CASObject extends PhetioObject {
       tandem: options.tandem.createTandem( 'isShowingAnimationHighlightProperty' )
     } );
     this.dragStartedEmitter = new Emitter();
+    this.disposedEmitter = new Emitter();
   }
 
   step( dt: number ): void {
@@ -146,6 +148,9 @@ class CASObject extends PhetioObject {
     this.dragPositionProperty.dispose();
     this.isMedianObjectProperty.dispose();
     this.isShowingAnimationHighlightProperty.dispose();
+    this.disposedEmitter.emit();
+    this.disposedEmitter.dispose();
+
   }
 
   toStateObject() {
