@@ -133,9 +133,10 @@ class CASObjectNode extends Node {
     }
 
     // show or hide the median highlight
-    Property.multilink( [ casObject.isMedianObjectProperty, isShowingPlayAreaMedianProperty ],
-      ( isMedianObject, isShowingBottomMedian ) => {
-        medianHighlight.visible = isMedianObject && isShowingBottomMedian && options.objectViewType !== CASObjectType.DOT;
+    Property.multilink( [ casObject.isMedianObjectProperty, isShowingPlayAreaMedianProperty, casObject.isShowingAnimationHighlightProperty ],
+      ( isMedianObject, isShowingPlayAreaMedian, isShowingAnimationHighlight ) => {
+        medianHighlight.visible = options.objectViewType === CASObjectType.DOT ? isShowingAnimationHighlight :
+                                  isShowingPlayAreaMedian && isMedianObject;
       } );
 
     // The initial ready-to-kick ball is full opacity. The rest of the balls waiting to be kicked are lower opacity so
@@ -143,12 +144,6 @@ class CASObjectNode extends Node {
     Property.multilink( [ casObject.valueProperty, casObject.animationModeProperty ],
       ( value: number | null, animationMode: AnimationMode ) => {
         this.opacity = value === null && animationMode === AnimationMode.NONE && !casObject.isFirstObject ? 0.4 : 1;
-      } );
-
-    // isShowingAnimationHighlightProperty
-    Property.multilink( [ casObject.isShowingAnimationHighlightProperty ],
-      ( isShowingAnimationHighlight: boolean ) => {
-        medianHighlight.visible = isShowingAnimationHighlight && options.objectViewType === CASObjectType.DOT;
       } );
 
     // Show index when debugging with ?dev

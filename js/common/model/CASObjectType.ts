@@ -15,6 +15,8 @@ class CASObjectType extends EnumerationValue {
   radius: number;
   static DATA_POINT = new CASObjectType( 1 );
   static SOCCER_BALL = new CASObjectType( 0.3 );
+
+  // TODO: This term is confusing because sometimes these are rendered as 'x' marks
   static DOT = new CASObjectType( 0.127 );
 
   static enumeration = new Enumeration( CASObjectType );

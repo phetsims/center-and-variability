@@ -87,7 +87,7 @@ class CASPlotNode extends Node {
     backgroundNode.addChild( this.dotLayer );
 
     const dotNodeGroup = new PhetioGroup<CASObjectNode, [ CASObject ]>( ( tandem, casObject ) => {
-      return new CASObjectNode( casObject, model.isShowingPlayAreaMedianProperty, modelViewTransform, {
+      return new CASObjectNode( casObject, model.isShowingTopMedianProperty, modelViewTransform, {
         objectViewType: CASObjectType.DOT,
         draggingEnabled: false,
         tandem: tandem
