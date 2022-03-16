@@ -152,15 +152,14 @@ class CardNodeContainer extends Node {
       visible: false
     } );
 
-    // create an offset rainbow gradient
-    // TODO: Is there a way to do this with the color stops being pieces of the pie instead of concentric-ish circles?
-    const startPoint = new Vector2( dataSortedNode.left + 20, dataSortedNode.top + 20 );
-    // const height = dataSortedNode.width / 2 + 15;
-    const endPoint = new Vector2( dataSortedNode.right - 20, dataSortedNode.bottom - 20 );
+    // create a rotated linear gradient
+    const gradientMargin = 20;
+    const startPoint = new Vector2( dataSortedNode.left + gradientMargin, dataSortedNode.top + gradientMargin );
+    const endPoint = new Vector2( dataSortedNode.right - gradientMargin, dataSortedNode.bottom - gradientMargin );
     const gradient = new LinearGradient( startPoint.x, startPoint.y, endPoint.x, endPoint.y );
     gradient.addColorStop( 0, '#fa9696' );
-    gradient.addColorStop( 0.2, '#f7be8d' );
-    gradient.addColorStop( 0.4, '#ede195' );
+    gradient.addColorStop( 0.2, '#ffa659' );
+    gradient.addColorStop( 0.4, '#ebd75e' );
     gradient.addColorStop( 0.6, '#8ce685' );
     gradient.addColorStop( 0.8, '#7fd7f0' );
     gradient.addColorStop( 1, '#927feb' );
