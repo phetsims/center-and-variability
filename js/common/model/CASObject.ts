@@ -26,6 +26,7 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import { AnimationMode } from './AnimationMode.js';
 import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
 
 type SelfOptions = {
   position?: Vector2;
@@ -156,7 +157,8 @@ class CASObject extends PhetioObject {
   toStateObject() {
     return {
       objectType: this.objectType.toString(),
-      targetX: this.targetX
+      targetX: this.targetX,
+      isFirstObject: this.isFirstObject
     };
   }
 }
@@ -183,12 +185,14 @@ CASObject.CASObjectIO = new IOType( 'CASObjectIO', {
   stateToArgsForConstructor: ( stateObject: any ) => {
     return [
       stateObject.objectType === 'SOCCER_BALL' ? CASObjectType.SOCCER_BALL : CASObjectType.DATA_POINT, {
-        targetX: stateObject.targetX
+        targetX: stateObject.targetX,
+        isFirstObject: stateObject.isFirstObject
       } ];
   },
   stateSchema: {
     objectType: EnumerationIO( CASObjectType ),
-    targetX: NullableIO( NumberIO )
+    targetX: NullableIO( NumberIO ),
+    isFirstObject: BooleanIO
   }
 } );
 
