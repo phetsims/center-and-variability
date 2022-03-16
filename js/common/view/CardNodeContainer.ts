@@ -8,7 +8,7 @@
  */
 
 import centerAndSpread from '../../centerAndSpread.js';
-import { Node, NodeOptions, RadialGradient, Text } from '../../../../scenery/js/imports.js';
+import { LinearGradient, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CASModel from '../model/CASModel.js';
@@ -40,6 +40,7 @@ import dotRandom from '../../../../dot/js/dotRandom.js';
 import AsyncCounter from '../model/AsyncCounter.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import Matrix3 from '../../../../dot/js/Matrix3.js';
 
 // constants
 const CARD_SPACING = 10;
@@ -153,17 +154,18 @@ class CardNodeContainer extends Node {
 
     // create an offset rainbow gradient
     // TODO: Is there a way to do this with the color stops being pieces of the pie instead of concentric-ish circles?
-    const startPoint = new Vector2( dataSortedNode.left, dataSortedNode.top - 20 );
-    const height = dataSortedNode.width / 2 + 15;
-    const endPoint = new Vector2( dataSortedNode.centerX, dataSortedNode.bottom );
-    const rainbowRadialGradient = new RadialGradient( startPoint.x, startPoint.y, 0, endPoint.x, endPoint.y, height );
-    rainbowRadialGradient.addColorStop( 0, '#fa9696' );
-    rainbowRadialGradient.addColorStop( 0.2, '#f7be8d' );
-    rainbowRadialGradient.addColorStop( 0.4, '#ede195' );
-    rainbowRadialGradient.addColorStop( 0.6, '#8ce685' );
-    rainbowRadialGradient.addColorStop( 0.8, '#7fd7f0' );
-    rainbowRadialGradient.addColorStop( 1, '#927feb' );
-    dataSortedNode.stroke = rainbowRadialGradient;
+    const startPoint = new Vector2( dataSortedNode.left + 20, dataSortedNode.top + 20 );
+    // const height = dataSortedNode.width / 2 + 15;
+    const endPoint = new Vector2( dataSortedNode.right - 20, dataSortedNode.bottom - 20 );
+    const gradient = new LinearGradient( startPoint.x, startPoint.y, endPoint.x, endPoint.y );
+    gradient.addColorStop( 0, '#fa9696' );
+    gradient.addColorStop( 0.2, '#f7be8d' );
+    gradient.addColorStop( 0.4, '#ede195' );
+    gradient.addColorStop( 0.6, '#8ce685' );
+    gradient.addColorStop( 0.8, '#7fd7f0' );
+    gradient.addColorStop( 1, '#927feb' );
+    gradient.setTransformMatrix( Matrix3.rotationAroundPoint( Math.PI / 4 * 1.2, dataSortedNode.center ) );
+    dataSortedNode.stroke = gradient;
 
     this.addChild( dataSortedNode );
 
