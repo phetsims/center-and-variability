@@ -51,7 +51,7 @@ class CASObject extends PhetioObject {
   readonly isShowingAnimationHighlightProperty: BooleanProperty;
   readonly objectType: CASObjectType;
   readonly isFirstObject: boolean;
-  readonly disposedEmitter: Emitter
+  readonly disposedEmitter: Emitter;
 
   // Where the object is animating to, or null if not yet animating
   targetX: number | null;
