@@ -26,6 +26,8 @@ import Easing from '../../../../twixt/js/Easing.js';
 import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import { AnimationMode } from './AnimationMode.js';
+import NullableIO from '../../../../tandem/js/types/NullableIO.js';
+import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 
 type SelfOptions = {};
 type SoccerModelOptions = SelfOptions & CASModelOptions;
@@ -78,7 +80,10 @@ class SoccerModel extends CASModel {
     this.populateSoccerPlayerGroup();
 
     // Create an initial ball to show on startup
-    this.nextBallToKickProperty = new Property<CASObject | null>( this.createBall() );
+    this.nextBallToKickProperty = new Property<CASObject | null>( this.createBall(), {
+      tandem: options.tandem.createTandem( 'nextBallToKickProperty' ),
+      phetioType: Property.PropertyIO( NullableIO( ReferenceIO( CASObject.CASObjectIO ) ) )
+    } );
 
     this.ballPlayerMap = new Map();
 
