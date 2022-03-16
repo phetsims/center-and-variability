@@ -113,7 +113,9 @@ class SoccerModel extends CASModel {
     this.objectGroup.elementCreatedEmitter.addListener( casObject => {
       casObject.valueProperty.link( ( value, oldValue ) => {
         if ( value !== null && oldValue === null ) {
-          this.soccerBallLandedListener( casObject, value );
+          if ( !phet.joist.sim.isSettingPhetioStateProperty.value ) {
+            this.soccerBallLandedListener( casObject, value );
+          }
         }
       } );
     } );
