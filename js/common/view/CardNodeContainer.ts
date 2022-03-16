@@ -382,7 +382,13 @@ class CardNodeContainer extends Node {
         const originalCell = this.cardNodeCells.indexOf( cardNode );
 
         // Find the closest cell to the dragged card
-        const closestCell = this.getClosestCell( position.x );
+        const dragCell = this.getClosestCell( position.x );
+
+        // The drag delta can suggest a match further than a neighboring cell. But we must do pairwise swaps with
+        // neighbors only in order to maintain the correct ordering. See https://github.com/phetsims/center-and-spread/issues/78
+        const closestCell = dragCell > originalCell ? originalCell + 1 :
+                            dragCell < originalCell ? originalCell - 1 :
+                            originalCell;
 
         const currentOccupant = this.cardNodeCells[ closestCell ];
 
