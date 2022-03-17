@@ -25,6 +25,7 @@ import timesSolidShape from '../../../../sherpa/js/fontawesome-5/timesSolidShape
 import CASConstants from '../CASConstants.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 
 type SelfOptions = {
   objectViewType?: CASObjectType;
@@ -121,6 +122,19 @@ class CASObjectNode extends Node {
           casObject.animation && casObject.animation.stop();
         }
       } );
+
+      // pan and zoom - In order to move the CASObjectNode to a new position the pointer has to move more than half the
+      // unit model length. When the CASObjectNode is near the edge of the screen while zoomed in, the pointer doesn't
+      // have enough space to move that far. If we make sure that bounds surrounding the CASObjectNode have a width
+      // of 2 model units the pointer will always have enough space to drag the CASObjectNode to a new position.
+      // See https://github.com/phetsims/center-and-spread/issues/88
+      dragListener.createPanTargetBounds = () => {
+        const modelPosition = casObject.positionProperty.value;
+        const modelBounds = new Bounds2( modelPosition.x - 1, modelPosition.y - 1, modelPosition.x + 1, modelPosition.y + 1 );
+        const viewBounds = modelViewTransform.modelToViewBounds( modelBounds );
+        return this.parentToGlobalBounds( viewBounds );
+      };
+
       this.addInputListener( dragListener );
       this.touchArea = this.localBounds.dilatedX( 10 );
 
