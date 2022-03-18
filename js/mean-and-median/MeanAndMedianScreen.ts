@@ -7,6 +7,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import { Image } from '../../../scenery/js/imports.js';
 import optionize from '../../../phet-core/js/optionize.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import CAVColors from '../common/CAVColors.js';
@@ -15,6 +16,8 @@ import MeanAndMedianModel from './model/MeanAndMedianModel.js';
 import CAVScreen, { CAVScreenOptions } from '../common/CAVScreen.js';
 import MeanAndMedianScreenView from './view/MeanAndMedianScreenView.js';
 import centerAndVariabilityStrings from '../centerAndVariabilityStrings.js';
+import ScreenIcon from '../../../joist/js/ScreenIcon.js';
+import meanAndMedianScreenIcon_png from '../../images/meanAndMedianScreenIcon_png.js';
 
 type MeanAndMedianScreenOptions = CAVScreenOptions;
 
@@ -24,6 +27,10 @@ class MeanAndMedianScreen extends CAVScreen<MeanAndMedianModel, MeanAndMedianScr
 
     const options = optionize<MeanAndMedianScreenOptions, {}>( {
       name: centerAndVariabilityStrings.screen.meanAndMedian,
+      homeScreenIcon: new ScreenIcon( new Image( meanAndMedianScreenIcon_png ), {
+        maxIconWidthProportion: 1,
+        maxIconHeightProportion: 1
+      } ),
       backgroundColorProperty: CAVColors.screenBackgroundColorProperty,
       tandem: Tandem.REQUIRED
     }, providedOptions );
