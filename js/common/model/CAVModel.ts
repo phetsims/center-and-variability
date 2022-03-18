@@ -226,11 +226,19 @@ class CAVModel {
       parameters: [ { valueType: CAVObject } ]
     } );
 
-    // Don't show animation on startup
+    // Don't show animation on startup or when setting PhET-iO state
     this.isShowingTopMedianProperty.lazyLink( isShowingTopMedian => {
       if ( isShowingTopMedian ) {
-        this.highlightAnimationIndex = 0;
-        this.lastHighlightAnimationStepTime = this.timeProperty.value;
+
+        if ( !phet.joist.sim.isSettingPhetioStateProperty.value ) {
+          this.highlightAnimationIndex = 0;
+          this.lastHighlightAnimationStepTime = this.timeProperty.value;
+        }
+        else {
+
+          // When setting PhET-iO state, show the arrow right away.
+          this.isMedianAnimationCompleteProperty.value = true;
+        }
       }
       else {
         this.clearAnimation();
