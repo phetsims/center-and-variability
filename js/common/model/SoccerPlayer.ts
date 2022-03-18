@@ -7,7 +7,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import centerAndSpread from '../../centerAndSpread.js';
+import centerAndVariability from '../../centerAndVariability.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
@@ -50,7 +50,7 @@ class SoccerPlayer extends PhetioObject {
 
     this.initialPlaceInLine = placeInLine;
 
-    this.timestampWhenPoisedBegan = -1;  // Not yet poised.  TODO: use null for this case?  See https://github.com/phetsims/center-and-spread/issues/59
+    this.timestampWhenPoisedBegan = -1;  // Not yet poised.  TODO: use null for this case?  See https://github.com/phetsims/center-and-variability/issues/59
   }
 
   reset() {
@@ -74,5 +74,5 @@ SoccerPlayer.SoccerPlayerIO = new IOType( 'SoccerPlayerIO', {
   }
 } );
 
-centerAndSpread.register( 'SoccerPlayer', SoccerPlayer );
+centerAndVariability.register( 'SoccerPlayer', SoccerPlayer );
 export default SoccerPlayer;

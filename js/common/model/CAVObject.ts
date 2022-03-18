@@ -8,18 +8,18 @@
  */
 
 import Animation from '../../../../twixt/js/Animation.js';
-import centerAndSpread from '../../centerAndSpread.js';
+import centerAndVariability from '../../centerAndVariability.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
-import CASObjectType from './CASObjectType.js';
+import CAVObjectType from './CAVObjectType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import EnumerationIO from '../../../../tandem/js/types/EnumerationIO.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import CASConstants from '../CASConstants.js';
+import CAVConstants from '../CAVConstants.js';
 import Property from '../../../../axon/js/Property.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import Emitter from '../../../../axon/js/Emitter.js';
@@ -34,12 +34,12 @@ type SelfOptions = {
   value?: number | null;
   isFirstObject?: boolean;
 };
-export type CASObjectOptions =
+export type CAVObjectOptions =
   SelfOptions
   & PhetioObjectOptions
   & PickRequired<PhetioObjectOptions, 'tandem'>;
 
-class CASObject extends PhetioObject {
+class CAVObject extends PhetioObject {
 
   // Continuous value for the drag listener. When dragging, the object snaps to each tickmark
   readonly dragPositionProperty: Vector2Property;
@@ -50,7 +50,7 @@ class CASObject extends PhetioObject {
   animationModeProperty: Property<AnimationMode>;
   readonly isMedianObjectProperty: BooleanProperty;
   readonly isShowingAnimationHighlightProperty: BooleanProperty;
-  readonly objectType: CASObjectType;
+  readonly objectType: CAVObjectType;
   readonly isFirstObject: boolean;
   readonly disposedEmitter: Emitter;
 
@@ -60,17 +60,17 @@ class CASObject extends PhetioObject {
   // The value that participates in the data set.
   valueProperty: Property<number | null>;
 
-  static CASObjectIO: IOType;
+  static CAVObjectIO: IOType;
   readonly dragStartedEmitter: Emitter;
   animation: Animation | null;
 
-  constructor( objectType: CASObjectType, providedOptions: CASObjectOptions ) {
+  constructor( objectType: CAVObjectType, providedOptions: CAVObjectOptions ) {
 
-    const options = optionize<CASObjectOptions, SelfOptions, PhetioObjectOptions>( {
+    const options = optionize<CAVObjectOptions, SelfOptions, PhetioObjectOptions>( {
       position: Vector2.ZERO,
       velocity: Vector2.ZERO,
       tandem: Tandem.REQUIRED,
-      phetioType: CASObject.CASObjectIO,
+      phetioType: CAVObject.CAVObjectIO,
       phetioDynamicElement: true,
       value: null,
       isFirstObject: false
@@ -87,7 +87,7 @@ class CASObject extends PhetioObject {
       tandem: options.tandem.createTandem( 'positionProperty' )
     } );
     this.velocityProperty = new Vector2Property( options.velocity, {
-      tandem: objectType === CASObjectType.SOCCER_BALL ?
+      tandem: objectType === CAVObjectType.SOCCER_BALL ?
               options.tandem.createTandem( 'velocityProperty' ) :
               Tandem.OPT_OUT
     } );
@@ -115,7 +115,7 @@ class CASObject extends PhetioObject {
       assert && assert( this.targetX !== null, 'targetX should be non-null when animating' );
 
       const xCoordinates = rk4( this.positionProperty.value.x, this.velocityProperty.value.x, 0, dt );
-      const yCoordinates = rk4( this.positionProperty.value.y, this.velocityProperty.value.y, CASConstants.GRAVITY, dt );
+      const yCoordinates = rk4( this.positionProperty.value.y, this.velocityProperty.value.y, CAVConstants.GRAVITY, dt );
 
       let x = xCoordinates[ 0 ];
       let y = yCoordinates[ 0 ];
@@ -179,22 +179,22 @@ const rk4 = ( x: number, v: number, a: number, dt: number ) => {
   return [ xResult, vResult ];
 };
 
-CASObject.CASObjectIO = new IOType( 'CASObjectIO', {
-  valueType: CASObject,
-  toStateObject: ( casObject: CASObject ) => casObject.toStateObject(),
+CAVObject.CAVObjectIO = new IOType( 'CAVObjectIO', {
+  valueType: CAVObject,
+  toStateObject: ( casObject: CAVObject ) => casObject.toStateObject(),
   stateToArgsForConstructor: ( stateObject: any ) => {
     return [
-      stateObject.objectType === 'SOCCER_BALL' ? CASObjectType.SOCCER_BALL : CASObjectType.DATA_POINT, {
+      stateObject.objectType === 'SOCCER_BALL' ? CAVObjectType.SOCCER_BALL : CAVObjectType.DATA_POINT, {
         targetX: stateObject.targetX,
         isFirstObject: stateObject.isFirstObject
       } ];
   },
   stateSchema: {
-    objectType: EnumerationIO( CASObjectType ),
+    objectType: EnumerationIO( CAVObjectType ),
     targetX: NullableIO( NumberIO ),
     isFirstObject: BooleanIO
   }
 } );
 
-centerAndSpread.register( 'CASObject', CASObject );
-export default CASObject;
+centerAndVariability.register( 'CAVObject', CAVObject );
+export default CAVObject;

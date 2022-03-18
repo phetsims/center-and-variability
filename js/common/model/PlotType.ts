@@ -2,7 +2,7 @@
 
 import Enumeration from '../../../../phet-core/js/Enumeration.js';
 import EnumerationValue from '../../../../phet-core/js/EnumerationValue.js';
-import centerAndSpread from '../../centerAndSpread.js';
+import centerAndVariability from '../../centerAndVariability.js';
 
 /**
  * Whether to show dots or x's in the plot.
@@ -15,5 +15,5 @@ class PlotType extends EnumerationValue {
   static enumeration = new Enumeration( PlotType );
 }
 
-centerAndSpread.register( 'PlotType', PlotType );
+centerAndVariability.register( 'PlotType', PlotType );
 export default PlotType;

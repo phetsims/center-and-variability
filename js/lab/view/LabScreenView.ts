@@ -9,14 +9,14 @@
 
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import centerAndSpread from '../../centerAndSpread.js';
+import centerAndVariability from '../../centerAndVariability.js';
 import LabModel from '../model/LabModel.js';
-import CASScreenView, { CASScreenViewOptions } from '../../common/view/CASScreenView.js';
+import CAVScreenView, { CAVScreenViewOptions } from '../../common/view/CAVScreenView.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 
-type LabScreenViewOptions = CASScreenViewOptions;
+type LabScreenViewOptions = CAVScreenViewOptions;
 
-class LabScreenView extends CASScreenView {
+class LabScreenView extends CAVScreenView {
 
   constructor( model: LabModel, providedOptions: LabScreenViewOptions ) {
 
@@ -41,5 +41,5 @@ class LabScreenView extends CASScreenView {
   }
 }
 
-centerAndSpread.register( 'LabScreenView', LabScreenView );
+centerAndVariability.register( 'LabScreenView', LabScreenView );
 export default LabScreenView;

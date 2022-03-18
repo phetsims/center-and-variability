@@ -9,13 +9,13 @@
 
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import centerAndSpread from '../../centerAndSpread.js';
+import centerAndVariability from '../../centerAndVariability.js';
 import SoccerScreenView, { SoccerScreenViewOptions } from '../../common/view/SoccerScreenView.js';
-import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
-import CASAccordionBox from '../../common/view/CASAccordionBox.js';
-import CASConstants from '../../common/CASConstants.js';
+import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
+import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
+import CAVConstants from '../../common/CAVConstants.js';
 import CardNodeContainer from '../../common/view/CardNodeContainer.js';
-import CASPlotNode from './CASPlotNode.js';
+import CAVPlotNode from './CAVPlotNode.js';
 import SoccerModel from '../model/SoccerModel.js';
 import ValueReadoutsNode from './ValueReadoutsNode.js';
 import { Node, ManualConstraint, Text } from '../../../../scenery/js/imports.js';
@@ -30,7 +30,7 @@ type SelfOptions = {
 export type MeanOrMedianScreenViewOptions = SelfOptions & SoccerScreenViewOptions;
 
 class MeanOrMedianScreenView extends SoccerScreenView {
-  private readonly accordionBox: CASAccordionBox;
+  private readonly accordionBox: CAVAccordionBox;
   protected readonly accordionBoxContents: Node;
 
   constructor( model: SoccerModel, providedOptions: MeanOrMedianScreenViewOptions ) {
@@ -51,7 +51,7 @@ class MeanOrMedianScreenView extends SoccerScreenView {
       } );
     }
     else {
-      this.accordionBoxContents = new CASPlotNode( this.model, this.chartViewWidth, {
+      this.accordionBoxContents = new CAVPlotNode( this.model, this.chartViewWidth, {
         tandem: accordionBoxTandem.createTandem( 'plotNode' )
       } );
     }
@@ -62,21 +62,21 @@ class MeanOrMedianScreenView extends SoccerScreenView {
     } );
 
     if ( options.isMedianScreen ) {
-      titleNode.text = centerAndSpreadStrings.distanceInMeters;
+      titleNode.text = centerAndVariabilityStrings.distanceInMeters;
     }
     else {
-      CASConstants.PLOT_TYPE_PROPERTY.link( plotType => {
-        titleNode.text = plotType === PlotType.LINE_PLOT ? centerAndSpreadStrings.linePlot : centerAndSpreadStrings.dotPlot;
+      CAVConstants.PLOT_TYPE_PROPERTY.link( plotType => {
+        titleNode.text = plotType === PlotType.LINE_PLOT ? centerAndVariabilityStrings.linePlot : centerAndVariabilityStrings.dotPlot;
       } );
     }
 
-    this.accordionBox = new CASAccordionBox( this.model, this.accordionBoxContents, this.topCheckboxPanel,
+    this.accordionBox = new CAVAccordionBox( this.model, this.accordionBoxContents, this.topCheckboxPanel,
       titleNode,
       this.layoutBounds, {
         tandem: accordionBoxTandem,
         contentNodeOffsetY: options.isMedianScreen ? -6 : 0,
         centerX: this.layoutBounds.centerX,
-        top: this.questionBar.bottom + CASConstants.SCREEN_VIEW_Y_MARGIN,
+        top: this.questionBar.bottom + CAVConstants.SCREEN_VIEW_Y_MARGIN,
 
         // TODO: Better pattern for this
         valueReadoutsNode: options.isMedianScreen ? null : new ValueReadoutsNode( model )
@@ -113,9 +113,9 @@ class MeanOrMedianScreenView extends SoccerScreenView {
     } );
     this.visibleBoundsProperty.value = this.parentToLocalBounds( viewBounds );
 
-    this.accordionBox.top = this.questionBar.bottom + CASConstants.SCREEN_VIEW_Y_MARGIN;
+    this.accordionBox.top = this.questionBar.bottom + CAVConstants.SCREEN_VIEW_Y_MARGIN;
   }
 }
 
-centerAndSpread.register( 'MeanOrMedianScreenView', MeanOrMedianScreenView );
+centerAndVariability.register( 'MeanOrMedianScreenView', MeanOrMedianScreenView );
 export default MeanOrMedianScreenView;

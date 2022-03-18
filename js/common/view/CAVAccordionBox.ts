@@ -10,12 +10,12 @@
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import { Node, Rectangle } from '../../../../scenery/js/imports.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
-import CASConstants from '../CASConstants.js';
+import CAVConstants from '../CAVConstants.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import centerAndSpread from '../../centerAndSpread.js';
+import centerAndVariability from '../../centerAndVariability.js';
 import TopRepresentationCheckboxGroup from './TopRepresentationCheckboxGroup.js';
-import CASModel from '../model/CASModel.js';
+import CAVModel from '../model/CAVModel.js';
 import ValueReadoutsNode from './ValueReadoutsNode.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
@@ -24,7 +24,7 @@ type SelfOptions = {
   valueReadoutsNode: ValueReadoutsNode | null;
   contentNodeOffsetY: number;
 };
-export type CASAccordionBoxOptions =
+export type CAVAccordionBoxOptions =
   SelfOptions
   & Omit<AccordionBoxOptions, 'titleNode' | 'expandedProperty'>
   & PickRequired<AccordionBoxOptions, 'tandem'>;
@@ -33,15 +33,15 @@ export type CASAccordionBoxOptions =
 const CONTENT_MARGIN = 10;
 const BUTTON_SIDE_LENGTH = 20;
 
-class CASAccordionBox extends AccordionBox {
+class CAVAccordionBox extends AccordionBox {
 
   // TODO: In order to support the accordion box (screen 2) and panel (screen 3) with similar layouts,
   // consider a panel that puts readouts on the left, data + number line in the middle, and
   // checkboxes on the right.  Rather than duplicating that here is accordion box and the screen 3 panel.
-  constructor( model: CASModel, contentNode: Node, checkboxPanel: TopRepresentationCheckboxGroup,
-               titleNode: Node, layoutBounds: Bounds2, providedOptions: CASAccordionBoxOptions ) {
+  constructor( model: CAVModel, contentNode: Node, checkboxPanel: TopRepresentationCheckboxGroup,
+               titleNode: Node, layoutBounds: Bounds2, providedOptions: CAVAccordionBoxOptions ) {
 
-    const options = optionize<CASAccordionBoxOptions, SelfOptions, AccordionBoxOptions>( {
+    const options = optionize<CAVAccordionBoxOptions, SelfOptions, AccordionBoxOptions>( {
       titleAlignX: 'left',
       titleXSpacing: 8,
       cornerRadius: 6,
@@ -61,7 +61,7 @@ class CASAccordionBox extends AccordionBox {
 
     const backgroundNode = new Rectangle( {
       rectHeight: 140,
-      rectWidth: layoutBounds.width - CASConstants.SCREEN_VIEW_X_MARGIN * 2 - CONTENT_MARGIN * 2
+      rectWidth: layoutBounds.width - CAVConstants.SCREEN_VIEW_X_MARGIN * 2 - CONTENT_MARGIN * 2
     } );
 
     // Explicitly set the local bounds so they don't change. This lets content appear next to the accordion box title.
@@ -99,5 +99,5 @@ class CASAccordionBox extends AccordionBox {
   }
 }
 
-centerAndSpread.register( 'CASAccordionBox', CASAccordionBox );
-export default CASAccordionBox;
+centerAndVariability.register( 'CAVAccordionBox', CAVAccordionBox );
+export default CAVAccordionBox;

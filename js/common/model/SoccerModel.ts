@@ -9,15 +9,15 @@
 
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import centerAndSpread from '../../centerAndSpread.js';
-import CASModel, { CASModelOptions } from '../../common/model/CASModel.js';
-import CASObjectType from '../../common/model/CASObjectType.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
+import CAVObjectType from '../../common/model/CAVObjectType.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
-import CASConstants from '../CASConstants.js';
+import CAVConstants from '../CAVConstants.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import SoccerPlayer from './SoccerPlayer.js';
-import CASObject from './CASObject.js';
+import CAVObject from './CAVObject.js';
 import Property from '../../../../axon/js/Property.js';
 import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
 import Pose from './Pose.js';
@@ -30,7 +30,7 @@ import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 
 type SelfOptions = {};
-type SoccerModelOptions = SelfOptions & CASModelOptions;
+type SoccerModelOptions = SelfOptions & CAVModelOptions;
 
 // constants
 const TIME_BETWEEN_RAPID_KICKS = 0.5; // in seconds
@@ -42,24 +42,24 @@ const SKEWED_LEFT = [
 ];
 const SKEWED_RIGHT = SKEWED_LEFT.slice().reverse();
 
-class SoccerModel extends CASModel {
+class SoccerModel extends CAVModel {
   readonly soccerPlayerGroup: PhetioGroup<SoccerPlayer, [ number ]>;
-  readonly nextBallToKickProperty: Property<CASObject | null>; // Null if there is no more ball to kick
+  readonly nextBallToKickProperty: Property<CAVObject | null>; // Null if there is no more ball to kick
   private readonly numberOfScheduledSoccerBallsToKickProperty: NumberProperty;
   readonly numberOfRemainingKickableSoccerBallsProperty: IReadOnlyProperty<number>;
   readonly hasKickableSoccerBallsProperty: Property<boolean>;
 
   private readonly timeWhenLastBallWasKickedProperty: NumberProperty;
-  private readonly ballPlayerMap: Map<CASObject, SoccerPlayer>; // TODO: Add to PhET-iO State
+  private readonly ballPlayerMap: Map<CAVObject, SoccerPlayer>; // TODO: Add to PhET-iO State
   currentDistribution: number[];
 
   constructor( maxNumberOfBalls: number, options: SoccerModelOptions ) {
 
-    options = optionize<SoccerModelOptions, SelfOptions, CASModelOptions>( {
+    options = optionize<SoccerModelOptions, SelfOptions, CAVModelOptions>( {
       tandem: Tandem.REQUIRED
     }, options );
 
-    super( CASObjectType.SOCCER_BALL, maxNumberOfBalls, options );
+    super( CAVObjectType.SOCCER_BALL, maxNumberOfBalls, options );
 
     this.numberOfScheduledSoccerBallsToKickProperty = new NumberProperty( 0, {
       tandem: options.tandem.createTandem( 'numberOfScheduledSoccerBallsToKickProperty' )
@@ -80,14 +80,14 @@ class SoccerModel extends CASModel {
     this.populateSoccerPlayerGroup();
 
     // Create an initial ball to show on startup
-    this.nextBallToKickProperty = new Property<CASObject | null>( this.createBall(), {
+    this.nextBallToKickProperty = new Property<CAVObject | null>( this.createBall(), {
       tandem: options.tandem.createTandem( 'nextBallToKickProperty' ),
-      phetioType: Property.PropertyIO( NullableIO( ReferenceIO( CASObject.CASObjectIO ) ) )
+      phetioType: Property.PropertyIO( NullableIO( ReferenceIO( CAVObject.CAVObjectIO ) ) )
     } );
 
     this.ballPlayerMap = new Map();
 
-    this.numberOfRemainingKickableSoccerBallsProperty = new DerivedProperty<number, [ number, number, CASObject | null ]>( [
+    this.numberOfRemainingKickableSoccerBallsProperty = new DerivedProperty<number, [ number, number, CAVObject | null ]>( [
       this.numberOfRemainingObjectsProperty,
       this.numberOfScheduledSoccerBallsToKickProperty,
       this.nextBallToKickProperty ], ( numberOfRemainingObjects,
@@ -133,7 +133,7 @@ class SoccerModel extends CASModel {
   /**
    * Creates a ball at the starting kick position.
    */
-  private createBall(): CASObject {
+  private createBall(): CAVObject {
 
     const y0 = this.objectType.radius;
     const position = new Vector2( 0, y0 );
@@ -146,7 +146,7 @@ class SoccerModel extends CASModel {
   /**
    * When a ball lands on the ground, animate all other balls that were at this location above the landed ball.
    */
-  soccerBallLandedListener( casObject: CASObject, value: number ) {
+  soccerBallLandedListener( casObject: CAVObject, value: number ) {
     const otherObjectsInStack = this.objectGroup.filter( x => x.valueProperty.value === value && x !== casObject );
     const sortedOthers = _.sortBy( otherObjectsInStack, object => object.positionProperty.value.y );
 
@@ -191,7 +191,7 @@ class SoccerModel extends CASModel {
   /**
    * Select a target location for the nextBallToKick, set its velocity and mark it for animation.
    */
-  private kickBall( soccerPlayer: SoccerPlayer, casObject: CASObject ) {
+  private kickBall( soccerPlayer: SoccerPlayer, casObject: CAVObject ) {
     soccerPlayer.poseProperty.value = Pose.KICKING;
 
     this.ballPlayerMap.set( casObject, soccerPlayer );
@@ -221,7 +221,7 @@ class SoccerModel extends CASModel {
     // Equation 4.26
     const degreesToRadians = ( degrees: number ) => degrees * Math.PI * 2 / 360;
     const angle = dotRandom.nextDoubleBetween( degreesToRadians( 25 ), degreesToRadians( 70 ) );
-    const v0 = Math.sqrt( Math.abs( x1 * Math.abs( CASConstants.GRAVITY ) / Math.sin( 2 * angle ) ) );
+    const v0 = Math.sqrt( Math.abs( x1 * Math.abs( CAVConstants.GRAVITY ) / Math.sin( 2 * angle ) ) );
 
     const velocity = Vector2.createPolar( v0, angle );
     casObject.velocityProperty.value = velocity;
@@ -259,7 +259,7 @@ class SoccerModel extends CASModel {
           this.nextBallToKickProperty.value = this.createBall();
         }
 
-        // TODO: Why is this called here? https://github.com/phetsims/center-and-spread/issues/59
+        // TODO: Why is this called here? https://github.com/phetsims/center-and-variability/issues/59
         this.advanceLine();
 
         assert && assert( this.nextBallToKickProperty.value !== null, 'there was no ball to kick' );
@@ -275,7 +275,7 @@ class SoccerModel extends CASModel {
         const elapsedTime = this.timeProperty.value - frontPlayer.timestampWhenPoisedBegan;
         if ( elapsedTime > 0.075 ) {
 
-          const casObject = this.nextBallToKickProperty.value!; // TODO: Probably? See https://github.com/phetsims/center-and-spread/issues/59
+          const casObject = this.nextBallToKickProperty.value!; // TODO: Probably? See https://github.com/phetsims/center-and-variability/issues/59
           this.kickBall( frontPlayer, casObject );
           this.numberOfScheduledSoccerBallsToKickProperty.value--;
         }
@@ -333,5 +333,5 @@ class SoccerModel extends CASModel {
   }
 }
 
-centerAndSpread.register( 'SoccerModel', SoccerModel );
+centerAndVariability.register( 'SoccerModel', SoccerModel );
 export default SoccerModel;

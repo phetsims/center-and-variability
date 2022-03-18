@@ -10,21 +10,21 @@
 import Screen, { ScreenOptions } from '../../../joist/js/Screen.js';
 import optionize from '../../../phet-core/js/optionize.js';
 import Tandem from '../../../tandem/js/Tandem.js';
-import CASColors from '../common/CASColors.js';
-import centerAndSpread from '../centerAndSpread.js';
-import CASModel from './model/CASModel.js';
-import CASScreenView from './view/CASScreenView.js';
+import CAVColors from '../common/CAVColors.js';
+import centerAndVariability from '../centerAndVariability.js';
+import CAVModel from './model/CAVModel.js';
+import CAVScreenView from './view/CAVScreenView.js';
 import PickRequired from '../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = {};
-export type CASScreenOptions = SelfOptions & ScreenOptions & PickRequired<ScreenOptions, 'tandem'>;
+export type CAVScreenOptions = SelfOptions & ScreenOptions & PickRequired<ScreenOptions, 'tandem'>;
 
-class CASScreen<M extends CASModel, V extends CASScreenView> extends Screen<M, V> {
+class CAVScreen<M extends CAVModel, V extends CAVScreenView> extends Screen<M, V> {
 
-  constructor( createModel: () => M, createView: ( m: M ) => V, providedOptions?: CASScreenOptions ) {
+  constructor( createModel: () => M, createView: ( m: M ) => V, providedOptions?: CAVScreenOptions ) {
 
-    const options = optionize<CASScreenOptions, SelfOptions, ScreenOptions>( {
-      backgroundColorProperty: CASColors.screenBackgroundColorProperty,
+    const options = optionize<CAVScreenOptions, SelfOptions, ScreenOptions>( {
+      backgroundColorProperty: CAVColors.screenBackgroundColorProperty,
       tandem: Tandem.REQUIRED
     }, providedOptions );
 
@@ -32,5 +32,5 @@ class CASScreen<M extends CASModel, V extends CASScreenView> extends Screen<M, V
   }
 }
 
-centerAndSpread.register( 'CASScreen', CASScreen );
-export default CASScreen;
+centerAndVariability.register( 'CAVScreen', CAVScreen );
+export default CAVScreen;

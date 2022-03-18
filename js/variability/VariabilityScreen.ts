@@ -1,7 +1,7 @@
 // Copyright 2022, University of Colorado Boulder
 
 /**
- * Screen for the "Spread" screen
+ * Screen for the "Variability" screen
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
@@ -9,36 +9,36 @@
 
 import optionize from '../../../phet-core/js/optionize.js';
 import Tandem from '../../../tandem/js/Tandem.js';
-import CASColors from '../common/CASColors.js';
-import centerAndSpread from '../centerAndSpread.js';
-import SpreadModel from './model/SpreadModel.js';
-import CASScreen, { CASScreenOptions } from '../common/CASScreen.js';
-import SpreadScreenView from './view/SpreadScreenView.js';
-import centerAndSpreadStrings from '../centerAndSpreadStrings.js';
+import CAVColors from '../common/CAVColors.js';
+import centerAndVariability from '../centerAndVariability.js';
+import VariabilityModel from './model/VariabilityModel.js';
+import CAVScreen, { CAVScreenOptions } from '../common/CAVScreen.js';
+import VariabilityScreenView from './view/VariabilityScreenView.js';
+import centerAndVariabilityStrings from '../centerAndVariabilityStrings.js';
 
-type SpreadScreenOptions = CASScreenOptions;
+type VariabilityScreenOptions = CAVScreenOptions;
 
-class SpreadScreen extends CASScreen<SpreadModel, SpreadScreenView> {
+class VariabilityScreen extends CAVScreen<VariabilityModel, VariabilityScreenView> {
 
-  constructor( providedOptions: SpreadScreenOptions ) {
+  constructor( providedOptions: VariabilityScreenOptions ) {
 
-    const options = optionize<SpreadScreenOptions, {}>( {
-      name: centerAndSpreadStrings.screen.spread,
-      backgroundColorProperty: CASColors.screenBackgroundColorProperty,
+    const options = optionize<VariabilityScreenOptions, {}>( {
+      name: centerAndVariabilityStrings.screen.variability,
+      backgroundColorProperty: CAVColors.screenBackgroundColorProperty,
       tandem: Tandem.REQUIRED
     }, providedOptions );
 
     super(
-      () => new SpreadModel( {
+      () => new VariabilityModel( {
         includeCards: false,
         tandem: options.tandem.createTandem( 'model' ),
         instrumentMeanPredictionProperty: true
       } ),
-      ( model: SpreadModel ) => new SpreadScreenView( model, { tandem: options.tandem.createTandem( 'view' ) } ),
+      ( model: VariabilityModel ) => new VariabilityScreenView( model, { tandem: options.tandem.createTandem( 'view' ) } ),
       options
     );
   }
 }
 
-centerAndSpread.register( 'SpreadScreen', SpreadScreen );
-export default SpreadScreen;
+centerAndVariability.register( 'VariabilityScreen', VariabilityScreen );
+export default VariabilityScreen;

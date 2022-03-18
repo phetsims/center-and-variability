@@ -7,7 +7,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import centerAndSpread from '../../centerAndSpread.js';
+import centerAndVariability from '../../centerAndVariability.js';
 import { Text, Image, Node, NodeOptions } from '../../../../scenery/js/imports.js';
 
 import player01Standing_png from '../../../images/player01Standing_png.js';
@@ -113,5 +113,5 @@ class SoccerPlayerNode extends Node {
   }
 }
 
-centerAndSpread.register( 'SoccerPlayerNode', SoccerPlayerNode );
+centerAndVariability.register( 'SoccerPlayerNode', SoccerPlayerNode );
 export default SoccerPlayerNode;

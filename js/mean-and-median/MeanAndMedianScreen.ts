@@ -9,22 +9,22 @@
 
 import optionize from '../../../phet-core/js/optionize.js';
 import Tandem from '../../../tandem/js/Tandem.js';
-import CASColors from '../common/CASColors.js';
-import centerAndSpread from '../centerAndSpread.js';
+import CAVColors from '../common/CAVColors.js';
+import centerAndVariability from '../centerAndVariability.js';
 import MeanAndMedianModel from './model/MeanAndMedianModel.js';
-import CASScreen, { CASScreenOptions } from '../common/CASScreen.js';
+import CAVScreen, { CAVScreenOptions } from '../common/CAVScreen.js';
 import MeanAndMedianScreenView from './view/MeanAndMedianScreenView.js';
-import centerAndSpreadStrings from '../centerAndSpreadStrings.js';
+import centerAndVariabilityStrings from '../centerAndVariabilityStrings.js';
 
-type MeanAndMedianScreenOptions = CASScreenOptions;
+type MeanAndMedianScreenOptions = CAVScreenOptions;
 
-class MeanAndMedianScreen extends CASScreen<MeanAndMedianModel, MeanAndMedianScreenView> {
+class MeanAndMedianScreen extends CAVScreen<MeanAndMedianModel, MeanAndMedianScreenView> {
 
   constructor( providedOptions: MeanAndMedianScreenOptions ) {
 
     const options = optionize<MeanAndMedianScreenOptions, {}>( {
-      name: centerAndSpreadStrings.screen.meanAndMedian,
-      backgroundColorProperty: CASColors.screenBackgroundColorProperty,
+      name: centerAndVariabilityStrings.screen.meanAndMedian,
+      backgroundColorProperty: CAVColors.screenBackgroundColorProperty,
       tandem: Tandem.REQUIRED
     }, providedOptions );
 
@@ -41,5 +41,5 @@ class MeanAndMedianScreen extends CASScreen<MeanAndMedianModel, MeanAndMedianScr
   }
 }
 
-centerAndSpread.register( 'MeanAndMedianScreen', MeanAndMedianScreen );
+centerAndVariability.register( 'MeanAndMedianScreen', MeanAndMedianScreen );
 export default MeanAndMedianScreen;

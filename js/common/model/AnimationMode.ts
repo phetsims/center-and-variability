@@ -2,10 +2,10 @@
 
 import Enumeration from '../../../../phet-core/js/Enumeration.js';
 import EnumerationValue from '../../../../phet-core/js/EnumerationValue.js';
-import centerAndSpread from '../../centerAndSpread.js';
+import centerAndVariability from '../../centerAndVariability.js';
 
 /**
- * AnimationMode is used to identify what type of animation a CASObject is undergoing.
+ * AnimationMode is used to identify what type of animation a CAVObject is undergoing.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
@@ -22,4 +22,4 @@ export class AnimationMode extends EnumerationValue {
   static enumeration = new Enumeration( AnimationMode );
 }
 
-centerAndSpread.register( 'AnimationMode', AnimationMode );
+centerAndVariability.register( 'AnimationMode', AnimationMode );

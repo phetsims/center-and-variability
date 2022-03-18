@@ -13,14 +13,14 @@ import Range from '../../../../dot/js/Range.js';
 import Property from '../../../../axon/js/Property.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
-import centerAndSpread from '../../centerAndSpread.js';
+import centerAndVariability from '../../centerAndVariability.js';
 import VerticalCheckboxGroup, { VerticalCheckboxGroupOptions } from '../../../../sun/js/VerticalCheckboxGroup.js';
 import { HBox, IColor, Text } from '../../../../scenery/js/imports.js';
-import CASModel from '../model/CASModel.js';
-import CASConstants from '../CASConstants.js';
-import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
+import CAVModel from '../model/CAVModel.js';
+import CAVConstants from '../CAVConstants.js';
+import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
 import PredictionNode from './PredictionNode.js';
-import CASColors from '../CASColors.js';
+import CAVColors from '../CAVColors.js';
 import NumberLineNode from './NumberLineNode.js';
 
 type SelfOptions = {
@@ -33,13 +33,13 @@ export type BottomRepresentationCheckboxGroupOptions = SelfOptions & VerticalChe
 
 // constants
 const TEXT_OPTIONS = {
-  font: CASConstants.BUTTON_FONT,
-  maxWidth: CASConstants.CHECKBOX_TEXT_MAX_WIDTH
+  font: CAVConstants.BUTTON_FONT,
+  maxWidth: CAVConstants.CHECKBOX_TEXT_MAX_WIDTH
 };
 
 class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
-  constructor( model: CASModel, providedOptions?: BottomRepresentationCheckboxGroupOptions ) {
+  constructor( model: CAVModel, providedOptions?: BottomRepresentationCheckboxGroupOptions ) {
 
     const options = optionize<BottomRepresentationCheckboxGroupOptions, SelfOptions, VerticalCheckboxGroupOptions>( {
       includeMean: true,
@@ -72,10 +72,10 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
     };
 
     options.includePredictMean && items.push( createPredictionItem(
-      model.isShowingMeanPredictionProperty, centerAndSpreadStrings.predictMean, CASColors.meanColorProperty, 20.3
+      model.isShowingMeanPredictionProperty, centerAndVariabilityStrings.predictMean, CAVColors.meanColorProperty, 20.3
     ) );
     options.includePredictMedian && items.push( createPredictionItem(
-      model.isShowingMedianPredictionProperty, centerAndSpreadStrings.predictMedian, CASColors.medianColorProperty, 8
+      model.isShowingMedianPredictionProperty, centerAndVariabilityStrings.predictMedian, CAVColors.medianColorProperty, 8
     ) );
 
     options.includeMean && items.push( {
@@ -84,7 +84,7 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
       node: new HBox( {
         spacing: 24.5,
         children: [
-          new Text( centerAndSpreadStrings.mean, TEXT_OPTIONS ),
+          new Text( centerAndVariabilityStrings.mean, TEXT_OPTIONS ),
           NumberLineNode.createMeanIndicatorNode( true )
         ]
       } ),
@@ -96,13 +96,13 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
       node: new HBox( {
         spacing: 14,
         children: [
-          new Text( centerAndSpreadStrings.median, TEXT_OPTIONS ),
+          new Text( centerAndVariabilityStrings.median, TEXT_OPTIONS ),
 
           // TODO: Factor out?  See playAreaMedianIndicatorNode
           new ArrowNode( 0, 0, 0, 27, {
-            fill: CASColors.medianColorProperty,
-            stroke: CASColors.arrowStrokeProperty,
-            lineWidth: CASConstants.ARROW_LINE_WIDTH,
+            fill: CAVColors.medianColorProperty,
+            stroke: CAVColors.arrowStrokeProperty,
+            lineWidth: CAVConstants.ARROW_LINE_WIDTH,
             headHeight: 12,
             headWidth: 18,
             maxHeight: 20
@@ -116,5 +116,5 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
   }
 }
 
-centerAndSpread.register( 'BottomRepresentationCheckboxGroup', BottomRepresentationCheckboxGroup );
+centerAndVariability.register( 'BottomRepresentationCheckboxGroup', BottomRepresentationCheckboxGroup );
 export default BottomRepresentationCheckboxGroup;

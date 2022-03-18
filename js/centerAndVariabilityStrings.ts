@@ -5,21 +5,21 @@
  */
 /* eslint-disable */
 import getStringModule from '../../chipper/js/getStringModule.js';
-import centerAndSpread from './centerAndSpread.js';
+import centerAndVariability from './centerAndVariability.js';
 
 type StringsType = {
-  'center-and-spread': {
+  'center-and-variability': {
     'title': string
   },
   'screen': {
     'median': string,
     'meanAndMedian': string,
-    'spread': string,
+    'variability': string,
     'lab': string
   },
   'medianQuestion': string,
   'meanAndMedianQuestion': string,
-  'spreadQuestion': string,
+  'variabilityQuestion': string,
   'kickValue': string,
   'distanceInMeters': string,
   'sortData': string,
@@ -36,8 +36,8 @@ type StringsType = {
   'youSortedTheData': string
 };
 
-const centerAndSpreadStrings = getStringModule( 'CENTER_AND_SPREAD' ) as StringsType;
+const centerAndVariabilityStrings = getStringModule( 'CENTER_AND_VARIABILITY' ) as StringsType;
 
-centerAndSpread.register( 'centerAndSpreadStrings', centerAndSpreadStrings );
+centerAndVariability.register( 'centerAndVariabilityStrings', centerAndVariabilityStrings );
 
-export default centerAndSpreadStrings;
+export default centerAndVariabilityStrings;

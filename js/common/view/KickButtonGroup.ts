@@ -7,15 +7,15 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import centerAndSpread from '../../centerAndSpread.js';
+import centerAndVariability from '../../centerAndVariability.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import { AlignGroup, Node, Text, VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
+import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import CASColors from '../CASColors.js';
+import CAVColors from '../CAVColors.js';
 import SoccerModel from '../model/SoccerModel.js';
-import CASConstants from '../CASConstants.js';
+import CAVConstants from '../CAVConstants.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
@@ -39,7 +39,7 @@ class KickButtonGroup extends VBox {
     const createLabel = ( label: string, tandem: Tandem ) => {
       const text = new Text( label, {
         maxWidth: TEXT_MAX_WIDTH,
-        font: CASConstants.BUTTON_FONT,
+        font: CAVConstants.BUTTON_FONT,
         tandem: tandem
       } );
       return {
@@ -53,14 +53,14 @@ class KickButtonGroup extends VBox {
       if ( multikick ) {
         model.numberOfRemainingKickableSoccerBallsProperty.link( numberOfRemainingKickableObjects => {
           const value = Math.max( Math.min( numberOfRemainingKickableObjects, numberToKick ), 1 );
-          content.text.text = StringUtils.fillIn( centerAndSpreadStrings.kickValue, { value: value } );
+          content.text.text = StringUtils.fillIn( centerAndVariabilityStrings.kickValue, { value: value } );
         } );
       }
 
       return new RectangularPushButton( {
         visibleProperty: model.hasKickableSoccerBallsProperty,
         content: content.label,
-        baseColor: CASColors.kickButtonFillColorProperty,
+        baseColor: CAVColors.kickButtonFillColorProperty,
         xMargin: 12,
         yMargin: 12,
         tandem: tandem,
@@ -78,8 +78,8 @@ class KickButtonGroup extends VBox {
     const kick5ButtonTandem = options.tandem.createTandem( 'kickFiveButton' );
 
     // Create labels first so their sizes can be aligned
-    const kick1Label = createLabel( StringUtils.fillIn( centerAndSpreadStrings.kickValue, { value: 1 } ), kick1ButtonTandem.createTandem( 'labelNode' ) );
-    const kick5Label = createLabel( StringUtils.fillIn( centerAndSpreadStrings.kickValue, { value: 5 } ), kick5ButtonTandem.createTandem( 'labelNode' ) );
+    const kick1Label = createLabel( StringUtils.fillIn( centerAndVariabilityStrings.kickValue, { value: 1 } ), kick1ButtonTandem.createTandem( 'labelNode' ) );
+    const kick5Label = createLabel( StringUtils.fillIn( centerAndVariabilityStrings.kickValue, { value: 5 } ), kick5ButtonTandem.createTandem( 'labelNode' ) );
 
     options.children = [
       createKickButton( kick1Label, kick1ButtonTandem, 1, false ),
@@ -90,5 +90,5 @@ class KickButtonGroup extends VBox {
   }
 }
 
-centerAndSpread.register( 'KickButtonGroup', KickButtonGroup );
+centerAndVariability.register( 'KickButtonGroup', KickButtonGroup );
 export default KickButtonGroup;

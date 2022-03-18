@@ -16,42 +16,42 @@
  */
 
 import { ProfileColorProperty } from '../../../scenery/js/imports.js';
-import centerAndSpread from '../centerAndSpread.js';
+import centerAndVariability from '../centerAndVariability.js';
 
-const CASColors = {
+const CAVColors = {
 
   // Background color that for screens in this sim
-  screenBackgroundColorProperty: new ProfileColorProperty( centerAndSpread, 'background', {
+  screenBackgroundColorProperty: new ProfileColorProperty( centerAndVariability, 'background', {
     default: 'white'
   } ),
-  medianQuestionBarFillColorProperty: new ProfileColorProperty( centerAndSpread, 'medianQuestionBarFill', {
+  medianQuestionBarFillColorProperty: new ProfileColorProperty( centerAndVariability, 'medianQuestionBarFill', {
     default: '#58c662'
   } ),
-  meanAndMedianQuestionBarFillColorProperty: new ProfileColorProperty( centerAndSpread, 'meanAndMedianQuestionBarFill', {
+  meanAndMedianQuestionBarFillColorProperty: new ProfileColorProperty( centerAndVariability, 'meanAndMedianQuestionBarFill', {
     default: '#955fc4'
   } ),
-  spreadQuestionBarFillColorProperty: new ProfileColorProperty( centerAndSpread, 'spreadQuestionBarFill', {
+  variabilityQuestionBarFillColorProperty: new ProfileColorProperty( centerAndVariability, 'variabilityQuestionBarFill', {
     default: '#fdd10b'
   } ),
-  kickButtonFillColorProperty: new ProfileColorProperty( centerAndSpread, 'kickButtonFillColor', {
+  kickButtonFillColorProperty: new ProfileColorProperty( centerAndVariability, 'kickButtonFillColor', {
     default: 'white'
   } ),
-  dragIndicatorColorProperty: new ProfileColorProperty( centerAndSpread, 'dragIndicatorColor', {
+  dragIndicatorColorProperty: new ProfileColorProperty( centerAndVariability, 'dragIndicatorColor', {
     default: '#6bc6ff'
   } ),
 
   // sky gradient, sampled from a screenshot
-  skyGradientTopColorProperty: new ProfileColorProperty( centerAndSpread, 'skyGradientTop', { default: '#365b9b' } ),
-  skyGradientMiddleColorProperty: new ProfileColorProperty( centerAndSpread, 'skyGradientMiddle', { default: '#81b5ea' } ),
-  skyGradientBottomColorProperty: new ProfileColorProperty( centerAndSpread, 'skyGradientBottom', { default: '#c9d9ef' } ),
+  skyGradientTopColorProperty: new ProfileColorProperty( centerAndVariability, 'skyGradientTop', { default: '#365b9b' } ),
+  skyGradientMiddleColorProperty: new ProfileColorProperty( centerAndVariability, 'skyGradientMiddle', { default: '#81b5ea' } ),
+  skyGradientBottomColorProperty: new ProfileColorProperty( centerAndVariability, 'skyGradientBottom', { default: '#c9d9ef' } ),
 
   // the ground
-  groundColorProperty: new ProfileColorProperty( centerAndSpread, 'groundColor', { default: '#009245' } ),
+  groundColorProperty: new ProfileColorProperty( centerAndVariability, 'groundColor', { default: '#009245' } ),
 
-  medianColorProperty: new ProfileColorProperty( centerAndSpread, 'medianColor', { default: '#f03000' } ),
-  meanColorProperty: new ProfileColorProperty( centerAndSpread, 'meanColor', { default: '#8500bd' } ),
-  arrowStrokeProperty: new ProfileColorProperty( centerAndSpread, 'arrowStroke', { default: 'black' } )
+  medianColorProperty: new ProfileColorProperty( centerAndVariability, 'medianColor', { default: '#f03000' } ),
+  meanColorProperty: new ProfileColorProperty( centerAndVariability, 'meanColor', { default: '#8500bd' } ),
+  arrowStrokeProperty: new ProfileColorProperty( centerAndVariability, 'arrowStroke', { default: 'black' } )
 };
 
-centerAndSpread.register( 'CASColors', CASColors );
-export default CASColors;
+centerAndVariability.register( 'CAVColors', CAVColors );
+export default CAVColors;

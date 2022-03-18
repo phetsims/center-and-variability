@@ -10,22 +10,22 @@
 import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import centerAndSpread from '../../centerAndSpread.js';
-import CASModel from '../model/CASModel.js';
-import CASConstants from '../CASConstants.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CAVModel from '../model/CAVModel.js';
+import CAVConstants from '../CAVConstants.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
-import CASObjectNode from './CASObjectNode.js';
+import CAVObjectNode from './CAVObjectNode.js';
 import { Node } from '../../../../scenery/js/imports.js';
-import CASObjectType from '../model/CASObjectType.js';
-import CASObject from '../model/CASObject.js';
+import CAVObjectType from '../model/CAVObjectType.js';
+import CAVObject from '../model/CAVObject.js';
 import TopRepresentationCheckboxGroup from './TopRepresentationCheckboxGroup.js';
 import BottomRepresentationCheckboxGroup from './BottomRepresentationCheckboxGroup.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import PredictionNode from './PredictionNode.js';
-import CASColors from '../CASColors.js';
+import CAVColors from '../CAVColors.js';
 
 type SelfOptions = {
   topCheckboxPanelOptions?: {
@@ -42,16 +42,16 @@ type SelfOptions = {
     includePredictMean?: boolean;
   };
 };
-export type CASScreenViewOptions = SelfOptions & ScreenViewOptions;
+export type CAVScreenViewOptions = SelfOptions & ScreenViewOptions;
 
-class CASScreenView extends ScreenView {
+class CAVScreenView extends ScreenView {
 
   protected readonly topCheckboxPanel: TopRepresentationCheckboxGroup;
   protected readonly bottomCheckboxPanel: BottomRepresentationCheckboxGroup;
 
   protected readonly resetAllButton: ResetAllButton;
   protected readonly modelViewTransform: ModelViewTransform2;
-  protected readonly model: CASModel;
+  protected readonly model: CAVModel;
   protected readonly frontObjectLayer: Node;
 
   // TODO: We haven't enforced the "exactly half a ball should be occluded if anything is occluded" idea.
@@ -66,9 +66,9 @@ class CASScreenView extends ScreenView {
   protected readonly medianPredictionNode: PredictionNode;
   protected readonly meanPredictionNode: PredictionNode;
 
-  constructor( model: CASModel, modelViewTransform: ModelViewTransform2, providedOptions: CASScreenViewOptions ) {
+  constructor( model: CAVModel, modelViewTransform: ModelViewTransform2, providedOptions: CAVScreenViewOptions ) {
     // @ts-ignore what was happening here?
-    const options = optionize<CASScreenViewOptions, SelfOptions, ScreenViewOptions, 'tandem'>( {
+    const options = optionize<CAVScreenViewOptions, SelfOptions, ScreenViewOptions, 'tandem'>( {
       tandem: Tandem.REQUIRED
     }, providedOptions );
 
@@ -77,13 +77,13 @@ class CASScreenView extends ScreenView {
     this.modelViewTransform = modelViewTransform;
     this.model = model;
 
-    const objectNodeGroup = new PhetioGroup<CASObjectNode, [ CASObject ]>( ( tandem, casObject ) => {
-      return new CASObjectNode( casObject, model.isShowingPlayAreaMedianProperty, modelViewTransform, {
+    const objectNodeGroup = new PhetioGroup<CAVObjectNode, [ CAVObject ]>( ( tandem, casObject ) => {
+      return new CAVObjectNode( casObject, model.isShowingPlayAreaMedianProperty, modelViewTransform, {
         tandem: tandem
       } );
     }, [ model.objectGroup.archetype ], {
       phetioType: PhetioGroup.PhetioGroupIO( Node.NodeIO ),
-      tandem: options.tandem.createTandem( model.objectType === CASObjectType.SOCCER_BALL ? 'soccerBallNodeGroup' : 'dataPointNodeGroup' ),
+      tandem: options.tandem.createTandem( model.objectType === CAVObjectType.SOCCER_BALL ? 'soccerBallNodeGroup' : 'dataPointNodeGroup' ),
       supportsDynamicState: false
     } );
 
@@ -95,9 +95,9 @@ class CASScreenView extends ScreenView {
     this.frontObjectLayer = new Node();
     this.addChild( this.frontObjectLayer );
 
-    const map = new Map<CASObject, CASObjectNode>();
+    const map = new Map<CAVObject, CAVObjectNode>();
 
-    const createObjectNode = ( casObject: CASObject ) => {
+    const createObjectNode = ( casObject: CAVObject ) => {
       const casObjectNode = objectNodeGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject );
       this.frontObjectLayer.addChild( casObjectNode );
 
@@ -126,9 +126,9 @@ class CASScreenView extends ScreenView {
 
     // TODO: Separate class?
     this.playAreaMedianIndicatorNode = new ArrowNode( 0, 0, 0, 27, {
-      fill: CASColors.medianColorProperty,
-      stroke: CASColors.arrowStrokeProperty,
-      lineWidth: CASConstants.ARROW_LINE_WIDTH,
+      fill: CAVColors.medianColorProperty,
+      stroke: CAVColors.arrowStrokeProperty,
+      lineWidth: CAVConstants.ARROW_LINE_WIDTH,
       headHeight: 12,
       headWidth: 18
     } );
@@ -158,13 +158,13 @@ class CASScreenView extends ScreenView {
     this.medianPredictionNode = new PredictionNode( model.medianPredictionProperty, this.modelViewTransform, model.physicalRange, {
       center: this.layoutBounds.center,
       tandem: options.tandem.createTandem( 'medianPredictionNode' ),
-      color: CASColors.medianColorProperty,
+      color: CAVColors.medianColorProperty,
       roundToInterval: 0.5
     } );
     this.meanPredictionNode = new PredictionNode( model.meanPredictionProperty, this.modelViewTransform, model.physicalRange, {
       center: this.layoutBounds.center,
       tandem: options.tandem.createTandem( 'meanPredictionNode' ),
-      color: CASColors.meanColorProperty,
+      color: CAVColors.meanColorProperty,
       roundToInterval: null // continuous
     } );
 
@@ -181,8 +181,8 @@ class CASScreenView extends ScreenView {
 
         model.reset();
       },
-      right: this.layoutBounds.maxX - CASConstants.SCREEN_VIEW_X_MARGIN,
-      bottom: this.layoutBounds.maxY - CASConstants.SCREEN_VIEW_Y_MARGIN,
+      right: this.layoutBounds.maxX - CAVConstants.SCREEN_VIEW_X_MARGIN,
+      bottom: this.layoutBounds.maxY - CAVConstants.SCREEN_VIEW_Y_MARGIN,
       tandem: options.tandem.createTandem( 'resetAllButton' )
     } );
 
@@ -195,7 +195,7 @@ class CASScreenView extends ScreenView {
         model.clearData();
       },
       iconWidth: 26,
-      right: this.resetAllButton.left - CASConstants.SCREEN_VIEW_X_MARGIN,
+      right: this.resetAllButton.left - CAVConstants.SCREEN_VIEW_X_MARGIN,
       centerY: this.resetAllButton.centerY
     } );
     this.addChild( this.eraserButton );
@@ -210,5 +210,5 @@ class CASScreenView extends ScreenView {
   }
 }
 
-centerAndSpread.register( 'CASScreenView', CASScreenView );
-export default CASScreenView;
+centerAndVariability.register( 'CAVScreenView', CAVScreenView );
+export default CAVScreenView;

@@ -9,10 +9,10 @@
 
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import centerAndSpread from '../../centerAndSpread.js';
+import centerAndVariability from '../../centerAndVariability.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
-import CASColors from '../../common/CASColors.js';
-import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
+import CAVColors from '../../common/CAVColors.js';
+import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
 import { ManualConstraint } from '../../../../scenery/js/imports.js';
 import MeanOrMedianScreenView, { MeanOrMedianScreenViewOptions } from '../../common/view/MeanOrMedianScreenView.js';
 
@@ -27,8 +27,8 @@ class MeanAndMedianScreenView extends MeanOrMedianScreenView {
       // TODO: TypeScript is okay with not including isMedianScreen, why?
       isMedianScreen: false,
       questionBarOptions: {
-        barFill: CASColors.meanAndMedianQuestionBarFillColorProperty,
-        labelText: centerAndSpreadStrings.meanAndMedianQuestion
+        barFill: CAVColors.meanAndMedianQuestionBarFillColorProperty,
+        labelText: centerAndVariabilityStrings.meanAndMedianQuestion
       },
       topCheckboxPanelOptions: {
         medianBarIconOptions: {
@@ -55,5 +55,5 @@ class MeanAndMedianScreenView extends MeanOrMedianScreenView {
   }
 }
 
-centerAndSpread.register( 'MeanAndMedianScreenView', MeanAndMedianScreenView );
+centerAndVariability.register( 'MeanAndMedianScreenView', MeanAndMedianScreenView );
 export default MeanAndMedianScreenView;

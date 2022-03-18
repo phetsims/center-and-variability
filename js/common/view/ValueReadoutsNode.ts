@@ -1,20 +1,20 @@
 // Copyright 2022, University of Colorado Boulder
 
 /**
- * For the "Mean and Median" screen and the "Spread" screen, show the readouts on the left of the dot plot.
+ * For the "Mean and Median" screen and the "Variability" screen, show the readouts on the left of the dot plot.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
 import optionize from '../../../../phet-core/js/optionize.js';
-import centerAndSpread from '../../centerAndSpread.js';
+import centerAndVariability from '../../centerAndVariability.js';
 import { IPaint, Text, VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
-import CASModel from '../model/CASModel.js';
-import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
+import CAVModel from '../model/CAVModel.js';
+import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import Utils from '../../../../dot/js/Utils.js';
-import CASColors from '../CASColors.js';
+import CAVColors from '../CAVColors.js';
 import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 
@@ -23,7 +23,7 @@ export type ValueReadoutNodeOptions = SelfOptions & VBoxOptions;
 
 class ValueReadoutsNode extends VBox {
 
-  constructor( model: CASModel, providedOptions?: ValueReadoutNodeOptions ) {
+  constructor( model: CAVModel, providedOptions?: ValueReadoutNodeOptions ) {
 
     const createReadoutText = ( valueProperty: IReadOnlyProperty<number | null>, visibleProperty: IReadOnlyProperty<boolean>,
                                 stringTemplate: string, fill: IPaint ) => {
@@ -33,7 +33,7 @@ class ValueReadoutsNode extends VBox {
       } );
       valueProperty.link( value => {
         text.text = StringUtils.fillIn( stringTemplate, {
-          value: value === null ? centerAndSpreadStrings.valueUnknown : Utils.toFixed( value, 1 )
+          value: value === null ? centerAndVariabilityStrings.valueUnknown : Utils.toFixed( value, 1 )
         } );
       } );
 
@@ -43,10 +43,10 @@ class ValueReadoutsNode extends VBox {
     };
 
     const meanText = createReadoutText( model.meanValueProperty, model.isShowingTopMeanProperty,
-      centerAndSpreadStrings.meanEqualsValue, CASColors.meanColorProperty );
+      centerAndVariabilityStrings.meanEqualsValue, CAVColors.meanColorProperty );
 
     const medianText = createReadoutText( model.medianValueProperty, model.isShowingTopMedianProperty,
-      centerAndSpreadStrings.medianEqualsValue, CASColors.medianColorProperty );
+      centerAndVariabilityStrings.medianEqualsValue, CAVColors.medianColorProperty );
 
     const options = optionize<ValueReadoutNodeOptions, SelfOptions, VBoxOptions>( {
       align: 'left',
@@ -62,5 +62,5 @@ class ValueReadoutsNode extends VBox {
   }
 }
 
-centerAndSpread.register( 'ValueReadoutsNode', ValueReadoutsNode );
+centerAndVariability.register( 'ValueReadoutsNode', ValueReadoutsNode );
 export default ValueReadoutsNode;

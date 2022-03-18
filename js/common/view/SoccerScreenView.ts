@@ -9,8 +9,8 @@
 
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import centerAndSpread from '../../centerAndSpread.js';
-import CASScreenView, { CASScreenViewOptions } from './CASScreenView.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CAVScreenView, { CAVScreenViewOptions } from './CAVScreenView.js';
 import QuestionBar, { QuestionBarOptions } from './QuestionBar.js';
 import KickButtonGroup from './KickButtonGroup.js';
 import BackgroundNode from './BackgroundNode.js';
@@ -27,20 +27,20 @@ import NumberLineNode from './NumberLineNode.js';
 type SelfOptions = {
   questionBarOptions: QuestionBarOptions
 };
-export type SoccerScreenViewOptions = SelfOptions & CASScreenViewOptions;
+export type SoccerScreenViewOptions = SelfOptions & CAVScreenViewOptions;
 
 // constants
 const GROUND_POSITION_Y = 500;
 const NUMBER_LINE_MARGIN_X = 207;
 
-class SoccerScreenView extends CASScreenView {
+class SoccerScreenView extends CAVScreenView {
   protected readonly questionBar: QuestionBar;
   protected readonly chartViewWidth: number;
   protected readonly playAreaNumberLineNode: NumberLineNode;
 
   constructor( model: SoccerModel, providedOptions: SoccerScreenViewOptions ) {
 
-    const options = optionize<SoccerScreenViewOptions, SelfOptions, CASScreenViewOptions, 'tandem'>( {
+    const options = optionize<SoccerScreenViewOptions, SelfOptions, CAVScreenViewOptions, 'tandem'>( {
       tandem: Tandem.REQUIRED
     }, providedOptions );
 
@@ -119,5 +119,5 @@ class SoccerScreenView extends CASScreenView {
   }
 }
 
-centerAndSpread.register( 'SoccerScreenView', SoccerScreenView );
+centerAndVariability.register( 'SoccerScreenView', SoccerScreenView );
 export default SoccerScreenView;

@@ -8,34 +8,34 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import centerAndSpread from '../../centerAndSpread.js';
+import centerAndVariability from '../../centerAndVariability.js';
 import { Node, NodeOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import CASModel from '../model/CASModel.js';
-import CASObject from '../model/CASObject.js';
+import CAVModel from '../model/CAVModel.js';
+import CAVObject from '../model/CAVObject.js';
 import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
-import CASObjectNode from './CASObjectNode.js';
-import CASObjectType from '../model/CASObjectType.js';
+import CAVObjectNode from './CAVObjectNode.js';
+import CAVObjectType from '../model/CAVObjectType.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import NumberLineNode from './NumberLineNode.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import MedianBarNode from './MedianBarNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
+import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = {};
-export type CASPlotOptions = NodeOptions & PickRequired<NodeOptions, 'tandem'>;
+export type CAVPlotOptions = NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
-class CASPlotNode extends Node {
+class CAVPlotNode extends Node {
 
   private readonly dotLayer: Node;
   private readonly medianBarNode: MedianBarNode;
 
-  constructor( model: CASModel, numberLineWidth: number, providedOptions?: CASPlotOptions ) {
+  constructor( model: CAVModel, numberLineWidth: number, providedOptions?: CAVPlotOptions ) {
 
-    const options = optionize<CASPlotOptions, SelfOptions, NodeOptions>( {
+    const options = optionize<CAVPlotOptions, SelfOptions, NodeOptions>( {
       tandem: Tandem.REQUIRED
     }, providedOptions );
 
@@ -48,7 +48,7 @@ class CASPlotNode extends Node {
     const numberLinePositionY = 127;
 
     // scale down in the y direction to support smaller object nodes
-    const yScale = CASObjectType.DOT.radius / model.objectType.radius;
+    const yScale = CAVObjectType.DOT.radius / model.objectType.radius;
 
     // const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
     //   new Bounds2( model.range.min, 0, model.range.max, 1 ),
@@ -76,7 +76,7 @@ class CASPlotNode extends Node {
       } );
     backgroundNode.addChild( numberLineNode );
 
-    backgroundNode.addChild( new Text( centerAndSpreadStrings.distanceInMeters, {
+    backgroundNode.addChild( new Text( centerAndVariabilityStrings.distanceInMeters, {
 
       // TODO-UX: This may be asymmetrical if it accounts for edge labels
       centerX: numberLineNode.centerX,
@@ -86,9 +86,9 @@ class CASPlotNode extends Node {
     this.dotLayer = new Node();
     backgroundNode.addChild( this.dotLayer );
 
-    const dotNodeGroup = new PhetioGroup<CASObjectNode, [ CASObject ]>( ( tandem, casObject ) => {
-      return new CASObjectNode( casObject, model.isShowingTopMedianProperty, modelViewTransform, {
-        objectViewType: CASObjectType.DOT,
+    const dotNodeGroup = new PhetioGroup<CAVObjectNode, [ CAVObject ]>( ( tandem, casObject ) => {
+      return new CAVObjectNode( casObject, model.isShowingTopMedianProperty, modelViewTransform, {
+        objectViewType: CAVObjectType.DOT,
         draggingEnabled: false,
         tandem: tandem
       } );
@@ -98,9 +98,9 @@ class CASPlotNode extends Node {
       supportsDynamicState: false
     } );
 
-    const map = new Map<CASObject, CASObjectNode>();
+    const map = new Map<CAVObject, CAVObjectNode>();
 
-    const createDotNode = ( casObject: CASObject ) => {
+    const createDotNode = ( casObject: CAVObject ) => {
       const dotNode = dotNodeGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject );
 
       casObject.valueProperty.link( value => {
@@ -167,5 +167,5 @@ class CASPlotNode extends Node {
   reset() {}
 }
 
-centerAndSpread.register( 'CASPlotNode', CASPlotNode );
-export default CASPlotNode;
+centerAndVariability.register( 'CAVPlotNode', CAVPlotNode );
+export default CAVPlotNode;

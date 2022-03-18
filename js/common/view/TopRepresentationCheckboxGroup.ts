@@ -8,15 +8,15 @@
  */
 
 import optionize from '../../../../phet-core/js/optionize.js';
-import centerAndSpread from '../../centerAndSpread.js';
+import centerAndVariability from '../../centerAndVariability.js';
 import VerticalCheckboxGroup, { VerticalCheckboxGroupOptions } from '../../../../sun/js/VerticalCheckboxGroup.js';
 import { HBox, Line, Node, Text } from '../../../../scenery/js/imports.js';
-import CASModel from '../model/CASModel.js';
-import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
-import CASConstants from '../CASConstants.js';
+import CAVModel from '../model/CAVModel.js';
+import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
+import CAVConstants from '../CAVConstants.js';
 import NumberLineNode from './NumberLineNode.js';
 import MedianBarNode, { MedianBarNodeOptions } from './MedianBarNode.js';
-import CASColors from '../CASColors.js';
+import CAVColors from '../CAVColors.js';
 
 type SelfOptions = {
   includeSortData?: boolean;
@@ -33,13 +33,13 @@ const ICON_WIDTH = 24;
 // TODO: Unify with line with in MedianBarNode?
 const LINE_WIDTH = 2;
 const TEXT_OPTIONS = {
-  font: CASConstants.BUTTON_FONT,
-  maxWidth: CASConstants.CHECKBOX_TEXT_MAX_WIDTH
+  font: CAVConstants.BUTTON_FONT,
+  maxWidth: CAVConstants.CHECKBOX_TEXT_MAX_WIDTH
 };
 
 class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
-  constructor( model: CASModel, providedOptions?: TopRepresentationCheckboxGroupOptions ) {
+  constructor( model: CAVModel, providedOptions?: TopRepresentationCheckboxGroupOptions ) {
 
     const options = optionize<TopRepresentationCheckboxGroupOptions, SelfOptions, VerticalCheckboxGroupOptions>( {
       includeSortData: false,
@@ -49,7 +49,7 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
     const items = [];
     options.includeSortData && items.push( {
-      node: new Text( centerAndSpreadStrings.sortData, TEXT_OPTIONS ),
+      node: new Text( centerAndVariabilityStrings.sortData, TEXT_OPTIONS ),
       property: model.isSortingDataProperty
     } );
     options.includeMean && items.push( {
@@ -58,13 +58,13 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
         // TODO: align icons
         spacing: 24.5,
         children: [
-          new Text( centerAndSpreadStrings.mean, TEXT_OPTIONS ),
+          new Text( centerAndVariabilityStrings.mean, TEXT_OPTIONS ),
           new Node( {
             children: [
 
               // Horizontal line above the triangle
               new Line( -ICON_WIDTH / 2, -LINE_WIDTH / 2, ICON_WIDTH / 2, -LINE_WIDTH / 2, {
-                stroke: CASColors.meanColorProperty,
+                stroke: CAVColors.meanColorProperty,
                 lineWidth: LINE_WIDTH
               } ),
 
@@ -80,7 +80,7 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
       node: new HBox( {
         spacing: 12,
         children: [
-          new Text( centerAndSpreadStrings.median, TEXT_OPTIONS ),
+          new Text( centerAndVariabilityStrings.median, TEXT_OPTIONS ),
           ...options.showMedianCheckboxIcon ? [
             new MedianBarNode( options.medianBarIconOptions )
               .setMedianBarShape( 0, 0, ICON_WIDTH / 2 - LINE_WIDTH / 2, ICON_WIDTH - LINE_WIDTH, true )
@@ -93,5 +93,5 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
   }
 }
 
-centerAndSpread.register( 'TopRepresentationCheckboxGroup', TopRepresentationCheckboxGroup );
+centerAndVariability.register( 'TopRepresentationCheckboxGroup', TopRepresentationCheckboxGroup );
 export default TopRepresentationCheckboxGroup;

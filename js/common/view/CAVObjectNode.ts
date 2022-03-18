@@ -1,49 +1,49 @@
 // Copyright 2022, University of Colorado Boulder
 
 /**
- * Base class which renders a Node for the CASObject.
+ * Base class which renders a Node for the CAVObject.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
 import optionize from '../../../../phet-core/js/optionize.js';
-import centerAndSpread from '../../centerAndSpread.js';
+import centerAndVariability from '../../centerAndVariability.js';
 import { Circle, DragListener, Image, Node, NodeOptions, Path, Text } from '../../../../scenery/js/imports.js';
-import CASObject from '../model/CASObject.js';
+import CAVObject from '../model/CAVObject.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import CASObjectType from '../model/CASObjectType.js';
+import CAVObjectType from '../model/CAVObjectType.js';
 import ball_png from '../../../images/ball_png.js';
 import ShadedSphereNode from '../../../../scenery-phet/js/ShadedSphereNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import { AnimationMode } from '../model/AnimationMode.js';
 import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
 import Property from '../../../../axon/js/Property.js';
-import CASColors from '../CASColors.js';
+import CAVColors from '../CAVColors.js';
 import PlotType from '../model/PlotType.js';
 import timesSolidShape from '../../../../sherpa/js/fontawesome-5/timesSolidShape.js';
-import CASConstants from '../CASConstants.js';
+import CAVConstants from '../CAVConstants.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 
 type SelfOptions = {
-  objectViewType?: CASObjectType;
+  objectViewType?: CAVObjectType;
   draggingEnabled?: boolean;
 };
-export type CASObjectNodeOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
+export type CAVObjectNodeOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
 // for debugging with ?dev
 let index = 0;
 
-class CASObjectNode extends Node {
+class CAVObjectNode extends Node {
 
-  constructor( casObject: CASObject, isShowingPlayAreaMedianProperty: IReadOnlyProperty<boolean>,
-               modelViewTransform: ModelViewTransform2, providedOptions?: CASObjectNodeOptions ) {
+  constructor( casObject: CAVObject, isShowingPlayAreaMedianProperty: IReadOnlyProperty<boolean>,
+               modelViewTransform: ModelViewTransform2, providedOptions?: CAVObjectNodeOptions ) {
 
-    const options = optionize<CASObjectNodeOptions, SelfOptions, NodeOptions>( {
+    const options = optionize<CAVObjectNodeOptions, SelfOptions, NodeOptions>( {
 
-      // In the Mean & Median screen and Spread screen, the objectType is SOCCER_BALL, but we render the dot plot
+      // In the Mean & Median screen and Variability screen, the objectType is SOCCER_BALL, but we render the dot plot
       // with DOT views
       objectViewType: casObject.objectType,
       draggingEnabled: true,
@@ -58,7 +58,7 @@ class CASObjectNode extends Node {
     // look lopsided (heavier on the left)
     // TODO-DESIGN: This highlight is difficult to see
     const medianHighlight = new Circle( viewRadius + 1.75, {
-      fill: CASColors.medianColorProperty
+      fill: CAVColors.medianColorProperty
     } );
     this.addChild( medianHighlight );
 
@@ -74,7 +74,7 @@ class CASObjectNode extends Node {
         maxWidth: viewRadius * 2 * 0.8,
         center: Vector2.ZERO
       } );
-      CASConstants.PLOT_TYPE_PROPERTY.link( plotType => {
+      CAVConstants.PLOT_TYPE_PROPERTY.link( plotType => {
         circle.visible = plotType === PlotType.DOT_PLOT;
         cross.visible = plotType === PlotType.LINE_PLOT;
       } );
@@ -84,8 +84,8 @@ class CASObjectNode extends Node {
       return node;
     };
 
-    const childNode = options.objectViewType === CASObjectType.SOCCER_BALL ? new Image( ball_png ) :
-                      options.objectViewType === CASObjectType.DOT ? createPlotMarker() :
+    const childNode = options.objectViewType === CAVObjectType.SOCCER_BALL ? new Image( ball_png ) :
+                      options.objectViewType === CAVObjectType.DOT ? createPlotMarker() :
                       new ShadedSphereNode( options.objectViewType.radius * 2 );
     childNode.maxWidth = viewRadius * 2;
 
@@ -100,7 +100,7 @@ class CASObjectNode extends Node {
     this.addChild( childNode );
 
     this.addLinkedElement( casObject, {
-      tandem: options.tandem.createTandem( casObject.objectType === CASObjectType.SOCCER_BALL ? 'soccerBall' : 'dataPoint' ),
+      tandem: options.tandem.createTandem( casObject.objectType === CAVObjectType.SOCCER_BALL ? 'soccerBall' : 'dataPoint' ),
       phetioState: false
     } );
 
@@ -123,11 +123,11 @@ class CASObjectNode extends Node {
         }
       } );
 
-      // pan and zoom - In order to move the CASObjectNode to a new position the pointer has to move more than half the
-      // unit model length. When the CASObjectNode is near the edge of the screen while zoomed in, the pointer doesn't
-      // have enough space to move that far. If we make sure that bounds surrounding the CASObjectNode have a width
-      // of 2 model units the pointer will always have enough space to drag the CASObjectNode to a new position.
-      // See https://github.com/phetsims/center-and-spread/issues/88
+      // pan and zoom - In order to move the CAVObjectNode to a new position the pointer has to move more than half the
+      // unit model length. When the CAVObjectNode is near the edge of the screen while zoomed in, the pointer doesn't
+      // have enough space to move that far. If we make sure that bounds surrounding the CAVObjectNode have a width
+      // of 2 model units the pointer will always have enough space to drag the CAVObjectNode to a new position.
+      // See https://github.com/phetsims/center-and-variability/issues/88
       dragListener.createPanTargetBounds = () => {
         const modelPosition = casObject.positionProperty.value;
         const modelBounds = new Bounds2( modelPosition.x - 1, modelPosition.y - 1, modelPosition.x + 1, modelPosition.y + 1 );
@@ -149,7 +149,7 @@ class CASObjectNode extends Node {
     // show or hide the median highlight
     Property.multilink( [ casObject.isMedianObjectProperty, isShowingPlayAreaMedianProperty, casObject.isShowingAnimationHighlightProperty ],
       ( isMedianObject, isShowingPlayAreaMedian, isShowingAnimationHighlight ) => {
-        medianHighlight.visible = options.objectViewType === CASObjectType.DOT ? isShowingAnimationHighlight :
+        medianHighlight.visible = options.objectViewType === CAVObjectType.DOT ? isShowingAnimationHighlight :
                                   isShowingPlayAreaMedian && isMedianObject;
       } );
 
@@ -171,5 +171,5 @@ class CASObjectNode extends Node {
   }
 }
 
-centerAndSpread.register( 'CASObjectNode', CASObjectNode );
-export default CASObjectNode;
+centerAndVariability.register( 'CAVObjectNode', CAVObjectNode );
+export default CAVObjectNode;

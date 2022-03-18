@@ -8,32 +8,32 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import centerAndSpread from '../../centerAndSpread.js';
+import centerAndVariability from '../../centerAndVariability.js';
 import { Color, LinearGradient, Rectangle } from '../../../../scenery/js/imports.js';
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import CASColors from '../CASColors.js';
+import CAVColors from '../CAVColors.js';
 
 class BackgroundNode extends Rectangle {
   constructor( bottomY: number, visibleBoundsProperty: Property<Bounds2> ) {
     super( visibleBoundsProperty.value.centerX, visibleBoundsProperty.value.top, visibleBoundsProperty.value.centerX, bottomY );
 
     Property.multilink( [
-      CASColors.skyGradientTopColorProperty,
-      CASColors.skyGradientMiddleColorProperty,
-      CASColors.skyGradientBottomColorProperty,
-      CASColors.groundColorProperty,
+      CAVColors.skyGradientTopColorProperty,
+      CAVColors.skyGradientMiddleColorProperty,
+      CAVColors.skyGradientBottomColorProperty,
+      CAVColors.groundColorProperty,
       visibleBoundsProperty
     ], ( skyGradientTopColor: Color, skyGradientMiddleColor: Color, skyGradientBottomColor: Color, groundColor: Color, visibleBounds: Bounds2 ) => {
       const gradient = new LinearGradient( visibleBounds.centerX, visibleBounds.top, visibleBounds.centerX, bottomY );
 
       // sky gradient, sampled from a screenshot
-      gradient.addColorStop( 0.0, CASColors.skyGradientTopColorProperty.value );
-      gradient.addColorStop( 0.5, CASColors.skyGradientMiddleColorProperty.value );
-      gradient.addColorStop( 1.0, CASColors.skyGradientBottomColorProperty.value );
+      gradient.addColorStop( 0.0, CAVColors.skyGradientTopColorProperty.value );
+      gradient.addColorStop( 0.5, CAVColors.skyGradientMiddleColorProperty.value );
+      gradient.addColorStop( 1.0, CAVColors.skyGradientBottomColorProperty.value );
 
       // The ground
-      gradient.addColorStop( 1.0, CASColors.groundColorProperty.value );
+      gradient.addColorStop( 1.0, CAVColors.groundColorProperty.value );
 
       this.setRect( visibleBounds.left, visibleBounds.top, visibleBounds.width, visibleBounds.height );
       this.fill = gradient;
@@ -41,5 +41,5 @@ class BackgroundNode extends Rectangle {
   }
 }
 
-centerAndSpread.register( 'BackgroundNode', BackgroundNode );
+centerAndVariability.register( 'BackgroundNode', BackgroundNode );
 export default BackgroundNode;

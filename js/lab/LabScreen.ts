@@ -9,22 +9,22 @@
 
 import optionize from '../../../phet-core/js/optionize.js';
 import Tandem from '../../../tandem/js/Tandem.js';
-import CASColors from '../common/CASColors.js';
-import centerAndSpread from '../centerAndSpread.js';
+import CAVColors from '../common/CAVColors.js';
+import centerAndVariability from '../centerAndVariability.js';
 import LabModel from './model/LabModel.js';
-import CASScreen, { CASScreenOptions } from '../common/CASScreen.js';
+import CAVScreen, { CAVScreenOptions } from '../common/CAVScreen.js';
 import LabScreenView from './view/LabScreenView.js';
-import centerAndSpreadStrings from '../centerAndSpreadStrings.js';
+import centerAndVariabilityStrings from '../centerAndVariabilityStrings.js';
 
-type LabScreenOptions = CASScreenOptions;
+type LabScreenOptions = CAVScreenOptions;
 
-class LabScreen extends CASScreen<LabModel, LabScreenView> {
+class LabScreen extends CAVScreen<LabModel, LabScreenView> {
 
   constructor( providedOptions: LabScreenOptions ) {
 
     const options = optionize<LabScreenOptions, {}>( {
-      name: centerAndSpreadStrings.screen.lab,
-      backgroundColorProperty: CASColors.screenBackgroundColorProperty,
+      name: centerAndVariabilityStrings.screen.lab,
+      backgroundColorProperty: CAVColors.screenBackgroundColorProperty,
       tandem: Tandem.REQUIRED
     }, providedOptions );
 
@@ -40,5 +40,5 @@ class LabScreen extends CASScreen<LabModel, LabScreenView> {
   }
 }
 
-centerAndSpread.register( 'LabScreen', LabScreen );
+centerAndVariability.register( 'LabScreen', LabScreen );
 export default LabScreen;

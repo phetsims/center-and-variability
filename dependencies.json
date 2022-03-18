@@ -1,5 +1,5 @@
 {
-  "comment": "# center-and-spread 1.0.0-dev.11 Sun Mar 06 2022 18:50:05 GMT-0700 (Mountain Standard Time)",
+  "comment": "# center-and-variability 1.0.0-dev.11 Sun Mar 06 2022 18:50:05 GMT-0700 (Mountain Standard Time)",
   "assert": {
     "sha": "767b2f345518ceca5144a152ecf40cd4f9206136",
     "branch": "master"
@@ -16,7 +16,7 @@
     "sha": "abb2576ef6eb66541c6ff4524ab510e82e90303d",
     "branch": "master"
   },
-  "center-and-spread": {
+  "center-and-variability": {
     "sha": "f1a167e93229769288a2184841de54e6330fd77b",
     "branch": "master"
   },

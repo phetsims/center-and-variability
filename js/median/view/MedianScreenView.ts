@@ -9,10 +9,10 @@
 
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import centerAndSpread from '../../centerAndSpread.js';
+import centerAndVariability from '../../centerAndVariability.js';
 import MedianModel from '../model/MedianModel.js';
-import CASColors from '../../common/CASColors.js';
-import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
+import CAVColors from '../../common/CAVColors.js';
+import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
 import MeanOrMedianScreenView, { MeanOrMedianScreenViewOptions } from '../../common/view/MeanOrMedianScreenView.js';
 
 type SelfOptions = {};
@@ -27,8 +27,8 @@ class MedianScreenView extends MeanOrMedianScreenView {
       // TODO: TypeScript is okay with not including isMedianScreen, why? Severe problem!
       isMedianScreen: true,
       questionBarOptions: {
-        barFill: CASColors.medianQuestionBarFillColorProperty,
-        labelText: centerAndSpreadStrings.medianQuestion
+        barFill: CAVColors.medianQuestionBarFillColorProperty,
+        labelText: centerAndVariabilityStrings.medianQuestion
       },
       topCheckboxPanelOptions: {
         includeSortData: true,
@@ -50,5 +50,5 @@ class MedianScreenView extends MeanOrMedianScreenView {
   }
 }
 
-centerAndSpread.register( 'MedianScreenView', MedianScreenView );
+centerAndVariability.register( 'MedianScreenView', MedianScreenView );
 export default MedianScreenView;

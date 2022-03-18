@@ -1,7 +1,7 @@
 // Copyright 2022, University of Colorado Boulder
 
 /**
- * SpreadScreenView is the ScreenView for the 'Spread' screen, which has four different scenes with four different
+ * VariabilityScreenView is the ScreenView for the 'Variability' screen, which has four different scenes with four different
  * distributions.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
@@ -10,22 +10,22 @@
 
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import centerAndSpread from '../../centerAndSpread.js';
-import SpreadModel from '../model/SpreadModel.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import VariabilityModel from '../model/VariabilityModel.js';
 import SoccerScreenView, { SoccerScreenViewOptions } from '../../common/view/SoccerScreenView.js';
-import CASColors from '../../common/CASColors.js';
-import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
+import CAVColors from '../../common/CAVColors.js';
+import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
 
-type SpreadScreenViewOptions = Omit<SoccerScreenViewOptions, 'questionBarOptions'>;
+type VariabilityScreenViewOptions = Omit<SoccerScreenViewOptions, 'questionBarOptions'>;
 
-class SpreadScreenView extends SoccerScreenView {
+class VariabilityScreenView extends SoccerScreenView {
 
-  constructor( model: SpreadModel, providedOptions: SpreadScreenViewOptions ) {
+  constructor( model: VariabilityModel, providedOptions: VariabilityScreenViewOptions ) {
 
-    const options = optionize<SpreadScreenViewOptions, {}, SoccerScreenViewOptions>( {
+    const options = optionize<VariabilityScreenViewOptions, {}, SoccerScreenViewOptions>( {
       questionBarOptions: {
-        barFill: CASColors.spreadQuestionBarFillColorProperty,
-        labelText: centerAndSpreadStrings.spreadQuestion
+        barFill: CAVColors.variabilityQuestionBarFillColorProperty,
+        labelText: centerAndVariabilityStrings.variabilityQuestion
       },
       tandem: Tandem.REQUIRED
     }, providedOptions );
@@ -34,5 +34,5 @@ class SpreadScreenView extends SoccerScreenView {
   }
 }
 
-centerAndSpread.register( 'SpreadScreenView', SpreadScreenView );
-export default SpreadScreenView;
+centerAndVariability.register( 'VariabilityScreenView', VariabilityScreenView );
+export default VariabilityScreenView;

@@ -7,12 +7,12 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import centerAndSpread from '../../centerAndSpread.js';
+import centerAndVariability from '../../centerAndVariability.js';
 import { DragListener, Node, NodeOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import CASObject from '../model/CASObject.js';
+import CAVObject from '../model/CAVObject.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Animation from '../../../../twixt/js/Animation.js';
@@ -33,7 +33,7 @@ class CardNode extends Node {
   // has dragged a sufficient amount
   readonly dragDistanceEmitter: Emitter<[ number ]>;
 
-  readonly casObject: CASObject;
+  readonly casObject: CAVObject;
   animation: Animation | null;
   animationTo: Vector2 | null;
 
@@ -152,5 +152,5 @@ class CardNode extends Node {
   }
 }
 
-centerAndSpread.register( 'CardNode', CardNode );
+centerAndVariability.register( 'CardNode', CardNode );
 export default CardNode;

@@ -7,7 +7,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import centerAndSpread from '../../centerAndSpread.js';
+import centerAndVariability from '../../centerAndVariability.js';
 import { DragListener, IColor, Node, NodeOptions } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -18,8 +18,8 @@ import ShadedSphereNode from '../../../../scenery-phet/js/ShadedSphereNode.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
-import CASColors from '../CASColors.js';
-import CASConstants from '../CASConstants.js';
+import CAVColors from '../CAVColors.js';
+import CAVConstants from '../CAVConstants.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = {
@@ -40,8 +40,8 @@ class PredictionNode extends Node {
 
       // TODO-DESIGN: This looks more orange in the mockup.  Use colorblind red?
       mainColor: providedOptions.color,
-      stroke: CASColors.arrowStrokeProperty,
-      lineWidth: CASConstants.ARROW_LINE_WIDTH
+      stroke: CAVColors.arrowStrokeProperty,
+      lineWidth: CAVConstants.ARROW_LINE_WIDTH
     } );
 
     // TODO-DESIGN: The mockup shows different arrowheads.
@@ -50,8 +50,8 @@ class PredictionNode extends Node {
       headWidth: 14,
       tailWidth: 2,
       fill: providedOptions.color,
-      stroke: CASColors.arrowStrokeProperty,
-      lineWidth: CASConstants.ARROW_LINE_WIDTH
+      stroke: CAVColors.arrowStrokeProperty,
+      lineWidth: CAVConstants.ARROW_LINE_WIDTH
     } );
     const options = optionize<PredictionNodeOptions, SelfOptions, NodeOptions>( {
       tandem: Tandem.REQUIRED,
@@ -90,5 +90,5 @@ class PredictionNode extends Node {
   }
 }
 
-centerAndSpread.register( 'PredictionNode', PredictionNode );
+centerAndVariability.register( 'PredictionNode', PredictionNode );
 export default PredictionNode;

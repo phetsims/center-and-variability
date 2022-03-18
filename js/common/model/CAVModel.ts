@@ -7,12 +7,12 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import centerAndSpread from '../../centerAndSpread.js';
+import centerAndVariability from '../../centerAndVariability.js';
 import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import CASObject, { CASObjectOptions } from './CASObject.js';
-import CASObjectType from './CASObjectType.js';
+import CAVObject, { CAVObjectOptions } from './CAVObject.js';
+import CAVObjectType from './CAVObjectType.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Range from '../../../../dot/js/Range.js';
 import Property from '../../../../axon/js/Property.js';
@@ -31,14 +31,14 @@ type SelfOptions = {
   includeCards: boolean;
   instrumentMeanPredictionProperty: boolean;
 };
-export type CASModelOptions = SelfOptions & {};
+export type CAVModelOptions = SelfOptions & {};
 
 // constants
 const HIGHLIGHT_ANIMATION_TIME_STEP = 0.25; // in seconds
 
-class CASModel {
-  readonly objectGroup: PhetioGroup<CASObject, [ CASObjectType, Omit<CASObjectOptions, 'tandem'> ]>;
-  readonly objectType: CASObjectType;
+class CAVModel {
+  readonly objectGroup: PhetioGroup<CAVObject, [ CAVObjectType, Omit<CAVObjectOptions, 'tandem'> ]>;
+  readonly objectType: CAVObjectType;
   readonly isSortingDataProperty: BooleanProperty;
   readonly isShowingTopMeanProperty: BooleanProperty;
   readonly isShowingTopMedianProperty: BooleanProperty;
@@ -50,7 +50,7 @@ class CASModel {
   // For PhET-iO State, it is difficult to power 2 views from one model, see https://github.com/phetsims/phet-io/issues/1688#issuecomment-1032967603
   // Therefore, we introduce a minimal model element for the cards, so they can be managed by the state
   // Only instrumented and enabled if includeCards === true
-  readonly cardModelGroup: PhetioGroup<CardModel, [ CASObject ]>;
+  readonly cardModelGroup: PhetioGroup<CardModel, [ CAVObject ]>;
 
   readonly includeCards: boolean;
   readonly maxNumberOfObjects: number;
@@ -65,7 +65,7 @@ class CASModel {
   readonly dataRangeProperty: Property<Range | null>;
 
   // Signify whenever any object's value or position changes
-  readonly objectChangedEmitter: Emitter<[ CASObject ]>;
+  readonly objectChangedEmitter: Emitter<[ CAVObject ]>;
 
   // Null until the user has made a prediction.
   readonly medianPredictionProperty: NumberProperty;
@@ -84,12 +84,12 @@ class CASModel {
   readonly isMedianAnimationCompleteProperty: BooleanProperty;
 
   // TODO: See if TypeScript 4.6 will let us initialize more things here
-  protected readonly objectValueBecameNonNullEmitter: Emitter<[ CASObject ]>;
+  protected readonly objectValueBecameNonNullEmitter: Emitter<[ CAVObject ]>;
   readonly resetEmitter: Emitter;
 
-  constructor( objectType: CASObjectType, maxNumberOfObjects: number, providedOptions: CASModelOptions ) {
+  constructor( objectType: CAVObjectType, maxNumberOfObjects: number, providedOptions: CAVModelOptions ) {
 
-    const options = optionize<CASModelOptions, SelfOptions, {}>( {
+    const options = optionize<CAVModelOptions, SelfOptions, {}>( {
       tandem: Tandem.REQUIRED
     }, providedOptions );
 
@@ -97,7 +97,7 @@ class CASModel {
 
     this.maxNumberOfObjects = maxNumberOfObjects;
 
-    this.objectGroup = new PhetioGroup( ( tandem, objectType: CASObjectType, providedOptions ) => {
+    this.objectGroup = new PhetioGroup( ( tandem, objectType: CAVObjectType, providedOptions ) => {
 
       // Assign the tandem to the options
       const options = merge( providedOptions, {
@@ -108,9 +108,9 @@ class CASModel {
         tandem: tandem
       } );
 
-      const casObject = new CASObject( objectType, options );
+      const casObject = new CAVObject( objectType, options );
 
-      // TODO: Should some or all of this move into CASObject or CASObjectNode?
+      // TODO: Should some or all of this move into CAVObject or CAVObjectNode?
       const dragPositionListener = ( dragPosition: Vector2 ) => {
         casObject.valueProperty.value = Utils.roundSymmetric( this.physicalRange.constrainValue( dragPosition.x ) );
 
@@ -121,8 +121,8 @@ class CASModel {
 
       return casObject;
     }, [ objectType, {} ], {
-      phetioType: PhetioGroup.PhetioGroupIO( CASObject.CASObjectIO ),
-      tandem: options.tandem.createTandem( objectType === CASObjectType.SOCCER_BALL ? 'soccerBallGroup' : 'dataPointGroup' )
+      phetioType: PhetioGroup.PhetioGroupIO( CAVObject.CAVObjectIO ),
+      tandem: options.tandem.createTandem( objectType === CAVObjectType.SOCCER_BALL ? 'soccerBallGroup' : 'dataPointGroup' )
     } );
 
     this.cardModelGroup = new PhetioGroup( ( tandem, casObject ) => {
@@ -192,7 +192,7 @@ class CASModel {
     this.isShowingPlayAreaMedianProperty.link( updateMeanAndMedian );
 
     // Trigger CardModel creation when a ball lands.
-    const objectCreatedListener = ( casObject: CASObject ) => {
+    const objectCreatedListener = ( casObject: CAVObject ) => {
       const listener = ( value: number | null ) => {
         if ( value !== null ) {
           if ( !phet.joist.sim.isSettingPhetioStateProperty.value ) {
@@ -222,8 +222,8 @@ class CASModel {
       return this.maxNumberOfObjects - count;
     } );
 
-    this.objectChangedEmitter = new Emitter<[ CASObject ]>( {
-      parameters: [ { valueType: CASObject } ]
+    this.objectChangedEmitter = new Emitter<[ CAVObject ]>( {
+      parameters: [ { valueType: CAVObject } ]
     } );
 
     // Don't show animation on startup
@@ -238,8 +238,8 @@ class CASModel {
       }
     } );
 
-    this.objectValueBecameNonNullEmitter = new Emitter<[ CASObject ]>( {
-      parameters: [ { valueType: CASObject } ]
+    this.objectValueBecameNonNullEmitter = new Emitter<[ CAVObject ]>( {
+      parameters: [ { valueType: CAVObject } ]
     } );
     this.objectValueBecameNonNullEmitter.addListener( () => this.updateAnimation() );
 
@@ -282,7 +282,7 @@ class CASModel {
       this.medianValueProperty.value = null;
     }
 
-    const medianObjects: CASObject[] = [];
+    const medianObjects: CAVObject[] = [];
 
     const takeTopObjects = ( median: number, numberToTake: number ) => {
       const objectsWithMedianValue = this.objectGroup.filter( casObject => casObject.valueProperty.value === median );
@@ -321,8 +321,8 @@ class CASModel {
   /**
    * Returns all other objects at the target position of the provided object.
    */
-  protected getOtherObjectsAtTarget( casObject: CASObject ): CASObject[] {
-    return this.objectGroup.filter( ( o: CASObject ) => {
+  protected getOtherObjectsAtTarget( casObject: CAVObject ): CAVObject[] {
+    return this.objectGroup.filter( ( o: CAVObject ) => {
       return o.valueProperty.value === casObject.valueProperty.value && casObject !== o;
     } );
   }
@@ -330,7 +330,7 @@ class CASModel {
   /**
    * Set the position of the parameter object to be on top of the other objects at that target position.
    */
-  protected moveToTop( casObject: CASObject ): void {
+  protected moveToTop( casObject: CAVObject ): void {
 
     const objectsAtTarget = this.getOtherObjectsAtTarget( casObject );
 
@@ -423,5 +423,5 @@ class CASModel {
   }
 }
 
-centerAndSpread.register( 'CASModel', CASModel );
-export default CASModel;
+centerAndVariability.register( 'CAVModel', CAVModel );
+export default CAVModel;

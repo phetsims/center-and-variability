@@ -6,7 +6,7 @@
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */
-import centerAndSpread from '../../centerAndSpread.js';
+import centerAndVariability from '../../centerAndVariability.js';
 
 class AsyncCounter {
   private index: number;
@@ -33,5 +33,5 @@ class AsyncCounter {
   }
 }
 
-centerAndSpread.register( 'AsyncCounter', AsyncCounter );
+centerAndVariability.register( 'AsyncCounter', AsyncCounter );
 export default AsyncCounter;

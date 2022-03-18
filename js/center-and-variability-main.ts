@@ -10,14 +10,14 @@
 import Sim from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
 import Tandem from '../../tandem/js/Tandem.js';
-// import SpreadScreen from './spread/SpreadScreen.js';
-import centerAndSpreadStrings from './centerAndSpreadStrings.js';
+// import VariabilityScreen from './variability/VariabilityScreen.js';
+import centerAndVariabilityStrings from './centerAndVariabilityStrings.js';
 import MedianScreen from './median/MedianScreen.js';
 import MeanAndMedianScreen from './mean-and-median/MeanAndMedianScreen.js';
 import GlobalOptionsNode from './common/view/GlobalOptionsNode.js';
 // import LabScreen from './lab/LabScreen.js';
 
-const centerAndSpreadTitleString = centerAndSpreadStrings[ 'center-and-spread' ].title;
+const centerAndVariabilityTitleString = centerAndVariabilityStrings[ 'center-and-variability' ].title;
 
 
 const simOptions = {
@@ -32,10 +32,10 @@ const simOptions = {
 };
 
 simLauncher.launch( () => {
-  const sim = new Sim( centerAndSpreadTitleString, [
+  const sim = new Sim( centerAndVariabilityTitleString, [
     new MedianScreen( { tandem: Tandem.ROOT.createTandem( 'medianScreen' ) } ),
     new MeanAndMedianScreen( { tandem: Tandem.ROOT.createTandem( 'meanAndMedianScreen' ) } )
-    // , new SpreadScreen( { tandem: Tandem.ROOT.createTandem( 'spreadScreen' ) } )
+    // , new VariabilityScreen( { tandem: Tandem.ROOT.createTandem( 'variabilityScreen' ) } )
     // , new LabScreen( { tandem: Tandem.ROOT.createTandem( 'labScreen' ) } )
   ], simOptions );
   sim.start();

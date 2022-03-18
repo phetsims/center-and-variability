@@ -9,7 +9,7 @@
 
 import Enumeration from '../../../../phet-core/js/Enumeration.js';
 import EnumerationValue from '../../../../phet-core/js/EnumerationValue.js';
-import centerAndSpread from '../../centerAndSpread.js';
+import centerAndVariability from '../../centerAndVariability.js';
 
 class Pose extends EnumerationValue {
   static STANDING = new Pose();
@@ -19,5 +19,5 @@ class Pose extends EnumerationValue {
   static enumeration = new Enumeration( Pose );
 }
 
-centerAndSpread.register( 'Pose', Pose );
+centerAndVariability.register( 'Pose', Pose );
 export default Pose;

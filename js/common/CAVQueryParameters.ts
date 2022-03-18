@@ -7,9 +7,9 @@
  * @author Chris Klusendorf (PhET Interactive Simulations)
  */
 
-import centerAndSpread from '../centerAndSpread.js';
+import centerAndVariability from '../centerAndVariability.js';
 
-const CASQueryParameters = QueryStringMachine.getAll( {
+const CAVQueryParameters = QueryStringMachine.getAll( {
 
   // TODO: It would be nice if QueryStringMachine supported mapping to EnumerationValue
   // SR: Or should we bring back StringEnumerationProperty in https://github.com/phetsims/axon/issues/373?
@@ -22,5 +22,5 @@ const CASQueryParameters = QueryStringMachine.getAll( {
   }
 } );
 
-centerAndSpread.register( 'CASQueryParameters', CASQueryParameters );
-export default CASQueryParameters;
+centerAndVariability.register( 'CAVQueryParameters', CAVQueryParameters );
+export default CAVQueryParameters;

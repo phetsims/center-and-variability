@@ -2,19 +2,19 @@
 
 /**
  * Renders non-interactive red bars that show how the median splits up into the lower and upper groups.
- * This appears within the CardNodeContainer and in the CASPlotNode
+ * This appears within the CardNodeContainer and in the CAVPlotNode
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import centerAndSpread from '../../centerAndSpread.js';
+import centerAndVariability from '../../centerAndVariability.js';
 import { Path, PathOptions } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import CASColors from '../CASColors.js';
+import CAVColors from '../CAVColors.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 
 type NotchDirection = 'up' | 'down';
@@ -41,7 +41,7 @@ class MedianBarNode extends Path {
     const options = optionize<MedianBarNodeOptions, SelfOptions, PathOptions>( {
       tandem: Tandem.REQUIRED,
       lineWidth: LINE_WIDTH,
-      stroke: CASColors.medianColorProperty,
+      stroke: CAVColors.medianColorProperty,
       arrowScale: 1
     }, providedOptions );
 
@@ -55,7 +55,7 @@ class MedianBarNode extends Path {
       headHeight: 8,
       headWidth: 9,
       tailWidth: LINE_WIDTH,
-      fill: CASColors.medianColorProperty,
+      fill: CAVColors.medianColorProperty,
       stroke: null,
       visible: false
     } );
@@ -97,5 +97,5 @@ class MedianBarNode extends Path {
   }
 }
 
-centerAndSpread.register( 'MedianBarNode', MedianBarNode );
+centerAndVariability.register( 'MedianBarNode', MedianBarNode );
 export default MedianBarNode;

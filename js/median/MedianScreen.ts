@@ -9,22 +9,22 @@
 
 import optionize from '../../../phet-core/js/optionize.js';
 import Tandem from '../../../tandem/js/Tandem.js';
-import CASColors from '../common/CASColors.js';
-import centerAndSpread from '../centerAndSpread.js';
+import CAVColors from '../common/CAVColors.js';
+import centerAndVariability from '../centerAndVariability.js';
 import MedianModel from './model/MedianModel.js';
-import CASScreen, { CASScreenOptions } from '../common/CASScreen.js';
+import CAVScreen, { CAVScreenOptions } from '../common/CAVScreen.js';
 import MedianScreenView from './view/MedianScreenView.js';
-import centerAndSpreadStrings from '../centerAndSpreadStrings.js';
+import centerAndVariabilityStrings from '../centerAndVariabilityStrings.js';
 
-type MedianScreenOptions = CASScreenOptions;
+type MedianScreenOptions = CAVScreenOptions;
 
-class MedianScreen extends CASScreen<MedianModel, MedianScreenView> {
+class MedianScreen extends CAVScreen<MedianModel, MedianScreenView> {
 
   constructor( providedOptions: MedianScreenOptions ) {
 
     const options = optionize<MedianScreenOptions, {}>( {
-      name: centerAndSpreadStrings.screen.median,
-      backgroundColorProperty: CASColors.screenBackgroundColorProperty,
+      name: centerAndVariabilityStrings.screen.median,
+      backgroundColorProperty: CAVColors.screenBackgroundColorProperty,
       tandem: Tandem.REQUIRED
     }, providedOptions );
 
@@ -41,5 +41,5 @@ class MedianScreen extends CASScreen<MedianModel, MedianScreenView> {
   }
 }
 
-centerAndSpread.register( 'MedianScreen', MedianScreen );
+centerAndVariability.register( 'MedianScreen', MedianScreen );
 export default MedianScreen;

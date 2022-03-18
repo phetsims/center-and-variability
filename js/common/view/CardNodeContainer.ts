@@ -7,12 +7,12 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import centerAndSpread from '../../centerAndSpread.js';
+import centerAndVariability from '../../centerAndVariability.js';
 import { LinearGradient, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import CASModel from '../model/CASModel.js';
-import CASObject from '../model/CASObject.js';
+import CAVModel from '../model/CAVModel.js';
+import CAVObject from '../model/CAVObject.js';
 import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import CardNode from './CardNode.js';
@@ -24,11 +24,11 @@ import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
 import CardModel from '../model/CardModel.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import Panel from '../../../../sun/js/Panel.js';
-import CASConstants from '../CASConstants.js';
-import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
+import CAVConstants from '../CAVConstants.js';
+import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import MedianBarNode from './MedianBarNode.js';
-import CASColors from '../CASColors.js';
+import CAVColors from '../CAVColors.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
@@ -58,7 +58,7 @@ class CardNodeContainer extends Node {
   // Fires if the cardNodeCells may have changed
   readonly cardNodeCellsChangedEmitter: Emitter<[]>;
 
-  private readonly model: CASModel;
+  private readonly model: CAVModel;
   private readonly cardNodeGroup: PhetioGroup<CardNode, [ CardModel ]>;
   private readonly medianBarNode: MedianBarNode;
   private readonly dragIndicatorArrowNode: ArrowNode;
@@ -71,7 +71,7 @@ class CardNodeContainer extends Node {
   private remainingCelebrationAnimations: ( () => void )[];
   private dataSortedNodeAnimation: Animation | null;
 
-  constructor( model: CASModel, providedOptions: CardNodeContainerOptions ) {
+  constructor( model: CAVModel, providedOptions: CardNodeContainerOptions ) {
 
     const options = optionize<CardNodeContainerOptions, SelfOptions, NodeOptions>( {
       tandem: Tandem.REQUIRED,
@@ -110,13 +110,13 @@ class CardNodeContainer extends Node {
     } );
     this.addChild( this.medianBarNode );
 
-    const objectCreatedListener = ( casObject: CASObject ) => {
+    const objectCreatedListener = ( casObject: CAVObject ) => {
 
       // A ball landed OR a value changed
       casObject.valueProperty.link( value => {
         if ( this.model.isSortingDataProperty.value && value !== null ) {
 
-          // TODO: Much of this listener code moved to the CASModel. Should this move there as well?  We could make
+          // TODO: Much of this listener code moved to the CAVModel. Should this move there as well?  We could make
           // the model track cardModelCells instead of the view tracking cardNodeCells
           this.sortData();
         }
@@ -142,7 +142,7 @@ class CardNodeContainer extends Node {
       }
     } );
 
-    const dataSortedTextNode = new Text( centerAndSpreadStrings.youSortedTheData, {
+    const dataSortedTextNode = new Text( centerAndVariabilityStrings.youSortedTheData, {
       font: new PhetFont( 15 )
     } );
     const dataSortedNode = new Panel( dataSortedTextNode, {
@@ -280,9 +280,9 @@ class CardNodeContainer extends Node {
       tailWidth: 5,
       pickable: false,
       doubleHead: true,
-      fill: CASColors.dragIndicatorColorProperty,
-      stroke: CASColors.arrowStrokeProperty,
-      lineWidth: CASConstants.ARROW_LINE_WIDTH,
+      fill: CAVColors.dragIndicatorColorProperty,
+      stroke: CAVColors.arrowStrokeProperty,
+      lineWidth: CAVConstants.ARROW_LINE_WIDTH,
       tandem: options.tandem.createTandem( 'dragIndicatorArrowNode' )
     } );
 
@@ -311,7 +311,7 @@ class CardNodeContainer extends Node {
     this.hasDraggedCardProperty.link( updateDragIndicator );
 
     const medianTextNode = new Text( '', {
-      font: CASConstants.BUTTON_FONT
+      font: CAVConstants.BUTTON_FONT
     } );
     const medianReadoutPanel = new Panel( medianTextNode, {
       stroke: 'lightgray',
@@ -323,7 +323,7 @@ class CardNodeContainer extends Node {
     model.medianValueProperty.link( medianValue => {
 
       // TODO-PHET_IO: Re-center when the text changes since it could have a different width
-      medianTextNode.text = StringUtils.fillIn( centerAndSpreadStrings.medianEqualsValue, { value: model.medianValueProperty.value } );
+      medianTextNode.text = StringUtils.fillIn( centerAndVariabilityStrings.medianEqualsValue, { value: model.medianValueProperty.value } );
     } );
 
     const updateMedianNode = () => {
@@ -386,7 +386,7 @@ class CardNodeContainer extends Node {
         const dragCell = this.getClosestCell( position.x );
 
         // The drag delta can suggest a match further than a neighboring cell. But we must do pairwise swaps with
-        // neighbors only in order to maintain the correct ordering. See https://github.com/phetsims/center-and-spread/issues/78
+        // neighbors only in order to maintain the correct ordering. See https://github.com/phetsims/center-and-variability/issues/78
         const closestCell = dragCell > originalCell ? originalCell + 1 :
                             dragCell < originalCell ? originalCell - 1 :
                             originalCell;
@@ -596,7 +596,7 @@ class CardNodeContainer extends Node {
     }
   }
 
-  getCardNode( casObject: CASObject ): CardNode | null {
+  getCardNode( casObject: CAVObject ): CardNode | null {
     return this.cardNodeCells.find( cardNode => cardNode.casObject === casObject ) || null;
   }
 
@@ -640,5 +640,5 @@ const CardNodeContainerIO = new IOType( 'CardNodeContainerIO', {
   }
 } );
 
-centerAndSpread.register( 'CardNodeContainer', CardNodeContainer );
+centerAndVariability.register( 'CardNodeContainer', CardNodeContainer );
 export default CardNodeContainer;

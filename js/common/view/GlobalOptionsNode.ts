@@ -10,12 +10,12 @@
 import OptionsDialog from '../../../../joist/js/OptionsDialog.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
 import { VBox, Text } from '../../../../scenery/js/imports.js';
-import centerAndSpread from '../../centerAndSpread.js';
+import centerAndVariability from '../../centerAndVariability.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import PlotType from '../model/PlotType.js';
-import CASConstants from '../CASConstants.js';
+import CAVConstants from '../CAVConstants.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import centerAndSpreadStrings from '../../centerAndSpreadStrings.js';
+import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
 
 class GlobalOptionsNode extends VBox {
   private disposeGlobalOptionsNode: () => void;
@@ -23,18 +23,18 @@ class GlobalOptionsNode extends VBox {
   // TODO: Tandem in the options?  And use tandem in the file?
   constructor( tandem: Tandem ) {
 
-    const title = new Text( centerAndSpreadStrings.plotType, {
+    const title = new Text( centerAndVariabilityStrings.plotType, {
       font: new PhetFont( 24 )
     } );
 
     const TEXT_OPTIONS = {
       font: new PhetFont( 18 )
     };
-    const radioButtonGroup = new VerticalAquaRadioButtonGroup<PlotType>( CASConstants.PLOT_TYPE_PROPERTY, [ {
-      node: new Text( centerAndSpreadStrings.linePlot, TEXT_OPTIONS ),
+    const radioButtonGroup = new VerticalAquaRadioButtonGroup<PlotType>( CAVConstants.PLOT_TYPE_PROPERTY, [ {
+      node: new Text( centerAndVariabilityStrings.linePlot, TEXT_OPTIONS ),
       value: PlotType.LINE_PLOT
     }, {
-      node: new Text( centerAndSpreadStrings.dotPlot, TEXT_OPTIONS ),
+      node: new Text( centerAndVariabilityStrings.dotPlot, TEXT_OPTIONS ),
       value: PlotType.DOT_PLOT
     } ] );
 
@@ -54,5 +54,5 @@ class GlobalOptionsNode extends VBox {
   }
 }
 
-centerAndSpread.register( 'GlobalOptionsNode', GlobalOptionsNode );
+centerAndVariability.register( 'GlobalOptionsNode', GlobalOptionsNode );
 export default GlobalOptionsNode;

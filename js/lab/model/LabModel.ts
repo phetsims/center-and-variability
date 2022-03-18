@@ -9,23 +9,23 @@
 
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import centerAndSpread from '../../centerAndSpread.js';
-import CASModel, { CASModelOptions } from '../../common/model/CASModel.js';
-import CASObjectType from '../../common/model/CASObjectType.js';
-import CASConstants from '../../common/CASConstants.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
+import CAVObjectType from '../../common/model/CAVObjectType.js';
+import CAVConstants from '../../common/CAVConstants.js';
 
 type SelfOptions = {};
-type LabModelOptions = SelfOptions & CASModelOptions;
+type LabModelOptions = SelfOptions & CAVModelOptions;
 
-class LabModel extends CASModel {
+class LabModel extends CAVModel {
 
   constructor( options: LabModelOptions ) {
 
-    options = optionize<LabModelOptions, SelfOptions, CASModelOptions>( {
+    options = optionize<LabModelOptions, SelfOptions, CAVModelOptions>( {
       tandem: Tandem.REQUIRED
     }, options );
 
-    super( CASObjectType.DATA_POINT, CASConstants.NUMBER_OF_OBJECTS_LARGE, options );
+    super( CAVObjectType.DATA_POINT, CAVConstants.NUMBER_OF_OBJECTS_LARGE, options );
   }
 
   /**
@@ -42,5 +42,5 @@ class LabModel extends CASModel {
   }
 }
 
-centerAndSpread.register( 'LabModel', LabModel );
+centerAndVariability.register( 'LabModel', LabModel );
 export default LabModel;

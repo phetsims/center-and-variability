@@ -1,6 +1,6 @@
 {
   "center-and-variability.title": {
-    "value": "Center and Spread"
+    "value": "Center and Variability"
   },
   "screen.median": {
     "value": "Median"
@@ -8,8 +8,8 @@
   "screen.meanAndMedian": {
     "value": "Mean & Median"
   },
-  "screen.spread": {
-    "value": "Spread"
+  "screen.variability": {
+    "value": "Variability"
   },
   "screen.lab": {
     "value": "Lab"
@@ -20,7 +20,7 @@
   "meanAndMedianQuestion": {
     "value": "How does each kick influence the mean and median?"
   },
-  "spreadQuestion": {
+  "variabilityQuestion": {
     "value": "How consistent is ball distance?"
   },
   "kickValue": {

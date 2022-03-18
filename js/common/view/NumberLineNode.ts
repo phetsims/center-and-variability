@@ -7,7 +7,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import centerAndSpread from '../../centerAndSpread.js';
+import centerAndVariability from '../../centerAndVariability.js';
 import { IPaint, Node, NodeOptions, Path, Text } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -19,12 +19,12 @@ import TickLabelSet from '../../../../bamboo/js/TickLabelSet.js';
 import Utils from '../../../../dot/js/Utils.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
-import CASColors from '../CASColors.js';
+import CAVColors from '../CAVColors.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import CASConstants from '../CASConstants.js';
+import CAVConstants from '../CAVConstants.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = {
@@ -86,7 +86,7 @@ class NumberLineNode extends Node {
 
       // For the dot plot, when "mean" is selected, there is a purple overlay on the x-axis (if there is an x-axis)
       const rangeNode = new Path( new Shape().moveTo( 0, 0 ).lineToRelative( 100, 0 ), {
-        stroke: CASColors.meanColorProperty,
+        stroke: CAVColors.meanColorProperty,
         lineWidth: 3.2
       } );
       Property.multilink( [ rangeProperty, isShowingMeanIndicatorProperty ],
@@ -139,12 +139,12 @@ class NumberLineNode extends Node {
       .close();
 
     return new Path( TRIANGLE_SHAPE, {
-      fill: CASColors.meanColorProperty,
-      stroke: includeStroke ? CASColors.arrowStrokeProperty : null,
-      lineWidth: CASConstants.ARROW_LINE_WIDTH
+      fill: CAVColors.meanColorProperty,
+      stroke: includeStroke ? CAVColors.arrowStrokeProperty : null,
+      lineWidth: CAVConstants.ARROW_LINE_WIDTH
     } );
   }
 }
 
-centerAndSpread.register( 'NumberLineNode', NumberLineNode );
+centerAndVariability.register( 'NumberLineNode', NumberLineNode );
 export default NumberLineNode;
