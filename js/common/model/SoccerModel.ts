@@ -28,19 +28,14 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import { AnimationMode } from './AnimationMode.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
+import { DistributionType } from './DistributionType.js';
+import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 
 type SelfOptions = {};
 type SoccerModelOptions = SelfOptions & CAVModelOptions;
 
 // constants
 const TIME_BETWEEN_RAPID_KICKS = 0.5; // in seconds
-
-const SKEWED_LEFT = [
-  6, 9, 11, 14, 11,
-  8, 6, 5, 5, 5,
-  5, 5, 5, 5, 5
-];
-const SKEWED_RIGHT = SKEWED_LEFT.slice().reverse();
 
 class SoccerModel extends CAVModel {
   readonly soccerPlayerGroup: PhetioGroup<SoccerPlayer, [ number ]>;
@@ -51,7 +46,7 @@ class SoccerModel extends CAVModel {
 
   private readonly timeWhenLastBallWasKickedProperty: NumberProperty;
   private readonly ballPlayerMap: Map<CAVObject, SoccerPlayer>; // TODO: Add to PhET-iO State
-  currentDistribution: number[];
+  distributionProperty: EnumerationProperty<DistributionType>;
 
   constructor( maxNumberOfBalls: number, options: SoccerModelOptions ) {
 
@@ -101,7 +96,9 @@ class SoccerModel extends CAVModel {
     this.hasKickableSoccerBallsProperty = new DerivedProperty( [ this.numberOfRemainingKickableSoccerBallsProperty ],
       numberOfRemainingKickableObjects => numberOfRemainingKickableObjects > 0 );
 
-    this.currentDistribution = SoccerModel.chooseDistribution();
+    this.distributionProperty = new EnumerationProperty( SoccerModel.chooseDistribution(), {
+      tandem: options.tandem.createTandem( 'distributionProperty' )
+    } );
 
     this.objectValueBecameNonNullEmitter.addListener( casObject => {
 
@@ -126,8 +123,8 @@ class SoccerModel extends CAVModel {
     } );
   }
 
-  static chooseDistribution(): number[] {
-    return dotRandom.nextBoolean() ? SKEWED_LEFT : SKEWED_RIGHT;
+  static chooseDistribution(): DistributionType {
+    return dotRandom.nextBoolean() ? DistributionType.SKEWED_LEFT : DistributionType.SKEWED_RIGHT;
   }
 
   /**
@@ -212,7 +209,7 @@ class SoccerModel extends CAVModel {
     // console.log( inputNormalized );
     // console.log( resultNormalized );
 
-    const weights = this.currentDistribution;
+    const weights = this.distributionProperty.value.data;
 
     assert && assert( weights.length === this.physicalRange.getLength() + 1, 'weight array should match the model range' );
     const x1 = dotRandom.sampleProbabilities( weights ) + 1;
@@ -325,7 +322,7 @@ class SoccerModel extends CAVModel {
   reset(): void {
     super.reset();
     this.clearData();
-    this.currentDistribution = SoccerModel.chooseDistribution();
+    this.distributionProperty.value = SoccerModel.chooseDistribution();
   }
 
   private populateSoccerPlayerGroup(): void {
