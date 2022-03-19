@@ -24,7 +24,7 @@
       "vegas"
     ],
     "phet-io": {
-      "validation": false
+      "validation": true
     },
     "supportsOutputJS": true,
     "simFeatures": {
