@@ -34,7 +34,7 @@ type SelfOptions = {
     medianBarIconOptions: {
       notchDirection: string;
       barStyle: string;
-    },
+    };
     showMedianCheckboxIcon: boolean;
   };
   bottomCheckboxPanelOptions?: {

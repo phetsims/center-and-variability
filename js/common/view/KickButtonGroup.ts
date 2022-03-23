@@ -48,7 +48,7 @@ class KickButtonGroup extends VBox {
       };
     };
 
-    const createKickButton = ( content: { label: Node, text: Text }, tandem: Tandem, numberToKick: number, multikick: boolean ) => {
+    const createKickButton = ( content: { label: Node; text: Text }, tandem: Tandem, numberToKick: number, multikick: boolean ) => {
 
       if ( multikick ) {
         model.numberOfRemainingKickableSoccerBallsProperty.link( numberOfRemainingKickableObjects => {

@@ -25,7 +25,7 @@ import SoccerPlayer from '../model/SoccerPlayer.js';
 import NumberLineNode from './NumberLineNode.js';
 
 type SelfOptions = {
-  questionBarOptions: QuestionBarOptions
+  questionBarOptions: QuestionBarOptions;
 };
 export type SoccerScreenViewOptions = SelfOptions & CAVScreenViewOptions;
 
