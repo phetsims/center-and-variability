@@ -124,7 +124,7 @@ class SoccerModel extends CAVModel {
   }
 
   static chooseDistribution(): DistributionType {
-    return dotRandom.nextBoolean() ? DistributionType.SKEWED_LEFT : DistributionType.SKEWED_RIGHT;
+    return dotRandom.nextBoolean() ? DistributionType.LEFT_SKEWED : DistributionType.RIGHT_SKEWED;
   }
 
   /**

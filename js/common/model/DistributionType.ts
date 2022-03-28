@@ -11,16 +11,17 @@ import centerAndVariability from '../../centerAndVariability.js';
  * @author Chris Klusendorf (PhET Interactive Simulations)
  */
 
-const SKEWED_LEFT_DATA = [
+// Right skewed means most of the data is on the left, see https://github.com/phetsims/center-and-variability/issues/112
+const RIGHT_SKEWED_DATA = [
   6, 9, 11, 14, 11,
   8, 6, 5, 5, 5,
   5, 5, 5, 5, 5
 ];
-const SKEWED_RIGHT_DATA = SKEWED_LEFT_DATA.slice().reverse();
+const LEFT_SKEWED_DATA = RIGHT_SKEWED_DATA.slice().reverse();
 
 export class DistributionType extends EnumerationValue {
-  static SKEWED_LEFT = new DistributionType( SKEWED_LEFT_DATA );
-  static SKEWED_RIGHT = new DistributionType( SKEWED_RIGHT_DATA );
+  static LEFT_SKEWED = new DistributionType( RIGHT_SKEWED_DATA );
+  static RIGHT_SKEWED = new DistributionType( LEFT_SKEWED_DATA );
   static enumeration = new Enumeration( DistributionType );
   readonly data: ReadonlyArray<number>;
 
