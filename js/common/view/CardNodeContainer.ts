@@ -362,6 +362,7 @@ class CardNodeContainer extends Node {
     this.cardNodeCellsChangedEmitter.addListener( updateMedianNode );
     model.medianValueProperty.link( updateMedianNode );
     model.isShowingTopMedianProperty.link( updateMedianNode );
+    model.objectChangedEmitter.addListener( updateMedianNode );
 
     this.isReadyForCelebration = false;
 
