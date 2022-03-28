@@ -84,6 +84,7 @@ class PredictionNode extends Node {
     } );
 
     this.addInputListener( new DragListener( {
+      tandem: options.tandem.createTandem( 'dragListener' ),
       positionProperty: dragPositionProperty,
       start: () => this.moveToFront()
     } ) );

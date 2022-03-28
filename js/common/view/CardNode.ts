@@ -59,7 +59,8 @@ class CardNode extends Node {
     const options = optionize<CardNodeOptions, SelfOptions, NodeOptions>( {
       tandem: Tandem.REQUIRED,
       children: [ rectangle, text ],
-      cursor: 'pointer'
+      cursor: 'pointer',
+      phetioDynamicElement: true
     }, providedOptions );
 
     super( options );
@@ -83,6 +84,7 @@ class CardNode extends Node {
     } );
 
     this.dragListener = new DragListener( {
+      tandem: options.tandem.createTandem( 'dragListener' ),
       positionProperty: this.positionProperty,
       start: () => {
         this.moveToFront();
@@ -148,6 +150,7 @@ class CardNode extends Node {
 
   dispose() {
     this.positionProperty.dispose();
+    this.dragListener.dispose();
     super.dispose();
   }
 }

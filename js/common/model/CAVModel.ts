@@ -427,7 +427,7 @@ class CAVModel {
 
     this.updateAnimation();
 
-    this.objectGroup.forEach( casObject => casObject.step( dt ) );
+    this.objectGroup.forEach( cavObject => cavObject.step( dt ) );
   }
 }
 

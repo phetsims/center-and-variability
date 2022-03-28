@@ -37,6 +37,7 @@ export type CAVObjectNodeOptions = SelfOptions & NodeOptions & PickRequired<Node
 let index = 0;
 
 class CAVObjectNode extends Node {
+  private dragListener: DragListener | null;
 
   constructor( casObject: CAVObject, isShowingPlayAreaMedianProperty: IReadOnlyProperty<boolean>,
                modelViewTransform: ModelViewTransform2, providedOptions?: CAVObjectNodeOptions ) {
@@ -110,7 +111,8 @@ class CAVObjectNode extends Node {
 
     // only setup input-related things if dragging is enabled
     if ( options.draggingEnabled ) {
-      const dragListener = new DragListener( {
+      this.dragListener = new DragListener( {
+        tandem: options.tandem.createTandem( 'dragListener' ),
         positionProperty: casObject.dragPositionProperty,
         transform: modelViewTransform,
         start: () => {
@@ -128,14 +130,14 @@ class CAVObjectNode extends Node {
       // have enough space to move that far. If we make sure that bounds surrounding the CAVObjectNode have a width
       // of 2 model units the pointer will always have enough space to drag the CAVObjectNode to a new position.
       // See https://github.com/phetsims/center-and-variability/issues/88
-      dragListener.createPanTargetBounds = () => {
+      this.dragListener.createPanTargetBounds = () => {
         const modelPosition = casObject.positionProperty.value;
         const modelBounds = new Bounds2( modelPosition.x - 1, modelPosition.y - 1, modelPosition.x + 1, modelPosition.y + 1 );
         const viewBounds = modelViewTransform.modelToViewBounds( modelBounds );
         return this.parentToGlobalBounds( viewBounds );
       };
 
-      this.addInputListener( dragListener );
+      this.addInputListener( this.dragListener );
       this.touchArea = this.localBounds.dilatedX( 5 );
 
       // Prevent dragging or interaction while the object is animating
@@ -144,6 +146,9 @@ class CAVObjectNode extends Node {
         this.cursor = isPickable ? 'pointer' : null;
         this.pickable = isPickable;
       } );
+    }
+    else {
+      this.dragListener = null;
     }
 
     // show or hide the median highlight
@@ -168,6 +173,11 @@ class CAVObjectNode extends Node {
         x: this.width / 2 + 1
       } ) );
     }
+  }
+
+  dispose() {
+    this.dragListener && this.dragListener.dispose();
+    super.dispose();
   }
 }
 

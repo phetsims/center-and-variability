@@ -107,7 +107,9 @@ class SoccerPlayerNode extends Node {
         modelViewTransform.modelToViewPosition( new Vector2( 0, 0 ) ).plusXY( -20 - placeInLine * SPACING, 5 + verticalAdjustment );
     } );
 
-    const options = optionize<SoccerPlayerNodeOptions, SelfOptions, NodeOptions>( {}, providedOptions );
+    const options = optionize<SoccerPlayerNodeOptions, SelfOptions, NodeOptions>( {
+      phetioDynamicElement: true
+    }, providedOptions );
 
     this.mutate( options );
   }

@@ -187,6 +187,7 @@ class CAVScreenView extends ScreenView {
     } );
 
     this.eraserButton = new EraserButton( {
+      tandem: options.tandem.createTandem( 'eraserButton' ),
       listener: () => {
 
         // Interrupt dragging of existing objects

@@ -38,7 +38,8 @@ class SoccerPlayer extends PhetioObject {
 
     const options = optionize<SoccerPlayerOptions, SelfOptions, PhetioObjectOptions>( {
       phetioType: SoccerPlayer.SoccerPlayerIO,
-      tandem: Tandem.REQUIRED
+      tandem: Tandem.REQUIRED,
+      phetioDynamicElement: true
     }, providedOptions );
 
     super( options );
