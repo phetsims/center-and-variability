@@ -136,7 +136,7 @@ class CAVObjectNode extends Node {
       };
 
       this.addInputListener( dragListener );
-      this.touchArea = this.localBounds.dilatedX( 10 );
+      this.touchArea = this.localBounds.dilatedX( 5 );
 
       // Prevent dragging or interaction while the object is animating
       Property.multilink( [ casObject.animationModeProperty, casObject.valueProperty ], ( mode, value ) => {
