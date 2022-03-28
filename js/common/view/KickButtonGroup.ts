@@ -69,7 +69,10 @@ class KickButtonGroup extends VBox {
         // TODO-DESIGN: It feels asymmetrical that holding down "kick 1" fires soccer balls but holding down "kick 5" does nothing
         fireOnHold: !multikick,
         fireOnHoldDelay: 750,
-        fireOnHoldInterval: 250
+
+        // This needs to be longer than SoccerModel.TIME_BETWEEN_RAPID_KICKS plus the poise time, see
+        // https://github.com/phetsims/center-and-variability/issues/102
+        fireOnHoldInterval: 650
       } );
     };
 
