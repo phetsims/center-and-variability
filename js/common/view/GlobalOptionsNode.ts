@@ -32,17 +32,22 @@ class GlobalOptionsNode extends VBox {
     };
     const radioButtonGroup = new VerticalAquaRadioButtonGroup<PlotType>( CAVConstants.PLOT_TYPE_PROPERTY, [ {
       node: new Text( centerAndVariabilityStrings.linePlot, TEXT_OPTIONS ),
-      value: PlotType.LINE_PLOT
+      value: PlotType.LINE_PLOT,
+      tandemName: 'linePlotRadioButton'
     }, {
       node: new Text( centerAndVariabilityStrings.dotPlot, TEXT_OPTIONS ),
-      value: PlotType.DOT_PLOT
-    } ] );
+      value: PlotType.DOT_PLOT,
+      tandemName: 'dotPlotRadioButton'
+    } ], {
+      tandem: tandem.createTandem( 'plotTypeRadioButtonGroup' )
+    } );
 
     // VBox is used to make it easy to add additional options
     super( {
       children: [ title, radioButtonGroup ],
       spacing: OptionsDialog.DEFAULT_SPACING,
-      align: 'left'
+      align: 'left',
+      tandem: tandem
     } );
 
     this.disposeGlobalOptionsNode = () => radioButtonGroup.dispose();
