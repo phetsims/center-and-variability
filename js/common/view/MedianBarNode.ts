@@ -16,8 +16,8 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import CAVColors from '../CAVColors.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 
-type NotchDirection = 'up' | 'down';
-type BarStyle = 'continuous' | 'split';
+export type NotchDirection = 'up' | 'down';
+export type BarStyle = 'continuous' | 'split';
 type SelfOptions = {
   notchDirection: NotchDirection;
   barStyle: BarStyle;

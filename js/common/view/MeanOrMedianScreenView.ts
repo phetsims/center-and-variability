@@ -70,7 +70,7 @@ class MeanOrMedianScreenView extends SoccerScreenView {
       } );
     }
 
-    this.accordionBox = new CAVAccordionBox( this.model, this.accordionBoxContents, this.topCheckboxPanel,
+    this.accordionBox = new CAVAccordionBox( this.model, this.accordionBoxContents, this.topCheckboxGroup,
       titleNode,
       this.layoutBounds, {
         tandem: accordionBoxTandem,
@@ -85,13 +85,13 @@ class MeanOrMedianScreenView extends SoccerScreenView {
 
     const BOTTOM_CHECKBOX_PANEL_MARGIN = 12.5;
 
-    // TODO: What if positioning the bottomCheckboxPanel.right forces the topCheckboxPanel to the right of the accordion box bounds?
-    this.bottomCheckboxPanel.right = this.layoutBounds.right - BOTTOM_CHECKBOX_PANEL_MARGIN;
-    this.bottomCheckboxPanel.bottom = this.modelViewTransform.modelToViewY( 0 ) - BOTTOM_CHECKBOX_PANEL_MARGIN;
+    // TODO: What if positioning the bottomCheckboxGroup.right forces the topCheckboxGroup to the right of the accordion box bounds?
+    this.bottomCheckboxGroup.right = this.layoutBounds.right - BOTTOM_CHECKBOX_PANEL_MARGIN;
+    this.bottomCheckboxGroup.bottom = this.modelViewTransform.modelToViewY( 0 ) - BOTTOM_CHECKBOX_PANEL_MARGIN;
 
-    ManualConstraint.create( this, [ this.bottomCheckboxPanel, this.topCheckboxPanel ],
-      ( bottomCheckboxPanelWrapper, topCheckboxPanelWrapper ) => {
-        topCheckboxPanelWrapper.x = bottomCheckboxPanelWrapper.x;
+    ManualConstraint.create( this, [ this.bottomCheckboxGroup, this.topCheckboxGroup ],
+      ( bottomCheckboxGroupWrapper, topCheckboxGroupWrapper ) => {
+        topCheckboxGroupWrapper.x = bottomCheckboxGroupWrapper.x;
       } );
 
     // Add in the same order as the checkboxes, so the z-order matches the checkbox order

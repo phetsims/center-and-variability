@@ -17,6 +17,7 @@ import CAVConstants from '../CAVConstants.js';
 import NumberLineNode from './NumberLineNode.js';
 import MedianBarNode, { MedianBarNodeOptions } from './MedianBarNode.js';
 import CAVColors from '../CAVColors.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = {
   includeSortData?: boolean;
@@ -25,7 +26,8 @@ type SelfOptions = {
   medianBarIconOptions: MedianBarNodeOptions;
   showMedianCheckboxIcon: boolean;
 };
-export type TopRepresentationCheckboxGroupOptions = SelfOptions & VerticalCheckboxGroupOptions;
+export type TopRepresentationCheckboxGroupOptions = SelfOptions & VerticalCheckboxGroupOptions &
+  PickRequired<VerticalCheckboxGroupOptions, 'tandem'>;
 
 // constants
 const ICON_WIDTH = 24;
@@ -50,7 +52,8 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
     const items = [];
     options.includeSortData && items.push( {
       node: new Text( centerAndVariabilityStrings.sortData, TEXT_OPTIONS ),
-      property: model.isSortingDataProperty
+      property: model.isSortingDataProperty,
+      tandem: options.tandem.createTandem( 'sortDataCheckbox' )
     } );
     options.includeMean && items.push( {
       node: new HBox( {
@@ -74,7 +77,8 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
           } )
         ]
       } ),
-      property: model.isShowingTopMeanProperty
+      property: model.isShowingTopMeanProperty,
+      tandem: options.tandem.createTandem( 'meanCheckbox' )
     } );
     options.includeMedian && items.push( {
       node: new HBox( {
@@ -87,7 +91,8 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
           ] : []
         ]
       } ),
-      property: model.isShowingTopMedianProperty
+      property: model.isShowingTopMedianProperty,
+      tandem: options.tandem.createTandem( 'medianCheckbox' )
     } );
     super( items, options );
   }

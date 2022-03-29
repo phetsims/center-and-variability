@@ -20,24 +20,26 @@ import CAVObjectNode from './CAVObjectNode.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import CAVObject from '../model/CAVObject.js';
+import merge from '../../../../phet-core/js/merge.js';
 import TopRepresentationCheckboxGroup from './TopRepresentationCheckboxGroup.js';
 import BottomRepresentationCheckboxGroup from './BottomRepresentationCheckboxGroup.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import PredictionNode from './PredictionNode.js';
 import CAVColors from '../CAVColors.js';
+import { BarStyle, NotchDirection } from './MedianBarNode.js';
 
 type SelfOptions = {
-  topCheckboxPanelOptions?: {
+  topCheckboxGroupOptions?: {
     includeSortData: boolean;
     includeMean: boolean;
     medianBarIconOptions: {
-      notchDirection: string;
-      barStyle: string;
+      notchDirection: NotchDirection;
+      barStyle: BarStyle;
     };
     showMedianCheckboxIcon: boolean;
   };
-  bottomCheckboxPanelOptions?: {
+  bottomCheckboxGroupOptions?: {
     includeMean?: boolean;
     includePredictMean?: boolean;
   };
@@ -46,8 +48,8 @@ export type CAVScreenViewOptions = SelfOptions & ScreenViewOptions;
 
 class CAVScreenView extends ScreenView {
 
-  protected readonly topCheckboxPanel: TopRepresentationCheckboxGroup;
-  protected readonly bottomCheckboxPanel: BottomRepresentationCheckboxGroup;
+  protected readonly topCheckboxGroup: TopRepresentationCheckboxGroup;
+  protected readonly bottomCheckboxGroup: BottomRepresentationCheckboxGroup;
 
   protected readonly resetAllButton: ResetAllButton;
   protected readonly modelViewTransform: ModelViewTransform2;
@@ -118,11 +120,13 @@ class CAVScreenView extends ScreenView {
       objectNodeGroup.disposeElement( viewNode );
     } );
 
-    // TODO: Consider renaming as Group instead of panel (if they only contain checkboxes)
-    // @ts-ignore TODO
-    this.topCheckboxPanel = new TopRepresentationCheckboxGroup( model, options.topCheckboxPanelOptions );
-    this.bottomCheckboxPanel = new BottomRepresentationCheckboxGroup( model, options.bottomCheckboxPanelOptions );
-    this.addChild( this.bottomCheckboxPanel );
+    this.topCheckboxGroup = new TopRepresentationCheckboxGroup( model, merge( {
+      tandem: options.tandem.createTandem( 'topCheckboxGroup' )
+    }, options.topCheckboxGroupOptions ) );
+    this.bottomCheckboxGroup = new BottomRepresentationCheckboxGroup( model, merge( {
+      tandem: options.tandem.createTandem( 'bottomCheckboxGroup' )
+    }, options.bottomCheckboxGroupOptions ) );
+    this.addChild( this.bottomCheckboxGroup );
 
     // TODO: Separate class?
     this.playAreaMedianIndicatorNode = new ArrowNode( 0, 0, 0, 27, {

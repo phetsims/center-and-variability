@@ -22,6 +22,7 @@ import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
 import PredictionNode from './PredictionNode.js';
 import CAVColors from '../CAVColors.js';
 import NumberLineNode from './NumberLineNode.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = {
   includeMedian?: boolean;
@@ -29,7 +30,8 @@ type SelfOptions = {
   includePredictMean?: boolean;
   includePredictMedian?: boolean;
 };
-export type BottomRepresentationCheckboxGroupOptions = SelfOptions & VerticalCheckboxGroupOptions;
+export type BottomRepresentationCheckboxGroupOptions = SelfOptions & VerticalCheckboxGroupOptions &
+  PickRequired<VerticalCheckboxGroupOptions, 'tandem'>;
 
 // constants
 const TEXT_OPTIONS = {
@@ -50,7 +52,8 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
     const items = [];
 
-    const createPredictionItem = ( property: Property<boolean>, string: string, color: IColor, spacing: number ) => {
+    const createPredictionItem = ( property: Property<boolean>, string: string, color: IColor, spacing: number,
+                                   tandemName: string ) => {
       return {
         node: new HBox( {
           spacing: spacing,
@@ -67,15 +70,16 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
             } )
           ]
         } ),
-        property: property
+        property: property,
+        tandem: options.tandem.createTandem( tandemName )
       };
     };
 
-    options.includePredictMean && items.push( createPredictionItem(
-      model.isShowingMeanPredictionProperty, centerAndVariabilityStrings.predictMean, CAVColors.meanColorProperty, 20.3
+    options.includePredictMean && items.push( createPredictionItem( model.isShowingMeanPredictionProperty,
+      centerAndVariabilityStrings.predictMean, CAVColors.meanColorProperty, 20.3, 'predictMeanCheckbox'
     ) );
-    options.includePredictMedian && items.push( createPredictionItem(
-      model.isShowingMedianPredictionProperty, centerAndVariabilityStrings.predictMedian, CAVColors.medianColorProperty, 8
+    options.includePredictMedian && items.push( createPredictionItem( model.isShowingMedianPredictionProperty,
+      centerAndVariabilityStrings.predictMedian, CAVColors.medianColorProperty, 8, 'predictMedianCheckbox'
     ) );
 
     options.includeMean && items.push( {
@@ -88,7 +92,8 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
           NumberLineNode.createMeanIndicatorNode( true )
         ]
       } ),
-      property: model.isShowingPlayAreaMeanProperty
+      property: model.isShowingPlayAreaMeanProperty,
+      tandem: options.tandem.createTandem( 'meanCheckbox' )
     } );
     options.includeMedian && items.push( {
 
@@ -109,7 +114,8 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
           } )
         ]
       } ),
-      property: model.isShowingPlayAreaMedianProperty
+      property: model.isShowingPlayAreaMedianProperty,
+      tandem: options.tandem.createTandem( 'medianCheckbox' )
     } );
 
     super( items, options );
