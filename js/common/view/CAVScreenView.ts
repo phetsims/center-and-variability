@@ -28,6 +28,7 @@ import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import PredictionNode from './PredictionNode.js';
 import CAVColors from '../CAVColors.js';
 import { BarStyle, NotchDirection } from './MedianBarNode.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 
 type SelfOptions = {
   topCheckboxGroupOptions?: {
@@ -79,13 +80,21 @@ class CAVScreenView extends ScreenView {
     this.modelViewTransform = modelViewTransform;
     this.model = model;
 
+    const objectNodeGroupTandem = options.tandem.createTandem(
+      model.objectType === CAVObjectType.SOCCER_BALL ? 'soccerBallNodeGroup' : 'dataPointNodeGroup'
+    );
+
+    const objectNodesPickableProperty = new BooleanProperty( true, {
+      tandem: objectNodeGroupTandem.createTandem( 'pickableProperty' )
+    } );
+
     const objectNodeGroup = new PhetioGroup<CAVObjectNode, [ CAVObject ]>( ( tandem, casObject ) => {
-      return new CAVObjectNode( casObject, model.isShowingPlayAreaMedianProperty, modelViewTransform, {
+      return new CAVObjectNode( casObject, model.isShowingPlayAreaMedianProperty, modelViewTransform, objectNodesPickableProperty, {
         tandem: tandem
       } );
     }, [ model.objectGroup.archetype ], {
       phetioType: PhetioGroup.PhetioGroupIO( Node.NodeIO ),
-      tandem: options.tandem.createTandem( model.objectType === CAVObjectType.SOCCER_BALL ? 'soccerBallNodeGroup' : 'dataPointNodeGroup' ),
+      tandem: objectNodeGroupTandem,
       supportsDynamicState: false
     } );
 

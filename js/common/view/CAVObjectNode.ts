@@ -26,12 +26,18 @@ import CAVConstants from '../CAVConstants.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import IProperty from '../../../../axon/js/IProperty.js';
 
 type SelfOptions = {
   objectViewType?: CAVObjectType;
   draggingEnabled?: boolean;
 };
-export type CAVObjectNodeOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
+export type CAVObjectNodeOptions =
+  SelfOptions
+
+  // Take all options from NodeOptions, but do not allow passing through pickableProperty since it requires special handling in multilink
+  & Omit<NodeOptions, 'pickableProperty'>
+  & PickRequired<NodeOptions, 'tandem'>;
 
 // for debugging with ?dev
 let index = 0;
@@ -40,7 +46,8 @@ class CAVObjectNode extends Node {
   private dragListener: DragListener | null;
 
   constructor( casObject: CAVObject, isShowingPlayAreaMedianProperty: IReadOnlyProperty<boolean>,
-               modelViewTransform: ModelViewTransform2, providedOptions?: CAVObjectNodeOptions ) {
+               modelViewTransform: ModelViewTransform2, objectNodesPickableProperty: IProperty<boolean>,
+               providedOptions?: CAVObjectNodeOptions ) {
 
     const options = optionize<CAVObjectNodeOptions, SelfOptions, NodeOptions>( {
 
@@ -141,8 +148,8 @@ class CAVObjectNode extends Node {
       this.touchArea = this.localBounds.dilatedX( 5 );
 
       // Prevent dragging or interaction while the object is animating
-      Property.multilink( [ casObject.animationModeProperty, casObject.valueProperty ], ( mode, value ) => {
-        const isPickable = value !== null && mode === AnimationMode.NONE;
+      Property.multilink<[ AnimationMode, number | null, boolean ]>( [ casObject.animationModeProperty, casObject.valueProperty, objectNodesPickableProperty ], ( mode, value, objectsPickable ) => {
+        const isPickable = value !== null && mode === AnimationMode.NONE && objectsPickable;
         this.cursor = isPickable ? 'pointer' : null;
         this.pickable = isPickable;
       } );
