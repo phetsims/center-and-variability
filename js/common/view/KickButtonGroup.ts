@@ -41,8 +41,7 @@ class KickButtonGroup extends VBox {
     const createLabel = ( label: string, tandem: Tandem ) => {
       const text = new Text( label, {
         maxWidth: TEXT_MAX_WIDTH,
-        font: CAVConstants.BUTTON_FONT,
-        tandem: tandem
+        font: CAVConstants.BUTTON_FONT
       } );
       return {
         label: alignGroup.createBox( text ),
