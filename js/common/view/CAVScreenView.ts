@@ -59,7 +59,7 @@ class CAVScreenView extends ScreenView {
   // TODO: We haven't enforced the "exactly half a ball should be occluded if anything is occluded" idea.
   protected readonly backObjectLayer: Node;
   protected readonly playAreaMedianIndicatorNode: ArrowNode;
-  protected readonly eraserButton: EraserButton;
+  protected readonly eraseButton: EraserButton;
 
   // Subclasses use this to add to for correct z-ordering and correct tab navigation order
   // TODO: investigate if this is needed
@@ -190,8 +190,8 @@ class CAVScreenView extends ScreenView {
       tandem: options.tandem.createTandem( 'resetAllButton' )
     } );
 
-    this.eraserButton = new EraserButton( {
-      tandem: options.tandem.createTandem( 'eraserButton' ),
+    this.eraseButton = new EraserButton( {
+      tandem: options.tandem.createTandem( 'eraseButton' ),
       listener: () => {
 
         // Interrupt dragging of existing objects
@@ -203,7 +203,7 @@ class CAVScreenView extends ScreenView {
       right: this.resetAllButton.left - CAVConstants.SCREEN_VIEW_X_MARGIN,
       centerY: this.resetAllButton.centerY
     } );
-    this.addChild( this.eraserButton );
+    this.addChild( this.eraseButton );
     this.addChild( this.resetAllButton );
   }
 
