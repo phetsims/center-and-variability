@@ -18,6 +18,8 @@ import SoccerModel from '../model/SoccerModel.js';
 import CAVConstants from '../CAVConstants.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 type SelfOptions = {};
 export type KickButtonGroupOptions = SelfOptions & VBoxOptions & PickRequired<VBoxOptions, 'tandem'>;
@@ -57,8 +59,12 @@ class KickButtonGroup extends VBox {
         } );
       }
 
+      const buttonVisibleProperty = new BooleanProperty( true, {
+        tandem: tandem.createTandem( 'visibleProperty' )
+      } );
+
       return new RectangularPushButton( {
-        visibleProperty: model.hasKickableSoccerBallsProperty,
+        visibleProperty: DerivedProperty.and( [ model.hasKickableSoccerBallsProperty, buttonVisibleProperty ] ),
         content: content.label,
         baseColor: CAVColors.kickButtonFillColorProperty,
         xMargin: 12,
