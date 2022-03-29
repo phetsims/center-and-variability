@@ -20,8 +20,8 @@ const RIGHT_SKEWED_DATA = [
 const LEFT_SKEWED_DATA = RIGHT_SKEWED_DATA.slice().reverse();
 
 export class DistributionType extends EnumerationValue {
-  static LEFT_SKEWED = new DistributionType( RIGHT_SKEWED_DATA );
-  static RIGHT_SKEWED = new DistributionType( LEFT_SKEWED_DATA );
+  static LEFT_SKEWED = new DistributionType( LEFT_SKEWED_DATA );
+  static RIGHT_SKEWED = new DistributionType( RIGHT_SKEWED_DATA );
   static enumeration = new Enumeration( DistributionType );
   readonly data: ReadonlyArray<number>;
 
