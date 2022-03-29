@@ -172,20 +172,15 @@ class CAVScreenView extends ScreenView {
       center: this.layoutBounds.center,
       tandem: options.tandem.createTandem( 'medianPredictionNode' ),
       color: CAVColors.medianColorProperty,
-      roundToInterval: 0.5
+      roundToInterval: 0.5,
+      visibleProperty: model.isShowingMedianPredictionProperty
     } );
     this.meanPredictionNode = new PredictionNode( model.meanPredictionProperty, this.modelViewTransform, model.physicalRange, {
       center: this.layoutBounds.center,
       tandem: options.tandem.createTandem( 'meanPredictionNode' ),
       color: CAVColors.meanColorProperty,
-      roundToInterval: null // continuous
-    } );
-
-    model.isShowingMedianPredictionProperty.link( isShowingMedianPrediction => {
-      this.medianPredictionNode.visible = isShowingMedianPrediction;
-    } );
-    model.isShowingMeanPredictionProperty.link( isShowingMeanPrediction => {
-      this.meanPredictionNode.visible = isShowingMeanPrediction;
+      roundToInterval: null, // continuous
+      visibleProperty: model.isShowingMeanPredictionProperty
     } );
 
     this.resetAllButton = new ResetAllButton( {
