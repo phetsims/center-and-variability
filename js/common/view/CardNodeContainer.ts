@@ -70,6 +70,7 @@ class CardNodeContainer extends Node {
   private isReadyForCelebration: boolean;
   private remainingCelebrationAnimations: ( () => void )[];
   private dataSortedNodeAnimation: Animation | null;
+  private wasSortedBefore: boolean;
 
   constructor( model: CAVModel, providedOptions: CardNodeContainerOptions ) {
 
@@ -152,6 +153,8 @@ class CardNodeContainer extends Node {
       visible: false
     } );
 
+    this.wasSortedBefore = true;
+
     // create a rotated linear gradient
     const gradientMargin = 20;
     const startPoint = new Vector2( dataSortedNode.left + gradientMargin, dataSortedNode.top + gradientMargin );
@@ -183,6 +186,13 @@ class CardNodeContainer extends Node {
 
       // When a card is dropped, send it to its home cell
       cardNode.dragListener.isPressedProperty.link( isPressed => {
+
+        if ( isPressed ) {
+
+          // TODO: multitouch concerns.  Should it be null|true|false?  Or maybe after celebration, set it to true because we know it is sorted?
+          this.wasSortedBefore = this.isDataSorted();
+        }
+
         if ( !isPressed && !phet.joist.sim.isSettingPhetioStateProperty.value ) {
 
           // Animate the dropped card home
@@ -397,8 +407,6 @@ class CardNodeContainer extends Node {
         // No-op if the dragged card is near its home cell
         if ( currentOccupant !== cardNode ) {
 
-          const wasSortedBefore = this.isDataSorted();
-
           // it's just a pairwise swap
           this.cardNodeCells[ closestCell ] = cardNode;
           this.cardNodeCells[ originalCell ] = currentOccupant;
@@ -412,7 +420,7 @@ class CardNodeContainer extends Node {
           }
 
           // celebrate after the card was dropped and gets to its home
-          this.isReadyForCelebration = this.isDataSorted() && !wasSortedBefore;
+          this.isReadyForCelebration = this.isDataSorted() && !this.wasSortedBefore;
 
           this.cardNodeCellsChangedEmitter.emit();
         }
