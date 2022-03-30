@@ -84,12 +84,12 @@ class CAVScreenView extends ScreenView {
       model.objectType === CAVObjectType.SOCCER_BALL ? 'soccerBallNodeGroup' : 'dataPointNodeGroup'
     );
 
-    const objectNodesPickableProperty = new BooleanProperty( true, {
-      tandem: objectNodeGroupTandem.createTandem( 'pickableProperty' )
+    const objectNodesInputEnabledProperty = new BooleanProperty( true, {
+      tandem: objectNodeGroupTandem.createTandem( 'inputEnabledProperty' )
     } );
 
     const objectNodeGroup = new PhetioGroup<CAVObjectNode, [ CAVObject ]>( ( tandem, casObject ) => {
-      return new CAVObjectNode( casObject, model.isShowingPlayAreaMedianProperty, modelViewTransform, objectNodesPickableProperty, {
+      return new CAVObjectNode( casObject, model.isShowingPlayAreaMedianProperty, modelViewTransform, objectNodesInputEnabledProperty, {
         tandem: tandem
       } );
     }, [ model.objectGroup.archetype ], {
