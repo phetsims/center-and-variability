@@ -142,17 +142,9 @@ class SoccerPlayerNode extends Node {
     this.addChild( standingNode );
 
     const poisedToKickNode = new Image( playerGroups[ imageNumber ].poisedToKick );
-
-    // TODO: Workaround needed because images are not relatively positioned to each other on art boards
-    poisedToKickNode.x = -90;
-    poisedToKickNode.y = -19;
     this.addChild( poisedToKickNode );
 
     const kickingNode = new Image( playerGroups[ imageNumber ].kicking );
-
-    // TODO: Workaround needed because images are not relatively positioned to each other on art boards
-    kickingNode.x = -90;
-    kickingNode.y = -19;
     this.addChild( kickingNode );
 
     this.setScaleMagnitude( SCALE );
@@ -170,7 +162,7 @@ class SoccerPlayerNode extends Node {
       standingNode.visible = pose === Pose.STANDING;
       poisedToKickNode.visible = pose === Pose.POISED_TO_KICK;
       kickingNode.visible = pose === Pose.KICKING;
-      this.centerBottom = modelViewTransform.modelToViewPosition( new Vector2( 0, 0 ) ).plusXY( -20, 8.5 );
+      this.centerBottom = modelViewTransform.modelToViewPosition( new Vector2( 0, 0 ) ).plusXY( -28, 8.5 );
     } );
 
     soccerPlayer.placeInLineProperty.link( placeInLine => {
