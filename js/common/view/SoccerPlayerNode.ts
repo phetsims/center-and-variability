@@ -8,7 +8,7 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import { Text, Image, Node, NodeOptions } from '../../../../scenery/js/imports.js';
+import { Image, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
 
 import player01Standing_png from '../../../images/player01Standing_png.js';
 import player01PoisedToKick_png from '../../../images/player01PoisedToKick_png.js';
@@ -24,10 +24,39 @@ import player04PoisedToKick_png from '../../../images/player04PoisedToKick_png.j
 import player04Kicking_png from '../../../images/player04Kicking_png.js';
 import player05Standing_png from '../../../images/player05Standing_png.js';
 import player05PoisedToKick_png from '../../../images/player05PoisedToKick_png.js';
+import player06Kicking_png from '../../../images/player06Kicking_png.js';
+import player06Standing_png from '../../../images/player06Standing_png.js';
+import player06PoisedToKick_png from '../../../images/player06PoisedToKick_png.js';
+import player07Kicking_png from '../../../images/player07Kicking_png.js';
+import player07Standing_png from '../../../images/player07Standing_png.js';
+import player07PoisedToKick_png from '../../../images/player07PoisedToKick_png.js';
+import player08Kicking_png from '../../../images/player08Kicking_png.js';
+import player08Standing_png from '../../../images/player08Standing_png.js';
+import player08PoisedToKick_png from '../../../images/player08PoisedToKick_png.js';
+import player09Kicking_png from '../../../images/player09Kicking_png.js';
+import player09Standing_png from '../../../images/player09Standing_png.js';
+import player09PoisedToKick_png from '../../../images/player09PoisedToKick_png.js';
+import player10Kicking_png from '../../../images/player10Kicking_png.js';
+import player10Standing_png from '../../../images/player10Standing_png.js';
+import player10PoisedToKick_png from '../../../images/player10PoisedToKick_png.js';
+import player11Kicking_png from '../../../images/player11Kicking_png.js';
+import player11Standing_png from '../../../images/player11Standing_png.js';
+import player11PoisedToKick_png from '../../../images/player11PoisedToKick_png.js';
+import player12Kicking_png from '../../../images/player12Kicking_png.js';
+import player12Standing_png from '../../../images/player12Standing_png.js';
+import player12PoisedToKick_png from '../../../images/player12PoisedToKick_png.js';
+import player13Kicking_png from '../../../images/player13Kicking_png.js';
+import player13Standing_png from '../../../images/player13Standing_png.js';
+import player13PoisedToKick_png from '../../../images/player13PoisedToKick_png.js';
+import player14Kicking_png from '../../../images/player14Kicking_png.js';
+import player14Standing_png from '../../../images/player14Standing_png.js';
+import player14PoisedToKick_png from '../../../images/player14PoisedToKick_png.js';
+import player15Kicking_png from '../../../images/player15Kicking_png.js';
+import player15Standing_png from '../../../images/player15Standing_png.js';
+import player15PoisedToKick_png from '../../../images/player15PoisedToKick_png.js';
 import player05Kicking_png from '../../../images/player05Kicking_png.js';
 import SoccerPlayer from '../model/SoccerPlayer.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Pose from '../model/Pose.js';
@@ -55,11 +84,49 @@ const playerGroups = [ {
   standing: player05Standing_png,
   poisedToKick: player05PoisedToKick_png,
   kicking: player05Kicking_png
+}, {
+  standing: player06Standing_png,
+  poisedToKick: player06PoisedToKick_png,
+  kicking: player06Kicking_png
+}, {
+  standing: player07Standing_png,
+  poisedToKick: player07PoisedToKick_png,
+  kicking: player07Kicking_png
+}, {
+  standing: player08Standing_png,
+  poisedToKick: player08PoisedToKick_png,
+  kicking: player08Kicking_png
+}, {
+  standing: player09Standing_png,
+  poisedToKick: player09PoisedToKick_png,
+  kicking: player09Kicking_png
+}, {
+  standing: player10Standing_png,
+  poisedToKick: player10PoisedToKick_png,
+  kicking: player10Kicking_png
+}, {
+  standing: player11Standing_png,
+  poisedToKick: player11PoisedToKick_png,
+  kicking: player11Kicking_png
+}, {
+  standing: player12Standing_png,
+  poisedToKick: player12PoisedToKick_png,
+  kicking: player12Kicking_png
+}, {
+  standing: player13Standing_png,
+  poisedToKick: player13PoisedToKick_png,
+  kicking: player13Kicking_png
+}, {
+  standing: player14Standing_png,
+  poisedToKick: player14PoisedToKick_png,
+  kicking: player14Kicking_png
+}, {
+  standing: player15Standing_png,
+  poisedToKick: player15PoisedToKick_png,
+  kicking: player15Kicking_png
 } ];
 
-// TODO: If the team approves this design, then we can change the architecture to reflect the decision
-const SPACING = 5000;
-const SCALE = 0.15;
+const SCALE = 0.155;
 
 class SoccerPlayerNode extends Node {
   readonly soccerPlayer: SoccerPlayer;
@@ -69,16 +136,26 @@ class SoccerPlayerNode extends Node {
 
     this.soccerPlayer = soccerPlayer;
 
-    const imageNumber = soccerPlayer.initialPlaceInLine % playerGroups.length;
+    const imageNumber = soccerPlayer.initialPlaceInLine;
 
-    const restingNode = new Image( playerGroups[ imageNumber ].standing );
-    this.addChild( restingNode );
-
-    const standingNode = new Image( playerGroups[ imageNumber ].poisedToKick );
+    const standingNode = new Image( playerGroups[ imageNumber ].standing );
     this.addChild( standingNode );
 
+    const poisedToKickNode = new Image( playerGroups[ imageNumber ].poisedToKick );
+
+    // TODO: Workaround needed because images are not relatively positioned to each other on art boards
+    poisedToKickNode.x = -90;
+    poisedToKickNode.y = -19;
+    this.addChild( poisedToKickNode );
+
     const kickingNode = new Image( playerGroups[ imageNumber ].kicking );
+
+    // TODO: Workaround needed because images are not relatively positioned to each other on art boards
+    kickingNode.x = -90;
+    kickingNode.y = -19;
     this.addChild( kickingNode );
+
+    this.setScaleMagnitude( SCALE );
 
     // Show index when debugging with ?dev
     if ( phet.chipper.queryParameters.dev ) {
@@ -90,25 +167,19 @@ class SoccerPlayerNode extends Node {
     }
 
     soccerPlayer.poseProperty.link( pose => {
-      restingNode.visible = pose === Pose.STANDING;
-      standingNode.visible = pose === Pose.POISED_TO_KICK;
+      standingNode.visible = pose === Pose.STANDING;
+      poisedToKickNode.visible = pose === Pose.POISED_TO_KICK;
       kickingNode.visible = pose === Pose.KICKING;
+      this.centerBottom = modelViewTransform.modelToViewPosition( new Vector2( 0, 0 ) ).plusXY( -20, 8.5 );
     } );
 
     soccerPlayer.placeInLineProperty.link( placeInLine => {
-
-      this.setScaleMagnitude( Utils.linear( 0, 15, 1, 0.8, placeInLine ) * SCALE );
-
-      // Since the images have a margin/padding below the foot, scaling the image also changes the relative distance
-      // from the foot to the bottom of the image.  So we have to accommodate that if using centerBottom positioning
-      const verticalAdjustment = Utils.linear( 0, 15, 0, -1, placeInLine );
-
-      this.centerBottom =
-        modelViewTransform.modelToViewPosition( new Vector2( 0, 0 ) ).plusXY( -20 - placeInLine * SPACING, 5 + verticalAdjustment );
+      this.visible = placeInLine === 0;
     } );
 
     const options = optionize<SoccerPlayerNodeOptions, SelfOptions, NodeOptions>( {
-      phetioDynamicElement: true
+      phetioDynamicElement: true,
+      excludeInvisibleChildrenFromBounds: false
     }, providedOptions );
 
     this.mutate( options );
