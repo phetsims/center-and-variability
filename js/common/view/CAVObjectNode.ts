@@ -35,8 +35,8 @@ type SelfOptions = {
 export type CAVObjectNodeOptions =
   SelfOptions
 
-  // Take all options from NodeOptions, but do not allow passing through pickableProperty since it requires special handling in multilink
-  & Omit<NodeOptions, 'pickableProperty'>
+  // Take all options from NodeOptions, but do not allow passing through inputEnabledProperty since it requires special handling in multilink
+  & Omit<NodeOptions, 'inputEnabledProperty'>
   & PickRequired<NodeOptions, 'tandem'>;
 
 // for debugging with ?dev
@@ -46,7 +46,7 @@ class CAVObjectNode extends Node {
   private dragListener: DragListener | null;
 
   constructor( casObject: CAVObject, isShowingPlayAreaMedianProperty: IReadOnlyProperty<boolean>,
-               modelViewTransform: ModelViewTransform2, objectNodesPickableProperty: IProperty<boolean>,
+               modelViewTransform: ModelViewTransform2, objectNodesInputEnabledProperty: IProperty<boolean>,
                providedOptions?: CAVObjectNodeOptions ) {
 
     const options = optionize<CAVObjectNodeOptions, SelfOptions, NodeOptions>( {
@@ -55,7 +55,8 @@ class CAVObjectNode extends Node {
       // with DOT views
       objectViewType: casObject.objectType,
       draggingEnabled: true,
-      phetioDynamicElement: true
+      phetioDynamicElement: true,
+      cursor: 'pointer'
     }, providedOptions );
     super( options );
 
@@ -148,10 +149,9 @@ class CAVObjectNode extends Node {
       this.touchArea = this.localBounds.dilatedX( 5 );
 
       // Prevent dragging or interaction while the object is animating
-      Property.multilink<[ AnimationMode, number | null, boolean ]>( [ casObject.animationModeProperty, casObject.valueProperty, objectNodesPickableProperty ], ( mode, value, objectsPickable ) => {
-        const isPickable = value !== null && mode === AnimationMode.NONE && objectsPickable;
-        this.cursor = isPickable ? 'pointer' : null;
-        this.pickable = isPickable;
+      Property.multilink<[ AnimationMode, number | null, boolean ]>( [ casObject.animationModeProperty, casObject.valueProperty, objectNodesInputEnabledProperty ], ( mode, value, objectsInputEnabled ) => {
+        const inputEnabled = value !== null && mode === AnimationMode.NONE && objectsInputEnabled;
+        this.inputEnabled = inputEnabled;
       } );
     }
     else {
