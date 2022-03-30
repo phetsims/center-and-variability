@@ -14,6 +14,13 @@ import centerAndVariability from '../centerAndVariability.js';
 import CAVQueryParameters from './CAVQueryParameters.js';
 import PlotType from './model/PlotType.js';
 
+// Right skewed means most of the data is on the left, see https://github.com/phetsims/center-and-variability/issues/112
+const RIGHT_SKEWED_DATA = [
+  6, 9, 11, 14, 11,
+  8, 6, 5, 5, 5,
+  5, 5, 5, 5, 5
+];
+
 const CAVConstants = {
   SCREEN_VIEW_X_MARGIN: 15,
   SCREEN_VIEW_Y_MARGIN: 15,
@@ -25,7 +32,9 @@ const CAVConstants = {
   PLOT_TYPE_PROPERTY: new EnumerationProperty( CAVQueryParameters.plotType === 'dotPlot' ? PlotType.DOT_PLOT : PlotType.LINE_PLOT, {
     tandem: Tandem.GLOBAL_VIEW.createTandem( 'plotTypeProperty' )
   } ),
-  ARROW_LINE_WIDTH: 0.5
+  ARROW_LINE_WIDTH: 0.5,
+  RIGHT_SKEWED_DATA: RIGHT_SKEWED_DATA,
+  LEFT_SKEWED_DATA: RIGHT_SKEWED_DATA.slice().reverse()
 };
 
 centerAndVariability.register( 'CAVConstants', CAVConstants );
