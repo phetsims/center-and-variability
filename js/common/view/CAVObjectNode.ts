@@ -28,6 +28,7 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import IProperty from '../../../../axon/js/IProperty.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import ballDark_png from '../../../images/ballDark_png.js';
 
 type SelfOptions = {
   objectViewType?: CAVObjectType;
@@ -94,7 +95,14 @@ class CAVObjectNode extends Node {
       return node;
     };
 
-    const childNode = options.objectViewType === CAVObjectType.SOCCER_BALL ? new Image( ball_png ) :
+    // The dark soccer ball is used for when a ball has input disabled.
+    const soccerBallNode = new Image( ball_png );
+    const soccerBallDarkNode = new Image( ballDark_png );
+    const soccerBallNodes = new Node( {
+      children: [ soccerBallNode, soccerBallDarkNode ]
+    } );
+
+    const childNode = options.objectViewType === CAVObjectType.SOCCER_BALL ? soccerBallNodes :
                       options.objectViewType === CAVObjectType.DOT ? createPlotMarker() :
                       new ShadedSphereNode( options.objectViewType.radius * 2 );
     childNode.maxWidth = viewRadius * 2;
@@ -159,9 +167,21 @@ class CAVObjectNode extends Node {
       // ahs been disabled
       Property.multilink<[ AnimationMode, number | null, boolean, boolean ]>(
         [ casObject.animationModeProperty, casObject.valueProperty, inputEnabledProperty, objectNodesInputEnabledProperty ],
-        ( mode, value, inputEnabled, objectsInputEnabled ) => {
-        this.inputEnabled = value !== null && mode === AnimationMode.NONE && inputEnabled && objectsInputEnabled;
-      } );
+        ( mode, value, singleObjectInputEnabled, objectsInputEnabled ) => {
+          const inputEnabled = value !== null && mode === AnimationMode.NONE && singleObjectInputEnabled && objectsInputEnabled;
+
+          // if input is disabled and the ball is in the play area, show the darker version
+          if ( !inputEnabled && options.objectViewType === CAVObjectType.SOCCER_BALL && value !== null ) {
+            soccerBallDarkNode.visible = true;
+            soccerBallNode.visible = false;
+          }
+          else {
+            soccerBallDarkNode.visible = false;
+            soccerBallNode.visible = true;
+          }
+
+          this.inputEnabled = inputEnabled;
+        } );
     }
     else {
       this.dragListener = null;
