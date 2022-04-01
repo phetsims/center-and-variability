@@ -27,6 +27,7 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import IProperty from '../../../../axon/js/IProperty.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 
 type SelfOptions = {
   objectViewType?: CAVObjectType;
@@ -148,10 +149,18 @@ class CAVObjectNode extends Node {
       this.addInputListener( this.dragListener );
       this.touchArea = this.localBounds.dilatedX( 5 );
 
-      // Prevent dragging or interaction while the object is animating
-      Property.multilink<[ AnimationMode, number | null, boolean ]>( [ casObject.animationModeProperty, casObject.valueProperty, objectNodesInputEnabledProperty ], ( mode, value, objectsInputEnabled ) => {
-        const inputEnabled = value !== null && mode === AnimationMode.NONE && objectsInputEnabled;
-        this.inputEnabled = inputEnabled;
+      // not passed through through options to super because other factors affect inputEnabled, see multilink below
+      const inputEnabledProperty = new BooleanProperty( true, {
+        tandem: options.tandem.createTandem( 'inputEnabledProperty' )
+      } );
+
+      // Prevent dragging or interaction while the object does not have a value (when it is not in the play area yet),
+      // when it is animating, if input for this individual node is disabled, or if input for all of the object nodes
+      // ahs been disabled
+      Property.multilink<[ AnimationMode, number | null, boolean, boolean ]>(
+        [ casObject.animationModeProperty, casObject.valueProperty, inputEnabledProperty, objectNodesInputEnabledProperty ],
+        ( mode, value, inputEnabled, objectsInputEnabled ) => {
+        this.inputEnabled = value !== null && mode === AnimationMode.NONE && inputEnabled && objectsInputEnabled;
       } );
     }
     else {
