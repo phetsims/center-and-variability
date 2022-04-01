@@ -23,6 +23,7 @@ import SoccerPlayerNode from './SoccerPlayerNode.js';
 import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
 import SoccerPlayer from '../model/SoccerPlayer.js';
 import NumberLineNode from './NumberLineNode.js';
+import merge from '../../../../phet-core/js/merge.js';
 
 type SelfOptions = {
   questionBarOptions: QuestionBarOptions;
@@ -103,7 +104,9 @@ class SoccerScreenView extends CAVScreenView {
     // 0th soccer player is at the front of the line, and should also be in the front in z-ordering
     soccerPlayerNodeGroup.getArrayCopy().reverse().forEach( soccerPlayerNode => soccerPlayerNode.moveToFront() );
 
-    this.questionBar = new QuestionBar( this.layoutBounds, this.visibleBoundsProperty, options.questionBarOptions );
+    this.questionBar = new QuestionBar( this.layoutBounds, this.visibleBoundsProperty, merge( {
+      tandem: options.tandem.createTandem( 'questionBar' )
+    }, options.questionBarOptions ) );
     this.contentLayer.addChild( this.questionBar );
     this.contentLayer.addChild( new KickButtonGroup( model, {
       left: 25,
