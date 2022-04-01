@@ -46,6 +46,7 @@ let index = 0;
 
 class CAVObjectNode extends Node {
   private dragListener: DragListener | null;
+  private readonly selfInputEnabledProperty: BooleanProperty | null;
 
   constructor( casObject: CAVObject, isShowingPlayAreaMedianProperty: IReadOnlyProperty<boolean>,
                modelViewTransform: ModelViewTransform2, objectNodesInputEnabledProperty: IProperty<boolean>,
@@ -157,8 +158,10 @@ class CAVObjectNode extends Node {
       this.addInputListener( this.dragListener );
       this.touchArea = this.localBounds.dilatedX( 5 );
 
-      // not passed through through options to super because other factors affect inputEnabled, see multilink below
-      const inputEnabledProperty = new BooleanProperty( true, {
+      // TODO: better name? (can't use inputEnabledProperty)
+      // not passed through through options or assigned to super with usual 'inputEnabledProperty' name because other
+      // factors affect inputEnabled, see multilink below
+      this.selfInputEnabledProperty = new BooleanProperty( true, {
         tandem: options.tandem.createTandem( 'inputEnabledProperty' )
       } );
 
@@ -166,9 +169,9 @@ class CAVObjectNode extends Node {
       // when it is animating, if input for this individual node is disabled, or if input for all of the object nodes
       // ahs been disabled
       Property.multilink<[ AnimationMode, number | null, boolean, boolean ]>(
-        [ casObject.animationModeProperty, casObject.valueProperty, inputEnabledProperty, objectNodesInputEnabledProperty ],
-        ( mode, value, singleObjectInputEnabled, objectsInputEnabled ) => {
-          const inputEnabled = value !== null && mode === AnimationMode.NONE && singleObjectInputEnabled && objectsInputEnabled;
+        [ casObject.animationModeProperty, casObject.valueProperty, this.selfInputEnabledProperty, objectNodesInputEnabledProperty ],
+        ( mode, value, selfInputEnabled, objectsInputEnabled ) => {
+          const inputEnabled = value !== null && mode === AnimationMode.NONE && selfInputEnabled && objectsInputEnabled;
 
           // if input is disabled and the ball is in the play area, show the darker version
           if ( !inputEnabled && options.objectViewType === CAVObjectType.SOCCER_BALL && value !== null ) {
@@ -185,6 +188,7 @@ class CAVObjectNode extends Node {
     }
     else {
       this.dragListener = null;
+      this.selfInputEnabledProperty = null;
     }
 
     // show or hide the median highlight
@@ -212,6 +216,7 @@ class CAVObjectNode extends Node {
   }
 
   dispose() {
+    this.selfInputEnabledProperty && this.selfInputEnabledProperty.dispose();
     this.dragListener && this.dragListener.dispose();
     super.dispose();
   }
