@@ -99,7 +99,8 @@ class SoccerModel extends CAVModel {
     this.distributionProperty = new Property( SoccerModel.chooseDistribution(), {
       tandem: options.tandem.createTandem( 'distributionProperty' ),
       phetioType: Property.PropertyIO( ArrayIO( NumberIO ) ),
-      phetioDocumentation: 'The distribution of probabilities of where the balls will land is represented as an un-normalized array of numbers, one value for each place in the physical range',
+      phetioDocumentation: 'The distribution of probabilities of where the balls will land is represented as an un-normalized array of non-negative, floating-point numbers, one value for each location in the physical range',
+      // TODO: Array numbers should be non-negative
       isValidValue: ( value: Array<number> ) => value.length === this.physicalRange.getLength() + 1 // inclusive of endpoints
     } );
 
