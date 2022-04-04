@@ -130,6 +130,7 @@ class CAVScreenView extends ScreenView {
             // add the dragIndicatorArrowNode above the last object when it is added to the play area. if an object was
             // moved before this happens, don't show the dragIndicatorArrowNode
             if ( model.objectGroup.countProperty.value === this.model.physicalRange.max &&
+                 objectNodesInputEnabledProperty.value &&
                  _.every( model.objectGroup.getArray(), cavObject => cavObject.valueProperty.value !== null ) &&
                  !objectHasBeenDragged ) {
               dragIndicatorArrowNode.centerX = this.modelViewTransform.modelToViewX( value );
