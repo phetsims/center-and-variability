@@ -173,14 +173,12 @@ class CAVObjectNode extends Node {
         ( mode, value, selfInputEnabled, objectsInputEnabled ) => {
           const inputEnabled = value !== null && mode === AnimationMode.NONE && selfInputEnabled && objectsInputEnabled;
 
-          // if input is disabled and the ball is in the play area, show the darker version
-          if ( !inputEnabled && options.objectViewType === CAVObjectType.SOCCER_BALL && value !== null ) {
-            soccerBallDarkNode.visible = true;
-            soccerBallNode.visible = false;
-          }
-          else {
-            soccerBallDarkNode.visible = false;
-            soccerBallNode.visible = true;
+          if ( options.objectViewType === CAVObjectType.SOCCER_BALL ) {
+
+            // if input is disabled and the ball is in the play area, show the darker version
+            const showDisabledSoccerBall = !inputEnabled && value !== null;
+            soccerBallDarkNode.visible = showDisabledSoccerBall;
+            soccerBallNode.visible = !showDisabledSoccerBall;
           }
 
           this.inputEnabled = inputEnabled;
