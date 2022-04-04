@@ -28,7 +28,6 @@ import CAVConstants from '../CAVConstants.js';
 import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import MedianBarNode from './MedianBarNode.js';
-import CAVColors from '../CAVColors.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
@@ -41,6 +40,7 @@ import AsyncCounter from '../model/AsyncCounter.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Matrix3 from '../../../../dot/js/Matrix3.js';
+import DragIndicatorArrowNode from './DragIndicatorArrowNode.js';
 
 // constants
 const CARD_SPACING = 10;
@@ -284,15 +284,7 @@ class CardNodeContainer extends Node {
       }
     } );
 
-    this.dragIndicatorArrowNode = new ArrowNode( 0, 0, 35, 0, {
-      headHeight: 8,
-      headWidth: 12,
-      tailWidth: 5,
-      pickable: false,
-      doubleHead: true,
-      fill: CAVColors.dragIndicatorColorProperty,
-      stroke: CAVColors.arrowStrokeProperty,
-      lineWidth: CAVConstants.ARROW_LINE_WIDTH,
+    this.dragIndicatorArrowNode = new DragIndicatorArrowNode( {
       tandem: options.tandem.createTandem( 'dragIndicatorArrowNode' )
     } );
 

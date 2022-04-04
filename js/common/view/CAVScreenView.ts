@@ -29,6 +29,7 @@ import PredictionNode from './PredictionNode.js';
 import CAVColors from '../CAVColors.js';
 import { BarStyle, NotchDirection } from './MedianBarNode.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import DragIndicatorArrowNode from './DragIndicatorArrowNode.js';
 
 type SelfOptions = {
   topCheckboxGroupOptions?: {
@@ -108,14 +109,47 @@ class CAVScreenView extends ScreenView {
 
     const map = new Map<CAVObject, CAVObjectNode>();
 
+    let objectHasBeenDragged = false;
+    const dragIndicatorArrowNode = new DragIndicatorArrowNode( {
+      tandem: options.tandem.createTandem( 'dragIndicatorArrowNode' ),
+      visible: false
+    } );
+    this.backObjectLayer.addChild( dragIndicatorArrowNode );
+
     const createObjectNode = ( casObject: CAVObject ) => {
       const casObjectNode = objectNodeGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject );
       this.frontObjectLayer.addChild( casObjectNode );
 
-      casObject.valueProperty.link( value => {
-        if ( value !== null && this.frontObjectLayer.hasChild( casObjectNode ) ) {
-          this.frontObjectLayer.removeChild( casObjectNode );
-          this.backObjectLayer.addChild( casObjectNode );
+      casObject.valueProperty.lazyLink( ( value, oldValue ) => {
+        if ( value !== null ) {
+          if ( oldValue === null ) {
+            assert && assert( this.frontObjectLayer.hasChild( casObjectNode ) );
+            this.frontObjectLayer.removeChild( casObjectNode );
+            this.backObjectLayer.addChild( casObjectNode );
+
+            // add the dragIndicatorArrowNode above the last object when it is added to the play area. if an object was
+            // moved before this happens, don't show the dragIndicatorArrowNode
+            if ( model.objectGroup.countProperty.value === this.model.physicalRange.max &&
+                 _.every( model.objectGroup.getArray(), cavObject => cavObject.valueProperty.value !== null ) &&
+                 !objectHasBeenDragged ) {
+              dragIndicatorArrowNode.centerX = this.modelViewTransform.modelToViewX( value );
+
+              const dragIndicatorArrowNodeMargin = 6;
+
+              // calculate where the top object is
+              const topObjectPositionY = this.modelViewTransform.modelToViewY( 0 ) -
+                                         ( model.getOtherObjectsAtTarget( casObject ).length + 1 ) *
+                                         Math.abs( this.modelViewTransform.modelToViewDeltaY( model.objectType.radius ) ) * 2 -
+                                         dragIndicatorArrowNodeMargin;
+
+              dragIndicatorArrowNode.bottom = topObjectPositionY;
+              dragIndicatorArrowNode.visible = true;
+            }
+          }
+          else {
+            objectHasBeenDragged = true;
+            dragIndicatorArrowNode.visible = false;
+          }
         }
       } );
 
@@ -188,6 +222,10 @@ class CAVScreenView extends ScreenView {
         this.interruptSubtreeInput(); // cancel interactions that may be in progress
 
         model.reset();
+
+        // hide the dragIndicatorArrowNode and reset the flag for if it has been dragged already
+        objectHasBeenDragged = false;
+        dragIndicatorArrowNode.visible = false;
       },
       right: this.layoutBounds.maxX - CAVConstants.SCREEN_VIEW_X_MARGIN,
       bottom: this.layoutBounds.maxY - CAVConstants.SCREEN_VIEW_Y_MARGIN,
@@ -202,6 +240,9 @@ class CAVScreenView extends ScreenView {
         this.interruptSubtreeInput();
 
         model.clearData();
+
+        // hide the dragIndicatorArrowNode but don't reset objectHasBeenDragged
+        dragIndicatorArrowNode.visible = false;
       },
       iconWidth: 26,
       right: this.resetAllButton.left - CAVConstants.SCREEN_VIEW_X_MARGIN,
