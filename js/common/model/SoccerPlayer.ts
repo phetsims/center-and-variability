@@ -58,7 +58,7 @@ class SoccerPlayer extends PhetioObject {
     this.poseProperty.reset();
   }
 
-  dispose() {
+  override dispose() {
     this.placeInLineProperty.dispose();
     super.dispose();
   }

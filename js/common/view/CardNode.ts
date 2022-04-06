@@ -148,7 +148,7 @@ class CardNode extends Node {
     this.animation.start();
   }
 
-  dispose() {
+  override dispose() {
     this.positionProperty.dispose();
     this.dragListener.dispose();
     super.dispose();
