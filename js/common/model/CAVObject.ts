@@ -140,7 +140,7 @@ class CAVObject extends PhetioObject {
     }
   }
 
-  dispose(): void {
+  override dispose(): void {
     super.dispose();
     this.positionProperty.dispose();
     this.velocityProperty.dispose();
@@ -151,7 +151,6 @@ class CAVObject extends PhetioObject {
     this.isShowingAnimationHighlightProperty.dispose();
     this.disposedEmitter.emit();
     this.disposedEmitter.dispose();
-
   }
 
   toStateObject() {

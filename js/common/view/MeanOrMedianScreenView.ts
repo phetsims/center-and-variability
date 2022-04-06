@@ -105,7 +105,7 @@ class MeanOrMedianScreenView extends SoccerScreenView {
   /**
    * Floating layout that keeps the ground near the ground, and accordion box near the question bar
    */
-  layout( viewBounds: Bounds2 ): void {
+  override layout( viewBounds: Bounds2 ): void {
 
     // TODO: Duplicates effort with the parent implementation
     this.matrix = ScreenView.getLayoutMatrix( this.layoutBounds, viewBounds, {

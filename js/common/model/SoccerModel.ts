@@ -236,7 +236,7 @@ class SoccerModel extends CAVModel {
     this.nextBallToKickProperty.value = null;
   }
 
-  step( dt: number ): void {
+  override step( dt: number ): void {
     super.step( dt );
 
     const frontPlayerList = this.soccerPlayerGroup.filter( soccerPlayer => soccerPlayer.placeInLineProperty.value === 0 );
@@ -308,7 +308,7 @@ class SoccerModel extends CAVModel {
     }
   }
 
-  clearData(): void {
+  override clearData(): void {
     this.numberOfScheduledSoccerBallsToKickProperty.reset();
     this.timeProperty.reset();
     this.timeWhenLastBallWasKickedProperty.reset();
@@ -323,7 +323,7 @@ class SoccerModel extends CAVModel {
     this.nextBallToKickProperty.value = this.createBall();
   }
 
-  reset(): void {
+  override reset(): void {
     super.reset();
     this.clearData();
     this.distributionProperty.value = SoccerModel.chooseDistribution();

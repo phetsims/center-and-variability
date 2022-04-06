@@ -213,7 +213,7 @@ class CAVObjectNode extends Node {
     }
   }
 
-  dispose() {
+  override dispose() {
     this.selfInputEnabledProperty && this.selfInputEnabledProperty.dispose();
     this.dragListener && this.dragListener.dispose();
     super.dispose();
