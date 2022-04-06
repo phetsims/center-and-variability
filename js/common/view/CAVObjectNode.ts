@@ -219,7 +219,7 @@ class CAVObjectNode extends Node {
     }
   }
 
-  dispose() {
+  override dispose() {
     Property.unmultilink( this.opacityMultilink );
     Property.unmultilink( this.medianHighlightVisibleMultilink );
     this.inputEnabledMultilink && Property.unmultilink( this.inputEnabledMultilink );
