@@ -1,5 +1,5 @@
 {
-  "comment": "# center-and-variability 1.0.0-rc.1 Mon Mar 21 2022 10:41:15 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# center-and-variability 1.0.0-rc.1 Wed Apr 06 2022 11:52:49 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "767b2f345518ceca5144a152ecf40cd4f9206136",
     "branch": "HEAD"
@@ -17,7 +17,7 @@
     "branch": "HEAD"
   },
   "center-and-variability": {
-    "sha": "e87e8d48aa998427915eccab2282c2bd6a381b0e",
+    "sha": "3ddd977d6ecaab9236ea6bb46c294cabc92ed494",
     "branch": "1.0"
   },
   "chipper": {
@@ -81,8 +81,8 @@
     "branch": "HEAD"
   },
   "studio": {
-    "sha": "dbf2959c7687b35447832c60e981d6cfceb735f3",
-    "branch": "HEAD"
+    "sha": "cebfbab6142e8ee9253b3958036810a03d86c6bc",
+    "branch": "center-and-variability-1.0"
   },
   "sun": {
     "sha": "f3e38f9193a56783748d0e20bec4ab1793346ffc",
