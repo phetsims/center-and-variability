@@ -26,20 +26,35 @@ import CAVConstants from '../CAVConstants.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import IProperty from '../../../../axon/js/IProperty.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import ballDark_png from '../../../images/ballDark_png.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 
 type SelfOptions = {
   objectViewType?: CAVObjectType;
   draggingEnabled?: boolean;
 };
-export type CAVObjectNodeOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
+export type CAVObjectNodeOptions =
+  SelfOptions
+
+  // Take all options from NodeOptions, but do not allow passing through inputEnabledProperty since it requires special handling in multilink
+  & Omit<NodeOptions, 'inputEnabledProperty'>
+  & PickRequired<NodeOptions, 'tandem'>;
 
 // for debugging with ?dev
 let index = 0;
 
 class CAVObjectNode extends Node {
+  private readonly dragListener: DragListener | null;
+  private readonly selfInputEnabledProperty: BooleanProperty | null;
+  private readonly inputEnabledMultilink: Multilink<[ AnimationMode, number | null, boolean, boolean ]> | null;
+  private readonly medianHighlightVisibleMultilink: Multilink<[ boolean, boolean, boolean ]>;
+  private readonly opacityMultilink: Multilink<[ number | null, AnimationMode ]>;
 
   constructor( casObject: CAVObject, isShowingPlayAreaMedianProperty: IReadOnlyProperty<boolean>,
-               modelViewTransform: ModelViewTransform2, providedOptions?: CAVObjectNodeOptions ) {
+               modelViewTransform: ModelViewTransform2, objectNodesInputEnabledProperty: IProperty<boolean>,
+               providedOptions?: CAVObjectNodeOptions ) {
 
     const options = optionize<CAVObjectNodeOptions, SelfOptions, NodeOptions>( {
 
@@ -47,7 +62,8 @@ class CAVObjectNode extends Node {
       // with DOT views
       objectViewType: casObject.objectType,
       draggingEnabled: true,
-      phetioDynamicElement: true
+      phetioDynamicElement: true,
+      cursor: 'pointer'
     }, providedOptions );
     super( options );
 
@@ -84,7 +100,14 @@ class CAVObjectNode extends Node {
       return node;
     };
 
-    const childNode = options.objectViewType === CAVObjectType.SOCCER_BALL ? new Image( ball_png ) :
+    // The dark soccer ball is used for when a ball has input disabled.
+    const soccerBallNode = new Image( ball_png );
+    const soccerBallDarkNode = new Image( ballDark_png );
+    const soccerBallNodes = new Node( {
+      children: [ soccerBallNode, soccerBallDarkNode ]
+    } );
+
+    const childNode = options.objectViewType === CAVObjectType.SOCCER_BALL ? soccerBallNodes :
                       options.objectViewType === CAVObjectType.DOT ? createPlotMarker() :
                       new ShadedSphereNode( options.objectViewType.radius * 2 );
     childNode.maxWidth = viewRadius * 2;
@@ -110,7 +133,8 @@ class CAVObjectNode extends Node {
 
     // only setup input-related things if dragging is enabled
     if ( options.draggingEnabled ) {
-      const dragListener = new DragListener( {
+      this.dragListener = new DragListener( {
+        tandem: options.tandem.createTandem( 'dragListener' ),
         positionProperty: casObject.dragPositionProperty,
         transform: modelViewTransform,
         start: () => {
@@ -128,26 +152,51 @@ class CAVObjectNode extends Node {
       // have enough space to move that far. If we make sure that bounds surrounding the CAVObjectNode have a width
       // of 2 model units the pointer will always have enough space to drag the CAVObjectNode to a new position.
       // See https://github.com/phetsims/center-and-variability/issues/88
-      dragListener.createPanTargetBounds = () => {
+      this.dragListener.createPanTargetBounds = () => {
         const modelPosition = casObject.positionProperty.value;
         const modelBounds = new Bounds2( modelPosition.x - 1, modelPosition.y - 1, modelPosition.x + 1, modelPosition.y + 1 );
         const viewBounds = modelViewTransform.modelToViewBounds( modelBounds );
         return this.parentToGlobalBounds( viewBounds );
       };
 
-      this.addInputListener( dragListener );
-      this.touchArea = this.localBounds.dilatedX( 10 );
+      this.addInputListener( this.dragListener );
+      this.touchArea = this.localBounds.dilatedX( 5 );
 
-      // Prevent dragging or interaction while the object is animating
-      Property.multilink( [ casObject.animationModeProperty, casObject.valueProperty ], ( mode, value ) => {
-        const isPickable = value !== null && mode === AnimationMode.NONE;
-        this.cursor = isPickable ? 'pointer' : null;
-        this.pickable = isPickable;
+      // TODO: better name? (can't use inputEnabledProperty)
+      // not passed through through options or assigned to super with usual 'inputEnabledProperty' name because other
+      // factors affect inputEnabled, see multilink below
+      this.selfInputEnabledProperty = new BooleanProperty( true, {
+        tandem: options.tandem.createTandem( 'inputEnabledProperty' )
       } );
+
+      // Prevent dragging or interaction while the object does not have a value (when it is not in the play area yet),
+      // when it is animating, if input for this individual node is disabled, or if input for all of the object nodes
+      // ahs been disabled
+      this.inputEnabledMultilink = Property.multilink<[ AnimationMode, number | null, boolean, boolean ]>(
+        [ casObject.animationModeProperty, casObject.valueProperty, this.selfInputEnabledProperty, objectNodesInputEnabledProperty ],
+        ( mode, value, selfInputEnabled, objectsInputEnabled ) => {
+          const inputEnabled = value !== null && mode === AnimationMode.NONE && selfInputEnabled && objectsInputEnabled;
+
+          if ( options.objectViewType === CAVObjectType.SOCCER_BALL ) {
+
+            // if input is disabled and the ball is in the play area, show the darker version
+            const showDisabledSoccerBall = !inputEnabled && value !== null;
+            soccerBallDarkNode.visible = showDisabledSoccerBall;
+            soccerBallNode.visible = !showDisabledSoccerBall;
+          }
+
+          this.inputEnabled = inputEnabled;
+        } );
+    }
+    else {
+      this.dragListener = null;
+      this.selfInputEnabledProperty = null;
+      this.inputEnabledMultilink = null;
     }
 
     // show or hide the median highlight
-    Property.multilink( [ casObject.isMedianObjectProperty, isShowingPlayAreaMedianProperty, casObject.isShowingAnimationHighlightProperty ],
+    this.medianHighlightVisibleMultilink = Property.multilink(
+      [ casObject.isMedianObjectProperty, isShowingPlayAreaMedianProperty, casObject.isShowingAnimationHighlightProperty ],
       ( isMedianObject, isShowingPlayAreaMedian, isShowingAnimationHighlight ) => {
         medianHighlight.visible = options.objectViewType === CAVObjectType.DOT ? isShowingAnimationHighlight :
                                   isShowingPlayAreaMedian && isMedianObject;
@@ -155,7 +204,7 @@ class CAVObjectNode extends Node {
 
     // The initial ready-to-kick ball is full opacity. The rest of the balls waiting to be kicked are lower opacity so
     // they don't look like part of the data set, but still look kickable.
-    Property.multilink( [ casObject.valueProperty, casObject.animationModeProperty ],
+    this.opacityMultilink = Property.multilink( [ casObject.valueProperty, casObject.animationModeProperty ],
       ( value: number | null, animationMode: AnimationMode ) => {
         this.opacity = value === null && animationMode === AnimationMode.NONE && !casObject.isFirstObject ? 0.4 : 1;
       } );
@@ -168,6 +217,16 @@ class CAVObjectNode extends Node {
         x: this.width / 2 + 1
       } ) );
     }
+  }
+
+  override dispose() {
+    Property.unmultilink( this.opacityMultilink );
+    Property.unmultilink( this.medianHighlightVisibleMultilink );
+    this.inputEnabledMultilink && Property.unmultilink( this.inputEnabledMultilink );
+    this.selfInputEnabledProperty && this.selfInputEnabledProperty.dispose();
+    this.dragListener && this.hasInputListener( this.dragListener ) && this.removeInputListener( this.dragListener );  // TODO: is this needed?
+    this.dragListener && this.dragListener.dispose();
+    super.dispose();
   }
 }
 

@@ -30,7 +30,7 @@ class MedianScreenView extends MeanOrMedianScreenView {
         barFill: CAVColors.medianQuestionBarFillColorProperty,
         labelText: centerAndVariabilityStrings.medianQuestion
       },
-      topCheckboxPanelOptions: {
+      topCheckboxGroupOptions: {
         includeSortData: true,
         includeMean: false,
         medianBarIconOptions: {
@@ -39,7 +39,7 @@ class MedianScreenView extends MeanOrMedianScreenView {
         },
         showMedianCheckboxIcon: false
       },
-      bottomCheckboxPanelOptions: {
+      bottomCheckboxGroupOptions: {
         includeMean: false,
         includePredictMean: false
       },

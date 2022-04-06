@@ -23,9 +23,6 @@
       "twixt",
       "vegas"
     ],
-    "phet-io": {
-      "validation": true
-    },
     "supportsOutputJS": true,
     "simFeatures": {
       "supportsInteractiveDescription": true

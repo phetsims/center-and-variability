@@ -11,14 +11,13 @@
 import centerAndVariability from '../../centerAndVariability.js';
 import { Path, PathOptions } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import CAVColors from '../CAVColors.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 
-type NotchDirection = 'up' | 'down';
-type BarStyle = 'continuous' | 'split';
+export type NotchDirection = 'up' | 'down';
+export type BarStyle = 'continuous' | 'split';
 type SelfOptions = {
   notchDirection: NotchDirection;
   barStyle: BarStyle;
@@ -39,7 +38,6 @@ class MedianBarNode extends Path {
   constructor( providedOptions: MedianBarNodeOptions ) {
 
     const options = optionize<MedianBarNodeOptions, SelfOptions, PathOptions>( {
-      tandem: Tandem.REQUIRED,
       lineWidth: LINE_WIDTH,
       stroke: CAVColors.medianColorProperty,
       arrowScale: 1

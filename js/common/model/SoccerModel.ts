@@ -28,8 +28,8 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import { AnimationMode } from './AnimationMode.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
-import { DistributionType } from './DistributionType.js';
-import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
+import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
+import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 
 type SelfOptions = {};
 type SoccerModelOptions = SelfOptions & CAVModelOptions;
@@ -46,7 +46,7 @@ class SoccerModel extends CAVModel {
 
   private readonly timeWhenLastBallWasKickedProperty: NumberProperty;
   private readonly ballPlayerMap: Map<CAVObject, SoccerPlayer>; // TODO: Add to PhET-iO State
-  distributionProperty: EnumerationProperty<DistributionType>;
+  private readonly distributionProperty: Property<ReadonlyArray<number>>;
 
   constructor( maxNumberOfBalls: number, options: SoccerModelOptions ) {
 
@@ -96,8 +96,12 @@ class SoccerModel extends CAVModel {
     this.hasKickableSoccerBallsProperty = new DerivedProperty( [ this.numberOfRemainingKickableSoccerBallsProperty ],
       numberOfRemainingKickableObjects => numberOfRemainingKickableObjects > 0 );
 
-    this.distributionProperty = new EnumerationProperty( SoccerModel.chooseDistribution(), {
-      tandem: options.tandem.createTandem( 'distributionProperty' )
+    this.distributionProperty = new Property( SoccerModel.chooseDistribution(), {
+      tandem: options.tandem.createTandem( 'distributionProperty' ),
+      phetioType: Property.PropertyIO( ArrayIO( NumberIO ) ),
+      phetioDocumentation: 'The distribution of probabilities of where the balls will land is represented as an un-normalized array of non-negative, floating-point numbers, one value for each location in the physical range',
+      isValidValue: ( array: Array<number> ) => array.length === this.physicalRange.getLength() + 1 && // inclusive of endpoints
+                                                _.every( array, element => element >= 0 )
     } );
 
     this.objectValueBecameNonNullEmitter.addListener( casObject => {
@@ -123,8 +127,8 @@ class SoccerModel extends CAVModel {
     } );
   }
 
-  static chooseDistribution(): DistributionType {
-    return dotRandom.nextBoolean() ? DistributionType.SKEWED_LEFT : DistributionType.SKEWED_RIGHT;
+  static chooseDistribution(): ReadonlyArray<number> {
+    return dotRandom.nextBoolean() ? CAVConstants.LEFT_SKEWED_DATA : CAVConstants.RIGHT_SKEWED_DATA;
   }
 
   /**
@@ -209,7 +213,7 @@ class SoccerModel extends CAVModel {
     // console.log( inputNormalized );
     // console.log( resultNormalized );
 
-    const weights = this.distributionProperty.value.data;
+    const weights = this.distributionProperty.value;
 
     assert && assert( weights.length === this.physicalRange.getLength() + 1, 'weight array should match the model range' );
     const x1 = dotRandom.sampleProbabilities( weights ) + 1;
@@ -232,7 +236,7 @@ class SoccerModel extends CAVModel {
     this.nextBallToKickProperty.value = null;
   }
 
-  step( dt: number ): void {
+  override step( dt: number ): void {
     super.step( dt );
 
     const frontPlayerList = this.soccerPlayerGroup.filter( soccerPlayer => soccerPlayer.placeInLineProperty.value === 0 );
@@ -304,7 +308,7 @@ class SoccerModel extends CAVModel {
     }
   }
 
-  clearData(): void {
+  override clearData(): void {
     this.numberOfScheduledSoccerBallsToKickProperty.reset();
     this.timeProperty.reset();
     this.timeWhenLastBallWasKickedProperty.reset();
@@ -319,7 +323,7 @@ class SoccerModel extends CAVModel {
     this.nextBallToKickProperty.value = this.createBall();
   }
 
-  reset(): void {
+  override reset(): void {
     super.reset();
     this.clearData();
     this.distributionProperty.value = SoccerModel.chooseDistribution();

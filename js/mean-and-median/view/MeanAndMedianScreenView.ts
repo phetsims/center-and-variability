@@ -30,7 +30,7 @@ class MeanAndMedianScreenView extends MeanOrMedianScreenView {
         barFill: CAVColors.meanAndMedianQuestionBarFillColorProperty,
         labelText: centerAndVariabilityStrings.meanAndMedianQuestion
       },
-      topCheckboxPanelOptions: {
+      topCheckboxGroupOptions: {
         medianBarIconOptions: {
           notchDirection: 'down',
           barStyle: 'continuous',

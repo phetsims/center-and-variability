@@ -24,6 +24,7 @@ import MedianBarNode from './MedianBarNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 
 type SelfOptions = {};
 export type CAVPlotOptions = NodeOptions & PickRequired<NodeOptions, 'tandem'>;
@@ -86,8 +87,11 @@ class CAVPlotNode extends Node {
     this.dotLayer = new Node();
     backgroundNode.addChild( this.dotLayer );
 
+    // TODO: This overlaps with draggingEnabled
+    const dotPlotObjectNodesDraggable = new BooleanProperty( false );
+
     const dotNodeGroup = new PhetioGroup<CAVObjectNode, [ CAVObject ]>( ( tandem, casObject ) => {
-      return new CAVObjectNode( casObject, model.isShowingTopMedianProperty, modelViewTransform, {
+      return new CAVObjectNode( casObject, model.isShowingTopMedianProperty, modelViewTransform, dotPlotObjectNodesDraggable, {
         objectViewType: CAVObjectType.DOT,
         draggingEnabled: false,
         tandem: tandem

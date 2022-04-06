@@ -20,24 +20,28 @@ import CAVObjectNode from './CAVObjectNode.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import CAVObject from '../model/CAVObject.js';
+import merge from '../../../../phet-core/js/merge.js';
 import TopRepresentationCheckboxGroup from './TopRepresentationCheckboxGroup.js';
 import BottomRepresentationCheckboxGroup from './BottomRepresentationCheckboxGroup.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import PredictionNode from './PredictionNode.js';
 import CAVColors from '../CAVColors.js';
+import { BarStyle, NotchDirection } from './MedianBarNode.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import DragIndicatorArrowNode from './DragIndicatorArrowNode.js';
 
 type SelfOptions = {
-  topCheckboxPanelOptions?: {
+  topCheckboxGroupOptions?: {
     includeSortData: boolean;
     includeMean: boolean;
     medianBarIconOptions: {
-      notchDirection: string;
-      barStyle: string;
-    },
+      notchDirection: NotchDirection;
+      barStyle: BarStyle;
+    };
     showMedianCheckboxIcon: boolean;
   };
-  bottomCheckboxPanelOptions?: {
+  bottomCheckboxGroupOptions?: {
     includeMean?: boolean;
     includePredictMean?: boolean;
   };
@@ -46,8 +50,8 @@ export type CAVScreenViewOptions = SelfOptions & ScreenViewOptions;
 
 class CAVScreenView extends ScreenView {
 
-  protected readonly topCheckboxPanel: TopRepresentationCheckboxGroup;
-  protected readonly bottomCheckboxPanel: BottomRepresentationCheckboxGroup;
+  protected readonly topCheckboxGroup: TopRepresentationCheckboxGroup;
+  protected readonly bottomCheckboxGroup: BottomRepresentationCheckboxGroup;
 
   protected readonly resetAllButton: ResetAllButton;
   protected readonly modelViewTransform: ModelViewTransform2;
@@ -57,7 +61,7 @@ class CAVScreenView extends ScreenView {
   // TODO: We haven't enforced the "exactly half a ball should be occluded if anything is occluded" idea.
   protected readonly backObjectLayer: Node;
   protected readonly playAreaMedianIndicatorNode: ArrowNode;
-  protected readonly eraserButton: EraserButton;
+  protected readonly eraseButton: EraserButton;
 
   // Subclasses use this to add to for correct z-ordering and correct tab navigation order
   // TODO: investigate if this is needed
@@ -77,13 +81,21 @@ class CAVScreenView extends ScreenView {
     this.modelViewTransform = modelViewTransform;
     this.model = model;
 
+    const objectNodeGroupTandem = options.tandem.createTandem(
+      model.objectType === CAVObjectType.SOCCER_BALL ? 'soccerBallNodeGroup' : 'dataPointNodeGroup'
+    );
+
+    const objectNodesInputEnabledProperty = new BooleanProperty( true, {
+      tandem: objectNodeGroupTandem.createTandem( 'inputEnabledProperty' )
+    } );
+
     const objectNodeGroup = new PhetioGroup<CAVObjectNode, [ CAVObject ]>( ( tandem, casObject ) => {
-      return new CAVObjectNode( casObject, model.isShowingPlayAreaMedianProperty, modelViewTransform, {
+      return new CAVObjectNode( casObject, model.isShowingPlayAreaMedianProperty, modelViewTransform, objectNodesInputEnabledProperty, {
         tandem: tandem
       } );
     }, [ model.objectGroup.archetype ], {
       phetioType: PhetioGroup.PhetioGroupIO( Node.NodeIO ),
-      tandem: options.tandem.createTandem( model.objectType === CAVObjectType.SOCCER_BALL ? 'soccerBallNodeGroup' : 'dataPointNodeGroup' ),
+      tandem: objectNodeGroupTandem,
       supportsDynamicState: false
     } );
 
@@ -97,14 +109,48 @@ class CAVScreenView extends ScreenView {
 
     const map = new Map<CAVObject, CAVObjectNode>();
 
+    let objectHasBeenDragged = false;
+    const dragIndicatorArrowNode = new DragIndicatorArrowNode( {
+      tandem: options.tandem.createTandem( 'dragIndicatorArrowNode' ),
+      visible: false
+    } );
+    this.backObjectLayer.addChild( dragIndicatorArrowNode );
+
     const createObjectNode = ( casObject: CAVObject ) => {
       const casObjectNode = objectNodeGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject );
       this.frontObjectLayer.addChild( casObjectNode );
 
-      casObject.valueProperty.link( value => {
-        if ( value !== null && this.frontObjectLayer.hasChild( casObjectNode ) ) {
-          this.frontObjectLayer.removeChild( casObjectNode );
-          this.backObjectLayer.addChild( casObjectNode );
+      casObject.valueProperty.lazyLink( ( value, oldValue ) => {
+        if ( value !== null ) {
+          if ( oldValue === null ) {
+            assert && assert( this.frontObjectLayer.hasChild( casObjectNode ) );
+            this.frontObjectLayer.removeChild( casObjectNode );
+            this.backObjectLayer.addChild( casObjectNode );
+
+            // add the dragIndicatorArrowNode above the last object when it is added to the play area. if an object was
+            // moved before this happens, don't show the dragIndicatorArrowNode
+            if ( model.objectGroup.countProperty.value === this.model.physicalRange.max &&
+                 objectNodesInputEnabledProperty.value &&
+                 _.every( model.objectGroup.getArray(), cavObject => cavObject.valueProperty.value !== null ) &&
+                 !objectHasBeenDragged ) {
+              dragIndicatorArrowNode.centerX = this.modelViewTransform.modelToViewX( value );
+
+              const dragIndicatorArrowNodeMargin = 6;
+
+              // calculate where the top object is
+              const topObjectPositionY = this.modelViewTransform.modelToViewY( 0 ) -
+                                         ( model.getOtherObjectsAtTarget( casObject ).length + 1 ) *
+                                         Math.abs( this.modelViewTransform.modelToViewDeltaY( model.objectType.radius ) ) * 2 -
+                                         dragIndicatorArrowNodeMargin;
+
+              dragIndicatorArrowNode.bottom = topObjectPositionY;
+              dragIndicatorArrowNode.visible = true;
+            }
+          }
+          else {
+            objectHasBeenDragged = true;
+            dragIndicatorArrowNode.visible = false;
+          }
         }
       } );
 
@@ -118,11 +164,13 @@ class CAVScreenView extends ScreenView {
       objectNodeGroup.disposeElement( viewNode );
     } );
 
-    // TODO: Consider renaming as Group instead of panel (if they only contain checkboxes)
-    // @ts-ignore TODO
-    this.topCheckboxPanel = new TopRepresentationCheckboxGroup( model, options.topCheckboxPanelOptions );
-    this.bottomCheckboxPanel = new BottomRepresentationCheckboxGroup( model, options.bottomCheckboxPanelOptions );
-    this.addChild( this.bottomCheckboxPanel );
+    this.topCheckboxGroup = new TopRepresentationCheckboxGroup( model, merge( {
+      tandem: options.tandem.createTandem( 'topCheckboxGroup' )
+    }, options.topCheckboxGroupOptions ) );
+    this.bottomCheckboxGroup = new BottomRepresentationCheckboxGroup( model, merge( {
+      tandem: options.tandem.createTandem( 'bottomCheckboxGroup' )
+    }, options.bottomCheckboxGroupOptions ) );
+    this.addChild( this.bottomCheckboxGroup );
 
     // TODO: Separate class?
     this.playAreaMedianIndicatorNode = new ArrowNode( 0, 0, 0, 27, {
@@ -159,20 +207,15 @@ class CAVScreenView extends ScreenView {
       center: this.layoutBounds.center,
       tandem: options.tandem.createTandem( 'medianPredictionNode' ),
       color: CAVColors.medianColorProperty,
-      roundToInterval: 0.5
+      roundToInterval: 0.5,
+      visibleProperty: model.isShowingMedianPredictionProperty
     } );
     this.meanPredictionNode = new PredictionNode( model.meanPredictionProperty, this.modelViewTransform, model.physicalRange, {
       center: this.layoutBounds.center,
       tandem: options.tandem.createTandem( 'meanPredictionNode' ),
       color: CAVColors.meanColorProperty,
-      roundToInterval: null // continuous
-    } );
-
-    model.isShowingMedianPredictionProperty.link( isShowingMedianPrediction => {
-      this.medianPredictionNode.visible = isShowingMedianPrediction;
-    } );
-    model.isShowingMeanPredictionProperty.link( isShowingMeanPrediction => {
-      this.meanPredictionNode.visible = isShowingMeanPrediction;
+      roundToInterval: null, // continuous
+      visibleProperty: model.isShowingMeanPredictionProperty
     } );
 
     this.resetAllButton = new ResetAllButton( {
@@ -180,25 +223,33 @@ class CAVScreenView extends ScreenView {
         this.interruptSubtreeInput(); // cancel interactions that may be in progress
 
         model.reset();
+
+        // hide the dragIndicatorArrowNode and reset the flag for if it has been dragged already
+        objectHasBeenDragged = false;
+        dragIndicatorArrowNode.visible = false;
       },
       right: this.layoutBounds.maxX - CAVConstants.SCREEN_VIEW_X_MARGIN,
       bottom: this.layoutBounds.maxY - CAVConstants.SCREEN_VIEW_Y_MARGIN,
       tandem: options.tandem.createTandem( 'resetAllButton' )
     } );
 
-    this.eraserButton = new EraserButton( {
+    this.eraseButton = new EraserButton( {
+      tandem: options.tandem.createTandem( 'eraseButton' ),
       listener: () => {
 
         // Interrupt dragging of existing objects
         this.interruptSubtreeInput();
 
         model.clearData();
+
+        // hide the dragIndicatorArrowNode but don't reset objectHasBeenDragged
+        dragIndicatorArrowNode.visible = false;
       },
       iconWidth: 26,
       right: this.resetAllButton.left - CAVConstants.SCREEN_VIEW_X_MARGIN,
       centerY: this.resetAllButton.centerY
     } );
-    this.addChild( this.eraserButton );
+    this.addChild( this.eraseButton );
     this.addChild( this.resetAllButton );
   }
 

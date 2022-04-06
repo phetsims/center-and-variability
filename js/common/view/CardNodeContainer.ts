@@ -28,7 +28,6 @@ import CAVConstants from '../CAVConstants.js';
 import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import MedianBarNode from './MedianBarNode.js';
-import CAVColors from '../CAVColors.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
@@ -41,6 +40,7 @@ import AsyncCounter from '../model/AsyncCounter.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Matrix3 from '../../../../dot/js/Matrix3.js';
+import DragIndicatorArrowNode from './DragIndicatorArrowNode.js';
 
 // constants
 const CARD_SPACING = 10;
@@ -70,6 +70,7 @@ class CardNodeContainer extends Node {
   private isReadyForCelebration: boolean;
   private remainingCelebrationAnimations: ( () => void )[];
   private dataSortedNodeAnimation: Animation | null;
+  private wasSortedBefore: boolean;
 
   constructor( model: CAVModel, providedOptions: CardNodeContainerOptions ) {
 
@@ -152,6 +153,8 @@ class CardNodeContainer extends Node {
       visible: false
     } );
 
+    this.wasSortedBefore = true;
+
     // create a rotated linear gradient
     const gradientMargin = 20;
     const startPoint = new Vector2( dataSortedNode.left + gradientMargin, dataSortedNode.top + gradientMargin );
@@ -183,6 +186,13 @@ class CardNodeContainer extends Node {
 
       // When a card is dropped, send it to its home cell
       cardNode.dragListener.isPressedProperty.link( isPressed => {
+
+        if ( isPressed ) {
+
+          // TODO: multitouch concerns.  Should it be null|true|false?  Or maybe after celebration, set it to true because we know it is sorted?
+          this.wasSortedBefore = this.isDataSorted();
+        }
+
         if ( !isPressed && !phet.joist.sim.isSettingPhetioStateProperty.value ) {
 
           // Animate the dropped card home
@@ -274,15 +284,7 @@ class CardNodeContainer extends Node {
       }
     } );
 
-    this.dragIndicatorArrowNode = new ArrowNode( 0, 0, 35, 0, {
-      headHeight: 8,
-      headWidth: 12,
-      tailWidth: 5,
-      pickable: false,
-      doubleHead: true,
-      fill: CAVColors.dragIndicatorColorProperty,
-      stroke: CAVColors.arrowStrokeProperty,
-      lineWidth: CAVConstants.ARROW_LINE_WIDTH,
+    this.dragIndicatorArrowNode = new DragIndicatorArrowNode( {
       tandem: options.tandem.createTandem( 'dragIndicatorArrowNode' )
     } );
 
@@ -362,6 +364,7 @@ class CardNodeContainer extends Node {
     this.cardNodeCellsChangedEmitter.addListener( updateMedianNode );
     model.medianValueProperty.link( updateMedianNode );
     model.isShowingTopMedianProperty.link( updateMedianNode );
+    model.objectChangedEmitter.addListener( updateMedianNode );
 
     this.isReadyForCelebration = false;
 
@@ -396,8 +399,6 @@ class CardNodeContainer extends Node {
         // No-op if the dragged card is near its home cell
         if ( currentOccupant !== cardNode ) {
 
-          const wasSortedBefore = this.isDataSorted();
-
           // it's just a pairwise swap
           this.cardNodeCells[ closestCell ] = cardNode;
           this.cardNodeCells[ originalCell ] = currentOccupant;
@@ -411,7 +412,7 @@ class CardNodeContainer extends Node {
           }
 
           // celebrate after the card was dropped and gets to its home
-          this.isReadyForCelebration = this.isDataSorted() && !wasSortedBefore;
+          this.isReadyForCelebration = this.isDataSorted() && !this.wasSortedBefore;
 
           this.cardNodeCellsChangedEmitter.emit();
         }

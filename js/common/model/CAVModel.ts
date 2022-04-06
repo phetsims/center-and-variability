@@ -329,7 +329,7 @@ class CAVModel {
   /**
    * Returns all other objects at the target position of the provided object.
    */
-  protected getOtherObjectsAtTarget( casObject: CAVObject ): CAVObject[] {
+  getOtherObjectsAtTarget( casObject: CAVObject ): CAVObject[] {
     return this.objectGroup.filter( ( o: CAVObject ) => {
       return o.valueProperty.value === casObject.valueProperty.value && casObject !== o;
     } );
@@ -427,7 +427,7 @@ class CAVModel {
 
     this.updateAnimation();
 
-    this.objectGroup.forEach( casObject => casObject.step( dt ) );
+    this.objectGroup.forEach( cavObject => cavObject.step( dt ) );
   }
 }
 

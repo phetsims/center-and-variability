@@ -34,7 +34,7 @@ const CAVColors = {
     default: '#fdd10b'
   } ),
   kickButtonFillColorProperty: new ProfileColorProperty( centerAndVariability, 'kickButtonFillColor', {
-    default: 'white'
+    default: '#dae6f7'
   } ),
   dragIndicatorColorProperty: new ProfileColorProperty( centerAndVariability, 'dragIndicatorColor', {
     default: '#6bc6ff'

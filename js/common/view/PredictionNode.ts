@@ -23,10 +23,10 @@ import CAVConstants from '../CAVConstants.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = {
-  color: IColor,
+  color: IColor;
 
   // Round to the nearest specified number, or, if null, there is no rounding. Mean is continuous, median is rounded to 0.5
-  roundToInterval: number | null
+  roundToInterval: number | null;
 };
 
 export type PredictionNodeOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
@@ -84,6 +84,7 @@ class PredictionNode extends Node {
     } );
 
     this.addInputListener( new DragListener( {
+      tandem: options.tandem.createTandem( 'dragListener' ),
       positionProperty: dragPositionProperty,
       start: () => this.moveToFront()
     } ) );
