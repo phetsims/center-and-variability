@@ -29,6 +29,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import IProperty from '../../../../axon/js/IProperty.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import ballDark_png from '../../../images/ballDark_png.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 
 type SelfOptions = {
   objectViewType?: CAVObjectType;
@@ -45,8 +46,11 @@ export type CAVObjectNodeOptions =
 let index = 0;
 
 class CAVObjectNode extends Node {
-  private dragListener: DragListener | null;
+  private readonly dragListener: DragListener | null;
   private readonly selfInputEnabledProperty: BooleanProperty | null;
+  private readonly inputEnabledMultilink: Multilink<[ AnimationMode, number | null, boolean, boolean ]> | null;
+  private readonly medianHighlightVisibleMultilink: Multilink<[ boolean, boolean, boolean ]>;
+  private readonly opacityMultilink: Multilink<[ number | null, AnimationMode ]>;
 
   constructor( casObject: CAVObject, isShowingPlayAreaMedianProperty: IReadOnlyProperty<boolean>,
                modelViewTransform: ModelViewTransform2, objectNodesInputEnabledProperty: IProperty<boolean>,
@@ -168,7 +172,7 @@ class CAVObjectNode extends Node {
       // Prevent dragging or interaction while the object does not have a value (when it is not in the play area yet),
       // when it is animating, if input for this individual node is disabled, or if input for all of the object nodes
       // ahs been disabled
-      Property.multilink<[ AnimationMode, number | null, boolean, boolean ]>(
+      this.inputEnabledMultilink = Property.multilink<[ AnimationMode, number | null, boolean, boolean ]>(
         [ casObject.animationModeProperty, casObject.valueProperty, this.selfInputEnabledProperty, objectNodesInputEnabledProperty ],
         ( mode, value, selfInputEnabled, objectsInputEnabled ) => {
           const inputEnabled = value !== null && mode === AnimationMode.NONE && selfInputEnabled && objectsInputEnabled;
@@ -187,10 +191,12 @@ class CAVObjectNode extends Node {
     else {
       this.dragListener = null;
       this.selfInputEnabledProperty = null;
+      this.inputEnabledMultilink = null;
     }
 
     // show or hide the median highlight
-    Property.multilink( [ casObject.isMedianObjectProperty, isShowingPlayAreaMedianProperty, casObject.isShowingAnimationHighlightProperty ],
+    this.medianHighlightVisibleMultilink = Property.multilink(
+      [ casObject.isMedianObjectProperty, isShowingPlayAreaMedianProperty, casObject.isShowingAnimationHighlightProperty ],
       ( isMedianObject, isShowingPlayAreaMedian, isShowingAnimationHighlight ) => {
         medianHighlight.visible = options.objectViewType === CAVObjectType.DOT ? isShowingAnimationHighlight :
                                   isShowingPlayAreaMedian && isMedianObject;
@@ -198,7 +204,7 @@ class CAVObjectNode extends Node {
 
     // The initial ready-to-kick ball is full opacity. The rest of the balls waiting to be kicked are lower opacity so
     // they don't look like part of the data set, but still look kickable.
-    Property.multilink( [ casObject.valueProperty, casObject.animationModeProperty ],
+    this.opacityMultilink = Property.multilink( [ casObject.valueProperty, casObject.animationModeProperty ],
       ( value: number | null, animationMode: AnimationMode ) => {
         this.opacity = value === null && animationMode === AnimationMode.NONE && !casObject.isFirstObject ? 0.4 : 1;
       } );
@@ -214,7 +220,11 @@ class CAVObjectNode extends Node {
   }
 
   dispose() {
+    Property.unmultilink( this.opacityMultilink );
+    Property.unmultilink( this.medianHighlightVisibleMultilink );
+    this.inputEnabledMultilink && Property.unmultilink( this.inputEnabledMultilink );
     this.selfInputEnabledProperty && this.selfInputEnabledProperty.dispose();
+    this.dragListener && this.hasInputListener( this.dragListener ) && this.removeInputListener( this.dragListener );  // TODO: is this needed?
     this.dragListener && this.dragListener.dispose();
     super.dispose();
   }
