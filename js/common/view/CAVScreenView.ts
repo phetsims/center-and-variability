@@ -162,7 +162,6 @@ class CAVScreenView extends ScreenView {
     model.objectGroup.elementDisposedEmitter.addListener( casObject => {
       const viewNode = map.get( casObject )!;
       objectNodeGroup.disposeElement( viewNode );
-      map.delete( casObject );
     } );
 
     this.topCheckboxGroup = new TopRepresentationCheckboxGroup( model, merge( {
@@ -183,26 +182,26 @@ class CAVScreenView extends ScreenView {
     } );
     this.addChild( this.playAreaMedianIndicatorNode );
 
-    // const updateMedianNode = () => {
-    //   const medianValue = model.medianValueProperty.value;
-    //   const visible = medianValue !== null && model.isShowingPlayAreaMedianProperty.value;
-    //
-    //   if ( visible ) {
-    //
-    //     // if there is a ball at that location, go above the ball
-    //     const ballsAtLocation = model.objectGroup.filter( casObject => casObject.valueProperty.value === medianValue );
-    //     const modelHeight = ballsAtLocation.length * model.objectType.radius * 2; // assumes no spacing
-    //
-    //     const viewHeight = this.modelViewTransform.modelToViewDeltaY( modelHeight );
-    //
-    //     this.playAreaMedianIndicatorNode.centerX = this.modelViewTransform.modelToViewX( medianValue );
-    //     this.playAreaMedianIndicatorNode.bottom = this.modelViewTransform.modelToViewY( 0 ) + viewHeight;
-    //   }
-    //   this.playAreaMedianIndicatorNode.visible = visible;
-    // };
-    // model.medianValueProperty.link( updateMedianNode );
-    // model.objectChangedEmitter.addListener( updateMedianNode );
-    // model.isShowingPlayAreaMedianProperty.link( updateMedianNode );
+    const updateMedianNode = () => {
+      const medianValue = model.medianValueProperty.value;
+      const visible = medianValue !== null && model.isShowingPlayAreaMedianProperty.value;
+
+      if ( visible ) {
+
+        // if there is a ball at that location, go above the ball
+        const ballsAtLocation = model.objectGroup.filter( casObject => casObject.valueProperty.value === medianValue );
+        const modelHeight = ballsAtLocation.length * model.objectType.radius * 2; // assumes no spacing
+
+        const viewHeight = this.modelViewTransform.modelToViewDeltaY( modelHeight );
+
+        this.playAreaMedianIndicatorNode.centerX = this.modelViewTransform.modelToViewX( medianValue );
+        this.playAreaMedianIndicatorNode.bottom = this.modelViewTransform.modelToViewY( 0 ) + viewHeight;
+      }
+      this.playAreaMedianIndicatorNode.visible = visible;
+    };
+    model.medianValueProperty.link( updateMedianNode );
+    model.objectChangedEmitter.addListener( updateMedianNode );
+    model.isShowingPlayAreaMedianProperty.link( updateMedianNode );
 
     this.medianPredictionNode = new PredictionNode( model.medianPredictionProperty, this.modelViewTransform, model.physicalRange, {
       center: this.layoutBounds.center,
@@ -220,7 +219,15 @@ class CAVScreenView extends ScreenView {
     } );
 
     this.resetAllButton = new ResetAllButton( {
-      listener: this.doReset.bind( this ),
+      listener: () => {
+        this.interruptSubtreeInput(); // cancel interactions that may be in progress
+
+        model.reset();
+
+        // hide the dragIndicatorArrowNode and reset the flag for if it has been dragged already
+        objectHasBeenDragged = false;
+        dragIndicatorArrowNode.visible = false;
+      },
       right: this.layoutBounds.maxX - CAVConstants.SCREEN_VIEW_X_MARGIN,
       bottom: this.layoutBounds.maxY - CAVConstants.SCREEN_VIEW_Y_MARGIN,
       tandem: options.tandem.createTandem( 'resetAllButton' )
@@ -228,7 +235,16 @@ class CAVScreenView extends ScreenView {
 
     this.eraseButton = new EraserButton( {
       tandem: options.tandem.createTandem( 'eraseButton' ),
-      listener: this.doReset.bind( this ),
+      listener: () => {
+
+        // Interrupt dragging of existing objects
+        this.interruptSubtreeInput();
+
+        model.clearData();
+
+        // hide the dragIndicatorArrowNode but don't reset objectHasBeenDragged
+        dragIndicatorArrowNode.visible = false;
+      },
       iconWidth: 26,
       right: this.resetAllButton.left - CAVConstants.SCREEN_VIEW_X_MARGIN,
       centerY: this.resetAllButton.centerY
@@ -242,10 +258,6 @@ class CAVScreenView extends ScreenView {
    * @param dt - time step, in seconds
    */
   step( dt: number ): void {
-  }
-
-  doReset(): void {
-    this.model.reset();
   }
 }
 
