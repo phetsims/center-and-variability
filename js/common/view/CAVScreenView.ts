@@ -183,26 +183,26 @@ class CAVScreenView extends ScreenView {
     } );
     this.addChild( this.playAreaMedianIndicatorNode );
 
-    const updateMedianNode = () => {
-      const medianValue = model.medianValueProperty.value;
-      const visible = medianValue !== null && model.isShowingPlayAreaMedianProperty.value;
-
-      if ( visible ) {
-
-        // if there is a ball at that location, go above the ball
-        const ballsAtLocation = model.objectGroup.filter( casObject => casObject.valueProperty.value === medianValue );
-        const modelHeight = ballsAtLocation.length * model.objectType.radius * 2; // assumes no spacing
-
-        const viewHeight = this.modelViewTransform.modelToViewDeltaY( modelHeight );
-
-        this.playAreaMedianIndicatorNode.centerX = this.modelViewTransform.modelToViewX( medianValue );
-        this.playAreaMedianIndicatorNode.bottom = this.modelViewTransform.modelToViewY( 0 ) + viewHeight;
-      }
-      this.playAreaMedianIndicatorNode.visible = visible;
-    };
-    model.medianValueProperty.link( updateMedianNode );
-    model.objectChangedEmitter.addListener( updateMedianNode );
-    model.isShowingPlayAreaMedianProperty.link( updateMedianNode );
+    // const updateMedianNode = () => {
+    //   const medianValue = model.medianValueProperty.value;
+    //   const visible = medianValue !== null && model.isShowingPlayAreaMedianProperty.value;
+    //
+    //   if ( visible ) {
+    //
+    //     // if there is a ball at that location, go above the ball
+    //     const ballsAtLocation = model.objectGroup.filter( casObject => casObject.valueProperty.value === medianValue );
+    //     const modelHeight = ballsAtLocation.length * model.objectType.radius * 2; // assumes no spacing
+    //
+    //     const viewHeight = this.modelViewTransform.modelToViewDeltaY( modelHeight );
+    //
+    //     this.playAreaMedianIndicatorNode.centerX = this.modelViewTransform.modelToViewX( medianValue );
+    //     this.playAreaMedianIndicatorNode.bottom = this.modelViewTransform.modelToViewY( 0 ) + viewHeight;
+    //   }
+    //   this.playAreaMedianIndicatorNode.visible = visible;
+    // };
+    // model.medianValueProperty.link( updateMedianNode );
+    // model.objectChangedEmitter.addListener( updateMedianNode );
+    // model.isShowingPlayAreaMedianProperty.link( updateMedianNode );
 
     this.medianPredictionNode = new PredictionNode( model.medianPredictionProperty, this.modelViewTransform, model.physicalRange, {
       center: this.layoutBounds.center,
