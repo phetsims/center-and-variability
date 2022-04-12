@@ -162,6 +162,7 @@ class CAVScreenView extends ScreenView {
     model.objectGroup.elementDisposedEmitter.addListener( casObject => {
       const viewNode = map.get( casObject )!;
       objectNodeGroup.disposeElement( viewNode );
+      map.delete( casObject );
     } );
 
     this.topCheckboxGroup = new TopRepresentationCheckboxGroup( model, merge( {
