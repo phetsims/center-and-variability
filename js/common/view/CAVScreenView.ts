@@ -220,7 +220,15 @@ class CAVScreenView extends ScreenView {
     } );
 
     this.resetAllButton = new ResetAllButton( {
-      listener: this.doReset.bind( this ),
+      listener: () => {
+        this.interruptSubtreeInput(); // cancel interactions that may be in progress
+
+        model.reset();
+
+        // hide the dragIndicatorArrowNode and reset the flag for if it has been dragged already
+        objectHasBeenDragged = false;
+        dragIndicatorArrowNode.visible = false;
+      },
       right: this.layoutBounds.maxX - CAVConstants.SCREEN_VIEW_X_MARGIN,
       bottom: this.layoutBounds.maxY - CAVConstants.SCREEN_VIEW_Y_MARGIN,
       tandem: options.tandem.createTandem( 'resetAllButton' )
@@ -228,7 +236,16 @@ class CAVScreenView extends ScreenView {
 
     this.eraseButton = new EraserButton( {
       tandem: options.tandem.createTandem( 'eraseButton' ),
-      listener: this.doReset.bind( this ),
+      listener: () => {
+
+        // Interrupt dragging of existing objects
+        this.interruptSubtreeInput();
+
+        model.clearData();
+
+        // hide the dragIndicatorArrowNode but don't reset objectHasBeenDragged
+        dragIndicatorArrowNode.visible = false;
+      },
       iconWidth: 26,
       right: this.resetAllButton.left - CAVConstants.SCREEN_VIEW_X_MARGIN,
       centerY: this.resetAllButton.centerY
@@ -242,10 +259,6 @@ class CAVScreenView extends ScreenView {
    * @param dt - time step, in seconds
    */
   step( dt: number ): void {
-  }
-
-  doReset(): void {
-    this.model.reset();
   }
 }
 
