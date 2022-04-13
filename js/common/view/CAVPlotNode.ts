@@ -150,9 +150,12 @@ class CAVPlotNode extends Node {
                      dotRadius - MARGIN_Y - MedianBarNode.NOTCH_HEIGHT;
 
         const rightmostDot = sortedDots[ sortedDots.length - 1 ];
-        const left = modelViewTransform.modelToViewX( leftmostDot.valueProperty.value );
-        const right = modelViewTransform.modelToViewX( rightmostDot.valueProperty.value );
-        const medianPositionX = modelViewTransform.modelToViewX( medianValue );
+        assert && assert( leftmostDot.valueProperty.value !== null );
+        const left = modelViewTransform.modelToViewX( leftmostDot.valueProperty.value! );
+        assert && assert( rightmostDot.valueProperty.value !== null );
+        const right = modelViewTransform.modelToViewX( rightmostDot.valueProperty.value! );
+        assert && assert( medianValue !== null );
+        const medianPositionX = modelViewTransform.modelToViewX( medianValue! );
 
         this.medianBarNode.setMedianBarShape( barY, left, medianPositionX, right, model.isMedianAnimationCompleteProperty.value );
       }
