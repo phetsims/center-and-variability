@@ -11,7 +11,7 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVScreenView, { CAVScreenViewOptions } from './CAVScreenView.js';
-import QuestionBar, { QuestionBarOptions } from './QuestionBar.js';
+import QuestionBar, { QuestionBarOptions } from '../../../../scenery-phet/js/QuestionBar.js';
 import KickButtonGroup from './KickButtonGroup.js';
 import BackgroundNode from './BackgroundNode.js';
 import { Node } from '../../../../scenery/js/imports.js';
