@@ -25,7 +25,7 @@ const simOptions = {
     leadDesign: 'Amanda McGarry',
     softwareDevelopment: 'Chris Klusendorf, Sam Reid',
     team: 'Kelly Findley, Marilyn Hartzell, Ariel Paul, Kathy Perkins, David Webb',
-    qualityAssurance: 'Nancy Salpepi, Kathryn Woessner, Devon Quispe',
+    qualityAssurance: 'Clifford Hardin, Emily Miller, Devon Quispe, Nancy Salpepi, Kathryn Woessner',
     graphicArts: 'Mariah Hermsmeyer'
   },
   createOptionsDialogContent: ( tandem: Tandem ) => new GlobalOptionsNode( tandem )
