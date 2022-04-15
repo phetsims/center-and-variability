@@ -28,7 +28,11 @@ const CAVConstants = {
   BUTTON_FONT: new PhetFont( 16 ),
   NUMBER_OF_OBJECTS_SMALL: 15, // the number of objects used on the Median and Mean & Median screens
   NUMBER_OF_OBJECTS_LARGE: 20, // the number of objects used on the Variability and Lab screens
-  CHECKBOX_TEXT_MAX_WIDTH: 120,
+  TOP_CHECKBOX_TEXT_MAX_WIDTH: 107,
+
+  // the top checkboxes are left aligned with the plat area checkboxes, so their max width is smaller to accommodate
+  // for the accordion box margin
+  PLAY_AREA_CHECKBOX_TEXT_MAX_WIDTH: 90,
   PLOT_TYPE_PROPERTY: new EnumerationProperty( CAVQueryParameters.plotType === 'dotPlot' ? PlotType.DOT_PLOT : PlotType.LINE_PLOT, {
     tandem: Tandem.GLOBAL_VIEW.createTandem( 'plotTypeProperty' )
   } ),

@@ -29,7 +29,8 @@ class ValueReadoutsNode extends VBox {
                                 stringTemplate: string, fill: IPaint ) => {
       const text = new Text( '', {
         fill: fill,
-        font: new PhetFont( 16 )
+        font: new PhetFont( 16 ),
+        maxWidth: 170
       } );
       valueProperty.link( value => {
         text.text = StringUtils.fillIn( stringTemplate, {

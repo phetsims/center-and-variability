@@ -36,7 +36,7 @@ const ICON_WIDTH = 24;
 const LINE_WIDTH = 2;
 const TEXT_OPTIONS = {
   font: CAVConstants.BUTTON_FONT,
-  maxWidth: CAVConstants.CHECKBOX_TEXT_MAX_WIDTH
+  maxWidth: CAVConstants.PLAY_AREA_CHECKBOX_TEXT_MAX_WIDTH
 };
 
 class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
