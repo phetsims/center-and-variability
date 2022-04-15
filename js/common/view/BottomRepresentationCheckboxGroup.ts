@@ -36,7 +36,7 @@ export type BottomRepresentationCheckboxGroupOptions = SelfOptions & VerticalChe
 // constants
 const TEXT_OPTIONS = {
   font: CAVConstants.BUTTON_FONT,
-  maxWidth: CAVConstants.CHECKBOX_TEXT_MAX_WIDTH
+  maxWidth: CAVConstants.TOP_CHECKBOX_TEXT_MAX_WIDTH
 };
 
 class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
