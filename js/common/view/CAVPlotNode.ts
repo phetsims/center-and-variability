@@ -121,6 +121,7 @@ class CAVPlotNode extends Node {
     model.objectGroup.elementDisposedEmitter.addListener( casObject => {
       const viewNode = map.get( casObject )!;
       dotNodeGroup.disposeElement( viewNode );
+      map.delete( casObject );
     } );
 
     this.medianBarNode = new MedianBarNode( {
