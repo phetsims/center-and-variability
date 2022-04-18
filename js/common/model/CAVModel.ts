@@ -130,7 +130,7 @@ class CAVModel {
       return new CardModel( casObject, {
         tandem: tandem
       } );
-    }, [ this.objectGroup.archetype ], {
+    }, () => [ this.objectGroup.archetype ], {
       phetioType: PhetioGroup.PhetioGroupIO( CardModel.CardModelIO ),
       tandem: options.includeCards ? options.tandem.createTandem( 'cardModelGroup' ) : Tandem.OPT_OUT
     } );

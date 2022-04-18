@@ -96,7 +96,7 @@ class CAVPlotNode extends Node {
         draggingEnabled: false,
         tandem: tandem
       } );
-    }, [ model.objectGroup.archetype ], {
+    }, () => [ model.objectGroup.archetype ], {
       phetioType: PhetioGroup.PhetioGroupIO( Node.NodeIO ),
       tandem: options.tandem.createTandem( 'dotNodeGroup' ),
       supportsDynamicState: false

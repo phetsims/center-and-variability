@@ -93,7 +93,7 @@ class CAVScreenView extends ScreenView {
       return new CAVObjectNode( casObject, model.isShowingPlayAreaMedianProperty, modelViewTransform, objectNodesInputEnabledProperty, {
         tandem: tandem
       } );
-    }, [ model.objectGroup.archetype ], {
+    }, () => [ model.objectGroup.archetype ], {
       phetioType: PhetioGroup.PhetioGroupIO( Node.NodeIO ),
       tandem: objectNodeGroupTandem,
       supportsDynamicState: false

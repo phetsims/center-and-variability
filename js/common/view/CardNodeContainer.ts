@@ -99,7 +99,7 @@ class CardNodeContainer extends Node {
       return new CardNode( cardModel, new Vector2( 0, 0 ), () => this.getDragRange(), {
         tandem: tandem
       } );
-    }, [ model.cardModelGroup.archetype ], {
+    }, () => [ model.cardModelGroup.archetype ], {
       phetioType: PhetioGroup.PhetioGroupIO( Node.NodeIO ),
       tandem: model.includeCards ? options.tandem.createTandem( 'cardNodeGroup' ) : Tandem.OPT_OUT,
       supportsDynamicState: false

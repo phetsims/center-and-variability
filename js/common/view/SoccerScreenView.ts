@@ -77,7 +77,7 @@ class SoccerScreenView extends CAVScreenView {
       return new SoccerPlayerNode( soccerPlayer, this.modelViewTransform, {
         tandem: tandem
       } );
-    }, [ model.soccerPlayerGroup.archetype ], {
+    }, () => [ model.soccerPlayerGroup.archetype ], {
       phetioType: PhetioGroup.PhetioGroupIO( Node.NodeIO ),
       tandem: options.tandem.createTandem( 'soccerPlayerNodeGroup' ),
       supportsDynamicState: false
