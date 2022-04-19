@@ -21,7 +21,7 @@ class VariabilityModel extends SoccerModel {
 
   constructor( options: VariabilityModelOptions ) {
 
-    options = optionize<VariabilityModelOptions, SelfOptions, CAVModelOptions>( {
+    options = optionize<VariabilityModelOptions, SelfOptions, CAVModelOptions>()( {
       tandem: Tandem.REQUIRED
     }, options );
 

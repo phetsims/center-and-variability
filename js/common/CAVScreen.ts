@@ -23,7 +23,7 @@ class CAVScreen<M extends CAVModel, V extends CAVScreenView> extends Screen<M, V
 
   constructor( createModel: () => M, createView: ( m: M ) => V, providedOptions?: CAVScreenOptions ) {
 
-    const options = optionize<CAVScreenOptions, SelfOptions, ScreenOptions>( {
+    const options = optionize<CAVScreenOptions, SelfOptions, ScreenOptions>()( {
       backgroundColorProperty: CAVColors.screenBackgroundColorProperty,
       tandem: Tandem.REQUIRED
     }, providedOptions );

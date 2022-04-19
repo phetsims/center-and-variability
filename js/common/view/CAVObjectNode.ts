@@ -56,7 +56,7 @@ class CAVObjectNode extends Node {
                modelViewTransform: ModelViewTransform2, objectNodesInputEnabledProperty: IProperty<boolean>,
                providedOptions?: CAVObjectNodeOptions ) {
 
-    const options = optionize<CAVObjectNodeOptions, SelfOptions, NodeOptions>( {
+    const options = optionize<CAVObjectNodeOptions, SelfOptions, NodeOptions>()( {
 
       // In the Mean & Median screen and Variability screen, the objectType is SOCCER_BALL, but we render the dot plot
       // with DOT views

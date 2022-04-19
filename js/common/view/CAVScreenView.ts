@@ -72,7 +72,7 @@ class CAVScreenView extends ScreenView {
 
   constructor( model: CAVModel, modelViewTransform: ModelViewTransform2, providedOptions: CAVScreenViewOptions ) {
     // @ts-ignore what was happening here?
-    const options = optionize<CAVScreenViewOptions, SelfOptions, ScreenViewOptions, 'tandem'>( {
+    const options = optionize<CAVScreenViewOptions, SelfOptions, ScreenViewOptions>()( {
       tandem: Tandem.REQUIRED
     }, providedOptions );
 

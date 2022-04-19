@@ -89,7 +89,7 @@ class CAVModel {
 
   constructor( objectType: CAVObjectType, maxNumberOfObjects: number, providedOptions: CAVModelOptions ) {
 
-    const options = optionize<CAVModelOptions, SelfOptions, {}>( {
+    const options = optionize<CAVModelOptions, SelfOptions, {}>()( {
       tandem: Tandem.REQUIRED
     }, providedOptions );
 

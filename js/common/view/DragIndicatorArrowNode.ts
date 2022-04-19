@@ -20,7 +20,7 @@ export default class DragIndicatorArrowNode extends ArrowNode {
 
   constructor( options: DragIndicatorArrowNodeOptions ) {
 
-    super( 0, 0, 35, 0, optionize<DragIndicatorArrowNodeOptions, {}, ArrowNodeOptions>( {
+    super( 0, 0, 35, 0, optionize<DragIndicatorArrowNodeOptions, {}, ArrowNodeOptions>()( {
       headHeight: 8,
       headWidth: 12,
       tailWidth: 5,

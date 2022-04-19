@@ -21,7 +21,7 @@ class MedianModel extends SoccerModel {
 
   constructor( options: MedianModelOptions ) {
 
-    options = optionize<MedianModelOptions, SelfOptions, CAVModelOptions>( {
+    options = optionize<MedianModelOptions, SelfOptions, CAVModelOptions>()( {
       tandem: Tandem.REQUIRED
     }, options );
 

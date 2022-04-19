@@ -53,7 +53,7 @@ class PredictionNode extends Node {
       stroke: CAVColors.arrowStrokeProperty,
       lineWidth: CAVConstants.ARROW_LINE_WIDTH
     } );
-    const options = optionize<PredictionNodeOptions, SelfOptions, NodeOptions>( {
+    const options = optionize<PredictionNodeOptions, SelfOptions, NodeOptions>()( {
       tandem: Tandem.REQUIRED,
       children: [ arrowNode, shadedSphereNode ],
       cursor: 'pointer'

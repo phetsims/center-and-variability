@@ -49,7 +49,7 @@ class ValueReadoutsNode extends VBox {
     const medianText = createReadoutText( model.medianValueProperty, model.isShowingTopMedianProperty,
       centerAndVariabilityStrings.medianEqualsValue, CAVColors.medianColorProperty );
 
-    const options = optionize<ValueReadoutNodeOptions, SelfOptions, VBoxOptions>( {
+    const options = optionize<ValueReadoutNodeOptions, SelfOptions, VBoxOptions>()( {
       align: 'left',
       spacing: 4,
       excludeInvisibleChildrenFromBounds: false,

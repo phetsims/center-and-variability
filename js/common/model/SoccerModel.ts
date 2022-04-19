@@ -50,7 +50,7 @@ class SoccerModel extends CAVModel {
 
   constructor( maxNumberOfBalls: number, options: SoccerModelOptions ) {
 
-    options = optionize<SoccerModelOptions, SelfOptions, CAVModelOptions>( {
+    options = optionize<SoccerModelOptions, SelfOptions, CAVModelOptions>()( {
       tandem: Tandem.REQUIRED
     }, options );
 

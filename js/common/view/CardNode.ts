@@ -56,7 +56,7 @@ class CardNode extends Node {
       text.center = rectangle.center;
     } );
 
-    const options = optionize<CardNodeOptions, SelfOptions, NodeOptions>( {
+    const options = optionize<CardNodeOptions, SelfOptions, NodeOptions>()( {
       tandem: Tandem.REQUIRED,
       children: [ rectangle, text ],
       cursor: 'pointer',

@@ -169,7 +169,7 @@ class SoccerPlayerNode extends Node {
       this.visible = placeInLine === 0;
     } );
 
-    const options = optionize<SoccerPlayerNodeOptions, SelfOptions, NodeOptions>( {
+    const options = optionize<SoccerPlayerNodeOptions, SelfOptions, NodeOptions>()( {
       phetioDynamicElement: true,
       excludeInvisibleChildrenFromBounds: false
     }, providedOptions );

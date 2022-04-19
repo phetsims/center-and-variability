@@ -37,7 +37,7 @@ class MedianBarNode extends Path {
 
   constructor( providedOptions: MedianBarNodeOptions ) {
 
-    const options = optionize<MedianBarNodeOptions, SelfOptions, PathOptions>( {
+    const options = optionize<MedianBarNodeOptions, SelfOptions, PathOptions>()( {
       lineWidth: LINE_WIDTH,
       stroke: CAVColors.medianColorProperty,
       arrowScale: 1

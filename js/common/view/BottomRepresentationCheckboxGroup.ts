@@ -43,7 +43,7 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
   constructor( model: CAVModel, providedOptions?: BottomRepresentationCheckboxGroupOptions ) {
 
-    const options = optionize<BottomRepresentationCheckboxGroupOptions, SelfOptions, VerticalCheckboxGroupOptions>( {
+    const options = optionize<BottomRepresentationCheckboxGroupOptions, SelfOptions, VerticalCheckboxGroupOptions>()( {
       includeMean: true,
       includeMedian: true,
       includePredictMean: true,

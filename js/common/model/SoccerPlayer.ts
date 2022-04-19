@@ -36,7 +36,7 @@ class SoccerPlayer extends PhetioObject {
 
   constructor( placeInLine: number, providedOptions: SoccerPlayerOptions ) {
 
-    const options = optionize<SoccerPlayerOptions, SelfOptions, PhetioObjectOptions>( {
+    const options = optionize<SoccerPlayerOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioType: SoccerPlayer.SoccerPlayerIO,
       tandem: Tandem.REQUIRED,
       phetioDynamicElement: true

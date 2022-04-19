@@ -36,7 +36,7 @@ class CAVPlotNode extends Node {
 
   constructor( model: CAVModel, numberLineWidth: number, providedOptions?: CAVPlotOptions ) {
 
-    const options = optionize<CAVPlotOptions, SelfOptions, NodeOptions>( {
+    const options = optionize<CAVPlotOptions, SelfOptions, NodeOptions>()( {
       tandem: Tandem.REQUIRED
     }, providedOptions );
 

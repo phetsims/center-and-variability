@@ -21,7 +21,7 @@ class LabModel extends CAVModel {
 
   constructor( options: LabModelOptions ) {
 
-    options = optionize<LabModelOptions, SelfOptions, CAVModelOptions>( {
+    options = optionize<LabModelOptions, SelfOptions, CAVModelOptions>()( {
       tandem: Tandem.REQUIRED
     }, options );
 

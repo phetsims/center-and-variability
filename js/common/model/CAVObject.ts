@@ -66,7 +66,7 @@ class CAVObject extends PhetioObject {
 
   constructor( objectType: CAVObjectType, providedOptions: CAVObjectOptions ) {
 
-    const options = optionize<CAVObjectOptions, SelfOptions, PhetioObjectOptions>( {
+    const options = optionize<CAVObjectOptions, SelfOptions, PhetioObjectOptions>()( {
       position: Vector2.ZERO,
       velocity: Vector2.ZERO,
       tandem: Tandem.REQUIRED,

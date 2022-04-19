@@ -41,7 +41,7 @@ class CAVAccordionBox extends AccordionBox {
   constructor( model: CAVModel, contentNode: Node, checkboxPanel: TopRepresentationCheckboxGroup,
                titleNode: Node, layoutBounds: Bounds2, providedOptions: CAVAccordionBoxOptions ) {
 
-    const options = optionize<CAVAccordionBoxOptions, SelfOptions, AccordionBoxOptions>( {
+    const options = optionize<CAVAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {
       titleAlignX: 'left',
       titleXSpacing: 8,
       cornerRadius: 6,

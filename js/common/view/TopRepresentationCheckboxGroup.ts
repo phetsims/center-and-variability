@@ -43,7 +43,7 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
   constructor( model: CAVModel, providedOptions?: TopRepresentationCheckboxGroupOptions ) {
 
-    const options = optionize<TopRepresentationCheckboxGroupOptions, SelfOptions, VerticalCheckboxGroupOptions>( {
+    const options = optionize<TopRepresentationCheckboxGroupOptions, SelfOptions, VerticalCheckboxGroupOptions>()( {
       includeSortData: false,
       includeMean: true,
       includeMedian: true

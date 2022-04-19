@@ -28,7 +28,7 @@ class CardModel extends PhetioObject {
 
   constructor( casObject: CAVObject, providedOptions?: CardModelOptions ) {
 
-    const options = optionize<CardModelOptions, SelfOptions, PhetioObjectOptions>( {
+    const options = optionize<CardModelOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioType: CardModel.CardModelIO,
       phetioDynamicElement: true
     }, providedOptions );

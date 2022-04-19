@@ -45,7 +45,7 @@ class NumberLineNode extends Node {
     providedOptions?: NumberLineNodeOptions
   ) {
 
-    const options = optionize<NumberLineNodeOptions, SelfOptions, NodeOptions>( {
+    const options = optionize<NumberLineNodeOptions, SelfOptions, NodeOptions>()( {
       color: 'white',
       tandem: Tandem.REQUIRED
     }, providedOptions );

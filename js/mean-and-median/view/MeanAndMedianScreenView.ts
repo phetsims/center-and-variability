@@ -22,7 +22,7 @@ class MeanAndMedianScreenView extends MeanOrMedianScreenView {
 
   constructor( model: MeanAndMedianModel, providedOptions: MeanAndMedianScreenViewOptions ) {
 
-    const options = optionize<MeanAndMedianScreenViewOptions, {}>( {
+    const options = optionize<MeanAndMedianScreenViewOptions, {}>()( {
 
       // TODO: TypeScript is okay with not including isMedianScreen, why?
       isMedianScreen: false,

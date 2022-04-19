@@ -22,7 +22,7 @@ class VariabilityScreenView extends SoccerScreenView {
 
   constructor( model: VariabilityModel, providedOptions: VariabilityScreenViewOptions ) {
 
-    const options = optionize<VariabilityScreenViewOptions, {}, SoccerScreenViewOptions>( {
+    const options = optionize<VariabilityScreenViewOptions, {}, SoccerScreenViewOptions>()( {
       questionBarOptions: {
         barFill: CAVColors.variabilityQuestionBarFillColorProperty,
         labelText: centerAndVariabilityStrings.variabilityQuestion

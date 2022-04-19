@@ -41,7 +41,7 @@ class SoccerScreenView extends CAVScreenView {
 
   constructor( model: SoccerModel, providedOptions: SoccerScreenViewOptions ) {
 
-    const options = optionize<SoccerScreenViewOptions, SelfOptions, CAVScreenViewOptions, 'tandem'>( {
+    const options = optionize<SoccerScreenViewOptions, SelfOptions, CAVScreenViewOptions>()( {
       tandem: Tandem.REQUIRED
     }, providedOptions );
 
