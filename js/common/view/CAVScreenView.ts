@@ -258,7 +258,7 @@ class CAVScreenView extends ScreenView {
    * Steps the view.
    * @param dt - time step, in seconds
    */
-  step( dt: number ): void {
+  override step( dt: number ): void {
   }
 }
 
