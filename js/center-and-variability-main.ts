@@ -7,7 +7,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import Sim from '../../joist/js/Sim.js';
+import Sim, { SimOptions } from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
 import Tandem from '../../tandem/js/Tandem.js';
 // import VariabilityScreen from './variability/VariabilityScreen.js';
@@ -20,7 +20,7 @@ import GlobalOptionsNode from './common/view/GlobalOptionsNode.js';
 const centerAndVariabilityTitleString = centerAndVariabilityStrings[ 'center-and-variability' ].title;
 
 
-const simOptions = {
+const simOptions: SimOptions = {
   credits: {
     leadDesign: 'Amanda McGarry',
     softwareDevelopment: 'Chris Klusendorf, Sam Reid',
