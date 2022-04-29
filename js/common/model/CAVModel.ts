@@ -383,12 +383,12 @@ class CAVModel {
     this.resetEmitter.emit();
   }
 
-  clearAnimation() {
+  clearAnimation(): void {
     this.highlightAnimationIndex = null;
     this.objectGroup.forEach( casObject => casObject.isShowingAnimationHighlightProperty.set( false ) );
   }
 
-  updateAnimation() {
+  updateAnimation(): void {
 
     // TODO: copied from updateMeanAndMedian
     const objectsInDataSet = this.objectGroup.filter( casObject => casObject.valueProperty.value !== null );

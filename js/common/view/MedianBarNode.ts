@@ -89,7 +89,7 @@ class MedianBarNode extends Path {
     return this;
   }
 
-  clear() {
+  clear(): void {
     this.shape = null;
     this.medianArrowNode.visible = false;
   }

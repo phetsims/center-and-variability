@@ -147,7 +147,7 @@ class SoccerModel extends CAVModel {
   /**
    * When a ball lands on the ground, animate all other balls that were at this location above the landed ball.
    */
-  soccerBallLandedListener( casObject: CAVObject, value: number ) {
+  soccerBallLandedListener( casObject: CAVObject, value: number ): void {
     const otherObjectsInStack = this.objectGroup.filter( x => x.valueProperty.value === value && x !== casObject );
     const sortedOthers = _.sortBy( otherObjectsInStack, object => object.positionProperty.value.y );
 
@@ -192,7 +192,7 @@ class SoccerModel extends CAVModel {
   /**
    * Select a target location for the nextBallToKick, set its velocity and mark it for animation.
    */
-  private kickBall( soccerPlayer: SoccerPlayer, casObject: CAVObject ) {
+  private kickBall( soccerPlayer: SoccerPlayer, casObject: CAVObject ): void {
     soccerPlayer.poseProperty.value = Pose.KICKING;
 
     this.ballPlayerMap.set( casObject, soccerPlayer );

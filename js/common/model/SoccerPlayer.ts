@@ -54,11 +54,11 @@ class SoccerPlayer extends PhetioObject {
     this.timestampWhenPoisedBegan = -1;  // Not yet poised.  TODO: use null for this case?  See https://github.com/phetsims/center-and-variability/issues/59
   }
 
-  reset() {
+  reset(): void {
     this.poseProperty.reset();
   }
 
-  override dispose() {
+  override dispose(): void {
     this.placeInLineProperty.dispose();
     super.dispose();
   }

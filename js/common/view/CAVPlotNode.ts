@@ -172,7 +172,7 @@ class CAVPlotNode extends Node {
   /**
    * No implementation because this node is powered by the model. Reset needed for uniformity with CardNodeContainer.
    */
-  reset() {}
+  reset(): void {}
 }
 
 centerAndVariability.register( 'CAVPlotNode', CAVPlotNode );

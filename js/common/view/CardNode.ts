@@ -103,7 +103,7 @@ class CardNode extends Node {
     } );
   }
 
-  animateTo( destination: Vector2, duration: number, callback = () => {} ) {
+  animateTo( destination: Vector2, duration: number, callback = () => {} ): void {
 
     if ( this.animation ) {
 
@@ -148,7 +148,7 @@ class CardNode extends Node {
     this.animation.start();
   }
 
-  override dispose() {
+  override dispose(): void {
     this.positionProperty.dispose();
     this.dragListener.dispose();
     super.dispose();

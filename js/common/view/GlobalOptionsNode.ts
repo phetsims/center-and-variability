@@ -53,7 +53,7 @@ class GlobalOptionsNode extends VBox {
     this.disposeGlobalOptionsNode = () => radioButtonGroup.dispose();
   }
 
-  override dispose() {
+  override dispose(): void {
     this.disposeGlobalOptionsNode();
     super.dispose();
   }

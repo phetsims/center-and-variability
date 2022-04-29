@@ -556,7 +556,7 @@ class CardNodeContainer extends Node {
    * Check if all of the data is in order, by using the cells associated with the card node.  Note that means
    * it is using the cell the card may be animating to.
    */
-  isDataSorted() {
+  isDataSorted(): boolean {
     let lastValue = null;
     for ( let i = 0; i < this.cardNodeCells.length; i++ ) {
       const value = this.cardNodeCells[ i ].casObject.valueProperty.value!;

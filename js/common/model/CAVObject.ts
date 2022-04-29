@@ -153,7 +153,7 @@ class CAVObject extends PhetioObject {
     this.disposedEmitter.dispose();
   }
 
-  toStateObject() {
+  toStateObject(): { objectType: string; targetX: number | null; isFirstObject: boolean } {
     return {
       objectType: this.objectType.toString(),
       targetX: this.targetX,
