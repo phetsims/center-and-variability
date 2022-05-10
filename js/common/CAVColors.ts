@@ -20,7 +20,7 @@ import centerAndVariability from '../centerAndVariability.js';
 
 const CAVColors = {
 
-  // Background color that for screens in this sim
+  // Background color for screens in this sim
   screenBackgroundColorProperty: new ProfileColorProperty( centerAndVariability, 'background', {
     default: 'white'
   } ),
