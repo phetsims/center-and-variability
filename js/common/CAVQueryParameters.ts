@@ -10,10 +10,6 @@
 import centerAndVariability from '../centerAndVariability.js';
 
 const CAVQueryParameters = QueryStringMachine.getAll( {
-
-  // TODO: It would be nice if QueryStringMachine supported mapping to EnumerationValue
-  // TODO SR: Or should we bring back StringEnumerationProperty in https://github.com/phetsims/axon/issues/394?
-  // TODO SR: Or both?
   plotType: {
     type: 'string',
     validValues: [ 'dotPlot', 'linePlot' ],
