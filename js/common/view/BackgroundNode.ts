@@ -9,7 +9,7 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import { Color, LinearGradient, Rectangle } from '../../../../scenery/js/imports.js';
+import { LinearGradient, Rectangle } from '../../../../scenery/js/imports.js';
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import CAVColors from '../CAVColors.js';
@@ -24,7 +24,7 @@ class BackgroundNode extends Rectangle {
       CAVColors.skyGradientBottomColorProperty,
       CAVColors.groundColorProperty,
       visibleBoundsProperty
-    ], ( skyGradientTopColor: Color, skyGradientMiddleColor: Color, skyGradientBottomColor: Color, groundColor: Color, visibleBounds: Bounds2 ) => {
+    ], ( skyGradientTopColor, skyGradientMiddleColor, skyGradientBottomColor, groundColor, visibleBounds ) => {
       const gradient = new LinearGradient( visibleBounds.centerX, visibleBounds.top, visibleBounds.centerX, bottomY );
 
       // sky gradient, sampled from a screenshot

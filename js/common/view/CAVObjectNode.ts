@@ -29,7 +29,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import IProperty from '../../../../axon/js/IProperty.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import ballDark_png from '../../../images/ballDark_png.js';
-import Multilink from '../../../../axon/js/Multilink.js';
+import { UnknownMultilink } from '../../../../axon/js/Multilink.js';
 
 type SelfOptions = {
   objectViewType?: CAVObjectType;
@@ -48,9 +48,10 @@ let index = 0;
 class CAVObjectNode extends Node {
   private readonly dragListener: DragListener | null;
   private readonly selfInputEnabledProperty: BooleanProperty | null;
-  private readonly inputEnabledMultilink: Multilink<[ AnimationMode, number | null, boolean, boolean ]> | null;
-  private readonly medianHighlightVisibleMultilink: Multilink<[ boolean, boolean, boolean ]>;
-  private readonly opacityMultilink: Multilink<[ number | null, AnimationMode ]>;
+
+  private readonly inputEnabledMultilink: UnknownMultilink | null;
+  private readonly medianHighlightVisibleMultilink: UnknownMultilink;
+  private readonly opacityMultilink: UnknownMultilink;
 
   constructor( casObject: CAVObject, isShowingPlayAreaMedianProperty: IReadOnlyProperty<boolean>,
                modelViewTransform: ModelViewTransform2, objectNodesInputEnabledProperty: IProperty<boolean>,
@@ -172,7 +173,7 @@ class CAVObjectNode extends Node {
       // Prevent dragging or interaction while the object does not have a value (when it is not in the play area yet),
       // when it is animating, if input for this individual node is disabled, or if input for all of the object nodes
       // ahs been disabled
-      this.inputEnabledMultilink = Property.multilink<[ AnimationMode, number | null, boolean, boolean ]>(
+      this.inputEnabledMultilink = Property.multilink(
         [ casObject.animationModeProperty, casObject.valueProperty, this.selfInputEnabledProperty, objectNodesInputEnabledProperty ],
         ( mode, value, selfInputEnabled, objectsInputEnabled ) => {
           const inputEnabled = value !== null && mode === AnimationMode.NONE && selfInputEnabled && objectsInputEnabled;
@@ -205,7 +206,7 @@ class CAVObjectNode extends Node {
     // The initial ready-to-kick ball is full opacity. The rest of the balls waiting to be kicked are lower opacity so
     // they don't look like part of the data set, but still look kickable.
     this.opacityMultilink = Property.multilink( [ casObject.valueProperty, casObject.animationModeProperty ],
-      ( value: number | null, animationMode: AnimationMode ) => {
+      ( value, animationMode ) => {
         this.opacity = value === null && animationMode === AnimationMode.NONE && !casObject.isFirstObject ? 0.4 : 1;
       } );
 

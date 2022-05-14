@@ -90,7 +90,7 @@ class NumberLineNode extends Node {
         lineWidth: 3.2
       } );
       Property.multilink( [ rangeProperty, isShowingMeanIndicatorProperty ],
-        ( range: Range | null, isShowingMeanIndicator: boolean ) => {
+        ( range, isShowingMeanIndicator ) => {
           if ( range !== null ) {
 
             // TODO: What to do if the range is 0???
@@ -116,7 +116,7 @@ class NumberLineNode extends Node {
     this.addChild( meanIndicatorNode );
 
     Property.multilink( [ meanValueProperty, isShowingMeanIndicatorProperty ],
-      ( meanValue: number | null, isShowingMeanIndicator: boolean ) => {
+      ( meanValue, isShowingMeanIndicator ) => {
         if ( meanValue !== null ) {
           meanIndicatorNode.centerTop = new Vector2( modelViewTransform.modelToViewX( meanValue ), 0 );
         }
