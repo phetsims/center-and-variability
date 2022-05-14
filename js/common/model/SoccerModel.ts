@@ -82,7 +82,7 @@ class SoccerModel extends CAVModel {
 
     this.ballPlayerMap = new Map();
 
-    this.numberOfRemainingKickableSoccerBallsProperty = new DerivedProperty<number, [ number, number, CAVObject | null ]>( [
+    this.numberOfRemainingKickableSoccerBallsProperty = new DerivedProperty( [
       this.numberOfRemainingObjectsProperty,
       this.numberOfScheduledSoccerBallsToKickProperty,
       this.nextBallToKickProperty ], ( numberOfRemainingObjects,
