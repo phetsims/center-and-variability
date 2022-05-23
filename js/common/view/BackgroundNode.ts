@@ -13,12 +13,13 @@ import { LinearGradient, Rectangle } from '../../../../scenery/js/imports.js';
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import CAVColors from '../CAVColors.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 
 class BackgroundNode extends Rectangle {
   constructor( bottomY: number, visibleBoundsProperty: Property<Bounds2> ) {
     super( visibleBoundsProperty.value.centerX, visibleBoundsProperty.value.top, visibleBoundsProperty.value.centerX, bottomY );
 
-    Property.multilink( [
+    Multilink.multilink( [
       CAVColors.skyGradientTopColorProperty,
       CAVColors.skyGradientMiddleColorProperty,
       CAVColors.skyGradientBottomColorProperty,

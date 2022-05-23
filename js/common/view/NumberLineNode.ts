@@ -22,10 +22,10 @@ import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
 import CAVColors from '../CAVColors.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import CAVConstants from '../CAVConstants.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 
 type SelfOptions = {
   color?: IPaint;
@@ -89,7 +89,7 @@ class NumberLineNode extends Node {
         stroke: CAVColors.meanColorProperty,
         lineWidth: 3.2
       } );
-      Property.multilink( [ rangeProperty, isShowingMeanIndicatorProperty ],
+      Multilink.multilink( [ rangeProperty, isShowingMeanIndicatorProperty ],
         ( range, isShowingMeanIndicator ) => {
           if ( range !== null ) {
 
@@ -115,7 +115,7 @@ class NumberLineNode extends Node {
     const meanIndicatorNode = NumberLineNode.createMeanIndicatorNode( options.includeMeanStroke );
     this.addChild( meanIndicatorNode );
 
-    Property.multilink( [ meanValueProperty, isShowingMeanIndicatorProperty ],
+    Multilink.multilink( [ meanValueProperty, isShowingMeanIndicatorProperty ],
       ( meanValue, isShowingMeanIndicator ) => {
         if ( meanValue !== null ) {
           meanIndicatorNode.centerTop = new Vector2( modelViewTransform.modelToViewX( meanValue ), 0 );
