@@ -8,6 +8,7 @@
  */
 
 import optionize from '../../../../phet-core/js/optionize.js';
+import OmitStrict from '../../../../phet-core/js/types/OmitStrict.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import { Circle, DragListener, Image, Node, NodeOptions, Path, Text } from '../../../../scenery/js/imports.js';
 import CAVObject from '../model/CAVObject.js';
@@ -38,7 +39,7 @@ export type CAVObjectNodeOptions =
   SelfOptions
 
   // Take all options from NodeOptions, but do not allow passing through inputEnabledProperty since it requires special handling in multilink
-  & Omit<NodeOptions, 'inputEnabledProperty'>
+  & OmitStrict<NodeOptions, 'inputEnabledProperty'>
   & PickRequired<NodeOptions, 'tandem'>;
 
 // for debugging with ?dev

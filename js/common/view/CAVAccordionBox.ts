@@ -8,6 +8,7 @@
  */
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import OmitStrict from '../../../../phet-core/js/types/OmitStrict.js';
 import { Node, Rectangle } from '../../../../scenery/js/imports.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import CAVConstants from '../CAVConstants.js';
@@ -26,7 +27,7 @@ type SelfOptions = {
 };
 export type CAVAccordionBoxOptions =
   SelfOptions
-  & Omit<AccordionBoxOptions, 'titleNode' | 'expandedProperty'>
+  & OmitStrict<AccordionBoxOptions, 'titleNode' | 'expandedProperty'>
   & PickRequired<AccordionBoxOptions, 'tandem'>;
 
 // constants

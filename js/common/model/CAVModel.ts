@@ -8,6 +8,7 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
+import OmitStrict from '../../../../phet-core/js/types/OmitStrict.js';
 import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -38,7 +39,7 @@ export type CAVModelOptions = SelfOptions & {};
 const HIGHLIGHT_ANIMATION_TIME_STEP = 0.25; // in seconds
 
 class CAVModel {
-  readonly objectGroup: PhetioGroup<CAVObject, [ CAVObjectType, Omit<CAVObjectOptions, 'tandem'> ]>;
+  readonly objectGroup: PhetioGroup<CAVObject, [ CAVObjectType, OmitStrict<CAVObjectOptions, 'tandem'> ]>;
   readonly objectType: CAVObjectType;
   readonly isSortingDataProperty: BooleanProperty;
   readonly isShowingTopMeanProperty: BooleanProperty;
