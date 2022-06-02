@@ -42,7 +42,7 @@ class SoccerModel extends CAVModel {
   readonly nextBallToKickProperty: Property<CAVObject | null>; // Null if there is no more ball to kick
   private readonly numberOfScheduledSoccerBallsToKickProperty: NumberProperty;
   readonly numberOfRemainingKickableSoccerBallsProperty: IReadOnlyProperty<number>;
-  readonly hasKickableSoccerBallsProperty: Property<boolean>;
+  readonly hasKickableSoccerBallsProperty: IReadOnlyProperty<boolean>;
 
   private readonly timeWhenLastBallWasKickedProperty: NumberProperty;
   private readonly ballPlayerMap: Map<CAVObject, SoccerPlayer>; // TODO: Add to PhET-iO State
