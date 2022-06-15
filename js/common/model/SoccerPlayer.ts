@@ -13,12 +13,13 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import EmptyObjectType from '../../../../phet-core/js/types/EmptyObjectType.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import Property from '../../../../axon/js/Property.js';
 import Pose from './Pose.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
-type SelfOptions = {};
+type SelfOptions = EmptyObjectType;
 type SoccerPlayerOptions =
   SelfOptions
   & PhetioObjectOptions

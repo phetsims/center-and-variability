@@ -9,6 +9,7 @@
 
 import { Image } from '../../../scenery/js/imports.js';
 import optionize from '../../../phet-core/js/optionize.js';
+import EmptyObjectType from '../../../phet-core/js/types/EmptyObjectType.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import CAVColors from '../common/CAVColors.js';
 import centerAndVariability from '../centerAndVariability.js';
@@ -25,7 +26,7 @@ class MedianScreen extends CAVScreen<MedianModel, MedianScreenView> {
 
   constructor( providedOptions: MedianScreenOptions ) {
 
-    const options = optionize<MedianScreenOptions, {}>()( {
+    const options = optionize<MedianScreenOptions, EmptyObjectType>()( {
       name: centerAndVariabilityStrings.screen.median,
       homeScreenIcon: new ScreenIcon( new Image( medianScreenIcon_png ), {
         maxIconWidthProportion: 1,

@@ -8,6 +8,7 @@
  */
 
 import optionize from '../../../../phet-core/js/optionize.js';
+import EmptyObjectType from '../../../../phet-core/js/types/EmptyObjectType.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import MedianModel from '../model/MedianModel.js';
@@ -15,7 +16,7 @@ import CAVColors from '../../common/CAVColors.js';
 import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
 import MeanOrMedianScreenView, { MeanOrMedianScreenViewOptions } from '../../common/view/MeanOrMedianScreenView.js';
 
-type SelfOptions = {};
+type SelfOptions = EmptyObjectType;
 type MedianScreenViewOptions = SelfOptions & MeanOrMedianScreenViewOptions;
 
 class MedianScreenView extends MeanOrMedianScreenView {

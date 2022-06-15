@@ -8,6 +8,7 @@
  */
 
 import optionize from '../../../../phet-core/js/optionize.js';
+import EmptyObjectType from '../../../../phet-core/js/types/EmptyObjectType.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
@@ -31,7 +32,7 @@ import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 
-type SelfOptions = {};
+type SelfOptions = EmptyObjectType;
 type SoccerModelOptions = SelfOptions & CAVModelOptions;
 
 // constants

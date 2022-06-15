@@ -8,6 +8,7 @@
  */
 
 import optionize from '../../../../phet-core/js/optionize.js';
+import EmptyObjectType from '../../../../phet-core/js/types/EmptyObjectType.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
@@ -22,7 +23,7 @@ class MeanAndMedianScreenView extends MeanOrMedianScreenView {
 
   constructor( model: MeanAndMedianModel, providedOptions: MeanAndMedianScreenViewOptions ) {
 
-    const options = optionize<MeanAndMedianScreenViewOptions, {}>()( {
+    const options = optionize<MeanAndMedianScreenViewOptions, EmptyObjectType>()( {
 
       // TODO: TypeScript is okay with not including isMedianScreen, why?
       isMedianScreen: false,

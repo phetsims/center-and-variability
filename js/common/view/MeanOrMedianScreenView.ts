@@ -8,6 +8,7 @@
  */
 
 import optionize from '../../../../phet-core/js/optionize.js';
+import EmptyObjectType from '../../../../phet-core/js/types/EmptyObjectType.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import SoccerScreenView, { SoccerScreenViewOptions } from '../../common/view/SoccerScreenView.js';
@@ -35,7 +36,7 @@ class MeanOrMedianScreenView extends SoccerScreenView {
 
   constructor( model: SoccerModel, providedOptions: MeanOrMedianScreenViewOptions ) {
 
-    const options = optionize<MeanOrMedianScreenViewOptions, {}, SoccerScreenViewOptions>()( {
+    const options = optionize<MeanOrMedianScreenViewOptions, EmptyObjectType, SoccerScreenViewOptions>()( {
       tandem: Tandem.REQUIRED
     }, providedOptions );
 

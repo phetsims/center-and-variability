@@ -9,6 +9,7 @@
 
 import centerAndVariability from '../../centerAndVariability.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import EmptyObjectType from '../../../../phet-core/js/types/EmptyObjectType.js';
 import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -91,7 +92,7 @@ class CAVModel {
 
   constructor( objectType: CAVObjectType, maxNumberOfObjects: number, providedOptions: CAVModelOptions ) {
 
-    const options = optionize<CAVModelOptions, SelfOptions, {}>()( {
+    const options = optionize<CAVModelOptions, SelfOptions, EmptyObjectType>()( {
       tandem: Tandem.REQUIRED
     }, providedOptions );
 

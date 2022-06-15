@@ -11,6 +11,7 @@
 import centerAndVariability from '../../centerAndVariability.js';
 import { Node, NodeOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import EmptyObjectType from '../../../../phet-core/js/types/EmptyObjectType.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CAVModel from '../model/CAVModel.js';
 import CAVObject from '../model/CAVObject.js';
@@ -26,7 +27,7 @@ import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 
-type SelfOptions = {};
+type SelfOptions = EmptyObjectType;
 export type CAVPlotOptions = NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
 class CAVPlotNode extends Node {

@@ -8,13 +8,14 @@
  */
 
 import optionize from '../../../../phet-core/js/optionize.js';
+import EmptyObjectType from '../../../../phet-core/js/types/EmptyObjectType.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
 import CAVObjectType from '../../common/model/CAVObjectType.js';
 import CAVConstants from '../../common/CAVConstants.js';
 
-type SelfOptions = {};
+type SelfOptions = EmptyObjectType;
 type LabModelOptions = SelfOptions & CAVModelOptions;
 
 class LabModel extends CAVModel {

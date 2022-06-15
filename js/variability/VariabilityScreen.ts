@@ -8,6 +8,7 @@
  */
 
 import optionize from '../../../phet-core/js/optionize.js';
+import EmptyObjectType from '../../../phet-core/js/types/EmptyObjectType.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import CAVColors from '../common/CAVColors.js';
 import centerAndVariability from '../centerAndVariability.js';
@@ -22,7 +23,7 @@ class VariabilityScreen extends CAVScreen<VariabilityModel, VariabilityScreenVie
 
   constructor( providedOptions: VariabilityScreenOptions ) {
 
-    const options = optionize<VariabilityScreenOptions, {}>()( {
+    const options = optionize<VariabilityScreenOptions, EmptyObjectType>()( {
       name: centerAndVariabilityStrings.screen.variability,
       backgroundColorProperty: CAVColors.screenBackgroundColorProperty,
       tandem: Tandem.REQUIRED
