@@ -34,7 +34,7 @@ type SelfOptions = {
   includeCards: boolean;
   instrumentMeanPredictionProperty: boolean;
 };
-export type CAVModelOptions = SelfOptions & {};
+export type CAVModelOptions = SelfOptions;
 
 // constants
 const HIGHLIGHT_ANIMATION_TIME_STEP = 0.25; // in seconds
