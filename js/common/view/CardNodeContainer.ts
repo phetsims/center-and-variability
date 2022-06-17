@@ -20,7 +20,7 @@ import CardNode from './CardNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Range from '../../../../dot/js/Range.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
-import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
+import ReferenceIO, { ReferenceIOState } from '../../../../tandem/js/types/ReferenceIO.js';
 import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
 import CardModel from '../model/CardModel.js';
 import Emitter from '../../../../axon/js/Emitter.js';
@@ -618,6 +618,10 @@ class CardNodeContainer extends Node {
   }
 }
 
+type CardNodeContainerState = {
+  cardNodes: ReferenceIOState[];
+};
+
 // Track the order of the cards as self-state, so that the downstream sim can get the cards in the desired cells
 const CardNodeReferenceIO = ReferenceIO( Node.NodeIO );
 const CardNodeContainerIO = new IOType( 'CardNodeContainerIO', {
@@ -627,8 +631,8 @@ const CardNodeContainerIO = new IOType( 'CardNodeContainerIO', {
       cardNodes: n.cardNodeCells.map( cardNode => CardNodeReferenceIO.toStateObject( cardNode ) )
     };
   },
-  applyState: ( n: CardNodeContainer, state: any ) => {
-    const cardNodes = state.cardNodes.map( ( element: any ) => CardNodeReferenceIO.fromStateObject( element ) );
+  applyState: ( n: CardNodeContainer, state: CardNodeContainerState ) => {
+    const cardNodes = state.cardNodes.map( ( element: ReferenceIOState ) => CardNodeReferenceIO.fromStateObject( element ) );
     n.cardNodeCells.length = 0;
     n.cardNodeCells.push( ...cardNodes );
     n.cardNodeCells.forEach( cardNode => {

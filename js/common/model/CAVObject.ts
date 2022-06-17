@@ -60,7 +60,7 @@ class CAVObject extends PhetioObject {
   // The value that participates in the data set.
   valueProperty: Property<number | null>;
 
-  static CAVObjectIO: IOType;
+  static CAVObjectIO: IOType<CAVObject, CAVObjectStateType>;
   readonly dragStartedEmitter: Emitter;
   animation: Animation | null;
 
@@ -153,7 +153,7 @@ class CAVObject extends PhetioObject {
     this.disposedEmitter.dispose();
   }
 
-  toStateObject(): { objectType: string; targetX: number | null; isFirstObject: boolean } {
+  toStateObject(): CAVObjectStateType {
     return {
       objectType: this.objectType.toString(),
       targetX: this.targetX,
@@ -178,10 +178,12 @@ const rk4 = ( x: number, v: number, a: number, dt: number ) => {
   return [ xResult, vResult ];
 };
 
-CAVObject.CAVObjectIO = new IOType( 'CAVObjectIO', {
+type CAVObjectStateType = { objectType: string; targetX: number | null; isFirstObject: boolean };
+
+CAVObject.CAVObjectIO = new IOType<CAVObject, CAVObjectStateType>( 'CAVObjectIO', {
   valueType: CAVObject,
   toStateObject: ( casObject: CAVObject ) => casObject.toStateObject(),
-  stateToArgsForConstructor: ( stateObject: any ) => {
+  stateToArgsForConstructor: ( stateObject: CAVObjectStateType ) => {
     return [
       stateObject.objectType === 'SOCCER_BALL' ? CAVObjectType.SOCCER_BALL : CAVObjectType.DATA_POINT, {
         targetX: stateObject.targetX,

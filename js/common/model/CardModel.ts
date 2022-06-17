@@ -11,7 +11,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
-import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
+import ReferenceIO, { ReferenceIOState } from '../../../../tandem/js/types/ReferenceIO.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import EmptyObjectType from '../../../../phet-core/js/types/EmptyObjectType.js';
 import CAVObjectType from './CAVObjectType.js';
@@ -46,7 +46,7 @@ class CardModel extends PhetioObject {
 CardModel.CardModelIO = new IOType( 'CardModelIO', {
   valueType: CardModel,
   toStateObject: ( cardModel: CardModel ) => CAVObjectReferenceIO.toStateObject( cardModel.casObject ),
-  stateToArgsForConstructor: ( stateObject: any ) => {
+  stateToArgsForConstructor: ( stateObject: ReferenceIOState ) => {
     return [ CAVObjectReferenceIO.fromStateObject( stateObject ) ];
   },
   stateSchema: {

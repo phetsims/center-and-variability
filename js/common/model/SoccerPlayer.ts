@@ -28,7 +28,7 @@ type SoccerPlayerOptions =
 class SoccerPlayer extends PhetioObject {
   readonly poseProperty: Property<Pose>;
   readonly placeInLineProperty: NumberProperty;
-  static SoccerPlayerIO: IOType;
+  static SoccerPlayerIO: IOType<SoccerPlayer, SoccerPlayerState>;
 
   // Also used to determine the artwork for rendering the SoccerPlayerNode
   readonly initialPlaceInLine: number;
@@ -65,10 +65,14 @@ class SoccerPlayer extends PhetioObject {
   }
 }
 
+type SoccerPlayerState = {
+  initialPlaceInLine: number;
+};
+
 SoccerPlayer.SoccerPlayerIO = new IOType( 'SoccerPlayerIO', {
   valueType: SoccerPlayer,
   toStateObject: ( soccerPlayer: SoccerPlayer ) => ( { initialPlaceInLine: soccerPlayer.initialPlaceInLine } ),
-  stateToArgsForConstructor: ( stateObject: any ) => {
+  stateToArgsForConstructor: ( stateObject: SoccerPlayerState ) => {
     return [ stateObject.initialPlaceInLine ];
   },
   stateSchema: {
