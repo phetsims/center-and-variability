@@ -27,19 +27,6 @@ class LabScreenView extends CAVScreenView {
 
     super( model, ModelViewTransform2.createIdentity(), options );
   }
-
-  /**
-   * Resets the view.
-   */
-  reset(): void {
-  }
-
-  /**
-   * Steps the view.
-   * @param dt - time step, in seconds
-   */
-  override step( dt: number ): void {
-  }
 }
 
 centerAndVariability.register( 'LabScreenView', LabScreenView );

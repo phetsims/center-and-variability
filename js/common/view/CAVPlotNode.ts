@@ -170,10 +170,9 @@ class CAVPlotNode extends Node {
     model.isMedianAnimationCompleteProperty.link( updateMedianBarNode );
   }
 
-  /**
-   * No implementation because this node is powered by the model. Reset needed for uniformity with CardNodeContainer.
-   */
-  reset(): void {}
+  reset(): void {
+    // No implementation because this node is powered by the model. Reset needed for uniformity with CardNodeContainer.
+  }
 }
 
 centerAndVariability.register( 'CAVPlotNode', CAVPlotNode );

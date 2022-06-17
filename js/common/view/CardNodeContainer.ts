@@ -572,7 +572,7 @@ class CardNodeContainer extends Node {
 
   // TODO: Do we like the way these are optional?
   // TODO: Separate into two methods: animateToHomeCell vs setAtHomeCell
-  sendToHomeCell( cardNode: CardNode, animate = true, duration = 0.3, callback = () => {} ): void {
+  sendToHomeCell( cardNode: CardNode, animate = true, duration = 0.3, callback = _.noop ): void {
     const homeIndex = this.cardNodeCells.indexOf( cardNode );
     const homePosition = new Vector2( getCardPositionX( homeIndex ), 0 );
 

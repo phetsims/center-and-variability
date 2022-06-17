@@ -33,6 +33,7 @@ class LabModel extends CAVModel {
    * Resets the model.
    */
   override reset(): void {
+    // See subclass for implementation
   }
 
   /**
@@ -40,6 +41,7 @@ class LabModel extends CAVModel {
    * @param dt - time step, in seconds
    */
   override step( dt: number ): void {
+    // See subclass for implementation
   }
 }
 

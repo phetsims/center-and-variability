@@ -104,7 +104,7 @@ class CardNode extends Node {
     } );
   }
 
-  animateTo( destination: Vector2, duration: number, callback = () => {} ): void {
+  animateTo( destination: Vector2, duration: number, callback = _.noop ): void {
 
     if ( this.animation ) {
 
