@@ -20,7 +20,7 @@ type LabModelOptions = SelfOptions & CAVModelOptions;
 
 class LabModel extends CAVModel {
 
-  constructor( options: LabModelOptions ) {
+  public constructor( options: LabModelOptions ) {
 
     options = optionize<LabModelOptions, SelfOptions, CAVModelOptions>()( {
       tandem: Tandem.REQUIRED
@@ -32,7 +32,7 @@ class LabModel extends CAVModel {
   /**
    * Resets the model.
    */
-  override reset(): void {
+  public override reset(): void {
     // See subclass for implementation
   }
 
@@ -40,7 +40,7 @@ class LabModel extends CAVModel {
    * Steps the model.
    * @param dt - time step, in seconds
    */
-  override step( dt: number ): void {
+  public override step( dt: number ): void {
     // See subclass for implementation
   }
 }

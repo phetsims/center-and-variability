@@ -41,7 +41,7 @@ const TEXT_OPTIONS = {
 
 class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
-  constructor( model: CAVModel, providedOptions?: TopRepresentationCheckboxGroupOptions ) {
+  public constructor( model: CAVModel, providedOptions?: TopRepresentationCheckboxGroupOptions ) {
 
     const options = optionize<TopRepresentationCheckboxGroupOptions, SelfOptions, VerticalCheckboxGroupOptions>()( {
       includeSortData: false,

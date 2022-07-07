@@ -39,17 +39,17 @@ type SoccerModelOptions = SelfOptions & CAVModelOptions;
 const TIME_BETWEEN_RAPID_KICKS = 0.5; // in seconds
 
 class SoccerModel extends CAVModel {
-  readonly soccerPlayerGroup: PhetioGroup<SoccerPlayer, [ number ]>;
-  readonly nextBallToKickProperty: Property<CAVObject | null>; // Null if there is no more ball to kick
+  public readonly soccerPlayerGroup: PhetioGroup<SoccerPlayer, [ number ]>;
+  private readonly nextBallToKickProperty: Property<CAVObject | null>; // Null if there is no more ball to kick
   private readonly numberOfScheduledSoccerBallsToKickProperty: NumberProperty;
-  readonly numberOfRemainingKickableSoccerBallsProperty: IReadOnlyProperty<number>;
-  readonly hasKickableSoccerBallsProperty: IReadOnlyProperty<boolean>;
+  public readonly numberOfRemainingKickableSoccerBallsProperty: IReadOnlyProperty<number>;
+  public readonly hasKickableSoccerBallsProperty: IReadOnlyProperty<boolean>;
 
   private readonly timeWhenLastBallWasKickedProperty: NumberProperty;
   private readonly ballPlayerMap: Map<CAVObject, SoccerPlayer>; // TODO: Add to PhET-iO State
   private readonly distributionProperty: Property<ReadonlyArray<number>>;
 
-  constructor( maxNumberOfBalls: number, options: SoccerModelOptions ) {
+  public constructor( maxNumberOfBalls: number, options: SoccerModelOptions ) {
 
     options = optionize<SoccerModelOptions, SelfOptions, CAVModelOptions>()( {
       tandem: Tandem.REQUIRED
@@ -128,7 +128,7 @@ class SoccerModel extends CAVModel {
     } );
   }
 
-  static chooseDistribution(): ReadonlyArray<number> {
+  private static chooseDistribution(): ReadonlyArray<number> {
     return dotRandom.nextBoolean() ? CAVConstants.LEFT_SKEWED_DATA : CAVConstants.RIGHT_SKEWED_DATA;
   }
 
@@ -148,7 +148,7 @@ class SoccerModel extends CAVModel {
   /**
    * When a ball lands on the ground, animate all other balls that were at this location above the landed ball.
    */
-  soccerBallLandedListener( casObject: CAVObject, value: number ): void {
+  private soccerBallLandedListener( casObject: CAVObject, value: number ): void {
     const otherObjectsInStack = this.objectGroup.filter( x => x.valueProperty.value === value && x !== casObject );
     const sortedOthers = _.sortBy( otherObjectsInStack, object => object.positionProperty.value.y );
 
@@ -185,7 +185,7 @@ class SoccerModel extends CAVModel {
   /**
    * Adds the provided number of balls to the scheduled balls to kick
    */
-  scheduleKicks( numberOfBallsToKick: number ): void {
+  public scheduleKicks( numberOfBallsToKick: number ): void {
     this.numberOfScheduledSoccerBallsToKickProperty.value +=
       Math.min( numberOfBallsToKick, this.numberOfRemainingKickableSoccerBallsProperty.value );
   }
@@ -237,7 +237,7 @@ class SoccerModel extends CAVModel {
     this.nextBallToKickProperty.value = null;
   }
 
-  override step( dt: number ): void {
+  public override step( dt: number ): void {
     super.step( dt );
 
     const frontPlayerList = this.soccerPlayerGroup.filter( soccerPlayer => soccerPlayer.placeInLineProperty.value === 0 );
@@ -309,7 +309,7 @@ class SoccerModel extends CAVModel {
     }
   }
 
-  override clearData(): void {
+  public override clearData(): void {
     this.numberOfScheduledSoccerBallsToKickProperty.reset();
     this.timeProperty.reset();
     this.timeWhenLastBallWasKickedProperty.reset();
@@ -324,7 +324,7 @@ class SoccerModel extends CAVModel {
     this.nextBallToKickProperty.value = this.createBall();
   }
 
-  override reset(): void {
+  public override reset(): void {
     super.reset();
     this.clearData();
     this.distributionProperty.value = SoccerModel.chooseDistribution();

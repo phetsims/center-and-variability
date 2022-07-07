@@ -21,7 +21,7 @@ type VariabilityScreenOptions = CAVScreenOptions;
 
 class VariabilityScreen extends CAVScreen<VariabilityModel, VariabilityScreenView> {
 
-  constructor( providedOptions: VariabilityScreenOptions ) {
+  private constructor( providedOptions: VariabilityScreenOptions ) {
 
     const options = optionize<VariabilityScreenOptions, EmptyObjectType>()( {
       name: centerAndVariabilityStrings.screen.variability,

@@ -26,16 +26,16 @@ type SoccerPlayerOptions =
   & PickRequired<PhetioObjectOptions, 'tandem'>;
 
 class SoccerPlayer extends PhetioObject {
-  readonly poseProperty: Property<Pose>;
-  readonly placeInLineProperty: NumberProperty;
-  static SoccerPlayerIO: IOType<SoccerPlayer, SoccerPlayerState>;
+  public readonly poseProperty: Property<Pose>;
+  public readonly placeInLineProperty: NumberProperty;
+  public static SoccerPlayerIO: IOType<SoccerPlayer, SoccerPlayerState>;
 
   // Also used to determine the artwork for rendering the SoccerPlayerNode
-  readonly initialPlaceInLine: number;
+  public readonly initialPlaceInLine: number;
 
-  timestampWhenPoisedBegan: number;
+  public timestampWhenPoisedBegan: number;
 
-  constructor( placeInLine: number, providedOptions: SoccerPlayerOptions ) {
+  public constructor( placeInLine: number, providedOptions: SoccerPlayerOptions ) {
 
     const options = optionize<SoccerPlayerOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioType: SoccerPlayer.SoccerPlayerIO,
@@ -55,11 +55,11 @@ class SoccerPlayer extends PhetioObject {
     this.timestampWhenPoisedBegan = -1;  // Not yet poised.  TODO: use null for this case?  See https://github.com/phetsims/center-and-variability/issues/59
   }
 
-  reset(): void {
+  public reset(): void {
     this.poseProperty.reset();
   }
 
-  override dispose(): void {
+  public override dispose(): void {
     this.placeInLineProperty.dispose();
     super.dispose();
   }

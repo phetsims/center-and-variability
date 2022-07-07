@@ -42,29 +42,29 @@ export type CAVObjectOptions =
 class CAVObject extends PhetioObject {
 
   // Continuous value for the drag listener. When dragging, the object snaps to each tickmark
-  readonly dragPositionProperty: Vector2Property;
+  public readonly dragPositionProperty: Vector2Property;
 
   // Continuous position during animation. After landing, it's discrete.
-  readonly positionProperty: Vector2Property;
-  readonly velocityProperty: Vector2Property;
-  animationModeProperty: Property<AnimationMode>;
-  readonly isMedianObjectProperty: BooleanProperty;
-  readonly isShowingAnimationHighlightProperty: BooleanProperty;
-  readonly objectType: CAVObjectType;
-  readonly isFirstObject: boolean;
-  readonly disposedEmitter: Emitter;
+  public readonly positionProperty: Vector2Property;
+  public readonly velocityProperty: Vector2Property;
+  public animationModeProperty: Property<AnimationMode>;
+  public readonly isMedianObjectProperty: BooleanProperty;
+  public readonly isShowingAnimationHighlightProperty: BooleanProperty;
+  public readonly objectType: CAVObjectType;
+  public readonly isFirstObject: boolean;
+  public readonly disposedEmitter: Emitter;
 
   // Where the object is animating to, or null if not yet animating
-  targetX: number | null;
+  public targetX: number | null;
 
   // The value that participates in the data set.
-  valueProperty: Property<number | null>;
+  public valueProperty: Property<number | null>;
 
-  static CAVObjectIO: IOType<CAVObject, CAVObjectStateType>;
-  readonly dragStartedEmitter: Emitter;
-  animation: Animation | null;
+  public static CAVObjectIO: IOType<CAVObject, CAVObjectStateType>;
+  public readonly dragStartedEmitter: Emitter;
+  public animation: Animation | null;
 
-  constructor( objectType: CAVObjectType, providedOptions: CAVObjectOptions ) {
+  public constructor( objectType: CAVObjectType, providedOptions: CAVObjectOptions ) {
 
     const options = optionize<CAVObjectOptions, SelfOptions, PhetioObjectOptions>()( {
       position: Vector2.ZERO,
@@ -109,7 +109,7 @@ class CAVObject extends PhetioObject {
     this.disposedEmitter = new Emitter();
   }
 
-  step( dt: number ): void {
+  public step( dt: number ): void {
     if ( this.animationModeProperty.value === AnimationMode.FLYING ) {
 
       assert && assert( this.targetX !== null, 'targetX should be non-null when animating' );
@@ -140,7 +140,7 @@ class CAVObject extends PhetioObject {
     }
   }
 
-  override dispose(): void {
+  public override dispose(): void {
     super.dispose();
     this.positionProperty.dispose();
     this.velocityProperty.dispose();
@@ -153,7 +153,7 @@ class CAVObject extends PhetioObject {
     this.disposedEmitter.dispose();
   }
 
-  toStateObject(): CAVObjectStateType {
+  public toStateObject(): CAVObjectStateType {
     return {
       objectType: this.objectType.toString(),
       targetX: this.targetX,

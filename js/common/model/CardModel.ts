@@ -24,10 +24,10 @@ type CardModelOptions = SelfOptions & PhetioObjectOptions & PickRequired<PhetioO
 
 class CardModel extends PhetioObject {
 
-  casObject: CAVObject;
-  static CardModelIO: IOType;
+  public casObject: CAVObject;
+  public static CardModelIO: IOType;
 
-  constructor( casObject: CAVObject, providedOptions?: CardModelOptions ) {
+  public constructor( casObject: CAVObject, providedOptions?: CardModelOptions ) {
 
     const options = optionize<CardModelOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioType: CardModel.CardModelIO,

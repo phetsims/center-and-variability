@@ -53,9 +53,9 @@ class CAVObjectNode extends Node {
   private readonly medianHighlightVisibleMultilink: UnknownMultilink;
   private readonly opacityMultilink: UnknownMultilink;
 
-  constructor( casObject: CAVObject, isShowingPlayAreaMedianProperty: IReadOnlyProperty<boolean>,
-               modelViewTransform: ModelViewTransform2, objectNodesInputEnabledProperty: IProperty<boolean>,
-               providedOptions?: CAVObjectNodeOptions ) {
+  public constructor( casObject: CAVObject, isShowingPlayAreaMedianProperty: IReadOnlyProperty<boolean>,
+                      modelViewTransform: ModelViewTransform2, objectNodesInputEnabledProperty: IProperty<boolean>,
+                      providedOptions?: CAVObjectNodeOptions ) {
 
     const options = optionize<CAVObjectNodeOptions, SelfOptions, NodeOptions>()( {
 
@@ -220,7 +220,7 @@ class CAVObjectNode extends Node {
     }
   }
 
-  override dispose(): void {
+  public override dispose(): void {
     Multilink.unmultilink( this.opacityMultilink );
     Multilink.unmultilink( this.medianHighlightVisibleMultilink );
     this.inputEnabledMultilink && Multilink.unmultilink( this.inputEnabledMultilink );

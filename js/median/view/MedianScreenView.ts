@@ -21,7 +21,7 @@ type MedianScreenViewOptions = SelfOptions & MeanOrMedianScreenViewOptions;
 
 class MedianScreenView extends MeanOrMedianScreenView {
 
-  constructor( model: MedianModel, providedOptions: MedianScreenViewOptions ) {
+  private constructor( model: MedianModel, providedOptions: MedianScreenViewOptions ) {
 
     const options = optionize<MedianScreenViewOptions, SelfOptions, MeanOrMedianScreenViewOptions>()( {
 

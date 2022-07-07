@@ -18,10 +18,10 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
 
 class GlobalOptionsNode extends VBox {
-  private disposeGlobalOptionsNode: () => void;
+  private readonly disposeGlobalOptionsNode: () => void;
 
   // TODO: Tandem in the options?  And use tandem in the file?
-  constructor( tandem: Tandem ) {
+  public constructor( tandem: Tandem ) {
 
     const title = new Text( centerAndVariabilityStrings.plotType, {
       font: new PhetFont( 24 )
@@ -53,7 +53,7 @@ class GlobalOptionsNode extends VBox {
     this.disposeGlobalOptionsNode = () => radioButtonGroup.dispose();
   }
 
-  override dispose(): void {
+  public override dispose(): void {
     this.disposeGlobalOptionsNode();
     super.dispose();
   }

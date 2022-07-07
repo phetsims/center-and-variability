@@ -24,7 +24,7 @@ export type ValueReadoutNodeOptions = SelfOptions & VBoxOptions;
 
 class ValueReadoutsNode extends VBox {
 
-  constructor( model: CAVModel, providedOptions?: ValueReadoutNodeOptions ) {
+  public constructor( model: CAVModel, providedOptions?: ValueReadoutNodeOptions ) {
 
     const createReadoutText = ( valueProperty: IReadOnlyProperty<number | null>, visibleProperty: IReadOnlyProperty<boolean>,
                                 stringTemplate: string, fill: IPaint ) => {

@@ -33,8 +33,8 @@ export type PredictionNodeOptions = SelfOptions & NodeOptions & PickRequired<Nod
 
 class PredictionNode extends Node {
 
-  constructor( predictionProperty: Property<number>, modelViewTransform: ModelViewTransform2, dragRange: Range,
-               providedOptions: PredictionNodeOptions ) {
+  public constructor( predictionProperty: Property<number>, modelViewTransform: ModelViewTransform2, dragRange: Range,
+                      providedOptions: PredictionNodeOptions ) {
 
     const shadedSphereNode = new ShadedSphereNode( 16, {
 

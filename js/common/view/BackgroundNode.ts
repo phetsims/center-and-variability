@@ -16,7 +16,7 @@ import CAVColors from '../CAVColors.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 
 class BackgroundNode extends Rectangle {
-  constructor( bottomY: number, visibleBoundsProperty: Property<Bounds2> ) {
+  public constructor( bottomY: number, visibleBoundsProperty: Property<Bounds2> ) {
     super( visibleBoundsProperty.value.centerX, visibleBoundsProperty.value.top, visibleBoundsProperty.value.centerX, bottomY );
 
     Multilink.multilink( [

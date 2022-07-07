@@ -70,7 +70,7 @@ class CAVScreenView extends ScreenView {
   protected readonly medianPredictionNode: PredictionNode;
   protected readonly meanPredictionNode: PredictionNode;
 
-  constructor( model: CAVModel, modelViewTransform: ModelViewTransform2, providedOptions: CAVScreenViewOptions ) {
+  public constructor( model: CAVModel, modelViewTransform: ModelViewTransform2, providedOptions: CAVScreenViewOptions ) {
     // @ts-ignore what was happening here?
     const options = optionize<CAVScreenViewOptions, SelfOptions, ScreenViewOptions>()( {
       tandem: Tandem.REQUIRED
@@ -258,7 +258,7 @@ class CAVScreenView extends ScreenView {
    * Steps the view.
    * @param dt - time step, in seconds
    */
-  override step( dt: number ): void {
+  public override step( dt: number ): void {
     // See subclass for implementation
   }
 }

@@ -54,10 +54,10 @@ class CardNodeContainer extends Node {
 
   // Each card is associated with one "cell", no two cards can be associated with the same cell.  The leftmost cell is 0.
   // The cells linearly map to locations across the screen.
-  readonly cardNodeCells: CardNode[];
+  public readonly cardNodeCells: CardNode[];
 
   // Fires if the cardNodeCells may have changed
-  readonly cardNodeCellsChangedEmitter: Emitter<[]>;
+  public readonly cardNodeCellsChangedEmitter: Emitter<[]>;
 
   private readonly model: CAVModel;
   private readonly cardNodeGroup: PhetioGroup<CardNode, [ CardModel ]>;
@@ -73,7 +73,7 @@ class CardNodeContainer extends Node {
   private dataSortedNodeAnimation: Animation | null;
   private wasSortedBefore: boolean;
 
-  constructor( model: CAVModel, providedOptions: CardNodeContainerOptions ) {
+  public constructor( model: CAVModel, providedOptions: CardNodeContainerOptions ) {
 
     const options = optionize<CardNodeContainerOptions, SelfOptions, NodeOptions>()( {
       tandem: Tandem.REQUIRED,
@@ -380,7 +380,7 @@ class CardNodeContainer extends Node {
   }
 
   // The listener which is linked to the cardNode.positionProperty
-  createDragPositionListener( cardNode: CardNode ): ( position: Vector2 ) => void {
+  private createDragPositionListener( cardNode: CardNode ): ( position: Vector2 ) => void {
     return ( position: Vector2 ) => {
       if ( cardNode.dragListener.isPressedProperty.value ) {
 
@@ -557,7 +557,7 @@ class CardNodeContainer extends Node {
    * Check if all of the data is in order, by using the cells associated with the card node.  Note that means
    * it is using the cell the card may be animating to.
    */
-  isDataSorted(): boolean {
+  private isDataSorted(): boolean {
     let lastValue = null;
     for ( let i = 0; i < this.cardNodeCells.length; i++ ) {
       const value = this.cardNodeCells[ i ].casObject.valueProperty.value!;
@@ -572,7 +572,7 @@ class CardNodeContainer extends Node {
 
   // TODO: Do we like the way these are optional?
   // TODO: Separate into two methods: animateToHomeCell vs setAtHomeCell
-  sendToHomeCell( cardNode: CardNode, animate = true, duration = 0.3, callback = _.noop ): void {
+  public sendToHomeCell( cardNode: CardNode, animate = true, duration = 0.3, callback = _.noop ): void {
     const homeIndex = this.cardNodeCells.indexOf( cardNode );
     const homePosition = new Vector2( getCardPositionX( homeIndex ), 0 );
 
@@ -588,7 +588,7 @@ class CardNodeContainer extends Node {
   /**
    * Find the cell the dragged card is closest to
    */
-  getClosestCell( x: number ): number {
+  private getClosestCell( x: number ): number {
     if ( this.cardNodeCells.length === 0 ) {
       return 0;
     }
@@ -598,11 +598,11 @@ class CardNodeContainer extends Node {
     }
   }
 
-  getCardNode( casObject: CAVObject ): CardNode | null {
+  private getCardNode( casObject: CAVObject ): CardNode | null {
     return this.cardNodeCells.find( cardNode => cardNode.casObject === casObject ) || null;
   }
 
-  sortData(): void {
+  private sortData(): void {
 
     // If the card is visible, the value property should be non-null
     const sorted = _.sortBy( this.cardNodeCells, cardNode => cardNode.casObject.valueProperty.value );
@@ -612,7 +612,7 @@ class CardNodeContainer extends Node {
     this.cardNodeCellsChangedEmitter.emit(); // TODO: OK if this fires false positives?
   }
 
-  getDragRange(): Range {
+  private getDragRange(): Range {
     const maxX = this.cardNodeCells.length > 0 ? getCardPositionX( this.cardNodeCells.length - 1 ) : 0;
     return new Range( 0, maxX );
   }

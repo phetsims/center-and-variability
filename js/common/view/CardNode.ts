@@ -27,20 +27,20 @@ type SelfOptions = EmptyObjectType;
 export type CardNodeOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
 class CardNode extends Node {
-  readonly positionProperty: Vector2Property;
-  readonly dragListener: DragListener;
+  public readonly positionProperty: Vector2Property;
+  public readonly dragListener: DragListener;
 
   // Emit how far the card has been dragged for purposes of hiding the drag indicator arrow when the user
   // has dragged a sufficient amount
-  readonly dragDistanceEmitter: Emitter<[ number ]>;
+  public readonly dragDistanceEmitter: Emitter<[ number ]>;
 
-  readonly casObject: CAVObject;
-  animation: Animation | null;
-  animationTo: Vector2 | null;
+  public readonly casObject: CAVObject;
+  public animation: Animation | null;
+  private animationTo: Vector2 | null;
 
-  static readonly CARD_WIDTH = 43;
+  public static readonly CARD_WIDTH = 43;
 
-  constructor( cardModel: CardModel, position: Vector2, getDragRange: () => Range, providedOptions: CardNodeOptions ) {
+  public constructor( cardModel: CardModel, position: Vector2, getDragRange: () => Range, providedOptions: CardNodeOptions ) {
 
     const cornerRadius = 10;
     const rectangle = new Rectangle( 0, 0, CardNode.CARD_WIDTH, CardNode.CARD_WIDTH, cornerRadius, cornerRadius, {
@@ -104,7 +104,7 @@ class CardNode extends Node {
     } );
   }
 
-  animateTo( destination: Vector2, duration: number, callback = _.noop ): void {
+  public animateTo( destination: Vector2, duration: number, callback = _.noop ): void {
 
     if ( this.animation ) {
 
@@ -149,7 +149,7 @@ class CardNode extends Node {
     this.animation.start();
   }
 
-  override dispose(): void {
+  public override dispose(): void {
     this.positionProperty.dispose();
     this.dragListener.dispose();
     super.dispose();

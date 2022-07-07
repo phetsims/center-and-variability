@@ -14,14 +14,14 @@ class AsyncCounter {
   private readonly count: number;
   private readonly callback: () => void;
 
-  constructor( count: number, callback: () => void ) {
+  public constructor( count: number, callback: () => void ) {
     this.index = 0;
     this.complete = false;
     this.count = count;
     this.callback = callback;
   }
 
-  increment(): void {
+  public increment(): void {
     this.index++;
 
     if ( this.index >= this.count ) {

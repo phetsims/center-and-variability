@@ -24,7 +24,7 @@ type MedianScreenOptions = CAVScreenOptions;
 
 class MedianScreen extends CAVScreen<MedianModel, MedianScreenView> {
 
-  constructor( providedOptions: MedianScreenOptions ) {
+  public constructor( providedOptions: MedianScreenOptions ) {
 
     const options = optionize<MedianScreenOptions, EmptyObjectType>()( {
       name: centerAndVariabilityStrings.screen.median,

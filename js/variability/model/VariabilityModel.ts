@@ -20,7 +20,7 @@ type VariabilityModelOptions = SelfOptions & CAVModelOptions;
 
 class VariabilityModel extends SoccerModel {
 
-  constructor( options: VariabilityModelOptions ) {
+  public constructor( options: VariabilityModelOptions ) {
 
     options = optionize<VariabilityModelOptions, SelfOptions, CAVModelOptions>()( {
       tandem: Tandem.REQUIRED

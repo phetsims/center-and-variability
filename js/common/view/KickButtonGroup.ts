@@ -30,7 +30,7 @@ const TEXT_MAX_WIDTH = 80;
 
 class KickButtonGroup extends VBox {
 
-  constructor( model: SoccerModel, providedOptions?: KickButtonGroupOptions ) {
+  public constructor( model: SoccerModel, providedOptions?: KickButtonGroupOptions ) {
 
     const options = optionize<KickButtonGroupOptions, SelfOptions, VBoxOptions>()( {
       spacing: 2,

@@ -39,7 +39,7 @@ class SoccerScreenView extends CAVScreenView {
   protected readonly chartViewWidth: number;
   protected readonly playAreaNumberLineNode: NumberLineNode;
 
-  constructor( model: SoccerModel, providedOptions: SoccerScreenViewOptions ) {
+  public constructor( model: SoccerModel, providedOptions: SoccerScreenViewOptions ) {
 
     const options = optionize<SoccerScreenViewOptions, SelfOptions, CAVScreenViewOptions>()( {
       tandem: Tandem.REQUIRED

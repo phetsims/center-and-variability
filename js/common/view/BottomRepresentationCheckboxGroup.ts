@@ -41,7 +41,7 @@ const TEXT_OPTIONS = {
 
 class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
-  constructor( model: CAVModel, providedOptions?: BottomRepresentationCheckboxGroupOptions ) {
+  public constructor( model: CAVModel, providedOptions?: BottomRepresentationCheckboxGroupOptions ) {
 
     const options = optionize<BottomRepresentationCheckboxGroupOptions, SelfOptions, VerticalCheckboxGroupOptions>()( {
       includeMean: true,

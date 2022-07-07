@@ -12,11 +12,11 @@ import EnumerationValue from '../../../../phet-core/js/EnumerationValue.js';
 import centerAndVariability from '../../centerAndVariability.js';
 
 class Pose extends EnumerationValue {
-  static STANDING = new Pose();
-  static POISED_TO_KICK = new Pose();
-  static KICKING = new Pose();
+  public static STANDING = new Pose();
+  public static POISED_TO_KICK = new Pose();
+  public static KICKING = new Pose();
 
-  static enumeration = new Enumeration( Pose );
+  private static enumeration = new Enumeration( Pose );
 }
 
 centerAndVariability.register( 'Pose', Pose );

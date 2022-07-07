@@ -130,9 +130,9 @@ const playerGroups = [ {
 const SCALE = 0.155;
 
 class SoccerPlayerNode extends Node {
-  readonly soccerPlayer: SoccerPlayer;
+  public readonly soccerPlayer: SoccerPlayer;
 
-  constructor( soccerPlayer: SoccerPlayer, modelViewTransform: ModelViewTransform2, providedOptions?: SoccerPlayerNodeOptions ) {
+  public constructor( soccerPlayer: SoccerPlayer, modelViewTransform: ModelViewTransform2, providedOptions?: SoccerPlayerNodeOptions ) {
     super();
 
     this.soccerPlayer = soccerPlayer;

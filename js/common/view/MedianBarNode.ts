@@ -32,10 +32,10 @@ class MedianBarNode extends Path {
   private readonly notchDirection: NotchDirection;
   private readonly barStyle: BarStyle;
   private readonly medianArrowNode: ArrowNode;
-  static NOTCH_HEIGHT = 10;
-  static HALF_SPLIT_WIDTH = 2;
+  public static readonly NOTCH_HEIGHT = 10;
+  public static readonly HALF_SPLIT_WIDTH = 2;
 
-  constructor( providedOptions: MedianBarNodeOptions ) {
+  public constructor( providedOptions: MedianBarNodeOptions ) {
 
     const options = optionize<MedianBarNodeOptions, SelfOptions, PathOptions>()( {
       lineWidth: LINE_WIDTH,
@@ -60,7 +60,7 @@ class MedianBarNode extends Path {
     this.addChild( this.medianArrowNode );
   }
 
-  setMedianBarShape( y: number, left: number, median: number, right: number, includeMedianArrow: boolean ): this {
+  public setMedianBarShape( y: number, left: number, median: number, right: number, includeMedianArrow: boolean ): this {
     const shape = new Shape();
 
     const notchSign = this.notchDirection === 'up' ? -1 : 1;
@@ -89,7 +89,7 @@ class MedianBarNode extends Path {
     return this;
   }
 
-  clear(): void {
+  public clear(): void {
     this.shape = null;
     this.medianArrowNode.visible = false;
   }

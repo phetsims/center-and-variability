@@ -19,7 +19,7 @@ type DragIndicatorArrowNodeOptions = PickRequired<ArrowNodeOptions, 'tandem'> & 
 
 export default class DragIndicatorArrowNode extends ArrowNode {
 
-  constructor( options: DragIndicatorArrowNodeOptions ) {
+  public constructor( options: DragIndicatorArrowNodeOptions ) {
 
     super( 0, 0, 35, 0, optionize<DragIndicatorArrowNodeOptions, EmptyObjectType, ArrowNodeOptions>()( {
       headHeight: 8,

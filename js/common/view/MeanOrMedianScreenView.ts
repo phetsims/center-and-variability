@@ -34,7 +34,7 @@ class MeanOrMedianScreenView extends SoccerScreenView {
   private readonly accordionBox: CAVAccordionBox;
   protected readonly accordionBoxContents: Node;
 
-  constructor( model: SoccerModel, providedOptions: MeanOrMedianScreenViewOptions ) {
+  public constructor( model: SoccerModel, providedOptions: MeanOrMedianScreenViewOptions ) {
 
     const options = optionize<MeanOrMedianScreenViewOptions, EmptyObjectType, SoccerScreenViewOptions>()( {
       tandem: Tandem.REQUIRED
@@ -106,7 +106,7 @@ class MeanOrMedianScreenView extends SoccerScreenView {
   /**
    * Floating layout that keeps the ground near the ground, and accordion box near the question bar
    */
-  override layout( viewBounds: Bounds2 ): void {
+  public override layout( viewBounds: Bounds2 ): void {
 
     // TODO: Duplicates effort with the parent implementation
     this.matrix = ScreenView.getLayoutMatrix( this.layoutBounds, viewBounds, {

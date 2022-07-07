@@ -36,7 +36,7 @@ export type NumberLineNodeOptions = SelfOptions & NodeOptions & PickRequired<Nod
 
 class NumberLineNode extends Node {
 
-  constructor(
+  public constructor(
     range: Range,
     width: number,
     meanValueProperty: IReadOnlyProperty<number | null>,
@@ -126,7 +126,7 @@ class NumberLineNode extends Node {
     this.mutate( options );
   }
 
-  static createMeanIndicatorNode( includeStroke: boolean ): Node {
+  public static createMeanIndicatorNode( includeStroke: boolean ): Node {
     const TRIANGLE_LENGTH = 15;
     const TRIANGLE_ALTITUDE = 13;
 

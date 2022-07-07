@@ -21,7 +21,7 @@ type LabScreenOptions = CAVScreenOptions;
 
 class LabScreen extends CAVScreen<LabModel, LabScreenView> {
 
-  constructor( providedOptions: LabScreenOptions ) {
+  public constructor( providedOptions: LabScreenOptions ) {
 
     const options = optionize<LabScreenOptions, EmptyObjectType>()( {
       name: centerAndVariabilityStrings.screen.lab,

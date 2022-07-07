@@ -10,9 +10,9 @@ import centerAndVariability from '../../centerAndVariability.js';
  * @author Sam Reid (PhET Interactive Simulations)
  */
 class PlotType extends EnumerationValue {
-  static LINE_PLOT = new PlotType();
-  static DOT_PLOT = new PlotType();
-  static enumeration = new Enumeration( PlotType );
+  public static LINE_PLOT = new PlotType();
+  public static DOT_PLOT = new PlotType();
+  private static enumeration = new Enumeration( PlotType );
 }
 
 centerAndVariability.register( 'PlotType', PlotType );

@@ -22,7 +22,7 @@ type VariabilityScreenViewOptions = StrictOmit<SoccerScreenViewOptions, 'questio
 
 class VariabilityScreenView extends SoccerScreenView {
 
-  constructor( model: VariabilityModel, providedOptions: VariabilityScreenViewOptions ) {
+  public constructor( model: VariabilityModel, providedOptions: VariabilityScreenViewOptions ) {
 
     const options = optionize<VariabilityScreenViewOptions, EmptyObjectType, SoccerScreenViewOptions>()( {
       questionBarOptions: {

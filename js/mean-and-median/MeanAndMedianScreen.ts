@@ -24,7 +24,7 @@ type MeanAndMedianScreenOptions = CAVScreenOptions;
 
 class MeanAndMedianScreen extends CAVScreen<MeanAndMedianModel, MeanAndMedianScreenView> {
 
-  constructor( providedOptions: MeanAndMedianScreenOptions ) {
+  public constructor( providedOptions: MeanAndMedianScreenOptions ) {
 
     const options = optionize<MeanAndMedianScreenOptions, EmptyObjectType>()( {
       name: centerAndVariabilityStrings.screen.meanAndMedian,

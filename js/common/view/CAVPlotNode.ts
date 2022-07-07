@@ -35,7 +35,7 @@ class CAVPlotNode extends Node {
   private readonly dotLayer: Node;
   private readonly medianBarNode: MedianBarNode;
 
-  constructor( model: CAVModel, numberLineWidth: number, providedOptions?: CAVPlotOptions ) {
+  public constructor( model: CAVModel, numberLineWidth: number, providedOptions?: CAVPlotOptions ) {
 
     const options = optionize<CAVPlotOptions, SelfOptions, NodeOptions>()( {
       tandem: Tandem.REQUIRED
@@ -170,7 +170,7 @@ class CAVPlotNode extends Node {
     model.isMedianAnimationCompleteProperty.link( updateMedianBarNode );
   }
 
-  reset(): void {
+  public reset(): void {
     // No implementation because this node is powered by the model. Reset needed for uniformity with CardNodeContainer.
   }
 }

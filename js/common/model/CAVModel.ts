@@ -40,39 +40,39 @@ export type CAVModelOptions = SelfOptions;
 const HIGHLIGHT_ANIMATION_TIME_STEP = 0.25; // in seconds
 
 class CAVModel {
-  readonly objectGroup: PhetioGroup<CAVObject, [ CAVObjectType, StrictOmit<CAVObjectOptions, 'tandem'> ]>;
-  readonly objectType: CAVObjectType;
-  readonly isSortingDataProperty: BooleanProperty;
-  readonly isShowingTopMeanProperty: BooleanProperty;
-  readonly isShowingTopMedianProperty: BooleanProperty;
-  readonly isShowingPlayAreaMedianProperty: BooleanProperty;
-  readonly isShowingPlayAreaMeanProperty: BooleanProperty;
-  readonly isShowingMeanPredictionProperty: BooleanProperty;
-  readonly isShowingMedianPredictionProperty: BooleanProperty;
+  public readonly objectGroup: PhetioGroup<CAVObject, [ CAVObjectType, StrictOmit<CAVObjectOptions, 'tandem'> ]>;
+  public readonly objectType: CAVObjectType;
+  public readonly isSortingDataProperty: BooleanProperty;
+  public readonly isShowingTopMeanProperty: BooleanProperty;
+  public readonly isShowingTopMedianProperty: BooleanProperty;
+  public readonly isShowingPlayAreaMedianProperty: BooleanProperty;
+  public readonly isShowingPlayAreaMeanProperty: BooleanProperty;
+  public readonly isShowingMeanPredictionProperty: BooleanProperty;
+  public readonly isShowingMedianPredictionProperty: BooleanProperty;
 
   // For PhET-iO State, it is difficult to power 2 views from one model, see https://github.com/phetsims/phet-io/issues/1688#issuecomment-1032967603
   // Therefore, we introduce a minimal model element for the cards, so they can be managed by the state
   // Only instrumented and enabled if includeCards === true
-  readonly cardModelGroup: PhetioGroup<CardModel, [ CAVObject ]>;
+  public readonly cardModelGroup: PhetioGroup<CardModel, [ CAVObject ]>;
 
-  readonly includeCards: boolean;
-  readonly maxNumberOfObjects: number;
-  readonly physicalRange: Range;
+  public readonly includeCards: boolean;
+  protected readonly maxNumberOfObjects: number;
+  public readonly physicalRange: Range;
 
   // This is the number that we can still add to the PhetioGroup
-  readonly numberOfRemainingObjectsProperty: IReadOnlyProperty<number>;
-  readonly medianValueProperty: Property<number | null>;
-  readonly meanValueProperty: Property<number | null>;
+  protected readonly numberOfRemainingObjectsProperty: IReadOnlyProperty<number>;
+  public readonly medianValueProperty: Property<number | null>;
+  public readonly meanValueProperty: Property<number | null>;
 
   // Indicates the max and min values in the data set, or null if there are no values in the data set
-  readonly dataRangeProperty: Property<Range | null>;
+  public readonly dataRangeProperty: Property<Range | null>;
 
   // Signify whenever any object's value or position changes
-  readonly objectChangedEmitter: Emitter<[ CAVObject ]>;
+  public readonly objectChangedEmitter: Emitter<[ CAVObject ]>;
 
   // Null until the user has made a prediction.
-  readonly medianPredictionProperty: NumberProperty;
-  readonly meanPredictionProperty: NumberProperty;
+  public readonly medianPredictionProperty: NumberProperty;
+  public readonly meanPredictionProperty: NumberProperty;
 
   protected readonly timeProperty: NumberProperty;
 
@@ -84,13 +84,13 @@ class CAVModel {
   // TODO: Would an enum like 'not-yet-started' vs 'in-progress' vs 'complete' be clearer?
   // SR: But it seems like we wouldn't use one of those states, or 2 are redundant for our current purposes.
   // SR: But maybe it would be clearer anyways?
-  readonly isMedianAnimationCompleteProperty: BooleanProperty;
+  public readonly isMedianAnimationCompleteProperty: BooleanProperty;
 
   // TODO: See if TypeScript 4.6 will let us initialize more things here
   protected readonly objectValueBecameNonNullEmitter: Emitter<[ CAVObject ]>;
-  readonly resetEmitter: Emitter;
+  public readonly resetEmitter: Emitter;
 
-  constructor( objectType: CAVObjectType, maxNumberOfObjects: number, providedOptions: CAVModelOptions ) {
+  public constructor( objectType: CAVObjectType, maxNumberOfObjects: number, providedOptions: CAVModelOptions ) {
 
     const options = optionize<CAVModelOptions, SelfOptions, EmptyObjectType>()( {
       tandem: Tandem.REQUIRED
@@ -257,7 +257,7 @@ class CAVModel {
     this.resetEmitter = new Emitter();
   }
 
-  updateMeanAndMedian(): void {
+  private updateMeanAndMedian(): void {
     const objectsInDataSet = this.objectGroup.filter( casObject => casObject.valueProperty.value !== null );
     const sortedObjects = _.sortBy( objectsInDataSet, casObject => casObject.valueProperty.value );
 
@@ -332,7 +332,7 @@ class CAVModel {
   /**
    * Returns all other objects at the target position of the provided object.
    */
-  getOtherObjectsAtTarget( casObject: CAVObject ): CAVObject[] {
+  public getOtherObjectsAtTarget( casObject: CAVObject ): CAVObject[] {
     return this.objectGroup.filter( ( o: CAVObject ) => {
       return o.valueProperty.value === casObject.valueProperty.value && casObject !== o;
     } );
@@ -360,7 +360,7 @@ class CAVModel {
   /**
    * Clears out the data and the cards
    */
-  clearData(): void {
+  public clearData(): void {
     this.objectGroup.clear();
     this.cardModelGroup.clear();
   }
@@ -368,7 +368,7 @@ class CAVModel {
   /**
    * Resets the model.
    */
-  reset(): void {
+  public reset(): void {
     this.medianPredictionProperty.reset();
     this.meanPredictionProperty.reset();
     this.isSortingDataProperty.reset();
@@ -385,12 +385,12 @@ class CAVModel {
     this.resetEmitter.emit();
   }
 
-  clearAnimation(): void {
+  private clearAnimation(): void {
     this.highlightAnimationIndex = null;
     this.objectGroup.forEach( casObject => casObject.isShowingAnimationHighlightProperty.set( false ) );
   }
 
-  updateAnimation(): void {
+  private updateAnimation(): void {
 
     // TODO: copied from updateMeanAndMedian
     const objectsInDataSet = this.objectGroup.filter( casObject => casObject.valueProperty.value !== null );
@@ -425,7 +425,7 @@ class CAVModel {
    *
    * @param dt - time step, in seconds
    */
-  step( dt: number ): void {
+  public step( dt: number ): void {
     this.timeProperty.value += dt;
 
     this.updateAnimation();

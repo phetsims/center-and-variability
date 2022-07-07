@@ -19,7 +19,7 @@ type LabScreenViewOptions = CAVScreenViewOptions;
 
 class LabScreenView extends CAVScreenView {
 
-  constructor( model: LabModel, providedOptions: LabScreenViewOptions ) {
+  public constructor( model: LabModel, providedOptions: LabScreenViewOptions ) {
 
     const options = optionize<LabScreenViewOptions, EmptyObjectType>()( {
       tandem: Tandem.REQUIRED

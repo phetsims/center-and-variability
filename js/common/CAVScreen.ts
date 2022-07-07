@@ -22,7 +22,7 @@ export type CAVScreenOptions = SelfOptions & ScreenOptions & PickRequired<Screen
 
 class CAVScreen<M extends CAVModel, V extends CAVScreenView> extends Screen<M, V> {
 
-  constructor( createModel: () => M, createView: ( m: M ) => V, providedOptions?: CAVScreenOptions ) {
+  public constructor( createModel: () => M, createView: ( m: M ) => V, providedOptions?: CAVScreenOptions ) {
 
     const options = optionize<CAVScreenOptions, SelfOptions, ScreenOptions>()( {
       backgroundColorProperty: CAVColors.screenBackgroundColorProperty,
