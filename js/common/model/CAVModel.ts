@@ -21,7 +21,6 @@ import Property from '../../../../axon/js/Property.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import merge from '../../../../phet-core/js/merge.js';
 import CardModel from './CardModel.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
@@ -100,16 +99,14 @@ class CAVModel {
 
     this.maxNumberOfObjects = maxNumberOfObjects;
 
-    this.objectGroup = new PhetioGroup( ( tandem, objectType: CAVObjectType, providedOptions ) => {
+    this.objectGroup = new PhetioGroup( ( tandem, objectType: CAVObjectType, providedOptions: StrictOmit<CAVObjectOptions, 'tandem'> ) => {
 
-      // Assign the tandem to the options
-      const options = merge( providedOptions, {
-
+      const options = optionize<StrictOmit<CAVObjectOptions, 'tandem'>, EmptyObjectType, CAVObjectOptions>()( {
         // If it's the first element in the group, mark as isFirstObject. For creating archetype, the objectGroup does
         // not yet exist, so just mark it as first
         isFirstObject: this.objectGroup ? this.objectGroup.count === 0 : true,
         tandem: tandem
-      } );
+      }, providedOptions );
 
       const casObject = new CAVObject( objectType, options );
 
