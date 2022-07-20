@@ -42,6 +42,7 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Matrix3 from '../../../../dot/js/Matrix3.js';
 import DragIndicatorArrowNode from './DragIndicatorArrowNode.js';
+import IEmitter from '../../../../axon/js/IEmitter.js';
 
 // constants
 const CARD_SPACING = 10;
@@ -57,7 +58,7 @@ class CardNodeContainer extends Node {
   public readonly cardNodeCells: CardNode[];
 
   // Fires if the cardNodeCells may have changed
-  public readonly cardNodeCellsChangedEmitter: Emitter<[]>;
+  public readonly cardNodeCellsChangedEmitter: IEmitter;
 
   private readonly model: CAVModel;
   private readonly cardNodeGroup: PhetioGroup<CardNode, [ CardModel ]>;

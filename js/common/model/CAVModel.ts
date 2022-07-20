@@ -27,6 +27,7 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
+import IEmitter from '../../../../axon/js/IEmitter.js';
 
 type SelfOptions = {
   tandem: Tandem;
@@ -67,7 +68,7 @@ class CAVModel {
   public readonly dataRangeProperty: Property<Range | null>;
 
   // Signify whenever any object's value or position changes
-  public readonly objectChangedEmitter: Emitter<[ CAVObject ]>;
+  public readonly objectChangedEmitter: IEmitter<[ CAVObject ]>;
 
   // Null until the user has made a prediction.
   public readonly medianPredictionProperty: NumberProperty;
@@ -86,8 +87,8 @@ class CAVModel {
   public readonly isMedianAnimationCompleteProperty: BooleanProperty;
 
   // TODO: See if TypeScript 4.6 will let us initialize more things here
-  protected readonly objectValueBecameNonNullEmitter: Emitter<[ CAVObject ]>;
-  public readonly resetEmitter: Emitter;
+  protected readonly objectValueBecameNonNullEmitter: IEmitter<[ CAVObject ]>;
+  public readonly resetEmitter: IEmitter;
 
   public constructor( objectType: CAVObjectType, maxNumberOfObjects: number, providedOptions: CAVModelOptions ) {
 

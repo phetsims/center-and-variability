@@ -22,6 +22,7 @@ import Easing from '../../../../twixt/js/Easing.js';
 import CardModel from '../model/CardModel.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import IEmitter from '../../../../axon/js/IEmitter.js';
 
 type SelfOptions = EmptyObjectType;
 export type CardNodeOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
@@ -32,7 +33,7 @@ class CardNode extends Node {
 
   // Emit how far the card has been dragged for purposes of hiding the drag indicator arrow when the user
   // has dragged a sufficient amount
-  public readonly dragDistanceEmitter: Emitter<[ number ]>;
+  public readonly dragDistanceEmitter: IEmitter<[ number ]>;
 
   public readonly casObject: CAVObject;
   public animation: Animation | null;
