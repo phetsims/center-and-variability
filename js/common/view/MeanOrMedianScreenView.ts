@@ -7,8 +7,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import optionize from '../../../../phet-core/js/optionize.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import SoccerScreenView, { SoccerScreenViewOptions } from '../../common/view/SoccerScreenView.js';
@@ -19,7 +18,7 @@ import CardNodeContainer from '../../common/view/CardNodeContainer.js';
 import CAVPlotNode from './CAVPlotNode.js';
 import SoccerModel from '../model/SoccerModel.js';
 import ValueReadoutsNode from './ValueReadoutsNode.js';
-import { Node, ManualConstraint, Text } from '../../../../scenery/js/imports.js';
+import { ManualConstraint, Node, Text } from '../../../../scenery/js/imports.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import PlotType from '../model/PlotType.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';

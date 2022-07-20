@@ -10,8 +10,7 @@
 import centerAndVariability from '../../centerAndVariability.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import { AlignGroup, Node, Text, VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
-import optionize from '../../../../phet-core/js/optionize.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CAVColors from '../CAVColors.js';

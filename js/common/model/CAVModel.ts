@@ -9,9 +9,8 @@
 
 import centerAndVariability from '../../centerAndVariability.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
-import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CAVObject, { CAVObjectOptions } from './CAVObject.js';
 import CAVObjectType from './CAVObjectType.js';

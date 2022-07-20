@@ -9,8 +9,7 @@
 
 import centerAndVariability from '../../centerAndVariability.js';
 import { DragListener, Node, NodeOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
-import optionize from '../../../../phet-core/js/optionize.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import CAVObject from '../model/CAVObject.js';
