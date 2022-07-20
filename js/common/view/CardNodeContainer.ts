@@ -10,7 +10,7 @@
 import centerAndVariability from '../../centerAndVariability.js';
 import { LinearGradient, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import EmptyObjectType from '../../../../phet-core/js/types/EmptyObjectType.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CAVModel from '../model/CAVModel.js';
 import CAVObject from '../model/CAVObject.js';
@@ -48,7 +48,7 @@ import IEmitter from '../../../../axon/js/IEmitter.js';
 const CARD_SPACING = 10;
 const getCardPositionX = ( index: number ) => index * ( CardNode.CARD_WIDTH + CARD_SPACING );
 
-type SelfOptions = EmptyObjectType;
+type SelfOptions = EmptySelfOptions;
 export type CardNodeContainerOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
 class CardNodeContainer extends Node {

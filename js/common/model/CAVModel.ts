@@ -9,7 +9,7 @@
 
 import centerAndVariability from '../../centerAndVariability.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import EmptyObjectType from '../../../../phet-core/js/types/EmptyObjectType.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -102,7 +102,7 @@ class CAVModel {
 
     this.objectGroup = new PhetioGroup( ( tandem, objectType: CAVObjectType, providedOptions: StrictOmit<CAVObjectOptions, 'tandem'> ) => {
 
-      const options = optionize<StrictOmit<CAVObjectOptions, 'tandem'>, EmptyObjectType, CAVObjectOptions>()( {
+      const options = optionize<StrictOmit<CAVObjectOptions, 'tandem'>, EmptySelfOptions, CAVObjectOptions>()( {
         // If it's the first element in the group, mark as isFirstObject. For creating archetype, the objectGroup does
         // not yet exist, so just mark it as first
         isFirstObject: this.objectGroup ? this.objectGroup.count === 0 : true,

@@ -12,7 +12,7 @@ import CAVColors from '../CAVColors.js';
 import CAVConstants from '../CAVConstants.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import EmptyObjectType from '../../../../phet-core/js/types/EmptyObjectType.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 
 type DragIndicatorArrowNodeOptions = PickRequired<ArrowNodeOptions, 'tandem'> & Pick<ArrowNodeOptions, 'visible'>;
@@ -21,7 +21,7 @@ export default class DragIndicatorArrowNode extends ArrowNode {
 
   public constructor( options: DragIndicatorArrowNodeOptions ) {
 
-    super( 0, 0, 35, 0, optionize<DragIndicatorArrowNodeOptions, EmptyObjectType, ArrowNodeOptions>()( {
+    super( 0, 0, 35, 0, optionize<DragIndicatorArrowNodeOptions, EmptySelfOptions, ArrowNodeOptions>()( {
       headHeight: 8,
       headWidth: 12,
       tailWidth: 5,

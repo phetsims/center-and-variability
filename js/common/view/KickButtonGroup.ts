@@ -11,7 +11,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import { AlignGroup, Node, Text, VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import EmptyObjectType from '../../../../phet-core/js/types/EmptyObjectType.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CAVColors from '../CAVColors.js';
@@ -22,7 +22,7 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
-type SelfOptions = EmptyObjectType;
+type SelfOptions = EmptySelfOptions;
 export type KickButtonGroupOptions = SelfOptions & VBoxOptions & PickRequired<VBoxOptions, 'tandem'>;
 
 // constants

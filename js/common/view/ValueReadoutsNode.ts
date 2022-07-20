@@ -8,7 +8,7 @@
  */
 
 import optionize from '../../../../phet-core/js/optionize.js';
-import EmptyObjectType from '../../../../phet-core/js/types/EmptyObjectType.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import { IPaint, Text, VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
 import CAVModel from '../model/CAVModel.js';
@@ -19,7 +19,7 @@ import CAVColors from '../CAVColors.js';
 import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 
-type SelfOptions = EmptyObjectType;
+type SelfOptions = EmptySelfOptions;
 export type ValueReadoutNodeOptions = SelfOptions & VBoxOptions;
 
 class ValueReadoutsNode extends VBox {

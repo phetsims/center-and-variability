@@ -9,7 +9,7 @@
  */
 
 import optionize from '../../../../phet-core/js/optionize.js';
-import EmptyObjectType from '../../../../phet-core/js/types/EmptyObjectType.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
@@ -24,7 +24,7 @@ class VariabilityScreenView extends SoccerScreenView {
 
   public constructor( model: VariabilityModel, providedOptions: VariabilityScreenViewOptions ) {
 
-    const options = optionize<VariabilityScreenViewOptions, EmptyObjectType, SoccerScreenViewOptions>()( {
+    const options = optionize<VariabilityScreenViewOptions, EmptySelfOptions, SoccerScreenViewOptions>()( {
       questionBarOptions: {
         barFill: CAVColors.variabilityQuestionBarFillColorProperty,
         labelText: centerAndVariabilityStrings.variabilityQuestion

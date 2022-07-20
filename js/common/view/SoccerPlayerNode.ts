@@ -57,12 +57,12 @@ import player15PoisedToKick_png from '../../../images/player15PoisedToKick_png.j
 import player05Kicking_png from '../../../images/player05Kicking_png.js';
 import SoccerPlayer from '../model/SoccerPlayer.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import EmptyObjectType from '../../../../phet-core/js/types/EmptyObjectType.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Pose from '../model/Pose.js';
 
-type SelfOptions = EmptyObjectType;
+type SelfOptions = EmptySelfOptions;
 type SoccerPlayerNodeOptions = SelfOptions & NodeOptions;
 
 const playerGroups = [ {

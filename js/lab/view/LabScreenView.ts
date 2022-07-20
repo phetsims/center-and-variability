@@ -8,7 +8,7 @@
  */
 
 import optionize from '../../../../phet-core/js/optionize.js';
-import EmptyObjectType from '../../../../phet-core/js/types/EmptyObjectType.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import LabModel from '../model/LabModel.js';
@@ -21,7 +21,7 @@ class LabScreenView extends CAVScreenView {
 
   public constructor( model: LabModel, providedOptions: LabScreenViewOptions ) {
 
-    const options = optionize<LabScreenViewOptions, EmptyObjectType>()( {
+    const options = optionize<LabScreenViewOptions, EmptySelfOptions>()( {
       tandem: Tandem.REQUIRED
     }, providedOptions );
 

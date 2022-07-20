@@ -8,14 +8,14 @@
  */
 
 import optionize from '../../../../phet-core/js/optionize.js';
-import EmptyObjectType from '../../../../phet-core/js/types/EmptyObjectType.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import { CAVModelOptions } from '../../common/model/CAVModel.js';
 import SoccerModel from '../../common/model/SoccerModel.js';
 import CAVConstants from '../../common/CAVConstants.js';
 
-type SelfOptions = EmptyObjectType;
+type SelfOptions = EmptySelfOptions;
 type MedianModelOptions = SelfOptions & CAVModelOptions;
 
 class MeanAndMedianModel extends SoccerModel {

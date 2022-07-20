@@ -13,13 +13,13 @@ import IOType from '../../../../tandem/js/types/IOType.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
 import ReferenceIO, { ReferenceIOState } from '../../../../tandem/js/types/ReferenceIO.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import EmptyObjectType from '../../../../phet-core/js/types/EmptyObjectType.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import CAVObjectType from './CAVObjectType.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
 const CAVObjectReferenceIO = ReferenceIO( CAVObject.CAVObjectIO );
 
-type SelfOptions = EmptyObjectType;
+type SelfOptions = EmptySelfOptions;
 type CardModelOptions = SelfOptions & PhetioObjectOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
 class CardModel extends PhetioObject {

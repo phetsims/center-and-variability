@@ -8,7 +8,7 @@
  */
 
 import optionize from '../../../phet-core/js/optionize.js';
-import EmptyObjectType from '../../../phet-core/js/types/EmptyObjectType.js';
+import { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import CAVColors from '../common/CAVColors.js';
 import centerAndVariability from '../centerAndVariability.js';
@@ -23,7 +23,7 @@ class LabScreen extends CAVScreen<LabModel, LabScreenView> {
 
   public constructor( providedOptions: LabScreenOptions ) {
 
-    const options = optionize<LabScreenOptions, EmptyObjectType>()( {
+    const options = optionize<LabScreenOptions, EmptySelfOptions>()( {
       name: centerAndVariabilityStrings.screen.lab,
       backgroundColorProperty: CAVColors.screenBackgroundColorProperty,
       tandem: Tandem.REQUIRED
