@@ -15,7 +15,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VerticalCheckboxGroup, { VerticalCheckboxGroupOptions } from '../../../../sun/js/VerticalCheckboxGroup.js';
-import { HBox, IColor, Text } from '../../../../scenery/js/imports.js';
+import { HBox, TColor, Text } from '../../../../scenery/js/imports.js';
 import CAVModel from '../model/CAVModel.js';
 import CAVConstants from '../CAVConstants.js';
 import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
@@ -52,7 +52,7 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
     const items = [];
 
-    const createPredictionItem = ( property: Property<boolean>, string: string, color: IColor, spacing: number,
+    const createPredictionItem = ( property: Property<boolean>, string: string, color: TColor, spacing: number,
                                    tandemName: string ) => {
       return {
         node: new HBox( {
