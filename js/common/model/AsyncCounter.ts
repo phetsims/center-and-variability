@@ -25,7 +25,7 @@ class AsyncCounter {
     this.index++;
 
     if ( this.index >= this.count ) {
-      assert && assert( this.complete === false, 'Too many completions' );
+      assert && assert( !this.complete, 'Too many completions' );
 
       this.complete = true;
       this.callback();
