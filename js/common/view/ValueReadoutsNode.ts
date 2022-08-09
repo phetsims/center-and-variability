@@ -9,7 +9,7 @@
 
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import { IPaint, Text, VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
+import { TPaint, Text, VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
 import CAVModel from '../model/CAVModel.js';
 import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
@@ -26,7 +26,7 @@ class ValueReadoutsNode extends VBox {
   public constructor( model: CAVModel, providedOptions?: ValueReadoutNodeOptions ) {
 
     const createReadoutText = ( valueProperty: IReadOnlyProperty<number | null>, visibleProperty: IReadOnlyProperty<boolean>,
-                                stringTemplate: string, fill: IPaint ) => {
+                                stringTemplate: string, fill: TPaint ) => {
       const text = new Text( '', {
         fill: fill,
         font: new PhetFont( 16 ),

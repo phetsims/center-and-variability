@@ -8,7 +8,7 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import { IPaint, Node, NodeOptions, Path, Text } from '../../../../scenery/js/imports.js';
+import { TPaint, Node, NodeOptions, Path, Text } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
@@ -28,7 +28,7 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 
 type SelfOptions = {
-  color?: IPaint;
+  color?: TPaint;
   includeXAxis: boolean;
   includeMeanStroke: boolean;
 };
