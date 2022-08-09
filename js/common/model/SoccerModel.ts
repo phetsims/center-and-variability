@@ -23,7 +23,7 @@ import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
 import Pose from './Pose.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
-import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import { AnimationMode } from './AnimationMode.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
@@ -41,8 +41,8 @@ class SoccerModel extends CAVModel {
   public readonly soccerPlayerGroup: PhetioGroup<SoccerPlayer, [ number ]>;
   private readonly nextBallToKickProperty: Property<CAVObject | null>; // Null if there is no more ball to kick
   private readonly numberOfScheduledSoccerBallsToKickProperty: NumberProperty;
-  public readonly numberOfRemainingKickableSoccerBallsProperty: IReadOnlyProperty<number>;
-  public readonly hasKickableSoccerBallsProperty: IReadOnlyProperty<boolean>;
+  public readonly numberOfRemainingKickableSoccerBallsProperty: TReadOnlyProperty<number>;
+  public readonly hasKickableSoccerBallsProperty: TReadOnlyProperty<boolean>;
 
   private readonly timeWhenLastBallWasKickedProperty: NumberProperty;
   private readonly ballPlayerMap: Map<CAVObject, SoccerPlayer>; // TODO: Add to PhET-iO State

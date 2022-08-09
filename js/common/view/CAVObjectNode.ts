@@ -18,7 +18,7 @@ import ball_png from '../../../images/ball_png.js';
 import ShadedSphereNode from '../../../../scenery-phet/js/ShadedSphereNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import { AnimationMode } from '../model/AnimationMode.js';
-import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import CAVColors from '../CAVColors.js';
 import PlotType from '../model/PlotType.js';
 import timesSolidShape from '../../../../sherpa/js/fontawesome-5/timesSolidShape.js';
@@ -53,7 +53,7 @@ class CAVObjectNode extends Node {
   private readonly medianHighlightVisibleMultilink: UnknownMultilink;
   private readonly opacityMultilink: UnknownMultilink;
 
-  public constructor( casObject: CAVObject, isShowingPlayAreaMedianProperty: IReadOnlyProperty<boolean>,
+  public constructor( casObject: CAVObject, isShowingPlayAreaMedianProperty: TReadOnlyProperty<boolean>,
                       modelViewTransform: ModelViewTransform2, objectNodesInputEnabledProperty: IProperty<boolean>,
                       providedOptions?: CAVObjectNodeOptions ) {
 

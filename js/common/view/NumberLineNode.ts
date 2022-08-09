@@ -18,7 +18,7 @@ import Orientation from '../../../../phet-core/js/Orientation.js';
 import TickLabelSet from '../../../../bamboo/js/TickLabelSet.js';
 import Utils from '../../../../dot/js/Utils.js';
 import { Shape } from '../../../../kite/js/imports.js';
-import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import CAVColors from '../CAVColors.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
@@ -39,9 +39,9 @@ class NumberLineNode extends Node {
   public constructor(
     range: Range,
     width: number,
-    meanValueProperty: IReadOnlyProperty<number | null>,
-    isShowingMeanIndicatorProperty: IReadOnlyProperty<boolean>,
-    rangeProperty: IReadOnlyProperty<Range | null>,
+    meanValueProperty: TReadOnlyProperty<number | null>,
+    isShowingMeanIndicatorProperty: TReadOnlyProperty<boolean>,
+    rangeProperty: TReadOnlyProperty<Range | null>,
     providedOptions?: NumberLineNodeOptions
   ) {
 

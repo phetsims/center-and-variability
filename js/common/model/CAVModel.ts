@@ -25,7 +25,7 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import IEmitter from '../../../../axon/js/IEmitter.js';
 
 type SelfOptions = {
@@ -59,7 +59,7 @@ class CAVModel {
   public readonly physicalRange: Range;
 
   // This is the number that we can still add to the PhetioGroup
-  protected readonly numberOfRemainingObjectsProperty: IReadOnlyProperty<number>;
+  protected readonly numberOfRemainingObjectsProperty: TReadOnlyProperty<number>;
   public readonly medianValueProperty: Property<number | null>;
   public readonly meanValueProperty: Property<number | null>;
 

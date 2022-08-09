@@ -30,7 +30,7 @@ import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import MedianBarNode from './MedianBarNode.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
 import stepTimer from '../../../../axon/js/stepTimer.js';
 import Easing from '../../../../twixt/js/Easing.js';
@@ -66,7 +66,7 @@ class CardNodeContainer extends Node {
 
   // Indicates whether the user has ever dragged a card. It's used to hide the drag indicator arrow after
   // the user dragged a card
-  private readonly hasDraggedCardProperty: IReadOnlyProperty<boolean>;
+  private readonly hasDraggedCardProperty: TReadOnlyProperty<boolean>;
   private readonly cardLayer: Node;
   private isReadyForCelebration: boolean;
   private remainingCelebrationAnimations: ( () => void )[];

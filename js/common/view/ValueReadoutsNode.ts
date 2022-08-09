@@ -15,7 +15,7 @@ import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import Utils from '../../../../dot/js/Utils.js';
 import CAVColors from '../CAVColors.js';
-import IReadOnlyProperty from '../../../../axon/js/IReadOnlyProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -25,7 +25,7 @@ class ValueReadoutsNode extends VBox {
 
   public constructor( model: CAVModel, providedOptions?: ValueReadoutNodeOptions ) {
 
-    const createReadoutText = ( valueProperty: IReadOnlyProperty<number | null>, visibleProperty: IReadOnlyProperty<boolean>,
+    const createReadoutText = ( valueProperty: TReadOnlyProperty<number | null>, visibleProperty: TReadOnlyProperty<boolean>,
                                 stringTemplate: string, fill: TPaint ) => {
       const text = new Text( '', {
         fill: fill,
