@@ -161,12 +161,12 @@ class CAVModel {
 
     this.medianValueProperty = new Property<number | null>( null, {
       tandem: options.tandem.createTandem( 'medianValueProperty' ),
-      phetioType: Property.PropertyIO( NullableIO( NumberIO ) ),
+      phetioValueType: NullableIO( NumberIO ),
       phetioReadOnly: true
     } );
     this.meanValueProperty = new Property<number | null>( null, {
       tandem: options.tandem.createTandem( 'meanValueProperty' ),
-      phetioType: Property.PropertyIO( NullableIO( NumberIO ) ),
+      phetioValueType: NullableIO( NumberIO ),
       phetioReadOnly: true
     } );
     this.dataRangeProperty = new Property<Range | null>( null );

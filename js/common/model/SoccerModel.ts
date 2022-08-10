@@ -77,7 +77,7 @@ class SoccerModel extends CAVModel {
     // Create an initial ball to show on startup
     this.nextBallToKickProperty = new Property<CAVObject | null>( this.createBall(), {
       tandem: options.tandem.createTandem( 'nextBallToKickProperty' ),
-      phetioType: Property.PropertyIO( NullableIO( ReferenceIO( CAVObject.CAVObjectIO ) ) )
+      phetioValueType: NullableIO( ReferenceIO( CAVObject.CAVObjectIO ) )
     } );
 
     this.ballPlayerMap = new Map();
@@ -98,7 +98,7 @@ class SoccerModel extends CAVModel {
 
     this.distributionProperty = new Property( SoccerModel.chooseDistribution(), {
       tandem: options.tandem.createTandem( 'distributionProperty' ),
-      phetioType: Property.PropertyIO( ArrayIO( NumberIO ) ),
+      phetioValueType: ArrayIO( NumberIO ),
       phetioDocumentation: 'The distribution of probabilities of where the balls will land is represented as an un-normalized array of non-negative, floating-point numbers, one value for each location in the physical range',
       isValidValue: ( array: readonly number[] ) => array.length === this.physicalRange.getLength() + 1 && // inclusive of endpoints
                                                     _.every( array, element => element >= 0 )

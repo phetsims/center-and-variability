@@ -98,7 +98,7 @@ class CAVObject extends PhetioObject {
     this.dragPositionProperty = new Vector2Property( options.position );
     this.valueProperty = new Property<number | null>( options.value, {
       tandem: options.tandem.createTandem( 'valueProperty' ),
-      phetioType: Property.PropertyIO( NullableIO( NumberIO ) )
+      phetioValueType: NullableIO( NumberIO )
     } );
     this.isMedianObjectProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isMedianObjectProperty' )
