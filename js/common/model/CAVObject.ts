@@ -27,7 +27,7 @@ import { AnimationMode } from './AnimationMode.js';
 import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
-import IEmitter from '../../../../axon/js/IEmitter.js';
+import TEmitter from '../../../../axon/js/TEmitter.js';
 
 type SelfOptions = {
   position?: Vector2;
@@ -53,7 +53,7 @@ class CAVObject extends PhetioObject {
   public readonly isShowingAnimationHighlightProperty: BooleanProperty;
   public readonly objectType: CAVObjectType;
   public readonly isFirstObject: boolean;
-  public readonly disposedEmitter: IEmitter;
+  public readonly disposedEmitter: TEmitter;
 
   // Where the object is animating to, or null if not yet animating
   public targetX: number | null;
@@ -62,7 +62,7 @@ class CAVObject extends PhetioObject {
   public valueProperty: Property<number | null>;
 
   public static CAVObjectIO: IOType<CAVObject, CAVObjectStateType>;
-  public readonly dragStartedEmitter: IEmitter;
+  public readonly dragStartedEmitter: TEmitter;
   public animation: Animation | null;
 
   public constructor( objectType: CAVObjectType, providedOptions: CAVObjectOptions ) {
