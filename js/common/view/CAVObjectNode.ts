@@ -26,7 +26,7 @@ import CAVConstants from '../CAVConstants.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import IProperty from '../../../../axon/js/IProperty.js';
+import TProperty from '../../../../axon/js/TProperty.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import ballDark_png from '../../../images/ballDark_png.js';
 import Multilink, { UnknownMultilink } from '../../../../axon/js/Multilink.js';
@@ -54,7 +54,7 @@ class CAVObjectNode extends Node {
   private readonly opacityMultilink: UnknownMultilink;
 
   public constructor( casObject: CAVObject, isShowingPlayAreaMedianProperty: TReadOnlyProperty<boolean>,
-                      modelViewTransform: ModelViewTransform2, objectNodesInputEnabledProperty: IProperty<boolean>,
+                      modelViewTransform: ModelViewTransform2, objectNodesInputEnabledProperty: TProperty<boolean>,
                       providedOptions?: CAVObjectNodeOptions ) {
 
     const options = optionize<CAVObjectNodeOptions, SelfOptions, NodeOptions>()( {
