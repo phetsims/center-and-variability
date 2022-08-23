@@ -15,6 +15,7 @@ import centerAndVariabilityStrings from './centerAndVariabilityStrings.js';
 import MedianScreen from './median/MedianScreen.js';
 import MeanAndMedianScreen from './mean-and-median/MeanAndMedianScreen.js';
 import GlobalOptionsNode from './common/view/GlobalOptionsNode.js';
+import PreferencesModel from '../../joist/js/preferences/PreferencesModel.js';
 // import LabScreen from './lab/LabScreen.js';
 
 const centerAndVariabilityTitleString = centerAndVariabilityStrings[ 'center-and-variability' ].title;
@@ -28,7 +29,13 @@ const simOptions: SimOptions = {
     qualityAssurance: 'Clifford Hardin, Emily Miller, Devon Quispe, Nancy Salpepi, Kathryn Woessner',
     graphicArts: 'Mariah Hermsmeyer'
   },
-  createOptionsDialogContent: ( tandem: Tandem ) => new GlobalOptionsNode( tandem )
+  preferencesModel: new PreferencesModel( {
+    generalOptions: {
+      customPreferences: [ {
+        createContent: tandem => new GlobalOptionsNode( tandem )
+      } ]
+    }
+  } )
 };
 
 simLauncher.launch( () => {
