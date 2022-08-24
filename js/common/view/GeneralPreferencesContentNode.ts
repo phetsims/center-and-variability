@@ -23,7 +23,7 @@ class GeneralPreferencesContentNode extends VBox {
   public constructor( tandem: Tandem ) {
 
     const title = new Text( centerAndVariabilityStrings.plotType, {
-      font: PreferencesDialog.TITLE_FONT
+      font: PreferencesDialog.PANEL_SECTION_LABEL_FONT
     } );
 
     const TEXT_OPTIONS = {
@@ -44,7 +44,7 @@ class GeneralPreferencesContentNode extends VBox {
     // VBox is used to make it easy to add additional controls
     super( {
       children: [ title, radioButtonGroup ],
-      spacing: PreferencesDialog.CONTENT_SPACING,
+      spacing: PreferencesDialog.LABEL_CONTENT_SPACING,
       align: 'left',
       tandem: tandem
     } );
