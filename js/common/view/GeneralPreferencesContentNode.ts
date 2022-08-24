@@ -16,7 +16,7 @@ import CAVConstants from '../CAVConstants.js';
 import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
 import PreferencesDialog from '../../../../joist/js/preferences/PreferencesDialog.js';
 
-class GlobalOptionsNode extends VBox {
+class GeneralPreferencesContentNode extends VBox {
   private readonly disposeGlobalOptionsNode: () => void;
 
   // TODO: Tandem in the options?  And use tandem in the file?
@@ -58,5 +58,5 @@ class GlobalOptionsNode extends VBox {
   }
 }
 
-centerAndVariability.register( 'GlobalOptionsNode', GlobalOptionsNode );
-export default GlobalOptionsNode;
+centerAndVariability.register( 'GeneralPreferencesContentNode', GeneralPreferencesContentNode );
+export default GeneralPreferencesContentNode;
