@@ -1,7 +1,7 @@
 // Copyright 2022, University of Colorado Boulder
 
 /**
- * Global options shown in the "Options" dialog from the PhET Menu
+ * General simulation controls that globally change the presentation or behavior of the simulation.
  *
  * @author Aaron Davis (PhET Interactive Simulations)
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
