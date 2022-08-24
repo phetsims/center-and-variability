@@ -32,7 +32,7 @@ const simOptions: SimOptions = {
   preferencesModel: new PreferencesModel( {
     generalOptions: {
       customPreferences: [ {
-        createContent: tandem => new GeneralPreferencesContentNode( tandem )
+        createContent: tandem => new GeneralPreferencesContentNode( tandem.createTandem( 'simPreferences' ) )
       } ]
     }
   } )
