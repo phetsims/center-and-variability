@@ -17,7 +17,7 @@ import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
 import PreferencesDialog from '../../../../joist/js/preferences/PreferencesDialog.js';
 
 class GeneralPreferencesContentNode extends VBox {
-  private readonly disposeGlobalOptionsNode: () => void;
+  private readonly disposeGeneralPreferencesContentNode: () => void;
 
   // TODO: Tandem in the options?  And use tandem in the file?
   public constructor( tandem: Tandem ) {
@@ -41,7 +41,7 @@ class GeneralPreferencesContentNode extends VBox {
       tandem: tandem.createTandem( 'plotTypeRadioButtonGroup' )
     } );
 
-    // VBox is used to make it easy to add additional options
+    // VBox is used to make it easy to add additional controls
     super( {
       children: [ title, radioButtonGroup ],
       spacing: PreferencesDialog.CONTENT_SPACING,
@@ -49,11 +49,11 @@ class GeneralPreferencesContentNode extends VBox {
       tandem: tandem
     } );
 
-    this.disposeGlobalOptionsNode = () => radioButtonGroup.dispose();
+    this.disposeGeneralPreferencesContentNode = () => radioButtonGroup.dispose();
   }
 
   public override dispose(): void {
-    this.disposeGlobalOptionsNode();
+    this.disposeGeneralPreferencesContentNode();
     super.dispose();
   }
 }
