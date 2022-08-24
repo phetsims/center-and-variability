@@ -7,15 +7,14 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import OptionsDialog from '../../../../joist/js/OptionsDialog.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
 import { Text, VBox } from '../../../../scenery/js/imports.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import PlotType from '../model/PlotType.js';
 import CAVConstants from '../CAVConstants.js';
-import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
+import PreferencesDialog from '../../../../joist/js/preferences/PreferencesDialog.js';
 
 class GlobalOptionsNode extends VBox {
   private readonly disposeGlobalOptionsNode: () => void;
@@ -24,11 +23,11 @@ class GlobalOptionsNode extends VBox {
   public constructor( tandem: Tandem ) {
 
     const title = new Text( centerAndVariabilityStrings.plotType, {
-      font: new PhetFont( 24 )
+      font: PreferencesDialog.TITLE_FONT
     } );
 
     const TEXT_OPTIONS = {
-      font: new PhetFont( 18 )
+      font: PreferencesDialog.CONTENT_FONT
     };
     const radioButtonGroup = new VerticalAquaRadioButtonGroup<PlotType>( CAVConstants.PLOT_TYPE_PROPERTY, [ {
       node: new Text( centerAndVariabilityStrings.linePlot, TEXT_OPTIONS ),
@@ -45,7 +44,7 @@ class GlobalOptionsNode extends VBox {
     // VBox is used to make it easy to add additional options
     super( {
       children: [ title, radioButtonGroup ],
-      spacing: OptionsDialog.DEFAULT_SPACING,
+      spacing: PreferencesDialog.CONTENT_SPACING,
       align: 'left',
       tandem: tandem
     } );
