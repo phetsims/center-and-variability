@@ -34,7 +34,7 @@ const CAVConstants = {
   // for the accordion box margin
   PLAY_AREA_CHECKBOX_TEXT_MAX_WIDTH: 90,
   PLOT_TYPE_PROPERTY: new EnumerationProperty( CAVQueryParameters.plotType === 'dotPlot' ? PlotType.DOT_PLOT : PlotType.LINE_PLOT, {
-    tandem: Tandem.GLOBAL_VIEW.createTandem( 'plotTypeProperty' )
+    tandem: Tandem.PREFERENCES.createTandem( 'plotTypeProperty' )
   } ),
   ARROW_LINE_WIDTH: 0.5,
   RIGHT_SKEWED_DATA: RIGHT_SKEWED_DATA,
