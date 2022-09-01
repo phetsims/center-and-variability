@@ -14,7 +14,7 @@ import Tandem from '../../tandem/js/Tandem.js';
 import centerAndVariabilityStrings from './centerAndVariabilityStrings.js';
 import MedianScreen from './median/MedianScreen.js';
 import MeanAndMedianScreen from './mean-and-median/MeanAndMedianScreen.js';
-import GeneralPreferencesContentNode from './common/view/GeneralPreferencesContentNode.js';
+import SimulationPreferencesContentNode from './common/view/SimulationPreferencesContentNode.js';
 import PreferencesModel from '../../joist/js/preferences/PreferencesModel.js';
 // import LabScreen from './lab/LabScreen.js';
 
@@ -32,7 +32,7 @@ const simOptions: SimOptions = {
   preferencesModel: new PreferencesModel( {
     simulationOptions: {
       customPreferences: [ {
-        createContent: tandem => new GeneralPreferencesContentNode( tandem.createTandem( 'simPreferences' ) )
+        createContent: tandem => new SimulationPreferencesContentNode( tandem.createTandem( 'simPreferences' ) )
       } ]
     }
   } )
