@@ -31,7 +31,7 @@ class BackgroundNode extends Rectangle {
       // sky gradient, sampled from a screenshot
       gradient.addColorStop( 0.0, CAVColors.skyGradientTopColorProperty.value );
       gradient.addColorStop( 0.5, CAVColors.skyGradientMiddleColorProperty.value );
-      gradient.addColorStop( 1.0, CAVColors.skyGradientBottomColorProperty.value );
+      gradient.addColorStop( 0.9999, CAVColors.skyGradientBottomColorProperty.value );
 
       // The ground
       gradient.addColorStop( 1.0, CAVColors.groundColorProperty.value );
