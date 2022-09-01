@@ -17,7 +17,7 @@ import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
 import PreferencesDialog from '../../../../joist/js/preferences/PreferencesDialog.js';
 
 class SimulationPreferencesContentNode extends VBox {
-  private readonly disposeGeneralPreferencesContentNode: () => void;
+  private readonly disposeSimulationPreferencesContentNode: () => void;
 
   // TODO: Tandem in the options?  And use tandem in the file?
   public constructor( tandem: Tandem ) {
@@ -49,11 +49,11 @@ class SimulationPreferencesContentNode extends VBox {
       tandem: tandem
     } );
 
-    this.disposeGeneralPreferencesContentNode = () => radioButtonGroup.dispose();
+    this.disposeSimulationPreferencesContentNode = () => radioButtonGroup.dispose();
   }
 
   public override dispose(): void {
-    this.disposeGeneralPreferencesContentNode();
+    this.disposeSimulationPreferencesContentNode();
     super.dispose();
   }
 }
