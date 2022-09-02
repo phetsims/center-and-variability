@@ -18,8 +18,7 @@ import SimulationPreferencesContentNode from './common/view/SimulationPreference
 import PreferencesModel from '../../joist/js/preferences/PreferencesModel.js';
 // import LabScreen from './lab/LabScreen.js';
 
-const centerAndVariabilityTitleString = centerAndVariabilityStrings[ 'center-and-variability' ].title;
-
+const centerAndVariabilityTitleStringProperty = centerAndVariabilityStrings[ 'center-and-variability' ].titleStringProperty;
 
 const simOptions: SimOptions = {
   credits: {
@@ -39,7 +38,7 @@ const simOptions: SimOptions = {
 };
 
 simLauncher.launch( () => {
-  const sim = new Sim( centerAndVariabilityTitleString, [
+  const sim = new Sim( centerAndVariabilityTitleStringProperty, [
     new MedianScreen( { tandem: Tandem.ROOT.createTandem( 'medianScreen' ) } ),
     new MeanAndMedianScreen( { tandem: Tandem.ROOT.createTandem( 'meanAndMedianScreen' ) } )
     // , new VariabilityScreen( { tandem: Tandem.ROOT.createTandem( 'variabilityScreen' ) } )
