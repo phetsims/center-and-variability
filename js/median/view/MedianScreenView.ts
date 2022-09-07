@@ -12,7 +12,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import MedianModel from '../model/MedianModel.js';
 import CAVColors from '../../common/CAVColors.js';
-import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import MeanOrMedianScreenView, { MeanOrMedianScreenViewOptions } from '../../common/view/MeanOrMedianScreenView.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -28,7 +28,7 @@ class MedianScreenView extends MeanOrMedianScreenView {
       isMedianScreen: true,
       questionBarOptions: {
         barFill: CAVColors.medianQuestionBarFillColorProperty,
-        labelText: centerAndVariabilityStrings.medianQuestion
+        labelText: CenterAndVariabilityStrings.medianQuestion
       },
       topCheckboxGroupOptions: {
         includeSortData: true,

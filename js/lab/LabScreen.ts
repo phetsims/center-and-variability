@@ -14,7 +14,7 @@ import centerAndVariability from '../centerAndVariability.js';
 import LabModel from './model/LabModel.js';
 import CAVScreen, { CAVScreenOptions } from '../common/CAVScreen.js';
 import LabScreenView from './view/LabScreenView.js';
-import centerAndVariabilityStrings from '../centerAndVariabilityStrings.js';
+import CenterAndVariabilityStrings from '../CenterAndVariabilityStrings.js';
 
 type LabScreenOptions = CAVScreenOptions;
 
@@ -23,7 +23,7 @@ class LabScreen extends CAVScreen<LabModel, LabScreenView> {
   public constructor( providedOptions: LabScreenOptions ) {
 
     const options = optionize<LabScreenOptions, EmptySelfOptions>()( {
-      name: centerAndVariabilityStrings.screen.lab,
+      name: CenterAndVariabilityStrings.screen.lab,
       backgroundColorProperty: CAVColors.screenBackgroundColorProperty,
       tandem: Tandem.REQUIRED
     }, providedOptions );

@@ -15,7 +15,7 @@ import centerAndVariability from '../centerAndVariability.js';
 import MeanAndMedianModel from './model/MeanAndMedianModel.js';
 import CAVScreen, { CAVScreenOptions } from '../common/CAVScreen.js';
 import MeanAndMedianScreenView from './view/MeanAndMedianScreenView.js';
-import centerAndVariabilityStrings from '../centerAndVariabilityStrings.js';
+import CenterAndVariabilityStrings from '../CenterAndVariabilityStrings.js';
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import meanAndMedianScreenIcon_png from '../../images/meanAndMedianScreenIcon_png.js';
 
@@ -26,7 +26,7 @@ class MeanAndMedianScreen extends CAVScreen<MeanAndMedianModel, MeanAndMedianScr
   public constructor( providedOptions: MeanAndMedianScreenOptions ) {
 
     const options = optionize<MeanAndMedianScreenOptions, EmptySelfOptions>()( {
-      name: centerAndVariabilityStrings.screen.meanAndMedian,
+      name: CenterAndVariabilityStrings.screen.meanAndMedian,
       homeScreenIcon: new ScreenIcon( new Image( meanAndMedianScreenIcon_png ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1

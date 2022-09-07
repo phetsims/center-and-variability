@@ -59,8 +59,8 @@ type StringsType = {
   'youSortedTheDataStringProperty': TReadOnlyProperty<string>;
 };
 
-const centerAndVariabilityStrings = getStringModule( 'CENTER_AND_VARIABILITY' ) as StringsType;
+const CenterAndVariabilityStrings = getStringModule( 'CENTER_AND_VARIABILITY' ) as StringsType;
 
-centerAndVariability.register( 'centerAndVariabilityStrings', centerAndVariabilityStrings );
+centerAndVariability.register( 'CenterAndVariabilityStrings', CenterAndVariabilityStrings );
 
-export default centerAndVariabilityStrings;
+export default CenterAndVariabilityStrings;

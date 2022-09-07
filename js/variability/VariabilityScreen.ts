@@ -14,7 +14,7 @@ import centerAndVariability from '../centerAndVariability.js';
 import VariabilityModel from './model/VariabilityModel.js';
 import CAVScreen, { CAVScreenOptions } from '../common/CAVScreen.js';
 import VariabilityScreenView from './view/VariabilityScreenView.js';
-import centerAndVariabilityStrings from '../centerAndVariabilityStrings.js';
+import CenterAndVariabilityStrings from '../CenterAndVariabilityStrings.js';
 
 type VariabilityScreenOptions = CAVScreenOptions;
 
@@ -23,7 +23,7 @@ class VariabilityScreen extends CAVScreen<VariabilityModel, VariabilityScreenVie
   private constructor( providedOptions: VariabilityScreenOptions ) {
 
     const options = optionize<VariabilityScreenOptions, EmptySelfOptions>()( {
-      name: centerAndVariabilityStrings.screen.variability,
+      name: CenterAndVariabilityStrings.screen.variability,
       backgroundColorProperty: CAVColors.screenBackgroundColorProperty,
       tandem: Tandem.REQUIRED
     }, providedOptions );

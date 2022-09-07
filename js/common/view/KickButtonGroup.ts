@@ -11,7 +11,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import { AlignGroup, Node, Text, VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CAVColors from '../CAVColors.js';
 import SoccerModel from '../model/SoccerModel.js';
@@ -54,7 +54,7 @@ class KickButtonGroup extends VBox {
       if ( multikick ) {
         model.numberOfRemainingKickableSoccerBallsProperty.link( numberOfRemainingKickableObjects => {
           const value = Math.max( Math.min( numberOfRemainingKickableObjects, numberToKick ), 1 );
-          content.text.text = StringUtils.fillIn( centerAndVariabilityStrings.kickValue, { value: value } );
+          content.text.text = StringUtils.fillIn( CenterAndVariabilityStrings.kickValue, { value: value } );
         } );
       }
 
@@ -86,8 +86,8 @@ class KickButtonGroup extends VBox {
     const kick5ButtonTandem = options.tandem.createTandem( 'kickFiveButton' );
 
     // Create labels first so their sizes can be aligned
-    const kick1Label = createLabel( StringUtils.fillIn( centerAndVariabilityStrings.kickValue, { value: 1 } ), kick1ButtonTandem.createTandem( 'labelNode' ) );
-    const kick5Label = createLabel( StringUtils.fillIn( centerAndVariabilityStrings.kickValue, { value: 5 } ), kick5ButtonTandem.createTandem( 'labelNode' ) );
+    const kick1Label = createLabel( StringUtils.fillIn( CenterAndVariabilityStrings.kickValue, { value: 1 } ), kick1ButtonTandem.createTandem( 'labelNode' ) );
+    const kick5Label = createLabel( StringUtils.fillIn( CenterAndVariabilityStrings.kickValue, { value: 5 } ), kick5ButtonTandem.createTandem( 'labelNode' ) );
 
     options.children = [
       createKickButton( kick1Label, kick1ButtonTandem, 1, false ),

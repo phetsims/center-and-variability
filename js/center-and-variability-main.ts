@@ -11,14 +11,14 @@ import Sim, { SimOptions } from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
 import Tandem from '../../tandem/js/Tandem.js';
 // import VariabilityScreen from './variability/VariabilityScreen.js';
-import centerAndVariabilityStrings from './centerAndVariabilityStrings.js';
+import CenterAndVariabilityStrings from './CenterAndVariabilityStrings.js';
 import MedianScreen from './median/MedianScreen.js';
 import MeanAndMedianScreen from './mean-and-median/MeanAndMedianScreen.js';
 import SimulationPreferencesContentNode from './common/view/SimulationPreferencesContentNode.js';
 import PreferencesModel from '../../joist/js/preferences/PreferencesModel.js';
 // import LabScreen from './lab/LabScreen.js';
 
-const centerAndVariabilityTitleStringProperty = centerAndVariabilityStrings[ 'center-and-variability' ].titleStringProperty;
+const centerAndVariabilityTitleStringProperty = CenterAndVariabilityStrings[ 'center-and-variability' ].titleStringProperty;
 
 const simOptions: SimOptions = {
   credits: {

@@ -12,7 +12,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
 import CAVColors from '../../common/CAVColors.js';
-import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import { ManualConstraint } from '../../../../scenery/js/imports.js';
 import MeanOrMedianScreenView, { MeanOrMedianScreenViewOptions } from '../../common/view/MeanOrMedianScreenView.js';
 
@@ -28,7 +28,7 @@ class MeanAndMedianScreenView extends MeanOrMedianScreenView {
       isMedianScreen: false,
       questionBarOptions: {
         barFill: CAVColors.meanAndMedianQuestionBarFillColorProperty,
-        labelText: centerAndVariabilityStrings.meanAndMedianQuestion
+        labelText: CenterAndVariabilityStrings.meanAndMedianQuestion
       },
       topCheckboxGroupOptions: {
         medianBarIconOptions: {

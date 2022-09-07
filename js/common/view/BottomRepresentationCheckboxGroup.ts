@@ -18,7 +18,7 @@ import VerticalCheckboxGroup, { VerticalCheckboxGroupOptions } from '../../../..
 import { HBox, TColor, Text } from '../../../../scenery/js/imports.js';
 import CAVModel from '../model/CAVModel.js';
 import CAVConstants from '../CAVConstants.js';
-import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PredictionNode from './PredictionNode.js';
 import CAVColors from '../CAVColors.js';
 import NumberLineNode from './NumberLineNode.js';
@@ -76,10 +76,10 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
     };
 
     options.includePredictMean && items.push( createPredictionItem( model.isShowingMeanPredictionProperty,
-      centerAndVariabilityStrings.predictMean, CAVColors.meanColorProperty, 20.3, 'predictMeanCheckbox'
+      CenterAndVariabilityStrings.predictMean, CAVColors.meanColorProperty, 20.3, 'predictMeanCheckbox'
     ) );
     options.includePredictMedian && items.push( createPredictionItem( model.isShowingMedianPredictionProperty,
-      centerAndVariabilityStrings.predictMedian, CAVColors.medianColorProperty, 8, 'predictMedianCheckbox'
+      CenterAndVariabilityStrings.predictMedian, CAVColors.medianColorProperty, 8, 'predictMedianCheckbox'
     ) );
 
     options.includeMean && items.push( {
@@ -88,7 +88,7 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
       node: new HBox( {
         spacing: 24.5,
         children: [
-          new Text( centerAndVariabilityStrings.mean, TEXT_OPTIONS ),
+          new Text( CenterAndVariabilityStrings.mean, TEXT_OPTIONS ),
           NumberLineNode.createMeanIndicatorNode( true )
         ]
       } ),
@@ -101,7 +101,7 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
       node: new HBox( {
         spacing: 14,
         children: [
-          new Text( centerAndVariabilityStrings.median, TEXT_OPTIONS ),
+          new Text( CenterAndVariabilityStrings.median, TEXT_OPTIONS ),
 
           // TODO: Factor out?  See playAreaMedianIndicatorNode
           new ArrowNode( 0, 0, 0, 27, {

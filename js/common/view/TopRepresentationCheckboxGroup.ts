@@ -12,7 +12,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import VerticalCheckboxGroup, { VerticalCheckboxGroupOptions } from '../../../../sun/js/VerticalCheckboxGroup.js';
 import { HBox, Line, Node, Text } from '../../../../scenery/js/imports.js';
 import CAVModel from '../model/CAVModel.js';
-import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVConstants from '../CAVConstants.js';
 import NumberLineNode from './NumberLineNode.js';
 import MedianBarNode, { MedianBarNodeOptions } from './MedianBarNode.js';
@@ -51,7 +51,7 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
     const items = [];
     options.includeSortData && items.push( {
-      node: new Text( centerAndVariabilityStrings.sortData, TEXT_OPTIONS ),
+      node: new Text( CenterAndVariabilityStrings.sortData, TEXT_OPTIONS ),
       property: model.isSortingDataProperty,
       tandem: options.tandem.createTandem( 'sortDataCheckbox' )
     } );
@@ -61,7 +61,7 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
         // TODO: align icons
         spacing: 24.5,
         children: [
-          new Text( centerAndVariabilityStrings.mean, TEXT_OPTIONS ),
+          new Text( CenterAndVariabilityStrings.mean, TEXT_OPTIONS ),
           new Node( {
             children: [
 
@@ -84,7 +84,7 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
       node: new HBox( {
         spacing: 12,
         children: [
-          new Text( centerAndVariabilityStrings.median, TEXT_OPTIONS ),
+          new Text( CenterAndVariabilityStrings.median, TEXT_OPTIONS ),
           ...options.showMedianCheckboxIcon ? [
             new MedianBarNode( options.medianBarIconOptions )
               .setMedianBarShape( 0, 0, ICON_WIDTH / 2 - LINE_WIDTH / 2, ICON_WIDTH - LINE_WIDTH, true )

@@ -11,7 +11,7 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import centerAndVariability from '../../centerAndVariability.js';
 import { TPaint, Text, VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
 import CAVModel from '../model/CAVModel.js';
-import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import Utils from '../../../../dot/js/Utils.js';
 import CAVColors from '../CAVColors.js';
@@ -34,7 +34,7 @@ class ValueReadoutsNode extends VBox {
       } );
       valueProperty.link( value => {
         text.text = StringUtils.fillIn( stringTemplate, {
-          value: value === null ? centerAndVariabilityStrings.valueUnknown : Utils.toFixed( value, 1 )
+          value: value === null ? CenterAndVariabilityStrings.valueUnknown : Utils.toFixed( value, 1 )
         } );
       } );
 
@@ -44,10 +44,10 @@ class ValueReadoutsNode extends VBox {
     };
 
     const meanText = createReadoutText( model.meanValueProperty, model.isShowingTopMeanProperty,
-      centerAndVariabilityStrings.meanEqualsValue, CAVColors.meanColorProperty );
+      CenterAndVariabilityStrings.meanEqualsValue, CAVColors.meanColorProperty );
 
     const medianText = createReadoutText( model.medianValueProperty, model.isShowingTopMedianProperty,
-      centerAndVariabilityStrings.medianEqualsValue, CAVColors.medianColorProperty );
+      CenterAndVariabilityStrings.medianEqualsValue, CAVColors.medianColorProperty );
 
     const options = optionize<ValueReadoutNodeOptions, SelfOptions, VBoxOptions>()( {
       align: 'left',

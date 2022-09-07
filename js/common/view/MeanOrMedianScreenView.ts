@@ -11,7 +11,7 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import SoccerScreenView, { SoccerScreenViewOptions } from '../../common/view/SoccerScreenView.js';
-import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import CardNodeContainer from '../../common/view/CardNodeContainer.js';
@@ -62,11 +62,11 @@ class MeanOrMedianScreenView extends SoccerScreenView {
     } );
 
     if ( options.isMedianScreen ) {
-      titleNode.text = centerAndVariabilityStrings.distanceInMeters;
+      titleNode.text = CenterAndVariabilityStrings.distanceInMeters;
     }
     else {
       CAVConstants.PLOT_TYPE_PROPERTY.link( plotType => {
-        titleNode.text = plotType === PlotType.LINE_PLOT ? centerAndVariabilityStrings.linePlot : centerAndVariabilityStrings.dotPlot;
+        titleNode.text = plotType === PlotType.LINE_PLOT ? CenterAndVariabilityStrings.linePlot : CenterAndVariabilityStrings.dotPlot;
       } );
     }
 

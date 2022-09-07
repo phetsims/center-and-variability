@@ -15,7 +15,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import SoccerScreenView, { SoccerScreenViewOptions } from '../../common/view/SoccerScreenView.js';
 import CAVColors from '../../common/CAVColors.js';
-import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 
 type VariabilityScreenViewOptions = StrictOmit<SoccerScreenViewOptions, 'questionBarOptions'>;
 
@@ -26,7 +26,7 @@ class VariabilityScreenView extends SoccerScreenView {
     const options = optionize<VariabilityScreenViewOptions, EmptySelfOptions, SoccerScreenViewOptions>()( {
       questionBarOptions: {
         barFill: CAVColors.variabilityQuestionBarFillColorProperty,
-        labelText: centerAndVariabilityStrings.variabilityQuestion
+        labelText: CenterAndVariabilityStrings.variabilityQuestion
       },
       tandem: Tandem.REQUIRED
     }, providedOptions );

@@ -13,7 +13,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import PlotType from '../model/PlotType.js';
 import CAVConstants from '../CAVConstants.js';
-import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PreferencesDialog from '../../../../joist/js/preferences/PreferencesDialog.js';
 
 class SimulationPreferencesContentNode extends VBox {
@@ -22,7 +22,7 @@ class SimulationPreferencesContentNode extends VBox {
   // TODO: Tandem in the options?  And use tandem in the file?
   public constructor( tandem: Tandem ) {
 
-    const title = new Text( centerAndVariabilityStrings.plotType, {
+    const title = new Text( CenterAndVariabilityStrings.plotType, {
       font: PreferencesDialog.PANEL_SECTION_LABEL_FONT
     } );
 
@@ -30,11 +30,11 @@ class SimulationPreferencesContentNode extends VBox {
       font: PreferencesDialog.CONTENT_FONT
     };
     const radioButtonGroup = new VerticalAquaRadioButtonGroup<PlotType>( CAVConstants.PLOT_TYPE_PROPERTY, [ {
-      createNode: tandem => new Text( centerAndVariabilityStrings.linePlot, TEXT_OPTIONS ),
+      createNode: tandem => new Text( CenterAndVariabilityStrings.linePlot, TEXT_OPTIONS ),
       value: PlotType.LINE_PLOT,
       tandemName: 'linePlotRadioButton'
     }, {
-      createNode: tandem => new Text( centerAndVariabilityStrings.dotPlot, TEXT_OPTIONS ),
+      createNode: tandem => new Text( CenterAndVariabilityStrings.dotPlot, TEXT_OPTIONS ),
       value: PlotType.DOT_PLOT,
       tandemName: 'dotPlotRadioButton'
     } ], {

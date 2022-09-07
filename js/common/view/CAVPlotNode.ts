@@ -22,7 +22,7 @@ import NumberLineNode from './NumberLineNode.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import MedianBarNode from './MedianBarNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import centerAndVariabilityStrings from '../../centerAndVariabilityStrings.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 
@@ -77,7 +77,7 @@ class CAVPlotNode extends Node {
       } );
     backgroundNode.addChild( numberLineNode );
 
-    backgroundNode.addChild( new Text( centerAndVariabilityStrings.distanceInMeters, {
+    backgroundNode.addChild( new Text( CenterAndVariabilityStrings.distanceInMeters, {
 
       // TODO-UX: This may be asymmetrical if it accounts for edge labels
       centerX: numberLineNode.centerX,
