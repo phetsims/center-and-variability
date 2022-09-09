@@ -13,7 +13,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 
 export class AnimationMode extends EnumerationValue {
 
-  // TODO: SR would like to re-evaluate StringEnumerationValue, see https://github.com/phetsims/axon/issues/373
+  // TODO: SR would like to re-evaluate StringEnumerationValue, see https://github.com/phetsims/center-and-variability/issues/141
   // SR: But more importantly, this sim should be consistent.
   public static FLYING = new AnimationMode();
   public static STACKING = new AnimationMode();
