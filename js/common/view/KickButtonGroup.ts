@@ -86,8 +86,8 @@ class KickButtonGroup extends VBox {
     const kick5ButtonTandem = options.tandem.createTandem( 'kickFiveButton' );
 
     // Create labels first so their sizes can be aligned
-    const kick1Label = createLabel( StringUtils.fillIn( CenterAndVariabilityStrings.kickValue, { value: 1 } ), kick1ButtonTandem.createTandem( 'labelNode' ) );
-    const kick5Label = createLabel( StringUtils.fillIn( CenterAndVariabilityStrings.kickValue, { value: 5 } ), kick5ButtonTandem.createTandem( 'labelNode' ) );
+    const kick1Label = createLabel( StringUtils.fillIn( CenterAndVariabilityStrings.kickValue, { value: 1 } ), kick1ButtonTandem.createTandem( 'labelText' ) );
+    const kick5Label = createLabel( StringUtils.fillIn( CenterAndVariabilityStrings.kickValue, { value: 5 } ), kick5ButtonTandem.createTandem( 'labelText' ) );
 
     options.children = [
       createKickButton( kick1Label, kick1ButtonTandem, 1, false ),
