@@ -26,7 +26,7 @@ class MedianScreen extends CAVScreen<MedianModel, MedianScreenView> {
   public constructor( providedOptions: MedianScreenOptions ) {
 
     const options = optionize<MedianScreenOptions, EmptySelfOptions>()( {
-      name: CenterAndVariabilityStrings.screen.median,
+      name: CenterAndVariabilityStrings.screen.medianStringProperty,
       homeScreenIcon: new ScreenIcon( new Image( medianScreenIcon_png ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1

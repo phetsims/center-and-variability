@@ -23,7 +23,7 @@ class VariabilityScreen extends CAVScreen<VariabilityModel, VariabilityScreenVie
   private constructor( providedOptions: VariabilityScreenOptions ) {
 
     const options = optionize<VariabilityScreenOptions, EmptySelfOptions>()( {
-      name: CenterAndVariabilityStrings.screen.variability,
+      name: CenterAndVariabilityStrings.screen.variabilityStringProperty,
       backgroundColorProperty: CAVColors.screenBackgroundColorProperty,
       tandem: Tandem.REQUIRED
     }, providedOptions );

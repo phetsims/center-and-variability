@@ -26,7 +26,7 @@ class MeanAndMedianScreen extends CAVScreen<MeanAndMedianModel, MeanAndMedianScr
   public constructor( providedOptions: MeanAndMedianScreenOptions ) {
 
     const options = optionize<MeanAndMedianScreenOptions, EmptySelfOptions>()( {
-      name: CenterAndVariabilityStrings.screen.meanAndMedian,
+      name: CenterAndVariabilityStrings.screen.meanAndMedianStringProperty,
       homeScreenIcon: new ScreenIcon( new Image( meanAndMedianScreenIcon_png ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1

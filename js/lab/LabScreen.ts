@@ -23,7 +23,7 @@ class LabScreen extends CAVScreen<LabModel, LabScreenView> {
   public constructor( providedOptions: LabScreenOptions ) {
 
     const options = optionize<LabScreenOptions, EmptySelfOptions>()( {
-      name: CenterAndVariabilityStrings.screen.lab,
+      name: CenterAndVariabilityStrings.screen.labStringProperty,
       backgroundColorProperty: CAVColors.screenBackgroundColorProperty,
       tandem: Tandem.REQUIRED
     }, providedOptions );
