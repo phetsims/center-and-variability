@@ -28,7 +28,7 @@ class MedianScreenView extends MeanOrMedianScreenView {
       isMedianScreen: true,
       questionBarOptions: {
         barFill: CAVColors.medianQuestionBarFillColorProperty,
-        labelText: CenterAndVariabilityStrings.medianQuestion
+        questionString: CenterAndVariabilityStrings.medianQuestion
       },
       topCheckboxGroupOptions: {
         includeSortData: true,

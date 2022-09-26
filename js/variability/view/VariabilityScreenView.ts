@@ -26,7 +26,7 @@ class VariabilityScreenView extends SoccerScreenView {
     const options = optionize<VariabilityScreenViewOptions, EmptySelfOptions, SoccerScreenViewOptions>()( {
       questionBarOptions: {
         barFill: CAVColors.variabilityQuestionBarFillColorProperty,
-        labelText: CenterAndVariabilityStrings.variabilityQuestion
+        questionString: CenterAndVariabilityStrings.variabilityQuestion
       },
       tandem: Tandem.REQUIRED
     }, providedOptions );

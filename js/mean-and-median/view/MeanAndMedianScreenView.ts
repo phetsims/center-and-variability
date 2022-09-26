@@ -28,7 +28,7 @@ class MeanAndMedianScreenView extends MeanOrMedianScreenView {
       isMedianScreen: false,
       questionBarOptions: {
         barFill: CAVColors.meanAndMedianQuestionBarFillColorProperty,
-        labelText: CenterAndVariabilityStrings.meanAndMedianQuestion
+        questionString: CenterAndVariabilityStrings.meanAndMedianQuestion
       },
       topCheckboxGroupOptions: {
         medianBarIconOptions: {
