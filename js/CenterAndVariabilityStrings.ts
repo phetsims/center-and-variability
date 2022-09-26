@@ -5,58 +5,58 @@
  */
 /* eslint-disable */
 import getStringModule from '../../chipper/js/getStringModule.js';
-import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
+import LinkableProperty from '../../axon/js/LinkableProperty.js';
 import centerAndVariability from './centerAndVariability.js';
 
 type StringsType = {
   'center-and-variability': {
     'title': string;
-    'titleStringProperty': TReadOnlyProperty<string>;
+    'titleStringProperty': LinkableProperty<string>;
   };
   'screen': {
     'median': string;
-    'medianStringProperty': TReadOnlyProperty<string>;
+    'medianStringProperty': LinkableProperty<string>;
     'meanAndMedian': string;
-    'meanAndMedianStringProperty': TReadOnlyProperty<string>;
+    'meanAndMedianStringProperty': LinkableProperty<string>;
     'variability': string;
-    'variabilityStringProperty': TReadOnlyProperty<string>;
+    'variabilityStringProperty': LinkableProperty<string>;
     'lab': string;
-    'labStringProperty': TReadOnlyProperty<string>;
+    'labStringProperty': LinkableProperty<string>;
   };
   'medianQuestion': string;
-  'medianQuestionStringProperty': TReadOnlyProperty<string>;
+  'medianQuestionStringProperty': LinkableProperty<string>;
   'meanAndMedianQuestion': string;
-  'meanAndMedianQuestionStringProperty': TReadOnlyProperty<string>;
+  'meanAndMedianQuestionStringProperty': LinkableProperty<string>;
   'variabilityQuestion': string;
-  'variabilityQuestionStringProperty': TReadOnlyProperty<string>;
+  'variabilityQuestionStringProperty': LinkableProperty<string>;
   'kickValue': string;
-  'kickValueStringProperty': TReadOnlyProperty<string>;
+  'kickValueStringProperty': LinkableProperty<string>;
   'distanceInMeters': string;
-  'distanceInMetersStringProperty': TReadOnlyProperty<string>;
+  'distanceInMetersStringProperty': LinkableProperty<string>;
   'sortData': string;
-  'sortDataStringProperty': TReadOnlyProperty<string>;
+  'sortDataStringProperty': LinkableProperty<string>;
   'meanEqualsValue': string;
-  'meanEqualsValueStringProperty': TReadOnlyProperty<string>;
+  'meanEqualsValueStringProperty': LinkableProperty<string>;
   'medianEqualsValue': string;
-  'medianEqualsValueStringProperty': TReadOnlyProperty<string>;
+  'medianEqualsValueStringProperty': LinkableProperty<string>;
   'plotType': string;
-  'plotTypeStringProperty': TReadOnlyProperty<string>;
+  'plotTypeStringProperty': LinkableProperty<string>;
   'dotPlot': string;
-  'dotPlotStringProperty': TReadOnlyProperty<string>;
+  'dotPlotStringProperty': LinkableProperty<string>;
   'linePlot': string;
-  'linePlotStringProperty': TReadOnlyProperty<string>;
+  'linePlotStringProperty': LinkableProperty<string>;
   'median': string;
-  'medianStringProperty': TReadOnlyProperty<string>;
+  'medianStringProperty': LinkableProperty<string>;
   'mean': string;
-  'meanStringProperty': TReadOnlyProperty<string>;
+  'meanStringProperty': LinkableProperty<string>;
   'predictMean': string;
-  'predictMeanStringProperty': TReadOnlyProperty<string>;
+  'predictMeanStringProperty': LinkableProperty<string>;
   'predictMedian': string;
-  'predictMedianStringProperty': TReadOnlyProperty<string>;
+  'predictMedianStringProperty': LinkableProperty<string>;
   'valueUnknown': string;
-  'valueUnknownStringProperty': TReadOnlyProperty<string>;
+  'valueUnknownStringProperty': LinkableProperty<string>;
   'youSortedTheData': string;
-  'youSortedTheDataStringProperty': TReadOnlyProperty<string>;
+  'youSortedTheDataStringProperty': LinkableProperty<string>;
 };
 
 const CenterAndVariabilityStrings = getStringModule( 'CENTER_AND_VARIABILITY' ) as StringsType;
