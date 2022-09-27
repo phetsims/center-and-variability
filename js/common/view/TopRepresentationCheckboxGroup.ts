@@ -9,7 +9,7 @@
 
 import optionize from '../../../../phet-core/js/optionize.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import VerticalCheckboxGroup, { VerticalCheckboxGroupOptions } from '../../../../sun/js/VerticalCheckboxGroup.js';
+import VerticalCheckboxGroup, { VerticalCheckboxGroupItem, VerticalCheckboxGroupOptions } from '../../../../sun/js/VerticalCheckboxGroup.js';
 import { HBox, Line, Node, Text } from '../../../../scenery/js/imports.js';
 import CAVModel from '../model/CAVModel.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
@@ -18,6 +18,7 @@ import NumberLineNode from './NumberLineNode.js';
 import MedianBarNode, { MedianBarNodeOptions } from './MedianBarNode.js';
 import CAVColors from '../CAVColors.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 type SelfOptions = {
   includeSortData?: boolean;
@@ -49,14 +50,14 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
       includeMedian: true
     }, providedOptions );
 
-    const items = [];
+    const items: VerticalCheckboxGroupItem[] = [];
     options.includeSortData && items.push( {
-      node: new Text( CenterAndVariabilityStrings.sortData, TEXT_OPTIONS ),
+      createNode: ( tandem: Tandem ) => new Text( CenterAndVariabilityStrings.sortData, TEXT_OPTIONS ),
       property: model.isSortingDataProperty,
-      tandem: options.tandem.createTandem( 'sortDataCheckbox' )
+      tandemName: 'sortDataCheckbox'
     } );
     options.includeMean && items.push( {
-      node: new HBox( {
+      createNode: ( tandem: Tandem ) => new HBox( {
 
         // TODO: align icons
         spacing: 24.5,
@@ -78,10 +79,10 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
         ]
       } ),
       property: model.isShowingTopMeanProperty,
-      tandem: options.tandem.createTandem( 'meanCheckbox' )
+      tandemName: 'meanCheckbox'
     } );
     options.includeMedian && items.push( {
-      node: new HBox( {
+      createNode: ( tandem: Tandem ) => new HBox( {
         spacing: 12,
         children: [
           new Text( CenterAndVariabilityStrings.median, TEXT_OPTIONS ),
@@ -92,7 +93,7 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
         ]
       } ),
       property: model.isShowingTopMedianProperty,
-      tandem: options.tandem.createTandem( 'medianCheckbox' )
+      tandemName: 'medianCheckbox'
     } );
     super( items, options );
   }

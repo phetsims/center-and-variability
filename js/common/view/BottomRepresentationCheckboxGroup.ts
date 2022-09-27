@@ -14,7 +14,7 @@ import Property from '../../../../axon/js/Property.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import VerticalCheckboxGroup, { VerticalCheckboxGroupOptions } from '../../../../sun/js/VerticalCheckboxGroup.js';
+import VerticalCheckboxGroup, { VerticalCheckboxGroupItem, VerticalCheckboxGroupOptions } from '../../../../sun/js/VerticalCheckboxGroup.js';
 import { HBox, TColor, Text } from '../../../../scenery/js/imports.js';
 import CAVModel from '../model/CAVModel.js';
 import CAVConstants from '../CAVConstants.js';
@@ -50,12 +50,12 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
       includePredictMedian: true
     }, providedOptions );
 
-    const items = [];
+    const items: VerticalCheckboxGroupItem[] = [];
 
     const createPredictionItem = ( property: Property<boolean>, string: string, color: TColor, spacing: number,
                                    tandemName: string ) => {
       return {
-        node: new HBox( {
+        createNode: ( tandem: Tandem ) => new HBox( {
           spacing: spacing,
           children: [
 
@@ -71,7 +71,7 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
           ]
         } ),
         property: property,
-        tandem: options.tandem.createTandem( tandemName )
+        tandemName: tandemName
       };
     };
 
@@ -85,7 +85,7 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
     options.includeMean && items.push( {
 
       // TODO: Align group to center align the icons
-      node: new HBox( {
+      createNode: ( tandem: Tandem ) => new HBox( {
         spacing: 24.5,
         children: [
           new Text( CenterAndVariabilityStrings.mean, TEXT_OPTIONS ),
@@ -93,12 +93,12 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
         ]
       } ),
       property: model.isShowingPlayAreaMeanProperty,
-      tandem: options.tandem.createTandem( 'meanCheckbox' )
+      tandemName: 'meanCheckbox'
     } );
     options.includeMedian && items.push( {
 
       // TODO: Align group to center align the icons
-      node: new HBox( {
+      createNode: ( tandem: Tandem ) => new HBox( {
         spacing: 14,
         children: [
           new Text( CenterAndVariabilityStrings.median, TEXT_OPTIONS ),
@@ -115,7 +115,7 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
         ]
       } ),
       property: model.isShowingPlayAreaMedianProperty,
-      tandem: options.tandem.createTandem( 'medianCheckbox' )
+      tandemName: 'medianCheckbox'
     } );
 
     super( items, options );
