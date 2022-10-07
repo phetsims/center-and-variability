@@ -631,15 +631,15 @@ const CardNodeContainerIO = new IOType( 'CardNodeContainerIO', {
       cardNodes: n.cardNodeCells.map( cardNode => CardNodeReferenceIO.toStateObject( cardNode ) )
     };
   },
-  applyState: ( n: CardNodeContainer, state: CardNodeContainerState ) => {
+  applyState: ( cardNodeContainer: CardNodeContainer, state: CardNodeContainerState ) => {
     const cardNodes = state.cardNodes.map( ( element: ReferenceIOState ) => CardNodeReferenceIO.fromStateObject( element ) );
-    n.cardNodeCells.length = 0;
-    n.cardNodeCells.push( ...cardNodes );
-    n.cardNodeCells.forEach( cardNode => {
-      n.sendToHomeCell( cardNode, false );
+    cardNodeContainer.cardNodeCells.length = 0;
+    cardNodeContainer.cardNodeCells.push( ...cardNodes );
+    cardNodeContainer.cardNodeCells.forEach( cardNode => {
+      cardNodeContainer.sendToHomeCell( cardNode, false );
     } );
 
-    n.cardNodeCellsChangedEmitter.emit();
+    cardNodeContainer.cardNodeCellsChangedEmitter.emit();
   },
   stateSchema: {
     cardNodes: ArrayIO( ReferenceIO( CardNodeReferenceIO ) )
