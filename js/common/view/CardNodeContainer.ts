@@ -626,9 +626,9 @@ type CardNodeContainerState = {
 const CardNodeReferenceIO = ReferenceIO( Node.NodeIO );
 const CardNodeContainerIO = new IOType( 'CardNodeContainerIO', {
   valueType: CardNodeContainer,
-  toStateObject: ( n: CardNodeContainer ) => {
+  toStateObject: ( cardNodeContainer: CardNodeContainer ) => {
     return {
-      cardNodes: n.cardNodeCells.map( cardNode => CardNodeReferenceIO.toStateObject( cardNode ) )
+      cardNodes: cardNodeContainer.cardNodeCells.map( cardNode => CardNodeReferenceIO.toStateObject( cardNode ) )
     };
   },
   applyState: ( cardNodeContainer: CardNodeContainer, state: CardNodeContainerState ) => {
