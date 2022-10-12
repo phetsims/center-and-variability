@@ -88,10 +88,10 @@ class CAVPlotNode extends Node {
     backgroundNode.addChild( this.dotLayer );
 
     // TODO: This overlaps with draggingEnabled
-    const dotPlotObjectNodesDraggable = new BooleanProperty( false );
+    const dotPlotObjectNodesDraggableProperty = new BooleanProperty( false );
 
     const dotNodeGroup = new PhetioGroup<CAVObjectNode, [ CAVObject ]>( ( tandem, casObject ) => {
-      return new CAVObjectNode( casObject, model.isShowingTopMedianProperty, modelViewTransform, dotPlotObjectNodesDraggable, {
+      return new CAVObjectNode( casObject, model.isShowingTopMedianProperty, modelViewTransform, dotPlotObjectNodesDraggableProperty, {
         objectViewType: CAVObjectType.DOT,
         draggingEnabled: false,
         tandem: tandem
