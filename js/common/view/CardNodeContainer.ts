@@ -208,11 +208,19 @@ class CardNodeContainer extends Node {
 
               // we know at least one card exists because we're in a dragListener link
               const leftmostCard = this.cardNodeCells[ 0 ]!;
-              dataSortedNode.centerX = getCardPositionX( ( this.cardNodeCells.length - 1 ) / 2 ) + leftmostCard.width / 2;
+
+              if ( leftmostCard ) {
+                dataSortedNode.centerX = getCardPositionX( ( this.cardNodeCells.length - 1 ) / 2 ) + leftmostCard.width / 2;
+                dataSortedNode.bottom = leftmostCard.top - 7;
+              }
+              else {
+                dataSortedNode.centerX = getCardPositionX( ( this.cardNodeCells.length - 1 ) / 2 );
+                dataSortedNode.bottom = -7.5;
+              }
+
               if ( dataSortedNode.left < 0 ) {
                 dataSortedNode.left = 0;
               }
-              dataSortedNode.bottom = leftmostCard.top - 7;
               dataSortedNode.visible = true;
               dataSortedNode.opacity = 1;
 
