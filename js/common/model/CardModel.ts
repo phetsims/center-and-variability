@@ -24,7 +24,16 @@ type CardModelOptions = SelfOptions & PhetioObjectOptions & PickRequired<PhetioO
 class CardModel extends PhetioObject {
 
   public casObject: CAVObject;
-  public static CardModelIO: IOType;
+  public static readonly CardModelIO = new IOType( 'CardModelIO', {
+    valueType: CardModel,
+    toStateObject: ( cardModel: CardModel ) => CAVObjectReferenceIO.toStateObject( cardModel.casObject ),
+    stateToArgsForConstructor: ( stateObject: ReferenceIOState ) => {
+      return [ CAVObjectReferenceIO.fromStateObject( stateObject ) ];
+    },
+    stateSchema: {
+      phetioID: StringIO
+    }
+  } );
 
   public constructor( casObject: CAVObject, providedOptions?: CardModelOptions ) {
 
@@ -41,17 +50,6 @@ class CardModel extends PhetioObject {
     } );
   }
 }
-
-CardModel.CardModelIO = new IOType( 'CardModelIO', {
-  valueType: CardModel,
-  toStateObject: ( cardModel: CardModel ) => CAVObjectReferenceIO.toStateObject( cardModel.casObject ),
-  stateToArgsForConstructor: ( stateObject: ReferenceIOState ) => {
-    return [ CAVObjectReferenceIO.fromStateObject( stateObject ) ];
-  },
-  stateSchema: {
-    phetioID: StringIO
-  }
-} );
 
 centerAndVariability.register( 'CardModel', CardModel );
 export default CardModel;

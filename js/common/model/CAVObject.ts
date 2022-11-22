@@ -61,7 +61,22 @@ class CAVObject extends PhetioObject {
   // The value that participates in the data set.
   public valueProperty: Property<number | null>;
 
-  public static CAVObjectIO: IOType<CAVObject, CAVObjectStateType>;
+  public static readonly CAVObjectIO = new IOType<CAVObject, CAVObjectStateType>( 'CAVObjectIO', {
+    valueType: CAVObject,
+    toStateObject: ( casObject: CAVObject ) => casObject.toStateObject(),
+    stateToArgsForConstructor: ( stateObject: CAVObjectStateType ) => {
+      return [
+        stateObject.objectType === 'SOCCER_BALL' ? CAVObjectType.SOCCER_BALL : CAVObjectType.DATA_POINT, {
+          targetX: stateObject.targetX,
+          isFirstObject: stateObject.isFirstObject
+        } ];
+    },
+    stateSchema: {
+      objectType: EnumerationIO( CAVObjectType ),
+      targetX: NullableIO( NumberIO ),
+      isFirstObject: BooleanIO
+    }
+  } );
   public readonly dragStartedEmitter: TEmitter;
   public animation: Animation | null;
 
@@ -180,23 +195,6 @@ const rk4 = ( x: number, v: number, a: number, dt: number ) => {
 };
 
 type CAVObjectStateType = { objectType: string; targetX: number | null; isFirstObject: boolean };
-
-CAVObject.CAVObjectIO = new IOType<CAVObject, CAVObjectStateType>( 'CAVObjectIO', {
-  valueType: CAVObject,
-  toStateObject: ( casObject: CAVObject ) => casObject.toStateObject(),
-  stateToArgsForConstructor: ( stateObject: CAVObjectStateType ) => {
-    return [
-      stateObject.objectType === 'SOCCER_BALL' ? CAVObjectType.SOCCER_BALL : CAVObjectType.DATA_POINT, {
-        targetX: stateObject.targetX,
-        isFirstObject: stateObject.isFirstObject
-      } ];
-  },
-  stateSchema: {
-    objectType: EnumerationIO( CAVObjectType ),
-    targetX: NullableIO( NumberIO ),
-    isFirstObject: BooleanIO
-  }
-} );
 
 centerAndVariability.register( 'CAVObject', CAVObject );
 export default CAVObject;
