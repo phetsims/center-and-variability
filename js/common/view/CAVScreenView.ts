@@ -21,26 +21,20 @@ import { Node } from '../../../../scenery/js/imports.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import CAVObject from '../model/CAVObject.js';
 import merge from '../../../../phet-core/js/merge.js';
-import TopRepresentationCheckboxGroup from './TopRepresentationCheckboxGroup.js';
+import TopRepresentationCheckboxGroup, { TopRepresentationCheckboxGroupOptions } from './TopRepresentationCheckboxGroup.js';
 import BottomRepresentationCheckboxGroup from './BottomRepresentationCheckboxGroup.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import PredictionNode from './PredictionNode.js';
 import CAVColors from '../CAVColors.js';
-import { BarStyle, NotchDirection } from './MedianBarNode.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DragIndicatorArrowNode from './DragIndicatorArrowNode.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 
 type SelfOptions = {
-  topCheckboxGroupOptions?: {
-    includeSortData: boolean;
-    includeMean: boolean;
-    medianBarIconOptions: {
-      notchDirection: NotchDirection;
-      barStyle: BarStyle;
-    };
-    showMedianCheckboxIcon: boolean;
-  };
+
+  // Tandem is required by the Class options, but is filled in after this optionize step.
+  topCheckboxGroupOptions?: StrictOmit<TopRepresentationCheckboxGroupOptions, 'tandem'>;
   bottomCheckboxGroupOptions?: {
     includeMean?: boolean;
     includePredictMean?: boolean;
