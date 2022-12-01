@@ -15,11 +15,11 @@ export class AnimationMode extends EnumerationValue {
 
   // TODO: SR would like to re-evaluate StringEnumerationValue, see https://github.com/phetsims/center-and-variability/issues/141
   // SR: But more importantly, this sim should be consistent.
-  public static FLYING = new AnimationMode();
-  public static STACKING = new AnimationMode();
-  public static RETURNING = new AnimationMode();
-  public static NONE = new AnimationMode();
-  private static enumeration = new Enumeration( AnimationMode );
+  public static readonly FLYING = new AnimationMode();
+  public static readonly STACKING = new AnimationMode();
+  public static readonly RETURNING = new AnimationMode();
+  public static readonly NONE = new AnimationMode();
+  private static readonly enumeration = new Enumeration( AnimationMode );
 }
 
 centerAndVariability.register( 'AnimationMode', AnimationMode );

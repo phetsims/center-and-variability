@@ -13,13 +13,13 @@ import centerAndVariability from '../../centerAndVariability.js';
 
 class CAVObjectType extends EnumerationValue {
   public readonly radius: number;
-  public static DATA_POINT = new CAVObjectType( 1 );
-  public static SOCCER_BALL = new CAVObjectType( 0.3 );
+  public static readonly DATA_POINT = new CAVObjectType( 1 );
+  public static readonly SOCCER_BALL = new CAVObjectType( 0.3 );
 
   // TODO: This term is confusing because sometimes these are rendered as 'x' marks
-  public static DOT = new CAVObjectType( 0.127 );
+  public static readonly DOT = new CAVObjectType( 0.127 );
 
-  public static enumeration = new Enumeration( CAVObjectType );
+  public static readonly enumeration = new Enumeration( CAVObjectType );
 
   public constructor( radius: number ) {
     super();
