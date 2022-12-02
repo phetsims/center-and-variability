@@ -26,8 +26,7 @@
     "supportsOutputJS": true,
     "simFeatures": {
       "supportsInteractiveDescription": true
-    },
-    "published": true
+    }
   },
   "eslintConfig": {
     "extends": "../chipper/eslint/sim_eslintrc.js"
