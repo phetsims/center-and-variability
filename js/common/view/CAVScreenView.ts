@@ -65,7 +65,7 @@ class CAVScreenView extends ScreenView {
   protected readonly meanPredictionNode: PredictionNode;
 
   public constructor( model: CAVModel, modelViewTransform: ModelViewTransform2, providedOptions: CAVScreenViewOptions ) {
-    // @ts-ignore what was happening here?
+    // @ts-expect-error what was happening here?
     const options = optionize<CAVScreenViewOptions, SelfOptions, ScreenViewOptions>()( {
       tandem: Tandem.REQUIRED
     }, providedOptions );
