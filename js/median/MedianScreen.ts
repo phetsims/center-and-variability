@@ -41,7 +41,6 @@ class MedianScreen extends CAVScreen<MedianModel, MedianScreenView> {
         tandem: options.tandem.createTandem( 'model' ),
         instrumentMeanPredictionProperty: false
       } ),
-      // @ts-expect-error TODO what is happening here?
       ( model: MedianModel ) => new MedianScreenView( model, { tandem: options.tandem.createTandem( 'view' ) } ),
       options
     );

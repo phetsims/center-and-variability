@@ -15,16 +15,15 @@ import CAVColors from '../../common/CAVColors.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import { ManualConstraint } from '../../../../scenery/js/imports.js';
 import MeanOrMedianScreenView, { MeanOrMedianScreenViewOptions } from '../../common/view/MeanOrMedianScreenView.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 
-type MeanAndMedianScreenViewOptions = MeanOrMedianScreenViewOptions;
+type MeanAndMedianScreenViewOptions = StrictOmit<MeanOrMedianScreenViewOptions, 'isMedianScreen' | 'questionBarOptions'>;
 
 class MeanAndMedianScreenView extends MeanOrMedianScreenView {
 
   public constructor( model: MeanAndMedianModel, providedOptions: MeanAndMedianScreenViewOptions ) {
 
-    const options = optionize<MeanAndMedianScreenViewOptions, EmptySelfOptions>()( {
-
-      // TODO: TypeScript is okay with not including isMedianScreen, why?
+    const options = optionize<MeanAndMedianScreenViewOptions, EmptySelfOptions, MeanOrMedianScreenViewOptions>()( {
       isMedianScreen: false,
       questionBarOptions: {
         barFill: CAVColors.meanAndMedianQuestionBarFillColorProperty,

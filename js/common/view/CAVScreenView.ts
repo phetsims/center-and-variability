@@ -8,7 +8,7 @@
  */
 
 import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
-import optionize from '../../../../phet-core/js/optionize.js';
+import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVModel from '../model/CAVModel.js';
@@ -20,9 +20,8 @@ import CAVObjectNode from './CAVObjectNode.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import CAVObject from '../model/CAVObject.js';
-import merge from '../../../../phet-core/js/merge.js';
 import TopRepresentationCheckboxGroup, { TopRepresentationCheckboxGroupOptions } from './TopRepresentationCheckboxGroup.js';
-import BottomRepresentationCheckboxGroup from './BottomRepresentationCheckboxGroup.js';
+import BottomRepresentationCheckboxGroup, { BottomRepresentationCheckboxGroupOptions } from './BottomRepresentationCheckboxGroup.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import PredictionNode from './PredictionNode.js';
@@ -65,8 +64,8 @@ class CAVScreenView extends ScreenView {
   protected readonly meanPredictionNode: PredictionNode;
 
   public constructor( model: CAVModel, modelViewTransform: ModelViewTransform2, providedOptions: CAVScreenViewOptions ) {
-    // @ts-expect-error what was happening here?
-    const options = optionize<CAVScreenViewOptions, SelfOptions, ScreenViewOptions>()( {
+    const options = optionize<CAVScreenViewOptions,
+      StrictOmit<SelfOptions, 'topCheckboxGroupOptions' | 'bottomCheckboxGroupOptions'>, ScreenViewOptions>()( {
       tandem: Tandem.REQUIRED
     }, providedOptions );
 
@@ -159,12 +158,14 @@ class CAVScreenView extends ScreenView {
       map.delete( casObject );
     } );
 
-    this.topCheckboxGroup = new TopRepresentationCheckboxGroup( model, merge( {
-      tandem: options.tandem.createTandem( 'topCheckboxGroup' )
-    }, options.topCheckboxGroupOptions ) );
-    this.bottomCheckboxGroup = new BottomRepresentationCheckboxGroup( model, merge( {
-      tandem: options.tandem.createTandem( 'bottomCheckboxGroup' )
-    }, options.bottomCheckboxGroupOptions ) );
+    this.topCheckboxGroup = new TopRepresentationCheckboxGroup( model,
+      combineOptions<TopRepresentationCheckboxGroupOptions>( {
+        tandem: options.tandem.createTandem( 'topCheckboxGroup' )
+      }, options.topCheckboxGroupOptions ) );
+    this.bottomCheckboxGroup = new BottomRepresentationCheckboxGroup( model,
+      combineOptions<BottomRepresentationCheckboxGroupOptions>( {
+        tandem: options.tandem.createTandem( 'bottomCheckboxGroup' )
+      }, options.bottomCheckboxGroupOptions ) );
     this.addChild( this.bottomCheckboxGroup );
 
     // TODO: Separate class?
