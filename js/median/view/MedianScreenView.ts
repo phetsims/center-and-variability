@@ -26,7 +26,7 @@ class MedianScreenView extends MeanOrMedianScreenView {
   public constructor( model: MedianModel, providedOptions: MedianScreenViewOptions ) {
 
     const options = optionize<MedianScreenViewOptions, SelfOptions, MeanOrMedianScreenViewOptions>()( {
-      // isMedianScreen: true,
+      isMedianScreen: true,
       questionBarOptions: {
         barFill: CAVColors.medianQuestionBarFillColorProperty,
         questionString: CenterAndVariabilityStrings.medianQuestion
