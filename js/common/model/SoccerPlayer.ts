@@ -30,7 +30,7 @@ class SoccerPlayer extends PhetioObject {
   public static readonly SoccerPlayerIO = new IOType( 'SoccerPlayerIO', {
     valueType: SoccerPlayer,
     toStateObject: ( soccerPlayer: SoccerPlayer ) => ( { initialPlaceInLine: soccerPlayer.initialPlaceInLine } ),
-    stateToArgsForConstructor: ( stateObject: SoccerPlayerState ) => {
+    stateObjectToCreateElementArguments: ( stateObject: SoccerPlayerState ) => {
       return [ stateObject.initialPlaceInLine ];
     },
     stateSchema: {

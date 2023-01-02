@@ -64,7 +64,7 @@ class CAVObject extends PhetioObject {
   public static readonly CAVObjectIO = new IOType<CAVObject, CAVObjectStateType>( 'CAVObjectIO', {
     valueType: CAVObject,
     toStateObject: ( casObject: CAVObject ) => casObject.toStateObject(),
-    stateToArgsForConstructor: ( stateObject: CAVObjectStateType ) => {
+    stateObjectToCreateElementArguments: ( stateObject: CAVObjectStateType ) => {
       return [
         stateObject.objectType === 'SOCCER_BALL' ? CAVObjectType.SOCCER_BALL : CAVObjectType.DATA_POINT, {
           targetX: stateObject.targetX,

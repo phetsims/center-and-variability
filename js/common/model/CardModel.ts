@@ -27,7 +27,7 @@ class CardModel extends PhetioObject {
   public static readonly CardModelIO = new IOType( 'CardModelIO', {
     valueType: CardModel,
     toStateObject: ( cardModel: CardModel ) => CAVObjectReferenceIO.toStateObject( cardModel.casObject ),
-    stateToArgsForConstructor: ( stateObject: ReferenceIOState ) => {
+    stateObjectToCreateElementArguments: ( stateObject: ReferenceIOState ) => {
       return [ CAVObjectReferenceIO.fromStateObject( stateObject ) ];
     },
     stateSchema: {
