@@ -1,4 +1,4 @@
-// Copyright 2022, University of Colorado Boulder
+// Copyright 2022-2023, University of Colorado Boulder
 
 /**
  * Base class for a manipulable data point which could be a soccer ball or, in the lab screen, a colored sphere.
