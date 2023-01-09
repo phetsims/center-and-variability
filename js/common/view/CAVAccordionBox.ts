@@ -13,7 +13,6 @@ import { Node, Rectangle } from '../../../../scenery/js/imports.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import CAVConstants from '../CAVConstants.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import TopRepresentationCheckboxGroup from './TopRepresentationCheckboxGroup.js';
 import CAVModel from '../model/CAVModel.js';
@@ -56,8 +55,7 @@ class CAVAccordionBox extends AccordionBox {
       expandCollapseButtonOptions: {
         sideLength: BUTTON_SIDE_LENGTH
       },
-      titleNode: titleNode,
-      tandem: Tandem.REQUIRED
+      titleNode: titleNode
     }, providedOptions );
 
     const backgroundNode = new Rectangle( {

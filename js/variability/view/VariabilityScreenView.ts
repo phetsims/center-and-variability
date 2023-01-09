@@ -10,7 +10,6 @@
 
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import SoccerScreenView, { SoccerScreenViewOptions } from '../../common/view/SoccerScreenView.js';
@@ -27,8 +26,7 @@ class VariabilityScreenView extends SoccerScreenView {
       questionBarOptions: {
         barFill: CAVColors.variabilityQuestionBarFillColorProperty,
         questionString: CenterAndVariabilityStrings.variabilityQuestion
-      },
-      tandem: Tandem.REQUIRED
+      }
     }, providedOptions );
 
     super( model, options as SoccerScreenViewOptions );

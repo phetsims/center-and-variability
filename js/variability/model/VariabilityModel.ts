@@ -8,7 +8,6 @@
  */
 
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import { CAVModelOptions } from '../../common/model/CAVModel.js';
 import SoccerModel from '../../common/model/SoccerModel.js';
@@ -21,9 +20,7 @@ class VariabilityModel extends SoccerModel {
 
   public constructor( options: VariabilityModelOptions ) {
 
-    options = optionize<VariabilityModelOptions, SelfOptions, CAVModelOptions>()( {
-      tandem: Tandem.REQUIRED
-    }, options );
+    options = optionize<VariabilityModelOptions, SelfOptions, CAVModelOptions>()( {}, options );
 
     super( CAVConstants.NUMBER_OF_OBJECTS_LARGE, options );
   }

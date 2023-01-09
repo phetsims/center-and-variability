@@ -11,7 +11,6 @@
 import centerAndVariability from '../../centerAndVariability.js';
 import { Node, NodeOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import CAVModel from '../model/CAVModel.js';
 import CAVObject from '../model/CAVObject.js';
 import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
@@ -36,9 +35,7 @@ class CAVPlotNode extends Node {
 
   public constructor( model: CAVModel, numberLineWidth: number, providedOptions?: CAVPlotOptions ) {
 
-    const options = optionize<CAVPlotOptions, SelfOptions, NodeOptions>()( {
-      tandem: Tandem.REQUIRED
-    }, providedOptions );
+    const options = optionize<CAVPlotOptions, SelfOptions, NodeOptions>()( {}, providedOptions );
 
     super( options );
 

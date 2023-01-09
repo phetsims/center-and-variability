@@ -8,7 +8,6 @@
  */
 
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
 import CAVColors from '../../common/CAVColors.js';
@@ -37,8 +36,7 @@ class MeanAndMedianScreenView extends MeanOrMedianScreenView {
           arrowScale: 0.75
         },
         showMedianCheckboxIcon: true
-      },
-      tandem: Tandem.REQUIRED
+      }
     }, providedOptions );
 
     super( model, options );

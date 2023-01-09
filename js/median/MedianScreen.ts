@@ -9,7 +9,6 @@
 
 import { Image } from '../../../scenery/js/imports.js';
 import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
-import Tandem from '../../../tandem/js/Tandem.js';
 import CAVColors from '../common/CAVColors.js';
 import centerAndVariability from '../centerAndVariability.js';
 import MedianModel from './model/MedianModel.js';
@@ -26,13 +25,13 @@ class MedianScreen extends CAVScreen<MedianModel, MedianScreenView> {
   public constructor( providedOptions: MedianScreenOptions ) {
 
     const options = optionize<MedianScreenOptions, EmptySelfOptions>()( {
+      // @ts-expect-error TODO SR can you help with "name" here? https://github.com/phetsims/chipper/issues/1360
       name: CenterAndVariabilityStrings.screen.medianStringProperty,
       homeScreenIcon: new ScreenIcon( new Image( medianScreenIcon_png ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1
       } ),
-      backgroundColorProperty: CAVColors.screenBackgroundColorProperty,
-      tandem: Tandem.REQUIRED
+      backgroundColorProperty: CAVColors.screenBackgroundColorProperty
     }, providedOptions );
 
     super(

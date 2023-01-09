@@ -8,9 +8,8 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import { DragListener, TColor, Node, NodeOptions } from '../../../../scenery/js/imports.js';
+import { DragListener, Node, NodeOptions, TColor } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import Property from '../../../../axon/js/Property.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
@@ -54,7 +53,6 @@ class PredictionNode extends Node {
       lineWidth: CAVConstants.ARROW_LINE_WIDTH
     } );
     const options = optionize<PredictionNodeOptions, SelfOptions, NodeOptions>()( {
-      tandem: Tandem.REQUIRED,
       children: [ arrowNode, shadedSphereNode ],
       cursor: 'pointer'
     }, providedOptions );

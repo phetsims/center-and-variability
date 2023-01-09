@@ -8,7 +8,6 @@
  */
 
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
 import CAVObjectType from '../../common/model/CAVObjectType.js';
@@ -21,9 +20,7 @@ class LabModel extends CAVModel {
 
   public constructor( options: LabModelOptions ) {
 
-    options = optionize<LabModelOptions, SelfOptions, CAVModelOptions>()( {
-      tandem: Tandem.REQUIRED
-    }, options );
+    options = optionize<LabModelOptions, SelfOptions, CAVModelOptions>()( {}, options );
 
     super( CAVObjectType.DATA_POINT, CAVConstants.NUMBER_OF_OBJECTS_LARGE, options );
   }

@@ -10,7 +10,6 @@
 import centerAndVariability from '../../centerAndVariability.js';
 import { DragListener, Node, NodeOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import CAVObject from '../model/CAVObject.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
@@ -58,7 +57,6 @@ class CardNode extends Node {
     } );
 
     const options = optionize<CardNodeOptions, SelfOptions, NodeOptions>()( {
-      tandem: Tandem.REQUIRED,
       children: [ rectangle, text ],
       cursor: 'pointer',
       phetioDynamicElement: true

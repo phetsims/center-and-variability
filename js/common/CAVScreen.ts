@@ -9,7 +9,6 @@
 
 import Screen, { ScreenOptions } from '../../../joist/js/Screen.js';
 import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
-import Tandem from '../../../tandem/js/Tandem.js';
 import CAVColors from '../common/CAVColors.js';
 import centerAndVariability from '../centerAndVariability.js';
 import CAVModel from './model/CAVModel.js';
@@ -24,8 +23,7 @@ class CAVScreen<M extends CAVModel, V extends CAVScreenView> extends Screen<M, V
   public constructor( createModel: () => M, createView: ( m: M ) => V, providedOptions?: CAVScreenOptions ) {
 
     const options = optionize<CAVScreenOptions, SelfOptions, ScreenOptions>()( {
-      backgroundColorProperty: CAVColors.screenBackgroundColorProperty,
-      tandem: Tandem.REQUIRED
+      backgroundColorProperty: CAVColors.screenBackgroundColorProperty
     }, providedOptions );
 
     super( createModel, createView, options );

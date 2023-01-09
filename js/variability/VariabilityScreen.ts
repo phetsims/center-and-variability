@@ -8,7 +8,6 @@
  */
 
 import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
-import Tandem from '../../../tandem/js/Tandem.js';
 import CAVColors from '../common/CAVColors.js';
 import centerAndVariability from '../centerAndVariability.js';
 import VariabilityModel from './model/VariabilityModel.js';
@@ -23,9 +22,10 @@ class VariabilityScreen extends CAVScreen<VariabilityModel, VariabilityScreenVie
   private constructor( providedOptions: VariabilityScreenOptions ) {
 
     const options = optionize<VariabilityScreenOptions, EmptySelfOptions>()( {
+
+      // @ts-expect-error TODO SR can you help with "name" here? https://github.com/phetsims/chipper/issues/1360
       name: CenterAndVariabilityStrings.screen.variabilityStringProperty,
-      backgroundColorProperty: CAVColors.screenBackgroundColorProperty,
-      tandem: Tandem.REQUIRED
+      backgroundColorProperty: CAVColors.screenBackgroundColorProperty
     }, providedOptions );
 
     super(

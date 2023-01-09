@@ -8,7 +8,6 @@
  */
 
 import optionize from '../../../../phet-core/js/optionize.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVScreenView, { CAVScreenViewOptions } from './CAVScreenView.js';
 import QuestionBar, { QuestionBarOptions } from '../../../../scenery-phet/js/QuestionBar.js';
@@ -41,9 +40,7 @@ class SoccerScreenView extends CAVScreenView {
 
   public constructor( model: SoccerModel, providedOptions: SoccerScreenViewOptions ) {
 
-    const options = optionize<SoccerScreenViewOptions, SelfOptions, CAVScreenViewOptions>()( {
-      tandem: Tandem.REQUIRED
-    }, providedOptions );
+    const options = optionize<SoccerScreenViewOptions, SelfOptions, CAVScreenViewOptions>()( {}, providedOptions );
 
     const chartViewWidth = ScreenView.DEFAULT_LAYOUT_BOUNDS.width - NUMBER_LINE_MARGIN_X * 2;
 

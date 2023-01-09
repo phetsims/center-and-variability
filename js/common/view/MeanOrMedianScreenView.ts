@@ -8,7 +8,6 @@
  */
 
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import SoccerScreenView, { SoccerScreenViewOptions } from '../../common/view/SoccerScreenView.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
@@ -35,9 +34,7 @@ class MeanOrMedianScreenView extends SoccerScreenView {
 
   public constructor( model: SoccerModel, providedOptions: MeanOrMedianScreenViewOptions ) {
 
-    const options = optionize<MeanOrMedianScreenViewOptions, EmptySelfOptions, SoccerScreenViewOptions>()( {
-      tandem: Tandem.REQUIRED
-    }, providedOptions );
+    const options = optionize<MeanOrMedianScreenViewOptions, EmptySelfOptions, SoccerScreenViewOptions>()( {}, providedOptions );
 
     super( model, options );
 

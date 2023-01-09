@@ -9,7 +9,6 @@
 
 import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVModel from '../model/CAVModel.js';
 import CAVConstants from '../CAVConstants.js';
@@ -65,9 +64,7 @@ class CAVScreenView extends ScreenView {
 
   public constructor( model: CAVModel, modelViewTransform: ModelViewTransform2, providedOptions: CAVScreenViewOptions ) {
     const options = optionize<CAVScreenViewOptions,
-      StrictOmit<SelfOptions, 'topCheckboxGroupOptions' | 'bottomCheckboxGroupOptions'>, ScreenViewOptions>()( {
-      tandem: Tandem.REQUIRED
-    }, providedOptions );
+      StrictOmit<SelfOptions, 'topCheckboxGroupOptions' | 'bottomCheckboxGroupOptions'>, ScreenViewOptions>()( {}, providedOptions );
 
     super( options );
 

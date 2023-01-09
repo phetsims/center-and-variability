@@ -7,8 +7,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import { CAVModelOptions } from '../../common/model/CAVModel.js';
 import SoccerModel from '../../common/model/SoccerModel.js';
@@ -20,11 +19,6 @@ type MedianModelOptions = SelfOptions & CAVModelOptions;
 class MeanAndMedianModel extends SoccerModel {
 
   public constructor( options: MedianModelOptions ) {
-
-    options = optionize<MedianModelOptions, SelfOptions, CAVModelOptions>()( {
-      tandem: Tandem.REQUIRED
-    }, options );
-
     super( CAVConstants.NUMBER_OF_OBJECTS_SMALL, options );
   }
 }

@@ -76,7 +76,6 @@ class CardNodeContainer extends Node {
   public constructor( model: CAVModel, providedOptions: CardNodeContainerOptions ) {
 
     const options = optionize<CardNodeContainerOptions, SelfOptions, NodeOptions>()( {
-      tandem: Tandem.REQUIRED,
       phetioType: CardNodeContainerIO,
       phetioState: true
     }, providedOptions );

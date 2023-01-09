@@ -32,8 +32,7 @@ class KickButtonGroup extends VBox {
   public constructor( model: SoccerModel, providedOptions?: KickButtonGroupOptions ) {
 
     const options = optionize<KickButtonGroupOptions, SelfOptions, VBoxOptions>()( {
-      spacing: 2,
-      tandem: Tandem.REQUIRED
+      spacing: 2
     }, providedOptions );
 
     const alignGroup = new AlignGroup();

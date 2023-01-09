@@ -8,7 +8,6 @@
  */
 
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import LabModel from '../model/LabModel.js';
 import CAVScreenView, { CAVScreenViewOptions } from '../../common/view/CAVScreenView.js';
@@ -20,9 +19,7 @@ class LabScreenView extends CAVScreenView {
 
   public constructor( model: LabModel, providedOptions: LabScreenViewOptions ) {
 
-    const options = optionize<LabScreenViewOptions, EmptySelfOptions>()( {
-      tandem: Tandem.REQUIRED
-    }, providedOptions );
+    const options = optionize<LabScreenViewOptions, EmptySelfOptions>()( {}, providedOptions );
 
     super( model, ModelViewTransform2.createIdentity(), options );
   }

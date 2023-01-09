@@ -13,7 +13,6 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import Property from '../../../../axon/js/Property.js';
 import Pose from './Pose.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
@@ -47,7 +46,6 @@ class SoccerPlayer extends PhetioObject {
 
     const options = optionize<SoccerPlayerOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioType: SoccerPlayer.SoccerPlayerIO,
-      tandem: Tandem.REQUIRED,
       phetioDynamicElement: true
     }, providedOptions );
 

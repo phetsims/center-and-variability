@@ -8,9 +8,8 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import { TPaint, Node, NodeOptions, Path, Text } from '../../../../scenery/js/imports.js';
+import { Node, NodeOptions, Path, Text, TPaint } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
 import Range from '../../../../dot/js/Range.js';
 import TickMarkSet from '../../../../bamboo/js/TickMarkSet.js';
@@ -46,8 +45,7 @@ class NumberLineNode extends Node {
   ) {
 
     const options = optionize<NumberLineNodeOptions, SelfOptions, NodeOptions>()( {
-      color: 'white',
-      tandem: Tandem.REQUIRED
+      color: 'white'
     }, providedOptions );
 
     super();
