@@ -1,4 +1,4 @@
-// Copyright 2022, University of Colorado Boulder
+// Copyright 2022-2023, University of Colorado Boulder
 
 /**
  * Draggable node that shows a single number on a card.  The number can change if the corresponding ball is dragged.

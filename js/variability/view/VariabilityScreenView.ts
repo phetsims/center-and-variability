@@ -1,4 +1,4 @@
-// Copyright 2022, University of Colorado Boulder
+// Copyright 2022-2023, University of Colorado Boulder
 
 /**
  * VariabilityScreenView is the ScreenView for the 'Variability' screen, which has four different scenes with four different

@@ -1,4 +1,4 @@
-// Copyright 2022, University of Colorado Boulder
+// Copyright 2022-2023, University of Colorado Boulder
 
 /**
  * Shows the dot plot or line plot on the "Mean & Median" Screen, including the legends/readouts to the left.

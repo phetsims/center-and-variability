@@ -1,4 +1,4 @@
-// Copyright 2022, University of Colorado Boulder
+// Copyright 2022-2023, University of Colorado Boulder
 
 /**
  * Shows a shaded sphere and arrow pointing up, to show where the user predicts a median value.
