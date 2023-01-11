@@ -24,8 +24,7 @@ class MeanAndMedianScreen extends CAVScreen<MeanAndMedianModel, MeanAndMedianScr
 
   public constructor( providedOptions: MeanAndMedianScreenOptions ) {
 
-    const options = optionize<MeanAndMedianScreenOptions, EmptySelfOptions>()( {
-      // @ts-expect-error TODO SR: not sure about this "name", can you help? https://github.com/phetsims/chipper/issues/1360
+    const options = optionize<MeanAndMedianScreenOptions, EmptySelfOptions, CAVScreenOptions>()( {
       name: CenterAndVariabilityStrings.screen.meanAndMedianStringProperty,
       homeScreenIcon: new ScreenIcon( new Image( meanAndMedianScreenIcon_png ), {
         maxIconWidthProportion: 1,

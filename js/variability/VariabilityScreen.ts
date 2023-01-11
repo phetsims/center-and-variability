@@ -21,9 +21,7 @@ class VariabilityScreen extends CAVScreen<VariabilityModel, VariabilityScreenVie
 
   private constructor( providedOptions: VariabilityScreenOptions ) {
 
-    const options = optionize<VariabilityScreenOptions, EmptySelfOptions>()( {
-
-      // @ts-expect-error TODO SR can you help with "name" here? https://github.com/phetsims/chipper/issues/1360
+    const options = optionize<VariabilityScreenOptions, EmptySelfOptions, CAVScreenOptions>()( {
       name: CenterAndVariabilityStrings.screen.variabilityStringProperty,
       backgroundColorProperty: CAVColors.screenBackgroundColorProperty
     }, providedOptions );

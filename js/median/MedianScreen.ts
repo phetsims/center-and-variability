@@ -24,8 +24,7 @@ class MedianScreen extends CAVScreen<MedianModel, MedianScreenView> {
 
   public constructor( providedOptions: MedianScreenOptions ) {
 
-    const options = optionize<MedianScreenOptions, EmptySelfOptions>()( {
-      // @ts-expect-error TODO SR can you help with "name" here? https://github.com/phetsims/chipper/issues/1360
+    const options = optionize<MedianScreenOptions, EmptySelfOptions, CAVScreenOptions>()( {
       name: CenterAndVariabilityStrings.screen.medianStringProperty,
       homeScreenIcon: new ScreenIcon( new Image( medianScreenIcon_png ), {
         maxIconWidthProportion: 1,
