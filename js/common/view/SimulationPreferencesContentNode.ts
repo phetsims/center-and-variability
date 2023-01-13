@@ -30,11 +30,11 @@ class SimulationPreferencesContentNode extends VBox {
       font: PreferencesDialog.CONTENT_FONT
     };
     const radioButtonGroup = new VerticalAquaRadioButtonGroup<PlotType>( CAVConstants.PLOT_TYPE_PROPERTY, [ {
-      createNode: tandem => new Text( CenterAndVariabilityStrings.linePlot, TEXT_OPTIONS ),
+      createNode: () => new Text( CenterAndVariabilityStrings.linePlot, TEXT_OPTIONS ),
       value: PlotType.LINE_PLOT,
       tandemName: 'linePlotRadioButton'
     }, {
-      createNode: tandem => new Text( CenterAndVariabilityStrings.dotPlot, TEXT_OPTIONS ),
+      createNode: () => new Text( CenterAndVariabilityStrings.dotPlot, TEXT_OPTIONS ),
       value: PlotType.DOT_PLOT,
       tandemName: 'dotPlotRadioButton'
     } ], {
