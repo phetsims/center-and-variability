@@ -66,7 +66,7 @@ class CardNode extends Node {
 
     this.positionProperty = new Vector2Property( position, {
       tandem: options.tandem.createTandem( 'positionProperty' ),
-      useDeepEquality: true
+      valueComparisonStrategy: 'equalsFunction'
     } );
 
     this.casObject = cardModel.casObject;
