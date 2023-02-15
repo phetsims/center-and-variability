@@ -27,6 +27,7 @@ import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import TEmitter from '../../../../axon/js/TEmitter.js';
+import TModel from '../../../../joist/js/TModel.js';
 
 type SelfOptions = {
   tandem: Tandem;
@@ -38,7 +39,7 @@ export type CAVModelOptions = SelfOptions;
 // constants
 const HIGHLIGHT_ANIMATION_TIME_STEP = 0.25; // in seconds
 
-class CAVModel {
+class CAVModel implements TModel {
   public readonly objectGroup: PhetioGroup<CAVObject, [ CAVObjectType, StrictOmit<CAVObjectOptions, 'tandem'> ]>;
   public readonly objectType: CAVObjectType;
   public readonly isSortingDataProperty: BooleanProperty;
