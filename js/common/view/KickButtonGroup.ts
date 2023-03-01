@@ -53,7 +53,7 @@ class KickButtonGroup extends VBox {
       if ( multikick ) {
         model.numberOfRemainingKickableSoccerBallsProperty.link( numberOfRemainingKickableObjects => {
           const value = Math.max( Math.min( numberOfRemainingKickableObjects, numberToKick ), 1 );
-          content.text.text = StringUtils.fillIn( CenterAndVariabilityStrings.kickValue, { value: value } );
+          content.text.string = StringUtils.fillIn( CenterAndVariabilityStrings.kickValue, { value: value } );
         } );
       }
 

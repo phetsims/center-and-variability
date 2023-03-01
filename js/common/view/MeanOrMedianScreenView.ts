@@ -59,11 +59,11 @@ class MeanOrMedianScreenView extends SoccerScreenView {
     } );
 
     if ( options.isMedianScreen ) {
-      titleNode.text = CenterAndVariabilityStrings.distanceInMeters;
+      titleNode.string = CenterAndVariabilityStrings.distanceInMeters;
     }
     else {
       CAVConstants.PLOT_TYPE_PROPERTY.link( plotType => {
-        titleNode.text = plotType === PlotType.LINE_PLOT ? CenterAndVariabilityStrings.linePlot : CenterAndVariabilityStrings.dotPlot;
+        titleNode.string = plotType === PlotType.LINE_PLOT ? CenterAndVariabilityStrings.linePlot : CenterAndVariabilityStrings.dotPlot;
       } );
     }
 

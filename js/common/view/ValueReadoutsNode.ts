@@ -33,7 +33,7 @@ class ValueReadoutsNode extends VBox {
         maxWidth: 170
       } );
       valueProperty.link( value => {
-        text.text = StringUtils.fillIn( stringTemplate, {
+        text.string = StringUtils.fillIn( stringTemplate, {
           value: value === null ? CenterAndVariabilityStrings.valueUnknown : Utils.toFixed( value, 1 )
         } );
       } );

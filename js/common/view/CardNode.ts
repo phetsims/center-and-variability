@@ -52,7 +52,7 @@ class CardNode extends Node {
     } );
 
     cardModel.casObject.valueProperty.link( value => {
-      text.text = value + '';
+      text.string = value + '';
       text.center = rectangle.center;
     } );
 

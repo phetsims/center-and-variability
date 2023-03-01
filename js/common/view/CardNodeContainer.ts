@@ -333,7 +333,7 @@ class CardNodeContainer extends Node {
     model.medianValueProperty.link( medianValue => {
 
       // TODO-PHET_IO: Re-center when the text changes since it could have a different width
-      medianTextNode.text = StringUtils.fillIn( CenterAndVariabilityStrings.medianEqualsValue, { value: model.medianValueProperty.value } );
+      medianTextNode.string = StringUtils.fillIn( CenterAndVariabilityStrings.medianEqualsValue, { value: model.medianValueProperty.value } );
     } );
 
     const updateMedianNode = () => {
