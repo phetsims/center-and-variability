@@ -1,4 +1,4 @@
-// Copyright 2022, University of Colorado Boulder
+// Copyright 2022-2023, University of Colorado Boulder
 
 /**
  * For the "Mean and Median" screen and the "Variability" screen, show the readouts on the left of the dot plot.
