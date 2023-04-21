@@ -255,31 +255,40 @@ class CAVModel implements TModel {
 
   private updateMeanAndMedian(): void {
     const objectsInDataSet = this.objectGroup.filter( casObject => casObject.valueProperty.value !== null );
-    const sortedObjects = _.sortBy( objectsInDataSet, casObject => casObject.valueProperty.value );
+    const objectsSortedByValue = _.sortBy( objectsInDataSet, casObject => casObject.valueProperty.value );
+    const objectsSortedByValueAndPosY = objectsSortedByValue.sort( ( object1: CAVObject, object2: CAVObject ) => {
+      return object1.valueProperty.value === object2.valueProperty.value ? object1.positionProperty.value.y - object2.positionProperty.value.y : 0;
+    } );
 
     // TODO: Why does this print twice at the same time?
     // console.log( values );
+
     const medianValues: number[] = [];
+    const medianObjectIndices: number[] = [];
 
     // Odd number of values, take the central value
-    if ( sortedObjects.length % 2 === 1 ) {
-      const midIndex = ( sortedObjects.length - 1 ) / 2;
-      this.medianValueProperty.value = sortedObjects[ midIndex ].valueProperty.value!;
+    if ( objectsSortedByValue.length % 2 === 1 ) {
+      const midIndex = ( objectsSortedByValue.length - 1 ) / 2;
+      this.medianValueProperty.value = objectsSortedByValue[ midIndex ].valueProperty.value!;
       medianValues.push( this.medianValueProperty.value );
+      medianObjectIndices.push( midIndex );
 
       assert && assert( !isNaN( this.medianValueProperty.value ) );
     }
-    else if ( sortedObjects.length % 2 === 0 && sortedObjects.length >= 2 ) {
+    else if ( objectsSortedByValue.length % 2 === 0 && objectsSortedByValue.length >= 2 ) {
 
       // Even number of values, average the two middle-most values
-      const mid1Index = ( sortedObjects.length - 2 ) / 2;
-      const mid2Index = ( sortedObjects.length - 0 ) / 2;
-      const mid1Value = sortedObjects[ mid1Index ].valueProperty.value!;
-      const mid2Value = sortedObjects[ mid2Index ].valueProperty.value!;
+      const mid1Index = ( objectsSortedByValue.length - 2 ) / 2;
+      const mid2Index = ( objectsSortedByValue.length - 0 ) / 2;
+      const mid1Value = objectsSortedByValue[ mid1Index ].valueProperty.value!;
+      const mid2Value = objectsSortedByValue[ mid2Index ].valueProperty.value!;
       this.medianValueProperty.value = ( mid1Value + mid2Value ) / 2;
 
       medianValues.push( mid1Value );
       medianValues.push( mid2Value );
+
+      medianObjectIndices.push( mid1Index );
+      medianObjectIndices.push( mid2Index );
 
       assert && assert( !isNaN( this.medianValueProperty.value ) );
     }
@@ -289,24 +298,7 @@ class CAVModel implements TModel {
       this.medianValueProperty.value = null;
     }
 
-    const medianObjects: CAVObject[] = [];
-
-    const takeTopObjects = ( median: number, numberToTake: number ) => {
-      const objectsWithMedianValue = this.objectGroup.filter( casObject => casObject.valueProperty.value === median );
-      const sortedObjects = _.sortBy( objectsWithMedianValue, casObject => casObject.positionProperty.value.y );
-      medianObjects.push( ...sortedObjects.slice( -numberToTake ) );
-    };
-
-    if ( medianValues.length === 1 ) {
-      takeTopObjects( medianValues[ 0 ], 1 );
-    }
-    else if ( medianValues.length === 2 && medianValues[ 0 ] === medianValues[ 1 ] ) {
-      takeTopObjects( medianValues[ 0 ], 2 );
-    }
-    else {
-      takeTopObjects( medianValues[ 0 ], 1 );
-      takeTopObjects( medianValues[ 1 ], 1 );
-    }
+    const medianObjects: CAVObject[] = objectsSortedByValueAndPosY.filter( ( casObject, index ) => medianObjectIndices.includes( index ) );
 
     this.objectGroup.forEach( object => {
       object.isMedianObjectProperty.value = medianObjects.includes( object );
@@ -315,8 +307,8 @@ class CAVModel implements TModel {
     if ( objectsInDataSet.length > 0 ) {
       this.meanValueProperty.value = _.mean( objectsInDataSet.map( casObject => casObject.valueProperty.value ) );
 
-      const min = sortedObjects[ 0 ].valueProperty.value!;
-      const max = sortedObjects[ sortedObjects.length - 1 ].valueProperty.value!;
+      const min = objectsSortedByValue[ 0 ].valueProperty.value!;
+      const max = objectsSortedByValue[ objectsSortedByValue.length - 1 ].valueProperty.value!;
       this.dataRangeProperty.value = new Range( min, max );
     }
     else {
