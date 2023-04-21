@@ -23,7 +23,6 @@ class MeanAndMedianScreenView extends MeanOrMedianScreenView {
   public constructor( model: MeanAndMedianModel, providedOptions: MeanAndMedianScreenViewOptions ) {
 
     const options = optionize<MeanAndMedianScreenViewOptions, EmptySelfOptions, MeanOrMedianScreenViewOptions>()( {
-      // TODO-TS: Why are isMedianScreen and questionBarOptions optional here? see https://github.com/phetsims/center-and-variability/issues/142
       isMedianScreen: false,
       questionBarOptions: {
         barFill: CAVColors.meanAndMedianQuestionBarFillColorProperty,
