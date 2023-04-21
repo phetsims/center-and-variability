@@ -8,8 +8,6 @@
  */
 
 import optionize from '../../../../phet-core/js/optionize.js';
-import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import Range from '../../../../dot/js/Range.js';
 import Property from '../../../../axon/js/Property.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
@@ -19,10 +17,10 @@ import { HBox, TColor, Text } from '../../../../scenery/js/imports.js';
 import CAVModel from '../model/CAVModel.js';
 import CAVConstants from '../CAVConstants.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import PredictionNode from './PredictionNode.js';
 import CAVColors from '../CAVColors.js';
 import NumberLineNode from './NumberLineNode.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import PredictionThumbNode from './PredictionThumbNode.js';
 
 type SelfOptions = {
   includeMedian?: boolean;
@@ -61,13 +59,7 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
             // TODO: this will be odd to a11y because both buttons have the same text.  Do we have alt text for the icons?  Or maybe we need alt text for the entire checkbox?
             new Text( string, TEXT_OPTIONS ),
-            new PredictionNode( new Property<number>( 1 ), ModelViewTransform2.createIdentity(), new Range( 1, 16 ), {
-              pickable: false,
-              maxHeight: 20,
-              tandem: Tandem.OPT_OUT,
-              color: color,
-              roundToInterval: null
-            } )
+            new PredictionThumbNode( { color: color, maxHeight: 20, pickable: false } )
           ]
         } ),
         property: property,

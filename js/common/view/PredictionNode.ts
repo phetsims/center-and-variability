@@ -8,52 +8,34 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import { DragListener, Node, NodeOptions, TColor } from '../../../../scenery/js/imports.js';
+import { DragListener, Node, NodeOptions } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Property from '../../../../axon/js/Property.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
-import ShadedSphereNode from '../../../../scenery-phet/js/ShadedSphereNode.js';
-import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
-import CAVColors from '../CAVColors.js';
-import CAVConstants from '../CAVConstants.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import PredictionThumbNode, { PredictionThumbNodeOptions } from './PredictionThumbNode.js';
+import AccessibleSlider, { AccessibleSliderOptions } from '../../../../sun/js/accessibility/AccessibleSlider.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 type SelfOptions = {
-  color: TColor;
+  predictionThumbNodeOptions: PredictionThumbNodeOptions;
 
   // Round to the nearest specified number, or, if null, there is no rounding. Mean is continuous, median is rounded to 0.5
   roundToInterval: number | null;
 };
+type ParentOptions = AccessibleSliderOptions & NodeOptions;
+export type PredictionSliderOptions = SelfOptions & WithRequired<ParentOptions, 'tandem'>;
 
-export type PredictionNodeOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
-
-class PredictionNode extends Node {
+class PredictionNode extends AccessibleSlider( Node, 0 ) {
 
   public constructor( predictionProperty: Property<number>, modelViewTransform: ModelViewTransform2, dragRange: Range,
-                      providedOptions: PredictionNodeOptions ) {
+                      providedOptions: PredictionSliderOptions ) {
 
-    const shadedSphereNode = new ShadedSphereNode( 16, {
-
-      // TODO-DESIGN: This looks more orange in the mockup.  Use colorblind red?
-      mainColor: providedOptions.color,
-      stroke: CAVColors.arrowStrokeProperty,
-      lineWidth: CAVConstants.ARROW_LINE_WIDTH
-    } );
-
-    // TODO-DESIGN: The mockup shows different arrowheads.
-    const arrowNode = new ArrowNode( 0, 0, 0, -50, {
-      headHeight: 10,
-      headWidth: 14,
-      tailWidth: 2,
-      fill: providedOptions.color,
-      stroke: CAVColors.arrowStrokeProperty,
-      lineWidth: CAVConstants.ARROW_LINE_WIDTH
-    } );
-    const options = optionize<PredictionNodeOptions, SelfOptions, NodeOptions>()( {
-      children: [ arrowNode, shadedSphereNode ],
+    const thumbNode = new PredictionThumbNode( providedOptions.predictionThumbNodeOptions );
+    const options = optionize<PredictionSliderOptions, SelfOptions, ParentOptions>()( {
+      children: [ thumbNode ],
       cursor: 'pointer'
     }, providedOptions );
 

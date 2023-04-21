@@ -28,6 +28,8 @@ import CAVColors from '../CAVColors.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DragIndicatorArrowNode from './DragIndicatorArrowNode.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import Property from '../../../../axon/js/Property.js';
+import Range from '../../../../dot/js/Range.js';
 
 type SelfOptions = {
 
@@ -197,18 +199,24 @@ class CAVScreenView extends ScreenView {
     model.isShowingPlayAreaMedianProperty.link( updateMedianNode );
 
     this.medianPredictionNode = new PredictionNode( model.medianPredictionProperty, this.modelViewTransform, model.physicalRange, {
-      center: this.layoutBounds.center,
-      tandem: options.tandem.createTandem( 'medianPredictionNode' ),
-      color: CAVColors.medianColorProperty,
+      predictionThumbNodeOptions: {
+        color: CAVColors.medianColorProperty
+      },
+      valueProperty: model.medianPredictionProperty,
+      enabledRangeProperty: new Property<Range>( model.physicalRange ),
       roundToInterval: 0.5,
-      visibleProperty: model.isShowingMedianPredictionProperty
+      visibleProperty: model.isShowingMedianPredictionProperty,
+      tandem: options.tandem.createTandem( 'medianPredictionNode' )
     } );
     this.meanPredictionNode = new PredictionNode( model.meanPredictionProperty, this.modelViewTransform, model.physicalRange, {
-      center: this.layoutBounds.center,
-      tandem: options.tandem.createTandem( 'meanPredictionNode' ),
-      color: CAVColors.meanColorProperty,
+      predictionThumbNodeOptions: {
+        color: CAVColors.meanColorProperty
+      },
+      valueProperty: model.meanPredictionProperty,
+      enabledRangeProperty: new Property<Range>( model.physicalRange ),
       roundToInterval: null, // continuous
-      visibleProperty: model.isShowingMeanPredictionProperty
+      visibleProperty: model.isShowingMeanPredictionProperty,
+      tandem: options.tandem.createTandem( 'meanPredictionNode' )
     } );
 
     this.resetAllButton = new ResetAllButton( {
