@@ -40,7 +40,7 @@ class SoccerPlayer extends PhetioObject {
   // Also used to determine the artwork for rendering the SoccerPlayerNode
   public readonly initialPlaceInLine: number;
 
-  public timestampWhenPoisedBegan: number;
+  public timestampWhenPoisedBegan: number | null;
 
   public constructor( placeInLine: number, providedOptions: SoccerPlayerOptions ) {
 
@@ -58,7 +58,7 @@ class SoccerPlayer extends PhetioObject {
 
     this.initialPlaceInLine = placeInLine;
 
-    this.timestampWhenPoisedBegan = -1;  // Not yet poised.  TODO: use null for this case?  See https://github.com/phetsims/center-and-variability/issues/59
+    this.timestampWhenPoisedBegan = null;
   }
 
   public reset(): void {

@@ -271,7 +271,8 @@ class SoccerModel extends CAVModel {
 
       // How long has the front player been poised?
       if ( frontPlayer.poseProperty.value === Pose.POISED_TO_KICK ) {
-        const elapsedTime = this.timeProperty.value - frontPlayer.timestampWhenPoisedBegan;
+        assert && assert( typeof frontPlayer.timestampWhenPoisedBegan === 'number', 'timestampWhenPoisedBegan should be a number' );
+        const elapsedTime = this.timeProperty.value - frontPlayer.timestampWhenPoisedBegan!;
         if ( elapsedTime > 0.075 ) {
 
           const casObject = this.nextBallToKickProperty.value!; // TODO: Probably? See https://github.com/phetsims/center-and-variability/issues/59
