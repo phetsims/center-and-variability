@@ -23,7 +23,7 @@ import TopRepresentationCheckboxGroup, { TopRepresentationCheckboxGroupOptions }
 import BottomRepresentationCheckboxGroup, { BottomRepresentationCheckboxGroupOptions } from './BottomRepresentationCheckboxGroup.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
-import PredictionNode from './PredictionNode.js';
+import PredictionSlider from './PredictionSlider.js';
 import CAVColors from '../CAVColors.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DragIndicatorArrowNode from './DragIndicatorArrowNode.js';
@@ -61,8 +61,8 @@ class CAVScreenView extends ScreenView {
   // TODO: investigate if this is needed
   protected readonly contentLayer: Node;
 
-  protected readonly medianPredictionNode: PredictionNode;
-  protected readonly meanPredictionNode: PredictionNode;
+  protected readonly medianPredictionNode: PredictionSlider;
+  protected readonly meanPredictionNode: PredictionSlider;
 
   public constructor( model: CAVModel, modelViewTransform: ModelViewTransform2, providedOptions: CAVScreenViewOptions ) {
     const options = optionize<CAVScreenViewOptions,
@@ -198,7 +198,7 @@ class CAVScreenView extends ScreenView {
     model.objectChangedEmitter.addListener( updateMedianNode );
     model.isShowingPlayAreaMedianProperty.link( updateMedianNode );
 
-    this.medianPredictionNode = new PredictionNode( model.medianPredictionProperty, this.modelViewTransform, model.physicalRange, {
+    this.medianPredictionNode = new PredictionSlider( model.medianPredictionProperty, this.modelViewTransform, model.physicalRange, {
       predictionThumbNodeOptions: {
         color: CAVColors.medianColorProperty
       },
@@ -208,7 +208,7 @@ class CAVScreenView extends ScreenView {
       visibleProperty: model.isShowingMedianPredictionProperty,
       tandem: options.tandem.createTandem( 'medianPredictionNode' )
     } );
-    this.meanPredictionNode = new PredictionNode( model.meanPredictionProperty, this.modelViewTransform, model.physicalRange, {
+    this.meanPredictionNode = new PredictionSlider( model.meanPredictionProperty, this.modelViewTransform, model.physicalRange, {
       predictionThumbNodeOptions: {
         color: CAVColors.meanColorProperty
       },
