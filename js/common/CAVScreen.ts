@@ -14,6 +14,7 @@ import centerAndVariability from '../centerAndVariability.js';
 import CAVModel from './model/CAVModel.js';
 import CAVScreenView from './view/CAVScreenView.js';
 import PickRequired from '../../../phet-core/js/types/PickRequired.js';
+import SliderControlsAndBasicActionsKeyboardHelpContent from '../../../scenery-phet/js/keyboard/help/SliderControlsAndBasicActionsKeyboardHelpContent.js';
 
 type SelfOptions = EmptySelfOptions;
 export type CAVScreenOptions = SelfOptions & ScreenOptions & PickRequired<ScreenOptions, 'tandem'>;
@@ -23,7 +24,8 @@ class CAVScreen<M extends CAVModel, V extends CAVScreenView> extends Screen<M, V
   public constructor( createModel: () => M, createView: ( m: M ) => V, providedOptions?: CAVScreenOptions ) {
 
     const options = optionize<CAVScreenOptions, SelfOptions, ScreenOptions>()( {
-      backgroundColorProperty: CAVColors.screenBackgroundColorProperty
+      backgroundColorProperty: CAVColors.screenBackgroundColorProperty,
+      createKeyboardHelpNode: () => new SliderControlsAndBasicActionsKeyboardHelpContent()
     }, providedOptions );
 
     super( createModel, createView, options );
