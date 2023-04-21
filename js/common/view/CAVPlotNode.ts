@@ -28,6 +28,9 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 type SelfOptions = EmptySelfOptions;
 export type CAVPlotOptions = NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
+// Prevent the median bar node from going off the top of the accordion box
+const MARGIN_TO_TOP_OF_ACCORDION_BOX = 4;
+
 class CAVPlotNode extends Node {
 
   private readonly dotLayer: Node;
@@ -144,8 +147,8 @@ class CAVPlotNode extends Node {
 
         // assumes all of the dots have the same radius
         // TODO: do we need to know notch height here?
-        const barY = modelViewTransform.modelToViewY( highestDot!.positionProperty.value.y ) -
-                     dotRadius - MARGIN_Y - MedianBarNode.NOTCH_HEIGHT;
+        const barY = Math.max( modelViewTransform.modelToViewY( highestDot!.positionProperty.value.y ) -
+                               dotRadius - MARGIN_Y - MedianBarNode.NOTCH_HEIGHT, MARGIN_TO_TOP_OF_ACCORDION_BOX );
 
         const rightmostDot = sortedDots[ sortedDots.length - 1 ];
         assert && assert( leftmostDot.valueProperty.value !== null );
