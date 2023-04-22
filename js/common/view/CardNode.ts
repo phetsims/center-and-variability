@@ -84,7 +84,7 @@ export default class CardNode extends Node {
       start: () => {
         this.moveToFront();
       },
-      // TODO-UX: This emits for dragging the leftmost card to the left
+      // TODO-UX: This emits for dragging the leftmost card to the left, see https://github.com/phetsims/center-and-variability/issues/150
       drag: ( event, listener ) => this.dragDistanceEmitter.emit( Math.abs( listener.modelDelta.x ) )
     } );
     this.addInputListener( this.dragListener );

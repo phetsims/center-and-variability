@@ -16,7 +16,7 @@ export default class CAVObjectType extends EnumerationValue {
   public static readonly DATA_POINT = new CAVObjectType( 1 );
   public static readonly SOCCER_BALL = new CAVObjectType( 0.3 );
 
-  // TODO: This term is confusing because sometimes these are rendered as 'x' marks
+  // TODO: This term is confusing because sometimes these are rendered as 'x' marks. Check all usages--sometimes it is in a dot plot and sometimes a line plot
   public static readonly DOT = new CAVObjectType( 0.127 );
 
   public static readonly enumeration = new Enumeration( CAVObjectType );

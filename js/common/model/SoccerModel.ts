@@ -311,11 +311,7 @@ export default class SoccerModel extends CAVModel {
     this.timeWhenLastBallWasKickedProperty.reset();
     this.ballPlayerMap.clear();
     this.soccerPlayerGroup.clear();
-
-    // TODO: SR: super.clearData() is called multiple times from reset.
-    // SR: This could be split up, but in my opinion it is clear and safe.  Maybe best to call it twice
-    super.clearData();
-
+    super.clearData(); // NOTE: clearData is called twice, but that's not a problem
     this.populateSoccerPlayerGroup();
     this.nextBallToKickProperty.value = this.createBall();
   }
