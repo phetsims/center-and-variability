@@ -13,7 +13,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VerticalCheckboxGroup, { VerticalCheckboxGroupItem, VerticalCheckboxGroupOptions } from '../../../../sun/js/VerticalCheckboxGroup.js';
-import { HBox, TColor, Text } from '../../../../scenery/js/imports.js';
+import { GridBox, Node, TColor, Text } from '../../../../scenery/js/imports.js';
 import CAVModel from '../model/CAVModel.js';
 import CAVConstants from '../CAVConstants.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
@@ -54,13 +54,15 @@ export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxG
     const createPredictionItem = ( property: Property<boolean>, stringProperty: LinkableProperty<string>, color: TColor, spacing: number,
                                    tandemName: string ) => {
       return {
-        createNode: ( tandem: Tandem ) => new HBox( {
+        createNode: ( tandem: Tandem ) => new GridBox( {
           spacing: spacing,
+          stretch: true,
+          grow: 1,
           children: [
 
             // TODO: this will be odd to a11y because both buttons have the same text.  Do we have alt text for the icons?  Or maybe we need alt text for the entire checkbox?
-            new Text( stringProperty, TEXT_OPTIONS ),
-            new PredictionThumbNode( { color: color, maxHeight: 20, pickable: false } )
+            new Node( { children: [ new Text( stringProperty, TEXT_OPTIONS ) ], layoutOptions: { xAlign: 'left' } } ),
+            new PredictionThumbNode( { color: color, maxHeight: 20, pickable: false, layoutOptions: { xAlign: 'right' } } )
           ]
         } ),
         property: property,
@@ -78,11 +80,13 @@ export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxG
     options.includeMean && items.push( {
 
       // TODO: Align group to center align the icons
-      createNode: ( tandem: Tandem ) => new HBox( {
+      createNode: ( tandem: Tandem ) => new GridBox( {
         spacing: 24.5,
+        stretch: true,
+        grow: 1,
         children: [
-          new Text( CenterAndVariabilityStrings.meanStringProperty, TEXT_OPTIONS ),
-          NumberLineNode.createMeanIndicatorNode( true )
+          new Node( { children: [ new Text( CenterAndVariabilityStrings.meanStringProperty, TEXT_OPTIONS ) ], layoutOptions: { xAlign: 'left' } } ),
+          NumberLineNode.createMeanIndicatorNode( true, true )
         ]
       } ),
       property: model.isShowingPlayAreaMeanProperty,
@@ -91,10 +95,12 @@ export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxG
     options.includeMedian && items.push( {
 
       // TODO: Align group to center align the icons
-      createNode: ( tandem: Tandem ) => new HBox( {
+      createNode: ( tandem: Tandem ) => new GridBox( {
         spacing: 14,
+        stretch: true,
+        grow: 1,
         children: [
-          new Text( CenterAndVariabilityStrings.medianStringProperty, TEXT_OPTIONS ),
+          new Node( { children: [ new Text( CenterAndVariabilityStrings.medianStringProperty, TEXT_OPTIONS ) ], layoutOptions: { xAlign: 'left' } } ),
 
           // TODO: Factor out?  See playAreaMedianIndicatorNode
           new ArrowNode( 0, 0, 0, 27, {
@@ -103,7 +109,10 @@ export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxG
             lineWidth: CAVConstants.ARROW_LINE_WIDTH,
             headHeight: 12,
             headWidth: 18,
-            maxHeight: 20
+            maxHeight: 20,
+            layoutOptions: {
+              xAlign: 'right'
+            }
           } )
         ]
       } ),

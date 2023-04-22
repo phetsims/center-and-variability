@@ -110,7 +110,7 @@ export default class NumberLineNode extends Node {
       new Bounds2( 0, -width, width, width )
     );
 
-    const meanIndicatorNode = NumberLineNode.createMeanIndicatorNode( options.includeMeanStroke );
+    const meanIndicatorNode = NumberLineNode.createMeanIndicatorNode( options.includeMeanStroke, false );
     this.addChild( meanIndicatorNode );
 
     Multilink.multilink( [ meanValueProperty, isShowingMeanIndicatorProperty ],
@@ -124,7 +124,7 @@ export default class NumberLineNode extends Node {
     this.mutate( options );
   }
 
-  public static createMeanIndicatorNode( includeStroke: boolean ): Node {
+  public static createMeanIndicatorNode( includeStroke: boolean, isIcon: boolean ): Node {
     const TRIANGLE_LENGTH = 15;
     const TRIANGLE_ALTITUDE = 13;
 
@@ -136,11 +136,15 @@ export default class NumberLineNode extends Node {
       .lineToRelative( TRIANGLE_LENGTH, 0 )
       .close();
 
-    return new Path( TRIANGLE_SHAPE, {
+    const path = new Path( TRIANGLE_SHAPE, {
       fill: CAVColors.meanColorProperty,
       stroke: includeStroke ? CAVColors.arrowStrokeProperty : null,
       lineWidth: CAVConstants.ARROW_LINE_WIDTH
     } );
+
+    const node = isIcon ? path : new Node( { children: [ path ], layoutOptions: { xAlign: 'left' } } );
+
+    return node;
   }
 }
 

@@ -73,7 +73,7 @@ export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGrou
               } ),
 
               // Triangle
-              NumberLineNode.createMeanIndicatorNode( false )
+              NumberLineNode.createMeanIndicatorNode( false, true )
             ]
           } )
         ]
