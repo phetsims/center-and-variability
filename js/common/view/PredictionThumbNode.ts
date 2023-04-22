@@ -1,4 +1,4 @@
-// Copyright 2022, University of Colorado Boulder
+// Copyright 2023, University of Colorado Boulder
 /**
  * The thumb node for the PreditionSlider. Is made up of an Arrow and ShadedSphere.
  *
