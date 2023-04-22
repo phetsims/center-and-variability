@@ -36,7 +36,9 @@ export default class VariabilityScreenView extends MeanOrMedianScreenView {
           barStyle: 'continuous',
           arrowScale: 0.75
         },
-        showMedianCheckboxIcon: true
+        showMedianCheckboxIcon: false,
+        includeMean: false,
+        includeMedian: false
       }
     }, providedOptions );
 
