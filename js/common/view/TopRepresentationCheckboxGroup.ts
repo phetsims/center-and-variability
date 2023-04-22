@@ -52,7 +52,7 @@ export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGrou
 
     const items: VerticalCheckboxGroupItem[] = [];
     options.includeSortData && items.push( {
-      createNode: ( tandem: Tandem ) => new Text( CenterAndVariabilityStrings.sortData, TEXT_OPTIONS ),
+      createNode: ( tandem: Tandem ) => new Text( CenterAndVariabilityStrings.sortDataStringProperty, TEXT_OPTIONS ),
       property: model.isSortingDataProperty,
       tandemName: 'sortDataCheckbox'
     } );
@@ -62,7 +62,7 @@ export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGrou
         // TODO: align icons
         spacing: 24.5,
         children: [
-          new Text( CenterAndVariabilityStrings.mean, TEXT_OPTIONS ),
+          new Text( CenterAndVariabilityStrings.meanStringProperty, TEXT_OPTIONS ),
           new Node( {
             children: [
 
@@ -85,7 +85,7 @@ export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGrou
       createNode: ( tandem: Tandem ) => new HBox( {
         spacing: 12,
         children: [
-          new Text( CenterAndVariabilityStrings.median, TEXT_OPTIONS ),
+          new Text( CenterAndVariabilityStrings.medianStringProperty, TEXT_OPTIONS ),
           ...options.showMedianCheckboxIcon ? [
             new MedianBarNode( options.medianBarIconOptions )
               .setMedianBarShape( 0, 0, ICON_WIDTH / 2 - LINE_WIDTH / 2, ICON_WIDTH - LINE_WIDTH, true )

@@ -76,7 +76,7 @@ export default class CAVPlotNode extends Node {
       } );
     backgroundNode.addChild( numberLineNode );
 
-    backgroundNode.addChild( new Text( CenterAndVariabilityStrings.distanceInMeters, {
+    backgroundNode.addChild( new Text( CenterAndVariabilityStrings.distanceInMetersStringProperty, {
 
       // TODO-UX: This may be asymmetrical if it accounts for edge labels
       centerX: numberLineNode.centerX,

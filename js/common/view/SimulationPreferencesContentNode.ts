@@ -22,7 +22,7 @@ export default class SimulationPreferencesContentNode extends VBox {
   // TODO: Tandem in the options?  And use tandem in the file?
   public constructor( tandem: Tandem ) {
 
-    const title = new Text( CenterAndVariabilityStrings.plotType, {
+    const title = new Text( CenterAndVariabilityStrings.plotTypeStringProperty, {
       font: PreferencesDialog.PANEL_SECTION_LABEL_FONT
     } );
 
@@ -30,11 +30,11 @@ export default class SimulationPreferencesContentNode extends VBox {
       font: PreferencesDialog.CONTENT_FONT
     };
     const radioButtonGroup = new VerticalAquaRadioButtonGroup<PlotType>( CAVConstants.PLOT_TYPE_PROPERTY, [ {
-      createNode: () => new Text( CenterAndVariabilityStrings.linePlot, TEXT_OPTIONS ),
+      createNode: () => new Text( CenterAndVariabilityStrings.linePlotStringProperty, TEXT_OPTIONS ),
       value: PlotType.LINE_PLOT,
       tandemName: 'linePlotRadioButton'
     }, {
-      createNode: () => new Text( CenterAndVariabilityStrings.dotPlot, TEXT_OPTIONS ),
+      createNode: () => new Text( CenterAndVariabilityStrings.dotPlotStringProperty, TEXT_OPTIONS ),
       value: PlotType.DOT_PLOT,
       tandemName: 'dotPlotRadioButton'
     } ], {

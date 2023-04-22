@@ -22,6 +22,7 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import PlotType from '../model/PlotType.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 
 type SelfOptions = {
   isMedianScreen: boolean;
@@ -53,19 +54,33 @@ export default class MeanOrMedianScreenView extends SoccerScreenView {
       } );
     }
 
-    const titleNode = new Text( '', {
+    const distanceInMetersTitleNode = new Text( CenterAndVariabilityStrings.distanceInMetersStringProperty, {
       font: new PhetFont( 16 ),
-      maxWidth: 300
+      maxWidth: 300,
+      visible: options.isMedianScreen
     } );
 
-    if ( options.isMedianScreen ) {
-      titleNode.string = CenterAndVariabilityStrings.distanceInMeters;
-    }
-    else {
-      CAVConstants.PLOT_TYPE_PROPERTY.link( plotType => {
-        titleNode.string = plotType === PlotType.LINE_PLOT ? CenterAndVariabilityStrings.linePlot : CenterAndVariabilityStrings.dotPlot;
-      } );
-    }
+
+    const linePlotTitleNodeVisibleProperty = new BooleanProperty( false );
+    const dotPlotTitleNodeVisibleProperty = new BooleanProperty( false );
+    !options.isMedianScreen && CAVConstants.PLOT_TYPE_PROPERTY.link( plotType => {
+      linePlotTitleNodeVisibleProperty.value = plotType === PlotType.LINE_PLOT;
+      dotPlotTitleNodeVisibleProperty.value = plotType === PlotType.DOT_PLOT;
+    } );
+
+    const linePlotTitleNode = new Text( CenterAndVariabilityStrings.linePlotStringProperty, {
+      font: new PhetFont( 16 ),
+      maxWidth: 300,
+      visibleProperty: linePlotTitleNodeVisibleProperty
+    } );
+
+    const dotPlotTitleNode = new Text( CenterAndVariabilityStrings.dotPlotStringProperty, {
+      font: new PhetFont( 16 ),
+      maxWidth: 300,
+      visibleProperty: dotPlotTitleNodeVisibleProperty
+    } );
+
+    const titleNode = new Node( { children: [ distanceInMetersTitleNode, linePlotTitleNode, dotPlotTitleNode ] } );
 
     this.accordionBox = new CAVAccordionBox( this.model, this.accordionBoxContents, this.topCheckboxGroup,
       titleNode,

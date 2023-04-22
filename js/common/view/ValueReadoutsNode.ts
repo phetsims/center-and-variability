@@ -17,6 +17,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import CAVColors from '../CAVColors.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import LinkableProperty from '../../../../axon/js/LinkableProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 export type ValueReadoutNodeOptions = SelfOptions & VBoxOptions;
@@ -26,7 +27,7 @@ export default class ValueReadoutsNode extends VBox {
   public constructor( model: CAVModel, providedOptions?: ValueReadoutNodeOptions ) {
 
     const createReadoutText = ( valueProperty: TReadOnlyProperty<number | null>, visibleProperty: TReadOnlyProperty<boolean>,
-                                stringTemplate: string, fill: TPaint ) => {
+                                stringTemplate: LinkableProperty<string>, fill: TPaint ) => {
       const text = new Text( '', {
         fill: fill,
         font: new PhetFont( 16 ),
@@ -34,7 +35,7 @@ export default class ValueReadoutsNode extends VBox {
       } );
       valueProperty.link( value => {
         text.string = StringUtils.fillIn( stringTemplate, {
-          value: value === null ? CenterAndVariabilityStrings.valueUnknown : Utils.toFixed( value, 1 )
+          value: value === null ? CenterAndVariabilityStrings.valueUnknownStringProperty : Utils.toFixed( value, 1 )
         } );
       } );
 
@@ -44,10 +45,10 @@ export default class ValueReadoutsNode extends VBox {
     };
 
     const meanText = createReadoutText( model.meanValueProperty, model.isShowingTopMeanProperty,
-      CenterAndVariabilityStrings.meanEqualsValue, CAVColors.meanColorProperty );
+      CenterAndVariabilityStrings.meanEqualsValueStringProperty, CAVColors.meanColorProperty );
 
     const medianText = createReadoutText( model.medianValueProperty, model.isShowingTopMedianProperty,
-      CenterAndVariabilityStrings.medianEqualsValue, CAVColors.medianColorProperty );
+      CenterAndVariabilityStrings.medianEqualsValueStringProperty, CAVColors.medianColorProperty );
 
     const options = optionize<ValueReadoutNodeOptions, SelfOptions, VBoxOptions>()( {
       align: 'left',

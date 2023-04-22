@@ -21,6 +21,7 @@ import CAVColors from '../CAVColors.js';
 import NumberLineNode from './NumberLineNode.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import PredictionThumbNode from './PredictionThumbNode.js';
+import LinkableProperty from '../../../../axon/js/LinkableProperty.js';
 
 type SelfOptions = {
   includeMedian?: boolean;
@@ -50,7 +51,7 @@ export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxG
 
     const items: VerticalCheckboxGroupItem[] = [];
 
-    const createPredictionItem = ( property: Property<boolean>, string: string, color: TColor, spacing: number,
+    const createPredictionItem = ( property: Property<boolean>, stringProperty: LinkableProperty<string>, color: TColor, spacing: number,
                                    tandemName: string ) => {
       return {
         createNode: ( tandem: Tandem ) => new HBox( {
@@ -58,7 +59,7 @@ export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxG
           children: [
 
             // TODO: this will be odd to a11y because both buttons have the same text.  Do we have alt text for the icons?  Or maybe we need alt text for the entire checkbox?
-            new Text( string, TEXT_OPTIONS ),
+            new Text( stringProperty, TEXT_OPTIONS ),
             new PredictionThumbNode( { color: color, maxHeight: 20, pickable: false } )
           ]
         } ),
@@ -68,10 +69,10 @@ export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxG
     };
 
     options.includePredictMean && items.push( createPredictionItem( model.isShowingMeanPredictionProperty,
-      CenterAndVariabilityStrings.predictMean, CAVColors.meanColorProperty, 20.3, 'predictMeanCheckbox'
+      CenterAndVariabilityStrings.predictMeanStringProperty, CAVColors.meanColorProperty, 20.3, 'predictMeanCheckbox'
     ) );
     options.includePredictMedian && items.push( createPredictionItem( model.isShowingMedianPredictionProperty,
-      CenterAndVariabilityStrings.predictMedian, CAVColors.medianColorProperty, 8, 'predictMedianCheckbox'
+      CenterAndVariabilityStrings.predictMedianStringProperty, CAVColors.medianColorProperty, 8, 'predictMedianCheckbox'
     ) );
 
     options.includeMean && items.push( {
@@ -80,7 +81,7 @@ export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxG
       createNode: ( tandem: Tandem ) => new HBox( {
         spacing: 24.5,
         children: [
-          new Text( CenterAndVariabilityStrings.mean, TEXT_OPTIONS ),
+          new Text( CenterAndVariabilityStrings.meanStringProperty, TEXT_OPTIONS ),
           NumberLineNode.createMeanIndicatorNode( true )
         ]
       } ),
@@ -93,7 +94,7 @@ export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxG
       createNode: ( tandem: Tandem ) => new HBox( {
         spacing: 14,
         children: [
-          new Text( CenterAndVariabilityStrings.median, TEXT_OPTIONS ),
+          new Text( CenterAndVariabilityStrings.medianStringProperty, TEXT_OPTIONS ),
 
           // TODO: Factor out?  See playAreaMedianIndicatorNode
           new ArrowNode( 0, 0, 0, 27, {

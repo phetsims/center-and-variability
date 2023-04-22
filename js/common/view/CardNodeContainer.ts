@@ -142,7 +142,7 @@ export default class CardNodeContainer extends Node {
       }
     } );
 
-    const dataSortedTextNode = new Text( CenterAndVariabilityStrings.youSortedTheData, {
+    const dataSortedTextNode = new Text( CenterAndVariabilityStrings.youSortedTheDataStringProperty, {
       font: new PhetFont( 15 )
     } );
     const dataSortedNode = new Panel( dataSortedTextNode, {
@@ -327,7 +327,7 @@ export default class CardNodeContainer extends Node {
     model.medianValueProperty.link( medianValue => {
 
       // TODO-PHET_IO: Re-center when the text changes since it could have a different width
-      medianTextNode.string = StringUtils.fillIn( CenterAndVariabilityStrings.medianEqualsValue, { value: model.medianValueProperty.value } );
+      medianTextNode.string = StringUtils.fillIn( CenterAndVariabilityStrings.medianEqualsValueStringProperty, { value: model.medianValueProperty.value } );
     } );
 
     const updateMedianNode = () => {
