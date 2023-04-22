@@ -45,7 +45,7 @@ export default class SoccerModel extends CAVModel {
   public readonly hasKickableSoccerBallsProperty: TReadOnlyProperty<boolean>;
 
   private readonly timeWhenLastBallWasKickedProperty: NumberProperty;
-  private readonly ballPlayerMap: Map<CAVObject, SoccerPlayer>; // TODO: Add to PhET-iO State
+  private readonly ballPlayerMap: Map<CAVObject, SoccerPlayer> = new Map<CAVObject, SoccerPlayer>(); // TODO: Add to PhET-iO State
   private readonly distributionProperty: Property<ReadonlyArray<number>>;
 
   public constructor( options: SoccerModelOptions ) {
@@ -77,8 +77,6 @@ export default class SoccerModel extends CAVModel {
       tandem: options.tandem.createTandem( 'nextBallToKickProperty' ),
       phetioValueType: NullableIO( ReferenceIO( CAVObject.CAVObjectIO ) )
     } );
-
-    this.ballPlayerMap = new Map();
 
     this.numberOfRemainingKickableSoccerBallsProperty = new DerivedProperty( [
       this.numberOfRemainingObjectsProperty,

@@ -53,10 +53,10 @@ export default class CAVObject extends PhetioObject {
   public readonly isShowingAnimationHighlightProperty: BooleanProperty;
   public readonly objectType: CAVObjectType;
   public readonly isFirstObject: boolean;
-  public readonly disposedEmitter: TEmitter;
+  public readonly disposedEmitter: TEmitter = new Emitter();
 
   // Where the object is animating to, or null if not yet animating
-  public targetX: number | null;
+  public targetX: number | null = null;
 
   // The value that participates in the data set.
   public valueProperty: Property<number | null>;
@@ -77,8 +77,8 @@ export default class CAVObject extends PhetioObject {
       isFirstObject: BooleanIO
     }
   } );
-  public readonly dragStartedEmitter: TEmitter;
-  public animation: Animation | null;
+  public readonly dragStartedEmitter: TEmitter = new Emitter();
+  public animation: Animation | null = null;
 
   public constructor( objectType: CAVObjectType, providedOptions: CAVObjectOptions ) {
 
@@ -94,9 +94,7 @@ export default class CAVObject extends PhetioObject {
     super( options );
 
     this.objectType = objectType;
-    this.targetX = null;
     this.isFirstObject = options.isFirstObject;
-    this.animation = null;
 
     this.positionProperty = new Vector2Property( options.position, {
       tandem: options.tandem.createTandem( 'positionProperty' )
@@ -121,8 +119,6 @@ export default class CAVObject extends PhetioObject {
     this.isShowingAnimationHighlightProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isShowingAnimationHighlightProperty' )
     } );
-    this.dragStartedEmitter = new Emitter();
-    this.disposedEmitter = new Emitter();
   }
 
   public step( dt: number ): void {

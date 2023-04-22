@@ -54,24 +54,27 @@ export default class CardNodeContainer extends Node {
 
   // Each card is associated with one "cell", no two cards can be associated with the same cell.  The leftmost cell is 0.
   // The cells linearly map to locations across the screen.
-  public readonly cardNodeCells: CardNode[];
+  public readonly cardNodeCells: CardNode[] = [];
 
   // Fires if the cardNodeCells may have changed
-  public readonly cardNodeCellsChangedEmitter: TEmitter;
+  public readonly cardNodeCellsChangedEmitter: TEmitter = new Emitter<[]>();
 
   private readonly model: CAVModel;
   private readonly cardNodeGroup: PhetioGroup<CardNode, [ CardModel ]>;
-  private readonly medianBarNode: MedianBarNode;
+  private readonly medianBarNode = new MedianBarNode( {
+    notchDirection: 'up',
+    barStyle: 'split'
+  } );
   private readonly dragIndicatorArrowNode: ArrowNode;
 
   // Indicates whether the user has ever dragged a card. It's used to hide the drag indicator arrow after
   // the user dragged a card
   private readonly hasDraggedCardProperty: TReadOnlyProperty<boolean>;
-  private readonly cardLayer: Node;
-  private isReadyForCelebration: boolean;
-  private remainingCelebrationAnimations: ( () => void )[];
-  private dataSortedNodeAnimation: Animation | null;
-  private wasSortedBefore: boolean;
+  private readonly cardLayer = new Node();
+  private isReadyForCelebration = false;
+  private remainingCelebrationAnimations: ( () => void )[] = [];
+  private dataSortedNodeAnimation: Animation | null = null;
+  private wasSortedBefore = true;
 
   public constructor( model: CAVModel, providedOptions: CardNodeContainerOptions ) {
 
@@ -83,8 +86,6 @@ export default class CardNodeContainer extends Node {
     super( options );
 
     this.model = model;
-    this.cardNodeCells = [];
-    this.cardNodeCellsChangedEmitter = new Emitter<[]>();
 
     // TODO-UX: maybe this should be converted to track distance for individual cards
     // Accumulated card drag distance, for purposes of hiding the drag indicator node
@@ -92,8 +93,6 @@ export default class CardNodeContainer extends Node {
     this.hasDraggedCardProperty = new DerivedProperty( [ totalDragDistanceProperty ], totalDragDistance => {
       return totalDragDistance > 15;
     } );
-
-    this.remainingCelebrationAnimations = [];
 
     this.cardNodeGroup = new PhetioGroup( ( tandem, cardModel ) => {
       return new CardNode( cardModel, new Vector2( 0, 0 ), () => this.getDragRange(), {
@@ -105,10 +104,6 @@ export default class CardNodeContainer extends Node {
       supportsDynamicState: false
     } );
 
-    this.medianBarNode = new MedianBarNode( {
-      notchDirection: 'up',
-      barStyle: 'split'
-    } );
     this.addChild( this.medianBarNode );
 
     const objectCreatedListener = ( casObject: CAVObject ) => {
@@ -153,8 +148,6 @@ export default class CardNodeContainer extends Node {
       visible: false
     } );
 
-    this.wasSortedBefore = true;
-
     // create a rotated linear gradient
     const gradientMargin = 20;
     const startPoint = new Vector2( dataSortedNode.left + gradientMargin, dataSortedNode.top + gradientMargin );
@@ -171,10 +164,7 @@ export default class CardNodeContainer extends Node {
 
     this.addChild( dataSortedNode );
 
-    this.cardLayer = new Node();
     this.addChild( this.cardLayer );
-
-    this.dataSortedNodeAnimation = null;
 
     model.cardModelGroup.elementCreatedEmitter.addListener( cardModel => {
 
@@ -373,8 +363,6 @@ export default class CardNodeContainer extends Node {
     model.medianValueProperty.link( updateMedianNode );
     model.isShowingTopMedianProperty.link( updateMedianNode );
     model.objectChangedEmitter.addListener( updateMedianNode );
-
-    this.isReadyForCelebration = false;
 
     this.model.resetEmitter.addListener( () => {
       totalDragDistanceProperty.reset();

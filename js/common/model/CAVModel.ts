@@ -57,7 +57,7 @@ export default class CAVModel implements TModel {
 
   public readonly includeCards: boolean;
   protected readonly maxNumberOfObjects: number;
-  public readonly physicalRange: Range;
+  public readonly physicalRange = new Range( 1, 15 );
 
   // This is the number that we can still add to the PhetioGroup
   protected readonly numberOfRemainingObjectsProperty: TReadOnlyProperty<number>;
@@ -68,7 +68,9 @@ export default class CAVModel implements TModel {
   public readonly dataRangeProperty: Property<Range | null>;
 
   // Signify whenever any object's value or position changes
-  public readonly objectChangedEmitter: TEmitter<[ CAVObject ]>;
+  public readonly objectChangedEmitter: TEmitter<[ CAVObject ]> = new Emitter<[ CAVObject ]>( {
+    parameters: [ { valueType: CAVObject } ]
+  } );
 
   // Null until the user has made a prediction.
   public readonly medianPredictionProperty: NumberProperty;
@@ -78,14 +80,12 @@ export default class CAVModel implements TModel {
 
   // Indicates how far the show median animation has progressed, or null if not animating. Not PhET-iO instrumented since
   // it represents a transient value.
-  private highlightAnimationIndex: number | null;
-  private lastHighlightAnimationStepTime: number;
+  private highlightAnimationIndex: number | null = null;
 
-  public readonly isMedianAnimationCompleteProperty: BooleanProperty;
-
-  // TODO: See if TypeScript 4.6 will let us initialize more things here
+  private lastHighlightAnimationStepTime = 0;
+  public readonly isMedianAnimationCompleteProperty = new BooleanProperty( false );
   protected readonly objectValueBecameNonNullEmitter: TEmitter<[ CAVObject ]>;
-  public readonly resetEmitter: TEmitter;
+  public readonly resetEmitter: TEmitter = new Emitter();
 
   public constructor( objectType: CAVObjectType, maxNumberOfObjects: number, providedOptions: CAVModelOptions ) {
 
@@ -130,8 +130,6 @@ export default class CAVModel implements TModel {
       phetioType: PhetioGroup.PhetioGroupIO( CardModel.CardModelIO ),
       tandem: options.includeCards ? options.tandem.createTandem( 'cardModelGroup' ) : Tandem.OPT_OUT
     } );
-
-    this.physicalRange = new Range( 1, 15 );
 
     this.isSortingDataProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isSortingDataProperty' )
@@ -179,11 +177,6 @@ export default class CAVModel implements TModel {
       tandem: options.tandem.createTandem( 'timeProperty' )
     } );
 
-    this.highlightAnimationIndex = null;
-    this.lastHighlightAnimationStepTime = 0;
-
-    this.isMedianAnimationCompleteProperty = new BooleanProperty( false );
-
     const updateMeanAndMedian = () => this.updateMeanAndMedian();
     this.isShowingPlayAreaMedianProperty.link( updateMeanAndMedian );
 
@@ -218,10 +211,6 @@ export default class CAVModel implements TModel {
       return this.maxNumberOfObjects - count;
     } );
 
-    this.objectChangedEmitter = new Emitter<[ CAVObject ]>( {
-      parameters: [ { valueType: CAVObject } ]
-    } );
-
     // Don't show animation on startup or when setting PhET-iO state
     this.isShowingTopMedianProperty.lazyLink( isShowingTopMedian => {
       if ( isShowingTopMedian ) {
@@ -246,8 +235,6 @@ export default class CAVModel implements TModel {
       parameters: [ { valueType: CAVObject } ]
     } );
     this.objectValueBecameNonNullEmitter.addListener( () => this.updateAnimation() );
-
-    this.resetEmitter = new Emitter();
   }
 
   private updateMeanAndMedian(): void {

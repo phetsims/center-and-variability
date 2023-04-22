@@ -50,16 +50,16 @@ export default class CAVScreenView extends ScreenView {
   protected readonly resetAllButton: ResetAllButton;
   protected readonly modelViewTransform: ModelViewTransform2;
   protected readonly model: CAVModel;
-  protected readonly frontObjectLayer: Node;
+  protected readonly frontObjectLayer = new Node();
 
   // TODO: We haven't enforced the "exactly half a ball should be occluded if anything is occluded" idea.
-  protected readonly backObjectLayer: Node;
+  protected readonly backObjectLayer = new Node();
   protected readonly playAreaMedianIndicatorNode: ArrowNode;
   protected readonly eraseButton: EraserButton;
 
   // Subclasses use this to add to for correct z-ordering and correct tab navigation order
   // TODO: investigate if this is needed
-  protected readonly contentLayer: Node;
+  protected readonly contentLayer = new Node();
 
   protected readonly medianPredictionNode: PredictionSlider;
   protected readonly meanPredictionNode: PredictionSlider;
@@ -91,12 +91,7 @@ export default class CAVScreenView extends ScreenView {
       supportsDynamicState: false
     } );
 
-    this.contentLayer = new Node();
-    this.backObjectLayer = new Node();
-
     this.addChild( this.contentLayer );
-
-    this.frontObjectLayer = new Node();
     this.addChild( this.frontObjectLayer );
 
     const map = new Map<CAVObject, CAVObjectNode>();

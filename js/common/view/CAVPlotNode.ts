@@ -33,8 +33,11 @@ const MARGIN_TO_TOP_OF_ACCORDION_BOX = 4;
 
 export default class CAVPlotNode extends Node {
 
-  private readonly dotLayer: Node;
-  private readonly medianBarNode: MedianBarNode;
+  private readonly dotLayer = new Node();
+  private readonly medianBarNode = new MedianBarNode( {
+    notchDirection: 'down',
+    barStyle: 'continuous'
+  } );
 
   public constructor( model: CAVModel, numberLineWidth: number, providedOptions?: CAVPlotOptions ) {
 
@@ -84,7 +87,6 @@ export default class CAVPlotNode extends Node {
       top: numberLineNode.bottom + 2,
       font: new PhetFont( 13 )
     } ) );
-    this.dotLayer = new Node();
     backgroundNode.addChild( this.dotLayer );
 
     // TODO: This overlaps with draggingEnabled
@@ -124,10 +126,6 @@ export default class CAVPlotNode extends Node {
       map.delete( casObject );
     } );
 
-    this.medianBarNode = new MedianBarNode( {
-      notchDirection: 'down',
-      barStyle: 'continuous'
-    } );
     this.addChild( this.medianBarNode );
 
     const updateMedianBarNode = () => {

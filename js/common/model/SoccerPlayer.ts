@@ -24,7 +24,7 @@ type SoccerPlayerOptions =
   & PickRequired<PhetioObjectOptions, 'tandem'>;
 
 export default class SoccerPlayer extends PhetioObject {
-  public readonly poseProperty: Property<Pose>;
+  public readonly poseProperty = new Property<Pose>( Pose.STANDING );
   public readonly placeInLineProperty: NumberProperty;
   public static readonly SoccerPlayerIO = new IOType( 'SoccerPlayerIO', {
     valueType: SoccerPlayer,
@@ -40,7 +40,7 @@ export default class SoccerPlayer extends PhetioObject {
   // Also used to determine the artwork for rendering the SoccerPlayerNode
   public readonly initialPlaceInLine: number;
 
-  public timestampWhenPoisedBegan: number | null;
+  public timestampWhenPoisedBegan: number | null = null;
 
   public constructor( placeInLine: number, providedOptions: SoccerPlayerOptions ) {
 
@@ -54,11 +54,8 @@ export default class SoccerPlayer extends PhetioObject {
     this.placeInLineProperty = new NumberProperty( placeInLine, {
       tandem: options.tandem.createTandem( 'placeInLineProperty' )
     } );
-    this.poseProperty = new Property<Pose>( Pose.STANDING );
 
     this.initialPlaceInLine = placeInLine;
-
-    this.timestampWhenPoisedBegan = null;
   }
 
   public reset(): void {

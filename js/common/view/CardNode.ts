@@ -31,11 +31,13 @@ export default class CardNode extends Node {
 
   // Emit how far the card has been dragged for purposes of hiding the drag indicator arrow when the user
   // has dragged a sufficient amount
-  public readonly dragDistanceEmitter: TEmitter<[ number ]>;
+  public readonly dragDistanceEmitter: TEmitter<[ number ]> = new Emitter<[ number ]>( {
+    parameters: [ { valueType: 'number' } ]
+  } );
 
   public readonly casObject: CAVObject;
-  public animation: Animation | null;
-  private animationTo: Vector2 | null;
+  public animation: Animation | null = null;
+  private animationTo: Vector2 | null = null;
 
   public static readonly CARD_WIDTH = 43;
 
@@ -71,15 +73,9 @@ export default class CardNode extends Node {
 
     this.casObject = cardModel.casObject;
 
-    this.animation = null;
-
     this.positionProperty.link( position => {
       const range = getDragRange();
       this.translation = new Vector2( range.constrainValue( position.x ), 0 );
-    } );
-
-    this.dragDistanceEmitter = new Emitter<[ number ]>( {
-      parameters: [ { valueType: 'number' } ]
     } );
 
     this.dragListener = new DragListener( {
@@ -94,8 +90,6 @@ export default class CardNode extends Node {
     this.addInputListener( this.dragListener );
 
     this.casObject.dragStartedEmitter.addListener( () => this.moveToFront() );
-
-    this.animationTo = null;
 
     this.addLinkedElement( cardModel, {
       tandem: options.tandem.createTandem( 'cardModel' )
