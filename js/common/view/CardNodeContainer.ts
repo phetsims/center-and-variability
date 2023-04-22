@@ -89,7 +89,11 @@ export default class CardNodeContainer extends Node {
 
     // TODO-UX: maybe this should be converted to track distance for individual cards, see https://github.com/phetsims/center-and-variability/issues/150
     // Accumulated card drag distance, for purposes of hiding the drag indicator node
-    const totalDragDistanceProperty = new NumberProperty( 0 );
+    const totalDragDistanceProperty = new NumberProperty( 0, {
+      tandem: options.tandem.createTandem( 'totalDragDistanceProperty' ),
+      phetioReadOnly: true,
+      phetioDocumentation: 'For PhET-iO internal use only. Accumulated card drag distance, for purposes of hiding the drag indicator node'
+    } );
     this.hasDraggedCardProperty = new DerivedProperty( [ totalDragDistanceProperty ], totalDragDistance => {
       return totalDragDistance > 15;
     } );
