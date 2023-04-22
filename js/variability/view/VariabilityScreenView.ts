@@ -12,24 +12,46 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
-import SoccerScreenView, { SoccerScreenViewOptions } from '../../common/view/SoccerScreenView.js';
+import { SoccerScreenViewOptions } from '../../common/view/SoccerScreenView.js';
 import CAVColors from '../../common/CAVColors.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
+import MeanOrMedianScreenView, { MeanOrMedianScreenViewOptions } from '../../common/view/MeanOrMedianScreenView.js';
+import { ManualConstraint } from '../../../../scenery/js/imports.js';
 
 type VariabilityScreenViewOptions = StrictOmit<SoccerScreenViewOptions, 'questionBarOptions'>;
 
-export default class VariabilityScreenView extends SoccerScreenView {
+export default class VariabilityScreenView extends MeanOrMedianScreenView {
 
   public constructor( model: VariabilityModel, providedOptions: VariabilityScreenViewOptions ) {
 
-    const options = optionize<VariabilityScreenViewOptions, EmptySelfOptions, SoccerScreenViewOptions>()( {
+    const options = optionize<VariabilityScreenViewOptions, EmptySelfOptions, MeanOrMedianScreenViewOptions>()( {
+      isMedianScreen: false,
       questionBarOptions: {
         barFill: CAVColors.variabilityQuestionBarFillColorProperty,
         questionString: CenterAndVariabilityStrings.variabilityQuestionStringProperty
+      },
+      topCheckboxGroupOptions: {
+        medianBarIconOptions: {
+          notchDirection: 'down',
+          barStyle: 'continuous',
+          arrowScale: 0.75
+        },
+        showMedianCheckboxIcon: true
       }
     }, providedOptions );
 
     super( model, options );
+
+    // NOTE: This assumes that the NumberLineNode in the play area and in the dot plot have the same characteristics:
+    // * Same font
+    // * Same offset and scale
+    // But given those assumptions, this code moves the dot plot so that its number line matches the play area one.
+    // TODO: Consider something more robust.  Using globalToLocal to exactly align based on the position of the tick marks
+    // TODO: Can this be combine in a parent class? See https://github.com/phetsims/center-and-variability/issues/152
+    ManualConstraint.create( this, [ this.playAreaNumberLineNode, this.accordionBoxContents ],
+      ( lowerNumberLineWrapper, contentsWrapper ) => {
+        contentsWrapper.x = lowerNumberLineWrapper.x;
+      } );
   }
 }
 
