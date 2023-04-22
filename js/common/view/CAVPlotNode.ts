@@ -54,10 +54,6 @@ export default class CAVPlotNode extends Node {
     // scale down in the y direction to support smaller object nodes
     const yScale = CAVObjectType.DOT.radius / model.objectType.radius;
 
-    // const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
-    //   new Bounds2( model.range.min, 0, model.range.max, 1 ),
-    //   new Bounds2( 0, numberLinePositionY - 14.84, 0 + numberLineWidth, numberLinePositionY )
-    // );
     // TODO: we currently define the y range with the x width because we are thinking of it as a square, with a stack of
     //  15 balls as the high point. Consider instead something like above, where we just base the y scaling on the height
     // of one ball.
