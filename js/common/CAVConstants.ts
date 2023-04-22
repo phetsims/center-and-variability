@@ -26,8 +26,7 @@ const CAVConstants = {
   SCREEN_VIEW_Y_MARGIN: 15,
   GRAVITY: -9.8, // in meters/second^2
   BUTTON_FONT: new PhetFont( 16 ),
-  NUMBER_OF_OBJECTS_SMALL: 15, // the number of objects used on the Median and Mean & Median screens
-  NUMBER_OF_OBJECTS_LARGE: 20, // the number of objects used on the Variability and Lab screens
+  NUMBER_OF_OBJECTS: 15, // number of objects in the play area on each screen
   TOP_CHECKBOX_TEXT_MAX_WIDTH: 107,
 
   // the top checkboxes are left aligned with the plat area checkboxes, so their max width is smaller to accommodate

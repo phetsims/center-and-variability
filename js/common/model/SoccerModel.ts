@@ -48,11 +48,11 @@ class SoccerModel extends CAVModel {
   private readonly ballPlayerMap: Map<CAVObject, SoccerPlayer>; // TODO: Add to PhET-iO State
   private readonly distributionProperty: Property<ReadonlyArray<number>>;
 
-  public constructor( maxNumberOfBalls: number, options: SoccerModelOptions ) {
+  public constructor( options: SoccerModelOptions ) {
 
     options = optionize<SoccerModelOptions, SelfOptions, CAVModelOptions>()( {}, options );
 
-    super( CAVObjectType.SOCCER_BALL, maxNumberOfBalls, options );
+    super( CAVObjectType.SOCCER_BALL, CAVConstants.NUMBER_OF_OBJECTS, options );
 
     this.numberOfScheduledSoccerBallsToKickProperty = new NumberProperty( 0, {
       tandem: options.tandem.createTandem( 'numberOfScheduledSoccerBallsToKickProperty' )

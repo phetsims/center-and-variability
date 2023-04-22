@@ -7,23 +7,10 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import { CAVModelOptions } from '../../common/model/CAVModel.js';
 import SoccerModel from '../../common/model/SoccerModel.js';
-import CAVConstants from '../../common/CAVConstants.js';
-
-type SelfOptions = EmptySelfOptions;
-type VariabilityModelOptions = SelfOptions & CAVModelOptions;
 
 class VariabilityModel extends SoccerModel {
-
-  public constructor( options: VariabilityModelOptions ) {
-
-    options = optionize<VariabilityModelOptions, SelfOptions, CAVModelOptions>()( {}, options );
-
-    super( CAVConstants.NUMBER_OF_OBJECTS_LARGE, options );
-  }
 
   public static meanAbsoluteDeviation( data: number[] ): number {
 
