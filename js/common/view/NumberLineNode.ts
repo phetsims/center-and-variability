@@ -33,7 +33,7 @@ type SelfOptions = {
 };
 export type NumberLineNodeOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
-class NumberLineNode extends Node {
+export default class NumberLineNode extends Node {
 
   public constructor(
     range: Range,
@@ -145,4 +145,3 @@ class NumberLineNode extends Node {
 }
 
 centerAndVariability.register( 'NumberLineNode', NumberLineNode );
-export default NumberLineNode;

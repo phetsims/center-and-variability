@@ -40,7 +40,7 @@ const TEXT_OPTIONS = {
   maxWidth: CAVConstants.PLAY_AREA_CHECKBOX_TEXT_MAX_WIDTH
 };
 
-class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
+export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
   public constructor( model: CAVModel, providedOptions?: TopRepresentationCheckboxGroupOptions ) {
 
@@ -100,4 +100,3 @@ class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 }
 
 centerAndVariability.register( 'TopRepresentationCheckboxGroup', TopRepresentationCheckboxGroup );
-export default TopRepresentationCheckboxGroup;

@@ -39,7 +39,7 @@ export type CAVModelOptions = SelfOptions;
 // constants
 const HIGHLIGHT_ANIMATION_TIME_STEP = 0.25; // in seconds
 
-class CAVModel implements TModel {
+export default class CAVModel implements TModel {
   public readonly objectGroup: PhetioGroup<CAVObject, [ CAVObjectType, StrictOmit<CAVObjectOptions, 'tandem'> ]>;
   public readonly objectType: CAVObjectType;
   public readonly isSortingDataProperty: BooleanProperty;
@@ -422,4 +422,3 @@ class CAVModel implements TModel {
 }
 
 centerAndVariability.register( 'CAVModel', CAVModel );
-export default CAVModel;

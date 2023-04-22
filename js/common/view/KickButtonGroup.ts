@@ -27,7 +27,7 @@ export type KickButtonGroupOptions = SelfOptions & VBoxOptions & PickRequired<VB
 // constants
 const TEXT_MAX_WIDTH = 80;
 
-class KickButtonGroup extends VBox {
+export default class KickButtonGroup extends VBox {
 
   public constructor( model: SoccerModel, providedOptions?: KickButtonGroupOptions ) {
 
@@ -98,4 +98,3 @@ class KickButtonGroup extends VBox {
 }
 
 centerAndVariability.register( 'KickButtonGroup', KickButtonGroup );
-export default KickButtonGroup;

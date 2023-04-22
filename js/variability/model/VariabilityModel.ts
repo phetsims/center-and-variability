@@ -10,7 +10,7 @@
 import centerAndVariability from '../../centerAndVariability.js';
 import SoccerModel from '../../common/model/SoccerModel.js';
 
-class VariabilityModel extends SoccerModel {
+export default class VariabilityModel extends SoccerModel {
 
   public static meanAbsoluteDeviation( data: number[] ): number {
 
@@ -31,4 +31,3 @@ class VariabilityModel extends SoccerModel {
 }
 
 centerAndVariability.register( 'VariabilityModel', VariabilityModel );
-export default VariabilityModel;

@@ -21,7 +21,7 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 type SelfOptions = EmptySelfOptions;
 export type ValueReadoutNodeOptions = SelfOptions & VBoxOptions;
 
-class ValueReadoutsNode extends VBox {
+export default class ValueReadoutsNode extends VBox {
 
   public constructor( model: CAVModel, providedOptions?: ValueReadoutNodeOptions ) {
 
@@ -64,4 +64,3 @@ class ValueReadoutsNode extends VBox {
 }
 
 centerAndVariability.register( 'ValueReadoutsNode', ValueReadoutsNode );
-export default ValueReadoutsNode;

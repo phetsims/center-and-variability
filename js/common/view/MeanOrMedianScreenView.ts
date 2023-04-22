@@ -28,7 +28,7 @@ type SelfOptions = {
 };
 export type MeanOrMedianScreenViewOptions = SelfOptions & SoccerScreenViewOptions;
 
-class MeanOrMedianScreenView extends SoccerScreenView {
+export default class MeanOrMedianScreenView extends SoccerScreenView {
   private readonly accordionBox: CAVAccordionBox;
   protected readonly accordionBoxContents: Node;
 
@@ -115,4 +115,3 @@ class MeanOrMedianScreenView extends SoccerScreenView {
 }
 
 centerAndVariability.register( 'MeanOrMedianScreenView', MeanOrMedianScreenView );
-export default MeanOrMedianScreenView;

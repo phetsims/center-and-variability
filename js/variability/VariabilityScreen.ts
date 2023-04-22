@@ -17,7 +17,7 @@ import CenterAndVariabilityStrings from '../CenterAndVariabilityStrings.js';
 
 type VariabilityScreenOptions = CAVScreenOptions;
 
-class VariabilityScreen extends CAVScreen<VariabilityModel, VariabilityScreenView> {
+export default class VariabilityScreen extends CAVScreen<VariabilityModel, VariabilityScreenView> {
 
   public constructor( providedOptions: VariabilityScreenOptions ) {
 
@@ -39,4 +39,3 @@ class VariabilityScreen extends CAVScreen<VariabilityModel, VariabilityScreenVie
 }
 
 centerAndVariability.register( 'VariabilityScreen', VariabilityScreen );
-export default VariabilityScreen;

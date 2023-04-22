@@ -50,7 +50,7 @@ const getCardPositionX = ( index: number ) => index * ( CardNode.CARD_WIDTH + CA
 type SelfOptions = EmptySelfOptions;
 export type CardNodeContainerOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
-class CardNodeContainer extends Node {
+export default class CardNodeContainer extends Node {
 
   // Each card is associated with one "cell", no two cards can be associated with the same cell.  The leftmost cell is 0.
   // The cells linearly map to locations across the screen.
@@ -654,4 +654,3 @@ const CardNodeContainerIO = new IOType( 'CardNodeContainerIO', {
 } );
 
 centerAndVariability.register( 'CardNodeContainer', CardNodeContainer );
-export default CardNodeContainer;

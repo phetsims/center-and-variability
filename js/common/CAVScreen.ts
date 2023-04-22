@@ -19,7 +19,7 @@ import SliderControlsAndBasicActionsKeyboardHelpContent from '../../../scenery-p
 type SelfOptions = EmptySelfOptions;
 export type CAVScreenOptions = SelfOptions & ScreenOptions & PickRequired<ScreenOptions, 'tandem'>;
 
-class CAVScreen<M extends CAVModel, V extends CAVScreenView> extends Screen<M, V> {
+export default class CAVScreen<M extends CAVModel, V extends CAVScreenView> extends Screen<M, V> {
 
   public constructor( createModel: () => M, createView: ( m: M ) => V, providedOptions?: CAVScreenOptions ) {
 
@@ -33,4 +33,3 @@ class CAVScreen<M extends CAVModel, V extends CAVScreenView> extends Screen<M, V
 }
 
 centerAndVariability.register( 'CAVScreen', CAVScreen );
-export default CAVScreen;

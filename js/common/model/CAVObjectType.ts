@@ -11,7 +11,7 @@ import Enumeration from '../../../../phet-core/js/Enumeration.js';
 import EnumerationValue from '../../../../phet-core/js/EnumerationValue.js';
 import centerAndVariability from '../../centerAndVariability.js';
 
-class CAVObjectType extends EnumerationValue {
+export default class CAVObjectType extends EnumerationValue {
   public readonly radius: number;
   public static readonly DATA_POINT = new CAVObjectType( 1 );
   public static readonly SOCCER_BALL = new CAVObjectType( 0.3 );
@@ -28,4 +28,3 @@ class CAVObjectType extends EnumerationValue {
 }
 
 centerAndVariability.register( 'CAVObjectType', CAVObjectType );
-export default CAVObjectType;

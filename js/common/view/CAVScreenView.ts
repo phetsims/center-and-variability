@@ -42,7 +42,7 @@ type SelfOptions = {
 };
 export type CAVScreenViewOptions = SelfOptions & ScreenViewOptions;
 
-class CAVScreenView extends ScreenView {
+export default class CAVScreenView extends ScreenView {
 
   protected readonly topCheckboxGroup: TopRepresentationCheckboxGroup;
   protected readonly bottomCheckboxGroup: BottomRepresentationCheckboxGroup;
@@ -264,4 +264,3 @@ class CAVScreenView extends ScreenView {
 }
 
 centerAndVariability.register( 'CAVScreenView', CAVScreenView );
-export default CAVScreenView;

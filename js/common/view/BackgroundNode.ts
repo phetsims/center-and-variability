@@ -15,7 +15,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import CAVColors from '../CAVColors.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 
-class BackgroundNode extends Rectangle {
+export default class BackgroundNode extends Rectangle {
   public constructor( bottomY: number, visibleBoundsProperty: Property<Bounds2> ) {
     super( visibleBoundsProperty.value.centerX, visibleBoundsProperty.value.top, visibleBoundsProperty.value.centerX, bottomY );
 
@@ -43,4 +43,3 @@ class BackgroundNode extends Rectangle {
 }
 
 centerAndVariability.register( 'BackgroundNode', BackgroundNode );
-export default BackgroundNode;

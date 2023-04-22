@@ -8,7 +8,7 @@
  */
 import centerAndVariability from '../../centerAndVariability.js';
 
-class AsyncCounter {
+export default class AsyncCounter {
   private index: number;
   private complete: boolean;
   private readonly count: number;
@@ -34,4 +34,3 @@ class AsyncCounter {
 }
 
 centerAndVariability.register( 'AsyncCounter', AsyncCounter );
-export default AsyncCounter;

@@ -10,8 +10,7 @@
 import centerAndVariability from '../../centerAndVariability.js';
 import SoccerModel from '../../common/model/SoccerModel.js';
 
-class MedianModel extends SoccerModel {
+export default class MedianModel extends SoccerModel {
 }
 
 centerAndVariability.register( 'MedianModel', MedianModel );
-export default MedianModel;

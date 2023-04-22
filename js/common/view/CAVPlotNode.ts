@@ -31,7 +31,7 @@ export type CAVPlotOptions = NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 // Prevent the median bar node from going off the top of the accordion box
 const MARGIN_TO_TOP_OF_ACCORDION_BOX = 4;
 
-class CAVPlotNode extends Node {
+export default class CAVPlotNode extends Node {
 
   private readonly dotLayer: Node;
   private readonly medianBarNode: MedianBarNode;
@@ -175,4 +175,3 @@ class CAVPlotNode extends Node {
 }
 
 centerAndVariability.register( 'CAVPlotNode', CAVPlotNode );
-export default CAVPlotNode;

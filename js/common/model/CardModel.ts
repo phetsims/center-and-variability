@@ -21,7 +21,7 @@ const CAVObjectReferenceIO = ReferenceIO( CAVObject.CAVObjectIO );
 type SelfOptions = EmptySelfOptions;
 type CardModelOptions = SelfOptions & PhetioObjectOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
-class CardModel extends PhetioObject {
+export default class CardModel extends PhetioObject {
 
   public casObject: CAVObject;
   public static readonly CardModelIO = new IOType( 'CardModelIO', {
@@ -52,4 +52,3 @@ class CardModel extends PhetioObject {
 }
 
 centerAndVariability.register( 'CardModel', CardModel );
-export default CardModel;

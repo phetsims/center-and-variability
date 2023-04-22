@@ -16,7 +16,7 @@ import CAVConstants from '../CAVConstants.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PreferencesDialog from '../../../../joist/js/preferences/PreferencesDialog.js';
 
-class SimulationPreferencesContentNode extends VBox {
+export default class SimulationPreferencesContentNode extends VBox {
   private readonly disposeSimulationPreferencesContentNode: () => void;
 
   // TODO: Tandem in the options?  And use tandem in the file?
@@ -59,4 +59,3 @@ class SimulationPreferencesContentNode extends VBox {
 }
 
 centerAndVariability.register( 'SimulationPreferencesContentNode', SimulationPreferencesContentNode );
-export default SimulationPreferencesContentNode;

@@ -18,7 +18,7 @@ import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 
 type VariabilityScreenViewOptions = StrictOmit<SoccerScreenViewOptions, 'questionBarOptions'>;
 
-class VariabilityScreenView extends SoccerScreenView {
+export default class VariabilityScreenView extends SoccerScreenView {
 
   public constructor( model: VariabilityModel, providedOptions: VariabilityScreenViewOptions ) {
 
@@ -34,4 +34,3 @@ class VariabilityScreenView extends SoccerScreenView {
 }
 
 centerAndVariability.register( 'VariabilityScreenView', VariabilityScreenView );
-export default VariabilityScreenView;

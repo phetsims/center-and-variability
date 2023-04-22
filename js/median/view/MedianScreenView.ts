@@ -20,7 +20,7 @@ type MedianScreenViewOptions =
   SelfOptions
   & StrictOmit<MeanOrMedianScreenViewOptions, 'isMedianScreen' | 'questionBarOptions'>;
 
-class MedianScreenView extends MeanOrMedianScreenView {
+export default class MedianScreenView extends MeanOrMedianScreenView {
 
   public constructor( model: MedianModel, providedOptions: MedianScreenViewOptions ) {
 
@@ -50,4 +50,3 @@ class MedianScreenView extends MeanOrMedianScreenView {
 }
 
 centerAndVariability.register( 'MedianScreenView', MedianScreenView );
-export default MedianScreenView;

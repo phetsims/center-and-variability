@@ -18,7 +18,7 @@ import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 
 type MeanAndMedianScreenViewOptions = StrictOmit<MeanOrMedianScreenViewOptions, 'isMedianScreen' | 'questionBarOptions'>;
 
-class MeanAndMedianScreenView extends MeanOrMedianScreenView {
+export default class MeanAndMedianScreenView extends MeanOrMedianScreenView {
 
   public constructor( model: MeanAndMedianModel, providedOptions: MeanAndMedianScreenViewOptions ) {
 
@@ -53,4 +53,3 @@ class MeanAndMedianScreenView extends MeanOrMedianScreenView {
 }
 
 centerAndVariability.register( 'MeanAndMedianScreenView', MeanAndMedianScreenView );
-export default MeanAndMedianScreenView;

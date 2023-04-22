@@ -37,7 +37,7 @@ type SoccerModelOptions = SelfOptions & CAVModelOptions;
 // constants
 const TIME_BETWEEN_RAPID_KICKS = 0.5; // in seconds
 
-class SoccerModel extends CAVModel {
+export default class SoccerModel extends CAVModel {
   public readonly soccerPlayerGroup: PhetioGroup<SoccerPlayer, [ number ]>;
   private readonly nextBallToKickProperty: Property<CAVObject | null>; // Null if there is no more ball to kick
   private readonly numberOfScheduledSoccerBallsToKickProperty: NumberProperty;
@@ -334,4 +334,3 @@ class SoccerModel extends CAVModel {
 }
 
 centerAndVariability.register( 'SoccerModel', SoccerModel );
-export default SoccerModel;

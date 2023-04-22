@@ -45,7 +45,7 @@ export type CAVObjectNodeOptions =
 // for debugging with ?dev
 let index = 0;
 
-class CAVObjectNode extends Node {
+export default class CAVObjectNode extends Node {
   private readonly dragListener: DragListener | null;
   private readonly selfInputEnabledProperty: BooleanProperty | null;
 
@@ -232,4 +232,3 @@ class CAVObjectNode extends Node {
 }
 
 centerAndVariability.register( 'CAVObjectNode', CAVObjectNode );
-export default CAVObjectNode;

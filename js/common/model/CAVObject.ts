@@ -40,7 +40,7 @@ export type CAVObjectOptions =
   & PhetioObjectOptions
   & PickRequired<PhetioObjectOptions, 'tandem'>;
 
-class CAVObject extends PhetioObject {
+export default class CAVObject extends PhetioObject {
 
   // Continuous value for the drag listener. When dragging, the object snaps to each tickmark
   public readonly dragPositionProperty: Vector2Property;
@@ -197,4 +197,3 @@ const rk4 = ( x: number, v: number, a: number, dt: number ) => {
 type CAVObjectStateType = { objectType: string; targetX: number | null; isFirstObject: boolean };
 
 centerAndVariability.register( 'CAVObject', CAVObject );
-export default CAVObject;

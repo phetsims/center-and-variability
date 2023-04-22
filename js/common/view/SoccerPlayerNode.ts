@@ -128,7 +128,7 @@ const playerGroups = [ {
 
 const SCALE = 0.155;
 
-class SoccerPlayerNode extends Node {
+export default class SoccerPlayerNode extends Node {
   public readonly soccerPlayer: SoccerPlayer;
 
   public constructor( soccerPlayer: SoccerPlayer, modelViewTransform: ModelViewTransform2, providedOptions?: SoccerPlayerNodeOptions ) {
@@ -179,4 +179,3 @@ class SoccerPlayerNode extends Node {
 }
 
 centerAndVariability.register( 'SoccerPlayerNode', SoccerPlayerNode );
-export default SoccerPlayerNode;

@@ -37,7 +37,7 @@ const TEXT_OPTIONS = {
   maxWidth: CAVConstants.TOP_CHECKBOX_TEXT_MAX_WIDTH
 };
 
-class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
+export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
   public constructor( model: CAVModel, providedOptions?: BottomRepresentationCheckboxGroupOptions ) {
 
@@ -115,4 +115,3 @@ class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 }
 
 centerAndVariability.register( 'BottomRepresentationCheckboxGroup', BottomRepresentationCheckboxGroup );
-export default BottomRepresentationCheckboxGroup;

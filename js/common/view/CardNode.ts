@@ -25,7 +25,7 @@ import TEmitter from '../../../../axon/js/TEmitter.js';
 type SelfOptions = EmptySelfOptions;
 export type CardNodeOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
-class CardNode extends Node {
+export default class CardNode extends Node {
   public readonly positionProperty: Vector2Property;
   public readonly dragListener: DragListener;
 
@@ -155,4 +155,3 @@ class CardNode extends Node {
 }
 
 centerAndVariability.register( 'CardNode', CardNode );
-export default CardNode;

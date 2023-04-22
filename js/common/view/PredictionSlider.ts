@@ -28,7 +28,7 @@ type SelfOptions = {
 type ParentOptions = AccessibleSliderOptions & NodeOptions;
 export type PredictionSliderOptions = SelfOptions & WithRequired<ParentOptions, 'tandem'>;
 
-class PredictionSlider extends AccessibleSlider( Node, 0 ) {
+export default class PredictionSlider extends AccessibleSlider( Node, 0 ) {
 
   public constructor( predictionProperty: Property<number>, modelViewTransform: ModelViewTransform2, dragRange: Range,
                       providedOptions: PredictionSliderOptions ) {
@@ -72,4 +72,3 @@ class PredictionSlider extends AccessibleSlider( Node, 0 ) {
 }
 
 centerAndVariability.register( 'PredictionSlider', PredictionSlider );
-export default PredictionSlider;

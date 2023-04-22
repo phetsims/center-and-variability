@@ -20,7 +20,7 @@ import meanAndMedianScreenIcon_png from '../../images/meanAndMedianScreenIcon_pn
 
 type MeanAndMedianScreenOptions = CAVScreenOptions;
 
-class MeanAndMedianScreen extends CAVScreen<MeanAndMedianModel, MeanAndMedianScreenView> {
+export default class MeanAndMedianScreen extends CAVScreen<MeanAndMedianModel, MeanAndMedianScreenView> {
 
   public constructor( providedOptions: MeanAndMedianScreenOptions ) {
 
@@ -46,4 +46,3 @@ class MeanAndMedianScreen extends CAVScreen<MeanAndMedianModel, MeanAndMedianScr
 }
 
 centerAndVariability.register( 'MeanAndMedianScreen', MeanAndMedianScreen );
-export default MeanAndMedianScreen;

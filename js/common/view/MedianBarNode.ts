@@ -28,7 +28,7 @@ export type MedianBarNodeOptions = SelfOptions & PathOptions;
 // constants
 const LINE_WIDTH = 2;
 
-class MedianBarNode extends Path {
+export default class MedianBarNode extends Path {
   private readonly notchDirection: NotchDirection;
   private readonly barStyle: BarStyle;
   private readonly medianArrowNode: ArrowNode;
@@ -96,4 +96,3 @@ class MedianBarNode extends Path {
 }
 
 centerAndVariability.register( 'MedianBarNode', MedianBarNode );
-export default MedianBarNode;

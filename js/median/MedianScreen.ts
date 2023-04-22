@@ -20,7 +20,7 @@ import medianScreenIcon_png from '../../images/medianScreenIcon_png.js';
 
 type MedianScreenOptions = CAVScreenOptions;
 
-class MedianScreen extends CAVScreen<MedianModel, MedianScreenView> {
+export default class MedianScreen extends CAVScreen<MedianModel, MedianScreenView> {
 
   public constructor( providedOptions: MedianScreenOptions ) {
 
@@ -46,4 +46,3 @@ class MedianScreen extends CAVScreen<MedianModel, MedianScreenView> {
 }
 
 centerAndVariability.register( 'MedianScreen', MedianScreen );
-export default MedianScreen;

@@ -33,7 +33,7 @@ export type CAVAccordionBoxOptions =
 const CONTENT_MARGIN = 10;
 const BUTTON_SIDE_LENGTH = 20;
 
-class CAVAccordionBox extends AccordionBox {
+export default class CAVAccordionBox extends AccordionBox {
 
   // TODO: In order to support the accordion box (screen 2) and panel (screen 3) with similar layouts,
   // consider a panel that puts readouts on the left, data + number line in the middle, and
@@ -99,4 +99,3 @@ class CAVAccordionBox extends AccordionBox {
 }
 
 centerAndVariability.register( 'CAVAccordionBox', CAVAccordionBox );
-export default CAVAccordionBox;

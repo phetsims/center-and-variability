@@ -33,7 +33,7 @@ export type SoccerScreenViewOptions = SelfOptions & CAVScreenViewOptions;
 const GROUND_POSITION_Y = 500;
 const NUMBER_LINE_MARGIN_X = 207;
 
-class SoccerScreenView extends CAVScreenView {
+export default class SoccerScreenView extends CAVScreenView {
   protected readonly questionBar: QuestionBar;
   protected readonly chartViewWidth: number;
   protected readonly playAreaNumberLineNode: NumberLineNode;
@@ -120,4 +120,3 @@ class SoccerScreenView extends CAVScreenView {
 }
 
 centerAndVariability.register( 'SoccerScreenView', SoccerScreenView );
-export default SoccerScreenView;

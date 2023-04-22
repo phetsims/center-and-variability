@@ -23,7 +23,7 @@ type SoccerPlayerOptions =
   & PhetioObjectOptions
   & PickRequired<PhetioObjectOptions, 'tandem'>;
 
-class SoccerPlayer extends PhetioObject {
+export default class SoccerPlayer extends PhetioObject {
   public readonly poseProperty: Property<Pose>;
   public readonly placeInLineProperty: NumberProperty;
   public static readonly SoccerPlayerIO = new IOType( 'SoccerPlayerIO', {
@@ -76,4 +76,3 @@ type SoccerPlayerState = {
 };
 
 centerAndVariability.register( 'SoccerPlayer', SoccerPlayer );
-export default SoccerPlayer;
