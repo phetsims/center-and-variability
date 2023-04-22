@@ -81,9 +81,6 @@ export default class CAVModel implements TModel {
   private highlightAnimationIndex: number | null;
   private lastHighlightAnimationStepTime: number;
 
-  // TODO: Would an enum like 'not-yet-started' vs 'in-progress' vs 'complete' be clearer?
-  // SR: But it seems like we wouldn't use one of those states, or 2 are redundant for our current purposes.
-  // SR: But maybe it would be clearer anyways?
   public readonly isMedianAnimationCompleteProperty: BooleanProperty;
 
   // TODO: See if TypeScript 4.6 will let us initialize more things here
