@@ -29,7 +29,7 @@ export default class VariabilityScreenView extends SoccerScreenView {
       }
     }, providedOptions );
 
-    super( model, options as SoccerScreenViewOptions );
+    super( model, options );
   }
 }
 
