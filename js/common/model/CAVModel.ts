@@ -240,10 +240,6 @@ export default class CAVModel implements TModel {
   private updateMeanAndMedian(): void {
 
     const sortedObjects = this.getSortedLandedObjects();
-
-    // TODO: Why does this print twice at the same time?
-    // console.log( values );
-
     const medianObjects: CAVObject[] = [];
 
     // Odd number of values, take the central value
