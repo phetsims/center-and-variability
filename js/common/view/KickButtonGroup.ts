@@ -16,10 +16,11 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import CAVColors from '../CAVColors.js';
 import SoccerModel from '../model/SoccerModel.js';
 import CAVConstants from '../CAVConstants.js';
-import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 export type KickButtonGroupOptions = SelfOptions & VBoxOptions & PickRequired<VBoxOptions, 'tandem'>;
@@ -37,7 +38,7 @@ export default class KickButtonGroup extends VBox {
 
     const alignGroup = new AlignGroup();
 
-    const createLabel = ( label: string, tandem: Tandem ) => {
+    const createLabel = ( label: PatternStringProperty<{ value: number }>, tandem: Tandem ) => {
       const text = new Text( label, {
         maxWidth: TEXT_MAX_WIDTH,
         font: CAVConstants.BUTTON_FONT
@@ -49,13 +50,6 @@ export default class KickButtonGroup extends VBox {
     };
 
     const createKickButton = ( content: { label: Node; text: Text }, tandem: Tandem, numberToKick: number, multikick: boolean ) => {
-
-      if ( multikick ) {
-        model.numberOfRemainingKickableSoccerBallsProperty.link( numberOfRemainingKickableObjects => {
-          const value = Math.max( Math.min( numberOfRemainingKickableObjects, numberToKick ), 1 );
-          content.text.string = StringUtils.fillIn( CenterAndVariabilityStrings.kickValueStringProperty, { value: value } );
-        } );
-      }
 
       const buttonVisibleProperty = new BooleanProperty( true, {
         tandem: tandem.createTandem( 'visibleProperty' )
@@ -85,8 +79,16 @@ export default class KickButtonGroup extends VBox {
     const kick5ButtonTandem = options.tandem.createTandem( 'kickFiveButton' );
 
     // Create labels first so their sizes can be aligned
-    const kick1Label = createLabel( StringUtils.fillIn( CenterAndVariabilityStrings.kickValueStringProperty, { value: 1 } ), kick1ButtonTandem.createTandem( 'labelText' ) );
-    const kick5Label = createLabel( StringUtils.fillIn( CenterAndVariabilityStrings.kickValueStringProperty, { value: 5 } ), kick5ButtonTandem.createTandem( 'labelText' ) );
+    const kick1PatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.kickValueStringProperty, { value: 1 } );
+    const kick1Label = createLabel( kick1PatternStringProperty, kick1ButtonTandem.createTandem( 'labelText' ) );
+
+    const multiKickProperty = new NumberProperty( 5 );
+    const kick5PatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.kickValueStringProperty, { value: multiKickProperty } );
+    model.numberOfRemainingKickableSoccerBallsProperty.link( numberOfRemainingKickableObjects => {
+      const value = Math.max( Math.min( numberOfRemainingKickableObjects, 5 ), 1 );
+      multiKickProperty.value = value;
+    } );
+    const kick5Label = createLabel( kick5PatternStringProperty, kick5ButtonTandem.createTandem( 'labelText' ) );
 
     options.children = [
       createKickButton( kick1Label, kick1ButtonTandem, 1, false ),
