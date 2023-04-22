@@ -124,7 +124,30 @@ const playerGroups = [ {
   standing: player15Standing_png,
   poisedToKick: player15PoisedToKick_png,
   kicking: player15Kicking_png
-} ];
+},
+
+  // TODO: We need artwork for 5 more players, see https://github.com/phetsims/center-and-variability/issues/148
+  {
+    standing: player15Standing_png,
+    poisedToKick: player15PoisedToKick_png,
+    kicking: player15Kicking_png
+  }, {
+    standing: player15Standing_png,
+    poisedToKick: player15PoisedToKick_png,
+    kicking: player15Kicking_png
+  }, {
+    standing: player15Standing_png,
+    poisedToKick: player15PoisedToKick_png,
+    kicking: player15Kicking_png
+  }, {
+    standing: player15Standing_png,
+    poisedToKick: player15PoisedToKick_png,
+    kicking: player15Kicking_png
+  }, {
+    standing: player15Standing_png,
+    poisedToKick: player15PoisedToKick_png,
+    kicking: player15Kicking_png
+  } ];
 
 const SCALE = 0.155;
 
