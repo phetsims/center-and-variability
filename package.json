@@ -13,6 +13,7 @@
     "requirejsNamespace": "CENTER_AND_VARIABILITY",
     "simulation": true,
     "runnable": true,
+    "generatedUnitTests": true,
     "supportedBrands": [
       "phet",
       "phet-io",
