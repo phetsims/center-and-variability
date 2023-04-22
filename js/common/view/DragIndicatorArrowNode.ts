@@ -24,7 +24,6 @@ export default class DragIndicatorArrowNode extends ArrowNode {
       headHeight: 8,
       headWidth: 12,
       tailWidth: 5,
-      pickable: false,
       doubleHead: true,
       fill: CAVColors.dragIndicatorColorProperty,
       stroke: CAVColors.arrowStrokeProperty,
