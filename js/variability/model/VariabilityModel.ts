@@ -27,6 +27,11 @@ export default class VariabilityModel extends SoccerModel {
     } );
   }
 
+  public override reset(): void {
+    super.reset();
+    this.selectedDistributionProperty.reset();
+  }
+
   public static meanAbsoluteDeviation( data: number[] ): number {
 
     // Calculate the mean
