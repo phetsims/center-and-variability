@@ -8,6 +8,7 @@ import centerAndVariability from '../../centerAndVariability.js';
  * DistributionType is used to identify the selected distribution type.
  * TODO: Should these be named "team 1" etc?
  * TODO: How to accommodate phet-io defined ones
+ * TODO: See also CAVConstants.RIGHT_SKEWED_DATA
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
