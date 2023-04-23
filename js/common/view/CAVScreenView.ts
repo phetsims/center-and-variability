@@ -35,10 +35,7 @@ type SelfOptions = {
 
   // Tandem is required by the Class options, but is filled in after this optionize step.
   topCheckboxGroupOptions?: StrictOmit<TopRepresentationCheckboxGroupOptions, 'tandem'>;
-  bottomCheckboxGroupOptions?: {
-    includeMean?: boolean;
-    includePredictMean?: boolean;
-  };
+  bottomCheckboxGroupOptions?: StrictOmit<BottomRepresentationCheckboxGroupOptions, 'tandem'>;
 };
 export type CAVScreenViewOptions = SelfOptions & ScreenViewOptions;
 

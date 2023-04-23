@@ -28,6 +28,7 @@ type SelfOptions = {
   includeMean?: boolean;
   includePredictMean?: boolean;
   includePredictMedian?: boolean;
+  includeVariability?: boolean;
 };
 export type BottomRepresentationCheckboxGroupOptions = SelfOptions & VerticalCheckboxGroupOptions &
   PickRequired<VerticalCheckboxGroupOptions, 'tandem'>;
@@ -46,7 +47,8 @@ export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxG
       includeMean: true,
       includeMedian: true,
       includePredictMean: true,
-      includePredictMedian: true
+      includePredictMedian: true,
+      includeVariability: false
     }, providedOptions );
 
     const items: VerticalCheckboxGroupItem[] = [];
@@ -76,6 +78,24 @@ export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxG
     options.includePredictMedian && items.push( createPredictionItem( model.isShowingMedianPredictionProperty,
       CenterAndVariabilityStrings.predictMedianStringProperty, CAVColors.medianColorProperty, 8, 'predictMedianCheckbox'
     ) );
+
+    options.includeVariability && items.push( {
+
+      // TODO: Align group to center align the icons
+      createNode: ( tandem: Tandem ) => new GridBox( {
+
+        // TODO: A lot of duplicated options in this file
+        spacing: 24.5,
+        stretch: true,
+        grow: 1,
+        children: [
+          new Node( { children: [ new Text( CenterAndVariabilityStrings.variabilityStringProperty, TEXT_OPTIONS ) ], layoutOptions: { xAlign: 'left' } } ),
+          NumberLineNode.createMeanIndicatorNode( true, true )
+        ]
+      } ),
+      property: model.isShowingPlayAreaVariabilityProperty,
+      tandemName: 'meanCheckbox'
+    } );
 
     options.includeMean && items.push( {
 

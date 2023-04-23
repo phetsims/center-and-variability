@@ -49,6 +49,8 @@ type StringsType = {
   'medianStringProperty': LinkableProperty<string>;
   'mean': string;
   'meanStringProperty': LinkableProperty<string>;
+  'variability': string;
+  'variabilityStringProperty': LinkableProperty<string>;
   'predictMean': string;
   'predictMeanStringProperty': LinkableProperty<string>;
   'predictMedian': string;

@@ -39,6 +39,11 @@ export default class VariabilityScreenView extends MeanOrMedianScreenView {
         showMedianCheckboxIcon: false,
         includeMean: false,
         includeMedian: false
+      },
+      bottomCheckboxGroupOptions: {
+        includeVariability: true,
+        includePredictMean: false,
+        includePredictMedian: false
       }
     }, providedOptions );
 
