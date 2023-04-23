@@ -18,6 +18,7 @@ import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import MeanOrMedianScreenView, { MeanOrMedianScreenViewOptions } from '../../common/view/MeanOrMedianScreenView.js';
 import { ManualConstraint } from '../../../../scenery/js/imports.js';
 import DistributionRadioButtonGroup from './DistributionRadioButtonGroup.js';
+import VariabilityRadioButtonGroup from './VariabilityRadioButtonGroup.js';
 
 type VariabilityScreenViewOptions = StrictOmit<SoccerScreenViewOptions, 'questionBarOptions'>;
 
@@ -73,6 +74,16 @@ export default class VariabilityScreenView extends MeanOrMedianScreenView {
       } );
 
     this.addChild( distributionRadioButtonGroup );
+
+    const variabilityRadioButtonGroup = new VariabilityRadioButtonGroup( model.selectedVariabilityProperty, {
+      left: 10
+    } );
+    this.addChild( variabilityRadioButtonGroup );
+
+    ManualConstraint.create( this, [ variabilityRadioButtonGroup, this.accordionBoxContents ],
+      ( variabilityRadioButtonGroupWrapper, accordionBoxWrapper ) => {
+        variabilityRadioButtonGroupWrapper.top = accordionBoxWrapper.top;
+      } );
   }
 }
 

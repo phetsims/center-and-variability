@@ -13,23 +13,30 @@ import DistributionType from './DistributionType.js';
 import Property from '../../../../axon/js/Property.js';
 import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import VariabilityType from './VariabilityType.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityModelOptions = SelfOptions & SoccerModelOptions;
 
 export default class VariabilityModel extends SoccerModel {
   public readonly selectedDistributionProperty: Property<DistributionType>;
+  public readonly selectedVariabilityProperty: Property<VariabilityType>;
 
   public constructor( options: VariabilityModelOptions ) {
     super( options );
     this.selectedDistributionProperty = new EnumerationProperty( DistributionType.SYMMETRIC_SMALL, {
       tandem: options.tandem.createTandem( 'selectedDistributionProperty' )
     } );
+
+    this.selectedVariabilityProperty = new EnumerationProperty( VariabilityType.RANGE, {
+      tandem: options.tandem.createTandem( 'selectedVariabilityProperty' )
+    } );
   }
 
   public override reset(): void {
     super.reset();
     this.selectedDistributionProperty.reset();
+    this.selectedVariabilityProperty.reset();
   }
 
   public static meanAbsoluteDeviation( data: number[] ): number {

@@ -88,7 +88,7 @@ export default class MeanOrMedianScreenView extends SoccerScreenView {
     this.accordionBox = new CAVAccordionBox( this.model, this.accordionBoxContents, this.topCheckboxGroup,
       titleNode,
       this.layoutBounds, {
-        leftMargin: options.isVariabilityScreen ? 100 : 0,
+        leftMargin: options.isVariabilityScreen ? 70 : 0,
         tandem: accordionBoxTandem,
         contentNodeOffsetY: options.isMedianScreen ? -6 : 0,
         top: this.questionBar.bottom + CAVConstants.SCREEN_VIEW_Y_MARGIN,

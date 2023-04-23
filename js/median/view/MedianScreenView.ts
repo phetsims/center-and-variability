@@ -18,7 +18,7 @@ import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 type SelfOptions = EmptySelfOptions;
 type MedianScreenViewOptions =
   SelfOptions
-  & StrictOmit<MeanOrMedianScreenViewOptions, 'isMedianScreen' | 'questionBarOptions'>;
+  & StrictOmit<MeanOrMedianScreenViewOptions, 'isMedianScreen' | 'isVariabilityScreen' | 'questionBarOptions'>;
 
 export default class MedianScreenView extends MeanOrMedianScreenView {
 
@@ -26,6 +26,7 @@ export default class MedianScreenView extends MeanOrMedianScreenView {
 
     const options = optionize<MedianScreenViewOptions, SelfOptions, MeanOrMedianScreenViewOptions>()( {
       isMedianScreen: true,
+      isVariabilityScreen: false,
       questionBarOptions: {
         barFill: CAVColors.medianQuestionBarFillColorProperty,
         questionString: CenterAndVariabilityStrings.medianQuestionStringProperty
