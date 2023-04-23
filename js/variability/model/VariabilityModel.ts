@@ -8,9 +8,24 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import SoccerModel from '../../common/model/SoccerModel.js';
+import SoccerModel, { SoccerModelOptions } from '../../common/model/SoccerModel.js';
+import DistributionType from './DistributionType.js';
+import Property from '../../../../axon/js/Property.js';
+import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+
+type SelfOptions = EmptySelfOptions;
+type VariabilityModelOptions = SelfOptions & SoccerModelOptions;
 
 export default class VariabilityModel extends SoccerModel {
+  public readonly selectedDistributionProperty: Property<DistributionType>;
+
+  public constructor( options: VariabilityModelOptions ) {
+    super( options );
+    this.selectedDistributionProperty = new EnumerationProperty( DistributionType.SYMMETRIC_SMALL, {
+      tandem: options.tandem.createTandem( 'selectedDistributionProperty' )
+    } );
+  }
 
   public static meanAbsoluteDeviation( data: number[] ): number {
 

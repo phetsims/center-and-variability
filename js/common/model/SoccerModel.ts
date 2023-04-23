@@ -32,7 +32,7 @@ import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 
 type SelfOptions = EmptySelfOptions;
-type SoccerModelOptions = SelfOptions & CAVModelOptions;
+export type SoccerModelOptions = SelfOptions & CAVModelOptions;
 
 // constants
 const TIME_BETWEEN_RAPID_KICKS = 0.5; // in seconds

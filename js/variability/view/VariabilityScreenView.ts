@@ -17,6 +17,7 @@ import CAVColors from '../../common/CAVColors.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import MeanOrMedianScreenView, { MeanOrMedianScreenViewOptions } from '../../common/view/MeanOrMedianScreenView.js';
 import { ManualConstraint } from '../../../../scenery/js/imports.js';
+import DistributionRadioButtonGroup from './DistributionRadioButtonGroup.js';
 
 type VariabilityScreenViewOptions = StrictOmit<SoccerScreenViewOptions, 'questionBarOptions'>;
 
@@ -59,6 +60,18 @@ export default class VariabilityScreenView extends MeanOrMedianScreenView {
       ( lowerNumberLineWrapper, contentsWrapper ) => {
         contentsWrapper.x = lowerNumberLineWrapper.x;
       } );
+
+    const distributionRadioButtonGroup = new DistributionRadioButtonGroup( model.selectedDistributionProperty, {
+      left: 10
+    } );
+
+    // Float above the ground
+    ManualConstraint.create( this, [ this.playAreaNumberLineNode, distributionRadioButtonGroup ],
+      ( lowerNumberLineWrapper, distributionRadioButtonGroupWrapper ) => {
+        distributionRadioButtonGroupWrapper.bottom = lowerNumberLineWrapper.top - 10;
+      } );
+
+    this.addChild( distributionRadioButtonGroup );
   }
 }
 
