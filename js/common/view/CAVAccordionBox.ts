@@ -23,6 +23,7 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 type SelfOptions = {
   valueReadoutsNode: ValueReadoutsNode | null;
   contentNodeOffsetY: number;
+  leftMargin: number;
 };
 export type CAVAccordionBoxOptions =
   SelfOptions
@@ -60,7 +61,7 @@ export default class CAVAccordionBox extends AccordionBox {
 
     const backgroundNode = new Rectangle( {
       rectHeight: 140,
-      rectWidth: layoutBounds.width - CAVConstants.SCREEN_VIEW_X_MARGIN * 2 - CONTENT_MARGIN * 2
+      rectWidth: layoutBounds.width - CAVConstants.SCREEN_VIEW_X_MARGIN * 2 - CONTENT_MARGIN * 2 - options.leftMargin
     } );
 
     // Explicitly set the local bounds so they don't change. This lets content appear next to the accordion box title.

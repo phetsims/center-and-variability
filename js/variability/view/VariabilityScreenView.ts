@@ -27,6 +27,7 @@ export default class VariabilityScreenView extends MeanOrMedianScreenView {
 
     const options = optionize<VariabilityScreenViewOptions, EmptySelfOptions, MeanOrMedianScreenViewOptions>()( {
       isMedianScreen: false,
+      isVariabilityScreen: true,
       questionBarOptions: {
         barFill: CAVColors.variabilityQuestionBarFillColorProperty,
         questionString: CenterAndVariabilityStrings.variabilityQuestionStringProperty

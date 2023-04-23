@@ -25,7 +25,10 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 
 type SelfOptions = {
+
+  // TODO: If we are sticking with this pattern, switch to screen: 'median' | 'meanAndMedian' | 'variability' etc, see https://github.com/phetsims/center-and-variability/issues/153
   isMedianScreen: boolean;
+  isVariabilityScreen: boolean;
 };
 export type MeanOrMedianScreenViewOptions = SelfOptions & SoccerScreenViewOptions;
 
@@ -85,13 +88,19 @@ export default class MeanOrMedianScreenView extends SoccerScreenView {
     this.accordionBox = new CAVAccordionBox( this.model, this.accordionBoxContents, this.topCheckboxGroup,
       titleNode,
       this.layoutBounds, {
+        leftMargin: options.isVariabilityScreen ? 100 : 0,
         tandem: accordionBoxTandem,
         contentNodeOffsetY: options.isMedianScreen ? -6 : 0,
-        centerX: this.layoutBounds.centerX,
         top: this.questionBar.bottom + CAVConstants.SCREEN_VIEW_Y_MARGIN,
 
         // TODO: Better pattern for this
-        valueReadoutsNode: options.isMedianScreen ? null : new ValueReadoutsNode( model )
+        valueReadoutsNode: options.isMedianScreen ? null : new ValueReadoutsNode( model ),
+
+        ...( options.isVariabilityScreen ? {
+          right: this.layoutBounds.right - CAVConstants.SCREEN_VIEW_X_MARGIN
+        } : {
+          centerX: this.layoutBounds.centerX
+        } )
       } );
     this.contentLayer.addChild( this.accordionBox );
 
