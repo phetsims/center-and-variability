@@ -97,48 +97,63 @@ export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxG
       tandemName: 'meanCheckbox'
     } );
 
-    options.includeMean && items.push( {
+    const addMeanItem = () => {
+      options.includeMean && items.push( {
 
-      // TODO: Align group to center align the icons
-      createNode: ( tandem: Tandem ) => new GridBox( {
-        spacing: 24.5,
-        stretch: true,
-        grow: 1,
-        children: [
-          new Node( { children: [ new Text( CenterAndVariabilityStrings.meanStringProperty, TEXT_OPTIONS ) ], layoutOptions: { xAlign: 'left' } } ),
-          NumberLineNode.createMeanIndicatorNode( true, true )
-        ]
-      } ),
-      property: model.isShowingPlayAreaMeanProperty,
-      tandemName: 'meanCheckbox'
-    } );
-    options.includeMedian && items.push( {
+        // TODO: Align group to center align the icons
+        createNode: ( tandem: Tandem ) => new GridBox( {
+          spacing: 24.5,
+          stretch: true,
+          grow: 1,
+          children: [
+            new Node( { children: [ new Text( CenterAndVariabilityStrings.meanStringProperty, TEXT_OPTIONS ) ], layoutOptions: { xAlign: 'left' } } ),
+            NumberLineNode.createMeanIndicatorNode( true, true )
+          ]
+        } ),
+        property: model.isShowingPlayAreaMeanProperty,
+        tandemName: 'meanCheckbox'
+      } );
+    };
 
-      // TODO: Align group to center align the icons
-      createNode: ( tandem: Tandem ) => new GridBox( {
-        spacing: 14,
-        stretch: true,
-        grow: 1,
-        children: [
-          new Node( { children: [ new Text( CenterAndVariabilityStrings.medianStringProperty, TEXT_OPTIONS ) ], layoutOptions: { xAlign: 'left' } } ),
+    const addMedianItem = () => {
+      options.includeMedian && items.push( {
 
-          // TODO: Factor out?  See playAreaMedianIndicatorNode
-          new ArrowNode( 0, 0, 0, 27, {
-            fill: CAVColors.medianColorProperty,
-            stroke: CAVColors.arrowStrokeProperty,
-            lineWidth: CAVConstants.ARROW_LINE_WIDTH,
-            headHeight: 12,
-            headWidth: 18,
-            maxHeight: 20,
-            layoutOptions: {
-              xAlign: 'right'
-            }
-          } )
-        ]
-      } ),
-      property: model.isShowingPlayAreaMedianProperty,
-      tandemName: 'medianCheckbox'
-    } );
+        // TODO: Align group to center align the icons
+        createNode: ( tandem: Tandem ) => new GridBox( {
+          spacing: 14,
+          stretch: true,
+          grow: 1,
+          children: [
+            new Node( { children: [ new Text( CenterAndVariabilityStrings.medianStringProperty, TEXT_OPTIONS ) ], layoutOptions: { xAlign: 'left' } } ),
+
+            // TODO: Factor out?  See playAreaMedianIndicatorNode
+            new ArrowNode( 0, 0, 0, 27, {
+              fill: CAVColors.medianColorProperty,
+              stroke: CAVColors.arrowStrokeProperty,
+              lineWidth: CAVConstants.ARROW_LINE_WIDTH,
+              headHeight: 12,
+              headWidth: 18,
+              maxHeight: 20,
+              layoutOptions: {
+                xAlign: 'right'
+              }
+            } )
+          ]
+        } ),
+        property: model.isShowingPlayAreaMedianProperty,
+        tandemName: 'medianCheckbox'
+      } );
+    };
+
+    // TODO: I think it will be confusing for students for this order to be swapped on the 3rd screen
+    if ( options.includeVariability ) {
+      addMedianItem();
+      addMeanItem();
+    }
+    else {
+      addMeanItem();
+      addMedianItem();
+    }
 
     super( items, options );
   }
