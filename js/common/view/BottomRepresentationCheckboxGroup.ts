@@ -72,11 +72,11 @@ export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxG
       };
     };
 
-    options.includePredictMean && items.push( createPredictionItem( model.isShowingMeanPredictionProperty,
-      CenterAndVariabilityStrings.predictMeanStringProperty, CAVColors.meanColorProperty, 20.3, 'predictMeanCheckbox'
-    ) );
     options.includePredictMedian && items.push( createPredictionItem( model.isShowingMedianPredictionProperty,
       CenterAndVariabilityStrings.predictMedianStringProperty, CAVColors.medianColorProperty, 8, 'predictMedianCheckbox'
+    ) );
+    options.includePredictMean && items.push( createPredictionItem( model.isShowingMeanPredictionProperty,
+      CenterAndVariabilityStrings.predictMeanStringProperty, CAVColors.meanColorProperty, 20.3, 'predictMeanCheckbox'
     ) );
 
     options.includeVariability && items.push( {
@@ -145,15 +145,9 @@ export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxG
       } );
     };
 
-    // TODO: I think it will be confusing for students for this order to be swapped on the 3rd screen
-    if ( options.includeVariability ) {
-      addMedianItem();
-      addMeanItem();
-    }
-    else {
-      addMeanItem();
-      addMedianItem();
-    }
+    // TODO: no longer need this abstraction now that order is consistent
+    addMedianItem();
+    addMeanItem();
 
     super( items, options );
   }

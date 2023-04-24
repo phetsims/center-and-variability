@@ -56,6 +56,20 @@ export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGrou
       property: model.isSortingDataProperty,
       tandemName: 'sortDataCheckbox'
     } );
+    options.includeMedian && items.push( {
+      createNode: ( tandem: Tandem ) => new HBox( {
+        spacing: 12,
+        children: [
+          new Text( CenterAndVariabilityStrings.medianStringProperty, TEXT_OPTIONS ),
+          ...options.showMedianCheckboxIcon ? [
+            new MedianBarNode( options.medianBarIconOptions )
+              .setMedianBarShape( 0, 0, ICON_WIDTH / 2 - LINE_WIDTH / 2, ICON_WIDTH - LINE_WIDTH, true )
+          ] : []
+        ]
+      } ),
+      property: model.isShowingTopMedianProperty,
+      tandemName: 'medianCheckbox'
+    } )
     options.includeMean && items.push( {
       createNode: ( tandem: Tandem ) => new HBox( {
 
@@ -80,20 +94,6 @@ export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGrou
       } ),
       property: model.isShowingTopMeanProperty,
       tandemName: 'meanCheckbox'
-    } );
-    options.includeMedian && items.push( {
-      createNode: ( tandem: Tandem ) => new HBox( {
-        spacing: 12,
-        children: [
-          new Text( CenterAndVariabilityStrings.medianStringProperty, TEXT_OPTIONS ),
-          ...options.showMedianCheckboxIcon ? [
-            new MedianBarNode( options.medianBarIconOptions )
-              .setMedianBarShape( 0, 0, ICON_WIDTH / 2 - LINE_WIDTH / 2, ICON_WIDTH - LINE_WIDTH, true )
-          ] : []
-        ]
-      } ),
-      property: model.isShowingTopMedianProperty,
-      tandemName: 'medianCheckbox'
     } );
     super( items, options );
   }

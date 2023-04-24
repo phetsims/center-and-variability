@@ -58,7 +58,7 @@ export default class VariabilityScreenView extends MeanOrMedianScreenView {
       createAccordionBoxControlNode: tandem => new ToggleNode( model.selectedVariabilityProperty, [ {
         value: VariabilityMeasure.RANGE,
 
-        // TODO: Different string value?
+        // TODO: Different string value? For now, use the same string for the accordion box title and checkbox, and a different one for the value equals pattern
         createNode: tandem => new Checkbox( model.isShowingRangeProperty, new Text( CenterAndVariabilityStrings.rangeStringProperty, TEXT_OPTIONS ) )
       }, {
         value: VariabilityMeasure.IQR,
