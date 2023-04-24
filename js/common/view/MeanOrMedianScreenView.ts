@@ -13,7 +13,6 @@ import SoccerScreenView, { SoccerScreenViewOptions } from '../../common/view/Soc
 import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import CardNodeContainer from '../../common/view/CardNodeContainer.js';
-import CAVPlotNode from './CAVPlotNode.js';
 import SoccerModel from '../model/SoccerModel.js';
 import ValueReadoutsNode from './ValueReadoutsNode.js';
 import { ManualConstraint, Node, Text } from '../../../../scenery/js/imports.js';
@@ -22,6 +21,7 @@ import ScreenView from '../../../../joist/js/ScreenView.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import VariabilityModel from '../../variability/model/VariabilityModel.js';
+import CAVPlotNodeWithMedianBar from '../../mean-and-median/view/CAVPlotNodeWithMedianBar.js';
 
 type SelfOptions = {
 
@@ -52,7 +52,7 @@ export default class MeanOrMedianScreenView extends SoccerScreenView {
       } );
     }
     else {
-      this.accordionBoxContents = new CAVPlotNode( this.model, this.chartViewWidth, {
+      this.accordionBoxContents = new CAVPlotNodeWithMedianBar( this.model, this.chartViewWidth, {
         tandem: accordionBoxTandem.createTandem( 'plotNode' )
       } );
     }
