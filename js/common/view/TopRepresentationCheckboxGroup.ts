@@ -19,7 +19,6 @@ import MedianBarNode, { MedianBarNodeOptions } from './MedianBarNode.js';
 import CAVColors from '../CAVColors.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import VariabilityModel from '../../variability/model/VariabilityModel.js';
 
 type SelfOptions = {
   includeSortData?: boolean;
@@ -95,20 +94,6 @@ export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGrou
       } ),
       property: model.isShowingTopMedianProperty,
       tandemName: 'medianCheckbox'
-    } );
-
-    // TODO: See https://github.com/phetsims/center-and-variability/issues/153
-    ( model instanceof VariabilityModel ) && items.push( {
-      createNode: ( tandem: Tandem ) => new HBox( {
-        spacing: 12,
-        children: [
-
-          // TODO: Different i18n key for Range title vs range checkbox?
-          new Text( CenterAndVariabilityStrings.rangeStringProperty, TEXT_OPTIONS )
-        ]
-      } ),
-      property: model.isShowingRangeProperty,
-      tandemName: 'rangeCheckbox'
     } );
     super( items, options );
   }
