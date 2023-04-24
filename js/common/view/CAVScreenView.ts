@@ -78,6 +78,7 @@ export default class CAVScreenView extends ScreenView {
 
     const objectNodeGroup = new PhetioGroup<CAVObjectNode, [ CAVObject ]>( ( tandem, casObject ) => {
       return new CAVObjectNode( casObject, model.isShowingPlayAreaMedianProperty, modelViewTransform, objectNodesInputEnabledProperty, {
+        fill: model.dataPointFill,
         tandem: tandem
       } );
     }, () => [ model.objectGroup.archetype ], {

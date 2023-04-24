@@ -33,6 +33,7 @@ type SelfOptions = {
   tandem: Tandem;
   includeCards: boolean;
   instrumentMeanPredictionProperty: boolean;
+  dataPointFill: string;
 };
 export type CAVModelOptions = SelfOptions;
 
@@ -50,6 +51,10 @@ export default class CAVModel implements TModel {
   public readonly isShowingPlayAreaVariabilityProperty: BooleanProperty; // TODO: only used in screen 3
   public readonly isShowingMeanPredictionProperty: BooleanProperty;
   public readonly isShowingMedianPredictionProperty: BooleanProperty;
+
+  // This is used like a view attribute, but passing it through views led to too much complexity
+  // TODO: Do we want to move this to the view?
+  public readonly dataPointFill: string;
 
   // For PhET-iO State, it is difficult to power 2 views from one model, see https://github.com/phetsims/phet-io/issues/1688#issuecomment-1032967603
   // Therefore, we introduce a minimal model element for the cards, so they can be managed by the state
@@ -92,8 +97,8 @@ export default class CAVModel implements TModel {
 
     const options = optionize<CAVModelOptions, SelfOptions>()( {}, providedOptions );
 
+    this.dataPointFill = options.dataPointFill;
     this.objectType = objectType;
-
     this.maxNumberOfObjects = maxNumberOfObjects;
 
     this.objectGroup = new PhetioGroup( ( tandem, objectType: CAVObjectType, providedOptions: StrictOmit<CAVObjectOptions, 'tandem'> ) => {

@@ -92,7 +92,8 @@ export default class CAVPlotNode extends Node {
       return new CAVObjectNode( casObject, model.isShowingTopMedianProperty, modelViewTransform, dotPlotObjectNodesDraggableProperty, {
         objectViewType: CAVObjectType.DOT,
         draggingEnabled: false,
-        tandem: tandem
+        tandem: tandem,
+        fill: model.dataPointFill
       } );
     }, () => [ model.objectGroup.archetype ], {
       phetioType: PhetioGroup.PhetioGroupIO( Node.NodeIO ),

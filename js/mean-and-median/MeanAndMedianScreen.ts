@@ -49,7 +49,8 @@ export default class MeanAndMedianScreen extends CAVScreen<MeanAndMedianModel, M
       () => new MeanAndMedianModel( {
         includeCards: false,
         tandem: options.tandem.createTandem( 'model' ),
-        instrumentMeanPredictionProperty: true
+        instrumentMeanPredictionProperty: true,
+        dataPointFill: 'black'
       } ),
       model => new MeanAndMedianScreenView( model, {
         isVariabilityScreen: false,

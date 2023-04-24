@@ -34,6 +34,7 @@ import Multilink, { UnknownMultilink } from '../../../../axon/js/Multilink.js';
 type SelfOptions = {
   objectViewType?: CAVObjectType;
   draggingEnabled?: boolean;
+  fill: string;
 };
 export type CAVObjectNodeOptions =
   SelfOptions
@@ -53,7 +54,7 @@ export default class CAVObjectNode extends Node {
   private readonly medianHighlightVisibleMultilink: UnknownMultilink;
   private readonly opacityMultilink: UnknownMultilink;
 
-  public constructor( casObject: CAVObject, isShowingPlayAreaMedianProperty: TReadOnlyProperty<boolean>,
+  public constructor( cavObject: CAVObject, isShowingPlayAreaMedianProperty: TReadOnlyProperty<boolean>,
                       modelViewTransform: ModelViewTransform2, objectNodesInputEnabledProperty: TProperty<boolean>,
                       providedOptions?: CAVObjectNodeOptions ) {
 
@@ -61,7 +62,7 @@ export default class CAVObjectNode extends Node {
 
       // In the Mean & Median screen and Variability screen, the objectType is SOCCER_BALL, but we render the dot plot
       // with DOT views
-      objectViewType: casObject.objectType,
+      objectViewType: cavObject.objectType,
       draggingEnabled: true,
       phetioDynamicElement: true,
       cursor: 'pointer'
@@ -81,13 +82,13 @@ export default class CAVObjectNode extends Node {
 
     const createPlotMarker = () => {
       const circle = new Circle( viewRadius, {
-        fill: 'black',
+        fill: options.fill,
         center: Vector2.ZERO
       } );
       const cross = new Path( timesSolidShape, {
 
         // Leave some spacing between the stacked 'x' marks
-        fill: 'black',
+        fill: options.fill,
         maxWidth: viewRadius * 2 * 0.8,
         center: Vector2.ZERO
       } );
@@ -123,12 +124,12 @@ export default class CAVObjectNode extends Node {
     // TODO: CK: Better comment that explains why this nested layer is necessary
     this.addChild( childNode );
 
-    this.addLinkedElement( casObject, {
-      tandem: options.tandem.createTandem( casObject.objectType === CAVObjectType.SOCCER_BALL ? 'soccerBall' : 'dataPoint' ),
+    this.addLinkedElement( cavObject, {
+      tandem: options.tandem.createTandem( cavObject.objectType === CAVObjectType.SOCCER_BALL ? 'soccerBall' : 'dataPoint' ),
       phetioState: false
     } );
 
-    casObject.positionProperty.link( position => {
+    cavObject.positionProperty.link( position => {
       this.translation = modelViewTransform.modelToViewPosition( position );
     } );
 
@@ -136,15 +137,15 @@ export default class CAVObjectNode extends Node {
     if ( options.draggingEnabled ) {
       this.dragListener = new DragListener( {
         tandem: options.tandem.createTandem( 'dragListener' ),
-        positionProperty: casObject.dragPositionProperty,
+        positionProperty: cavObject.dragPositionProperty,
         transform: modelViewTransform,
         start: () => {
 
           // if the user presses an object that's animating, allow it to keep animating up in the stack
-          casObject.dragStartedEmitter.emit();
+          cavObject.dragStartedEmitter.emit();
         },
         drag: () => {
-          casObject.animation && casObject.animation.stop();
+          cavObject.animation && cavObject.animation.stop();
         }
       } );
 
@@ -154,7 +155,7 @@ export default class CAVObjectNode extends Node {
       // of 2 model units the pointer will always have enough space to drag the CAVObjectNode to a new position.
       // See https://github.com/phetsims/center-and-variability/issues/88
       this.dragListener.createPanTargetBounds = () => {
-        const modelPosition = casObject.positionProperty.value;
+        const modelPosition = cavObject.positionProperty.value;
         const modelBounds = new Bounds2( modelPosition.x - 1, modelPosition.y - 1, modelPosition.x + 1, modelPosition.y + 1 );
         const viewBounds = modelViewTransform.modelToViewBounds( modelBounds );
         return this.parentToGlobalBounds( viewBounds );
@@ -174,7 +175,7 @@ export default class CAVObjectNode extends Node {
       // when it is animating, if input for this individual node is disabled, or if input for all of the object nodes
       // ahs been disabled
       this.inputEnabledMultilink = Multilink.multilink(
-        [ casObject.animationModeProperty, casObject.valueProperty, this.selfInputEnabledProperty, objectNodesInputEnabledProperty ],
+        [ cavObject.animationModeProperty, cavObject.valueProperty, this.selfInputEnabledProperty, objectNodesInputEnabledProperty ],
         ( mode, value, selfInputEnabled, objectsInputEnabled ) => {
           const inputEnabled = value !== null && mode === AnimationMode.NONE && selfInputEnabled && objectsInputEnabled;
 
@@ -197,7 +198,7 @@ export default class CAVObjectNode extends Node {
 
     // show or hide the median highlight
     this.medianHighlightVisibleMultilink = Multilink.multilink(
-      [ casObject.isMedianObjectProperty, isShowingPlayAreaMedianProperty, casObject.isShowingAnimationHighlightProperty ],
+      [ cavObject.isMedianObjectProperty, isShowingPlayAreaMedianProperty, cavObject.isShowingAnimationHighlightProperty ],
       ( isMedianObject, isShowingPlayAreaMedian, isShowingAnimationHighlight ) => {
         medianHighlight.visible = options.objectViewType === CAVObjectType.DOT ? isShowingAnimationHighlight :
                                   isShowingPlayAreaMedian && isMedianObject;
@@ -205,9 +206,9 @@ export default class CAVObjectNode extends Node {
 
     // The initial ready-to-kick ball is full opacity. The rest of the balls waiting to be kicked are lower opacity so
     // they don't look like part of the data set, but still look kickable.
-    this.opacityMultilink = Multilink.multilink( [ casObject.valueProperty, casObject.animationModeProperty ],
+    this.opacityMultilink = Multilink.multilink( [ cavObject.valueProperty, cavObject.animationModeProperty ],
       ( value, animationMode ) => {
-        this.opacity = value === null && animationMode === AnimationMode.NONE && !casObject.isFirstObject ? 0.4 : 1;
+        this.opacity = value === null && animationMode === AnimationMode.NONE && !cavObject.isFirstObject ? 0.4 : 1;
       } );
 
     // Show index when debugging with ?dev

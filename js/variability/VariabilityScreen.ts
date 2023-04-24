@@ -30,7 +30,10 @@ export default class VariabilityScreen extends CAVScreen<VariabilityModel, Varia
       () => new VariabilityModel( {
         includeCards: false,
         tandem: options.tandem.createTandem( 'model' ),
-        instrumentMeanPredictionProperty: true
+        instrumentMeanPredictionProperty: true,
+
+        // TODO: This is the color from the design doc, but perhaps #777777 or darker would be better?
+        dataPointFill: '#8f8f8f'
       } ),
       ( model: VariabilityModel ) => new VariabilityScreenView( model, { tandem: options.tandem.createTandem( 'view' ) } ),
       options
