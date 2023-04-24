@@ -39,6 +39,8 @@ type StringsType = {
   'meanEqualsValueStringProperty': LinkableProperty<string>;
   'medianEqualsValue': string;
   'medianEqualsValueStringProperty': LinkableProperty<string>;
+  'rangeEqualsValue': string;
+  'rangeEqualsValueStringProperty': LinkableProperty<string>;
   'plotType': string;
   'plotTypeStringProperty': LinkableProperty<string>;
   'dotPlot': string;

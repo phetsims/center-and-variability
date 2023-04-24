@@ -23,6 +23,7 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import VariabilityModel from '../../variability/model/VariabilityModel.js';
 import CAVPlotNodeWithMedianBar from '../../mean-and-median/view/CAVPlotNodeWithMedianBar.js';
 import VariabilityPlotNode from '../../variability/view/VariabilityPlotNode.js';
+import VariabilityReadoutsNode from '../../variability/view/VariabilityReadoutsNode.js';
 
 type SelfOptions = {
 
@@ -78,7 +79,9 @@ export default class MeanOrMedianScreenView extends SoccerScreenView {
         top: this.questionBar.bottom + CAVConstants.SCREEN_VIEW_Y_MARGIN,
 
         // TODO: Better pattern for this
-        valueReadoutsNode: options.isMedianScreen ? null : new ValueReadoutsNode( model ),
+        valueReadoutsNode: model instanceof VariabilityModel ? new VariabilityReadoutsNode( model ) :
+                           options.isMedianScreen ? null :
+                           new ValueReadoutsNode( model ),
 
         ...( options.isVariabilityScreen ? {
           right: this.layoutBounds.right - CAVConstants.SCREEN_VIEW_X_MARGIN
