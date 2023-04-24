@@ -54,6 +54,7 @@ export default class CAVModel implements TModel {
 
   // This is used like a view attribute, but passing it through views led to too much complexity
   // TODO: Do we want to move this to the view?
+  // TODO: Or at the instantiation site, could do `model instanceof VariabilityModel? gray : black`
   public readonly dataPointFill: string;
 
   // For PhET-iO State, it is difficult to power 2 views from one model, see https://github.com/phetsims/phet-io/issues/1688#issuecomment-1032967603
