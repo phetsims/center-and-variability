@@ -11,7 +11,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 type SelfOptions = EmptySelfOptions;
 type VariabilityRadioButtonGroupOptions = SelfOptions & RectangularRadioButtonGroupOptions;
 
-export default class VariabilityRadioButtonGroup extends RectangularRadioButtonGroup<VariabilityMeasure> {
+export default class VariabilityMeasureRadioButtonGroup extends RectangularRadioButtonGroup<VariabilityMeasure> {
 
   public constructor( property: Property<VariabilityMeasure>, providedOptions: VariabilityRadioButtonGroupOptions ) {
     const options = optionize<VariabilityRadioButtonGroupOptions, SelfOptions, RectangularRadioButtonGroupOptions>()( {
@@ -42,4 +42,4 @@ export default class VariabilityRadioButtonGroup extends RectangularRadioButtonG
   }
 }
 
-centerAndVariability.register( 'VariabilityRadioButtonGroup', VariabilityRadioButtonGroup );
+centerAndVariability.register( 'VariabilityMeasureRadioButtonGroup', VariabilityMeasureRadioButtonGroup );

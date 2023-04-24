@@ -18,7 +18,7 @@ import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import MeanOrMedianScreenView, { MeanOrMedianScreenViewOptions } from '../../common/view/MeanOrMedianScreenView.js';
 import { ManualConstraint, Text } from '../../../../scenery/js/imports.js';
 import DistributionRadioButtonGroup from './DistributionRadioButtonGroup.js';
-import VariabilityRadioButtonGroup from './VariabilityRadioButtonGroup.js';
+import VariabilityMeasureRadioButtonGroup from './VariabilityMeasureRadioButtonGroup.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
@@ -101,7 +101,7 @@ export default class VariabilityScreenView extends MeanOrMedianScreenView {
 
     this.addChild( distributionRadioButtonGroup );
 
-    const variabilityRadioButtonGroup = new VariabilityRadioButtonGroup( model.selectedVariabilityProperty, {
+    const variabilityRadioButtonGroup = new VariabilityMeasureRadioButtonGroup( model.selectedVariabilityProperty, {
       left: 10
     } );
     this.addChild( variabilityRadioButtonGroup );
