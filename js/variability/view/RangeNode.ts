@@ -37,12 +37,17 @@ export default class RangeNode extends Node {
       const sortedDots = _.sortBy( model.objectGroup.getArrayCopy().filter( object => object.valueProperty.value !== null ),
         object => object.valueProperty.value );
       const leftmostDot = sortedDots[ 0 ];
+      const rightmostDot = sortedDots[ sortedDots.length - 1 ];
 
       // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card
-      if ( leftmostDot && model.isShowingRangeProperty.value && model.selectedVariabilityProperty.value === VariabilityType.RANGE ) {
+      if ( leftmostDot &&
+           rightmostDot &&
+           leftmostDot.valueProperty.value !== rightmostDot.valueProperty.value &&
+           model.isShowingRangeProperty.value &&
+           model.selectedVariabilityProperty.value === VariabilityType.RANGE ) {
 
         // assumes all of the dots have the same radius
-        const rightmostDot = sortedDots[ sortedDots.length - 1 ];
+
         const left = modelViewTransform.modelToViewX( leftmostDot.valueProperty.value! );
         const right = modelViewTransform.modelToViewX( rightmostDot.valueProperty.value! );
 
