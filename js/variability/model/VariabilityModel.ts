@@ -15,6 +15,7 @@ import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import VariabilityMeasure from './VariabilityMeasure.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import CAVConstants from '../../common/CAVConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityModelOptions = SelfOptions & SoccerModelOptions;
@@ -51,6 +52,23 @@ export default class VariabilityModel extends SoccerModel {
 
     this.isInfoShowingProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isInfoShowingProperty' )
+    } );
+
+    this.selectedDistributionProperty.link( distribution => {
+
+      // TODO: the parent class sets this incorrectly on reset
+      this.distributionProperty.value =
+        distribution === DistributionType.UNIFORM ? [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] :
+
+          // TODO: This isn't a real gaussian
+        distribution === DistributionType.GAUSSIAN ? [ 1, 1, 2, 2, 3, 5, 8, 12, 8, 5, 3, 2, 2, 1, 1 ] :
+
+          // TODO-design - is this the right distribution, or should it be left or switch between them?
+        distribution === DistributionType.SKEWED ? CAVConstants.RIGHT_SKEWED_DATA :
+
+          // Bimodal
+          // TODO-design: want to choose this distribution?
+          [ 1, 3, 5, 7, 4, 1, 1, 1, 1, 1, 4, 7, 5, 3, 1 ];
     } );
   }
 

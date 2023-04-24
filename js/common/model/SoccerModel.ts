@@ -46,7 +46,7 @@ export default class SoccerModel extends CAVModel {
 
   private readonly timeWhenLastBallWasKickedProperty: NumberProperty;
   private readonly ballPlayerMap: Map<CAVObject, SoccerPlayer> = new Map<CAVObject, SoccerPlayer>(); // TODO: Add to PhET-iO State, see https://github.com/phetsims/center-and-variability/issues/128
-  private readonly distributionProperty: Property<ReadonlyArray<number>>;
+  protected readonly distributionProperty: Property<ReadonlyArray<number>>;
 
   public constructor( options: SoccerModelOptions ) {
 
