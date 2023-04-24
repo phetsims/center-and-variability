@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import RectangularRadioButtonGroup, { RectangularRadioButtonGroupOptions } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
-import VariabilityType from '../model/VariabilityType.js';
+import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Property from '../../../../axon/js/Property.js';
@@ -11,9 +11,9 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 type SelfOptions = EmptySelfOptions;
 type VariabilityRadioButtonGroupOptions = SelfOptions & RectangularRadioButtonGroupOptions;
 
-export default class VariabilityRadioButtonGroup extends RectangularRadioButtonGroup<VariabilityType> {
+export default class VariabilityRadioButtonGroup extends RectangularRadioButtonGroup<VariabilityMeasure> {
 
-  public constructor( property: Property<VariabilityType>, providedOptions: VariabilityRadioButtonGroupOptions ) {
+  public constructor( property: Property<VariabilityMeasure>, providedOptions: VariabilityRadioButtonGroupOptions ) {
     const options = optionize<VariabilityRadioButtonGroupOptions, SelfOptions, RectangularRadioButtonGroupOptions>()( {
       radioButtonOptions: {
         baseColor: 'white'
@@ -30,13 +30,13 @@ export default class VariabilityRadioButtonGroup extends RectangularRadioButtonG
       return text;
     };
     super( property, [ {
-      value: VariabilityType.RANGE,
+      value: VariabilityMeasure.RANGE,
       createNode: tandem => createLabel( tandem, 'RAN', '#ec5f3a' )
     }, {
-      value: VariabilityType.IQR,
+      value: VariabilityMeasure.IQR,
       createNode: tandem => createLabel( tandem, 'IQR', '#5bc760' )
     }, {
-      value: VariabilityType.MAD,
+      value: VariabilityMeasure.MAD,
       createNode: tandem => createLabel( tandem, 'MAD', '#fdf454' )
     } ], options );
   }

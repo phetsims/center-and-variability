@@ -5,7 +5,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import Dialog from '../../../../sun/js/Dialog.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
-import VariabilityType from '../model/VariabilityType.js';
+import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import VariabilityPlotNode from './VariabilityPlotNode.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -15,7 +15,7 @@ export default class InfoDialog extends Dialog {
   public constructor( model: VariabilityModel, chartViewWidth: number ) {
 
     const content = new ToggleNode( model.selectedVariabilityProperty, [ {
-      value: VariabilityType.RANGE,
+      value: VariabilityMeasure.RANGE,
       createNode: tandem => {
         return new VBox( {
           align: 'left',
@@ -43,7 +43,7 @@ export default class InfoDialog extends Dialog {
             // be magnified?
             new VariabilityPlotNode( model, chartViewWidth, {
 
-              staticDisplay: VariabilityType.RANGE,
+              staticDisplay: VariabilityMeasure.RANGE,
 
               // TODO: Tandem
               tandem: Tandem.OPT_OUT
@@ -52,12 +52,12 @@ export default class InfoDialog extends Dialog {
         } );
       }
     }, {
-      value: VariabilityType.IQR,
+      value: VariabilityMeasure.IQR,
       createNode: tandem => {
         return new Text( 'IQR' );
       }
     }, {
-      value: VariabilityType.MAD,
+      value: VariabilityMeasure.MAD,
       createNode: tandem => {
         return new Text( 'IQR' );
       }

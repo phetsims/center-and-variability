@@ -14,12 +14,12 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import CAVPlotNode from '../../common/view/CAVPlotNode.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import RangeNode from './RangeNode.js';
-import VariabilityType from '../model/VariabilityType.js';
+import VariabilityMeasure from '../model/VariabilityMeasure.js';
 
 type SelfOptions = {
 
   // TODO: Alternatives to staticDisplay option?
-  staticDisplay?: VariabilityType;
+  staticDisplay?: VariabilityMeasure;
 };
 export type CAVPlotOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 

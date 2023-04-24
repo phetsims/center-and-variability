@@ -13,7 +13,7 @@ import DistributionType from './DistributionType.js';
 import Property from '../../../../axon/js/Property.js';
 import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import VariabilityType from './VariabilityType.js';
+import VariabilityMeasure from './VariabilityMeasure.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -21,7 +21,7 @@ type VariabilityModelOptions = SelfOptions & SoccerModelOptions;
 
 export default class VariabilityModel extends SoccerModel {
   public readonly selectedDistributionProperty: Property<DistributionType>;
-  public readonly selectedVariabilityProperty: Property<VariabilityType>;
+  public readonly selectedVariabilityProperty: Property<VariabilityMeasure>;
   public readonly isShowingRangeProperty: Property<boolean>;
   public readonly isShowingIQRProperty: Property<boolean>;
   public readonly isShowingMADProperty: Property<boolean>;
@@ -33,7 +33,7 @@ export default class VariabilityModel extends SoccerModel {
       tandem: options.tandem.createTandem( 'selectedDistributionProperty' )
     } );
 
-    this.selectedVariabilityProperty = new EnumerationProperty( VariabilityType.RANGE, {
+    this.selectedVariabilityProperty = new EnumerationProperty( VariabilityMeasure.RANGE, {
       tandem: options.tandem.createTandem( 'selectedVariabilityProperty' )
     } );
 

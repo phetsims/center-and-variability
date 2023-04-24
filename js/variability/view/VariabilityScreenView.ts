@@ -20,7 +20,7 @@ import { ManualConstraint, Text } from '../../../../scenery/js/imports.js';
 import DistributionRadioButtonGroup from './DistributionRadioButtonGroup.js';
 import VariabilityRadioButtonGroup from './VariabilityRadioButtonGroup.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import VariabilityType from '../model/VariabilityType.js';
+import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
@@ -41,8 +41,8 @@ export default class VariabilityScreenView extends MeanOrMedianScreenView {
   public constructor( model: VariabilityModel, providedOptions: VariabilityScreenViewOptions ) {
 
     const currentProperty = new DerivedProperty( [ model.selectedVariabilityProperty ], selectedVariability =>
-      selectedVariability === VariabilityType.RANGE ? CenterAndVariabilityStrings.rangeStringProperty :
-      selectedVariability === VariabilityType.IQR ? CenterAndVariabilityStrings.interquartileRangeIQRStringProperty :
+      selectedVariability === VariabilityMeasure.RANGE ? CenterAndVariabilityStrings.rangeStringProperty :
+      selectedVariability === VariabilityMeasure.IQR ? CenterAndVariabilityStrings.interquartileRangeIQRStringProperty :
       CenterAndVariabilityStrings.meanAbsoluteDeviationMADStringProperty
     );
 
@@ -56,15 +56,15 @@ export default class VariabilityScreenView extends MeanOrMedianScreenView {
         questionString: CenterAndVariabilityStrings.variabilityQuestionStringProperty
       },
       createAccordionBoxControlNode: tandem => new ToggleNode( model.selectedVariabilityProperty, [ {
-        value: VariabilityType.RANGE,
+        value: VariabilityMeasure.RANGE,
 
         // TODO: Different string value?
         createNode: tandem => new Checkbox( model.isShowingRangeProperty, new Text( CenterAndVariabilityStrings.rangeStringProperty, TEXT_OPTIONS ) )
       }, {
-        value: VariabilityType.IQR,
+        value: VariabilityMeasure.IQR,
         createNode: tandem => new Checkbox( model.isShowingIQRProperty, new Text( CenterAndVariabilityStrings.iqrStringProperty, TEXT_OPTIONS ) )
       }, {
-        value: VariabilityType.MAD,
+        value: VariabilityMeasure.MAD,
         createNode: tandem => new Checkbox( model.isShowingMADProperty, new Text( CenterAndVariabilityStrings.madStringProperty, TEXT_OPTIONS ) )
       }
       ] ),

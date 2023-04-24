@@ -4,14 +4,14 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import MedianBarNode from '../../common/view/MedianBarNode.js';
 import { Rectangle, Text, Node, NodeOptions } from '../../../../scenery/js/imports.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import VariabilityType from '../model/VariabilityType.js';
+import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import Utils from '../../../../dot/js/Utils.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 
 type SelfOptions = {
-  staticDisplay?: VariabilityType | null;
+  staticDisplay?: VariabilityMeasure | null;
 };
 type RangeNodeOptions = SelfOptions & NodeOptions;
 
@@ -54,9 +54,9 @@ export default class RangeNode extends Node {
       if ( leftmostDot &&
            rightmostDot &&
            leftmostDot.valueProperty.value !== rightmostDot.valueProperty.value &&
-           ( options.staticDisplay === VariabilityType.RANGE || (
+           ( options.staticDisplay === VariabilityMeasure.RANGE || (
              model.isShowingRangeProperty.value &&
-             model.selectedVariabilityProperty.value === VariabilityType.RANGE
+             model.selectedVariabilityProperty.value === VariabilityMeasure.RANGE
            ) ) ) {
 
         // assumes all of the dots have the same radius

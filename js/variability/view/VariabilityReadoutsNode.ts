@@ -20,7 +20,7 @@ import VariabilityModel from '../model/VariabilityModel.js';
 import CAVColors from '../../common/CAVColors.js';
 import Range from '../../../../dot/js/Range.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import VariabilityType from '../model/VariabilityType.js';
+import VariabilityMeasure from '../model/VariabilityMeasure.js';
 
 type SelfOptions = EmptySelfOptions;
 export type ValueReadoutNodeOptions = SelfOptions & VBoxOptions;
@@ -53,7 +53,7 @@ export default class VariabilityReadoutsNode extends VBox {
 
     const rangeText = createReadoutText(
       model.dataRangeProperty,
-      DerivedProperty.and( [ model.isShowingRangeProperty, DerivedProperty.valueEqualsConstant( model.selectedVariabilityProperty, VariabilityType.RANGE ) ] ),
+      DerivedProperty.and( [ model.isShowingRangeProperty, DerivedProperty.valueEqualsConstant( model.selectedVariabilityProperty, VariabilityMeasure.RANGE ) ] ),
       CenterAndVariabilityStrings.rangeEqualsValueStringProperty,
       CAVColors.meanColorProperty
     );
