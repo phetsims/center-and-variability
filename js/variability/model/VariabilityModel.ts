@@ -14,6 +14,7 @@ import Property from '../../../../axon/js/Property.js';
 import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import VariabilityType from './VariabilityType.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityModelOptions = SelfOptions & SoccerModelOptions;
@@ -21,6 +22,9 @@ type VariabilityModelOptions = SelfOptions & SoccerModelOptions;
 export default class VariabilityModel extends SoccerModel {
   public readonly selectedDistributionProperty: Property<DistributionType>;
   public readonly selectedVariabilityProperty: Property<VariabilityType>;
+  public readonly isShowingRangeProperty: Property<boolean>;
+  public readonly isShowingIQRProperty: Property<boolean>;
+  public readonly isShowingMADProperty: Property<boolean>;
 
   public constructor( options: VariabilityModelOptions ) {
     super( options );
@@ -31,12 +35,27 @@ export default class VariabilityModel extends SoccerModel {
     this.selectedVariabilityProperty = new EnumerationProperty( VariabilityType.RANGE, {
       tandem: options.tandem.createTandem( 'selectedVariabilityProperty' )
     } );
+
+    this.isShowingRangeProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isShowingRangeProperty' )
+    } );
+
+    this.isShowingIQRProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isShowingIQRProperty' )
+    } );
+
+    this.isShowingMADProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isShowingMADProperty' )
+    } );
   }
 
   public override reset(): void {
     super.reset();
     this.selectedDistributionProperty.reset();
     this.selectedVariabilityProperty.reset();
+    this.isShowingRangeProperty.reset();
+    this.isShowingIQRProperty.reset();
+    this.isShowingMADProperty.reset();
   }
 
   public static meanAbsoluteDeviation( data: number[] ): number {

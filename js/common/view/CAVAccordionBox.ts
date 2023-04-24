@@ -14,7 +14,6 @@ import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionB
 import CAVConstants from '../CAVConstants.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import TopRepresentationCheckboxGroup from './TopRepresentationCheckboxGroup.js';
 import CAVModel from '../model/CAVModel.js';
 import ValueReadoutsNode from './ValueReadoutsNode.js';
 import { Shape } from '../../../../kite/js/imports.js';
@@ -39,7 +38,7 @@ export default class CAVAccordionBox extends AccordionBox {
   // TODO: In order to support the accordion box (screen 2) and panel (screen 3) with similar layouts,
   // consider a panel that puts readouts on the left, data + number line in the middle, and
   // checkboxes on the right.  Rather than duplicating that here is accordion box and the screen 3 panel.
-  public constructor( model: CAVModel, contentNode: Node, checkboxPanel: TopRepresentationCheckboxGroup,
+  public constructor( model: CAVModel, contentNode: Node, checkboxPanel: Node,
                       titleNode: Node, layoutBounds: Bounds2, providedOptions: CAVAccordionBoxOptions ) {
 
     const options = optionize<CAVAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {

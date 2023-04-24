@@ -14,11 +14,12 @@ import CAVColors from '../../common/CAVColors.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import MeanOrMedianScreenView, { MeanOrMedianScreenViewOptions } from '../../common/view/MeanOrMedianScreenView.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import TopRepresentationCheckboxGroup from '../../common/view/TopRepresentationCheckboxGroup.js';
 
 type SelfOptions = EmptySelfOptions;
 type MedianScreenViewOptions =
   SelfOptions
-  & StrictOmit<MeanOrMedianScreenViewOptions, 'isMedianScreen' | 'isVariabilityScreen' | 'questionBarOptions' | 'accordionBoxTitleStringProperty'>;
+  & StrictOmit<MeanOrMedianScreenViewOptions, 'createAccordionBoxControlNode' | 'isMedianScreen' | 'isVariabilityScreen' | 'questionBarOptions' | 'accordionBoxTitleStringProperty'>;
 
 export default class MedianScreenView extends MeanOrMedianScreenView {
 
@@ -31,15 +32,16 @@ export default class MedianScreenView extends MeanOrMedianScreenView {
         barFill: CAVColors.medianQuestionBarFillColorProperty,
         questionString: CenterAndVariabilityStrings.medianQuestionStringProperty
       },
-      topCheckboxGroupOptions: {
+      createAccordionBoxControlNode: tandem => new TopRepresentationCheckboxGroup( model, {
         includeSortData: true,
         includeMean: false,
         medianBarIconOptions: {
           notchDirection: 'up',
           barStyle: 'continuous'
         },
-        showMedianCheckboxIcon: false
-      },
+        showMedianCheckboxIcon: false,
+        tandem: tandem.createTandem( 'checkboxGroup' )
+      } ),
       bottomCheckboxGroupOptions: {
         includeMean: false,
         includePredictMean: false

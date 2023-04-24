@@ -19,7 +19,6 @@ import CAVObjectNode from './CAVObjectNode.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import CAVObject from '../model/CAVObject.js';
-import TopRepresentationCheckboxGroup, { TopRepresentationCheckboxGroupOptions } from './TopRepresentationCheckboxGroup.js';
 import BottomRepresentationCheckboxGroup, { BottomRepresentationCheckboxGroupOptions } from './BottomRepresentationCheckboxGroup.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
@@ -30,18 +29,16 @@ import DragIndicatorArrowNode from './DragIndicatorArrowNode.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Property from '../../../../axon/js/Property.js';
 import Range from '../../../../dot/js/Range.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 type SelfOptions = {
-
-  // Tandem is required by the Class options, but is filled in after this optionize step.
-  topCheckboxGroupOptions?: StrictOmit<TopRepresentationCheckboxGroupOptions, 'tandem'>;
+  createAccordionBoxControlNode: ( tandem: Tandem ) => Node;
   bottomCheckboxGroupOptions?: StrictOmit<BottomRepresentationCheckboxGroupOptions, 'tandem'>;
 };
 export type CAVScreenViewOptions = SelfOptions & ScreenViewOptions;
 
 export default class CAVScreenView extends ScreenView {
 
-  protected readonly topCheckboxGroup: TopRepresentationCheckboxGroup;
   protected readonly bottomCheckboxGroup: BottomRepresentationCheckboxGroup;
 
   protected readonly resetAllButton: ResetAllButton;
@@ -60,10 +57,11 @@ export default class CAVScreenView extends ScreenView {
 
   protected readonly medianPredictionNode: PredictionSlider;
   protected readonly meanPredictionNode: PredictionSlider;
+  protected readonly accordionBoxControlNode: Node;
 
   public constructor( model: CAVModel, modelViewTransform: ModelViewTransform2, providedOptions: CAVScreenViewOptions ) {
     const options = optionize<CAVScreenViewOptions,
-      StrictOmit<SelfOptions, 'topCheckboxGroupOptions' | 'bottomCheckboxGroupOptions'>, ScreenViewOptions>()( {}, providedOptions );
+      StrictOmit<SelfOptions, 'bottomCheckboxGroupOptions'>, ScreenViewOptions>()( {}, providedOptions );
 
     super( options );
 
@@ -149,10 +147,7 @@ export default class CAVScreenView extends ScreenView {
       map.delete( casObject );
     } );
 
-    this.topCheckboxGroup = new TopRepresentationCheckboxGroup( model,
-      combineOptions<TopRepresentationCheckboxGroupOptions>( {
-        tandem: options.tandem.createTandem( 'topCheckboxGroup' )
-      }, options.topCheckboxGroupOptions ) );
+    this.accordionBoxControlNode = options.createAccordionBoxControlNode( options.tandem.createTandem( 'accordionBoxControl' ) );
     this.bottomCheckboxGroup = new BottomRepresentationCheckboxGroup( model,
       combineOptions<BottomRepresentationCheckboxGroupOptions>( {
         tandem: options.tandem.createTandem( 'bottomCheckboxGroup' )

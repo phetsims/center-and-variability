@@ -27,14 +27,6 @@ export default class MeanAndMedianScreenView extends MeanOrMedianScreenView {
       questionBarOptions: {
         barFill: CAVColors.meanAndMedianQuestionBarFillColorProperty,
         questionString: CenterAndVariabilityStrings.meanAndMedianQuestionStringProperty
-      },
-      topCheckboxGroupOptions: {
-        medianBarIconOptions: {
-          notchDirection: 'down',
-          barStyle: 'continuous',
-          arrowScale: 0.75
-        },
-        showMedianCheckboxIcon: true
       }
     }, providedOptions );
 

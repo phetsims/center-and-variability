@@ -16,14 +16,15 @@ import { SoccerScreenViewOptions } from '../../common/view/SoccerScreenView.js';
 import CAVColors from '../../common/CAVColors.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import MeanOrMedianScreenView, { MeanOrMedianScreenViewOptions } from '../../common/view/MeanOrMedianScreenView.js';
-import { ManualConstraint } from '../../../../scenery/js/imports.js';
+import { ManualConstraint, Text } from '../../../../scenery/js/imports.js';
 import DistributionRadioButtonGroup from './DistributionRadioButtonGroup.js';
 import VariabilityRadioButtonGroup from './VariabilityRadioButtonGroup.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import VariabilityType from '../model/VariabilityType.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 
-type VariabilityScreenViewOptions = StrictOmit<SoccerScreenViewOptions, 'questionBarOptions'>;
+type SelfOptions = EmptySelfOptions;
+type VariabilityScreenViewOptions = SelfOptions & StrictOmit<SoccerScreenViewOptions, 'questionBarOptions' | 'createAccordionBoxControlNode'>;
 
 export default class VariabilityScreenView extends MeanOrMedianScreenView {
 
@@ -37,23 +38,14 @@ export default class VariabilityScreenView extends MeanOrMedianScreenView {
 
     const accordionBoxTitleProperty = new DynamicProperty<string, unknown, unknown>( currentProperty );
 
-    const options = optionize<VariabilityScreenViewOptions, EmptySelfOptions, MeanOrMedianScreenViewOptions>()( {
+    const options = optionize<VariabilityScreenViewOptions, SelfOptions, MeanOrMedianScreenViewOptions>()( {
       isMedianScreen: false,
       isVariabilityScreen: true,
       questionBarOptions: {
         barFill: CAVColors.variabilityQuestionBarFillColorProperty,
         questionString: CenterAndVariabilityStrings.variabilityQuestionStringProperty
       },
-      topCheckboxGroupOptions: {
-        medianBarIconOptions: {
-          notchDirection: 'down',
-          barStyle: 'continuous',
-          arrowScale: 0.75
-        },
-        showMedianCheckboxIcon: false,
-        includeMean: false,
-        includeMedian: false
-      },
+      createAccordionBoxControlNode: tandem => new Text( 'hello' ),
       bottomCheckboxGroupOptions: {
         includeVariability: true,
         includePredictMean: false,

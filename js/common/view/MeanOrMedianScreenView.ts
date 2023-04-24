@@ -61,7 +61,7 @@ export default class MeanOrMedianScreenView extends SoccerScreenView {
       maxWidth: 300
     } );
 
-    this.accordionBox = new CAVAccordionBox( this.model, this.accordionBoxContents, this.topCheckboxGroup,
+    this.accordionBox = new CAVAccordionBox( this.model, this.accordionBoxContents, this.accordionBoxControlNode,
       titleNode,
       this.layoutBounds, {
         leftMargin: options.isVariabilityScreen ? 70 : 0,
@@ -86,9 +86,9 @@ export default class MeanOrMedianScreenView extends SoccerScreenView {
     this.bottomCheckboxGroup.right = this.layoutBounds.right - BOTTOM_CHECKBOX_PANEL_MARGIN;
     this.bottomCheckboxGroup.bottom = this.modelViewTransform.modelToViewY( 0 ) - BOTTOM_CHECKBOX_PANEL_MARGIN;
 
-    ManualConstraint.create( this, [ this.bottomCheckboxGroup, this.topCheckboxGroup ],
-      ( bottomCheckboxGroupWrapper, topCheckboxGroupWrapper ) => {
-        topCheckboxGroupWrapper.x = bottomCheckboxGroupWrapper.x;
+    ManualConstraint.create( this, [ this.bottomCheckboxGroup, this.accordionBoxControlNode ],
+      ( bottomCheckboxGroupWrapper, accordionBoxControlNodeWrapper ) => {
+        accordionBoxControlNodeWrapper.x = bottomCheckboxGroupWrapper.x;
       } );
 
     // Add in the same order as the checkboxes, so the z-order matches the checkbox order

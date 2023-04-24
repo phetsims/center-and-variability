@@ -21,6 +21,7 @@ import DynamicProperty from '../../../axon/js/DynamicProperty.js';
 import CAVConstants from '../common/CAVConstants.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 import PlotType from '../common/model/PlotType.js';
+import TopRepresentationCheckboxGroup from '../common/view/TopRepresentationCheckboxGroup.js';
 
 type MeanAndMedianScreenOptions = CAVScreenOptions;
 
@@ -53,7 +54,16 @@ export default class MeanAndMedianScreen extends CAVScreen<MeanAndMedianModel, M
       model => new MeanAndMedianScreenView( model, {
         isVariabilityScreen: false,
         tandem: options.tandem.createTandem( 'view' ),
-        accordionBoxTitleStringProperty: accordionBoxTitleProperty
+        accordionBoxTitleStringProperty: accordionBoxTitleProperty,
+        createAccordionBoxControlNode: tandem => new TopRepresentationCheckboxGroup( model, {
+          medianBarIconOptions: {
+            notchDirection: 'down',
+            barStyle: 'continuous',
+            arrowScale: 0.75
+          },
+          showMedianCheckboxIcon: true,
+          tandem: tandem.createTandem( 'topRepresentationCheckboxGroup' )
+        } )
       } ),
       options
     );
