@@ -54,19 +54,24 @@ export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxG
     const items: VerticalCheckboxGroupItem[] = [];
     const iconGroup = new AlignGroup();
 
+    const newGridBox = ( text: Node, icon: Node ) => {
+      return new GridBox( {
+        stretch: true,
+        spacing: 5,
+        grow: 1,
+        rows: [ [
+
+          // TODO: this will be odd to a11y because both buttons have the same text.  Do we have alt text for the icons?  Or maybe we need alt text for the entire checkbox?
+          new Node( { children: [ text ], layoutOptions: { xAlign: 'left' } } ),
+          iconGroup.createBox( icon, { layoutOptions: { xAlign: 'right' }, xAlign: 'center' } )
+        ] ]
+      } );
+    };
+
     const createPredictionItem = ( property: Property<boolean>, stringProperty: LinkableProperty<string>, color: TColor, spacing: number,
                                    tandemName: string ) => {
       return {
-        createNode: ( tandem: Tandem ) => new GridBox( {
-          stretch: true,
-          grow: 1,
-          children: [
-
-            // TODO: this will be odd to a11y because both buttons have the same text.  Do we have alt text for the icons?  Or maybe we need alt text for the entire checkbox?
-            new Node( { children: [ new Text( stringProperty, TEXT_OPTIONS ) ], layoutOptions: { xAlign: 'left' } } ),
-            iconGroup.createBox( new PredictionThumbNode( { color: color, maxHeight: 20, pickable: false } ), { layoutOptions: { xAlign: 'right' }, xAlign: 'center' } )
-          ]
-        } ),
+        createNode: ( tandem: Tandem ) => newGridBox( new Text( stringProperty, TEXT_OPTIONS ), new PredictionThumbNode( { color: color, maxHeight: 20, pickable: false } ) ),
         property: property,
         tandemName: tandemName
       };
@@ -80,81 +85,32 @@ export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxG
     ) );
 
     options.includeVariability && items.push( {
-
-      // TODO: Align group to center align the icons
-      createNode: ( tandem: Tandem ) => new GridBox( {
-
-        // TODO: A lot of duplicated options in this file
-        stretch: true,
-        grow: 1,
-        children: [
-          new Node( { children: [ new Text( CenterAndVariabilityStrings.variabilityStringProperty, TEXT_OPTIONS ) ], layoutOptions: { xAlign: 'left' } } ),
-          //TODO: variability icon
-          iconGroup.createBox( NumberLineNode.createMeanIndicatorNode( true, true ), { layoutOptions: { xAlign: 'right' }, xAlign: 'center' } )
-        ]
-      } ),
+      createNode: ( tandem: Tandem ) => newGridBox( new Text( CenterAndVariabilityStrings.variabilityStringProperty, TEXT_OPTIONS ),
+        NumberLineNode.createMeanIndicatorNode( true, true ) ),
       property: model.isShowingPlayAreaVariabilityProperty,
       tandemName: 'variabilityCheckbox'
     } );
 
-    const addMeanItem = () => {
-      options.includeMean && items.push( {
+    options.includeMedian && items.push( {
+      createNode: ( tandem: Tandem ) => newGridBox( new Text( CenterAndVariabilityStrings.medianStringProperty, TEXT_OPTIONS ),
+        new ArrowNode( 0, 0, 0, 27, {
+          fill: CAVColors.medianColorProperty,
+          stroke: CAVColors.arrowStrokeProperty,
+          lineWidth: CAVConstants.ARROW_LINE_WIDTH,
+          headHeight: 12,
+          headWidth: 18,
+          maxHeight: 20
+        } ) ),
+      property: model.isShowingPlayAreaMedianProperty,
+      tandemName: 'medianCheckbox'
+    } );
 
-        // TODO: Align group to center align the icons
-        createNode: ( tandem: Tandem ) => new GridBox( {
-          stretch: true,
-          grow: 1,
-          children: [
-            new Node( {
-              children: [ new Text( CenterAndVariabilityStrings.meanStringProperty, TEXT_OPTIONS ) ],
-              layoutOptions: { xAlign: 'left', stretch: true, grow: 1 }
-            } ),
-            iconGroup.createBox( NumberLineNode.createMeanIndicatorNode( true, true ), { layoutOptions: { xAlign: 'right' }, xAlign: 'center' } )
-          ]
-        } ),
-        property: model.isShowingPlayAreaMeanProperty,
-        tandemName: 'meanCheckbox'
-      } );
-    };
-
-    const addMedianItem = () => {
-      options.includeMedian && items.push( {
-
-        // TODO: Align group to center align the icons
-        createNode: ( tandem: Tandem ) => new GridBox( {
-          stretch: true,
-          grow: 1,
-          children: [
-            new Node( { children: [ new Text( CenterAndVariabilityStrings.medianStringProperty, TEXT_OPTIONS ) ], layoutOptions: { xAlign: 'left' } } ),
-
-            // TODO: Factor out?  See playAreaMedianIndicatorNode
-            iconGroup.createBox(
-              new ArrowNode( 0, 0, 0, 27, {
-                fill: CAVColors.medianColorProperty,
-                stroke: CAVColors.arrowStrokeProperty,
-                lineWidth: CAVConstants.ARROW_LINE_WIDTH,
-                headHeight: 12,
-                headWidth: 18,
-                maxHeight: 20
-              } ),
-              {
-                layoutOptions: {
-                  xAlign: 'right'
-                },
-                xAlign: 'center'
-              }
-            )
-
-          ]
-        } ),
-        property: model.isShowingPlayAreaMedianProperty,
-        tandemName: 'medianCheckbox'
-      } );
-    };
-
-    // TODO: no longer need this abstraction now that order is consistent
-    addMedianItem();
-    addMeanItem();
+    options.includeMean && items.push( {
+      createNode: ( tandem: Tandem ) => newGridBox( new Text( CenterAndVariabilityStrings.meanStringProperty, TEXT_OPTIONS ),
+        NumberLineNode.createMeanIndicatorNode( true, true ) ),
+      property: model.isShowingPlayAreaMeanProperty,
+      tandemName: 'meanCheckbox'
+    } );
 
     super( items, options );
   }
