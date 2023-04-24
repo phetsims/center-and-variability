@@ -57,6 +57,7 @@ export default class CAVModel implements TModel {
   // TODO: Or at the instantiation site, could do `model instanceof VariabilityModel? gray : black`
   public readonly dataPointFill: string;
 
+  // TODO: Why is the CardModel in the base class that applies to all screens?
   // For PhET-iO State, it is difficult to power 2 views from one model, see https://github.com/phetsims/phet-io/issues/1688#issuecomment-1032967603
   // Therefore, we introduce a minimal model element for the cards, so they can be managed by the state
   // Only instrumented and enabled if includeCards === true
@@ -96,6 +97,7 @@ export default class CAVModel implements TModel {
   public readonly isMedianAnimationCompleteProperty = new BooleanProperty( false );
   protected readonly objectValueBecameNonNullEmitter: TEmitter<[ CAVObject ]>;
   public readonly resetEmitter: TEmitter = new Emitter();
+  public readonly numberOfDataPointsProperty: NumberProperty;
 
   public constructor( objectType: CAVObjectType, maxNumberOfObjects: number, providedOptions: CAVModelOptions ) {
 
@@ -193,6 +195,7 @@ export default class CAVModel implements TModel {
         return max - min;
       }
     } );
+    this.numberOfDataPointsProperty = new NumberProperty( 0 );
 
     this.medianPredictionProperty = new NumberProperty( 1, {
       range: this.physicalRange,
@@ -315,6 +318,8 @@ export default class CAVModel implements TModel {
       this.meanValueProperty.value = null;
       this.dataRangeProperty.value = null;
     }
+
+    this.numberOfDataPointsProperty.value = sortedObjects.length;
   }
 
   /**

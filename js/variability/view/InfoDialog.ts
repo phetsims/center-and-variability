@@ -10,6 +10,7 @@ import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import VariabilityPlotNode from './VariabilityPlotNode.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 export default class InfoDialog extends Dialog {
   public constructor( model: VariabilityModel, chartViewWidth: number ) {
@@ -17,6 +18,7 @@ export default class InfoDialog extends Dialog {
     const content = new ToggleNode( model.selectedVariabilityProperty, [ {
       value: VariabilityMeasure.RANGE,
       createNode: tandem => {
+        const hasEnoughDataProperty = new DerivedProperty( [ model.numberOfDataPointsProperty ], numberOfDataPoints => numberOfDataPoints >= 1 );
         return new VBox( {
           align: 'left',
           spacing: 5,
@@ -35,10 +37,10 @@ export default class InfoDialog extends Dialog {
             new Text( new PatternStringProperty( CenterAndVariabilityStrings.rangeCalculationPatternStringProperty, {
               max: model.maxValueProperty,
               min: model.minValueProperty
-            } ), { fontSize: 18 } ),
+            } ), { fontSize: 18, visibleProperty: hasEnoughDataProperty } ),
             new Text( new PatternStringProperty( CenterAndVariabilityStrings.rangeCalculationResultPatternStringProperty, {
               range: model.rangeValueProperty
-            } ), { fontSize: 18 } ),
+            } ), { fontSize: 18, visibleProperty: hasEnoughDataProperty } ),
             new VStrut( 10 ),
 
             // TODO: This shows it as the same size as all the other views. Is that good, or is it supposed to
