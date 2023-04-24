@@ -69,10 +69,11 @@ export default class RangeNode extends Node {
         rangeRectangle.left = left;
         rangeRectangle.bottom = floor;
         rangeRectangle.visible = true;
+
+        // TODO: In the info dialog, this should be above the topmost data point (in the accordion box it's ok to overlap)
         rangeBars.setMedianBarShape( rangeRectangle.top - MedianBarNode.NOTCH_HEIGHT - 2, rangeRectangle.left, 0, rangeRectangle.right, false );
 
-        // TODO: The design doc called for a decimal point, but I think we should omit it because it is always an integer
-        rangeTextReadout.string = Utils.toFixed( rightmostDot.valueProperty.value! - leftmostDot.valueProperty.value!, 1 );
+        rangeTextReadout.string = rightmostDot.valueProperty.value! - leftmostDot.valueProperty.value!;
         rangeTextReadout.centerX = rangeRectangle.centerX;
         rangeTextReadout.bottom = rangeBars.top - 5;
         rangeBars.visible = true;

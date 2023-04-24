@@ -28,7 +28,11 @@ export default class InfoDialog extends Dialog {
             // TODO: i18n
             new Text( 'Range is the distance between the maximum and minimum data points.', { fontSize: 18 } ),
 
-            // TODO: Add "need at least 1 kick" message on the chart
+            // TODO: Add "need at least 1 kick" message on the chart. But only if you click on the range checkbox
+            // or show the info dialog. In that case, don't show these texts at all.
+            // TODO: Range needs at least 1
+            // TODO: MAD needs at least 1
+            // TODO: IQR needs at least 5
 
             // TODO: String key name
             new Text( new PatternStringProperty( CenterAndVariabilityStrings.rangeCalculationPatternStringProperty, {
@@ -38,6 +42,7 @@ export default class InfoDialog extends Dialog {
             new Text( new PatternStringProperty( CenterAndVariabilityStrings.rangeCalculationResultPatternStringProperty, {
               range: model.rangeValueProperty
             } ), { fontSize: 18 } ),
+            new VStrut( 10 ),
 
             // TODO: This shows it as the same size as all the other views. Is that good, or is it supposed to
             // be magnified?

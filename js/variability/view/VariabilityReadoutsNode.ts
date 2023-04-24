@@ -42,7 +42,7 @@ export default class VariabilityReadoutsNode extends VBox {
 
           // TODO: Range is computed very differently in the RangeNode.
           // TODO: Also, perhaps instrument rangeProperty as a number|null for phet-io?
-          value: value === null ? CenterAndVariabilityStrings.valueUnknownStringProperty : Utils.toFixed( value.max - value.min, 1 )
+          value: value === null ? CenterAndVariabilityStrings.valueUnknownStringProperty : ( value.max - value.min )
         } );
       } );
 
