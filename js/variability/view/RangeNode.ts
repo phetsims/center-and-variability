@@ -2,16 +2,28 @@
 
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import MedianBarNode from '../../common/view/MedianBarNode.js';
-import { Rectangle, Text, Node } from '../../../../scenery/js/imports.js';
+import { Rectangle, Text, Node, NodeOptions } from '../../../../scenery/js/imports.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityType from '../model/VariabilityType.js';
 import Utils from '../../../../dot/js/Utils.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import VariabilityModel from '../model/VariabilityModel.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+
+type SelfOptions = {
+  staticDisplay?: VariabilityType | null;
+};
+type RangeNodeOptions = SelfOptions & NodeOptions;
 
 export default class RangeNode extends Node {
-  public constructor( model: VariabilityModel, modelViewTransform: ModelViewTransform2 ) {
+  public constructor( model: VariabilityModel, modelViewTransform: ModelViewTransform2, providedOptions?: RangeNodeOptions ) {
+
+    const options = optionize<RangeNodeOptions, SelfOptions, NodeOptions>()( {
+      staticDisplay: null
+    }, providedOptions );
+
     super();
+
     // TODO: Combine into a single node
     // TODO: Rename if we continue to use it here like this
     const rangeTextReadout = new Text( '', {
@@ -31,7 +43,6 @@ export default class RangeNode extends Node {
     this.addChild( rangeRectangle );
     this.addChild( rangeTextReadout );
 
-
     const updateRangeNode = () => {
 
       const sortedDots = _.sortBy( model.objectGroup.getArrayCopy().filter( object => object.valueProperty.value !== null ),
@@ -43,8 +54,10 @@ export default class RangeNode extends Node {
       if ( leftmostDot &&
            rightmostDot &&
            leftmostDot.valueProperty.value !== rightmostDot.valueProperty.value &&
-           model.isShowingRangeProperty.value &&
-           model.selectedVariabilityProperty.value === VariabilityType.RANGE ) {
+           ( options.staticDisplay === VariabilityType.RANGE || (
+             model.isShowingRangeProperty.value &&
+             model.selectedVariabilityProperty.value === VariabilityType.RANGE
+           ) ) ) {
 
         // assumes all of the dots have the same radius
 

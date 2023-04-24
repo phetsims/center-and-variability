@@ -20,6 +20,7 @@ import { Shape } from '../../../../kite/js/imports.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import InfoButton from '../../../../scenery-phet/js/buttons/InfoButton.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import VariabilityModel from '../../variability/model/VariabilityModel.js';
 
 type SelfOptions = {
   valueReadoutsNode: ValueReadoutsNode | null;
@@ -104,7 +105,12 @@ export default class CAVAccordionBox extends AccordionBox {
         iconFill: 'cornflowerblue',
         scale: 0.5,
         rightTop: backgroundNode.rightTop.plusXY( -5, 5 ),
-        touchAreaDilation: 5
+        touchAreaDilation: 5,
+        listener: () => {
+
+          // TODO: cast?
+          ( model as VariabilityModel ).isInfoShowingProperty.value = true;
+        }
       } );
       backgroundNode.addChild( infoButton );
 

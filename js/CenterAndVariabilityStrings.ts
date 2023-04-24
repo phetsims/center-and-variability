@@ -71,6 +71,10 @@ type StringsType = {
   'valueUnknownStringProperty': LinkableProperty<string>;
   'youSortedTheData': string;
   'youSortedTheDataStringProperty': LinkableProperty<string>;
+  'rangeCalculationPattern': string;
+  'rangeCalculationPatternStringProperty': LinkableProperty<string>;
+  'rangeCalculationResultPattern': string;
+  'rangeCalculationResultPatternStringProperty': LinkableProperty<string>;
 };
 
 const CenterAndVariabilityStrings = getStringModule( 'CENTER_AND_VARIABILITY' ) as StringsType;

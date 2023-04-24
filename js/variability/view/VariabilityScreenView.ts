@@ -25,6 +25,7 @@ import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
 import CAVConstants from '../../common/CAVConstants.js';
+import InfoDialog from './InfoDialog.js';
 
 // TODO: Copied from somewhere. What's the best pattern?
 const TEXT_OPTIONS = {
@@ -109,6 +110,16 @@ export default class VariabilityScreenView extends MeanOrMedianScreenView {
       ( variabilityRadioButtonGroupWrapper, accordionBoxWrapper ) => {
         variabilityRadioButtonGroupWrapper.top = accordionBoxWrapper.top;
       } );
+
+    const infoDialog = new InfoDialog( model, this.chartViewWidth );
+    model.isInfoShowingProperty.link( isInfoShowing => {
+      if ( isInfoShowing ) {
+        infoDialog.show();
+      }
+      else {
+        infoDialog.hide();
+      }
+    } );
   }
 }
 

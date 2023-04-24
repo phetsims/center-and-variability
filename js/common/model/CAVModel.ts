@@ -73,6 +73,9 @@ export default class CAVModel implements TModel {
 
   // Indicates the max and min values in the data set, or null if there are no values in the data set
   public readonly dataRangeProperty: Property<Range | null>;
+  public readonly maxValueProperty: TReadOnlyProperty<number | null>;
+  public readonly minValueProperty: TReadOnlyProperty<number | null>;
+  public readonly rangeValueProperty: TReadOnlyProperty<number | null>;
 
   // Signify whenever any object's value or position changes
   public readonly objectChangedEmitter: TEmitter<[ CAVObject ]> = new Emitter<[ CAVObject ]>( {
@@ -174,6 +177,23 @@ export default class CAVModel implements TModel {
       phetioReadOnly: true
     } );
     this.dataRangeProperty = new Property<Range | null>( null );
+
+    // TODO: phet-io instrumentation for all screens? probably
+    this.maxValueProperty = new DerivedProperty( [ this.dataRangeProperty ], dataRange => {
+      return dataRange === null ? null : dataRange.max;
+    } );
+    this.minValueProperty = new DerivedProperty( [ this.dataRangeProperty ], dataRange => {
+      return dataRange === null ? null : dataRange.min;
+    } );
+    this.rangeValueProperty = new DerivedProperty( [ this.maxValueProperty, this.minValueProperty ], ( max, min ) => {
+      if ( max === null || min === null ) {
+        return null;
+      }
+      else {
+        return max - min;
+      }
+    } );
+
     this.medianPredictionProperty = new NumberProperty( 1, {
       range: this.physicalRange,
       tandem: options.tandem.createTandem( 'medianPredictionProperty' )

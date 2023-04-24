@@ -85,5 +85,11 @@
   },
   "youSortedTheData": {
     "value": "You sorted the data!"
+  },
+  "rangeCalculationPattern": {
+    "value": "Range = maximum value - minimum value = {{max}} - {{min}}"
+  },
+  "rangeCalculationResultPattern": {
+    "value": "Range = {{range}} meters"
   }
 }
