@@ -13,6 +13,7 @@ import { NodeOptions, Rectangle } from '../../../../scenery/js/imports.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import CAVPlotNode from '../../common/view/CAVPlotNode.js';
 import VariabilityModel from '../model/VariabilityModel.js';
+import VariabilityType from '../model/VariabilityType.js';
 
 export type CAVPlotOptions = NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
@@ -36,7 +37,7 @@ export default class VariabilityPlotNode extends CAVPlotNode {
       const leftmostDot = sortedDots[ 0 ];
 
       // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card
-      if ( leftmostDot && model.isShowingRangeProperty.value ) {
+      if ( leftmostDot && model.isShowingRangeProperty.value && model.selectedVariabilityProperty.value === VariabilityType.RANGE ) {
 
         // assumes all of the dots have the same radius
         const rightmostDot = sortedDots[ sortedDots.length - 1 ];
@@ -55,6 +56,7 @@ export default class VariabilityPlotNode extends CAVPlotNode {
     };
     model.objectChangedEmitter.addListener( updateRangeNode );
     model.isShowingRangeProperty.link( updateRangeNode );
+    model.selectedVariabilityProperty.link( updateRangeNode );
 
     rangeRectangle.moveToBack();
   }
