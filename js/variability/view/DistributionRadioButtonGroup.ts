@@ -51,9 +51,7 @@ export default class DistributionRadioButtonGroup extends RectangularRadioButton
       createNode: tandem => createTShirtIcon( tandem, '3', '#fdf454' )
     }, {
       value: DistributionType.BIMODAL,
-
-      // TODO: I sampled this color from the design doc, but it is so dark you cannot see the number against it
-      createNode: tandem => createTShirtIcon( tandem, '4', '#5324f5' )
+      createNode: tandem => createTShirtIcon( tandem, '4', '#9078e5' )
     } ], options );
   }
 }
