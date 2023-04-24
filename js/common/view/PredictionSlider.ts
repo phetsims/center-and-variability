@@ -36,7 +36,14 @@ export default class PredictionSlider extends AccessibleSlider( Node, 0 ) {
     const thumbNode = new PredictionThumbNode( providedOptions.predictionThumbNodeOptions );
     const options = optionize<PredictionSliderOptions, SelfOptions, ParentOptions>()( {
       children: [ thumbNode ],
-      cursor: 'pointer'
+      cursor: 'pointer',
+
+      keyboardStep: 0.5,
+      shiftKeyboardStep: 0.1,
+      pageKeyboardStep: 1,
+
+      // Keyboard has a different rounding than mouse
+      constrainValue: value => Utils.roundToInterval( value, 0.5 )
     }, providedOptions );
 
     super( options );
