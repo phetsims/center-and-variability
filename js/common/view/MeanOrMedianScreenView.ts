@@ -10,7 +10,6 @@
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import SoccerScreenView, { SoccerScreenViewOptions } from '../../common/view/SoccerScreenView.js';
-import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import CardNodeContainer from '../../common/view/CardNodeContainer.js';
@@ -19,16 +18,16 @@ import SoccerModel from '../model/SoccerModel.js';
 import ValueReadoutsNode from './ValueReadoutsNode.js';
 import { ManualConstraint, Node, Text } from '../../../../scenery/js/imports.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import PlotType from '../model/PlotType.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 type SelfOptions = {
 
   // TODO: If we are sticking with this pattern, switch to screen: 'median' | 'meanAndMedian' | 'variability' etc, see https://github.com/phetsims/center-and-variability/issues/153
   isMedianScreen: boolean;
   isVariabilityScreen: boolean;
+  accordionBoxTitleStringProperty: TReadOnlyProperty<string>;
 };
 export type MeanOrMedianScreenViewOptions = SelfOptions & SoccerScreenViewOptions;
 
@@ -57,33 +56,10 @@ export default class MeanOrMedianScreenView extends SoccerScreenView {
       } );
     }
 
-    const distanceInMetersTitleNode = new Text( CenterAndVariabilityStrings.distanceInMetersStringProperty, {
+    const titleNode = new Text( options.accordionBoxTitleStringProperty, {
       font: new PhetFont( 16 ),
-      maxWidth: 300,
-      visible: options.isMedianScreen
+      maxWidth: 300
     } );
-
-
-    const linePlotTitleNodeVisibleProperty = new BooleanProperty( false );
-    const dotPlotTitleNodeVisibleProperty = new BooleanProperty( false );
-    !options.isMedianScreen && CAVConstants.PLOT_TYPE_PROPERTY.link( plotType => {
-      linePlotTitleNodeVisibleProperty.value = plotType === PlotType.LINE_PLOT;
-      dotPlotTitleNodeVisibleProperty.value = plotType === PlotType.DOT_PLOT;
-    } );
-
-    const linePlotTitleNode = new Text( CenterAndVariabilityStrings.linePlotStringProperty, {
-      font: new PhetFont( 16 ),
-      maxWidth: 300,
-      visibleProperty: linePlotTitleNodeVisibleProperty
-    } );
-
-    const dotPlotTitleNode = new Text( CenterAndVariabilityStrings.dotPlotStringProperty, {
-      font: new PhetFont( 16 ),
-      maxWidth: 300,
-      visibleProperty: dotPlotTitleNodeVisibleProperty
-    } );
-
-    const titleNode = new Node( { children: [ distanceInMetersTitleNode, linePlotTitleNode, dotPlotTitleNode ] } );
 
     this.accordionBox = new CAVAccordionBox( this.model, this.accordionBoxContents, this.topCheckboxGroup,
       titleNode,

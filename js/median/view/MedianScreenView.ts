@@ -18,7 +18,7 @@ import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 type SelfOptions = EmptySelfOptions;
 type MedianScreenViewOptions =
   SelfOptions
-  & StrictOmit<MeanOrMedianScreenViewOptions, 'isMedianScreen' | 'isVariabilityScreen' | 'questionBarOptions'>;
+  & StrictOmit<MeanOrMedianScreenViewOptions, 'isMedianScreen' | 'isVariabilityScreen' | 'questionBarOptions' | 'accordionBoxTitleStringProperty'>;
 
 export default class MedianScreenView extends MeanOrMedianScreenView {
 
@@ -43,7 +43,8 @@ export default class MedianScreenView extends MeanOrMedianScreenView {
       bottomCheckboxGroupOptions: {
         includeMean: false,
         includePredictMean: false
-      }
+      },
+      accordionBoxTitleStringProperty: CenterAndVariabilityStrings.distanceInMetersStringProperty
     }, providedOptions );
 
     super( model, options );

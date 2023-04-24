@@ -1,4 +1,4 @@
-// Copyright 2022, University of Colorado Boulder
+// Copyright 2022-2023, University of Colorado Boulder
 
 /**
  * Auto-generated from modulify, DO NOT manually modify.
@@ -49,6 +49,12 @@ type StringsType = {
   'medianStringProperty': LinkableProperty<string>;
   'mean': string;
   'meanStringProperty': LinkableProperty<string>;
+  'range': string;
+  'rangeStringProperty': LinkableProperty<string>;
+  'interquartileRangeIQR': string;
+  'interquartileRangeIQRStringProperty': LinkableProperty<string>;
+  'meanAbsoluteDeviationMAD': string;
+  'meanAbsoluteDeviationMADStringProperty': LinkableProperty<string>;
   'variability': string;
   'variabilityStringProperty': LinkableProperty<string>;
   'predictMean': string;
