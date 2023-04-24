@@ -22,6 +22,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import VariabilityModel from '../../variability/model/VariabilityModel.js';
 import CAVPlotNodeWithMedianBar from '../../mean-and-median/view/CAVPlotNodeWithMedianBar.js';
+import VariabilityPlotNode from '../../variability/view/VariabilityPlotNode.js';
 
 type SelfOptions = {
 
@@ -44,11 +45,17 @@ export default class MeanOrMedianScreenView extends SoccerScreenView {
 
     const accordionBoxTandem = options.tandem.createTandem( 'accordionBox' );
 
+    // TODO: Better logic for this, or better ordering
     if ( options.isMedianScreen ) {
       this.accordionBoxContents = new CardNodeContainer( this.model, {
 
         // Expose this intermediate layer to make it so that clients can hide the number cards with one call
         tandem: accordionBoxTandem.createTandem( 'cardNodeContainer' )
+      } );
+    }
+    else if ( options.isVariabilityScreen ) {
+      this.accordionBoxContents = new VariabilityPlotNode( this.model as VariabilityModel, this.chartViewWidth, {
+        tandem: accordionBoxTandem.createTandem( 'plotNode' )
       } );
     }
     else {
