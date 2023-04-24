@@ -16,7 +16,7 @@ import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.j
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
 import CAVObjectNode from './CAVObjectNode.js';
-import { Node } from '../../../../scenery/js/imports.js';
+import { AlignBox, Node } from '../../../../scenery/js/imports.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import CAVObject from '../model/CAVObject.js';
 import BottomRepresentationCheckboxGroup, { BottomRepresentationCheckboxGroupOptions } from './BottomRepresentationCheckboxGroup.js';
@@ -149,11 +149,20 @@ export default class CAVScreenView extends ScreenView {
     } );
 
     this.accordionBoxControlNode = options.createAccordionBoxControlNode( options.tandem.createTandem( 'accordionBoxControl' ) );
+
     this.bottomCheckboxGroup = new BottomRepresentationCheckboxGroup( model,
       combineOptions<BottomRepresentationCheckboxGroupOptions>( {
         tandem: options.tandem.createTandem( 'bottomCheckboxGroup' )
       }, options.bottomCheckboxGroupOptions ) );
-    this.addChild( this.bottomCheckboxGroup );
+
+    const BOTTOM_CHECKBOX_PANEL_MARGIN = 12.5;
+
+    // In order to use the AlignBox we need to know the distance from the top of the screen, to the top of the grass.
+    const BOTTOM_CHECKBOX_PANEL_Y_MARGIN = this.layoutBounds.maxY - this.modelViewTransform.modelToViewY( 0 ) + BOTTOM_CHECKBOX_PANEL_MARGIN;
+
+
+    const checkboxAlignBox = new AlignBox( this.bottomCheckboxGroup, { alignBounds: this.layoutBounds, xAlign: 'right', yAlign: 'bottom', xMargin: BOTTOM_CHECKBOX_PANEL_MARGIN, yMargin: BOTTOM_CHECKBOX_PANEL_Y_MARGIN } );
+    this.addChild( checkboxAlignBox );
 
     // TODO: Separate class?
     this.playAreaMedianIndicatorNode = new ArrowNode( 0, 0, 0, 27, {

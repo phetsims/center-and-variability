@@ -92,12 +92,8 @@ export default class MeanOrMedianScreenView extends SoccerScreenView {
       } );
     this.contentLayer.addChild( this.accordionBox );
 
-    const BOTTOM_CHECKBOX_PANEL_MARGIN = 12.5;
 
     // TODO: What if positioning the bottomCheckboxGroup.right forces the topCheckboxGroup to the right of the accordion box bounds?
-    this.bottomCheckboxGroup.right = this.layoutBounds.right - BOTTOM_CHECKBOX_PANEL_MARGIN;
-    this.bottomCheckboxGroup.bottom = this.modelViewTransform.modelToViewY( 0 ) - BOTTOM_CHECKBOX_PANEL_MARGIN;
-
     ManualConstraint.create( this, [ this.bottomCheckboxGroup, this.accordionBoxControlNode ],
       ( bottomCheckboxGroupWrapper, accordionBoxControlNodeWrapper ) => {
         accordionBoxControlNodeWrapper.x = bottomCheckboxGroupWrapper.x;
