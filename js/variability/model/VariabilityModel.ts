@@ -54,14 +54,21 @@ export default class VariabilityModel extends SoccerModel {
       tandem: options.tandem.createTandem( 'isInfoShowingProperty' )
     } );
 
+    function gaussian( x: number, mu: number, sigma: number ): number {
+      const coefficient = 1.0 / Math.sqrt( 2.0 * Math.PI * Math.pow( sigma, 2 ) );
+      const exponent = Math.exp( -Math.pow( x - mu, 2 ) / ( 2 * Math.pow( sigma, 2 ) ) );
+      return coefficient * exponent;
+    }
+
+    // TODO-design: Decide on sigma?
+    const GAUSSIAN = _.range( 1, 16 ).map( x => gaussian( x, 8, 2 ) );
+
     this.selectedDistributionProperty.link( distribution => {
 
       // TODO: the parent class sets this incorrectly on reset
       this.distributionProperty.value =
         distribution === DistributionType.UNIFORM ? [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] :
-
-          // TODO: This isn't a real gaussian
-        distribution === DistributionType.GAUSSIAN ? [ 1, 1, 2, 2, 3, 5, 8, 12, 8, 5, 3, 2, 2, 1, 1 ] :
+        distribution === DistributionType.GAUSSIAN ? GAUSSIAN :
 
           // TODO-design - is this the right distribution, or should it be left or switch between them?
         distribution === DistributionType.SKEWED ? CAVConstants.RIGHT_SKEWED_DATA :
