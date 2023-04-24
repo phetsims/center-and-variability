@@ -22,6 +22,15 @@ import VariabilityRadioButtonGroup from './VariabilityRadioButtonGroup.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import VariabilityType from '../model/VariabilityType.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
+import ToggleNode from '../../../../sun/js/ToggleNode.js';
+import Checkbox from '../../../../sun/js/Checkbox.js';
+import CAVConstants from '../../common/CAVConstants.js';
+
+// TODO: Copied from somewhere. What's the best pattern?
+const TEXT_OPTIONS = {
+  font: CAVConstants.BUTTON_FONT,
+  maxWidth: CAVConstants.PLAY_AREA_CHECKBOX_TEXT_MAX_WIDTH
+};
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityScreenViewOptions = SelfOptions & StrictOmit<SoccerScreenViewOptions, 'questionBarOptions' | 'createAccordionBoxControlNode'>;
@@ -45,7 +54,19 @@ export default class VariabilityScreenView extends MeanOrMedianScreenView {
         barFill: CAVColors.variabilityQuestionBarFillColorProperty,
         questionString: CenterAndVariabilityStrings.variabilityQuestionStringProperty
       },
-      createAccordionBoxControlNode: tandem => new Text( 'hello' ),
+      createAccordionBoxControlNode: tandem => new ToggleNode( model.selectedVariabilityProperty, [ {
+        value: VariabilityType.RANGE,
+
+        // TODO: Different string value?
+        createNode: tandem => new Checkbox( model.isShowingRangeProperty, new Text( CenterAndVariabilityStrings.rangeStringProperty, TEXT_OPTIONS ) )
+      }, {
+        value: VariabilityType.IQR,
+        createNode: tandem => new Checkbox( model.isShowingIQRProperty, new Text( CenterAndVariabilityStrings.iqrStringProperty, TEXT_OPTIONS ) )
+      }, {
+        value: VariabilityType.MAD,
+        createNode: tandem => new Checkbox( model.isShowingMADProperty, new Text( CenterAndVariabilityStrings.madStringProperty, TEXT_OPTIONS ) )
+      }
+      ] ),
       bottomCheckboxGroupOptions: {
         includeVariability: true,
         includePredictMean: false,

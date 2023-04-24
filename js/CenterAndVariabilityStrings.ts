@@ -53,8 +53,12 @@ type StringsType = {
   'rangeStringProperty': LinkableProperty<string>;
   'interquartileRangeIQR': string;
   'interquartileRangeIQRStringProperty': LinkableProperty<string>;
+  'iqr': string;
+  'iqrStringProperty': LinkableProperty<string>;
   'meanAbsoluteDeviationMAD': string;
   'meanAbsoluteDeviationMADStringProperty': LinkableProperty<string>;
+  'mad': string;
+  'madStringProperty': LinkableProperty<string>;
   'variability': string;
   'variabilityStringProperty': LinkableProperty<string>;
   'predictMean': string;
