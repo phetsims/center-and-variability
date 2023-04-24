@@ -77,6 +77,8 @@ type StringsType = {
   'rangeCalculationPatternStringProperty': LinkableProperty<string>;
   'rangeCalculationResultPattern': string;
   'rangeCalculationResultPatternStringProperty': LinkableProperty<string>;
+  'needAtLeastOneKick': string;
+  'needAtLeastOneKickStringProperty': LinkableProperty<string>;
 };
 
 const CenterAndVariabilityStrings = getStringModule( 'CENTER_AND_VARIABILITY' ) as StringsType;
