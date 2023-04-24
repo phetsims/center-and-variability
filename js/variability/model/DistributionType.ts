@@ -16,7 +16,7 @@ export default class DistributionType extends EnumerationValue {
   public static readonly GAUSSIAN = new DistributionType();
   public static readonly SKEWED = new DistributionType();
   public static readonly BIMODAL = new DistributionType();
-  private static readonly enumeration = new Enumeration( DistributionType,{} );
+  private static readonly enumeration = new Enumeration( DistributionType, {} );
 }
 
 centerAndVariability.register( 'DistributionType', DistributionType );

@@ -136,15 +136,11 @@ export default class NumberLineNode extends Node {
       .lineToRelative( TRIANGLE_LENGTH, 0 )
       .close();
 
-    const path = new Path( TRIANGLE_SHAPE, {
+    return new Path( TRIANGLE_SHAPE, {
       fill: CAVColors.meanColorProperty,
       stroke: includeStroke ? CAVColors.arrowStrokeProperty : null,
       lineWidth: CAVConstants.ARROW_LINE_WIDTH
     } );
-
-    const node = isIcon ? path : new Node( { children: [ path ], layoutOptions: { xAlign: 'left' } } );
-
-    return node;
   }
 }
 

@@ -12,7 +12,6 @@ import centerAndVariability from '../../centerAndVariability.js';
 import { TPaint, Text, VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
-import Utils from '../../../../dot/js/Utils.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import LinkableProperty from '../../../../axon/js/LinkableProperty.js';

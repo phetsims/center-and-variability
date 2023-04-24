@@ -69,7 +69,8 @@ export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGrou
       } ),
       property: model.isShowingTopMedianProperty,
       tandemName: 'medianCheckbox'
-    } )
+    } );
+
     options.includeMean && items.push( {
       createNode: ( tandem: Tandem ) => new HBox( {
 
