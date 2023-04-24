@@ -31,13 +31,16 @@ export default class VariabilityMeasureRadioButtonGroup extends RectangularRadio
     };
     super( property, [ {
       value: VariabilityMeasure.RANGE,
-      createNode: tandem => createLabel( tandem, 'RAN', '#ec5f3a' )
+      createNode: tandem => createLabel( tandem, 'RAN', '#ec5f3a' ),
+      tandemName: 'rangeRadioButton'
     }, {
       value: VariabilityMeasure.IQR,
-      createNode: tandem => createLabel( tandem, 'IQR', '#5bc760' )
+      createNode: tandem => createLabel( tandem, 'IQR', '#5bc760' ),
+      tandemName: 'iqrRadioButton'
     }, {
       value: VariabilityMeasure.MAD,
-      createNode: tandem => createLabel( tandem, 'MAD', '#fdf454' )
+      createNode: tandem => createLabel( tandem, 'MAD', '#fdf454' ),
+      tandemName: 'madRadioButton'
     } ], options );
   }
 }

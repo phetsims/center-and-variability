@@ -106,6 +106,7 @@ export default class CAVAccordionBox extends AccordionBox {
         scale: 0.5,
         rightTop: backgroundNode.rightTop.plusXY( -5, 5 ),
         touchAreaDilation: 5,
+        tandem: options.tandem.createTandem( 'infoButton' ),
         listener: () => {
 
           // TODO: cast?

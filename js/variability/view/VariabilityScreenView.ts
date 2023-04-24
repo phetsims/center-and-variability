@@ -59,13 +59,19 @@ export default class VariabilityScreenView extends MeanOrMedianScreenView {
         value: VariabilityMeasure.RANGE,
 
         // TODO: Different string value? For now, use the same string for the accordion box title and checkbox, and a different one for the value equals pattern
-        createNode: tandem => new Checkbox( model.isShowingRangeProperty, new Text( CenterAndVariabilityStrings.rangeStringProperty, TEXT_OPTIONS ) )
+        createNode: tandem => new Checkbox( model.isShowingRangeProperty, new Text( CenterAndVariabilityStrings.rangeStringProperty, TEXT_OPTIONS ), {
+          tandem: tandem.createTandem( 'rangeCheckbox' )
+        } )
       }, {
         value: VariabilityMeasure.IQR,
-        createNode: tandem => new Checkbox( model.isShowingIQRProperty, new Text( CenterAndVariabilityStrings.iqrStringProperty, TEXT_OPTIONS ) )
+        createNode: tandem => new Checkbox( model.isShowingIQRProperty, new Text( CenterAndVariabilityStrings.iqrStringProperty, TEXT_OPTIONS ), {
+          tandem: tandem.createTandem( 'iqrCheckbox' )
+        } )
       }, {
         value: VariabilityMeasure.MAD,
-        createNode: tandem => new Checkbox( model.isShowingMADProperty, new Text( CenterAndVariabilityStrings.madStringProperty, TEXT_OPTIONS ) )
+        createNode: tandem => new Checkbox( model.isShowingMADProperty, new Text( CenterAndVariabilityStrings.madStringProperty, TEXT_OPTIONS ), {
+          tandem: tandem.createTandem( 'madCheckbox' )
+        } )
       }
       ] ),
       bottomCheckboxGroupOptions: {
@@ -90,7 +96,8 @@ export default class VariabilityScreenView extends MeanOrMedianScreenView {
       } );
 
     const distributionRadioButtonGroup = new DistributionRadioButtonGroup( model.selectedDistributionProperty, {
-      left: 10
+      left: 10,
+      tandem: options.tandem.createTandem( 'distributionRadioButtonGroup' )
     } );
 
     // Float above the ground
@@ -101,17 +108,20 @@ export default class VariabilityScreenView extends MeanOrMedianScreenView {
 
     this.addChild( distributionRadioButtonGroup );
 
-    const variabilityRadioButtonGroup = new VariabilityMeasureRadioButtonGroup( model.selectedVariabilityProperty, {
-      left: 10
+    const variabilityMeasureRadioButtonGroup = new VariabilityMeasureRadioButtonGroup( model.selectedVariabilityProperty, {
+      left: 10,
+      tandem: options.tandem.createTandem( 'variabilityMeasureRadioButtonGroup' )
     } );
-    this.addChild( variabilityRadioButtonGroup );
+    this.addChild( variabilityMeasureRadioButtonGroup );
 
-    ManualConstraint.create( this, [ variabilityRadioButtonGroup, this.accordionBoxContents ],
+    ManualConstraint.create( this, [ variabilityMeasureRadioButtonGroup, this.accordionBoxContents ],
       ( variabilityRadioButtonGroupWrapper, accordionBoxWrapper ) => {
         variabilityRadioButtonGroupWrapper.top = accordionBoxWrapper.top;
       } );
 
-    const infoDialog = new InfoDialog( model, this.chartViewWidth );
+    const infoDialog = new InfoDialog( model, this.chartViewWidth, {
+      tandem: options.tandem.createTandem( 'infoDialog' )
+    } );
     model.isInfoShowingProperty.link( isInfoShowing => {
       if ( isInfoShowing ) {
         infoDialog.show();

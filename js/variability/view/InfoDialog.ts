@@ -3,7 +3,7 @@
 import { Text, VBox, VStrut } from '../../../../scenery/js/imports.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
-import Dialog from '../../../../sun/js/Dialog.js';
+import Dialog, { DialogOptions } from '../../../../sun/js/Dialog.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
@@ -13,7 +13,7 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 export default class InfoDialog extends Dialog {
-  public constructor( model: VariabilityModel, chartViewWidth: number ) {
+  public constructor( model: VariabilityModel, chartViewWidth: number, options: DialogOptions ) {
 
     const content = new ToggleNode( model.selectedVariabilityProperty, [ {
       value: VariabilityMeasure.RANGE,
@@ -49,8 +49,7 @@ export default class InfoDialog extends Dialog {
 
               staticDisplay: VariabilityMeasure.RANGE,
 
-              // TODO: Tandem
-              tandem: Tandem.OPT_OUT
+              tandem: options.tandem!.createTandem( 'variabilityPlotNode' )
             } )
           ]
         } );
