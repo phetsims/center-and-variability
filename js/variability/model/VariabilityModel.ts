@@ -25,6 +25,7 @@ export default class VariabilityModel extends SoccerModel {
   public readonly isShowingRangeProperty: Property<boolean>;
   public readonly isShowingIQRProperty: Property<boolean>;
   public readonly isShowingMADProperty: Property<boolean>;
+  public readonly isInfoShowingProperty: Property<boolean>;
 
   public constructor( options: VariabilityModelOptions ) {
     super( options );
@@ -47,6 +48,10 @@ export default class VariabilityModel extends SoccerModel {
     this.isShowingMADProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isShowingMADProperty' )
     } );
+
+    this.isInfoShowingProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isInfoShowingProperty' )
+    } );
   }
 
   public override reset(): void {
@@ -56,6 +61,7 @@ export default class VariabilityModel extends SoccerModel {
     this.isShowingRangeProperty.reset();
     this.isShowingIQRProperty.reset();
     this.isShowingMADProperty.reset();
+    this.isInfoShowingProperty.reset();
   }
 
   public static meanAbsoluteDeviation( data: number[] ): number {

@@ -21,6 +21,7 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import VariabilityModel from '../../variability/model/VariabilityModel.js';
 
 type SelfOptions = {
 
@@ -76,7 +77,8 @@ export default class MeanOrMedianScreenView extends SoccerScreenView {
           right: this.layoutBounds.right - CAVConstants.SCREEN_VIEW_X_MARGIN
         } : {
           centerX: this.layoutBounds.centerX
-        } )
+        } ),
+        infoShowingProperty: this.model instanceof VariabilityModel ? this.model.isInfoShowingProperty : null
       } );
     this.contentLayer.addChild( this.accordionBox );
 

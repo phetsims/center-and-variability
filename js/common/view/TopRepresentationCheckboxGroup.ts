@@ -104,7 +104,7 @@ export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGrou
         children: [
 
           // TODO: Different i18n key for Range title vs range checkbox?
-          new Text( CenterAndVariabilityStrings.rangeStringProperty, TEXT_OPTIONS ),
+          new Text( CenterAndVariabilityStrings.rangeStringProperty, TEXT_OPTIONS )
         ]
       } ),
       property: model.isShowingRangeProperty,

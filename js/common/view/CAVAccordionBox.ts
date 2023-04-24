@@ -9,7 +9,7 @@
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import { Node, Rectangle } from '../../../../scenery/js/imports.js';
+import { ManualConstraint, Node, Rectangle } from '../../../../scenery/js/imports.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import CAVConstants from '../CAVConstants.js';
 import optionize from '../../../../phet-core/js/optionize.js';
@@ -18,11 +18,14 @@ import CAVModel from '../model/CAVModel.js';
 import ValueReadoutsNode from './ValueReadoutsNode.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import InfoButton from '../../../../scenery-phet/js/buttons/InfoButton.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 type SelfOptions = {
   valueReadoutsNode: ValueReadoutsNode | null;
   contentNodeOffsetY: number;
   leftMargin: number;
+  infoShowingProperty: TReadOnlyProperty<boolean> | null;
 };
 export type CAVAccordionBoxOptions =
   SelfOptions
@@ -95,6 +98,25 @@ export default class CAVAccordionBox extends AccordionBox {
     super( backgroundNode, options );
 
     model.resetEmitter.addListener( () => this.reset() );
+
+    if ( options.infoShowingProperty ) {
+      const infoButton = new InfoButton( {
+        iconFill: 'cornflowerblue',
+        scale: 0.5,
+        rightTop: backgroundNode.rightTop.plusXY( -5, 5 ),
+        touchAreaDilation: 5
+      } );
+      backgroundNode.addChild( infoButton );
+
+      // NOTE: this overlaps the accordion box top panel
+      ManualConstraint.create( this, [ backgroundNode, infoButton ],
+        ( backgroundWrapper, infoButtonWrapper ) => {
+
+          // TODO: Is it a faux pas to move outside of the wrapper bounds? I couldn't figure how to be a child of the accordion
+          // box content, but overlap the title bar
+          infoButtonWrapper.rightTop = backgroundWrapper.rightTop.plusXY( 3, -35 );
+        } );
+    }
   }
 }
 
