@@ -91,7 +91,7 @@ export default class NumberLineNode extends Node {
         ( range, isShowingMeanIndicator ) => {
           if ( range !== null ) {
 
-            // TODO: What to do if the range is 0???
+            // Do not show any area or text above the data point if the range is 0
             rangeNode.shape = new Shape()
               .moveTo( modelViewTransform.modelToViewX( range.min ), 0 )
               .lineTo( modelViewTransform.modelToViewX( range.max ), 0 );

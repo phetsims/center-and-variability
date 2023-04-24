@@ -22,11 +22,8 @@ export default class InfoDialog extends Dialog {
           spacing: 5,
           children: [
             new Text( CenterAndVariabilityStrings.rangeStringProperty, { fontSize: 25 } ),
-
             new VStrut( 10 ),
-
-            // TODO: i18n
-            new Text( 'Range is the distance between the maximum and minimum data points.', { fontSize: 18 } ),
+            new Text( CenterAndVariabilityStrings.rangeDescriptionStringProperty, { fontSize: 18 } ),
 
             // TODO: Add "need at least 1 kick" message on the chart. But only if you click on the range checkbox
             // or show the info dialog. In that case, don't show these texts at all.

@@ -71,6 +71,8 @@ type StringsType = {
   'valueUnknownStringProperty': LinkableProperty<string>;
   'youSortedTheData': string;
   'youSortedTheDataStringProperty': LinkableProperty<string>;
+  'rangeDescription': string;
+  'rangeDescriptionStringProperty': LinkableProperty<string>;
   'rangeCalculationPattern': string;
   'rangeCalculationPatternStringProperty': LinkableProperty<string>;
   'rangeCalculationResultPattern': string;

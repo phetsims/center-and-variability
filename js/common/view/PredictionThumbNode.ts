@@ -26,14 +26,11 @@ export default class PredictionThumbNode extends Node {
   public constructor( providedOptions: PredictionThumbNodeOptions ) {
 
     const shadedSphereNode = new ShadedSphereNode( 16, {
-
-      // TODO-DESIGN: This looks more orange in the mockup.  Use colorblind red?
       mainColor: providedOptions.color,
       stroke: CAVColors.arrowStrokeProperty,
       lineWidth: CAVConstants.ARROW_LINE_WIDTH
     } );
 
-    // TODO-DESIGN: The mockup shows different arrowheads.
     const arrowNode = new ArrowNode( 0, 0, 0, -50, {
       headHeight: 10,
       headWidth: 14,

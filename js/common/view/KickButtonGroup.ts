@@ -65,6 +65,7 @@ export default class KickButtonGroup extends VBox {
         listener: () => model.scheduleKicks( numberToKick ),
 
         // TODO-DESIGN: It feels asymmetrical that holding down "kick 1" fires soccer balls but holding down "kick 5" does nothing
+        // TODO: Schedule for design meeting question
         fireOnHold: !multikick,
         fireOnHoldDelay: 750,
 
