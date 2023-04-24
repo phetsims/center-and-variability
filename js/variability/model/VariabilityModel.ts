@@ -29,7 +29,7 @@ export default class VariabilityModel extends SoccerModel {
 
   public constructor( options: VariabilityModelOptions ) {
     super( options );
-    this.selectedDistributionProperty = new EnumerationProperty( DistributionType.SYMMETRIC_SMALL, {
+    this.selectedDistributionProperty = new EnumerationProperty( DistributionType.UNIFORM, {
       tandem: options.tandem.createTandem( 'selectedDistributionProperty' )
     } );
 

@@ -28,6 +28,8 @@ export default class InfoDialog extends Dialog {
             // TODO: i18n
             new Text( 'Range is the distance between the maximum and minimum data points.', { fontSize: 18 } ),
 
+            // TODO: Add "need at least 1 kick" message on the chart
+
             // TODO: String key name
             new Text( new PatternStringProperty( CenterAndVariabilityStrings.rangeCalculationPatternStringProperty, {
               max: model.maxValueProperty,

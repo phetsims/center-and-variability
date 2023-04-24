@@ -41,10 +41,10 @@ export default class DistributionRadioButtonGroup extends RectangularRadioButton
       } );
     };
     super( property, [ {
-      value: DistributionType.SYMMETRIC_SMALL,
+      value: DistributionType.UNIFORM,
       createNode: tandem => createTShirtIcon( tandem, '1', '#ec5f3a' )
     }, {
-      value: DistributionType.SYMMETRIC_LARGE,
+      value: DistributionType.GAUSSIAN,
       createNode: tandem => createTShirtIcon( tandem, '2', '#5bc760' )
     }, {
       value: DistributionType.SKEWED,
