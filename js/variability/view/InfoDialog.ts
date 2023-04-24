@@ -8,7 +8,6 @@ import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import VariabilityPlotNode from './VariabilityPlotNode.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
