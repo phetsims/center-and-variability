@@ -14,18 +14,18 @@ import CAVColors from '../../common/CAVColors.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import TopRepresentationCheckboxGroup from '../../common/view/TopRepresentationCheckboxGroup.js';
-import SoccerScreenView, { SoccerScreenViewOptions } from '../../common/view/SoccerScreenView.js';
+import CAVScreenView, { CAVScreenViewOptions } from '../../common/view/CAVScreenView.js';
 
 type SelfOptions = EmptySelfOptions;
 type MedianScreenViewOptions =
   SelfOptions
-  & StrictOmit<SoccerScreenViewOptions, 'createAccordionBoxControlNode' | 'isMedianScreen' | 'isVariabilityScreen' | 'questionBarOptions' | 'accordionBoxTitleStringProperty'>;
+  & StrictOmit<CAVScreenViewOptions, 'createAccordionBoxControlNode' | 'isMedianScreen' | 'isVariabilityScreen' | 'questionBarOptions' | 'accordionBoxTitleStringProperty'>;
 
-export default class MedianScreenView extends SoccerScreenView {
+export default class MedianScreenView extends CAVScreenView {
 
   public constructor( model: MedianModel, providedOptions: MedianScreenViewOptions ) {
 
-    const options = optionize<MedianScreenViewOptions, SelfOptions, SoccerScreenViewOptions>()( {
+    const options = optionize<MedianScreenViewOptions, SelfOptions, CAVScreenViewOptions>()( {
       isMedianScreen: true,
       isVariabilityScreen: false,
       questionBarOptions: {

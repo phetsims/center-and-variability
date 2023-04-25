@@ -12,7 +12,6 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
-import SoccerScreenView, { SoccerScreenViewOptions } from '../../common/view/SoccerScreenView.js';
 import CAVColors from '../../common/CAVColors.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import { ManualConstraint, Text } from '../../../../scenery/js/imports.js';
@@ -25,6 +24,7 @@ import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import InfoDialog from './InfoDialog.js';
+import CAVScreenView, { CAVScreenViewOptions } from '../../common/view/CAVScreenView.js';
 
 // TODO: Copied from somewhere. What's the best pattern?
 const TEXT_OPTIONS = {
@@ -33,9 +33,9 @@ const TEXT_OPTIONS = {
 };
 
 type SelfOptions = EmptySelfOptions;
-type VariabilityScreenViewOptions = SelfOptions & StrictOmit<SoccerScreenViewOptions, 'questionBarOptions' | 'createAccordionBoxControlNode' | 'isMedianScreen' | 'isVariabilityScreen' | 'accordionBoxTitleStringProperty'>;
+type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions' | 'createAccordionBoxControlNode' | 'isMedianScreen' | 'isVariabilityScreen' | 'accordionBoxTitleStringProperty'>;
 
-export default class VariabilityScreenView extends SoccerScreenView {
+export default class VariabilityScreenView extends CAVScreenView {
 
   public constructor( model: VariabilityModel, providedOptions: VariabilityScreenViewOptions ) {
 
@@ -47,7 +47,7 @@ export default class VariabilityScreenView extends SoccerScreenView {
 
     const accordionBoxTitleProperty = new DynamicProperty<string, unknown, unknown>( currentProperty );
 
-    const options = optionize<VariabilityScreenViewOptions, SelfOptions, SoccerScreenViewOptions>()( {
+    const options = optionize<VariabilityScreenViewOptions, SelfOptions, CAVScreenViewOptions>()( {
       isMedianScreen: false,
       isVariabilityScreen: true,
       questionBarOptions: {

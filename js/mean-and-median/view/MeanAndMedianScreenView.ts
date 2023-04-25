@@ -14,15 +14,15 @@ import CAVColors from '../../common/CAVColors.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import { ManualConstraint } from '../../../../scenery/js/imports.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import SoccerScreenView, { SoccerScreenViewOptions } from '../../common/view/SoccerScreenView.js';
+import CAVScreenView, { CAVScreenViewOptions } from '../../common/view/CAVScreenView.js';
 
-type MeanAndMedianScreenViewOptions = StrictOmit<SoccerScreenViewOptions, 'isMedianScreen' | 'questionBarOptions'>;
+type MeanAndMedianScreenViewOptions = StrictOmit<CAVScreenViewOptions, 'isMedianScreen' | 'questionBarOptions'>;
 
-export default class MeanAndMedianScreenView extends SoccerScreenView {
+export default class MeanAndMedianScreenView extends CAVScreenView {
 
   public constructor( model: MeanAndMedianModel, providedOptions: MeanAndMedianScreenViewOptions ) {
 
-    const options = optionize<MeanAndMedianScreenViewOptions, EmptySelfOptions, SoccerScreenViewOptions>()( {
+    const options = optionize<MeanAndMedianScreenViewOptions, EmptySelfOptions, CAVScreenViewOptions>()( {
       isMedianScreen: false,
       questionBarOptions: {
         barFill: CAVColors.meanAndMedianQuestionBarFillColorProperty,
