@@ -80,12 +80,23 @@ export default class MADNode extends Node {
         sortedDots.forEach( dot => {
           const x1 = modelViewTransform.modelToViewX( dot.valueProperty.value! );
           const x2 = modelViewTransform.modelToViewX( mean );
-          children.push( new Line( x1, y, x2, y, {
+          const line = new Line( x1, y, x2, y, {
             stroke: 'black'
-          } ) );
+          } );
+
+          children.push( line );
+
+          if ( options.staticDisplay ) {
+            const distanceToMean = Math.abs( dot.valueProperty.value! - model.meanValueProperty.value! );
+            const text = new Text( Utils.toFixed( distanceToMean, 1 ), {
+              font: new PhetFont( 13 ),
+              centerBottom: line.centerTop
+            } );
+            children.push( text );
+          }
 
           // Enough spacing so they don't overlap the bottom row of data points
-          y += 4.2;
+          y += options.staticDisplay ? 15 : 4.2;
         } );
       }
 
@@ -101,6 +112,13 @@ export default class MADNode extends Node {
 
       if ( mad !== null ) {
         const viewCenterX = modelViewTransform.modelToViewX( model.meanValueProperty.value! );
+        const viewFloorY = modelViewTransform.modelToViewY( 0 );
+
+        if ( options.staticDisplay ) {
+          lineContainer.bottom = viewFloorY;
+          madRectangle.rectHeight = lineContainer.height;
+        }
+
         madRectangle.centerX = viewCenterX;
         madRectangle.bottom = modelViewTransform.modelToViewY( 0 );
         leftReadout.string = Utils.toFixed( mad, 1 );

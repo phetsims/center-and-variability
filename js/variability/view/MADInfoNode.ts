@@ -54,6 +54,7 @@ export default class MADInfoNode extends VBox {
         new Text( CenterAndVariabilityStrings.meanAbsoluteDeviationMADStringProperty, { fontSize: 25 } ),
         new VStrut( 10 ),
         new Text( CenterAndVariabilityStrings.madDescriptionStringProperty, { fontSize: 18 } ),
+        new VStrut( 10 ),
         new HBox( {
           spacing: 10,
           children: [
