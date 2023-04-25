@@ -84,6 +84,9 @@ export default class CAVAccordionBox extends AccordionBox {
     // TODO: we are mutating the position of things being passed in
 
     checkboxPanel.centerY = fullBackgroundBounds.centerY;
+
+    // TODO: Maybe every subclass doesn't want a checkboxPanel
+    checkboxPanel.right = backgroundNode.right - CONTENT_MARGIN;
     backgroundNode.addChild( checkboxPanel );
 
     // TODO: SR says: Perhaps use x and y instead of center in order to vertically center the content, then

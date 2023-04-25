@@ -16,7 +16,7 @@ import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.j
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
 import CAVObjectNode from './CAVObjectNode.js';
-import { AlignBox, ManualConstraint, Node, Text } from '../../../../scenery/js/imports.js';
+import { AlignBox, Node } from '../../../../scenery/js/imports.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import CAVObject from '../model/CAVObject.js';
 import BottomRepresentationCheckboxGroup, { BottomRepresentationCheckboxGroupOptions } from './BottomRepresentationCheckboxGroup.js';
@@ -31,7 +31,6 @@ import Property from '../../../../axon/js/Property.js';
 import Range from '../../../../dot/js/Range.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import QuestionBar, { QuestionBarOptions } from '../../../../scenery-phet/js/QuestionBar.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import CAVAccordionBox from './CAVAccordionBox.js';
 import NumberLineNode from './NumberLineNode.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
@@ -40,17 +39,8 @@ import SoccerPlayerNode from './SoccerPlayerNode.js';
 import SoccerPlayer from '../model/SoccerPlayer.js';
 import merge from '../../../../phet-core/js/merge.js';
 import KickButtonGroup from './KickButtonGroup.js';
-import CardNodeContainer from './CardNodeContainer.js';
-import MedianModel from '../../median/model/MedianModel.js';
-import VariabilityPlotNode from '../../variability/view/VariabilityPlotNode.js';
-import VariabilityModel from '../../variability/model/VariabilityModel.js';
-import CAVPlotNodeWithMedianBar from '../../mean-and-median/view/CAVPlotNodeWithMedianBar.js';
-import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import VariabilityReadoutsNode from '../../variability/view/VariabilityReadoutsNode.js';
-import ValueReadoutsNode from './ValueReadoutsNode.js';
 
 type SelfOptions = {
-  createAccordionBoxControlNode: ( tandem: Tandem ) => Node;
   bottomCheckboxGroupOptions?: StrictOmit<BottomRepresentationCheckboxGroupOptions, 'tandem'>;
 
   questionBarOptions: QuestionBarOptions;
@@ -58,15 +48,12 @@ type SelfOptions = {
   // TODO: If we are sticking with this pattern, switch to screen: 'median' | 'meanAndMedian' | 'variability' etc, see https://github.com/phetsims/center-and-variability/issues/153
   isMedianScreen: boolean;
   isVariabilityScreen: boolean;
-  accordionBoxTitleStringProperty: TReadOnlyProperty<string>;
-
 };
 
 export type CAVScreenViewOptions = SelfOptions & ScreenViewOptions;
 
 // constants
 const GROUND_POSITION_Y = 500;
-const NUMBER_LINE_MARGIN_X = 207;
 
 export default class CAVScreenView extends ScreenView {
 
@@ -88,25 +75,23 @@ export default class CAVScreenView extends ScreenView {
 
   protected readonly medianPredictionNode: PredictionSlider;
   protected readonly meanPredictionNode: PredictionSlider;
-  protected readonly accordionBoxControlNode: Node;
 
   private readonly accordionBox: CAVAccordionBox;
-  protected readonly accordionBoxContents: Node;
 
   protected readonly questionBar: QuestionBar;
-  protected readonly chartViewWidth: number;
   protected readonly playAreaNumberLineNode: NumberLineNode;
 
-  public constructor( model: CAVModel, providedOptions: CAVScreenViewOptions ) {
+  public constructor( model: CAVModel,
+
+                      // TODO: Structure in options?
+                      createAccordionBox: ( tandem: Tandem, top: number, layoutBounds: Bounds2, playAreaNumberLineNode: Node ) => CAVAccordionBox, providedOptions: CAVScreenViewOptions ) {
     const options = optionize<CAVScreenViewOptions,
       StrictOmit<SelfOptions, 'bottomCheckboxGroupOptions'>, ScreenViewOptions>()( {}, providedOptions );
-
-    const chartViewWidth = ScreenView.DEFAULT_LAYOUT_BOUNDS.width - NUMBER_LINE_MARGIN_X * 2;
 
     // The ground is at y=0
     const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
       new Bounds2( model.physicalRange.min, 0, model.physicalRange.max, model.physicalRange.getLength() ),
-      new Bounds2( NUMBER_LINE_MARGIN_X, GROUND_POSITION_Y - chartViewWidth, NUMBER_LINE_MARGIN_X + chartViewWidth, GROUND_POSITION_Y )
+      new Bounds2( CAVConstants.NUMBER_LINE_MARGIN_X, GROUND_POSITION_Y - CAVConstants.CHART_VIEW_WIDTH, CAVConstants.NUMBER_LINE_MARGIN_X + CAVConstants.CHART_VIEW_WIDTH, GROUND_POSITION_Y )
     );
 
     super( options );
@@ -191,8 +176,6 @@ export default class CAVScreenView extends ScreenView {
       objectNodeGroup.disposeElement( viewNode );
       map.delete( cavObject );
     } );
-
-    this.accordionBoxControlNode = options.createAccordionBoxControlNode( options.tandem.createTandem( 'accordionBoxControl' ) );
 
     this.bottomCheckboxGroup = new BottomRepresentationCheckboxGroup( model,
       combineOptions<BottomRepresentationCheckboxGroupOptions>( {
@@ -300,20 +283,20 @@ export default class CAVScreenView extends ScreenView {
     this.addChild( this.eraseButton );
     this.addChild( this.resetAllButton );
 
-    this.chartViewWidth = chartViewWidth;
-
     this.contentLayer.addChild( new BackgroundNode( GROUND_POSITION_Y, this.visibleBoundsProperty ) );
 
     this.playAreaNumberLineNode = new NumberLineNode(
       model.physicalRange,
-      chartViewWidth,
+
+      // TODO: Should not be parameter if constant
+      CAVConstants.CHART_VIEW_WIDTH,
       model.meanValueProperty,
       model.isShowingPlayAreaMeanProperty,
       model.dataRangeProperty, {
         includeXAxis: false,
         includeMeanStroke: true,
         tandem: options.tandem.createTandem( 'playAreaNumberLineNode' ),
-        x: NUMBER_LINE_MARGIN_X,
+        x: CAVConstants.NUMBER_LINE_MARGIN_X,
         y: GROUND_POSITION_Y
       } );
     this.contentLayer.addChild( this.playAreaNumberLineNode );
@@ -353,6 +336,9 @@ export default class CAVScreenView extends ScreenView {
       tandem: options.tandem.createTandem( 'questionBar' )
     }, options.questionBarOptions ) );
     this.contentLayer.addChild( this.questionBar );
+
+    this.accordionBox = createAccordionBox( options.tandem.createTandem( 'accordionBox' ), this.questionBar.bottom + CAVConstants.SCREEN_VIEW_Y_MARGIN, this.layoutBounds, this.playAreaNumberLineNode );
+
     this.contentLayer.addChild( new KickButtonGroup( model, {
       left: 25,
 
@@ -365,61 +351,8 @@ export default class CAVScreenView extends ScreenView {
     // Soccer balls go behind the accordion box after they land
     this.contentLayer.addChild( this.backObjectLayer );
 
-
-    const accordionBoxTandem = options.tandem.createTandem( 'accordionBox' );
-
-    // TODO: Better logic for this, or better ordering
-    if ( options.isMedianScreen ) {
-      this.accordionBoxContents = new CardNodeContainer( this.model as MedianModel, {
-
-        // Expose this intermediate layer to make it so that clients can hide the number cards with one call
-        tandem: accordionBoxTandem.createTandem( 'cardNodeContainer' )
-      } );
-    }
-    else if ( options.isVariabilityScreen ) {
-      this.accordionBoxContents = new VariabilityPlotNode( this.model as VariabilityModel, this.chartViewWidth, {
-        tandem: accordionBoxTandem.createTandem( 'plotNode' )
-      } );
-    }
-    else {
-      this.accordionBoxContents = new CAVPlotNodeWithMedianBar( this.model, this.chartViewWidth, {
-        tandem: accordionBoxTandem.createTandem( 'plotNode' )
-      } );
-    }
-
-    const titleNode = new Text( options.accordionBoxTitleStringProperty, {
-      font: new PhetFont( 16 ),
-      maxWidth: 300
-    } );
-
-    this.accordionBox = new CAVAccordionBox( this.model, this.accordionBoxContents, this.accordionBoxControlNode,
-      titleNode,
-      this.layoutBounds, {
-        leftMargin: options.isVariabilityScreen ? 70 : 0,
-        tandem: accordionBoxTandem,
-        contentNodeOffsetY: options.isMedianScreen ? -6 : 0,
-        top: this.questionBar.bottom + CAVConstants.SCREEN_VIEW_Y_MARGIN,
-
-        // TODO: Better pattern for this
-        valueReadoutsNode: model instanceof VariabilityModel ? new VariabilityReadoutsNode( model ) :
-                           options.isMedianScreen ? null :
-                           new ValueReadoutsNode( model ),
-
-        ...( options.isVariabilityScreen ? {
-          right: this.layoutBounds.right - CAVConstants.SCREEN_VIEW_X_MARGIN
-        } : {
-          centerX: this.layoutBounds.centerX
-        } ),
-        infoShowingProperty: this.model instanceof VariabilityModel ? this.model.isInfoShowingProperty : null
-      } );
     this.contentLayer.addChild( this.accordionBox );
     this.accordionBox.expandedProperty.link( updateMedianNode );
-
-    // TODO: What if positioning the bottomCheckboxGroup.right forces the topCheckboxGroup to the right of the accordion box bounds?
-    ManualConstraint.create( this, [ this.bottomCheckboxGroup, this.accordionBoxControlNode ],
-      ( bottomCheckboxGroupWrapper, accordionBoxControlNodeWrapper ) => {
-        accordionBoxControlNodeWrapper.x = bottomCheckboxGroupWrapper.x;
-      } );
 
     // Add in the same order as the checkboxes, so the z-order matches the checkbox order
     if ( !options.isMedianScreen ) {

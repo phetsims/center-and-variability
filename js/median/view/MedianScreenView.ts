@@ -15,11 +15,17 @@ import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import TopRepresentationCheckboxGroup from '../../common/view/TopRepresentationCheckboxGroup.js';
 import CAVScreenView, { CAVScreenViewOptions } from '../../common/view/CAVScreenView.js';
+import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
+import { Text } from '../../../../scenery/js/imports.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import CardNodeContainer from '../../common/view/CardNodeContainer.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 type SelfOptions = EmptySelfOptions;
 type MedianScreenViewOptions =
   SelfOptions
-  & StrictOmit<CAVScreenViewOptions, 'createAccordionBoxControlNode' | 'isMedianScreen' | 'isVariabilityScreen' | 'questionBarOptions' | 'accordionBoxTitleStringProperty'>;
+  & StrictOmit<CAVScreenViewOptions, 'isMedianScreen' | 'isVariabilityScreen' | 'questionBarOptions'>;
 
 export default class MedianScreenView extends CAVScreenView {
 
@@ -32,24 +38,41 @@ export default class MedianScreenView extends CAVScreenView {
         barFill: CAVColors.medianQuestionBarFillColorProperty,
         questionString: CenterAndVariabilityStrings.medianQuestionStringProperty
       },
-      createAccordionBoxControlNode: tandem => new TopRepresentationCheckboxGroup( model, {
-        includeSortData: true,
-        includeMean: false,
-        medianBarIconOptions: {
-          notchDirection: 'up',
-          barStyle: 'continuous'
-        },
-        showMedianCheckboxIcon: false,
-        tandem: tandem.createTandem( 'checkboxGroup' )
-      } ),
       bottomCheckboxGroupOptions: {
         includeMean: false,
         includePredictMean: false
-      },
-      accordionBoxTitleStringProperty: CenterAndVariabilityStrings.distanceInMetersStringProperty
+      }
     }, providedOptions );
 
-    super( model, options );
+    super( model, ( tandem: Tandem, top: number, layoutBounds: Bounds2 ) => {
+      return new CAVAccordionBox( model, new CardNodeContainer( model, {
+
+          // Expose this intermediate layer to make it so that clients can hide the number cards with one call
+          tandem: tandem.createTandem( 'cardNodeContainer' )
+        } ), new TopRepresentationCheckboxGroup( model, {
+          includeSortData: true,
+          includeMean: false,
+          medianBarIconOptions: {
+            notchDirection: 'up',
+            barStyle: 'continuous'
+          },
+          showMedianCheckboxIcon: false,
+          tandem: tandem.createTandem( 'checkboxGroup' )
+        } ),
+        new Text( CenterAndVariabilityStrings.distanceInMetersStringProperty, {
+          font: new PhetFont( 16 ),
+          maxWidth: 300
+        } ),
+        layoutBounds, {
+          leftMargin: 0,
+          tandem: tandem,
+          contentNodeOffsetY: -6,
+          top: top,
+          valueReadoutsNode: null,
+          centerX: layoutBounds.centerX,
+          infoShowingProperty: null
+        } );
+    }, options );
   }
 }
 

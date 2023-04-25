@@ -17,11 +17,6 @@ import MeanAndMedianScreenView from './view/MeanAndMedianScreenView.js';
 import CenterAndVariabilityStrings from '../CenterAndVariabilityStrings.js';
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import meanAndMedianScreenIcon_png from '../../images/meanAndMedianScreenIcon_png.js';
-import DynamicProperty from '../../../axon/js/DynamicProperty.js';
-import CAVConstants from '../common/CAVConstants.js';
-import DerivedProperty from '../../../axon/js/DerivedProperty.js';
-import PlotType from '../common/model/PlotType.js';
-import TopRepresentationCheckboxGroup from '../common/view/TopRepresentationCheckboxGroup.js';
 
 type MeanAndMedianScreenOptions = CAVScreenOptions;
 
@@ -38,13 +33,6 @@ export default class MeanAndMedianScreen extends CAVScreen<MeanAndMedianModel, M
       backgroundColorProperty: CAVColors.screenBackgroundColorProperty
     }, providedOptions );
 
-    const currentProperty = new DerivedProperty( [ CAVConstants.PLOT_TYPE_PROPERTY ], plotType => {
-      return plotType === PlotType.LINE_PLOT ? CenterAndVariabilityStrings.linePlotStringProperty :
-             CenterAndVariabilityStrings.dotPlotStringProperty;
-    } );
-
-    const accordionBoxTitleProperty = new DynamicProperty<string, unknown, unknown>( currentProperty );
-
     super(
       () => new MeanAndMedianModel( {
         tandem: options.tandem.createTandem( 'model' ),
@@ -53,17 +41,7 @@ export default class MeanAndMedianScreen extends CAVScreen<MeanAndMedianModel, M
       } ),
       model => new MeanAndMedianScreenView( model, {
         isVariabilityScreen: false,
-        tandem: options.tandem.createTandem( 'view' ),
-        accordionBoxTitleStringProperty: accordionBoxTitleProperty,
-        createAccordionBoxControlNode: tandem => new TopRepresentationCheckboxGroup( model, {
-          medianBarIconOptions: {
-            notchDirection: 'down',
-            barStyle: 'continuous',
-            arrowScale: 0.75
-          },
-          showMedianCheckboxIcon: true,
-          tandem: tandem.createTandem( 'topRepresentationCheckboxGroup' )
-        } )
+        tandem: options.tandem.createTandem( 'view' )
       } ),
       options
     );
