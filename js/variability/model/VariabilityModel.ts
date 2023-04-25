@@ -16,6 +16,8 @@ import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import VariabilityMeasure from './VariabilityMeasure.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import CAVConstants from '../../common/CAVConstants.js';
+import NullableIO from '../../../../tandem/js/types/NullableIO.js';
+import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityModelOptions = SelfOptions & SoccerModelOptions;
@@ -57,7 +59,8 @@ export default class VariabilityModel extends SoccerModel {
     } );
 
     this.madValueProperty = new Property<number | null>( null, {
-      tandem: options.tandem.createTandem( 'madValueProperty' )
+      tandem: options.tandem.createTandem( 'madValueProperty' ),
+      phetioValueType: NullableIO( NumberIO )
     } );
 
     function gaussian( x: number, mu: number, sigma: number ): number {
