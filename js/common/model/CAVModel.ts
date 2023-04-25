@@ -54,7 +54,6 @@ export default class CAVModel implements TModel {
   public readonly isShowingTopMedianProperty: BooleanProperty;
   public readonly isShowingPlayAreaMedianProperty: BooleanProperty;
   public readonly isShowingPlayAreaMeanProperty: BooleanProperty;
-  public readonly isShowingPlayAreaVariabilityProperty: BooleanProperty; // TODO: only used in screen 3
   public readonly isShowingMeanPredictionProperty: BooleanProperty;
   public readonly isShowingMedianPredictionProperty: BooleanProperty;
 
@@ -153,9 +152,6 @@ export default class CAVModel implements TModel {
     } );
     this.isShowingMedianPredictionProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isShowingMedianPredictionProperty' )
-    } );
-    this.isShowingPlayAreaVariabilityProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isShowingPlayAreaVariabilityProperty' )
     } );
 
     this.medianValueProperty = new Property<number | null>( null, {

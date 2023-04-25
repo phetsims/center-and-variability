@@ -22,8 +22,11 @@ import NumberLineNode from './NumberLineNode.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import PredictionThumbNode from './PredictionThumbNode.js';
 import LinkableProperty from '../../../../axon/js/LinkableProperty.js';
+import VariabilityModel from '../../variability/model/VariabilityModel.js';
 
 type SelfOptions = {
+
+  // TODO: Let each class create exactly what they want without these options
   includeMedian?: boolean;
   includeMean?: boolean;
   includePredictMean?: boolean;
@@ -87,7 +90,7 @@ export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxG
     options.includeVariability && items.push( {
       createNode: ( tandem: Tandem ) => newGridBox( new Text( CenterAndVariabilityStrings.variabilityStringProperty, TEXT_OPTIONS ),
         NumberLineNode.createMeanIndicatorNode( true, true ) ),
-      property: model.isShowingPlayAreaVariabilityProperty,
+      property: ( model as VariabilityModel ).isShowingPlayAreaVariabilityProperty,
       tandemName: 'variabilityCheckbox'
     } );
 

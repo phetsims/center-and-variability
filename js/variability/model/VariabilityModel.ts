@@ -29,6 +29,7 @@ export default class VariabilityModel extends CAVModel {
   public readonly isShowingIQRProperty: Property<boolean>;
   public readonly isShowingMADProperty: Property<boolean>;
   public readonly isInfoShowingProperty: Property<boolean>;
+  public readonly isShowingPlayAreaVariabilityProperty: BooleanProperty;
 
   public readonly madValueProperty: Property<number | null>;
 
@@ -61,6 +62,10 @@ export default class VariabilityModel extends CAVModel {
     this.madValueProperty = new Property<number | null>( null, {
       tandem: options.tandem.createTandem( 'madValueProperty' ),
       phetioValueType: NullableIO( NumberIO )
+    } );
+
+    this.isShowingPlayAreaVariabilityProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isShowingPlayAreaVariabilityProperty' )
     } );
 
     function gaussian( x: number, mu: number, sigma: number ): number {
