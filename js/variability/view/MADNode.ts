@@ -30,7 +30,8 @@ export default class MADNode extends CAVPlotNode {
 
     const madRectangle = new Rectangle( 0, 50, 100, 72, {
       fill: '#e0c0f5',
-      stroke: 'lightGray'
+      stroke: 'lightGray',
+      opacity: 0.5
     } );
 
     const leftBar = new MedianBarNode( {
@@ -100,13 +101,12 @@ export default class MADNode extends CAVPlotNode {
       lineContainer.children = children;
 
       // TODO: switch to 'info' and update the rest of the file accordingly, https://github.com/phetsims/center-and-variability/issues/153
-      const interestedInMAD = options.parentContext === 'accordion' || model.isShowingMADProperty.value;
       lineContainer.visible = model.selectedVariabilityProperty.value === VariabilityMeasure.MAD && sortedDots.length > 0;
 
       const mad = model.madValueProperty.value;
 
       madRectangle.rectWidth = this.modelViewTransform.modelToViewDeltaX( mad === null ? 0 : mad * 2 );
-      madRectangle.visible = interestedInMAD && mad !== null;
+      madRectangle.visible = ( options.parentContext === 'info' || model.isShowingMADProperty.value ) && mad !== null;
 
       if ( mad !== null ) {
         const viewCenterX = this.modelViewTransform.modelToViewX( model.meanValueProperty.value! );
@@ -128,13 +128,13 @@ export default class MADNode extends CAVPlotNode {
         leftReadout.centerBottom = leftBar.centerTop;
         rightReadout.centerBottom = rightBar.centerTop;
       }
-      leftBar.visible = interestedInMAD && mad !== null && sortedDots.length > 1;
-      rightBar.visible = interestedInMAD && mad !== null && sortedDots.length > 1;
-      leftReadout.visible = interestedInMAD && mad !== null && sortedDots.length > 1;
-      rightReadout.visible = interestedInMAD && mad !== null && sortedDots.length > 1;
+      leftBar.visible = ( options.parentContext === 'info' || model.isShowingMADProperty.value ) && mad !== null && sortedDots.length > 1;
+      rightBar.visible = ( options.parentContext === 'info' || model.isShowingMADProperty.value ) && mad !== null && sortedDots.length > 1;
+      leftReadout.visible = ( options.parentContext === 'info' || model.isShowingMADProperty.value ) && mad !== null && sortedDots.length > 1;
+      rightReadout.visible = ( options.parentContext === 'info' || model.isShowingMADProperty.value ) && mad !== null && sortedDots.length > 1;
 
       needAtLeastOneKick.center = this.modelViewTransform.modelToViewXY( 8, 2 );
-      needAtLeastOneKick.visible = model.numberOfDataPointsProperty.value === 0 && interestedInMAD;
+      needAtLeastOneKick.visible = model.numberOfDataPointsProperty.value === 0 && ( options.parentContext === 'info' || model.isShowingMADProperty.value );
     };
     model.objectChangedEmitter.addListener( update );
     model.isShowingMADProperty.link( update );
