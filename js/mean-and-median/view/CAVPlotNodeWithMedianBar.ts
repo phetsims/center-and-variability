@@ -14,6 +14,7 @@ import CAVModel from '../../common/model/CAVModel.js';
 import MedianBarNode from '../../common/view/MedianBarNode.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import CAVPlotNode from '../../common/view/CAVPlotNode.js';
+import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
 
 export type CAVPlotOptions = NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
@@ -62,7 +63,7 @@ export default class CAVPlotNodeWithMedianBar extends CAVPlotNode {
         assert && assert( medianValue !== null );
         const medianPositionX = modelViewTransform.modelToViewX( medianValue! );
 
-        this.medianBarNode.setMedianBarShape( barY, left, medianPositionX, right, model.isMedianAnimationCompleteProperty.value );
+        this.medianBarNode.setMedianBarShape( barY, left, medianPositionX, right, ( model as MeanAndMedianModel ).isMedianAnimationCompleteProperty.value );
       }
       else {
         this.medianBarNode.clear();
@@ -70,7 +71,9 @@ export default class CAVPlotNodeWithMedianBar extends CAVPlotNode {
     };
     model.objectChangedEmitter.addListener( updateMedianBarNode );
     model.isShowingTopMedianProperty.link( updateMedianBarNode );
-    model.isMedianAnimationCompleteProperty.link( updateMedianBarNode );
+    if ( model instanceof MeanAndMedianModel ) {
+      model.isMedianAnimationCompleteProperty.link( updateMedianBarNode );
+    }
   }
 }
 
