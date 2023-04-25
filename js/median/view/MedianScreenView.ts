@@ -36,6 +36,8 @@ export default class MedianScreenView extends CAVScreenView {
         barFill: CAVColors.medianQuestionBarFillColorProperty,
         questionString: CenterAndVariabilityStrings.medianQuestionStringProperty
       },
+
+      // TODO: Remove this option and just create things correctly in the subclass
       bottomCheckboxGroupOptions: {
         includeMean: false,
         includePredictMean: false

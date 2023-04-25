@@ -15,6 +15,8 @@ import VariabilityModel from '../model/VariabilityModel.js';
 import RangeNode from './RangeNode.js';
 import IQRNode from './IQRNode.js';
 import MADNode from './MADNode.js';
+import VariabilityMeasure from '../model/VariabilityMeasure.js';
+import ToggleNode from '../../../../sun/js/ToggleNode.js';
 
 export type CAVPlotOptions = NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
@@ -23,31 +25,32 @@ export default class VariabilityPlotNode extends Node {
   public constructor( model: VariabilityModel, numberLineWidth: number, providedOptions: CAVPlotOptions ) {
     super( providedOptions );
 
-    const rangeNode = new RangeNode( model, numberLineWidth, {
-      parentContext: 'accordion',
-      tandem: providedOptions.tandem.createTandem( 'rangeNode' )
+    const toggleNode = new ToggleNode( model.selectedVariabilityProperty, [ {
+      createNode: tandem => new RangeNode( model, numberLineWidth, {
+        parentContext: 'accordion',
+        tandem: tandem.createTandem( 'rangeNode' )
+      } ),
+      tandemName: 'rangeNode',
+      value: VariabilityMeasure.RANGE
+    }, {
+      createNode: tandem => new IQRNode( model, numberLineWidth, {
+        parentContext: 'accordion',
+        tandem: tandem.createTandem( 'iqrNode' )
+      } ),
+      tandemName: 'iqrNode',
+      value: VariabilityMeasure.IQR
+    }, {
+      createNode: tandem => new MADNode( model, numberLineWidth, {
+        parentContext: 'accordion',
+        tandem: tandem.createTandem( 'madNode' )
+      } ),
+      tandemName: 'madNode',
+      value: VariabilityMeasure.MAD
+    } ], {
+      tandem: providedOptions.tandem.createTandem( 'toggleNode' )
     } );
-    this.addChild( rangeNode );
-
-    const iqrNode = new IQRNode( model, numberLineWidth, {
-      parentContext: 'accordion',
-      tandem: providedOptions.tandem.createTandem( 'iqrNode' )
-
-    } );
-    this.addChild( iqrNode );
-
-    const madNode = new MADNode( model, numberLineWidth, {
-      parentContext: 'accordion',
-      tandem: providedOptions.tandem.createTandem( 'madNode' )
-
-    } );
-    this.addChild( madNode );
-
-    // TODO: Now we need to toggle between the nodes
-    // The rectangles must be behind the data points
-    rangeNode.moveToBack();
-    iqrNode.moveToBack();
-    madNode.moveToBack();
+    this.addChild( toggleNode );
+    toggleNode.moveToBack();
   }
 }
 
