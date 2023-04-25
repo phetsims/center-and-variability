@@ -2,27 +2,24 @@
 
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import MedianBarNode from '../../common/view/MedianBarNode.js';
-import { Rectangle, Text, Node, NodeOptions } from '../../../../scenery/js/imports.js';
+import { Rectangle, Text } from '../../../../scenery/js/imports.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityMeasure from '../model/VariabilityMeasure.js';
-import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import VariabilityModel from '../model/VariabilityModel.js';
-import optionize from '../../../../phet-core/js/optionize.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
+import CAVPlotNode, { CAVPlotOptions } from '../../common/view/CAVPlotNode.js';
 
 type SelfOptions = {
-  staticDisplay?: VariabilityMeasure | null;
+  parentContext: 'accordion' | 'info';
 };
-type IQRNodeOptions = SelfOptions & NodeOptions;
+type IQRNodeOptions = SelfOptions & CAVPlotOptions;
 
-export default class IQRNode extends Node {
-  public constructor( model: VariabilityModel, modelViewTransform: ModelViewTransform2, providedOptions?: IQRNodeOptions ) {
+export default class IQRNode extends CAVPlotNode {
+  public constructor( model: VariabilityModel, numberLineWidth: number, providedOptions: IQRNodeOptions ) {
 
-    const options = optionize<IQRNodeOptions, SelfOptions, NodeOptions>()( {
-      staticDisplay: null
-    }, providedOptions );
+    const options = providedOptions;
 
-    super();
+    super( model, numberLineWidth, options );
 
     const needAtLeastOneKick = new Text( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {
       fontSize: 18,
@@ -57,7 +54,8 @@ export default class IQRNode extends Node {
       const leftmostDot = sortedDots[ 0 ];
       const rightmostDot = sortedDots[ sortedDots.length - 1 ];
 
-      const interestedInIQR = options.staticDisplay === VariabilityMeasure.IQR || (
+      // TODO: switch to 'info' and update the rest of the file accordingly, https://github.com/phetsims/center-and-variability/issues/153
+      const interestedInIQR = options.parentContext === 'accordion' || (
         model.isShowingIQRProperty.value &&
         model.selectedVariabilityProperty.value === VariabilityMeasure.IQR
       );
@@ -69,12 +67,10 @@ export default class IQRNode extends Node {
              leftmostDot.valueProperty.value !== rightmostDot.valueProperty.value
         ) {
 
-          // assumes all of the dots have the same radius
+          const left = this.modelViewTransform.modelToViewX( leftmostDot.valueProperty.value! );
+          const right = this.modelViewTransform.modelToViewX( rightmostDot.valueProperty.value! );
 
-          const left = modelViewTransform.modelToViewX( leftmostDot.valueProperty.value! );
-          const right = modelViewTransform.modelToViewX( rightmostDot.valueProperty.value! );
-
-          const floor = modelViewTransform.modelToViewY( 0 );
+          const floor = this.modelViewTransform.modelToViewY( 0 );
           iqrRectangle.rectWidth = right - left;
           iqrRectangle.left = left;
           iqrRectangle.bottom = floor;
@@ -103,7 +99,7 @@ export default class IQRNode extends Node {
         iqrTextReadout.visible = false;
       }
 
-      needAtLeastOneKick.center = modelViewTransform.modelToViewXY( 8, 2 );
+      needAtLeastOneKick.center = this.modelViewTransform.modelToViewXY( 8, 2 );
       needAtLeastOneKick.visible = model.numberOfDataPointsProperty.value === 0 && interestedInIQR;
     };
     model.objectChangedEmitter.addListener( updateIQRNode );

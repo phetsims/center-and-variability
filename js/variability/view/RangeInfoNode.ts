@@ -4,12 +4,11 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import { Text, VBox, VStrut } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
-import VariabilityPlotNode from './VariabilityPlotNode.js';
-import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import centerAndVariability from '../../centerAndVariability.js';
+import RangeNode from './RangeNode.js';
 
 export default class RangeInfoNode extends VBox {
   public constructor( model: VariabilityModel, chartViewWidth: number, options: PickRequired<PhetioObject, 'tandem'> ) {
@@ -33,9 +32,9 @@ export default class RangeInfoNode extends VBox {
         } ), { fontSize: 18, visibleProperty: hasEnoughDataProperty } ),
         new VStrut( 10 ),
 
-        new VariabilityPlotNode( model, chartViewWidth, {
-          staticDisplay: VariabilityMeasure.RANGE,
-          tandem: options.tandem.createTandem( 'variabilityPlotNode' )
+        new RangeNode( model, chartViewWidth, {
+          parentContext: 'info',
+          tandem: options.tandem.createTandem( 'rangeNode' )
         } )
       ]
     } );

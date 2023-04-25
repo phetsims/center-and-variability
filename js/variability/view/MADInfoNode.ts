@@ -4,13 +4,12 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import { HBox, HSeparator, Text, VBox, VStrut } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
-import VariabilityPlotNode from './VariabilityPlotNode.js';
-import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import Utils from '../../../../dot/js/Utils.js';
+import MADNode from './MADNode.js';
 
 export default class MADInfoNode extends VBox {
   public constructor( model: VariabilityModel, chartViewWidth: number, options: PickRequired<PhetioObject, 'tandem'> ) {
@@ -75,9 +74,9 @@ export default class MADInfoNode extends VBox {
         } ), { fontSize: 18, visibleProperty: hasEnoughDataProperty } ),
         new VStrut( 10 ),
 
-        new VariabilityPlotNode( model, chartViewWidth, {
-          staticDisplay: VariabilityMeasure.MAD,
-          tandem: options.tandem.createTandem( 'variabilityPlotNode' )
+        new MADNode( model, chartViewWidth, {
+          parentContext: 'info',
+          tandem: options.tandem.createTandem( 'madNode' )
         } )
       ]
     } );

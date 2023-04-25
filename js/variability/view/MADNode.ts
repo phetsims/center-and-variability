@@ -1,29 +1,26 @@
 // Copyright 2023, University of Colorado Boulder
 
-import { Text, Node, NodeOptions, Line, Rectangle } from '../../../../scenery/js/imports.js';
+import { Line, Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityMeasure from '../model/VariabilityMeasure.js';
-import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import VariabilityModel from '../model/VariabilityModel.js';
-import optionize from '../../../../phet-core/js/optionize.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import MedianBarNode from '../../common/view/MedianBarNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Utils from '../../../../dot/js/Utils.js';
+import CAVPlotNode, { CAVPlotOptions } from '../../common/view/CAVPlotNode.js';
 
 type SelfOptions = {
-  staticDisplay?: VariabilityMeasure | null;
+  parentContext: 'accordion' | 'info';
 };
-type RangeNodeOptions = SelfOptions & NodeOptions;
+type RangeNodeOptions = SelfOptions & CAVPlotOptions;
 
-export default class MADNode extends Node {
-  public constructor( model: VariabilityModel, modelViewTransform: ModelViewTransform2, providedOptions?: RangeNodeOptions ) {
+export default class MADNode extends CAVPlotNode {
+  public constructor( model: VariabilityModel, numberLineWidth: number, providedOptions: RangeNodeOptions ) {
 
-    const options = optionize<RangeNodeOptions, SelfOptions, NodeOptions>()( {
-      staticDisplay: null
-    }, providedOptions );
+    const options = providedOptions;
 
-    super();
+    super( model, numberLineWidth, options );
 
     const needAtLeastOneKick = new Text( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {
       fontSize: 18,
@@ -78,15 +75,15 @@ export default class MADNode extends Node {
         // Underneath the accordion box title
         let y = 55;
         sortedDots.forEach( dot => {
-          const x1 = modelViewTransform.modelToViewX( dot.valueProperty.value! );
-          const x2 = modelViewTransform.modelToViewX( mean );
+          const x1 = this.modelViewTransform.modelToViewX( dot.valueProperty.value! );
+          const x2 = this.modelViewTransform.modelToViewX( mean );
           const line = new Line( x1, y, x2, y, {
             stroke: 'black'
           } );
 
           children.push( line );
 
-          if ( options.staticDisplay ) {
+          if ( options.parentContext === 'info' ) {
             const distanceToMean = Math.abs( dot.valueProperty.value! - model.meanValueProperty.value! );
             const text = new Text( Utils.toFixed( distanceToMean, 1 ), {
               font: new PhetFont( 13 ),
@@ -96,31 +93,32 @@ export default class MADNode extends Node {
           }
 
           // Enough spacing so they don't overlap the bottom row of data points
-          y += options.staticDisplay ? 15 : 4.2;
+          y += options.parentContext === 'info' ? 15 : 4.2;
         } );
       }
 
       lineContainer.children = children;
 
-      const interestedInMAD = options.staticDisplay === VariabilityMeasure.MAD || model.isShowingMADProperty.value;
+      // TODO: switch to 'info' and update the rest of the file accordingly, https://github.com/phetsims/center-and-variability/issues/153
+      const interestedInMAD = options.parentContext === 'accordion' || model.isShowingMADProperty.value;
       lineContainer.visible = model.selectedVariabilityProperty.value === VariabilityMeasure.MAD && sortedDots.length > 0;
 
       const mad = model.madValueProperty.value;
 
-      madRectangle.rectWidth = modelViewTransform.modelToViewDeltaX( mad === null ? 0 : mad * 2 );
+      madRectangle.rectWidth = this.modelViewTransform.modelToViewDeltaX( mad === null ? 0 : mad * 2 );
       madRectangle.visible = interestedInMAD && mad !== null;
 
       if ( mad !== null ) {
-        const viewCenterX = modelViewTransform.modelToViewX( model.meanValueProperty.value! );
-        const viewFloorY = modelViewTransform.modelToViewY( 0 );
+        const viewCenterX = this.modelViewTransform.modelToViewX( model.meanValueProperty.value! );
+        const viewFloorY = this.modelViewTransform.modelToViewY( 0 );
 
-        if ( options.staticDisplay ) {
+        if ( options.parentContext === 'info' ) {
           lineContainer.bottom = viewFloorY - 10;
           madRectangle.rectHeight = lineContainer.height;
         }
 
         madRectangle.centerX = viewCenterX;
-        madRectangle.bottom = modelViewTransform.modelToViewY( 0 );
+        madRectangle.bottom = this.modelViewTransform.modelToViewY( 0 );
         leftReadout.string = Utils.toFixed( mad, 1 );
         rightReadout.string = Utils.toFixed( mad, 1 );
 
@@ -135,7 +133,7 @@ export default class MADNode extends Node {
       leftReadout.visible = interestedInMAD && mad !== null && sortedDots.length > 1;
       rightReadout.visible = interestedInMAD && mad !== null && sortedDots.length > 1;
 
-      needAtLeastOneKick.center = modelViewTransform.modelToViewXY( 8, 2 );
+      needAtLeastOneKick.center = this.modelViewTransform.modelToViewXY( 8, 2 );
       needAtLeastOneKick.visible = model.numberOfDataPointsProperty.value === 0 && interestedInMAD;
     };
     model.objectChangedEmitter.addListener( update );

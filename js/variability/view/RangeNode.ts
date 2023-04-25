@@ -2,27 +2,24 @@
 
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import MedianBarNode from '../../common/view/MedianBarNode.js';
-import { Rectangle, Text, Node, NodeOptions } from '../../../../scenery/js/imports.js';
+import { Rectangle, Text } from '../../../../scenery/js/imports.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import VariabilityMeasure from '../model/VariabilityMeasure.js';
-import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import VariabilityModel from '../model/VariabilityModel.js';
-import optionize from '../../../../phet-core/js/optionize.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
+import CAVPlotNode, { CAVPlotOptions } from '../../common/view/CAVPlotNode.js';
+import CAVObjectType from '../../common/model/CAVObjectType.js';
 
 type SelfOptions = {
-  staticDisplay?: VariabilityMeasure | null;
+  parentContext: 'accordion' | 'info';
 };
-type RangeNodeOptions = SelfOptions & NodeOptions;
+type RangeNodeOptions = SelfOptions & CAVPlotOptions;
 
-export default class RangeNode extends Node {
-  public constructor( model: VariabilityModel, modelViewTransform: ModelViewTransform2, providedOptions?: RangeNodeOptions ) {
+export default class RangeNode extends CAVPlotNode {
+  public constructor( model: VariabilityModel, numberLineWidth: number, providedOptions: RangeNodeOptions ) {
 
-    const options = optionize<RangeNodeOptions, SelfOptions, NodeOptions>()( {
-      staticDisplay: null
-    }, providedOptions );
+    const options = providedOptions;
 
-    super();
+    super( model, numberLineWidth, options );
 
     const needAtLeastOneKick = new Text( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {
       fontSize: 18,
@@ -42,7 +39,8 @@ export default class RangeNode extends Node {
       stroke: 'black',
       lineWidth: 1
     } );
-    const rangeRectangle = new Rectangle( 0, 50, 100, 70, {
+    const rectangleHeight = 70;
+    const rangeRectangle = new Rectangle( 0, 50, 100, rectangleHeight, {
       fill: '#c3fdb9',
       stroke: 'lightGray'
     } );
@@ -57,59 +55,48 @@ export default class RangeNode extends Node {
       const leftmostDot = sortedDots[ 0 ];
       const rightmostDot = sortedDots[ sortedDots.length - 1 ];
 
-      const interestedInRange = options.staticDisplay === VariabilityMeasure.RANGE || (
-        model.isShowingRangeProperty.value &&
-        model.selectedVariabilityProperty.value === VariabilityMeasure.RANGE
-      );
-      if ( interestedInRange ) {
+      // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card
+      const hasNonZeroRange = leftmostDot &&
+                              rightmostDot &&
+                              leftmostDot.valueProperty.value !== rightmostDot.valueProperty.value;
+      if ( hasNonZeroRange ) {
+        const left = this.modelViewTransform.modelToViewX( leftmostDot.valueProperty.value! );
+        const right = this.modelViewTransform.modelToViewX( rightmostDot.valueProperty.value! );
+        const highestYValue = this.modelViewTransform.modelToViewY(
+          _.maxBy( sortedDots, dot => dot.positionProperty.value.y )!.positionProperty.value.y );
 
-        // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card
-        if ( leftmostDot &&
-             rightmostDot &&
-             leftmostDot.valueProperty.value !== rightmostDot.valueProperty.value
-        ) {
 
-          // assumes all of the dots have the same radius
+        const floor = this.modelViewTransform.modelToViewY( 0 );
 
-          const left = modelViewTransform.modelToViewX( leftmostDot.valueProperty.value! );
-          const right = modelViewTransform.modelToViewX( rightmostDot.valueProperty.value! );
-
-          const floor = modelViewTransform.modelToViewY( 0 );
-          rangeRectangle.rectWidth = right - left;
-          rangeRectangle.left = left;
-          rangeRectangle.bottom = floor;
-
-          // TODO: In the info dialog, this should be above the topmost data point (in the accordion box it's ok to overlap)
-          rangeBar.setMedianBarShape( rangeRectangle.top - MedianBarNode.NOTCH_HEIGHT - 2, rangeRectangle.left, 0, rangeRectangle.right, false );
-
-          // TODO: How to simplify this logic? Or will it help when things are combined?
-          rangeTextReadout.string = rightmostDot.valueProperty.value! - leftmostDot.valueProperty.value!;
-          rangeTextReadout.centerX = rangeRectangle.centerX;
-          rangeTextReadout.bottom = rangeBar.top - 5;
-
-          rangeRectangle.visible = true;
-          rangeBar.visible = true;
-          rangeTextReadout.visible = true;
+        if ( options.parentContext === 'info' ) {
+          rangeRectangle.rectHeight = Math.max( floor - highestYValue + this.modelViewTransform.modelToViewDeltaX( CAVObjectType.DOT.radius ),
+            rectangleHeight );
         }
-        else {
-          rangeRectangle.visible = false;
-          rangeBar.visible = false;
-          rangeTextReadout.visible = false;
-        }
-      }
-      else {
-        rangeRectangle.visible = false;
-        rangeBar.visible = false;
-        rangeTextReadout.visible = false;
-      }
+        rangeRectangle.rectWidth = right - left;
+        rangeRectangle.left = left;
+        rangeRectangle.bottom = floor;
 
-      needAtLeastOneKick.center = modelViewTransform.modelToViewXY( 8, 2 );
-      needAtLeastOneKick.visible = model.numberOfDataPointsProperty.value === 0 && interestedInRange;
+        rangeBar.setMedianBarShape( rangeRectangle.top - MedianBarNode.NOTCH_HEIGHT - 2, rangeRectangle.left, 0, rangeRectangle.right, false );
+
+        // TODO: How to simplify this logic? Or will it help when things are combined?
+        rangeTextReadout.string = rightmostDot.valueProperty.value! - leftmostDot.valueProperty.value!;
+        rangeTextReadout.centerX = rangeRectangle.centerX;
+        rangeTextReadout.bottom = rangeBar.top - 5;
+      }
+      const rangeVisibility = ( options.parentContext === 'info' && hasNonZeroRange ) ||
+                              ( options.parentContext === 'accordion' && hasNonZeroRange && model.isShowingRangeProperty.value );
+      rangeRectangle.visible = rangeVisibility;
+      rangeBar.visible = rangeVisibility;
+      rangeTextReadout.visible = rangeVisibility;
+      needAtLeastOneKick.center = this.modelViewTransform.modelToViewXY( 8, 2 );
+      needAtLeastOneKick.visible = model.numberOfDataPointsProperty.value === 0 && ( options.parentContext === 'info' ||
+                                                                                     ( options.parentContext === 'accordion' && model.isShowingRangeProperty.value ) );
     };
     model.objectChangedEmitter.addListener( updateRangeNode );
     model.isShowingRangeProperty.link( updateRangeNode );
     model.selectedVariabilityProperty.link( updateRangeNode );
     model.numberOfDataPointsProperty.link( updateRangeNode );
+    rangeRectangle.moveToBack();
   }
 }
 
