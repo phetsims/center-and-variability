@@ -69,8 +69,7 @@ export default class MedianScreenView extends CAVScreenView {
           contentNodeOffsetY: -6,
           top: top,
           valueReadoutsNode: null,
-          centerX: layoutBounds.centerX,
-          infoShowingProperty: null
+          centerX: layoutBounds.centerX
         } );
     }, options );
   }

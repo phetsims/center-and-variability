@@ -81,8 +81,7 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
           contentNodeOffsetY: 0,
           top: top,
           valueReadoutsNode: new ValueReadoutsNode( model ),
-          centerX: layoutBounds.centerX,
-          infoShowingProperty: null
+          centerX: layoutBounds.centerX
         } );
     }, options );
 

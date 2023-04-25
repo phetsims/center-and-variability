@@ -31,6 +31,7 @@ import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
 import VariabilityReadoutsNode from './VariabilityReadoutsNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import InfoButton from '../../../../scenery-phet/js/buttons/InfoButton.js';
 
 // TODO: Copied from somewhere. What's the best pattern?
 const TEXT_OPTIONS = {
@@ -79,6 +80,21 @@ export default class VariabilityScreenView extends CAVScreenView {
         tandem: tandem.createTandem( 'plotNode' )
       } );
 
+      const infoButton = new InfoButton( {
+        iconFill: 'cornflowerblue',
+        scale: 0.5,
+        touchAreaDilation: 5,
+        tandem: options.tandem.createTandem( 'infoButton' ),
+        listener: () => {
+          model.isInfoShowingProperty.value = true;
+        },
+        top: 0,
+
+        // TODO: How to position this properly?
+        right: accordionBoxContents.width + 130
+      } );
+      accordionBoxContents.addChild( infoButton );
+
       afterInit = () => {      // NOTE: This assumes that the NumberLineNode in the play area and in the dot plot have the same characteristics:
         // * Same font
         // * Same offset and scale
@@ -94,6 +110,15 @@ export default class VariabilityScreenView extends CAVScreenView {
           ( variabilityRadioButtonGroupWrapper, accordionBoxWrapper ) => {
             variabilityRadioButtonGroupWrapper.top = accordionBoxWrapper.top;
           } );
+
+        // NOTE: this overlaps the accordion box top panel
+        // ManualConstraint.create( this, [ accordionBoxContents, infoButton ],
+        //   ( backgroundWrapper, infoButtonWrapper ) => {
+        //
+        //     // TODO: Is it a faux pas to move outside of the wrapper bounds? I couldn't figure how to be a child of the accordion
+        //     // box content, but overlap the title bar
+        //     infoButtonWrapper.rightTop = backgroundWrapper.rightTop.plusXY( 3, -35 );
+        //   } );
       };
       return new CAVAccordionBox( model, accordionBoxContents, new ToggleNode( model.selectedVariabilityProperty, [ {
           value: VariabilityMeasure.RANGE,
@@ -124,8 +149,7 @@ export default class VariabilityScreenView extends CAVScreenView {
           contentNodeOffsetY: 0,
           top: top,
           valueReadoutsNode: new VariabilityReadoutsNode( model ),
-          right: layoutBounds.right - CAVConstants.SCREEN_VIEW_X_MARGIN,
-          infoShowingProperty: model.isInfoShowingProperty
+          right: layoutBounds.right - CAVConstants.SCREEN_VIEW_X_MARGIN
         } );
 
     }, options );
