@@ -114,7 +114,7 @@ export default class MADNode extends CAVPlotNode {
 
         if ( options.parentContext === 'info' ) {
           lineContainer.bottom = viewFloorY - 10;
-          madRectangle.rectHeight = lineContainer.height;
+          madRectangle.rectHeight = children.length > 0 ? lineContainer.height : 0;
         }
 
         madRectangle.centerX = viewCenterX;
