@@ -112,10 +112,10 @@ export default class MADNode extends Node {
         leftReadout.centerBottom = leftBar.centerTop;
         rightReadout.centerBottom = rightBar.centerTop;
       }
-      leftBar.visible = interestedInMAD && mad !== null && sortedDots.length > 0;
-      rightBar.visible = interestedInMAD && mad !== null && sortedDots.length > 0;
-      leftReadout.visible = interestedInMAD && mad !== null && sortedDots.length > 0;
-      rightReadout.visible = interestedInMAD && mad !== null && sortedDots.length > 0;
+      leftBar.visible = interestedInMAD && mad !== null && sortedDots.length > 1;
+      rightBar.visible = interestedInMAD && mad !== null && sortedDots.length > 1;
+      leftReadout.visible = interestedInMAD && mad !== null && sortedDots.length > 1;
+      rightReadout.visible = interestedInMAD && mad !== null && sortedDots.length > 1;
 
       needAtLeastOneKick.center = modelViewTransform.modelToViewXY( 8, 2 );
       needAtLeastOneKick.visible = model.numberOfDataPointsProperty.value === 0 && interestedInMAD;

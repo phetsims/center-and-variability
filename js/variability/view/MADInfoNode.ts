@@ -15,6 +15,7 @@ import Utils from '../../../../dot/js/Utils.js';
 export default class MADInfoNode extends VBox {
   public constructor( model: VariabilityModel, chartViewWidth: number, options: PickRequired<PhetioObject, 'tandem'> ) {
 
+    // TODO-design: Should we change this to >1 ? To show the calculation?
     const hasEnoughDataProperty = new DerivedProperty( [ model.numberOfDataPointsProperty ], numberOfDataPoints => numberOfDataPoints >= 1 );
 
     const numeratorText = new Text( '', { fontSize: 16 } );
@@ -63,7 +64,8 @@ export default class MADInfoNode extends VBox {
             // to put nodes in the placeholders. So probably this is good. But should be translate the equals sign anyways?
             new Text( '=', { fontSize: 18 } ),
             resultFraction
-          ]
+          ],
+          visibleProperty: hasEnoughDataProperty
         } ),
 
         // TODO-design: I changed the wording slightly from the design doc
