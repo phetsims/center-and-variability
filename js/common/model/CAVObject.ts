@@ -65,11 +65,10 @@ export default class CAVObject extends PhetioObject {
     valueType: CAVObject,
     toStateObject: ( cavObject: CAVObject ) => cavObject.toStateObject(),
     stateObjectToCreateElementArguments: ( stateObject: CAVObjectStateType ) => {
-      return [
-        stateObject.objectType === 'SOCCER_BALL' ? CAVObjectType.SOCCER_BALL : CAVObjectType.DATA_POINT, {
-          targetX: stateObject.targetX,
-          isFirstObject: stateObject.isFirstObject
-        } ];
+      return [ {
+        targetX: stateObject.targetX,
+        isFirstObject: stateObject.isFirstObject
+      } ];
     },
     stateSchema: {
       objectType: EnumerationIO( CAVObjectType ),
