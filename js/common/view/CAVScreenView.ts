@@ -43,7 +43,6 @@ import KickButtonGroup from './KickButtonGroup.js';
 type SelfOptions = {
   bottomCheckboxGroupOptions?: StrictOmit<BottomRepresentationCheckboxGroupOptions, 'tandem'>;
   questionBarOptions: QuestionBarOptions;
-  isVariabilityScreen: boolean;
 };
 
 export type CAVScreenViewOptions = SelfOptions & ScreenViewOptions;

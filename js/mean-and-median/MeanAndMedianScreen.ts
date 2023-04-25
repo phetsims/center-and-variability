@@ -40,7 +40,6 @@ export default class MeanAndMedianScreen extends CAVScreen<MeanAndMedianModel, M
         dataPointFill: 'black'
       } ),
       model => new MeanAndMedianScreenView( model, {
-        isVariabilityScreen: false,
         tandem: options.tandem.createTandem( 'view' )
       } ),
       options
