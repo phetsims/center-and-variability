@@ -35,7 +35,7 @@ export default class RangeNode extends Node {
     const rangeTextReadout = new Text( '', {
       font: new PhetFont( 13 )
     } );
-    const rangeBars = new MedianBarNode( {
+    const rangeBar = new MedianBarNode( {
       notchDirection: 'down',
       barStyle: 'continuous',
       stroke: 'black',
@@ -45,7 +45,7 @@ export default class RangeNode extends Node {
       fill: '#c3fdb9',
       stroke: 'lightGray'
     } );
-    this.addChild( rangeBars );
+    this.addChild( rangeBar );
     this.addChild( rangeRectangle );
     this.addChild( rangeTextReadout );
 
@@ -80,24 +80,24 @@ export default class RangeNode extends Node {
           rangeRectangle.visible = true;
 
           // TODO: In the info dialog, this should be above the topmost data point (in the accordion box it's ok to overlap)
-          rangeBars.setMedianBarShape( rangeRectangle.top - MedianBarNode.NOTCH_HEIGHT - 2, rangeRectangle.left, 0, rangeRectangle.right, false );
+          rangeBar.setMedianBarShape( rangeRectangle.top - MedianBarNode.NOTCH_HEIGHT - 2, rangeRectangle.left, 0, rangeRectangle.right, false );
 
           // TODO: How to simplify this logic? Or will it help when things are combined?
           rangeTextReadout.string = rightmostDot.valueProperty.value! - leftmostDot.valueProperty.value!;
           rangeTextReadout.centerX = rangeRectangle.centerX;
-          rangeTextReadout.bottom = rangeBars.top - 5;
-          rangeBars.visible = true;
+          rangeTextReadout.bottom = rangeBar.top - 5;
+          rangeBar.visible = true;
           rangeTextReadout.visible = true;
         }
         else {
           rangeRectangle.visible = false;
-          rangeBars.visible = false;
+          rangeBar.visible = false;
           rangeTextReadout.visible = false;
         }
       }
       else {
         rangeRectangle.visible = false;
-        rangeBars.visible = false;
+        rangeBar.visible = false;
         rangeTextReadout.visible = false;
       }
 
@@ -108,8 +108,6 @@ export default class RangeNode extends Node {
     model.isShowingRangeProperty.link( updateRangeNode );
     model.selectedVariabilityProperty.link( updateRangeNode );
     model.numberOfDataPointsProperty.link( updateRangeNode );
-
-    rangeRectangle.moveToBack();
   }
 }
 
