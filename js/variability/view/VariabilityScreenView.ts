@@ -93,32 +93,7 @@ export default class VariabilityScreenView extends CAVScreenView {
       } );
       accordionBoxContents.addChild( infoButton );
 
-      afterInit = () => {      // NOTE: This assumes that the NumberLineNode in the play area and in the dot plot have the same characteristics:
-        // * Same font
-        // * Same offset and scale
-        // But given those assumptions, this code moves the dot plot so that its number line matches the play area one.
-        // TODO: Consider something more robust.  Using globalToLocal to exactly align based on the position of the tick marks
-        // TODO: Can this be combine in a parent class? See https://github.com/phetsims/center-and-variability/issues/152
-        ManualConstraint.create( this, [ playAreaNumberLineNode, accordionBoxContents ],
-          ( lowerNumberLineWrapper, contentsWrapper ) => {
-            contentsWrapper.x = lowerNumberLineWrapper.x;
-          } );
-
-        ManualConstraint.create( this, [ variabilityMeasureRadioButtonGroup, accordionBoxContents ],
-          ( variabilityRadioButtonGroupWrapper, accordionBoxWrapper ) => {
-            variabilityRadioButtonGroupWrapper.top = accordionBoxWrapper.top;
-          } );
-
-        // NOTE: this overlaps the accordion box top panel
-        // ManualConstraint.create( this, [ accordionBoxContents, infoButton ],
-        //   ( backgroundWrapper, infoButtonWrapper ) => {
-        //
-        //     // TODO: Is it a faux pas to move outside of the wrapper bounds? I couldn't figure how to be a child of the accordion
-        //     // box content, but overlap the title bar
-        //     infoButtonWrapper.rightTop = backgroundWrapper.rightTop.plusXY( 3, -35 );
-        //   } );
-      };
-      return new CAVAccordionBox( model, accordionBoxContents, new ToggleNode( model.selectedVariabilityProperty, [ {
+      const accordionBox = new CAVAccordionBox( model, accordionBoxContents, new ToggleNode( model.selectedVariabilityProperty, [ {
           value: VariabilityMeasure.RANGE,
 
           // TODO: Different string value? For now, use the same string for the accordion box title and checkbox, and a different one for the value equals pattern
@@ -149,6 +124,33 @@ export default class VariabilityScreenView extends CAVScreenView {
           valueReadoutsNode: new VariabilityReadoutsNode( model ),
           right: layoutBounds.right - CAVConstants.SCREEN_VIEW_X_MARGIN
         } );
+
+      afterInit = () => {      // NOTE: This assumes that the NumberLineNode in the play area and in the dot plot have the same characteristics:
+        // * Same font
+        // * Same offset and scale
+        // But given those assumptions, this code moves the dot plot so that its number line matches the play area one.
+        // TODO: Consider something more robust.  Using globalToLocal to exactly align based on the position of the tick marks
+        // TODO: Can this be combine in a parent class? See https://github.com/phetsims/center-and-variability/issues/152
+        ManualConstraint.create( this, [ playAreaNumberLineNode, accordionBoxContents ],
+          ( lowerNumberLineWrapper, contentsWrapper ) => {
+            contentsWrapper.x = lowerNumberLineWrapper.x;
+          } );
+
+        ManualConstraint.create( this, [ variabilityMeasureRadioButtonGroup, accordionBox ],
+          ( variabilityRadioButtonGroupWrapper, accordionBoxWrapper ) => {
+            variabilityRadioButtonGroupWrapper.centerY = accordionBoxWrapper.centerY;
+          } );
+
+        // NOTE: this overlaps the accordion box top panel
+        // ManualConstraint.create( this, [ accordionBoxContents, infoButton ],
+        //   ( backgroundWrapper, infoButtonWrapper ) => {
+        //
+        //     // TODO: Is it a faux pas to move outside of the wrapper bounds? I couldn't figure how to be a child of the accordion
+        //     // box content, but overlap the title bar
+        //     infoButtonWrapper.rightTop = backgroundWrapper.rightTop.plusXY( 3, -35 );
+        //   } );
+      };
+      return accordionBox;
 
     }, options );
 
