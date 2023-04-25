@@ -232,6 +232,12 @@ export default class CAVScreenView extends ScreenView {
 
         this.playAreaMedianIndicatorNode.centerX = this.modelViewTransform.modelToViewX( medianValue );
         this.playAreaMedianIndicatorNode.bottom = this.modelViewTransform.modelToViewY( 0 ) + viewHeight;
+
+        // The arrow shouldn't overlap the accordion box
+        const accordionBoxHeight = this.accordionBox.expandedProperty.value ? this.accordionBox.getExpandedBoxHeight() : this.accordionBox.getCollapsedBoxHeight();
+        if ( this.playAreaMedianIndicatorNode.top < this.accordionBox.top + accordionBoxHeight ) {
+          this.playAreaMedianIndicatorNode.top = this.accordionBox.top + accordionBoxHeight + 4;
+        }
       }
       this.playAreaMedianIndicatorNode.visible = visible;
     };
@@ -407,7 +413,7 @@ export default class CAVScreenView extends ScreenView {
         infoShowingProperty: this.model instanceof VariabilityModel ? this.model.isInfoShowingProperty : null
       } );
     this.contentLayer.addChild( this.accordionBox );
-
+    this.accordionBox.expandedProperty.link( updateMedianNode );
 
     // TODO: What if positioning the bottomCheckboxGroup.right forces the topCheckboxGroup to the right of the accordion box bounds?
     ManualConstraint.create( this, [ this.bottomCheckboxGroup, this.accordionBoxControlNode ],
