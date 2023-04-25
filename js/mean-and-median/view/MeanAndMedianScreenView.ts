@@ -13,16 +13,16 @@ import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
 import CAVColors from '../../common/CAVColors.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import { ManualConstraint } from '../../../../scenery/js/imports.js';
-import MeanOrMedianScreenView, { MeanOrMedianScreenViewOptions } from '../../common/view/MeanOrMedianScreenView.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import SoccerScreenView, { SoccerScreenViewOptions } from '../../common/view/SoccerScreenView.js';
 
-type MeanAndMedianScreenViewOptions = StrictOmit<MeanOrMedianScreenViewOptions, 'isMedianScreen' | 'questionBarOptions'>;
+type MeanAndMedianScreenViewOptions = StrictOmit<SoccerScreenViewOptions, 'isMedianScreen' | 'questionBarOptions'>;
 
-export default class MeanAndMedianScreenView extends MeanOrMedianScreenView {
+export default class MeanAndMedianScreenView extends SoccerScreenView {
 
   public constructor( model: MeanAndMedianModel, providedOptions: MeanAndMedianScreenViewOptions ) {
 
-    const options = optionize<MeanAndMedianScreenViewOptions, EmptySelfOptions, MeanOrMedianScreenViewOptions>()( {
+    const options = optionize<MeanAndMedianScreenViewOptions, EmptySelfOptions, SoccerScreenViewOptions>()( {
       isMedianScreen: false,
       questionBarOptions: {
         barFill: CAVColors.meanAndMedianQuestionBarFillColorProperty,

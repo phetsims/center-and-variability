@@ -12,10 +12,9 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
-import { SoccerScreenViewOptions } from '../../common/view/SoccerScreenView.js';
+import SoccerScreenView, { SoccerScreenViewOptions } from '../../common/view/SoccerScreenView.js';
 import CAVColors from '../../common/CAVColors.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import MeanOrMedianScreenView, { MeanOrMedianScreenViewOptions } from '../../common/view/MeanOrMedianScreenView.js';
 import { ManualConstraint, Text } from '../../../../scenery/js/imports.js';
 import DistributionRadioButtonGroup from './DistributionRadioButtonGroup.js';
 import VariabilityMeasureRadioButtonGroup from './VariabilityMeasureRadioButtonGroup.js';
@@ -34,9 +33,9 @@ const TEXT_OPTIONS = {
 };
 
 type SelfOptions = EmptySelfOptions;
-type VariabilityScreenViewOptions = SelfOptions & StrictOmit<SoccerScreenViewOptions, 'questionBarOptions' | 'createAccordionBoxControlNode'>;
+type VariabilityScreenViewOptions = SelfOptions & StrictOmit<SoccerScreenViewOptions, 'questionBarOptions' | 'createAccordionBoxControlNode' | 'isMedianScreen' | 'isVariabilityScreen' | 'accordionBoxTitleStringProperty'>;
 
-export default class VariabilityScreenView extends MeanOrMedianScreenView {
+export default class VariabilityScreenView extends SoccerScreenView {
 
   public constructor( model: VariabilityModel, providedOptions: VariabilityScreenViewOptions ) {
 
@@ -48,7 +47,7 @@ export default class VariabilityScreenView extends MeanOrMedianScreenView {
 
     const accordionBoxTitleProperty = new DynamicProperty<string, unknown, unknown>( currentProperty );
 
-    const options = optionize<VariabilityScreenViewOptions, SelfOptions, MeanOrMedianScreenViewOptions>()( {
+    const options = optionize<VariabilityScreenViewOptions, SelfOptions, SoccerScreenViewOptions>()( {
       isMedianScreen: false,
       isVariabilityScreen: true,
       questionBarOptions: {
