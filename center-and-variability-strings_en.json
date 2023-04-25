@@ -109,5 +109,8 @@
   },
   "needAtLeastOneKick": {
     "value": "Need at least one kick"
+  },
+  "needAtLeastFiveKicks": {
+    "value": "Need at least five kicks"
   }
 }

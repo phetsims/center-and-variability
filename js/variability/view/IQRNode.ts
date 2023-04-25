@@ -2,7 +2,7 @@
 
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import MedianBarNode from '../../common/view/MedianBarNode.js';
-import { Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { Rectangle, Text, Node, Line } from '../../../../scenery/js/imports.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import VariabilityModel from '../model/VariabilityModel.js';
@@ -21,11 +21,11 @@ export default class IQRNode extends CAVPlotNode {
 
     super( model, numberLineWidth, options );
 
-    const needAtLeastOneKick = new Text( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {
+    const needAtLeastFiveKicks = new Text( CenterAndVariabilityStrings.needAtLeastFiveKicksStringProperty, {
       fontSize: 18,
       top: 100
     } );
-    this.addChild( needAtLeastOneKick );
+    this.addChild( needAtLeastFiveKicks );
 
     // TODO: Combine into a single node?
     const iqrTextReadout = new Text( '', {
@@ -40,12 +40,55 @@ export default class IQRNode extends CAVPlotNode {
       lineWidth: 1
     } );
     const iqrRectangle = new Rectangle( 0, 50, 100, 70, {
-      fill: '#c3fdb9',
-      stroke: 'lightGray'
+      fill: '#99ffff'
     } );
-    this.addChild( iqrBar );
-    this.addChild( iqrRectangle );
-    this.addChild( iqrTextReadout );
+
+    const BOX_CENTER_Y = 78;
+    const BOX_HEIGHT = 25;
+    const END_CAP_HEIGHT = 15;
+
+    const boxWhiskerNode = new Node();
+
+    const boxWhiskerMedianLine = new Line( 0, BOX_CENTER_Y - BOX_HEIGHT / 2, 0, BOX_CENTER_Y + BOX_HEIGHT / 2, {
+      stroke: 'red',
+      lineWidth: 3
+    } );
+
+    const boxWhiskerBox = new Rectangle( 0, BOX_CENTER_Y - BOX_HEIGHT / 2, 100, BOX_HEIGHT, {
+      stroke: 'black',
+      lineWidth: 2
+    } );
+
+    const boxWhiskerLineLeft = new Line( 0, BOX_CENTER_Y, 0, BOX_CENTER_Y, {
+      stroke: 'black',
+      lineWidth: 2
+    } );
+
+    const boxWhiskerLineRight = new Line( 0, BOX_CENTER_Y, 0, BOX_CENTER_Y, {
+      stroke: 'black',
+      lineWidth: 2
+    } );
+
+    const boxWhiskerEndCapLeft = new Line( 0, BOX_CENTER_Y - END_CAP_HEIGHT / 2, 0, BOX_CENTER_Y + END_CAP_HEIGHT / 2, {
+      stroke: 'black',
+      lineWidth: 2
+    } );
+
+    const boxWhiskerEndCapRight = new Line( 0, BOX_CENTER_Y - END_CAP_HEIGHT / 2, 0, BOX_CENTER_Y + END_CAP_HEIGHT / 2, {
+      stroke: 'black',
+      lineWidth: 2
+    } );
+
+    boxWhiskerNode.addChild( iqrBar );
+    boxWhiskerNode.addChild( iqrRectangle );
+    boxWhiskerNode.addChild( iqrTextReadout );
+    boxWhiskerNode.addChild( boxWhiskerMedianLine );
+    boxWhiskerNode.addChild( boxWhiskerBox );
+    boxWhiskerNode.addChild( boxWhiskerLineLeft );
+    boxWhiskerNode.addChild( boxWhiskerLineRight );
+    boxWhiskerNode.addChild( boxWhiskerEndCapLeft );
+    boxWhiskerNode.addChild( boxWhiskerEndCapRight );
+    this.addChild( boxWhiskerNode );
 
     const updateIQRNode = () => {
 
@@ -59,27 +102,42 @@ export default class IQRNode extends CAVPlotNode {
         model.isShowingIQRProperty.value &&
         model.selectedVariabilityProperty.value === VariabilityMeasure.IQR
       );
+
+      boxWhiskerMedianLine.x1 = boxWhiskerMedianLine.x2 = this.modelViewTransform.modelToViewX( model.medianValueProperty.value! );
+
+      const boxLeft = this.modelViewTransform.modelToViewX( model.q1ValueProperty.value! );
+      const boxRight = this.modelViewTransform.modelToViewX( model.q3ValueProperty.value! );
+
+      boxWhiskerBox.left = boxLeft;
+      boxWhiskerBox.rectWidth = boxRight - boxLeft;
+
+      if ( leftmostDot && rightmostDot ) {
+        const minValue = this.modelViewTransform.modelToViewX( leftmostDot.valueProperty.value! );
+        const maxValue = this.modelViewTransform.modelToViewX( rightmostDot.valueProperty.value! );
+
+        boxWhiskerLineLeft.x1 = boxWhiskerEndCapLeft.x1 = boxWhiskerEndCapLeft.x2 = minValue;
+        boxWhiskerLineLeft.x2 = boxLeft;
+
+        boxWhiskerLineRight.x1 = boxRight;
+        boxWhiskerLineRight.x2 = boxWhiskerEndCapRight.x1 = boxWhiskerEndCapRight.x2 = maxValue;
+
+        boxWhiskerEndCapLeft.visible = boxLeft !== minValue;
+        boxWhiskerEndCapRight.visible = boxRight !== maxValue;
+      }
+
       if ( interestedInIQR ) {
 
-        // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card
-        if ( leftmostDot &&
-             rightmostDot &&
-             leftmostDot.valueProperty.value !== rightmostDot.valueProperty.value
-        ) {
-
-          const left = this.modelViewTransform.modelToViewX( leftmostDot.valueProperty.value! );
-          const right = this.modelViewTransform.modelToViewX( rightmostDot.valueProperty.value! );
-
+        if ( boxLeft !== boxRight ) {
           const floor = this.modelViewTransform.modelToViewY( 0 );
-          iqrRectangle.rectWidth = right - left;
-          iqrRectangle.left = left;
+          iqrRectangle.rectWidth = boxRight - boxLeft;
+          iqrRectangle.left = boxLeft;
           iqrRectangle.bottom = floor;
 
           // TODO: In the info dialog, this should be above the topmost data point (in the accordion box it's ok to overlap)
           iqrBar.setMedianBarShape( iqrRectangle.top - MedianBarNode.NOTCH_HEIGHT - 2, iqrRectangle.left, 0, iqrRectangle.right, false );
 
           // TODO: How to simplify this logic? Or will it help when things are combined?
-          iqrTextReadout.string = rightmostDot.valueProperty.value! - leftmostDot.valueProperty.value!;
+          iqrTextReadout.string = model.q3ValueProperty.value! - model.q1ValueProperty.value!;
           iqrTextReadout.centerX = iqrRectangle.centerX;
           iqrTextReadout.bottom = iqrBar.top - 5;
 
@@ -99,8 +157,13 @@ export default class IQRNode extends CAVPlotNode {
         iqrTextReadout.visible = false;
       }
 
-      needAtLeastOneKick.center = this.modelViewTransform.modelToViewXY( 8, 2 );
-      needAtLeastOneKick.visible = model.numberOfDataPointsProperty.value === 0 && interestedInIQR;
+      const enoughData = model.numberOfDataPointsProperty.value >= 5;
+      const showBoxAndWhiskerPlot = model.selectedVariabilityProperty.value === VariabilityMeasure.IQR && enoughData;
+
+      boxWhiskerNode.visible = showBoxAndWhiskerPlot;
+
+      needAtLeastFiveKicks.center = this.modelViewTransform.modelToViewXY( 8, 2 );
+      needAtLeastFiveKicks.visible = model.selectedVariabilityProperty.value === VariabilityMeasure.IQR && !enoughData;
     };
     model.objectChangedEmitter.addListener( updateIQRNode );
     model.isShowingIQRProperty.link( updateIQRNode );

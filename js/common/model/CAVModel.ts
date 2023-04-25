@@ -70,6 +70,8 @@ export default class CAVModel implements TModel {
   protected readonly numberOfRemainingObjectsProperty: TReadOnlyProperty<number>;
   public readonly medianValueProperty: Property<number | null>;
   public readonly meanValueProperty: Property<number | null>;
+  public readonly q1ValueProperty: Property<number | null>;
+  public readonly q3ValueProperty: Property<number | null>;
 
   // Indicates the max and min values in the data set, or null if there are no values in the data set
   public readonly dataRangeProperty: Property<Range | null>;
@@ -163,6 +165,16 @@ export default class CAVModel implements TModel {
     } );
     this.meanValueProperty = new Property<number | null>( null, {
       tandem: options.tandem.createTandem( 'meanValueProperty' ),
+      phetioValueType: NullableIO( NumberIO ),
+      phetioReadOnly: true
+    } );
+    this.q1ValueProperty = new Property<number | null>( null, {
+      tandem: options.tandem.createTandem( 'q1ValueProperty' ),
+      phetioValueType: NullableIO( NumberIO ),
+      phetioReadOnly: true
+    } );
+    this.q3ValueProperty = new Property<number | null>( null, {
+      tandem: options.tandem.createTandem( 'q3ValueProperty' ),
       phetioValueType: NullableIO( NumberIO ),
       phetioReadOnly: true
     } );
@@ -354,6 +366,51 @@ export default class CAVModel implements TModel {
     else {
       this.meanValueProperty.value = null;
       this.dataRangeProperty.value = null;
+    }
+
+    if ( sortedObjects.length >= 5 ) {
+      const midIndex = ( sortedObjects.length - 1 ) / 2;
+      const lowerHalf: CAVObject[] = [];
+      const upperHalf: CAVObject[] = [];
+
+      // split the data into lower and upper halves, ignoring the median if odd number of objects
+      for ( let i = 0; i < sortedObjects.length; i++ ) {
+        if ( i < midIndex ) {
+          lowerHalf.push( sortedObjects[ i ] );
+        }
+        else if ( i > midIndex ) {
+          upperHalf.push( sortedObjects[ i ] );
+        }
+      }
+
+      if ( lowerHalf.length % 2 === 1 ) {
+
+        // Split data has odd number of values, take the central value of each half
+        const quartileIndex = ( lowerHalf.length - 1 ) / 2;
+        this.q1ValueProperty.value = lowerHalf[ quartileIndex ].valueProperty.value!;
+        this.q3ValueProperty.value = upperHalf[ quartileIndex ].valueProperty.value!;
+      }
+      else {
+
+        // Split data has even number of values, average the two middle-most values in each half
+        const quartileIndex1 = ( lowerHalf.length - 2 ) / 2;
+        const quartileIndex2 = ( lowerHalf.length - 0 ) / 2;
+        const q1Value1 = lowerHalf[ quartileIndex1 ].valueProperty.value!;
+        const q1Value2 = lowerHalf[ quartileIndex2 ].valueProperty.value!;
+        const q3Value1 = upperHalf[ quartileIndex1 ].valueProperty.value!;
+        const q3Value2 = upperHalf[ quartileIndex2 ].valueProperty.value!;
+        this.q1ValueProperty.value = ( q1Value1 + q1Value2 ) / 2;
+        this.q3ValueProperty.value = ( q3Value1 + q3Value2 ) / 2;
+      }
+
+      assert && assert( !isNaN( this.q1ValueProperty.value ) );
+      assert && assert( !isNaN( this.q3ValueProperty.value ) );
+    }
+    else {
+
+      // Not enough values for q1 and q3 to be defined
+      this.q1ValueProperty.value = null;
+      this.q3ValueProperty.value = null;
     }
 
     this.numberOfDataPointsProperty.value = sortedObjects.length;
