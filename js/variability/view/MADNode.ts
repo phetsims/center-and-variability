@@ -7,6 +7,9 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import VariabilityModel from '../model/VariabilityModel.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
+import MedianBarNode from '../../common/view/MedianBarNode.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import Utils from '../../../../dot/js/Utils.js';
 
 type SelfOptions = {
   staticDisplay?: VariabilityMeasure | null;
@@ -28,14 +31,39 @@ export default class MADNode extends Node {
     } );
     this.addChild( needAtLeastOneKick );
 
-    const madRectangle = new Rectangle( 0, 50, 100, 100, {
+    const madRectangle = new Rectangle( 0, 50, 100, 72, {
       fill: '#e0c0f5',
       stroke: 'lightGray'
+    } );
+
+    const leftBar = new MedianBarNode( {
+      notchDirection: 'down',
+      barStyle: 'continuous',
+      stroke: 'black',
+      lineWidth: 1
+    } );
+    const rightBar = new MedianBarNode( {
+      notchDirection: 'down',
+      barStyle: 'continuous',
+      stroke: 'black',
+      lineWidth: 1
+    } );
+
+    const leftReadout = new Text( '', {
+      font: new PhetFont( 13 )
+    } );
+    const rightReadout = new Text( '', {
+      font: new PhetFont( 13 )
     } );
 
     const lineContainer = new Node();
     this.addChild( madRectangle );
     this.addChild( lineContainer );
+
+    this.addChild( leftBar );
+    this.addChild( rightBar );
+    this.addChild( leftReadout );
+    this.addChild( rightReadout );
 
     const update = () => {
 
@@ -48,7 +76,7 @@ export default class MADNode extends Node {
         const mean = _.mean( sortedDots.map( dot => dot.valueProperty.value ) );
 
         // Underneath the accordion box title
-        let y = 36;
+        let y = 55;
         sortedDots.forEach( dot => {
           const x1 = modelViewTransform.modelToViewX( dot.valueProperty.value! );
           const x2 = modelViewTransform.modelToViewX( mean );
@@ -57,7 +85,7 @@ export default class MADNode extends Node {
           } ) );
 
           // Enough spacing so they don't overlap the bottom row of data points
-          y += 5;
+          y += 4.2;
         } );
       }
 
@@ -69,13 +97,25 @@ export default class MADNode extends Node {
       const mad = model.madValueProperty.value;
 
       madRectangle.rectWidth = modelViewTransform.modelToViewDeltaX( mad === null ? 0 : mad * 2 );
+      madRectangle.visible = interestedInMAD && mad !== null;
 
       if ( mad !== null ) {
-        madRectangle.centerX = modelViewTransform.modelToViewX( model.meanValueProperty.value! );
+        const viewCenterX = modelViewTransform.modelToViewX( model.meanValueProperty.value! );
+        madRectangle.centerX = viewCenterX;
         madRectangle.bottom = modelViewTransform.modelToViewY( 0 );
-      }
+        leftReadout.string = Utils.toFixed( mad, 1 );
+        rightReadout.string = Utils.toFixed( mad, 1 );
 
-      madRectangle.visible = interestedInMAD;
+        leftBar.setMedianBarShape( madRectangle.top - MedianBarNode.NOTCH_HEIGHT - 2, madRectangle.left, 0, viewCenterX, false );
+        rightBar.setMedianBarShape( madRectangle.top - MedianBarNode.NOTCH_HEIGHT - 2, viewCenterX, 0, madRectangle.right, false );
+
+        leftReadout.centerBottom = leftBar.centerTop;
+        rightReadout.centerBottom = rightBar.centerTop;
+      }
+      leftBar.visible = interestedInMAD && mad !== null && sortedDots.length > 0;
+      rightBar.visible = interestedInMAD && mad !== null && sortedDots.length > 0;
+      leftReadout.visible = interestedInMAD && mad !== null && sortedDots.length > 0;
+      rightReadout.visible = interestedInMAD && mad !== null && sortedDots.length > 0;
 
       needAtLeastOneKick.center = modelViewTransform.modelToViewXY( 8, 2 );
       needAtLeastOneKick.visible = model.numberOfDataPointsProperty.value === 0 && interestedInMAD;

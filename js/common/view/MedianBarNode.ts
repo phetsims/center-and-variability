@@ -40,7 +40,8 @@ export default class MedianBarNode extends Path {
     const options = optionize<MedianBarNodeOptions, SelfOptions, PathOptions>()( {
       lineWidth: LINE_WIDTH,
       stroke: CAVColors.medianColorProperty,
-      arrowScale: 1
+      arrowScale: 1,
+      excludeInvisibleChildrenFromBounds: true
     }, providedOptions );
 
     super( null, options );
