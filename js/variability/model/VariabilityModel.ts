@@ -8,7 +8,6 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import SoccerModel, { SoccerModelOptions } from '../../common/model/SoccerModel.js';
 import DistributionType from './DistributionType.js';
 import Property from '../../../../axon/js/Property.js';
 import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
@@ -18,11 +17,12 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
+import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
 
 type SelfOptions = EmptySelfOptions;
-type VariabilityModelOptions = SelfOptions & SoccerModelOptions;
+type VariabilityModelOptions = SelfOptions & CAVModelOptions;
 
-export default class VariabilityModel extends SoccerModel {
+export default class VariabilityModel extends CAVModel {
   public readonly selectedDistributionProperty: Property<DistributionType>;
   public readonly selectedVariabilityProperty: Property<VariabilityMeasure>;
   public readonly isShowingRangeProperty: Property<boolean>;

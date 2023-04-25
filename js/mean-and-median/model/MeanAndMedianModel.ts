@@ -8,13 +8,13 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import SoccerModel, { SoccerModelOptions } from '../../common/model/SoccerModel.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
 
 // constants
 const HIGHLIGHT_ANIMATION_TIME_STEP = 0.25; // in seconds
 
-export default class MeanAndMedianModel extends SoccerModel {
+export default class MeanAndMedianModel extends CAVModel {
 
 
   // Indicates how far the show median animation has progressed, or null if not animating. Not PhET-iO instrumented since
@@ -24,9 +24,8 @@ export default class MeanAndMedianModel extends SoccerModel {
   private lastHighlightAnimationStepTime = 0;
   public readonly isMedianAnimationCompleteProperty = new BooleanProperty( false );
 
-  public constructor( options: SoccerModelOptions ) {
+  public constructor( options: CAVModelOptions ) {
     super( options );
-
 
     // Don't show animation on startup or when setting PhET-iO state
     this.isShowingTopMedianProperty.lazyLink( isShowingTopMedian => {

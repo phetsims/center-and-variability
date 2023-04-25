@@ -8,13 +8,13 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import SoccerModel, { SoccerModelOptions } from '../../common/model/SoccerModel.js';
 import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
 import CardModel from '../../common/model/CardModel.js';
 import CAVObject from '../../common/model/CAVObject.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
 
-export default class MedianModel extends SoccerModel {
+export default class MedianModel extends CAVModel {
 
   // For PhET-iO State, it is difficult to power 2 views from one model, see https://github.com/phetsims/phet-io/issues/1688#issuecomment-1032967603
   // Therefore, we introduce a minimal model element for the cards, so they can be managed by the state
@@ -22,7 +22,7 @@ export default class MedianModel extends SoccerModel {
 
   public readonly isSortingDataProperty: BooleanProperty;
 
-  public constructor( options: SoccerModelOptions ) {
+  public constructor( options: CAVModelOptions ) {
     super( options );
     this.cardModelGroup = new PhetioGroup( ( tandem, casObject ) => {
       assert && assert( casObject, 'casObject should be defined' );

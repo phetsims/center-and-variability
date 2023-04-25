@@ -48,7 +48,6 @@ import CAVPlotNodeWithMedianBar from '../../mean-and-median/view/CAVPlotNodeWith
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import VariabilityReadoutsNode from '../../variability/view/VariabilityReadoutsNode.js';
 import ValueReadoutsNode from './ValueReadoutsNode.js';
-import SoccerModel from '../model/SoccerModel.js';
 
 type SelfOptions = {
   createAccordionBoxControlNode: ( tandem: Tandem ) => Node;
@@ -98,7 +97,7 @@ export default class CAVScreenView extends ScreenView {
   protected readonly chartViewWidth: number;
   protected readonly playAreaNumberLineNode: NumberLineNode;
 
-  public constructor( model: SoccerModel, providedOptions: CAVScreenViewOptions ) {
+  public constructor( model: CAVModel, providedOptions: CAVScreenViewOptions ) {
     const options = optionize<CAVScreenViewOptions,
       StrictOmit<SelfOptions, 'bottomCheckboxGroupOptions'>, ScreenViewOptions>()( {}, providedOptions );
 
