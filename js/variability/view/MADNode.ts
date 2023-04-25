@@ -115,7 +115,7 @@ export default class MADNode extends Node {
         const viewFloorY = modelViewTransform.modelToViewY( 0 );
 
         if ( options.staticDisplay ) {
-          lineContainer.bottom = viewFloorY;
+          lineContainer.bottom = viewFloorY - 10;
           madRectangle.rectHeight = lineContainer.height;
         }
 
@@ -144,6 +144,9 @@ export default class MADNode extends Node {
     model.numberOfDataPointsProperty.link( update );
     model.meanValueProperty.link( update );
     model.madValueProperty.link( update );
+
+    // TODO: the numbers should be in front of the "x" marks, but the rectangle should be behind?  Or should the rectangle
+    // TODO: be partially transparent?
   }
 }
 
