@@ -1,6 +1,6 @@
 // Copyright 2023, University of Colorado Boulder
 
-import { Text, Node, NodeOptions, Line } from '../../../../scenery/js/imports.js';
+import { Text, Node, NodeOptions, Line, Rectangle } from '../../../../scenery/js/imports.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
@@ -28,8 +28,13 @@ export default class MADNode extends Node {
     } );
     this.addChild( needAtLeastOneKick );
 
-    // TODO: Combine into a single node
+    const madRectangle = new Rectangle( 0, 50, 100, 100, {
+      fill: '#e0c0f5',
+      stroke: 'lightGray'
+    } );
+
     const lineContainer = new Node();
+    this.addChild( madRectangle );
     this.addChild( lineContainer );
 
     const update = () => {
@@ -58,24 +63,19 @@ export default class MADNode extends Node {
 
       lineContainer.children = children;
 
-      const interestedInMAD = options.staticDisplay === VariabilityMeasure.MAD || (
-        model.isShowingMADProperty.value &&
-        model.selectedVariabilityProperty.value === VariabilityMeasure.MAD
-      );
-      if ( interestedInMAD ) {
+      const interestedInMAD = options.staticDisplay === VariabilityMeasure.MAD || model.isShowingMADProperty.value;
+      lineContainer.visible = model.selectedVariabilityProperty.value === VariabilityMeasure.MAD && sortedDots.length > 0;
 
-        // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card
-        if ( sortedDots.length > 0 ) {
+      const mad = model.madValueProperty.value;
 
-          lineContainer.visible = true;
-        }
-        else {
-          lineContainer.visible = false;
-        }
+      madRectangle.rectWidth = modelViewTransform.modelToViewDeltaX( mad === null ? 0 : mad * 2 );
+
+      if ( mad !== null ) {
+        madRectangle.centerX = modelViewTransform.modelToViewX( model.meanValueProperty.value! );
+        madRectangle.bottom = modelViewTransform.modelToViewY( 0 );
       }
-      else {
-        lineContainer.visible = false;
-      }
+
+      madRectangle.visible = interestedInMAD;
 
       needAtLeastOneKick.center = modelViewTransform.modelToViewXY( 8, 2 );
       needAtLeastOneKick.visible = model.numberOfDataPointsProperty.value === 0 && interestedInMAD;
@@ -84,6 +84,8 @@ export default class MADNode extends Node {
     model.isShowingMADProperty.link( update );
     model.selectedVariabilityProperty.link( update );
     model.numberOfDataPointsProperty.link( update );
+    model.meanValueProperty.link( update );
+    model.madValueProperty.link( update );
   }
 }
 

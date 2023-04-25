@@ -30,11 +30,12 @@ export default class RangeNode extends Node {
     } );
     this.addChild( needAtLeastOneKick );
 
-    // TODO: Combine into a single node
-    // TODO: Rename if we continue to use it here like this
+    // TODO: Combine into a single node?
     const rangeTextReadout = new Text( '', {
       font: new PhetFont( 13 )
     } );
+
+    // TODO: Rename if we continue to use it here like this
     const rangeBar = new MedianBarNode( {
       notchDirection: 'down',
       barStyle: 'continuous',
@@ -77,7 +78,6 @@ export default class RangeNode extends Node {
           rangeRectangle.rectWidth = right - left;
           rangeRectangle.left = left;
           rangeRectangle.bottom = floor;
-          rangeRectangle.visible = true;
 
           // TODO: In the info dialog, this should be above the topmost data point (in the accordion box it's ok to overlap)
           rangeBar.setMedianBarShape( rangeRectangle.top - MedianBarNode.NOTCH_HEIGHT - 2, rangeRectangle.left, 0, rangeRectangle.right, false );
@@ -86,6 +86,8 @@ export default class RangeNode extends Node {
           rangeTextReadout.string = rightmostDot.valueProperty.value! - leftmostDot.valueProperty.value!;
           rangeTextReadout.centerX = rangeRectangle.centerX;
           rangeTextReadout.bottom = rangeBar.top - 5;
+
+          rangeRectangle.visible = true;
           rangeBar.visible = true;
           rangeTextReadout.visible = true;
         }

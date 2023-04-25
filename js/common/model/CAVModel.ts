@@ -210,8 +210,8 @@ export default class CAVModel implements TModel {
       tandem: options.tandem.createTandem( 'timeProperty' )
     } );
 
-    const updateMeanAndMedian = () => this.updateMeanAndMedian();
-    this.isShowingPlayAreaMedianProperty.link( updateMeanAndMedian );
+    const updateDataMeasures = () => this.updateDataMeasures();
+    this.isShowingPlayAreaMedianProperty.link( updateDataMeasures );
 
     // Trigger CardModel creation when a ball lands.
     const objectCreatedListener = ( casObject: CAVObject ) => {
@@ -227,8 +227,8 @@ export default class CAVModel implements TModel {
         }
       };
       casObject.valueProperty.link( listener );
-      casObject.valueProperty.link( updateMeanAndMedian );
-      casObject.positionProperty.link( updateMeanAndMedian );
+      casObject.valueProperty.link( updateDataMeasures );
+      casObject.positionProperty.link( updateDataMeasures );
 
       // Signal to listeners that a value changed
       // TODO: Maybe should combine with temporary listener for one permanent one
@@ -270,7 +270,7 @@ export default class CAVModel implements TModel {
     this.objectValueBecameNonNullEmitter.addListener( () => this.updateAnimation() );
   }
 
-  private updateMeanAndMedian(): void {
+  protected updateDataMeasures(): void {
 
     const sortedObjects = this.getSortedLandedObjects();
     const medianObjects: CAVObject[] = [];

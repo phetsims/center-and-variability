@@ -34,13 +34,14 @@ export default class VariabilityPlotNode extends CAVPlotNode {
     } );
     this.addChild( rangeNode );
 
-    // Behind the data points
-    rangeNode.moveToBack();
-
     const madNode = new MADNode( model, this.modelViewTransform, {
       staticDisplay: providedOptions?.staticDisplay
     } );
     this.addChild( madNode );
+
+    // The rectangles must be behind the data points
+    rangeNode.moveToBack();
+    madNode.moveToBack();
   }
 }
 

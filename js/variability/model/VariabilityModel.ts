@@ -28,6 +28,8 @@ export default class VariabilityModel extends SoccerModel {
   public readonly isShowingMADProperty: Property<boolean>;
   public readonly isInfoShowingProperty: Property<boolean>;
 
+  public readonly madValueProperty: Property<number | null>;
+
   public constructor( options: VariabilityModelOptions ) {
     super( options );
     this.selectedDistributionProperty = new EnumerationProperty( DistributionType.UNIFORM, {
@@ -52,6 +54,10 @@ export default class VariabilityModel extends SoccerModel {
 
     this.isInfoShowingProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isInfoShowingProperty' )
+    } );
+
+    this.madValueProperty = new Property<number | null>( null, {
+      tandem: options.tandem.createTandem( 'madValueProperty' )
     } );
 
     function gaussian( x: number, mu: number, sigma: number ): number {
@@ -87,6 +93,20 @@ export default class VariabilityModel extends SoccerModel {
     this.isShowingIQRProperty.reset();
     this.isShowingMADProperty.reset();
     this.isInfoShowingProperty.reset();
+    this.madValueProperty.reset();
+
+    this.updateDataMeasures();
+  }
+
+  protected override updateDataMeasures(): void {
+    super.updateDataMeasures();
+
+    // Support call from superclass constructor
+    if ( this.madValueProperty ) {
+      const sortedObjects = this.getSortedLandedObjects();
+      this.madValueProperty.value = sortedObjects.length === 0 ? null :
+                                    VariabilityModel.meanAbsoluteDeviation( sortedObjects.map( object => object.valueProperty.value! ) );
+    }
   }
 
   public static meanAbsoluteDeviation( data: number[] ): number {
