@@ -24,6 +24,7 @@ import VariabilityModel from '../../variability/model/VariabilityModel.js';
 import CAVPlotNodeWithMedianBar from '../../mean-and-median/view/CAVPlotNodeWithMedianBar.js';
 import VariabilityPlotNode from '../../variability/view/VariabilityPlotNode.js';
 import VariabilityReadoutsNode from '../../variability/view/VariabilityReadoutsNode.js';
+import MedianModel from '../../median/model/MedianModel.js';
 
 type SelfOptions = {
 
@@ -48,7 +49,7 @@ export default class MeanOrMedianScreenView extends SoccerScreenView {
 
     // TODO: Better logic for this, or better ordering
     if ( options.isMedianScreen ) {
-      this.accordionBoxContents = new CardNodeContainer( this.model, {
+      this.accordionBoxContents = new CardNodeContainer( this.model as MedianModel, {
 
         // Expose this intermediate layer to make it so that clients can hide the number cards with one call
         tandem: accordionBoxTandem.createTandem( 'cardNodeContainer' )

@@ -20,7 +20,6 @@ import Property from '../../../../axon/js/Property.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import CardModel from './CardModel.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
@@ -31,7 +30,6 @@ import TModel from '../../../../joist/js/TModel.js';
 
 type SelfOptions = {
   tandem: Tandem;
-  includeCards: boolean;
   instrumentMeanPredictionProperty: boolean;
   dataPointFill: string;
 };
@@ -43,7 +41,7 @@ const HIGHLIGHT_ANIMATION_TIME_STEP = 0.25; // in seconds
 export default class CAVModel implements TModel {
   public readonly objectGroup: PhetioGroup<CAVObject, [ CAVObjectType, StrictOmit<CAVObjectOptions, 'tandem'> ]>;
   public readonly objectType: CAVObjectType;
-  public readonly isSortingDataProperty: BooleanProperty;
+
   public readonly isShowingTopMeanProperty: BooleanProperty;
   public readonly isShowingTopMedianProperty: BooleanProperty;
   public readonly isShowingPlayAreaMedianProperty: BooleanProperty;
@@ -57,13 +55,6 @@ export default class CAVModel implements TModel {
   // TODO: Or at the instantiation site, could do `model instanceof VariabilityModel? gray : black`
   public readonly dataPointFill: string;
 
-  // TODO: Why is the CardModel in the base class that applies to all screens?
-  // For PhET-iO State, it is difficult to power 2 views from one model, see https://github.com/phetsims/phet-io/issues/1688#issuecomment-1032967603
-  // Therefore, we introduce a minimal model element for the cards, so they can be managed by the state
-  // Only instrumented and enabled if includeCards === true
-  public readonly cardModelGroup: PhetioGroup<CardModel, [ CAVObject ]>;
-
-  public readonly includeCards: boolean;
   protected readonly maxNumberOfObjects: number;
   public readonly physicalRange = new Range( 1, 15 );
 
@@ -133,19 +124,6 @@ export default class CAVModel implements TModel {
       tandem: options.tandem.createTandem( objectType === CAVObjectType.SOCCER_BALL ? 'soccerBallGroup' : 'dataPointGroup' )
     } );
 
-    this.cardModelGroup = new PhetioGroup( ( tandem, casObject ) => {
-      assert && assert( casObject, 'casObject should be defined' );
-      return new CardModel( casObject, {
-        tandem: tandem
-      } );
-    }, () => [ this.objectGroup.archetype ], {
-      phetioType: PhetioGroup.PhetioGroupIO( CardModel.CardModelIO ),
-      tandem: options.includeCards ? options.tandem.createTandem( 'cardModelGroup' ) : Tandem.OPT_OUT
-    } );
-
-    this.isSortingDataProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isSortingDataProperty' )
-    } );
     this.isShowingTopMeanProperty = new BooleanProperty( false, {
       tandem: options.instrumentMeanPredictionProperty ? options.tandem.createTandem( 'isShowingTopMeanProperty' ) : Tandem.OPT_OUT
     } );
@@ -218,9 +196,7 @@ export default class CAVModel implements TModel {
       const listener = ( value: number | null ) => {
         if ( value !== null ) {
           if ( !phet.joist.sim.isSettingPhetioStateProperty.value ) {
-            if ( options.includeCards ) {
-              this.cardModelGroup.createNextElement( casObject );
-            }
+            this.objectCreated( casObject );
             this.objectValueBecameNonNullEmitter.emit( casObject );
           }
           casObject.valueProperty.unlink( listener ); // Only create the card once, then no need to listen further
@@ -237,8 +213,6 @@ export default class CAVModel implements TModel {
     };
     this.objectGroup.forEach( objectCreatedListener );
     this.objectGroup.elementCreatedEmitter.addListener( objectCreatedListener );
-
-    this.includeCards = options.includeCards;
 
     this.numberOfRemainingObjectsProperty = new DerivedProperty( [ this.objectGroup.countProperty ], count => {
       return this.maxNumberOfObjects - count;
@@ -268,6 +242,11 @@ export default class CAVModel implements TModel {
       parameters: [ { valueType: CAVObject } ]
     } );
     this.objectValueBecameNonNullEmitter.addListener( () => this.updateAnimation() );
+  }
+
+  protected objectCreated( cavObject: CAVObject ): void {
+
+    // Override in subclasses
   }
 
   protected updateDataMeasures(): void {
@@ -355,7 +334,6 @@ export default class CAVModel implements TModel {
    */
   public clearData(): void {
     this.objectGroup.clear();
-    this.cardModelGroup.clear();
   }
 
   /**
@@ -364,7 +342,6 @@ export default class CAVModel implements TModel {
   public reset(): void {
     this.medianPredictionProperty.reset();
     this.meanPredictionProperty.reset();
-    this.isSortingDataProperty.reset();
     this.isShowingTopMeanProperty.reset();
     this.isShowingTopMedianProperty.reset();
     this.isShowingPlayAreaMeanProperty.reset();

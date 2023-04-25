@@ -10,8 +10,6 @@
 import centerAndVariability from '../../centerAndVariability.js';
 import { LinearGradient, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
-import CAVModel from '../model/CAVModel.js';
 import CAVObject from '../model/CAVObject.js';
 import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
@@ -42,6 +40,7 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Matrix3 from '../../../../dot/js/Matrix3.js';
 import DragIndicatorArrowNode from './DragIndicatorArrowNode.js';
 import TEmitter from '../../../../axon/js/TEmitter.js';
+import MedianModel from '../../median/model/MedianModel.js';
 
 // constants
 const CARD_SPACING = 10;
@@ -59,7 +58,7 @@ export default class CardNodeContainer extends Node {
   // Fires if the cardNodeCells may have changed
   public readonly cardNodeCellsChangedEmitter: TEmitter = new Emitter<[]>();
 
-  private readonly model: CAVModel;
+  private readonly model: MedianModel;
   private readonly cardNodeGroup: PhetioGroup<CardNode, [ CardModel ]>;
   private readonly medianBarNode = new MedianBarNode( {
     notchDirection: 'up',
@@ -76,7 +75,7 @@ export default class CardNodeContainer extends Node {
   private dataSortedNodeAnimation: Animation | null = null;
   private wasSortedBefore = true;
 
-  public constructor( model: CAVModel, providedOptions: CardNodeContainerOptions ) {
+  public constructor( model: MedianModel, providedOptions: CardNodeContainerOptions ) {
 
     const options = optionize<CardNodeContainerOptions, SelfOptions, NodeOptions>()( {
       phetioType: CardNodeContainerIO,
@@ -104,7 +103,7 @@ export default class CardNodeContainer extends Node {
       } );
     }, () => [ model.cardModelGroup.archetype ], {
       phetioType: PhetioGroup.PhetioGroupIO( Node.NodeIO ),
-      tandem: model.includeCards ? options.tandem.createTandem( 'cardNodeGroup' ) : Tandem.OPT_OUT,
+      tandem: options.tandem.createTandem( 'cardNodeGroup' ),
       supportsDynamicState: false
     } );
 

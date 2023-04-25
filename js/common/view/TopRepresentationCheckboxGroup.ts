@@ -19,6 +19,7 @@ import MedianBarNode, { MedianBarNodeOptions } from './MedianBarNode.js';
 import CAVColors from '../CAVColors.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import MedianModel from '../../median/model/MedianModel.js';
 
 type SelfOptions = {
   includeSortData?: boolean;
@@ -53,7 +54,7 @@ export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGrou
     const items: VerticalCheckboxGroupItem[] = [];
     options.includeSortData && items.push( {
       createNode: ( tandem: Tandem ) => new Text( CenterAndVariabilityStrings.sortDataStringProperty, TEXT_OPTIONS ),
-      property: model.isSortingDataProperty,
+      property: ( model as MedianModel ).isSortingDataProperty,
       tandemName: 'sortDataCheckbox'
     } );
     options.includeMedian && items.push( {
