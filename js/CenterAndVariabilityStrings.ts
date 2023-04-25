@@ -73,6 +73,12 @@ type StringsType = {
   'youSortedTheDataStringProperty': LinkableProperty<string>;
   'rangeDescription': string;
   'rangeDescriptionStringProperty': LinkableProperty<string>;
+  'madDescription': string;
+  'madDescriptionStringProperty': LinkableProperty<string>;
+  'madCalculationPattern': string;
+  'madCalculationPatternStringProperty': LinkableProperty<string>;
+  'madCalculationResultPattern': string;
+  'madCalculationResultPatternStringProperty': LinkableProperty<string>;
   'rangeCalculationPattern': string;
   'rangeCalculationPatternStringProperty': LinkableProperty<string>;
   'rangeCalculationResultPattern': string;

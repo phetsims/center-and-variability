@@ -7,6 +7,7 @@ import Dialog, { DialogOptions } from '../../../../sun/js/Dialog.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import RangeInfoNode from './RangeInfoNode.js';
+import MADInfoNode from './MADInfoNode.js';
 
 export default class InfoDialog extends Dialog {
   public constructor( model: VariabilityModel, chartViewWidth: number, options: DialogOptions ) {
@@ -21,9 +22,7 @@ export default class InfoDialog extends Dialog {
       }
     }, {
       value: VariabilityMeasure.MAD,
-      createNode: tandem => {
-        return new Text( 'IQR' );
-      }
+      createNode: tandem => new MADInfoNode( model, chartViewWidth, { tandem: tandem } )
     } ] );
 
     super( content, {
