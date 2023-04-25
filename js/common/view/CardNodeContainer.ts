@@ -109,10 +109,10 @@ export default class CardNodeContainer extends Node {
 
     this.addChild( this.medianBarNode );
 
-    const objectCreatedListener = ( casObject: CAVObject ) => {
+    const objectCreatedListener = ( cavObject: CAVObject ) => {
 
       // A ball landed OR a value changed
-      casObject.valueProperty.link( value => {
+      cavObject.valueProperty.link( value => {
         if ( this.model.isSortingDataProperty.value && value !== null ) {
 
           // TODO: Much of this listener code moved to the CAVModel. Should this move there as well?  We could make
@@ -126,7 +126,7 @@ export default class CardNodeContainer extends Node {
     model.objectGroup.elementCreatedEmitter.addListener( objectCreatedListener );
 
     model.cardModelGroup.elementDisposedEmitter.addListener( cardModel => {
-      const cardNode = this.getCardNode( cardModel.casObject )!;
+      const cardNode = this.getCardNode( cardModel.cavObject )!;
       assert && assert( cardNode, 'card node should exist' );
 
       arrayRemove( this.cardNodeCells, cardNode );
@@ -265,8 +265,8 @@ export default class CardNodeContainer extends Node {
 
       let targetIndex = this.cardNodeCells.length;
       if ( this.model.isSortingDataProperty.value ) {
-        const newValue = cardNode.casObject.valueProperty.value!;
-        const existingLowerCardNodes = this.cardNodeCells.filter( cardNode => cardNode.casObject.valueProperty.value! <= newValue );
+        const newValue = cardNode.cavObject.valueProperty.value!;
+        const existingLowerCardNodes = this.cardNodeCells.filter( cardNode => cardNode.cavObject.valueProperty.value! <= newValue );
 
         const lowerNeighborCardNode = _.maxBy( existingLowerCardNodes, cardNode => this.cardNodeCells.indexOf( cardNode ) );
         targetIndex = lowerNeighborCardNode ? this.cardNodeCells.indexOf( lowerNeighborCardNode ) + 1 : 0;
@@ -558,7 +558,7 @@ export default class CardNodeContainer extends Node {
   private isDataSorted(): boolean {
     let lastValue = null;
     for ( let i = 0; i < this.cardNodeCells.length; i++ ) {
-      const value = this.cardNodeCells[ i ].casObject.valueProperty.value!;
+      const value = this.cardNodeCells[ i ].cavObject.valueProperty.value!;
 
       if ( lastValue !== null && value < lastValue ) {
         return false;
@@ -596,14 +596,14 @@ export default class CardNodeContainer extends Node {
     }
   }
 
-  private getCardNode( casObject: CAVObject ): CardNode | null {
-    return this.cardNodeCells.find( cardNode => cardNode.casObject === casObject ) || null;
+  private getCardNode( cavObject: CAVObject ): CardNode | null {
+    return this.cardNodeCells.find( cardNode => cardNode.cavObject === cavObject ) || null;
   }
 
   private sortData(): void {
 
     // If the card is visible, the value property should be non-null
-    const sorted = _.sortBy( this.cardNodeCells, cardNode => cardNode.casObject.valueProperty.value );
+    const sorted = _.sortBy( this.cardNodeCells, cardNode => cardNode.cavObject.valueProperty.value );
     this.cardNodeCells.length = 0;
     this.cardNodeCells.push( ...sorted );
     this.cardNodeCells.forEach( cardNode => this.sendToHomeCell( cardNode, true, 0.5 ) );

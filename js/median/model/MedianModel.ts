@@ -24,9 +24,9 @@ export default class MedianModel extends CAVModel {
 
   public constructor( options: CAVModelOptions ) {
     super( options );
-    this.cardModelGroup = new PhetioGroup( ( tandem, casObject ) => {
-      assert && assert( casObject, 'casObject should be defined' );
-      return new CardModel( casObject, {
+    this.cardModelGroup = new PhetioGroup( ( tandem, cavObject ) => {
+      assert && assert( cavObject, 'cavObject should be defined' );
+      return new CardModel( cavObject, {
         tandem: tandem
       } );
     }, () => [ this.objectGroup.archetype ], {

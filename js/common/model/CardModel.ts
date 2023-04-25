@@ -23,10 +23,10 @@ type CardModelOptions = SelfOptions & PhetioObjectOptions & PickRequired<PhetioO
 
 export default class CardModel extends PhetioObject {
 
-  public casObject: CAVObject;
+  public cavObject: CAVObject;
   public static readonly CardModelIO = new IOType( 'CardModelIO', {
     valueType: CardModel,
-    toStateObject: ( cardModel: CardModel ) => CAVObjectReferenceIO.toStateObject( cardModel.casObject ),
+    toStateObject: ( cardModel: CardModel ) => CAVObjectReferenceIO.toStateObject( cardModel.cavObject ),
     stateObjectToCreateElementArguments: ( stateObject: ReferenceIOState ) => {
       return [ CAVObjectReferenceIO.fromStateObject( stateObject ) ];
     },
@@ -35,7 +35,7 @@ export default class CardModel extends PhetioObject {
     }
   } );
 
-  public constructor( casObject: CAVObject, providedOptions?: CardModelOptions ) {
+  public constructor( cavObject: CAVObject, providedOptions?: CardModelOptions ) {
 
     const options = optionize<CardModelOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioType: CardModel.CardModelIO,
@@ -43,10 +43,10 @@ export default class CardModel extends PhetioObject {
     }, providedOptions );
 
     super( options );
-    this.casObject = casObject;
+    this.cavObject = cavObject;
 
-    this.addLinkedElement( casObject, {
-      tandem: options.tandem.createTandem( casObject.objectType === CAVObjectType.SOCCER_BALL ? 'soccerBall' : 'dataPoint' )
+    this.addLinkedElement( cavObject, {
+      tandem: options.tandem.createTandem( cavObject.objectType === CAVObjectType.SOCCER_BALL ? 'soccerBall' : 'dataPoint' )
     } );
   }
 }

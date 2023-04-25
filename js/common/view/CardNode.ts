@@ -35,7 +35,7 @@ export default class CardNode extends Node {
     parameters: [ { valueType: 'number' } ]
   } );
 
-  public readonly casObject: CAVObject;
+  public readonly cavObject: CAVObject;
   public animation: Animation | null = null;
   private animationTo: Vector2 | null = null;
 
@@ -53,7 +53,7 @@ export default class CardNode extends Node {
       font: new PhetFont( 24 )
     } );
 
-    cardModel.casObject.valueProperty.link( value => {
+    cardModel.cavObject.valueProperty.link( value => {
       text.string = value + '';
       text.center = rectangle.center;
     } );
@@ -71,7 +71,7 @@ export default class CardNode extends Node {
       valueComparisonStrategy: 'equalsFunction'
     } );
 
-    this.casObject = cardModel.casObject;
+    this.cavObject = cardModel.cavObject;
 
     this.positionProperty.link( position => {
       const range = getDragRange();
@@ -89,7 +89,7 @@ export default class CardNode extends Node {
     } );
     this.addInputListener( this.dragListener );
 
-    this.casObject.dragStartedEmitter.addListener( () => this.moveToFront() );
+    this.cavObject.dragStartedEmitter.addListener( () => this.moveToFront() );
 
     this.addLinkedElement( cardModel, {
       tandem: options.tandem.createTandem( 'cardModel' )

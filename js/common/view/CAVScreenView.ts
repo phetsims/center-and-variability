@@ -120,8 +120,8 @@ export default class CAVScreenView extends ScreenView {
       tandem: objectNodeGroupTandem.createTandem( 'inputEnabledProperty' )
     } );
 
-    const objectNodeGroup = new PhetioGroup<CAVObjectNode, [ CAVObject ]>( ( tandem, casObject ) => {
-      return new CAVObjectNode( casObject, model.isShowingPlayAreaMedianProperty, modelViewTransform, objectNodesInputEnabledProperty, {
+    const objectNodeGroup = new PhetioGroup<CAVObjectNode, [ CAVObject ]>( ( tandem, cavObject ) => {
+      return new CAVObjectNode( cavObject, model.isShowingPlayAreaMedianProperty, modelViewTransform, objectNodesInputEnabledProperty, {
         fill: model.dataPointFill,
         tandem: tandem
       } );
@@ -143,16 +143,16 @@ export default class CAVScreenView extends ScreenView {
     } );
     this.backObjectLayer.addChild( dragIndicatorArrowNode );
 
-    const createObjectNode = ( casObject: CAVObject ) => {
-      const casObjectNode = objectNodeGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject );
-      this.frontObjectLayer.addChild( casObjectNode );
+    const createObjectNode = ( cavObject: CAVObject ) => {
+      const cavObjectNode = objectNodeGroup.createCorrespondingGroupElement( cavObject.tandem.name, cavObject );
+      this.frontObjectLayer.addChild( cavObjectNode );
 
-      casObject.valueProperty.lazyLink( ( value, oldValue ) => {
+      cavObject.valueProperty.lazyLink( ( value, oldValue ) => {
         if ( value !== null ) {
           if ( oldValue === null ) {
-            assert && assert( this.frontObjectLayer.hasChild( casObjectNode ) );
-            this.frontObjectLayer.removeChild( casObjectNode );
-            this.backObjectLayer.addChild( casObjectNode );
+            assert && assert( this.frontObjectLayer.hasChild( cavObjectNode ) );
+            this.frontObjectLayer.removeChild( cavObjectNode );
+            this.backObjectLayer.addChild( cavObjectNode );
 
             // add the dragIndicatorArrowNode above the last object when it is added to the play area. if an object was
             // moved before this happens, don't show the dragIndicatorArrowNode
@@ -166,7 +166,7 @@ export default class CAVScreenView extends ScreenView {
 
               // calculate where the top object is
               const topObjectPositionY = this.modelViewTransform.modelToViewY( 0 ) -
-                                         ( model.getOtherObjectsAtTarget( casObject ).length + 1 ) *
+                                         ( model.getOtherObjectsAtTarget( cavObject ).length + 1 ) *
                                          Math.abs( this.modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) ) * 2 -
                                          dragIndicatorArrowNodeMargin;
 
@@ -181,15 +181,15 @@ export default class CAVScreenView extends ScreenView {
         }
       } );
 
-      map.set( casObject, casObjectNode );
+      map.set( cavObject, cavObjectNode );
     };
     model.objectGroup.forEach( createObjectNode );
     model.objectGroup.elementCreatedEmitter.addListener( createObjectNode );
 
-    model.objectGroup.elementDisposedEmitter.addListener( casObject => {
-      const viewNode = map.get( casObject )!;
+    model.objectGroup.elementDisposedEmitter.addListener( cavObject => {
+      const viewNode = map.get( cavObject )!;
       objectNodeGroup.disposeElement( viewNode );
-      map.delete( casObject );
+      map.delete( cavObject );
     } );
 
     this.accordionBoxControlNode = options.createAccordionBoxControlNode( options.tandem.createTandem( 'accordionBoxControl' ) );
@@ -225,7 +225,7 @@ export default class CAVScreenView extends ScreenView {
       if ( visible ) {
 
         // if there is a ball at that location, go above the ball
-        const ballsAtLocation = model.objectGroup.filter( casObject => casObject.valueProperty.value === medianValue );
+        const ballsAtLocation = model.objectGroup.filter( cavObject => cavObject.valueProperty.value === medianValue );
         const modelHeight = ballsAtLocation.length * CAVObjectType.SOCCER_BALL.radius * 2; // assumes no spacing
 
         const viewHeight = this.modelViewTransform.modelToViewDeltaY( modelHeight );

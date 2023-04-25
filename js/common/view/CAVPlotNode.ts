@@ -82,8 +82,8 @@ export default class CAVPlotNode extends Node {
     // TODO: This overlaps with draggingEnabled
     const dotPlotObjectNodesDraggableProperty = new BooleanProperty( false );
 
-    const dotNodeGroup = new PhetioGroup<CAVObjectNode, [ CAVObject ]>( ( tandem, casObject ) => {
-      return new CAVObjectNode( casObject, model.isShowingTopMedianProperty, modelViewTransform, dotPlotObjectNodesDraggableProperty, {
+    const dotNodeGroup = new PhetioGroup<CAVObjectNode, [ CAVObject ]>( ( tandem, cavObject ) => {
+      return new CAVObjectNode( cavObject, model.isShowingTopMedianProperty, modelViewTransform, dotPlotObjectNodesDraggableProperty, {
         objectViewType: CAVObjectType.DOT,
         draggingEnabled: false,
         tandem: tandem,
@@ -97,24 +97,24 @@ export default class CAVPlotNode extends Node {
 
     const map = new Map<CAVObject, CAVObjectNode>();
 
-    const createDotNode = ( casObject: CAVObject ) => {
-      const dotNode = dotNodeGroup.createCorrespondingGroupElement( casObject.tandem.name, casObject );
+    const createDotNode = ( cavObject: CAVObject ) => {
+      const dotNode = dotNodeGroup.createCorrespondingGroupElement( cavObject.tandem.name, cavObject );
 
-      casObject.valueProperty.link( value => {
+      cavObject.valueProperty.link( value => {
         dotNode.setVisible( value !== null );
         if ( value !== null && !this.dotLayer.hasChild( dotNode ) ) {
           this.dotLayer.addChild( dotNode );
         }
       } );
-      map.set( casObject, dotNode );
+      map.set( cavObject, dotNode );
     };
     model.objectGroup.forEach( createDotNode );
     model.objectGroup.elementCreatedEmitter.addListener( createDotNode );
 
-    model.objectGroup.elementDisposedEmitter.addListener( casObject => {
-      const viewNode = map.get( casObject )!;
+    model.objectGroup.elementDisposedEmitter.addListener( cavObject => {
+      const viewNode = map.get( cavObject )!;
       dotNodeGroup.disposeElement( viewNode );
-      map.delete( casObject );
+      map.delete( cavObject );
     } );
   }
 

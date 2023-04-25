@@ -117,18 +117,18 @@ export default class CAVModel implements TModel {
         tandem: tandem
       }, providedOptions );
 
-      const casObject = new CAVObject( CAVObjectType.SOCCER_BALL, options );
+      const cavObject = new CAVObject( CAVObjectType.SOCCER_BALL, options );
 
       // TODO: Should some or all of this move into CAVObject or CAVObjectNode?
       const dragPositionListener = ( dragPosition: Vector2 ) => {
-        casObject.valueProperty.value = Utils.roundSymmetric( this.physicalRange.constrainValue( dragPosition.x ) );
+        cavObject.valueProperty.value = Utils.roundSymmetric( this.physicalRange.constrainValue( dragPosition.x ) );
 
-        this.moveToTop( casObject );
+        this.moveToTop( cavObject );
       };
-      casObject.dragPositionProperty.lazyLink( dragPositionListener );
-      casObject.disposedEmitter.addListener( () => casObject.dragPositionProperty.unlink( dragPositionListener ) );
+      cavObject.dragPositionProperty.lazyLink( dragPositionListener );
+      cavObject.disposedEmitter.addListener( () => cavObject.dragPositionProperty.unlink( dragPositionListener ) );
 
-      return casObject;
+      return cavObject;
     }, [ {} ], {
       phetioType: PhetioGroup.PhetioGroupIO( CAVObject.CAVObjectIO ),
       tandem: options.tandem.createTandem( 'soccerBallGroup' )
@@ -202,24 +202,24 @@ export default class CAVModel implements TModel {
     this.isShowingPlayAreaMedianProperty.link( updateDataMeasures );
 
     // Trigger CardModel creation when a ball lands.
-    const objectCreatedListener = ( casObject: CAVObject ) => {
+    const objectCreatedListener = ( cavObject: CAVObject ) => {
       const listener = ( value: number | null ) => {
         if ( value !== null ) {
           if ( !phet.joist.sim.isSettingPhetioStateProperty.value ) {
-            this.objectCreated( casObject );
-            this.objectValueBecameNonNullEmitter.emit( casObject );
+            this.objectCreated( cavObject );
+            this.objectValueBecameNonNullEmitter.emit( cavObject );
           }
-          casObject.valueProperty.unlink( listener ); // Only create the card once, then no need to listen further
+          cavObject.valueProperty.unlink( listener ); // Only create the card once, then no need to listen further
         }
       };
-      casObject.valueProperty.link( listener );
-      casObject.valueProperty.link( updateDataMeasures );
-      casObject.positionProperty.link( updateDataMeasures );
+      cavObject.valueProperty.link( listener );
+      cavObject.valueProperty.link( updateDataMeasures );
+      cavObject.positionProperty.link( updateDataMeasures );
 
       // Signal to listeners that a value changed
       // TODO: Maybe should combine with temporary listener for one permanent one
-      casObject.valueProperty.link( () => this.objectChangedEmitter.emit( casObject ) );
-      casObject.positionProperty.link( () => this.objectChangedEmitter.emit( casObject ) );
+      cavObject.valueProperty.link( () => this.objectChangedEmitter.emit( cavObject ) );
+      cavObject.positionProperty.link( () => this.objectChangedEmitter.emit( cavObject ) );
     };
     this.objectGroup.forEach( objectCreatedListener );
     this.objectGroup.elementCreatedEmitter.addListener( objectCreatedListener );
@@ -279,10 +279,10 @@ export default class CAVModel implements TModel {
                                                     _.every( array, element => element >= 0 )
     } );
 
-    this.objectValueBecameNonNullEmitter.addListener( casObject => {
+    this.objectValueBecameNonNullEmitter.addListener( cavObject => {
 
       // If the soccer player that kicked that ball was still in line when the ball lands, they can leave the line now.
-      if ( this.soccerPlayerGroup.includes( this.ballPlayerMap.get( casObject )! ) ) {
+      if ( this.soccerPlayerGroup.includes( this.ballPlayerMap.get( cavObject )! ) ) {
         this.advanceLine();
       }
 
@@ -291,11 +291,11 @@ export default class CAVModel implements TModel {
       }
     } );
 
-    this.objectGroup.elementCreatedEmitter.addListener( casObject => {
-      casObject.valueProperty.link( ( value, oldValue ) => {
+    this.objectGroup.elementCreatedEmitter.addListener( cavObject => {
+      cavObject.valueProperty.link( ( value, oldValue ) => {
         if ( value !== null && oldValue === null ) {
           if ( !phet.joist.sim.isSettingPhetioStateProperty.value ) {
-            this.soccerBallLandedListener( casObject, value );
+            this.soccerBallLandedListener( cavObject, value );
           }
         }
       } );
@@ -345,7 +345,7 @@ export default class CAVModel implements TModel {
     } );
 
     if ( sortedObjects.length > 0 ) {
-      this.meanValueProperty.value = _.mean( sortedObjects.map( casObject => casObject.valueProperty.value ) );
+      this.meanValueProperty.value = _.mean( sortedObjects.map( cavObject => cavObject.valueProperty.value ) );
 
       const min = sortedObjects[ 0 ].valueProperty.value!;
       const max = sortedObjects[ sortedObjects.length - 1 ].valueProperty.value!;
@@ -362,27 +362,27 @@ export default class CAVModel implements TModel {
   /**
    * Returns all other objects at the target position of the provided object.
    */
-  public getOtherObjectsAtTarget( casObject: CAVObject ): CAVObject[] {
+  public getOtherObjectsAtTarget( cavObject: CAVObject ): CAVObject[] {
     return this.objectGroup.filter( ( o: CAVObject ) => {
-      return o.valueProperty.value === casObject.valueProperty.value && casObject !== o;
+      return o.valueProperty.value === cavObject.valueProperty.value && cavObject !== o;
     } );
   }
 
   /**
    * Set the position of the parameter object to be on top of the other objects at that target position.
    */
-  protected moveToTop( casObject: CAVObject ): void {
+  protected moveToTop( cavObject: CAVObject ): void {
 
-    const objectsAtTarget = this.getOtherObjectsAtTarget( casObject );
+    const objectsAtTarget = this.getOtherObjectsAtTarget( cavObject );
 
     // Sort from bottom to top, so they can be re-stacked. The specified object will appear at the top.
     const sortedOthers = _.sortBy( objectsAtTarget, object => object.positionProperty.value.y );
-    const sorted = [ ...sortedOthers, casObject ];
+    const sorted = [ ...sortedOthers, cavObject ];
 
     // collapse the rest of the stack. NOTE: This assumes the radii are the same.
-    let position = casObject.objectType.radius;
+    let position = cavObject.objectType.radius;
     sorted.forEach( object => {
-      object.positionProperty.value = new Vector2( casObject.valueProperty.value!, position );
+      object.positionProperty.value = new Vector2( cavObject.valueProperty.value!, position );
       position += object.objectType.radius * 2;
     } );
   }
@@ -421,13 +421,13 @@ export default class CAVModel implements TModel {
   }
 
   public getSortedLandedObjects(): CAVObject[] {
-    return _.sortBy( this.objectGroup.filter( casObject => casObject.valueProperty.value !== null ),
+    return _.sortBy( this.objectGroup.filter( cavObject => cavObject.valueProperty.value !== null ),
 
       // The numerical value takes predence for sorting
-      casObject => casObject.valueProperty.value,
+      cavObject => cavObject.valueProperty.value,
 
       // Then consider the height within the stack
-      casObject => casObject.positionProperty.value.y
+      cavObject => cavObject.positionProperty.value.y
     );
   }
 
@@ -479,8 +479,8 @@ export default class CAVModel implements TModel {
         const elapsedTime = this.timeProperty.value - frontPlayer.timestampWhenPoisedBegan!;
         if ( elapsedTime > 0.075 ) {
 
-          const casObject = this.nextBallToKickProperty.value!; // TODO: Probably? See https://github.com/phetsims/center-and-variability/issues/59
-          this.kickBall( frontPlayer, casObject );
+          const cavObject = this.nextBallToKickProperty.value!; // TODO: Probably? See https://github.com/phetsims/center-and-variability/issues/59
+          this.kickBall( frontPlayer, cavObject );
           this.numberOfScheduledSoccerBallsToKickProperty.value--;
         }
       }
@@ -531,25 +531,25 @@ export default class CAVModel implements TModel {
   /**
    * When a ball lands on the ground, animate all other balls that were at this location above the landed ball.
    */
-  private soccerBallLandedListener( casObject: CAVObject, value: number ): void {
-    const otherObjectsInStack = this.objectGroup.filter( x => x.valueProperty.value === value && x !== casObject );
+  private soccerBallLandedListener( cavObject: CAVObject, value: number ): void {
+    const otherObjectsInStack = this.objectGroup.filter( x => x.valueProperty.value === value && x !== cavObject );
     const sortedOthers = _.sortBy( otherObjectsInStack, object => object.positionProperty.value.y );
 
-    sortedOthers.forEach( ( casObject, index ) => {
+    sortedOthers.forEach( ( cavObject, index ) => {
 
-      const diameter = casObject.objectType.radius * 2;
-      const targetPositionY = ( index + 1 ) * diameter + casObject.objectType.radius;
-      const positionYProperty = new NumberProperty( casObject.positionProperty.value.y );
+      const diameter = cavObject.objectType.radius * 2;
+      const targetPositionY = ( index + 1 ) * diameter + cavObject.objectType.radius;
+      const positionYProperty = new NumberProperty( cavObject.positionProperty.value.y );
 
-      // TODO: Use casObject.positionProperty in the Animation?
+      // TODO: Use cavObject.positionProperty in the Animation?
       positionYProperty.link( positionY => {
-        casObject.positionProperty.value = new Vector2( casObject.positionProperty.value.x, positionY );
+        cavObject.positionProperty.value = new Vector2( cavObject.positionProperty.value.x, positionY );
       } );
 
-      if ( casObject.animation ) {
-        casObject.animation.stop();
+      if ( cavObject.animation ) {
+        cavObject.animation.stop();
       }
-      casObject.animation = new Animation( {
+      cavObject.animation = new Animation( {
         duration: 0.15,
         targets: [ {
           property: positionYProperty,
@@ -558,10 +558,10 @@ export default class CAVModel implements TModel {
         } ]
       } );
 
-      casObject.animation.endedEmitter.addListener( () => {
-        casObject.animation = null;
+      cavObject.animation.endedEmitter.addListener( () => {
+        cavObject.animation = null;
       } );
-      casObject.animation.start();
+      cavObject.animation.start();
     } );
   }
 
@@ -576,10 +576,10 @@ export default class CAVModel implements TModel {
   /**
    * Select a target location for the nextBallToKick, set its velocity and mark it for animation.
    */
-  private kickBall( soccerPlayer: SoccerPlayer, casObject: CAVObject ): void {
+  private kickBall( soccerPlayer: SoccerPlayer, cavObject: CAVObject ): void {
     soccerPlayer.poseProperty.value = Pose.KICKING;
 
-    this.ballPlayerMap.set( casObject, soccerPlayer );
+    this.ballPlayerMap.set( cavObject, soccerPlayer );
 
     // Test that the sampling engine is working properly
     // TODO: Move to unit tests in dot?
@@ -609,11 +609,11 @@ export default class CAVModel implements TModel {
     const v0 = Math.sqrt( Math.abs( x1 * Math.abs( CAVConstants.GRAVITY ) / Math.sin( 2 * angle ) ) );
 
     const velocity = Vector2.createPolar( v0, angle );
-    casObject.velocityProperty.value = velocity;
+    cavObject.velocityProperty.value = velocity;
 
-    casObject.targetX = x1;
+    cavObject.targetX = x1;
 
-    casObject.animationModeProperty.value = AnimationMode.FLYING;
+    cavObject.animationModeProperty.value = AnimationMode.FLYING;
     this.timeWhenLastBallWasKickedProperty.value = this.timeProperty.value;
 
     // New ball will be created later in step
