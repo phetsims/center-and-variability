@@ -15,6 +15,7 @@ import CAVPlotNode from '../../common/view/CAVPlotNode.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import RangeNode from './RangeNode.js';
 import VariabilityMeasure from '../model/VariabilityMeasure.js';
+import MADNode from './MADNode.js';
 
 type SelfOptions = {
 
@@ -32,7 +33,14 @@ export default class VariabilityPlotNode extends CAVPlotNode {
       staticDisplay: providedOptions?.staticDisplay
     } );
     this.addChild( rangeNode );
+
+    // Behind the data points
     rangeNode.moveToBack();
+
+    const madNode = new MADNode( model, this.modelViewTransform, {
+      staticDisplay: providedOptions?.staticDisplay
+    } );
+    this.addChild( madNode );
   }
 }
 
