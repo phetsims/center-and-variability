@@ -57,12 +57,28 @@ export default class VariabilityReadoutsNode extends VBox {
       CAVColors.meanColorProperty
     );
 
+    const medianText = createReadoutText(
+      model.dataRangeProperty,
+      DerivedProperty.valueEqualsConstant( model.selectedVariabilityProperty, VariabilityMeasure.IQR ),
+      CenterAndVariabilityStrings.medianEqualsValueStringProperty,
+      CAVColors.medianColorProperty
+    );
+
+    const iqrText = createReadoutText(
+      model.dataRangeProperty,
+      DerivedProperty.and( [ model.isShowingIQRProperty, DerivedProperty.valueEqualsConstant( model.selectedVariabilityProperty, VariabilityMeasure.IQR ) ] ),
+      CenterAndVariabilityStrings.iqrEqualsValueStringProperty,
+      CAVColors.meanColorProperty
+    );
+
     const options = optionize<ValueReadoutNodeOptions, SelfOptions, VBoxOptions>()( {
       align: 'left',
       spacing: 4,
-      excludeInvisibleChildrenFromBounds: false,
+      // excludeInvisibleChildrenFromBounds: false,
       children: [
-        rangeText
+        rangeText,
+        medianText,
+        iqrText
       ]
     }, providedOptions );
 

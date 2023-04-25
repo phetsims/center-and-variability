@@ -13,8 +13,9 @@ import { NodeOptions } from '../../../../scenery/js/imports.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import CAVPlotNode from '../../common/view/CAVPlotNode.js';
 import VariabilityModel from '../model/VariabilityModel.js';
-import RangeNode from './RangeNode.js';
 import VariabilityMeasure from '../model/VariabilityMeasure.js';
+import RangeNode from './RangeNode.js';
+import IQRNode from './IQRNode.js';
 import MADNode from './MADNode.js';
 
 type SelfOptions = {
@@ -34,6 +35,11 @@ export default class VariabilityPlotNode extends CAVPlotNode {
     } );
     this.addChild( rangeNode );
 
+    const iqrNode = new IQRNode( model, this.modelViewTransform, {
+      staticDisplay: providedOptions?.staticDisplay
+    } );
+    this.addChild( iqrNode );
+
     const madNode = new MADNode( model, this.modelViewTransform, {
       staticDisplay: providedOptions?.staticDisplay
     } );
@@ -41,6 +47,7 @@ export default class VariabilityPlotNode extends CAVPlotNode {
 
     // The rectangles must be behind the data points
     rangeNode.moveToBack();
+    iqrNode.moveToBack();
     madNode.moveToBack();
   }
 }

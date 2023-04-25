@@ -38,6 +38,9 @@
   "medianEqualsValue": {
     "value": "Median = {{value}}"
   },
+  "iqrEqualsValue": {
+    "value": "IQR = {{value}}"
+  },
   "rangeEqualsValue": {
     "value": "Range = {{value}}"
   },
