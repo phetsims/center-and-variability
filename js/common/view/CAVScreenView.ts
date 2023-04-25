@@ -42,11 +42,7 @@ import KickButtonGroup from './KickButtonGroup.js';
 
 type SelfOptions = {
   bottomCheckboxGroupOptions?: StrictOmit<BottomRepresentationCheckboxGroupOptions, 'tandem'>;
-
   questionBarOptions: QuestionBarOptions;
-
-  // TODO: If we are sticking with this pattern, switch to screen: 'median' | 'meanAndMedian' | 'variability' etc, see https://github.com/phetsims/center-and-variability/issues/153
-  isMedianScreen: boolean;
   isVariabilityScreen: boolean;
 };
 
@@ -82,7 +78,6 @@ export default class CAVScreenView extends ScreenView {
   protected readonly playAreaNumberLineNode: NumberLineNode;
 
   public constructor( model: CAVModel,
-
                       // TODO: Structure in options?
                       createAccordionBox: ( tandem: Tandem, top: number, layoutBounds: Bounds2, playAreaNumberLineNode: Node ) => CAVAccordionBox, providedOptions: CAVScreenViewOptions ) {
     const options = optionize<CAVScreenViewOptions,
@@ -355,10 +350,9 @@ export default class CAVScreenView extends ScreenView {
     this.accordionBox.expandedProperty.link( updateMedianNode );
 
     // Add in the same order as the checkboxes, so the z-order matches the checkbox order
-    if ( !options.isMedianScreen ) {
-      this.contentLayer.addChild( this.meanPredictionNode );
-    }
 
+    // TODO: meanPredictionNode should only exist in MeanAndMedianScreenView
+    this.contentLayer.addChild( this.meanPredictionNode );
     this.contentLayer.addChild( this.medianPredictionNode );
   }
 

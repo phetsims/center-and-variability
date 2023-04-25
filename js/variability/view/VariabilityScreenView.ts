@@ -40,7 +40,7 @@ const TEXT_OPTIONS = {
 };
 
 type SelfOptions = EmptySelfOptions;
-type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions' | 'isMedianScreen' | 'isVariabilityScreen'>;
+type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions' | 'isVariabilityScreen'>;
 
 export default class VariabilityScreenView extends CAVScreenView {
 
@@ -55,7 +55,6 @@ export default class VariabilityScreenView extends CAVScreenView {
     const accordionBoxTitleProperty = new DynamicProperty<string, unknown, unknown>( currentProperty );
 
     const options = optionize<VariabilityScreenViewOptions, SelfOptions, CAVScreenViewOptions>()( {
-      isMedianScreen: false,
       isVariabilityScreen: true,
       questionBarOptions: {
         barFill: CAVColors.variabilityQuestionBarFillColorProperty,

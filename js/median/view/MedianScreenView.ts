@@ -25,14 +25,13 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 type SelfOptions = EmptySelfOptions;
 type MedianScreenViewOptions =
   SelfOptions
-  & StrictOmit<CAVScreenViewOptions, 'isMedianScreen' | 'isVariabilityScreen' | 'questionBarOptions'>;
+  & StrictOmit<CAVScreenViewOptions, 'isVariabilityScreen' | 'questionBarOptions'>;
 
 export default class MedianScreenView extends CAVScreenView {
 
   public constructor( model: MedianModel, providedOptions: MedianScreenViewOptions ) {
 
     const options = optionize<MedianScreenViewOptions, SelfOptions, CAVScreenViewOptions>()( {
-      isMedianScreen: true,
       isVariabilityScreen: false,
       questionBarOptions: {
         barFill: CAVColors.medianQuestionBarFillColorProperty,

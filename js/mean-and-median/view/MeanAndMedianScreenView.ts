@@ -24,14 +24,13 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import TopRepresentationCheckboxGroup from '../../common/view/TopRepresentationCheckboxGroup.js';
 
-type MeanAndMedianScreenViewOptions = StrictOmit<CAVScreenViewOptions, 'isMedianScreen' | 'questionBarOptions'>;
+type MeanAndMedianScreenViewOptions = StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
 
 export default class MeanAndMedianScreenView extends CAVScreenView {
 
   public constructor( model: MeanAndMedianModel, providedOptions: MeanAndMedianScreenViewOptions ) {
 
     const options = optionize<MeanAndMedianScreenViewOptions, EmptySelfOptions, CAVScreenViewOptions>()( {
-      isMedianScreen: false,
       questionBarOptions: {
         barFill: CAVColors.meanAndMedianQuestionBarFillColorProperty,
         questionString: CenterAndVariabilityStrings.meanAndMedianQuestionStringProperty
