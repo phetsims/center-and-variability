@@ -114,9 +114,7 @@ export default class CAVScreenView extends ScreenView {
     this.modelViewTransform = modelViewTransform;
     this.model = model;
 
-    const objectNodeGroupTandem = options.tandem.createTandem(
-      model.objectType === CAVObjectType.SOCCER_BALL ? 'soccerBallNodeGroup' : 'dataPointNodeGroup'
-    );
+    const objectNodeGroupTandem = options.tandem.createTandem( 'soccerBallNodeGroup' );
 
     const objectNodesInputEnabledProperty = new BooleanProperty( true, {
       tandem: objectNodeGroupTandem.createTandem( 'inputEnabledProperty' )
@@ -169,7 +167,7 @@ export default class CAVScreenView extends ScreenView {
               // calculate where the top object is
               const topObjectPositionY = this.modelViewTransform.modelToViewY( 0 ) -
                                          ( model.getOtherObjectsAtTarget( casObject ).length + 1 ) *
-                                         Math.abs( this.modelViewTransform.modelToViewDeltaY( model.objectType.radius ) ) * 2 -
+                                         Math.abs( this.modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) ) * 2 -
                                          dragIndicatorArrowNodeMargin;
 
               dragIndicatorArrowNode.bottom = topObjectPositionY;
@@ -228,7 +226,7 @@ export default class CAVScreenView extends ScreenView {
 
         // if there is a ball at that location, go above the ball
         const ballsAtLocation = model.objectGroup.filter( casObject => casObject.valueProperty.value === medianValue );
-        const modelHeight = ballsAtLocation.length * model.objectType.radius * 2; // assumes no spacing
+        const modelHeight = ballsAtLocation.length * CAVObjectType.SOCCER_BALL.radius * 2; // assumes no spacing
 
         const viewHeight = this.modelViewTransform.modelToViewDeltaY( modelHeight );
 

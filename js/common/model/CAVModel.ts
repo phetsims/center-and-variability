@@ -48,8 +48,7 @@ export type CAVModelOptions = SelfOptions;
 const TIME_BETWEEN_RAPID_KICKS = 0.5; // in seconds
 
 export default class CAVModel implements TModel {
-  public readonly objectGroup: PhetioGroup<CAVObject, [ CAVObjectType, StrictOmit<CAVObjectOptions, 'tandem'> ]>;
-  public readonly objectType = CAVObjectType.SOCCER_BALL;
+  public readonly objectGroup: PhetioGroup<CAVObject, [ StrictOmit<CAVObjectOptions, 'tandem'> ]>;
 
   public readonly isShowingTopMeanProperty: BooleanProperty;
   public readonly isShowingTopMedianProperty: BooleanProperty;
@@ -109,7 +108,7 @@ export default class CAVModel implements TModel {
 
     this.dataPointFill = options.dataPointFill;
 
-    this.objectGroup = new PhetioGroup( ( tandem, objectType: CAVObjectType, providedOptions: StrictOmit<CAVObjectOptions, 'tandem'> ) => {
+    this.objectGroup = new PhetioGroup( ( tandem, providedOptions: StrictOmit<CAVObjectOptions, 'tandem'> ) => {
 
       const options = optionize<StrictOmit<CAVObjectOptions, 'tandem'>, EmptySelfOptions, CAVObjectOptions>()( {
         // If it's the first element in the group, mark as isFirstObject. For creating archetype, the objectGroup does
@@ -118,7 +117,7 @@ export default class CAVModel implements TModel {
         tandem: tandem
       }, providedOptions );
 
-      const casObject = new CAVObject( objectType, options );
+      const casObject = new CAVObject( CAVObjectType.SOCCER_BALL, options );
 
       // TODO: Should some or all of this move into CAVObject or CAVObjectNode?
       const dragPositionListener = ( dragPosition: Vector2 ) => {
@@ -130,9 +129,9 @@ export default class CAVModel implements TModel {
       casObject.disposedEmitter.addListener( () => casObject.dragPositionProperty.unlink( dragPositionListener ) );
 
       return casObject;
-    }, [ this.objectType, {} ], {
+    }, [ {} ], {
       phetioType: PhetioGroup.PhetioGroupIO( CAVObject.CAVObjectIO ),
-      tandem: options.tandem.createTandem( this.objectType === CAVObjectType.SOCCER_BALL ? 'soccerBallGroup' : 'dataPointGroup' )
+      tandem: options.tandem.createTandem( 'soccerBallGroup' )
     } );
 
     this.isShowingTopMeanProperty = new BooleanProperty( false, {
@@ -521,10 +520,10 @@ export default class CAVModel implements TModel {
    */
   private createBall(): CAVObject {
 
-    const y0 = this.objectType.radius;
+    const y0 = CAVObjectType.SOCCER_BALL.radius;
     const position = new Vector2( 0, y0 );
 
-    return this.objectGroup.createNextElement( this.objectType, {
+    return this.objectGroup.createNextElement( {
       position: position
     } );
   }
