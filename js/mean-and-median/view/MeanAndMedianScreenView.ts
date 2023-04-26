@@ -49,10 +49,10 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
 
     const iconGroup = new AlignGroup();
     const bottomCheckboxGroup = new VerticalCheckboxGroup( [
-      BottomRepresentationCheckboxGroup.getPredictMedianCheckbox( iconGroup, model ),
-      BottomRepresentationCheckboxGroup.getPredictMeanCheckbox( iconGroup, model ),
-      BottomRepresentationCheckboxGroup.getMedianCheckbox( iconGroup, model ),
-      BottomRepresentationCheckboxGroup.getMeanCheckbox( iconGroup, model )
+      BottomRepresentationCheckboxGroup.getPredictMedianCheckboxItem( iconGroup, model ),
+      BottomRepresentationCheckboxGroup.getPredictMeanCheckboxItem( iconGroup, model ),
+      BottomRepresentationCheckboxGroup.getMedianCheckboxItem( iconGroup, model ),
+      BottomRepresentationCheckboxGroup.getMeanCheckboxItem( iconGroup, model )
     ], {
       tandem: options.tandem.createTandem( 'bottomCheckboxGroup' )
     } );

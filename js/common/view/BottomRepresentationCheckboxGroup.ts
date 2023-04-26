@@ -30,7 +30,7 @@ const TEXT_OPTIONS = {
 
 export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
-  private static newGridBox( text: Node, icon: Node, iconGroup: AlignGroup ): GridBox {
+  private static createGridBox( text: Node, icon: Node, iconGroup: AlignGroup ): GridBox {
     return new GridBox( {
       stretch: true,
       spacing: 5,
@@ -44,10 +44,10 @@ export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxG
     } );
   }
 
-  public static getVariabilityCheckbox( alignGroup: AlignGroup, model: VariabilityModel ): VerticalCheckboxGroupItem {
+  public static getVariabilityCheckboxItem( alignGroup: AlignGroup, model: VariabilityModel ): VerticalCheckboxGroupItem {
     return {
       createNode: ( tandem: Tandem ) => {
-        return BottomRepresentationCheckboxGroup.newGridBox(
+        return BottomRepresentationCheckboxGroup.createGridBox(
           new Text( CenterAndVariabilityStrings.variabilityStringProperty, TEXT_OPTIONS ),
           NumberLineNode.createMeanIndicatorNode( true, true ),
           alignGroup
@@ -58,10 +58,10 @@ export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxG
     };
   }
 
-  public static getMedianCheckbox( alignGroup: AlignGroup, model: CAVModel ): VerticalCheckboxGroupItem {
+  public static getMedianCheckboxItem( alignGroup: AlignGroup, model: CAVModel ): VerticalCheckboxGroupItem {
     return {
       createNode: ( tandem: Tandem ) => {
-        return BottomRepresentationCheckboxGroup.newGridBox(
+        return BottomRepresentationCheckboxGroup.createGridBox(
           new Text( CenterAndVariabilityStrings.medianStringProperty, TEXT_OPTIONS ),
           new ArrowNode( 0, 0, 0, 27, {
             fill: CAVColors.medianColorProperty,
@@ -77,9 +77,9 @@ export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxG
     };
   }
 
-  public static getMeanCheckbox( alignGroup: AlignGroup, model: CAVModel ): VerticalCheckboxGroupItem {
+  public static getMeanCheckboxItem( alignGroup: AlignGroup, model: CAVModel ): VerticalCheckboxGroupItem {
     return {
-      createNode: ( tandem: Tandem ) => BottomRepresentationCheckboxGroup.newGridBox( new Text( CenterAndVariabilityStrings.meanStringProperty, TEXT_OPTIONS ),
+      createNode: ( tandem: Tandem ) => BottomRepresentationCheckboxGroup.createGridBox( new Text( CenterAndVariabilityStrings.meanStringProperty, TEXT_OPTIONS ),
         NumberLineNode.createMeanIndicatorNode( true, true ), alignGroup ),
       property: model.isShowingPlayAreaMeanProperty,
       tandemName: 'meanCheckbox'
@@ -90,7 +90,7 @@ export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxG
                                        tandemName: string, alignGroup: AlignGroup ): VerticalCheckboxGroupItem {
     return {
       createNode: ( tandem: Tandem ) => {
-        return BottomRepresentationCheckboxGroup.newGridBox(
+        return BottomRepresentationCheckboxGroup.createGridBox(
           new Text( stringProperty, TEXT_OPTIONS ),
           new PredictionThumbNode( { color: color, maxHeight: 20, pickable: false } ),
           alignGroup );
@@ -100,7 +100,7 @@ export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxG
     };
   }
 
-  public static getPredictMedianCheckbox( alignGroup: AlignGroup, model: CAVModel ): VerticalCheckboxGroupItem {
+  public static getPredictMedianCheckboxItem( alignGroup: AlignGroup, model: CAVModel ): VerticalCheckboxGroupItem {
     return BottomRepresentationCheckboxGroup.createPredictionItem(
       model.isShowingMedianPredictionProperty,
       CenterAndVariabilityStrings.predictMedianStringProperty,
@@ -111,7 +111,7 @@ export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxG
     );
   }
 
-  public static getPredictMeanCheckbox( alignGroup: AlignGroup, model: CAVModel ): VerticalCheckboxGroupItem {
+  public static getPredictMeanCheckboxItem( alignGroup: AlignGroup, model: CAVModel ): VerticalCheckboxGroupItem {
     return BottomRepresentationCheckboxGroup.createPredictionItem(
       model.isShowingMeanPredictionProperty,
       CenterAndVariabilityStrings.predictMeanStringProperty,

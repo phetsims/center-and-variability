@@ -46,8 +46,8 @@ export default class MedianScreenView extends CAVScreenView {
 
     const iconGroup = new AlignGroup();
     const bottomCheckboxGroup = new VerticalCheckboxGroup( [
-      BottomRepresentationCheckboxGroup.getPredictMedianCheckbox( iconGroup, model ),
-      BottomRepresentationCheckboxGroup.getMedianCheckbox( iconGroup, model )
+      BottomRepresentationCheckboxGroup.getPredictMedianCheckboxItem( iconGroup, model ),
+      BottomRepresentationCheckboxGroup.getMedianCheckboxItem( iconGroup, model )
     ], {
       tandem: options.tandem.createTandem( 'bottomCheckboxGroup' )
     } );

@@ -93,9 +93,9 @@ export default class VariabilityScreenView extends CAVScreenView {
 
     const iconGroup = new AlignGroup();
     const bottomCheckboxGroup = new VerticalCheckboxGroup( [
-      BottomRepresentationCheckboxGroup.getVariabilityCheckbox( iconGroup, model ),
-      BottomRepresentationCheckboxGroup.getMedianCheckbox( iconGroup, model ),
-      BottomRepresentationCheckboxGroup.getMeanCheckbox( iconGroup, model )
+      BottomRepresentationCheckboxGroup.getVariabilityCheckboxItem( iconGroup, model ),
+      BottomRepresentationCheckboxGroup.getMedianCheckboxItem( iconGroup, model ),
+      BottomRepresentationCheckboxGroup.getMeanCheckboxItem( iconGroup, model )
     ], {
       tandem: options.tandem.createTandem( 'bottomCheckboxGroup' )
     } );
