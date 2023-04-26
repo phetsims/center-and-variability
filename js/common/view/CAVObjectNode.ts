@@ -10,7 +10,7 @@
 import optionize from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import { Circle, DragListener, Image, Node, NodeOptions, Path, Text } from '../../../../scenery/js/imports.js';
+import { Circle, DragListener, Image, Node, NodeOptions, Path, TColor, Text } from '../../../../scenery/js/imports.js';
 import CAVObject from '../model/CAVObject.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import CAVObjectType from '../model/CAVObjectType.js';
@@ -34,7 +34,7 @@ import Multilink, { UnknownMultilink } from '../../../../axon/js/Multilink.js';
 type SelfOptions = {
   objectViewType?: CAVObjectType;
   draggingEnabled?: boolean;
-  fill: string;
+  fill: TColor;
 };
 export type CAVObjectNodeOptions =
   SelfOptions

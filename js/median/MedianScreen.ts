@@ -36,8 +36,7 @@ export default class MedianScreen extends CAVScreen<MedianModel, MedianScreenVie
     super(
       () => new MedianModel( {
         tandem: options.tandem.createTandem( 'model' ),
-        instrumentMeanPredictionProperty: false,
-        dataPointFill: 'black'
+        instrumentMeanPredictionProperty: false
       } ),
       ( model: MedianModel ) => new MedianScreenView( model, { tandem: options.tandem.createTandem( 'view' ) } ),
       options

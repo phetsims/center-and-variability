@@ -8,18 +8,23 @@ import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVPlotNode, { CAVPlotOptions } from '../../common/view/CAVPlotNode.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import CAVConstants from '../../common/CAVConstants.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
 };
-type IQRNodeOptions = SelfOptions & CAVPlotOptions;
+type IQRNodeOptions = SelfOptions & StrictOmit<CAVPlotOptions, 'dataPointFill'>;
 
 export default class IQRNode extends CAVPlotNode {
   public constructor( model: VariabilityModel, providedOptions: IQRNodeOptions ) {
 
     const options = providedOptions;
 
-    super( model, options );
+    super( model, {
+      dataPointFill: CAVConstants.GRAY_DATA_POINT_FILL,
+      ...options
+    } );
 
     const needAtLeastFiveKicks = new Text( CenterAndVariabilityStrings.needAtLeastFiveKicksStringProperty, {
       fontSize: 18,

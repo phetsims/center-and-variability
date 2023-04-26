@@ -8,18 +8,23 @@ import MedianBarNode from '../../common/view/MedianBarNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Utils from '../../../../dot/js/Utils.js';
 import CAVPlotNode, { CAVPlotOptions } from '../../common/view/CAVPlotNode.js';
+import CAVConstants from '../../common/CAVConstants.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
 };
-type RangeNodeOptions = SelfOptions & CAVPlotOptions;
+type RangeNodeOptions = SelfOptions & StrictOmit<CAVPlotOptions, 'dataPointFill'>;
 
 export default class MADNode extends CAVPlotNode {
   public constructor( model: VariabilityModel, providedOptions: RangeNodeOptions ) {
 
     const options = providedOptions;
 
-    super( model, options );
+    super( model, {
+      dataPointFill: CAVConstants.GRAY_DATA_POINT_FILL,
+      ...options
+    } );
 
     const needAtLeastOneKick = new Text( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {
       fontSize: 18,

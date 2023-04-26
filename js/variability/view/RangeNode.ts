@@ -8,18 +8,23 @@ import VariabilityModel from '../model/VariabilityModel.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVPlotNode, { CAVPlotOptions } from '../../common/view/CAVPlotNode.js';
 import CAVObjectType from '../../common/model/CAVObjectType.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import CAVConstants from '../../common/CAVConstants.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
 };
-type RangeNodeOptions = SelfOptions & CAVPlotOptions;
+type RangeNodeOptions = SelfOptions & StrictOmit<CAVPlotOptions, 'dataPointFill'>;
 
 export default class RangeNode extends CAVPlotNode {
   public constructor( model: VariabilityModel, providedOptions: RangeNodeOptions ) {
 
     const options = providedOptions;
 
-    super( model, options );
+    super( model, {
+      dataPointFill: CAVConstants.GRAY_DATA_POINT_FILL,
+      ...options
+    } );
 
     const needAtLeastOneKick = new Text( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {
       fontSize: 18,

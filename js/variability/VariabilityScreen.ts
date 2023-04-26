@@ -29,11 +29,7 @@ export default class VariabilityScreen extends CAVScreen<VariabilityModel, Varia
     super(
       () => new VariabilityModel( {
         tandem: options.tandem.createTandem( 'model' ),
-        instrumentMeanPredictionProperty: true,
-
-        // TODO: This is the color from the design doc, but perhaps #777777 or darker would be better?
-        // TODO: Let's discuss once the IQR lines are drawn
-        dataPointFill: '#8f8f8f'
+        instrumentMeanPredictionProperty: true
       } ),
       ( model: VariabilityModel ) => new VariabilityScreenView( model, { tandem: options.tandem.createTandem( 'view' ) } ),
       options

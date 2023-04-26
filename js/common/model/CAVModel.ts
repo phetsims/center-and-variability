@@ -40,7 +40,6 @@ import { AnimationMode } from './AnimationMode.js';
 type SelfOptions = {
   tandem: Tandem;
   instrumentMeanPredictionProperty: boolean;
-  dataPointFill: string;
 };
 export type CAVModelOptions = SelfOptions;
 
@@ -56,11 +55,6 @@ export default class CAVModel implements TModel {
   public readonly isShowingPlayAreaMeanProperty: BooleanProperty;
   public readonly isShowingMeanPredictionProperty: BooleanProperty;
   public readonly isShowingMedianPredictionProperty: BooleanProperty;
-
-  // This is used like a view attribute, but passing it through views led to too much complexity
-  // TODO: Do we want to move this to the view?
-  // TODO: Or at the instantiation site, could do `model instanceof VariabilityModel? gray : black`
-  public readonly dataPointFill: string;
 
   protected readonly maxNumberOfObjects = CAVConstants.NUMBER_OF_OBJECTS;
   public readonly physicalRange = new Range( 1, 15 );
@@ -106,8 +100,6 @@ export default class CAVModel implements TModel {
   public constructor( providedOptions: CAVModelOptions ) {
 
     const options = optionize<CAVModelOptions, SelfOptions>()( {}, providedOptions );
-
-    this.dataPointFill = options.dataPointFill;
 
     this.objectGroup = new PhetioGroup( ( tandem, providedOptions: StrictOmit<CAVObjectOptions, 'tandem'> ) => {
 

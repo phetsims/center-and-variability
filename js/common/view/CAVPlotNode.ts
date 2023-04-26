@@ -9,8 +9,8 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import { Node, NodeOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import { Node, NodeOptions, Rectangle, TColor, Text } from '../../../../scenery/js/imports.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import CAVModel from '../model/CAVModel.js';
 import CAVObject from '../model/CAVObject.js';
 import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
@@ -25,8 +25,10 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import CAVConstants from '../CAVConstants.js';
 
-type SelfOptions = EmptySelfOptions;
-export type CAVPlotOptions = NodeOptions & PickRequired<NodeOptions, 'tandem'>;
+type SelfOptions = {
+  dataPointFill: TColor;
+};
+export type CAVPlotOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
 export default class CAVPlotNode extends Node {
 
@@ -87,7 +89,7 @@ export default class CAVPlotNode extends Node {
         objectViewType: CAVObjectType.DATA_POINT,
         draggingEnabled: false,
         tandem: tandem,
-        fill: model.dataPointFill
+        fill: options.dataPointFill
       } );
     }, () => [ model.objectGroup.archetype ], {
       phetioType: PhetioGroup.PhetioGroupIO( Node.NodeIO ),
