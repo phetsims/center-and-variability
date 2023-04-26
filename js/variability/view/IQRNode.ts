@@ -106,12 +106,6 @@ export default class IQRNode extends CAVPlotNode {
       const leftmostDot = sortedDots[ 0 ];
       const rightmostDot = sortedDots[ sortedDots.length - 1 ];
 
-      // TODO: switch to 'info' and update the rest of the file accordingly, https://github.com/phetsims/center-and-variability/issues/153
-      const interestedInIQR = options.parentContext === 'accordion' || (
-        model.isShowingIQRProperty.value &&
-        model.selectedVariabilityProperty.value === VariabilityMeasure.IQR
-      );
-
       boxWhiskerMedianLine.x1 = boxWhiskerMedianLine.x2 = this.modelViewTransform.modelToViewX( model.medianValueProperty.value! );
 
       const boxLeft = this.modelViewTransform.modelToViewX( model.q1ValueProperty.value! );
@@ -134,45 +128,37 @@ export default class IQRNode extends CAVPlotNode {
         boxWhiskerEndCapRight.visible = boxRight !== maxValue;
       }
 
-      if ( interestedInIQR ) {
-
-        if ( boxLeft !== boxRight ) {
-          const floor = this.modelViewTransform.modelToViewY( 0 );
-          iqrRectangle.rectWidth = boxRight - boxLeft;
-          iqrRectangle.left = boxLeft;
-          iqrRectangle.bottom = floor;
-
-          // TODO: In the info dialog, this should be above the topmost data point (in the accordion box it's ok to overlap)
-          iqrBar.setMedianBarShape( iqrRectangle.top - MedianBarNode.NOTCH_HEIGHT - 2, iqrRectangle.left, 0, iqrRectangle.right, false );
-
-          // TODO: How to simplify this logic? Or will it help when things are combined?
-          iqrTextReadout.string = model.q3ValueProperty.value! - model.q1ValueProperty.value!;
-          iqrTextReadout.centerX = iqrRectangle.centerX;
-          iqrTextReadout.bottom = iqrBar.top - 5;
-
-          iqrRectangle.visible = true;
-          iqrBar.visible = true;
-          iqrTextReadout.visible = true;
-        }
-        else {
-          iqrRectangle.visible = false;
-          iqrBar.visible = false;
-          iqrTextReadout.visible = false;
-        }
-      }
-      else {
-        iqrRectangle.visible = false;
-        iqrBar.visible = false;
-        iqrTextReadout.visible = false;
-      }
-
       const enoughData = model.numberOfDataPointsProperty.value >= 5;
+
+      const iqrVisibility = ( options.parentContext === 'info' && enoughData ) ||
+                              ( options.parentContext === 'accordion' && enoughData && model.isShowingIQRProperty.value );
+
+      iqrRectangle.visible = iqrVisibility;
+      iqrBar.visible = iqrVisibility;
+      iqrTextReadout.visible = iqrVisibility;
+
+      if ( iqrVisibility ) {
+        const floor = this.modelViewTransform.modelToViewY( 0 );
+        iqrRectangle.rectWidth = boxRight - boxLeft;
+        iqrRectangle.left = boxLeft;
+        iqrRectangle.bottom = floor;
+
+        // TODO: In the info dialog, this should be above the topmost data point (in the accordion box it's ok to overlap)
+        iqrBar.setMedianBarShape( iqrRectangle.top - MedianBarNode.NOTCH_HEIGHT - 2, iqrRectangle.left, 0, iqrRectangle.right, false );
+
+        // TODO: How to simplify this logic? Or will it help when things are combined?
+        iqrTextReadout.string = model.q3ValueProperty.value! - model.q1ValueProperty.value!;
+        iqrTextReadout.centerX = iqrRectangle.centerX;
+        iqrTextReadout.bottom = iqrBar.top - 5;
+      }
+
       const showBoxAndWhiskerPlot = model.selectedVariabilityProperty.value === VariabilityMeasure.IQR && enoughData;
 
       boxWhiskerNode.visible = showBoxAndWhiskerPlot;
 
       needAtLeastFiveKicks.center = this.modelViewTransform.modelToViewXY( 8, 2 );
-      needAtLeastFiveKicks.visible = model.selectedVariabilityProperty.value === VariabilityMeasure.IQR && !enoughData;
+      needAtLeastFiveKicks.visible = !enoughData && ( options.parentContext === 'info' ||
+                                                                                     ( options.parentContext === 'accordion' && model.isShowingIQRProperty.value ) );
     };
     model.objectChangedEmitter.addListener( updateIQRNode );
     model.isShowingIQRProperty.link( updateIQRNode );
