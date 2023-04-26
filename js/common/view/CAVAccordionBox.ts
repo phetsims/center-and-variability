@@ -84,7 +84,11 @@ export default class CAVAccordionBox extends AccordionBox {
     checkboxPanel.right = backgroundNode.right - CONTENT_MARGIN;
     backgroundNode.addChild( checkboxPanel );
 
+    // Vertical positioning
     contentNode.centerY = fullBackgroundBounds.centerY;
+    if ( contentNode.bottom > fullBackgroundBounds.bottom - 5 ) {
+      contentNode.bottom = fullBackgroundBounds.bottom - 5;
+    }
     backgroundNode.addChild( contentNode );
 
     if ( options.valueReadoutsNode ) {

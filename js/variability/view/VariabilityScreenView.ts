@@ -86,9 +86,9 @@ export default class VariabilityScreenView extends CAVScreenView {
         listener: () => {
           model.isInfoShowingProperty.value = true;
         },
-        top: 0,
 
         // TODO: How to position this properly?
+        top: 10,
         right: accordionBoxContents.width + 130
       } );
       accordionBoxContents.addChild( infoButton );
