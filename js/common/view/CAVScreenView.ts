@@ -27,9 +27,7 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DragIndicatorArrowNode from './DragIndicatorArrowNode.js';
 import Property from '../../../../axon/js/Property.js';
 import Range from '../../../../dot/js/Range.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import QuestionBar, { QuestionBarOptions } from '../../../../scenery-phet/js/QuestionBar.js';
-import CAVAccordionBox from './CAVAccordionBox.js';
 import NumberLineNode from './NumberLineNode.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import BackgroundNode from './BackgroundNode.js';
@@ -38,6 +36,7 @@ import SoccerPlayer from '../model/SoccerPlayer.js';
 import merge from '../../../../phet-core/js/merge.js';
 import KickButtonGroup from './KickButtonGroup.js';
 import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';
+import CAVAccordionBox from './CAVAccordionBox.js';
 
 type SelfOptions = {
   questionBarOptions: QuestionBarOptions;
@@ -67,14 +66,13 @@ export default class CAVScreenView extends ScreenView {
   protected readonly medianPredictionNode: PredictionSlider;
   protected readonly meanPredictionNode: PredictionSlider;
 
-  protected readonly accordionBox: CAVAccordionBox;
+  protected accordionBox: CAVAccordionBox | null = null;
 
   protected readonly questionBar: QuestionBar;
   protected readonly playAreaNumberLineNode: NumberLineNode;
+  private readonly updateMedianNode: () => void;
 
-  public constructor( model: CAVModel,
-                      // TODO: Structure in options?
-                      createAccordionBox: ( tandem: Tandem, top: number, layoutBounds: Bounds2, playAreaNumberLineNode: Node ) => CAVAccordionBox, providedOptions: CAVScreenViewOptions ) {
+  public constructor( model: CAVModel, providedOptions: CAVScreenViewOptions ) {
     const options = optionize<CAVScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
 
     // The ground is at y=0
@@ -171,7 +169,7 @@ export default class CAVScreenView extends ScreenView {
     this.playAreaMedianIndicatorNode = new PlayAreaMedianIndicatorNode();
     this.addChild( this.playAreaMedianIndicatorNode );
 
-    const updateMedianNode = () => {
+    this.updateMedianNode = () => {
       const medianValue = model.medianValueProperty.value;
       const visible = medianValue !== null && model.isShowingPlayAreaMedianProperty.value;
 
@@ -187,16 +185,18 @@ export default class CAVScreenView extends ScreenView {
         this.playAreaMedianIndicatorNode.bottom = this.modelViewTransform.modelToViewY( 0 ) + viewHeight;
 
         // The arrow shouldn't overlap the accordion box
-        const accordionBoxHeight = this.accordionBox.expandedProperty.value ? this.accordionBox.getExpandedBoxHeight() : this.accordionBox.getCollapsedBoxHeight();
-        if ( this.playAreaMedianIndicatorNode.top < this.accordionBox.top + accordionBoxHeight ) {
-          this.playAreaMedianIndicatorNode.top = this.accordionBox.top + accordionBoxHeight + 4;
+        if ( this.accordionBox ) {
+          const accordionBoxHeight = this.accordionBox.expandedProperty.value ? this.accordionBox.getExpandedBoxHeight() : this.accordionBox.getCollapsedBoxHeight();
+          if ( this.playAreaMedianIndicatorNode.top < this.accordionBox.top + accordionBoxHeight ) {
+            this.playAreaMedianIndicatorNode.top = this.accordionBox.top + accordionBoxHeight + 4;
+          }
         }
       }
       this.playAreaMedianIndicatorNode.visible = visible;
     };
-    model.medianValueProperty.link( updateMedianNode );
-    model.objectChangedEmitter.addListener( updateMedianNode );
-    model.isShowingPlayAreaMedianProperty.link( updateMedianNode );
+    model.medianValueProperty.link( this.updateMedianNode );
+    model.objectChangedEmitter.addListener( this.updateMedianNode );
+    model.isShowingPlayAreaMedianProperty.link( this.updateMedianNode );
 
     this.medianPredictionNode = new PredictionSlider( model.medianPredictionProperty, this.modelViewTransform, model.physicalRange, {
       predictionThumbNodeOptions: {
@@ -304,8 +304,6 @@ export default class CAVScreenView extends ScreenView {
     }, options.questionBarOptions ) );
     this.contentLayer.addChild( this.questionBar );
 
-    this.accordionBox = createAccordionBox( options.tandem.createTandem( 'accordionBox' ), this.questionBar.bottom + CAVConstants.SCREEN_VIEW_Y_MARGIN, this.layoutBounds, this.playAreaNumberLineNode );
-
     this.contentLayer.addChild( new KickButtonGroup( model, {
       left: 25,
 
@@ -318,9 +316,6 @@ export default class CAVScreenView extends ScreenView {
     // Soccer balls go behind the accordion box after they land
     this.contentLayer.addChild( this.backObjectLayer );
 
-    this.contentLayer.addChild( this.accordionBox );
-    this.accordionBox.expandedProperty.link( updateMedianNode );
-
     // Add in the same order as the checkboxes, so the z-order matches the checkbox order
 
     // TODO: meanPredictionNode should only exist in MeanAndMedianScreenView
@@ -328,12 +323,8 @@ export default class CAVScreenView extends ScreenView {
     this.contentLayer.addChild( this.medianPredictionNode );
   }
 
-  /**
-   * Steps the view.
-   * @param dt - time step, in seconds
-   */
-  public override step( dt: number ): void {
-    // See subclass for implementation
+  private updateAccordionBoxPosition(): void {
+    this.accordionBox!.top = this.questionBar.bottom + CAVConstants.SCREEN_VIEW_Y_MARGIN;
   }
 
   /**
@@ -347,7 +338,17 @@ export default class CAVScreenView extends ScreenView {
     } );
     this.visibleBoundsProperty.value = this.parentToLocalBounds( viewBounds );
 
-    this.accordionBox.top = this.questionBar.bottom + CAVConstants.SCREEN_VIEW_Y_MARGIN;
+    this.accordionBox && this.updateAccordionBoxPosition();
+  }
+
+  /**
+   * Called by subtype constructors to finish initialization.
+   */
+  protected setAccordionBox( accordionBox: CAVAccordionBox ): void {
+    this.accordionBox = accordionBox;
+    this.contentLayer.addChild( this.accordionBox );
+    this.accordionBox.expandedProperty.link( this.updateMedianNode );
+    this.updateAccordionBoxPosition();
   }
 }
 

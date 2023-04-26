@@ -14,16 +14,15 @@ import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import CAVColors from '../../common/CAVColors.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import { AlignBox, AlignGroup, ManualConstraint, Node } from '../../../../scenery/js/imports.js';
+import { AlignBox, AlignGroup, ManualConstraint } from '../../../../scenery/js/imports.js';
 import DistributionRadioButtonGroup from './DistributionRadioButtonGroup.js';
 import VariabilityMeasureRadioButtonGroup from './VariabilityMeasureRadioButtonGroup.js';
 import InfoDialog from './InfoDialog.js';
 import CAVScreenView, { CAVScreenViewOptions } from '../../common/view/CAVScreenView.js';
-import Bounds2 from '../../../../dot/js/Bounds2.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import VariabilityAccordionBox from './VariabilityAccordionBox.js';
 import BottomRepresentationCheckboxGroup from '../../common/view/BottomRepresentationCheckboxGroup.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
+import CAVConstants from '../../common/CAVConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
@@ -44,9 +43,9 @@ export default class VariabilityScreenView extends CAVScreenView {
       tandem: options.tandem.createTandem( 'variabilityMeasureRadioButtonGroup' )
     } );
 
-    super( model, ( tandem: Tandem, top: number, layoutBounds: Bounds2, playAreaNumberLineNode: Node ) => {
-      return new VariabilityAccordionBox( model, layoutBounds, tandem, top );
-    }, options );
+    super( model, options );
+
+    this.setAccordionBox( new VariabilityAccordionBox( model, this.layoutBounds, options.tandem.createTandem( 'accordionBox' ), this.questionBar.bottom + CAVConstants.SCREEN_VIEW_Y_MARGIN ) );
 
     // NOTE: This assumes that the NumberLineNode in the play area and in the dot plot have the same characteristics:
     // * Same font
@@ -55,12 +54,12 @@ export default class VariabilityScreenView extends CAVScreenView {
     // TODO: Consider something more robust.  Using globalToLocal to exactly align based on the position of the tick marks
     // TODO: Can this be combine in a parent class? See https://github.com/phetsims/center-and-variability/issues/152
     // TODO: Maybe if the accordion box was a subclass we could do this?
-    ManualConstraint.create( this, [ this.playAreaNumberLineNode, this.accordionBox.contentNode ],
+    ManualConstraint.create( this, [ this.playAreaNumberLineNode, this.accordionBox!.contentNode ],
       ( lowerNumberLineWrapper, contentsWrapper ) => {
         contentsWrapper.x = lowerNumberLineWrapper.x;
       } );
 
-    ManualConstraint.create( this, [ variabilityMeasureRadioButtonGroup, this.accordionBox ],
+    ManualConstraint.create( this, [ variabilityMeasureRadioButtonGroup, this.accordionBox! ],
       ( variabilityRadioButtonGroupWrapper, accordionBoxWrapper ) => {
         variabilityRadioButtonGroupWrapper.centerY = accordionBoxWrapper.centerY;
       } );
