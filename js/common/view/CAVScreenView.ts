@@ -94,9 +94,7 @@ export default class CAVScreenView extends ScreenView {
 
     const objectNodeGroup = new PhetioGroup<CAVObjectNode, [ CAVObject ]>( ( tandem, cavObject ) => {
       return new CAVObjectNode( cavObject, model.isShowingPlayAreaMedianProperty, modelViewTransform, objectNodesInputEnabledProperty, {
-
-        // TODO: Why require if null is OK?
-        fill: null,
+        fill: null, // Only depict as a soccer ball
         tandem: tandem
       } );
     }, () => [ model.objectGroup.archetype ], {
@@ -318,7 +316,7 @@ export default class CAVScreenView extends ScreenView {
 
     // Add in the same order as the checkboxes, so the z-order matches the checkbox order
 
-    // TODO: meanPredictionNode should only exist in MeanAndMedianScreenView
+    // TODO: meanPredictionNode should only exist in MeanAndMedianScreenView. Neither should exist in VariabilityScreenView
     this.contentLayer.addChild( this.meanPredictionNode );
     this.contentLayer.addChild( this.medianPredictionNode );
   }
@@ -331,12 +329,9 @@ export default class CAVScreenView extends ScreenView {
    * Floating layout that keeps the ground near the ground, and accordion box near the question bar
    */
   public override layout( viewBounds: Bounds2 ): void {
-
-    // TODO: Duplicates effort with the parent implementation
-    this.matrix = ScreenView.getLayoutMatrix( this.layoutBounds, viewBounds, {
+    super.layout( viewBounds, {
       verticalAlign: 'bottom'
     } );
-    this.visibleBoundsProperty.value = this.parentToLocalBounds( viewBounds );
 
     this.accordionBox && this.updateAccordionBoxPosition();
   }

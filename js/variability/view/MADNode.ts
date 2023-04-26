@@ -36,7 +36,7 @@ export default class MADNode extends CAVPlotNode {
       fill: '#e0c0f5',
       stroke: 'lightGray',
 
-      // TODO: the numbers should be in front of the "x" marks, but the rectangle should be behind?  Or should the rectangle
+      // TODO-design: the numbers should be in front of the "x" marks, but the rectangle should be behind?  Or should the rectangle
       // TODO: be partially transparent?
       opacity: 0.5
     } );

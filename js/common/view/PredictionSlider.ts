@@ -65,8 +65,6 @@ export default class PredictionSlider extends AccessibleSlider( Node, 0 ) {
     } );
 
     predictionProperty.link( prediction => {
-
-      // TODO: Factor out tick mark height
       this.centerTop = modelViewTransform.modelToViewXY( prediction, 0 ).plusXY( 0, 45 );
     } );
 

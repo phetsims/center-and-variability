@@ -19,7 +19,6 @@ import PreferencesDialog from '../../../../joist/js/preferences/PreferencesDialo
 export default class SimulationPreferencesContentNode extends VBox {
   private readonly disposeSimulationPreferencesContentNode: () => void;
 
-  // TODO: Tandem in the options?  And use tandem in the file?
   public constructor( tandem: Tandem ) {
 
     const title = new Text( CenterAndVariabilityStrings.plotTypeStringProperty, {

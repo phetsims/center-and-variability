@@ -9,14 +9,14 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
-import CAVPlotNodeWithMedianBar from './CAVPlotNodeWithMedianBar.js';
+import MedianPlotNode from './MedianPlotNode.js';
 import ValueReadoutsNode from '../../common/view/ValueReadoutsNode.js';
 
 export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
 
   public constructor( model: MeanAndMedianModel, layoutBounds: Bounds2, tandem: Tandem, top: number, playAreaNumberLineNode: Node ) {
 
-    const accordionBoxContents = new CAVPlotNodeWithMedianBar( model, {
+    const accordionBoxContents = new MedianPlotNode( model, {
       tandem: tandem.createTandem( 'plotNode' )
     } );
 

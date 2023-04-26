@@ -22,6 +22,8 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import MedianModel from '../../median/model/MedianModel.js';
 
 type SelfOptions = {
+
+  // TODO: Refactor this like we did for BottomRepresentationCheckboxGroup
   includeSortData?: boolean;
   includeMedian?: boolean;
   includeMean?: boolean;
