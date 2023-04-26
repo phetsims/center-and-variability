@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import { HBox, HSeparator, Text, VBox, VStrut } from '../../../../scenery/js/imports.js';
+import { HBox, HSeparator, Text, VBox } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import VariabilityModel from '../model/VariabilityModel.js';
@@ -9,6 +9,7 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import Utils from '../../../../dot/js/Utils.js';
+import CAVConstants from '../../common/CAVConstants.js';
 import MADNode from './MADNode.js';
 
 export default class MADInfoNode extends VBox {
@@ -50,10 +51,16 @@ export default class MADInfoNode extends VBox {
       align: 'left',
       spacing: 6,
       children: [
-        new Text( CenterAndVariabilityStrings.meanAbsoluteDeviationMADStringProperty, { fontSize: 25 } ),
-        new VStrut( 10 ),
-        new Text( CenterAndVariabilityStrings.madDescriptionStringProperty, { fontSize: 18 } ),
-        new VStrut( 10 ),
+        new Text( CenterAndVariabilityStrings.meanAbsoluteDeviationMADStringProperty, {
+          fontSize: 25,
+          maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
+          layoutOptions: { bottomMargin: 10 }
+        } ),
+        new Text( CenterAndVariabilityStrings.madDescriptionStringProperty, {
+          fontSize: 18,
+          maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
+          layoutOptions: { bottomMargin: 10 }
+        } ),
         new HBox( {
           spacing: 10,
           children: [
@@ -71,8 +78,7 @@ export default class MADInfoNode extends VBox {
         // TODO-design: I changed the wording slightly from the design doc
         new Text( new PatternStringProperty( CenterAndVariabilityStrings.madCalculationResultPatternStringProperty, {
           mad: new DerivedProperty( [ model.madValueProperty ], madValue => madValue === null ? null : Utils.toFixed( madValue, 1 ) )
-        } ), { fontSize: 18, visibleProperty: hasEnoughDataProperty } ),
-        new VStrut( 10 ),
+        } ), { fontSize: 18, visibleProperty: hasEnoughDataProperty, maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH, layoutOptions: { bottomMargin: 10 } } ),
 
         new MADNode( model, {
           parentContext: 'info',

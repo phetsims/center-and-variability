@@ -1,6 +1,6 @@
 // Copyright 2023, University of Colorado Boulder
 
-import { Line, Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { Line, ManualConstraint, Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
@@ -26,11 +26,15 @@ export default class MADNode extends CAVPlotNode {
       ...options
     } );
 
-    const needAtLeastOneKick = new Text( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {
+    const needAtLeastOneKickText = new Text( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {
       fontSize: 18,
-      top: 100
+      top: 100,
+      maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH
     } );
-    this.addChild( needAtLeastOneKick );
+    ManualConstraint.create( this, [ needAtLeastOneKickText ], textProxy => {
+      textProxy.center = this.modelViewTransform.modelToViewXY( 8, 2 );
+    } );
+    this.addChild( needAtLeastOneKickText );
 
     const madRectangle = new Rectangle( 0, 50, 100, 72, {
       fill: '#e0c0f5',
@@ -138,8 +142,7 @@ export default class MADNode extends CAVPlotNode {
       leftReadout.visible = ( options.parentContext === 'info' || model.isShowingMADProperty.value ) && mad !== null && sortedDots.length > 1;
       rightReadout.visible = ( options.parentContext === 'info' || model.isShowingMADProperty.value ) && mad !== null && sortedDots.length > 1;
 
-      needAtLeastOneKick.center = this.modelViewTransform.modelToViewXY( 8, 2 );
-      needAtLeastOneKick.visible = model.numberOfDataPointsProperty.value === 0 && ( options.parentContext === 'info' || model.isShowingMADProperty.value );
+      needAtLeastOneKickText.visible = model.numberOfDataPointsProperty.value === 0 && ( options.parentContext === 'info' || model.isShowingMADProperty.value );
     };
     model.objectChangedEmitter.addListener( update );
     model.isShowingMADProperty.link( update );

@@ -46,7 +46,9 @@ const CAVConstants = {
   NUMBER_LINE_MARGIN_X: NUMBER_LINE_MARGIN_X,
 
   // TODO-design: This is the color from the design doc, but perhaps #777777 or darker would be better? Let's discuss once the IQR lines are drawn
-  GRAY_DATA_POINT_FILL: '#8f8f8f'
+  GRAY_DATA_POINT_FILL: '#8f8f8f',
+
+  INFO_DIALOG_MAX_TEXT_WIDTH: 400
 };
 
 centerAndVariability.register( 'CAVConstants', CAVConstants );

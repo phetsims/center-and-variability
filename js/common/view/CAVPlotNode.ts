@@ -9,7 +9,7 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import { Node, NodeOptions, Rectangle, TColor, Text } from '../../../../scenery/js/imports.js';
+import { ManualConstraint, Node, NodeOptions, Rectangle, TColor, Text } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import CAVModel from '../model/CAVModel.js';
 import CAVObject from '../model/CAVObject.js';
@@ -19,7 +19,6 @@ import CAVObjectType from '../model/CAVObjectType.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import NumberLineNode from './NumberLineNode.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
@@ -70,13 +69,18 @@ export default class CAVPlotNode extends Node {
       } );
     backgroundNode.addChild( numberLineNode );
 
-    backgroundNode.addChild( new Text( CenterAndVariabilityStrings.distanceInMetersStringProperty, {
+    const distanceInMetersText = new Text( CenterAndVariabilityStrings.distanceInMetersStringProperty, {
+      top: numberLineNode.bottom + 2,
+      maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH
+    } );
+    backgroundNode.addChild( distanceInMetersText );
+
+    ManualConstraint.create( this, [ numberLineNode, distanceInMetersText ], ( numberLineProxy, textProxy ) => {
 
       // TODO-UX: This may be asymmetrical if it accounts for edge labels
-      centerX: numberLineNode.centerX,
-      top: numberLineNode.bottom + 2,
-      font: new PhetFont( 13 )
-    } ) );
+      textProxy.centerX = numberLineProxy.centerX;
+    } );
+
     backgroundNode.addChild( this.dotLayer );
 
     // TODO: This overlaps with draggingEnabled

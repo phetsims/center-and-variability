@@ -1,8 +1,9 @@
 // Copyright 2023, University of Colorado Boulder
+// TODO: File description
 
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import MedianBarNode from '../../common/view/MedianBarNode.js';
-import { Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { ManualConstraint, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
@@ -26,11 +27,16 @@ export default class RangeNode extends CAVPlotNode {
       ...options
     } );
 
-    const needAtLeastOneKick = new Text( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {
+    const needAtLeastOneKickText = new Text( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {
       fontSize: 18,
-      top: 100
+      top: 100,
+      maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH
     } );
-    this.addChild( needAtLeastOneKick );
+
+    ManualConstraint.create( this, [ needAtLeastOneKickText ], textProxy => {
+      needAtLeastOneKickText.center = this.modelViewTransform.modelToViewXY( 8, 2 );
+    } );
+    this.addChild( needAtLeastOneKickText );
 
     // TODO: Combine into a single node?
     const rangeTextReadout = new Text( '', {
@@ -93,8 +99,7 @@ export default class RangeNode extends CAVPlotNode {
       rangeRectangle.visible = rangeVisibility;
       rangeBar.visible = rangeVisibility;
       rangeTextReadout.visible = rangeVisibility;
-      needAtLeastOneKick.center = this.modelViewTransform.modelToViewXY( 8, 2 );
-      needAtLeastOneKick.visible = model.numberOfDataPointsProperty.value === 0 && ( options.parentContext === 'info' ||
+      needAtLeastOneKickText.visible = model.numberOfDataPointsProperty.value === 0 && ( options.parentContext === 'info' ||
                                                                                      ( options.parentContext === 'accordion' && model.isShowingRangeProperty.value ) );
     };
     model.objectChangedEmitter.addListener( updateRangeNode );
