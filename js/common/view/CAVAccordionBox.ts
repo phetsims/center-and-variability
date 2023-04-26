@@ -34,6 +34,8 @@ const BUTTON_SIDE_LENGTH = 20;
 
 export default class CAVAccordionBox extends AccordionBox {
 
+  public readonly contentNode: Node;
+
   // NOTE: The positions of the passed-in nodes are modified directly, so they cannot be used in the scenery DAG
   public constructor( model: CAVModel, contentNode: Node, checkboxPanel: Node,
                       titleNode: Node, layoutBounds: Bounds2, providedOptions: CAVAccordionBoxOptions ) {
@@ -97,6 +99,8 @@ export default class CAVAccordionBox extends AccordionBox {
     super( backgroundNode, options );
 
     model.resetEmitter.addListener( () => this.reset() );
+
+    this.contentNode = contentNode;
   }
 }
 

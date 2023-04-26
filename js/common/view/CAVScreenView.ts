@@ -72,7 +72,7 @@ export default class CAVScreenView extends ScreenView {
   protected readonly medianPredictionNode: PredictionSlider;
   protected readonly meanPredictionNode: PredictionSlider;
 
-  private readonly accordionBox: CAVAccordionBox;
+  protected readonly accordionBox: CAVAccordionBox;
 
   protected readonly questionBar: QuestionBar;
   protected readonly playAreaNumberLineNode: NumberLineNode;
