@@ -14,7 +14,6 @@ import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import VariabilityMeasure from './VariabilityMeasure.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import CAVConstants from '../../common/CAVConstants.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
@@ -35,7 +34,7 @@ export default class VariabilityModel extends CAVModel {
 
   public constructor( options: VariabilityModelOptions ) {
     super( options );
-    this.selectedDistributionProperty = new EnumerationProperty( DistributionType.UNIFORM, {
+    this.selectedDistributionProperty = new EnumerationProperty( DistributionType.KICKER_1, {
       tandem: options.tandem.createTandem( 'selectedDistributionProperty' )
     } );
 
@@ -68,29 +67,15 @@ export default class VariabilityModel extends CAVModel {
       tandem: options.tandem.createTandem( 'isShowingPlayAreaVariabilityProperty' )
     } );
 
-    function gaussian( x: number, mu: number, sigma: number ): number {
-      const coefficient = 1.0 / Math.sqrt( 2.0 * Math.PI * Math.pow( sigma, 2 ) );
-      const exponent = Math.exp( -Math.pow( x - mu, 2 ) / ( 2 * Math.pow( sigma, 2 ) ) );
-      return coefficient * exponent;
-    }
-
-    // TODO-design: Decide on sigma?
-    const GAUSSIAN = _.range( 1, 16 ).map( x => gaussian( x, 8, 2 ) );
-
     this.selectedDistributionProperty.link( distribution => {
 
       // TODO: the parent class sets this incorrectly on reset
       // TODO: PhET-iO wants to be able to set these values
       this.distributionProperty.value =
-        distribution === DistributionType.UNIFORM ? [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] :
-        distribution === DistributionType.GAUSSIAN ? GAUSSIAN :
-
-          // TODO-design - is this the right distribution, or should it be left or switch between them?
-        distribution === DistributionType.SKEWED ? CAVConstants.RIGHT_SKEWED_DATA :
-
-          // Bimodal
-          // TODO-design: want to choose this distribution?
-          [ 1, 3, 5, 7, 4, 1, 1, 1, 1, 1, 4, 7, 5, 3, 1 ];
+        distribution === DistributionType.KICKER_1 ? [ 0, 0, 0, 1, 3, 10, 18, 20, 18, 10, 3, 1, 0, 0, 0 ] :
+        distribution === DistributionType.KICKER_2 ? [ 5, 5, 10, 10, 25, 30, 40, 50, 40, 30, 25, 10, 10, 5, 5 ] :
+        distribution === DistributionType.KICKER_3 ? [ 6, 9, 11, 14, 11, 8, 6, 5, 5, 5, 5, 5, 5, 5, 5 ] :
+          /*KICKER_4*/ [ 5, 5, 5, 5, 5, 5, 5, 5, 6, 8, 11, 14, 11, 9, 6 ];
     } );
   }
 

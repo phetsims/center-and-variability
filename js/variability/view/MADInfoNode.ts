@@ -15,7 +15,7 @@ import MADNode from './MADNode.js';
 export default class MADInfoNode extends VBox {
   public constructor( model: VariabilityModel, options: PickRequired<PhetioObject, 'tandem'> ) {
 
-    // TODO-design: Should we change this to >1 ? Since you need >1 to show a calculation?
+    // TODO: The design calls for a depiction of the mean location.  This is not yet implemented.
     const hasEnoughDataProperty = new DerivedProperty( [ model.numberOfDataPointsProperty ], numberOfDataPoints => numberOfDataPoints >= 1 );
 
     const numeratorText = new Text( '', { fontSize: 16 } );
@@ -31,7 +31,7 @@ export default class MADInfoNode extends VBox {
       numeratorText.string = madStrings.join( ' + ' );
       denominatorText.string = values.length.toString();
 
-      // TODO-design: If the roundings don't match up, should we keep adding decimal points until the roundings match?
+      // TODO: If the visually displayed values don't match, adjust a value so it does match. Do this in a stable way
       const sum = _.reduce( mads, ( sum, mad ) => sum + mad, 0 );
       resultNumeratorText.string = Utils.toFixed( sum, 1 );
       resultDenominatorText.string = values.length.toString();
@@ -75,7 +75,10 @@ export default class MADInfoNode extends VBox {
           visibleProperty: hasEnoughDataProperty
         } ),
 
-        // TODO-design: I changed the wording slightly from the design doc
+        // TODO-design: We discussed phrasing it as:
+        //  "MAD is the average distance between each point and the mean."
+        //  however, that seems too easy for someone to misread and think it is about distance between points. So should I leave it as
+        //  "MAD is the average distance from each point to the mean."
         new Text( new PatternStringProperty( CenterAndVariabilityStrings.madCalculationResultPatternStringProperty, {
           mad: new DerivedProperty( [ model.madValueProperty ], madValue => madValue === null ? null : Utils.toFixed( madValue, 1 ) )
         } ), { fontSize: 18, visibleProperty: hasEnoughDataProperty, maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH, layoutOptions: { bottomMargin: 10 } } ),

@@ -64,8 +64,7 @@ export default class KickButtonGroup extends VBox {
         tandem: tandem,
         listener: () => model.scheduleKicks( numberToKick ),
 
-        // TODO-DESIGN: It feels asymmetrical that holding down "kick 1" fires soccer balls but holding down "kick 5" does nothing
-        // TODO: Schedule for design meeting question
+        // The Kick 1 button can be held down for repeat kicks, but the Kick 5 cannot.
         fireOnHold: !multikick,
         fireOnHoldDelay: 750,
 

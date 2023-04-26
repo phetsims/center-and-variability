@@ -74,7 +74,7 @@ export default class CAVObjectNode extends Node {
     // TODO-UX: These should be edge to edge
     // TODO-UX: For small dots, there is an optical illusion or rasterizing/roundoff/aliasing issue that makes it
     // look lopsided (heavier on the left)
-    // TODO-DESIGN: This highlight is difficult to see.
+    // TODO: Make sure it is always in the front in z-ordering, sometimes it gets obscured by adjacent soccer balls
     const medianHighlight = new Circle( viewRadius + 1.75, {
       fill: CAVColors.medianColorProperty
     } );

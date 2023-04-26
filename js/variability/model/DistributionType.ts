@@ -12,10 +12,13 @@ import centerAndVariability from '../../centerAndVariability.js';
  */
 
 export default class DistributionType extends EnumerationValue {
-  public static readonly UNIFORM = new DistributionType();
-  public static readonly GAUSSIAN = new DistributionType();
-  public static readonly SKEWED = new DistributionType();
-  public static readonly BIMODAL = new DistributionType();
+  public static readonly KICKER_1 = new DistributionType();
+  public static readonly KICKER_2 = new DistributionType();
+  public static readonly KICKER_3 = new DistributionType();
+  public static readonly KICKER_4 = new DistributionType();
+
+  // TODO: Maybe in the preferences, we would also add a "custom" option that would allow the user to specify the
+  //  distribution parameters.
   private static readonly enumeration = new Enumeration( DistributionType, {} );
 }
 
