@@ -26,7 +26,8 @@
     ],
     "supportsOutputJS": true,
     "simFeatures": {
-      "supportsInteractiveDescription": true
+      "supportsInteractiveDescription": true,
+      "supportsDynamicLocale": true
     }
   },
   "eslintConfig": {

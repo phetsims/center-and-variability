@@ -24,7 +24,6 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import Panel from '../../../../sun/js/Panel.js';
 import CAVConstants from '../CAVConstants.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import MedianBarNode from './MedianBarNode.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
@@ -41,6 +40,7 @@ import Matrix3 from '../../../../dot/js/Matrix3.js';
 import DragIndicatorArrowNode from './DragIndicatorArrowNode.js';
 import TEmitter from '../../../../axon/js/TEmitter.js';
 import MedianModel from '../../median/model/MedianModel.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 
 // constants
 const CARD_SPACING = 10;
@@ -313,8 +313,9 @@ export default class CardNodeContainer extends Node {
     this.cardNodeCellsChangedEmitter.addListener( updateDragIndicator );
     this.hasDraggedCardProperty.link( updateDragIndicator );
 
-    const medianTextNode = new Text( '', {
-      font: CAVConstants.BUTTON_FONT
+    const medianTextNode = new Text( new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValueStringProperty, { value: model.medianValueProperty } ), {
+      font: CAVConstants.BUTTON_FONT,
+      maxWidth: 300
     } );
     const medianReadoutPanel = new Panel( medianTextNode, {
       stroke: 'lightgray',
@@ -322,12 +323,6 @@ export default class CardNodeContainer extends Node {
       cornerRadius: 4
     } );
     this.addChild( medianReadoutPanel );
-
-    model.medianValueProperty.link( medianValue => {
-
-      // TODO-PHET_IO: Re-center when the text changes since it could have a different width
-      medianTextNode.string = StringUtils.fillIn( CenterAndVariabilityStrings.medianEqualsValueStringProperty, { value: model.medianValueProperty.value } );
-    } );
 
     const updateMedianNode = () => {
 
@@ -366,6 +361,7 @@ export default class CardNodeContainer extends Node {
     model.medianValueProperty.link( updateMedianNode );
     model.isShowingTopMedianProperty.link( updateMedianNode );
     model.objectChangedEmitter.addListener( updateMedianNode );
+    medianTextNode.boundsProperty.link( updateMedianNode );
 
     this.model.resetEmitter.addListener( () => {
       totalDragDistanceProperty.reset();
