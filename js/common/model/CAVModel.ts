@@ -94,7 +94,7 @@ export default class CAVModel implements TModel {
   public readonly hasKickableSoccerBallsProperty: TReadOnlyProperty<boolean>;
 
   private readonly timeWhenLastBallWasKickedProperty: NumberProperty;
-  private readonly ballPlayerMap: Map<CAVObject, SoccerPlayer> = new Map<CAVObject, SoccerPlayer>(); // TODO: Add to PhET-iO State, see https://github.com/phetsims/center-and-variability/issues/128
+  private readonly ballPlayerMap: Map<CAVObject, SoccerPlayer> = new Map<CAVObject, SoccerPlayer>(); // TODO: Add to PhET-iO State, see https://github.com/phetsims/center-and-variability/issues/128.  Keep in mind we may avoid PhetioGroup
   protected readonly distributionProperty: Property<ReadonlyArray<number>>;
 
   public constructor( providedOptions: CAVModelOptions ) {
@@ -500,7 +500,7 @@ export default class CAVModel implements TModel {
       assert && assert( frontPlayerList.length === 1, 'incorrect number of front soccer players: ' + frontPlayerList.length );
       const frontPlayer = frontPlayerList[ 0 ];
 
-      // TODO: number of balls that exist but haven't been kicked???  See KickButtonGroup.
+      // TODO: number of balls that exist but haven't been kicked???  See KickButtonGroup. Also this may change if we ditch PhetioGroup
       const numberBallsThatExistButHaventBeenKicked = this.nextBallToKickProperty.value === null ? 0 : 1;
       if ( this.numberOfScheduledSoccerBallsToKickProperty.value > 0 &&
            this.numberOfRemainingObjectsProperty.value + numberBallsThatExistButHaventBeenKicked > 0 &&

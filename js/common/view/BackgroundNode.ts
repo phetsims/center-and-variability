@@ -2,7 +2,7 @@
 
 /**
  * Shows the sky and the ground. Reshapes to the visible bounds.
- * TODO: Should this be generalized and moved to scenery-phet? Should other sims use this?
+ * TODO: Should this be generalized and moved to scenery-phet? Should other sims use this? SR is now thinking maybe just leave it as sim-specific?
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
