@@ -34,9 +34,7 @@ const BUTTON_SIDE_LENGTH = 20;
 
 export default class CAVAccordionBox extends AccordionBox {
 
-  // TODO: In order to support the accordion box (screen 2) and panel (screen 3) with similar layouts,
-  // consider a panel that puts readouts on the left, data + number line in the middle, and
-  // checkboxes on the right.  Rather than duplicating that here is accordion box and the screen 3 panel.
+  // NOTE: The positions of the passed-in nodes are modified directly, so they cannot be used in the scenery DAG
   public constructor( model: CAVModel, contentNode: Node, checkboxPanel: Node,
                       titleNode: Node, layoutBounds: Bounds2, providedOptions: CAVAccordionBoxOptions ) {
 
