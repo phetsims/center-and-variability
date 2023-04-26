@@ -266,11 +266,7 @@ export default class CAVScreenView extends ScreenView {
       } );
     this.contentLayer.addChild( this.playAreaNumberLineNode );
 
-    const soccerPlayerNodes = model.soccerPlayers.map( soccerPlayer => {
-      return new SoccerPlayerNode( soccerPlayer, this.modelViewTransform, {
-        tandem: options.tandem.createTandem( 'soccerPlayerNodes' ).createTandem( 'soccerPlayerNode' + soccerPlayer.initialPlaceInLine )
-      } );
-    } );
+    const soccerPlayerNodes = model.soccerPlayers.map( soccerPlayer => new SoccerPlayerNode( soccerPlayer, this.modelViewTransform ) );
 
     soccerPlayerNodes.forEach( soccerPlayerNode => this.contentLayer.addChild( soccerPlayerNode ) );
 

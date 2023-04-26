@@ -175,10 +175,6 @@ export default class SoccerPlayerNode extends Node {
     }, providedOptions );
 
     this.mutate( options );
-
-    this.addLinkedElement( soccerPlayer.isActiveProperty, {
-      tandem: options.tandem?.createTandem( 'isActiveProperty' )
-    } );
   }
 }
 

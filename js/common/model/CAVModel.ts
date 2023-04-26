@@ -249,11 +249,7 @@ export default class CAVModel implements TModel {
       tandem: options.tandem.createTandem( 'timeWhenLastBallWasKickedProperty' )
     } );
 
-    this.soccerPlayers = _.range( 0, this.maxNumberOfObjects ).map( placeInLine => {
-      return new SoccerPlayer( placeInLine, {
-        tandem: options.tandem.createTandem( 'soccerPlayers' ).createTandem( 'soccerPlayer' + placeInLine )
-      } );
-    } );
+    this.soccerPlayers = _.range( 0, this.maxNumberOfObjects ).map( placeInLine => new SoccerPlayer( placeInLine ) );
 
     // Create an initial ball to show on startup
     this.nextBallToKickProperty = new Property<CAVObject | null>( this.createBall(), {

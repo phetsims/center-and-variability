@@ -8,10 +8,8 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import Property from '../../../../axon/js/Property.js';
 import Pose from './Pose.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 
 export default class SoccerPlayer {
@@ -23,15 +21,8 @@ export default class SoccerPlayer {
   public timestampWhenPoisedBegan: number | null = null;
   public readonly isActiveProperty: BooleanProperty;
 
-  public constructor( placeInLine: number, options: PickRequired<PhetioObject, 'tandem'> ) {
-
-    this.isActiveProperty = new BooleanProperty( placeInLine === 0, {
-      tandem: options.tandem.createTandem( 'isActiveProperty' ),
-
-      // This is updated by the CAVModel.activeKickerIndexProperty
-      phetioReadOnly: true
-    } );
-
+  public constructor( placeInLine: number ) {
+    this.isActiveProperty = new BooleanProperty( placeInLine === 0 );
     this.initialPlaceInLine = placeInLine;
   }
 
