@@ -74,7 +74,7 @@ export default class CAVObjectNode extends Node {
     // TODO-UX: These should be edge to edge
     // TODO-UX: For small dots, there is an optical illusion or rasterizing/roundoff/aliasing issue that makes it
     // look lopsided (heavier on the left)
-    // TODO-DESIGN: This highlight is difficult to see
+    // TODO-DESIGN: This highlight is difficult to see.
     const medianHighlight = new Circle( viewRadius + 1.75, {
       fill: CAVColors.medianColorProperty
     } );
@@ -121,7 +121,7 @@ export default class CAVObjectNode extends Node {
     // Center the nested Node for compatibility with DragListener
     childNode.center = Vector2.ZERO;
 
-    // TODO: CK: Better comment that explains why this nested layer is necessary
+    // TODO: Add a comment that explains why this nested layer is necessary
     this.addChild( childNode );
 
     this.addLinkedElement( cavObject, {
@@ -226,7 +226,7 @@ export default class CAVObjectNode extends Node {
     Multilink.unmultilink( this.medianHighlightVisibleMultilink );
     this.inputEnabledMultilink && Multilink.unmultilink( this.inputEnabledMultilink );
     this.selfInputEnabledProperty && this.selfInputEnabledProperty.dispose();
-    this.dragListener && this.hasInputListener( this.dragListener ) && this.removeInputListener( this.dragListener );  // TODO: is this needed?
+    this.dragListener && this.hasInputListener( this.dragListener ) && this.removeInputListener( this.dragListener );
     this.dragListener && this.dragListener.dispose();
     super.dispose();
   }

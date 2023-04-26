@@ -45,7 +45,7 @@ const CAVConstants = {
   CHART_VIEW_WIDTH: ScreenView.DEFAULT_LAYOUT_BOUNDS.width - NUMBER_LINE_MARGIN_X * 2,
   NUMBER_LINE_MARGIN_X: NUMBER_LINE_MARGIN_X,
 
-  // TODO: This is the color from the design doc, but perhaps #777777 or darker would be better? Let's discuss once the IQR lines are drawn
+  // TODO-design: This is the color from the design doc, but perhaps #777777 or darker would be better? Let's discuss once the IQR lines are drawn
   GRAY_DATA_POINT_FILL: '#8f8f8f'
 };
 

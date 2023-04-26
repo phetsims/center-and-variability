@@ -86,7 +86,7 @@ export default class CardNodeContainer extends Node {
 
     this.model = model;
 
-    // TODO-UX: maybe this should be converted to track distance for individual cards, see https://github.com/phetsims/center-and-variability/issues/150
+    // TODO-UX: maybe this should be converted to track distance for individual cards, see https://github.com/phetsims/center-and-variability/issues/111
     // Accumulated card drag distance, for purposes of hiding the drag indicator node
     const totalDragDistanceProperty = new NumberProperty( 0, {
       tandem: options.tandem.createTandem( 'totalDragDistanceProperty' ),

@@ -36,8 +36,6 @@ export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxG
       spacing: 5,
       grow: 1,
       rows: [ [
-
-        // TODO: this will be odd to a11y because both buttons have the same text.  Do we have alt text for the icons?  Or maybe we need alt text for the entire checkbox?
         new Node( { children: [ text ], layoutOptions: { xAlign: 'left' } } ),
         iconGroup.createBox( icon, { layoutOptions: { xAlign: 'right' }, xAlign: 'center' } )
       ] ]

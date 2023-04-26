@@ -41,14 +41,12 @@ export default class CAVPlotNode extends Node {
 
     super( options );
 
-    // TODO: Factor out height with accordion box height
     const backgroundNode = new Rectangle( 0, 0, CAVConstants.CHART_VIEW_WIDTH, 180 );
     this.addChild( backgroundNode );
 
-    const numberLinePositionY = 127;
-
     // scale down in the y direction to support smaller object nodes
     const yScale = CAVObjectType.DATA_POINT.radius / CAVObjectType.SOCCER_BALL.radius;
+    const numberLinePositionY = 127;
 
     // TODO: we currently define the y range with the x width because we are thinking of it as a square, with a stack of
     //  15 balls as the high point. Consider instead something like above, where we just base the y scaling on the height
