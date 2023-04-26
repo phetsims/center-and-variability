@@ -10,6 +10,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import CAVPlotNode, { CAVPlotOptions } from '../../common/view/CAVPlotNode.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import CAVColors from '../../common/CAVColors.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
@@ -22,7 +23,7 @@ export default class MADNode extends CAVPlotNode {
     const options = providedOptions;
 
     super( model, {
-      dataPointFill: CAVConstants.GRAY_DATA_POINT_FILL,
+      dataPointFill: CAVColors.grayDataPointFill,
       ...options
     } );
 

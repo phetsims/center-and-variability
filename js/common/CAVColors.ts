@@ -50,7 +50,10 @@ const CAVColors = {
 
   medianColorProperty: new ProfileColorProperty( centerAndVariability, 'medianColor', { default: '#f03000' } ),
   meanColorProperty: new ProfileColorProperty( centerAndVariability, 'meanColor', { default: '#8500bd' } ),
-  arrowStrokeProperty: new ProfileColorProperty( centerAndVariability, 'arrowStroke', { default: 'black' } )
+  arrowStrokeProperty: new ProfileColorProperty( centerAndVariability, 'arrowStroke', { default: 'black' } ),
+
+  // TODO-design: This is the color from the design doc, but perhaps #777777 or darker would be better? Let's discuss once the IQR lines are drawn
+  grayDataPointFill: new ProfileColorProperty( centerAndVariability, 'grayDataPointFill', { default: '#8f8f8f' } )
 };
 
 centerAndVariability.register( 'CAVColors', CAVColors );
