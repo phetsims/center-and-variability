@@ -39,6 +39,7 @@ import SoccerPlayerNode from './SoccerPlayerNode.js';
 import SoccerPlayer from '../model/SoccerPlayer.js';
 import merge from '../../../../phet-core/js/merge.js';
 import KickButtonGroup from './KickButtonGroup.js';
+import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';
 
 type SelfOptions = {
   bottomCheckboxGroupOptions?: StrictOmit<BottomRepresentationCheckboxGroupOptions, 'tandem'>;
@@ -185,14 +186,7 @@ export default class CAVScreenView extends ScreenView {
     const checkboxAlignBox = new AlignBox( this.bottomCheckboxGroup, { alignBounds: this.layoutBounds, xAlign: 'right', yAlign: 'bottom', xMargin: BOTTOM_CHECKBOX_PANEL_MARGIN, yMargin: BOTTOM_CHECKBOX_PANEL_Y_MARGIN } );
     this.addChild( checkboxAlignBox );
 
-    // TODO: Separate class?
-    this.playAreaMedianIndicatorNode = new ArrowNode( 0, 0, 0, 27, {
-      fill: CAVColors.medianColorProperty,
-      stroke: CAVColors.arrowStrokeProperty,
-      lineWidth: CAVConstants.ARROW_LINE_WIDTH,
-      headHeight: 12,
-      headWidth: 18
-    } );
+    this.playAreaMedianIndicatorNode = new PlayAreaMedianIndicatorNode();
     this.addChild( this.playAreaMedianIndicatorNode );
 
     const updateMedianNode = () => {
