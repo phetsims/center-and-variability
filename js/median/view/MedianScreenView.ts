@@ -21,7 +21,7 @@ import MedianAccordionBox from './MedianAccordionBox.js';
 type SelfOptions = EmptySelfOptions;
 type MedianScreenViewOptions =
   SelfOptions
-  & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
+  & StrictOmit<CAVScreenViewOptions, 'questionBarOptions' | 'bottomCheckboxGroupOptions'>;
 
 export default class MedianScreenView extends CAVScreenView {
 
@@ -33,16 +33,22 @@ export default class MedianScreenView extends CAVScreenView {
         questionString: CenterAndVariabilityStrings.medianQuestionStringProperty
       },
 
-      // TODO: Remove this option and just create things correctly in the subclass
+      // TODO: Remove this option and just create things correctly in the AccordionBox subclass
       bottomCheckboxGroupOptions: {
         includeMean: false,
-        includePredictMean: false
+        includePredictMean: false,
+        includePredictMedian: true,
+        includeMedian: true,
+        includeVariability: false
       }
     }, providedOptions );
 
     // TODO: Arg order looks scrambled, should it be unified or optionized?
-    super( model, ( tandem: Tandem, top: number, layoutBounds: Bounds2 ) =>
-      new MedianAccordionBox( model, layoutBounds, tandem, top ), options );
+    super( model,
+
+      // TODO: Can we just add this after super()?  Why does it have to be here?
+      ( tandem: Tandem, top: number, layoutBounds: Bounds2 ) =>
+        new MedianAccordionBox( model, layoutBounds, tandem, top ), options );
   }
 }
 

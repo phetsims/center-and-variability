@@ -42,7 +42,7 @@ import KickButtonGroup from './KickButtonGroup.js';
 import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';
 
 type SelfOptions = {
-  bottomCheckboxGroupOptions?: StrictOmit<BottomRepresentationCheckboxGroupOptions, 'tandem'>;
+  bottomCheckboxGroupOptions: StrictOmit<BottomRepresentationCheckboxGroupOptions, 'tandem'>;
   questionBarOptions: QuestionBarOptions;
 };
 

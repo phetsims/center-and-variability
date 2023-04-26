@@ -19,7 +19,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import MeanAndMedianAccordionBox from './MeanAndMedianAccordionBox.js';
 
-type MeanAndMedianScreenViewOptions = StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
+type MeanAndMedianScreenViewOptions = StrictOmit<CAVScreenViewOptions, 'questionBarOptions' | 'bottomCheckboxGroupOptions'>;
 
 export default class MeanAndMedianScreenView extends CAVScreenView {
 
@@ -29,6 +29,13 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
       questionBarOptions: {
         barFill: CAVColors.meanAndMedianQuestionBarFillColorProperty,
         questionString: CenterAndVariabilityStrings.meanAndMedianQuestionStringProperty
+      },
+      bottomCheckboxGroupOptions: {
+        includeMean: true,
+        includePredictMean: true,
+        includePredictMedian: true,
+        includeMedian: true,
+        includeVariability: false
       }
     }, providedOptions );
 

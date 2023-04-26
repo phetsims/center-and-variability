@@ -27,11 +27,11 @@ import VariabilityModel from '../../variability/model/VariabilityModel.js';
 type SelfOptions = {
 
   // TODO: Let each class create exactly what they want without these options
-  includeMedian?: boolean;
-  includeMean?: boolean;
-  includePredictMean?: boolean;
-  includePredictMedian?: boolean;
-  includeVariability?: boolean;
+  includeMedian: boolean;
+  includeMean: boolean;
+  includePredictMean: boolean;
+  includePredictMedian: boolean;
+  includeVariability: boolean;
 };
 export type BottomRepresentationCheckboxGroupOptions = SelfOptions & VerticalCheckboxGroupOptions &
   PickRequired<VerticalCheckboxGroupOptions, 'tandem'>;
@@ -47,11 +47,6 @@ export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxG
   public constructor( model: CAVModel, providedOptions?: BottomRepresentationCheckboxGroupOptions ) {
 
     const options = optionize<BottomRepresentationCheckboxGroupOptions, SelfOptions, VerticalCheckboxGroupOptions>()( {
-      includeMean: true,
-      includeMedian: true,
-      includePredictMean: true,
-      includePredictMedian: true,
-      includeVariability: false
     }, providedOptions );
 
     const items: VerticalCheckboxGroupItem[] = [];

@@ -24,7 +24,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import VariabilityAccordionBox from './VariabilityAccordionBox.js';
 
 type SelfOptions = EmptySelfOptions;
-type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
+type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions' | 'bottomCheckboxGroupOptions'>;
 
 export default class VariabilityScreenView extends CAVScreenView {
 
@@ -38,7 +38,9 @@ export default class VariabilityScreenView extends CAVScreenView {
       bottomCheckboxGroupOptions: {
         includeVariability: true,
         includePredictMean: false,
-        includePredictMedian: false
+        includePredictMedian: false,
+        includeMean: true,
+        includeMedian: true
       }
     }, providedOptions );
 
