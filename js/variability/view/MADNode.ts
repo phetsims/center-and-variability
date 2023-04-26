@@ -39,11 +39,7 @@ export default class MADNode extends CAVPlotNode {
 
     const madRectangle = new Rectangle( 0, 50, 100, 72, {
       fill: '#e0c0f5',
-      stroke: 'lightGray',
-
-      // TODO: We need the madRectangle to be in a back layer, behind the data points, with full opacity
-      // So we may need to split up the layers
-      opacity: 0.5
+      stroke: 'lightGray'
     } );
 
     const leftBar = new MedianBarNode( {
@@ -68,6 +64,7 @@ export default class MADNode extends CAVPlotNode {
 
     const lineContainer = new Node();
     this.addChild( madRectangle );
+    madRectangle.moveToBack();
     this.addChild( lineContainer );
 
     this.addChild( leftBar );

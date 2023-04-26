@@ -6,7 +6,6 @@ import centerAndVariability from '../../centerAndVariability.js';
 
 /**
  * DistributionType is used to identify the selected distribution type.
- * TODO: See also CAVConstants.RIGHT_SKEWED_DATA
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
@@ -18,7 +17,7 @@ export default class DistributionType extends EnumerationValue {
   public static readonly KICKER_4 = new DistributionType();
 
   // TODO: Maybe in the preferences, we would also add a "custom" option that would allow the user to specify the
-  //  distribution parameters.
+  //  distribution parameters. Or for PhET-iO, and query parameters
   private static readonly enumeration = new Enumeration( DistributionType, {} );
 }
 

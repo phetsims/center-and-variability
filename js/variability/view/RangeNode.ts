@@ -1,5 +1,10 @@
 // Copyright 2023, University of Colorado Boulder
-// TODO: File description
+
+/**
+ * RangeNode overlays a range indicator on the plot. It is used in both the accordion and info views.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
 
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import MedianBarNode from '../../common/view/MedianBarNode.js';
@@ -101,7 +106,7 @@ export default class RangeNode extends CAVPlotNode {
       rangeBar.visible = rangeVisibility;
       rangeTextReadout.visible = rangeVisibility;
       needAtLeastOneKickText.visible = model.numberOfDataPointsProperty.value === 0 && ( options.parentContext === 'info' ||
-                                                                                     ( options.parentContext === 'accordion' && model.isShowingRangeProperty.value ) );
+                                                                                         ( options.parentContext === 'accordion' && model.isShowingRangeProperty.value ) );
     };
     model.objectChangedEmitter.addListener( updateRangeNode );
     model.isShowingRangeProperty.link( updateRangeNode );

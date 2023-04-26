@@ -47,8 +47,7 @@ export default class IQRNode extends CAVPlotNode {
     const iqrRectangle = new Rectangle( 0, 50, 100, 70, {
       fill: '#99ffff',
 
-      // TODO: I wasn't sure whether to make this transparent or moveToBack on the boxWhiskerNode.
-      // TODO: Or do we want it fully opaque but in a background layer?
+      // TODO: moveToBack like in MADNode, and set opacity to 1.0
       opacity: 0.5
     } );
 
