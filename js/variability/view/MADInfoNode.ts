@@ -67,7 +67,7 @@ export default class MADInfoNode extends VBox {
             new Text( CenterAndVariabilityStrings.madCalculationPatternStringProperty, { fontSize: 18 } ),
             calculationFraction,
 
-            // TODO-design: We don't typically i18n math, and even if we did, we don't have a placeholder language
+            // TODO: We don't typically i18n math, and even if we did, we don't have a placeholder language
             // to put nodes in the placeholders. So probably this is good. But should be translate the equals sign anyways?
             new Text( '=', { fontSize: 18 } ),
             resultFraction

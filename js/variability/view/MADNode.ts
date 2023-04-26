@@ -41,8 +41,8 @@ export default class MADNode extends CAVPlotNode {
       fill: '#e0c0f5',
       stroke: 'lightGray',
 
-      // TODO-design: the numbers should be in front of the "x" marks, but the rectangle should be behind?  Or should the rectangle
-      // TODO: be partially transparent?
+      // TODO: We need the madRectangle to be in a back layer, behind the data points, with full opacity
+      // So we may need to split up the layers
       opacity: 0.5
     } );
 
