@@ -24,17 +24,17 @@ const RIGHT_SKEWED_DATA = [
 
 const NUMBER_LINE_MARGIN_X = 207;
 
+const MAIN_FONT = new PhetFont( 16 );
 const CAVConstants = {
   SCREEN_VIEW_X_MARGIN: 15,
   SCREEN_VIEW_Y_MARGIN: 15,
   GRAVITY: -9.8, // in meters/second^2
-  BUTTON_FONT: new PhetFont( 16 ),
+  MAIN_FONT: MAIN_FONT,
   NUMBER_OF_OBJECTS: 15, // number of objects in the play area on each screen
-  TOP_CHECKBOX_TEXT_MAX_WIDTH: 107,
+  CHECKBOX_TEXT_MAX_WIDTH: 107,
 
-  // the top checkboxes are left aligned with the plat area checkboxes, so their max width is smaller to accommodate
+  // the top checkboxes are left aligned with the play area checkboxes, so their max width is smaller to accommodate
   // for the accordion box margin
-  PLAY_AREA_CHECKBOX_TEXT_MAX_WIDTH: 90,
   PLOT_TYPE_PROPERTY: new EnumerationProperty( CAVQueryParameters.plotType === 'dotPlot' ? PlotType.DOT_PLOT : PlotType.LINE_PLOT, {
     tandem: Tandem.PREFERENCES.createTandem( 'plotTypeProperty' )
   } ),
@@ -45,7 +45,12 @@ const CAVConstants = {
   CHART_VIEW_WIDTH: ScreenView.DEFAULT_LAYOUT_BOUNDS.width - NUMBER_LINE_MARGIN_X * 2,
   NUMBER_LINE_MARGIN_X: NUMBER_LINE_MARGIN_X,
 
-  INFO_DIALOG_MAX_TEXT_WIDTH: 400
+  INFO_DIALOG_MAX_TEXT_WIDTH: 400,
+
+  CHECKBOX_TEXT_OPTIONS: {
+    font: MAIN_FONT,
+    maxWidth: 90
+  }
 };
 
 centerAndVariability.register( 'CAVConstants', CAVConstants );

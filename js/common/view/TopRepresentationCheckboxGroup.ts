@@ -38,10 +38,6 @@ const ICON_WIDTH = 24;
 
 // TODO: Unify with line with in MedianBarNode?
 const LINE_WIDTH = 2;
-const TEXT_OPTIONS = {
-  font: CAVConstants.BUTTON_FONT,
-  maxWidth: CAVConstants.PLAY_AREA_CHECKBOX_TEXT_MAX_WIDTH
-};
 
 export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
@@ -55,7 +51,7 @@ export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGrou
 
     const items: VerticalCheckboxGroupItem[] = [];
     options.includeSortData && items.push( {
-      createNode: ( tandem: Tandem ) => new Text( CenterAndVariabilityStrings.sortDataStringProperty, TEXT_OPTIONS ),
+      createNode: ( tandem: Tandem ) => new Text( CenterAndVariabilityStrings.sortDataStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
       property: ( model as MedianModel ).isSortingDataProperty,
       tandemName: 'sortDataCheckbox'
     } );
@@ -63,7 +59,7 @@ export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGrou
       createNode: ( tandem: Tandem ) => new HBox( {
         spacing: 12,
         children: [
-          new Text( CenterAndVariabilityStrings.medianStringProperty, TEXT_OPTIONS ),
+          new Text( CenterAndVariabilityStrings.medianStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
           ...options.showMedianCheckboxIcon ? [
             new MedianBarNode( options.medianBarIconOptions )
               .setMedianBarShape( 0, 0, ICON_WIDTH / 2 - LINE_WIDTH / 2, ICON_WIDTH - LINE_WIDTH, true )
@@ -80,7 +76,7 @@ export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGrou
         // TODO: align icons
         spacing: 24.5,
         children: [
-          new Text( CenterAndVariabilityStrings.meanStringProperty, TEXT_OPTIONS ),
+          new Text( CenterAndVariabilityStrings.meanStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
           new Node( {
             children: [
 

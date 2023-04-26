@@ -314,7 +314,7 @@ export default class CardNodeContainer extends Node {
     this.hasDraggedCardProperty.link( updateDragIndicator );
 
     const medianTextNode = new Text( new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValueStringProperty, { value: model.medianValueProperty } ), {
-      font: CAVConstants.BUTTON_FONT,
+      font: CAVConstants.MAIN_FONT,
       maxWidth: 300
     } );
     const medianReadoutPanel = new Panel( medianTextNode, {

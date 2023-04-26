@@ -18,12 +18,6 @@ import CAVConstants from '../../common/CAVConstants.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 
-// TODO: Copied from somewhere. What's the best pattern?
-const TEXT_OPTIONS = {
-  font: CAVConstants.BUTTON_FONT,
-  maxWidth: CAVConstants.PLAY_AREA_CHECKBOX_TEXT_MAX_WIDTH
-};
-
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 
   public constructor( model: VariabilityModel, layoutBounds: Bounds2, tandem: Tandem, top: number ) {
@@ -59,17 +53,17 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         value: VariabilityMeasure.RANGE,
 
         // TODO: Different string value? For now, use the same string for the accordion box title and checkbox, and a different one for the value equals pattern
-        createNode: tandem => new Checkbox( model.isShowingRangeProperty, new Text( CenterAndVariabilityStrings.rangeStringProperty, TEXT_OPTIONS ), {
+        createNode: tandem => new Checkbox( model.isShowingRangeProperty, new Text( CenterAndVariabilityStrings.rangeStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ), {
           tandem: tandem.createTandem( 'rangeCheckbox' )
         } )
       }, {
         value: VariabilityMeasure.IQR,
-        createNode: tandem => new Checkbox( model.isShowingIQRProperty, new Text( CenterAndVariabilityStrings.iqrStringProperty, TEXT_OPTIONS ), {
+        createNode: tandem => new Checkbox( model.isShowingIQRProperty, new Text( CenterAndVariabilityStrings.iqrStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ), {
           tandem: tandem.createTandem( 'iqrCheckbox' )
         } )
       }, {
         value: VariabilityMeasure.MAD,
-        createNode: tandem => new Checkbox( model.isShowingMADProperty, new Text( CenterAndVariabilityStrings.madStringProperty, TEXT_OPTIONS ), {
+        createNode: tandem => new Checkbox( model.isShowingMADProperty, new Text( CenterAndVariabilityStrings.madStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ), {
           tandem: tandem.createTandem( 'madCheckbox' )
         } )
       }

@@ -24,8 +24,8 @@ import VariabilityModel from '../../variability/model/VariabilityModel.js';
 
 // constants
 const TEXT_OPTIONS = {
-  font: CAVConstants.BUTTON_FONT,
-  maxWidth: CAVConstants.TOP_CHECKBOX_TEXT_MAX_WIDTH
+  font: CAVConstants.MAIN_FONT,
+  maxWidth: CAVConstants.CHECKBOX_TEXT_MAX_WIDTH
 };
 
 export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {

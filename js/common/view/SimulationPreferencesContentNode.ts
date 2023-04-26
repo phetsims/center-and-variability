@@ -26,7 +26,8 @@ export default class SimulationPreferencesContentNode extends VBox {
     } );
 
     const TEXT_OPTIONS = {
-      font: PreferencesDialog.CONTENT_FONT
+      font: PreferencesDialog.CONTENT_FONT,
+      maxWidth: PreferencesDialog.CONTENT_MAX_WIDTH
     };
     const radioButtonGroup = new VerticalAquaRadioButtonGroup<PlotType>( CAVConstants.PLOT_TYPE_PROPERTY, [ {
       createNode: () => new Text( CenterAndVariabilityStrings.linePlotStringProperty, TEXT_OPTIONS ),
