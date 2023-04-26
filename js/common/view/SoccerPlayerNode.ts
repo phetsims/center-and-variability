@@ -165,16 +165,20 @@ export default class SoccerPlayerNode extends Node {
       this.centerBottom = modelViewTransform.modelToViewPosition( new Vector2( 0, 0 ) ).plusXY( -28, 8.5 );
     } );
 
-    soccerPlayer.placeInLineProperty.link( placeInLine => {
-      this.visible = placeInLine === 0;
+    soccerPlayer.isActiveProperty.link( isActive => {
+      this.visible = isActive;
     } );
 
     const options = optionize<SoccerPlayerNodeOptions, SelfOptions, NodeOptions>()( {
-      phetioDynamicElement: true,
-      excludeInvisibleChildrenFromBounds: false
+      excludeInvisibleChildrenFromBounds: false,
+      phetioVisiblePropertyInstrumented: false
     }, providedOptions );
 
     this.mutate( options );
+
+    this.addLinkedElement( soccerPlayer.isActiveProperty, {
+      tandem: options.tandem?.createTandem( 'isActiveProperty' )
+    } );
   }
 }
 

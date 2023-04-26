@@ -32,7 +32,6 @@ import NumberLineNode from './NumberLineNode.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import BackgroundNode from './BackgroundNode.js';
 import SoccerPlayerNode from './SoccerPlayerNode.js';
-import SoccerPlayer from '../model/SoccerPlayer.js';
 import merge from '../../../../phet-core/js/merge.js';
 import KickButtonGroup from './KickButtonGroup.js';
 import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';
@@ -266,36 +265,13 @@ export default class CAVScreenView extends ScreenView {
       } );
     this.contentLayer.addChild( this.playAreaNumberLineNode );
 
-    const soccerPlayerNodeGroup = new PhetioGroup<SoccerPlayerNode, [ SoccerPlayer ]>( ( tandem, soccerPlayer ) => {
+    const soccerPlayerNodes = model.soccerPlayers.map( soccerPlayer => {
       return new SoccerPlayerNode( soccerPlayer, this.modelViewTransform, {
-        tandem: tandem
+        tandem: options.tandem.createTandem( 'soccerPlayerNodes' ).createTandem( 'soccerPlayerNode' + soccerPlayer.initialPlaceInLine )
       } );
-    }, () => [ model.soccerPlayerGroup.archetype ], {
-      phetioType: PhetioGroup.PhetioGroupIO( Node.NodeIO ),
-      tandem: options.tandem.createTandem( 'soccerPlayerNodeGroup' ),
-      supportsDynamicState: false
     } );
 
-    // A layer for the soccer players, so we can adjust their z-ordering within that layer
-    const soccerPlayerLayer = new Node();
-    const createSoccerPlayerNode = ( soccerPlayer: SoccerPlayer ) => {
-      const soccerPlayerNode = soccerPlayerNodeGroup.createCorrespondingGroupElement( soccerPlayer.tandem.name, soccerPlayer );
-      soccerPlayerLayer.addChild( soccerPlayerNode );
-
-      // TODO: Document why this is correct (since it seems counterintuitive)
-      soccerPlayerNode.moveToBack();
-    };
-    this.contentLayer.addChild( soccerPlayerLayer );
-    model.soccerPlayerGroup.forEach( createSoccerPlayerNode );
-    model.soccerPlayerGroup.elementCreatedEmitter.addListener( createSoccerPlayerNode );
-
-    model.soccerPlayerGroup.elementDisposedEmitter.addListener( soccerPlayer => {
-      const viewNode = soccerPlayerNodeGroup.getArray().find( soccerPlayerNode => soccerPlayerNode.soccerPlayer === soccerPlayer )!;
-      soccerPlayerNodeGroup.disposeElement( viewNode );
-    } );
-
-    // 0th soccer player is at the front of the line, and should also be in the front in z-ordering
-    soccerPlayerNodeGroup.getArrayCopy().reverse().forEach( soccerPlayerNode => soccerPlayerNode.moveToFront() );
+    soccerPlayerNodes.forEach( soccerPlayerNode => this.contentLayer.addChild( soccerPlayerNode ) );
 
     this.questionBar = new QuestionBar( this.layoutBounds, this.visibleBoundsProperty, merge( {
       tandem: options.tandem.createTandem( 'questionBar' )

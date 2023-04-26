@@ -8,51 +8,28 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import IOType from '../../../../tandem/js/types/IOType.js';
-import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import Property from '../../../../axon/js/Property.js';
 import Pose from './Pose.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 
-type SelfOptions = EmptySelfOptions;
-type SoccerPlayerOptions =
-  SelfOptions
-  & PhetioObjectOptions
-  & PickRequired<PhetioObjectOptions, 'tandem'>;
-
-export default class SoccerPlayer extends PhetioObject {
+export default class SoccerPlayer {
   public readonly poseProperty = new Property<Pose>( Pose.STANDING );
-  public readonly placeInLineProperty: NumberProperty;
-  public static readonly SoccerPlayerIO = new IOType( 'SoccerPlayerIO', {
-    valueType: SoccerPlayer,
-    toStateObject: ( soccerPlayer: SoccerPlayer ) => ( { initialPlaceInLine: soccerPlayer.initialPlaceInLine } ),
-    stateObjectToCreateElementArguments: ( stateObject: SoccerPlayerState ) => {
-      return [ stateObject.initialPlaceInLine ];
-    },
-    stateSchema: {
-      initialPlaceInLine: NumberIO
-    }
-  } );
 
   // Also used to determine the artwork for rendering the SoccerPlayerNode
   public readonly initialPlaceInLine: number;
 
   public timestampWhenPoisedBegan: number | null = null;
+  public readonly isActiveProperty: BooleanProperty;
 
-  public constructor( placeInLine: number, providedOptions: SoccerPlayerOptions ) {
+  public constructor( placeInLine: number, options: PickRequired<PhetioObject, 'tandem'> ) {
 
-    const options = optionize<SoccerPlayerOptions, SelfOptions, PhetioObjectOptions>()( {
-      phetioType: SoccerPlayer.SoccerPlayerIO,
-      phetioDynamicElement: true
-    }, providedOptions );
+    this.isActiveProperty = new BooleanProperty( placeInLine === 0, {
+      tandem: options.tandem.createTandem( 'isActiveProperty' ),
 
-    super( options );
-
-    this.placeInLineProperty = new NumberProperty( placeInLine, {
-      tandem: options.tandem.createTandem( 'placeInLineProperty' )
+      // This is updated by the CAVModel.activeKickerIndexProperty
+      phetioReadOnly: true
     } );
 
     this.initialPlaceInLine = placeInLine;
@@ -61,15 +38,6 @@ export default class SoccerPlayer extends PhetioObject {
   public reset(): void {
     this.poseProperty.reset();
   }
-
-  public override dispose(): void {
-    this.placeInLineProperty.dispose();
-    super.dispose();
-  }
 }
-
-type SoccerPlayerState = {
-  initialPlaceInLine: number;
-};
 
 centerAndVariability.register( 'SoccerPlayer', SoccerPlayer );

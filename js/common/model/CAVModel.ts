@@ -87,15 +87,17 @@ export default class CAVModel implements TModel {
   public readonly resetEmitter: TEmitter = new Emitter();
   public readonly numberOfDataPointsProperty: NumberProperty;
 
-  public readonly soccerPlayerGroup: PhetioGroup<SoccerPlayer, [ number ]>;
+  public readonly soccerPlayers: SoccerPlayer[];
+
   private readonly nextBallToKickProperty: Property<CAVObject | null>; // Null if there is no more ball to kick
   private readonly numberOfScheduledSoccerBallsToKickProperty: NumberProperty;
   public readonly numberOfRemainingKickableSoccerBallsProperty: TReadOnlyProperty<number>;
   public readonly hasKickableSoccerBallsProperty: TReadOnlyProperty<boolean>;
-
   private readonly timeWhenLastBallWasKickedProperty: NumberProperty;
-  private readonly ballPlayerMap: Map<CAVObject, SoccerPlayer> = new Map<CAVObject, SoccerPlayer>(); // TODO: Add to PhET-iO State, see https://github.com/phetsims/center-and-variability/issues/128.  Keep in mind we may avoid PhetioGroup
   protected readonly distributionProperty: Property<ReadonlyArray<number>>;
+
+  // Starting at 0, iterate through the index of the kickers. This updates the SoccerPlayer.isActiveProperty to show the current kicker
+  private readonly activeKickerIndexProperty: NumberProperty;
 
   public constructor( providedOptions: CAVModelOptions ) {
 
@@ -247,16 +249,11 @@ export default class CAVModel implements TModel {
       tandem: options.tandem.createTandem( 'timeWhenLastBallWasKickedProperty' )
     } );
 
-    this.soccerPlayerGroup = new PhetioGroup( ( tandem: Tandem, placeInLine: number ) => {
+    this.soccerPlayers = _.range( 0, this.maxNumberOfObjects ).map( placeInLine => {
       return new SoccerPlayer( placeInLine, {
-        tandem: tandem
+        tandem: options.tandem.createTandem( 'soccerPlayers' ).createTandem( 'soccerPlayer' + placeInLine )
       } );
-    }, [ 0 ], {
-      phetioType: PhetioGroup.PhetioGroupIO( SoccerPlayer.SoccerPlayerIO ),
-      tandem: options.tandem.createTandem( 'soccerPlayerGroup' )
     } );
-
-    this.populateSoccerPlayerGroup();
 
     // Create an initial ball to show on startup
     this.nextBallToKickProperty = new Property<CAVObject | null>( this.createBall(), {
@@ -289,9 +286,7 @@ export default class CAVModel implements TModel {
     this.objectValueBecameNonNullEmitter.addListener( cavObject => {
 
       // If the soccer player that kicked that ball was still in line when the ball lands, they can leave the line now.
-      if ( this.soccerPlayerGroup.includes( this.ballPlayerMap.get( cavObject )! ) ) {
-        this.advanceLine();
-      }
+      this.advanceLine();
 
       if ( this.numberOfRemainingObjectsProperty.value > 0 && this.nextBallToKickProperty.value === null ) {
         this.nextBallToKickProperty.value = this.createBall();
@@ -305,6 +300,16 @@ export default class CAVModel implements TModel {
             this.soccerBallLandedListener( cavObject, value );
           }
         }
+      } );
+    } );
+
+    this.activeKickerIndexProperty = new NumberProperty( 0, {
+      tandem: options.tandem.createTandem( 'activeKickerIndexProperty' )
+    } );
+
+    this.activeKickerIndexProperty.link( activeKickerIndex => {
+      this.soccerPlayers.forEach( ( soccerPlayer, index ) => {
+        soccerPlayer.isActiveProperty.value = index === activeKickerIndex;
       } );
     } );
   }
@@ -448,10 +453,10 @@ export default class CAVModel implements TModel {
     this.numberOfScheduledSoccerBallsToKickProperty.reset();
     this.timeProperty.reset();
     this.timeWhenLastBallWasKickedProperty.reset();
-    this.ballPlayerMap.clear();
-    this.soccerPlayerGroup.clear();
-    this.populateSoccerPlayerGroup();
     this.nextBallToKickProperty.value = this.createBall();
+    this.activeKickerIndexProperty.reset();
+
+    this.soccerPlayers.forEach( soccerPlayer => soccerPlayer.reset() );
   }
 
   /**
@@ -492,13 +497,9 @@ export default class CAVModel implements TModel {
     this.timeProperty.value += dt;
     this.objectGroup.forEach( cavObject => cavObject.step( dt ) );
 
+    const frontPlayer = this.soccerPlayers[ this.activeKickerIndexProperty.value ];
 
-    const frontPlayerList = this.soccerPlayerGroup.filter( soccerPlayer => soccerPlayer.placeInLineProperty.value === 0 );
-
-    if ( frontPlayerList.length > 0 ) {
-
-      assert && assert( frontPlayerList.length === 1, 'incorrect number of front soccer players: ' + frontPlayerList.length );
-      const frontPlayer = frontPlayerList[ 0 ];
+    if ( frontPlayer ) {
 
       // TODO: number of balls that exist but haven't been kicked???  See KickButtonGroup. Also this may change if we ditch PhetioGroup
       const numberBallsThatExistButHaventBeenKicked = this.nextBallToKickProperty.value === null ? 0 : 1;
@@ -513,9 +514,6 @@ export default class CAVModel implements TModel {
           // TODO-UX-HIGH: A ball is being created too soon, when using the multikick button
           this.nextBallToKickProperty.value = this.createBall();
         }
-
-        // TODO: Why is this called here? https://github.com/phetsims/center-and-variability/issues/59
-        this.advanceLine();
 
         assert && assert( this.nextBallToKickProperty.value !== null, 'there was no ball to kick' );
 
@@ -542,25 +540,11 @@ export default class CAVModel implements TModel {
   // When a ball lands, or when the next player is supposed to kick (before the ball lands), move the line forward
   private advanceLine(): void {
 
-    // if the previous ball was still in the air, we need to move the line forward so the next player can kick
-    const kickingPlayers = this.soccerPlayerGroup.filter( soccerPlayer => soccerPlayer.poseProperty.value === Pose.KICKING );
-    assert && assert( kickingPlayers.length === 0 || kickingPlayers.length === 1, 'Too many kickers' );
-    if ( kickingPlayers.length === 1 ) {
-
-      const soccerPlayersToDispose: SoccerPlayer[] = [];
-
-      this.soccerPlayerGroup.forEach( soccerPlayer => {
-        if ( soccerPlayer.placeInLineProperty.value === 0 ) {
-          soccerPlayersToDispose.push( soccerPlayer );
-        }
-        else {
-          soccerPlayer.placeInLineProperty.value--;
-        }
-      } );
-
-      assert && assert( soccerPlayersToDispose.length === 1, 'should always dispose the front soccer player only' );
-      soccerPlayersToDispose.forEach( soccerPlayer => this.soccerPlayerGroup.disposeElement( soccerPlayer ) );
+    let nextIndex = this.activeKickerIndexProperty.value + 1;
+    if ( nextIndex > this.maxNumberOfObjects ) {
+      nextIndex = 0;
     }
+    this.activeKickerIndexProperty.value = nextIndex;
   }
 
   private static chooseDistribution(): ReadonlyArray<number> {
@@ -631,8 +615,6 @@ export default class CAVModel implements TModel {
   private kickBall( soccerPlayer: SoccerPlayer, cavObject: CAVObject ): void {
     soccerPlayer.poseProperty.value = Pose.KICKING;
 
-    this.ballPlayerMap.set( cavObject, soccerPlayer );
-
     // Test that the sampling engine is working properly
     // TODO: Where should these tests live? Should it be in the unit tests? Or in dot?
     // const array = new Array( weights.length );
@@ -670,10 +652,6 @@ export default class CAVModel implements TModel {
 
     // New ball will be created later in step
     this.nextBallToKickProperty.value = null;
-  }
-
-  private populateSoccerPlayerGroup(): void {
-    _.times( this.maxNumberOfObjects, index => this.soccerPlayerGroup.createNextElement( index ) );
   }
 }
 
