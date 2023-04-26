@@ -44,12 +44,10 @@ export default class RangeNode extends CAVPlotNode {
     } );
     this.addChild( needAtLeastOneKickText );
 
-    // TODO: Combine into a single node?
     const rangeTextReadout = new Text( '', {
       font: new PhetFont( 13 )
     } );
 
-    // TODO: Rename if we continue to use it here like this
     const rangeBar = new MedianBarNode( {
       notchDirection: 'down',
       barStyle: 'continuous',
@@ -95,8 +93,7 @@ export default class RangeNode extends CAVPlotNode {
 
         rangeBar.setMedianBarShape( rangeRectangle.top - MedianBarNode.NOTCH_HEIGHT - 2, rangeRectangle.left, 0, rangeRectangle.right, false );
 
-        // TODO: How to simplify this logic? Or will it help when things are combined?
-        rangeTextReadout.string = rightmostDot.valueProperty.value! - leftmostDot.valueProperty.value!;
+        rangeTextReadout.string = model.rangeValueProperty.value + '';
         rangeTextReadout.centerX = rangeRectangle.centerX;
         rangeTextReadout.bottom = rangeBar.top - 5;
       }
