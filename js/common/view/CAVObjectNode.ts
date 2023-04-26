@@ -110,7 +110,7 @@ export default class CAVObjectNode extends Node {
     } );
 
     const childNode = options.objectViewType === CAVObjectType.SOCCER_BALL ? soccerBallNodes :
-                      options.objectViewType === CAVObjectType.DOT ? createPlotMarker() :
+                      options.objectViewType === CAVObjectType.DATA_POINT ? createPlotMarker() :
                       new ShadedSphereNode( options.objectViewType.radius * 2 );
     childNode.maxWidth = viewRadius * 2;
 
@@ -200,7 +200,7 @@ export default class CAVObjectNode extends Node {
     this.medianHighlightVisibleMultilink = Multilink.multilink(
       [ cavObject.isMedianObjectProperty, isShowingPlayAreaMedianProperty, cavObject.isShowingAnimationHighlightProperty ],
       ( isMedianObject, isShowingPlayAreaMedian, isShowingAnimationHighlight ) => {
-        medianHighlight.visible = options.objectViewType === CAVObjectType.DOT ? isShowingAnimationHighlight :
+        medianHighlight.visible = options.objectViewType === CAVObjectType.DATA_POINT ? isShowingAnimationHighlight :
                                   isShowingPlayAreaMedian && isMedianObject;
       } );
 

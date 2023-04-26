@@ -176,12 +176,15 @@ export default class CAVModel implements TModel {
     } );
     this.dataRangeProperty = new Property<Range | null>( null );
 
-    // TODO: phet-io instrumentation for all screens? probably
     this.maxValueProperty = new DerivedProperty( [ this.dataRangeProperty ], dataRange => {
       return dataRange === null ? null : dataRange.max;
+    }, {
+      tandem: options.tandem.createTandem( 'maxValueProperty' )
     } );
     this.minValueProperty = new DerivedProperty( [ this.dataRangeProperty ], dataRange => {
       return dataRange === null ? null : dataRange.min;
+    }, {
+      tandem: options.tandem.createTandem( 'minValueProperty' )
     } );
     this.rangeValueProperty = new DerivedProperty( [ this.maxValueProperty, this.minValueProperty ], ( max, min ) => {
       if ( max === null || min === null ) {
@@ -190,6 +193,8 @@ export default class CAVModel implements TModel {
       else {
         return max - min;
       }
+    }, {
+      tandem: options.tandem.createTandem( 'rangeValueProperty' )
     } );
     this.numberOfDataPointsProperty = new NumberProperty( 0 );
 
@@ -239,7 +244,6 @@ export default class CAVModel implements TModel {
     this.objectValueBecameNonNullEmitter = new Emitter<[ CAVObject ]>( {
       parameters: [ { valueType: CAVObject } ]
     } );
-
 
     this.numberOfScheduledSoccerBallsToKickProperty = new NumberProperty( 0, {
       tandem: options.tandem.createTandem( 'numberOfScheduledSoccerBallsToKickProperty' )
@@ -635,7 +639,7 @@ export default class CAVModel implements TModel {
     this.ballPlayerMap.set( cavObject, soccerPlayer );
 
     // Test that the sampling engine is working properly
-    // TODO: Move to unit tests in dot?
+    // TODO: Where should these tests live? Should it be in the unit tests? Or in dot?
     // const array = new Array( weights.length );
     // _.fill( array, 0, 0, array.length );
     // for ( let i = 0; i < 1000000; i++ ) {
