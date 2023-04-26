@@ -77,7 +77,6 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
         layoutBounds, {
           leftMargin: 0,
           tandem: tandem,
-          contentNodeOffsetY: 0,
           top: top,
           valueReadoutsNode: new ValueReadoutsNode( model ),
           centerX: layoutBounds.centerX

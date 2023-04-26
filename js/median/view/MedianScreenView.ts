@@ -66,7 +66,6 @@ export default class MedianScreenView extends CAVScreenView {
         layoutBounds, {
           leftMargin: 0,
           tandem: tandem,
-          contentNodeOffsetY: -6,
           top: top,
           valueReadoutsNode: null,
           centerX: layoutBounds.centerX

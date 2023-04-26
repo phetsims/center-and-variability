@@ -21,7 +21,6 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = {
   valueReadoutsNode: ValueReadoutsNode | null;
-  contentNodeOffsetY: number;
   leftMargin: number;
 };
 export type CAVAccordionBoxOptions =
@@ -85,9 +84,7 @@ export default class CAVAccordionBox extends AccordionBox {
     checkboxPanel.right = backgroundNode.right - CONTENT_MARGIN;
     backgroundNode.addChild( checkboxPanel );
 
-    // TODO: SR says: Perhaps use x and y instead of center in order to vertically center the content, then
-    // options.contentNodeOffsetY should be omitted
-    contentNode.centerY = fullBackgroundBounds.centerY + options.contentNodeOffsetY;
+    contentNode.centerY = fullBackgroundBounds.centerY;
     backgroundNode.addChild( contentNode );
 
     if ( options.valueReadoutsNode ) {

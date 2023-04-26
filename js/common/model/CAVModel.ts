@@ -179,12 +179,14 @@ export default class CAVModel implements TModel {
     this.maxValueProperty = new DerivedProperty( [ this.dataRangeProperty ], dataRange => {
       return dataRange === null ? null : dataRange.max;
     }, {
-      tandem: options.tandem.createTandem( 'maxValueProperty' )
+      tandem: options.tandem.createTandem( 'maxValueProperty' ),
+      phetioValueType: NullableIO( NumberIO )
     } );
     this.minValueProperty = new DerivedProperty( [ this.dataRangeProperty ], dataRange => {
       return dataRange === null ? null : dataRange.min;
     }, {
-      tandem: options.tandem.createTandem( 'minValueProperty' )
+      tandem: options.tandem.createTandem( 'minValueProperty' ),
+      phetioValueType: NullableIO( NumberIO )
     } );
     this.rangeValueProperty = new DerivedProperty( [ this.maxValueProperty, this.minValueProperty ], ( max, min ) => {
       if ( max === null || min === null ) {
@@ -194,7 +196,8 @@ export default class CAVModel implements TModel {
         return max - min;
       }
     }, {
-      tandem: options.tandem.createTandem( 'rangeValueProperty' )
+      tandem: options.tandem.createTandem( 'rangeValueProperty' ),
+      phetioValueType: NullableIO( NumberIO )
     } );
     this.numberOfDataPointsProperty = new NumberProperty( 0 );
 

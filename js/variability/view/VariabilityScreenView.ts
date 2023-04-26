@@ -119,7 +119,6 @@ export default class VariabilityScreenView extends CAVScreenView {
         layoutBounds, {
           leftMargin: 70,
           tandem: tandem,
-          contentNodeOffsetY: 0,
           top: top,
           valueReadoutsNode: new VariabilityReadoutsNode( model ),
           right: layoutBounds.right - CAVConstants.SCREEN_VIEW_X_MARGIN
