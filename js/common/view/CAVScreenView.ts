@@ -8,7 +8,7 @@
  */
 
 import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
-import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVModel from '../model/CAVModel.js';
 import CAVConstants from '../CAVConstants.js';
@@ -16,17 +16,15 @@ import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.j
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
 import CAVObjectNode from './CAVObjectNode.js';
-import { AlignBox, Node } from '../../../../scenery/js/imports.js';
+import { Node } from '../../../../scenery/js/imports.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import CAVObject from '../model/CAVObject.js';
-import BottomRepresentationCheckboxGroup, { BottomRepresentationCheckboxGroupOptions } from './BottomRepresentationCheckboxGroup.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import PredictionSlider from './PredictionSlider.js';
 import CAVColors from '../CAVColors.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DragIndicatorArrowNode from './DragIndicatorArrowNode.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Property from '../../../../axon/js/Property.js';
 import Range from '../../../../dot/js/Range.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -42,7 +40,6 @@ import KickButtonGroup from './KickButtonGroup.js';
 import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';
 
 type SelfOptions = {
-  bottomCheckboxGroupOptions: StrictOmit<BottomRepresentationCheckboxGroupOptions, 'tandem'>;
   questionBarOptions: QuestionBarOptions;
 };
 
@@ -52,8 +49,6 @@ export type CAVScreenViewOptions = SelfOptions & ScreenViewOptions;
 const GROUND_POSITION_Y = 500;
 
 export default class CAVScreenView extends ScreenView {
-
-  protected readonly bottomCheckboxGroup: BottomRepresentationCheckboxGroup;
 
   protected readonly resetAllButton: ResetAllButton;
   protected readonly modelViewTransform: ModelViewTransform2;
@@ -80,8 +75,7 @@ export default class CAVScreenView extends ScreenView {
   public constructor( model: CAVModel,
                       // TODO: Structure in options?
                       createAccordionBox: ( tandem: Tandem, top: number, layoutBounds: Bounds2, playAreaNumberLineNode: Node ) => CAVAccordionBox, providedOptions: CAVScreenViewOptions ) {
-    const options = optionize<CAVScreenViewOptions,
-      StrictOmit<SelfOptions, 'bottomCheckboxGroupOptions'>, ScreenViewOptions>()( {}, providedOptions );
+    const options = optionize<CAVScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
 
     // The ground is at y=0
     const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
@@ -173,20 +167,6 @@ export default class CAVScreenView extends ScreenView {
       objectNodeGroup.disposeElement( viewNode );
       map.delete( cavObject );
     } );
-
-    this.bottomCheckboxGroup = new BottomRepresentationCheckboxGroup( model,
-      combineOptions<BottomRepresentationCheckboxGroupOptions>( {
-        tandem: options.tandem.createTandem( 'bottomCheckboxGroup' )
-      }, options.bottomCheckboxGroupOptions ) );
-
-    const BOTTOM_CHECKBOX_PANEL_MARGIN = 12.5;
-
-    // In order to use the AlignBox we need to know the distance from the top of the screen, to the top of the grass.
-    const BOTTOM_CHECKBOX_PANEL_Y_MARGIN = this.layoutBounds.maxY - this.modelViewTransform.modelToViewY( 0 ) + BOTTOM_CHECKBOX_PANEL_MARGIN;
-
-
-    const checkboxAlignBox = new AlignBox( this.bottomCheckboxGroup, { alignBounds: this.layoutBounds, xAlign: 'right', yAlign: 'bottom', xMargin: BOTTOM_CHECKBOX_PANEL_MARGIN, yMargin: BOTTOM_CHECKBOX_PANEL_Y_MARGIN } );
-    this.addChild( checkboxAlignBox );
 
     this.playAreaMedianIndicatorNode = new PlayAreaMedianIndicatorNode();
     this.addChild( this.playAreaMedianIndicatorNode );

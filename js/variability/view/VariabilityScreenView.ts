@@ -14,7 +14,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import CAVColors from '../../common/CAVColors.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import { ManualConstraint, Node } from '../../../../scenery/js/imports.js';
+import { AlignBox, ManualConstraint, Node } from '../../../../scenery/js/imports.js';
 import DistributionRadioButtonGroup from './DistributionRadioButtonGroup.js';
 import VariabilityMeasureRadioButtonGroup from './VariabilityMeasureRadioButtonGroup.js';
 import InfoDialog from './InfoDialog.js';
@@ -22,9 +22,10 @@ import CAVScreenView, { CAVScreenViewOptions } from '../../common/view/CAVScreen
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import VariabilityAccordionBox from './VariabilityAccordionBox.js';
+import BottomRepresentationCheckboxGroup from '../../common/view/BottomRepresentationCheckboxGroup.js';
 
 type SelfOptions = EmptySelfOptions;
-type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions' | 'bottomCheckboxGroupOptions'>;
+type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
 
 export default class VariabilityScreenView extends CAVScreenView {
 
@@ -34,13 +35,6 @@ export default class VariabilityScreenView extends CAVScreenView {
       questionBarOptions: {
         barFill: CAVColors.variabilityQuestionBarFillColorProperty,
         questionString: CenterAndVariabilityStrings.variabilityQuestionStringProperty
-      },
-      bottomCheckboxGroupOptions: {
-        includeVariability: true,
-        includePredictMean: false,
-        includePredictMedian: false,
-        includeMean: true,
-        includeMedian: true
       }
     }, providedOptions );
 
@@ -95,6 +89,23 @@ export default class VariabilityScreenView extends CAVScreenView {
         infoDialog.hide();
       }
     } );
+
+    const bottomCheckboxGroup = new BottomRepresentationCheckboxGroup( model, {
+      includeVariability: true,
+      includePredictMean: false,
+      includePredictMedian: false,
+      includeMean: true,
+      includeMedian: true,
+      tandem: options.tandem.createTandem( 'bottomCheckboxGroup' )
+    } );
+
+    // TODO: A bit of duplication across screen views
+    // In order to use the AlignBox we need to know the distance from the top of the screen, to the top of the grass.
+    const BOTTOM_CHECKBOX_PANEL_MARGIN = 12.5;
+    const BOTTOM_CHECKBOX_PANEL_Y_MARGIN = this.layoutBounds.maxY - this.modelViewTransform.modelToViewY( 0 ) + BOTTOM_CHECKBOX_PANEL_MARGIN;
+
+    const checkboxAlignBox = new AlignBox( bottomCheckboxGroup, { alignBounds: this.layoutBounds, xAlign: 'right', yAlign: 'bottom', xMargin: BOTTOM_CHECKBOX_PANEL_MARGIN, yMargin: BOTTOM_CHECKBOX_PANEL_Y_MARGIN } );
+    this.addChild( checkboxAlignBox );
   }
 }
 

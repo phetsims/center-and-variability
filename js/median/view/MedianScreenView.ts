@@ -17,11 +17,13 @@ import CAVScreenView, { CAVScreenViewOptions } from '../../common/view/CAVScreen
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import MedianAccordionBox from './MedianAccordionBox.js';
+import BottomRepresentationCheckboxGroup from '../../common/view/BottomRepresentationCheckboxGroup.js';
+import { AlignBox } from '../../../../scenery/js/imports.js';
 
 type SelfOptions = EmptySelfOptions;
 type MedianScreenViewOptions =
   SelfOptions
-  & StrictOmit<CAVScreenViewOptions, 'questionBarOptions' | 'bottomCheckboxGroupOptions'>;
+  & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
 
 export default class MedianScreenView extends CAVScreenView {
 
@@ -31,15 +33,6 @@ export default class MedianScreenView extends CAVScreenView {
       questionBarOptions: {
         barFill: CAVColors.medianQuestionBarFillColorProperty,
         questionString: CenterAndVariabilityStrings.medianQuestionStringProperty
-      },
-
-      // TODO: Remove this option and just create things correctly in the AccordionBox subclass
-      bottomCheckboxGroupOptions: {
-        includeMean: false,
-        includePredictMean: false,
-        includePredictMedian: true,
-        includeMedian: true,
-        includeVariability: false
       }
     }, providedOptions );
 
@@ -49,6 +42,22 @@ export default class MedianScreenView extends CAVScreenView {
       // TODO: Can we just add this after super()?  Why does it have to be here?
       ( tandem: Tandem, top: number, layoutBounds: Bounds2 ) =>
         new MedianAccordionBox( model, layoutBounds, tandem, top ), options );
+
+    const bottomCheckboxGroup = new BottomRepresentationCheckboxGroup( model, {
+      includeMean: false,
+      includePredictMean: false,
+      includePredictMedian: true,
+      includeMedian: true,
+      includeVariability: false,
+      tandem: options.tandem.createTandem( 'bottomCheckboxGroup' )
+    } );
+
+    // In order to use the AlignBox we need to know the distance from the top of the screen, to the top of the grass.
+    const BOTTOM_CHECKBOX_PANEL_MARGIN = 12.5;
+    const BOTTOM_CHECKBOX_PANEL_Y_MARGIN = this.layoutBounds.maxY - this.modelViewTransform.modelToViewY( 0 ) + BOTTOM_CHECKBOX_PANEL_MARGIN;
+
+    const checkboxAlignBox = new AlignBox( bottomCheckboxGroup, { alignBounds: this.layoutBounds, xAlign: 'right', yAlign: 'bottom', xMargin: BOTTOM_CHECKBOX_PANEL_MARGIN, yMargin: BOTTOM_CHECKBOX_PANEL_Y_MARGIN } );
+    this.addChild( checkboxAlignBox );
   }
 }
 
