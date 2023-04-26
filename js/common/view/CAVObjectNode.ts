@@ -15,7 +15,6 @@ import CAVObject from '../model/CAVObject.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import ball_png from '../../../images/ball_png.js';
-import ShadedSphereNode from '../../../../scenery-phet/js/ShadedSphereNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import { AnimationMode } from '../model/AnimationMode.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
@@ -110,18 +109,16 @@ export default class CAVObjectNode extends Node {
     } );
 
     const childNode = options.objectViewType === CAVObjectType.SOCCER_BALL ? soccerBallNodes :
-                      options.objectViewType === CAVObjectType.DATA_POINT ? createPlotMarker() :
-                      new ShadedSphereNode( options.objectViewType.radius * 2 );
-    childNode.maxWidth = viewRadius * 2;
+                      createPlotMarker();
 
     // if the child node is non-square, it should still fit within specified dimensions. Note: this does not change the
     // aspect ratio.
-    childNode.maxHeight = childNode.maxWidth;
+    childNode.maxWidth = viewRadius * 2;
+    childNode.maxHeight = viewRadius * 2;
 
     // Center the nested Node for compatibility with DragListener
     childNode.center = Vector2.ZERO;
 
-    // TODO: Add a comment that explains why this nested layer is necessary
     this.addChild( childNode );
 
     this.addLinkedElement( cavObject, {

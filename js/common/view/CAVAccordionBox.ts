@@ -76,8 +76,6 @@ export default class CAVAccordionBox extends AccordionBox {
     // add clip area so dot stacks that are taller than the accordion box are clipped appropriately
     backgroundNode.clipArea = Shape.bounds( fullBackgroundBounds );
 
-    // TODO: we are mutating the position of things being passed in
-
     checkboxPanel.centerY = fullBackgroundBounds.centerY;
 
     // TODO: Maybe every subclass doesn't want a checkboxPanel

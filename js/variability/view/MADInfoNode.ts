@@ -75,10 +75,6 @@ export default class MADInfoNode extends VBox {
           visibleProperty: hasEnoughDataProperty
         } ),
 
-        // TODO-design: We discussed phrasing it as:
-        //  "MAD is the average distance between each point and the mean."
-        //  however, that seems too easy for someone to misread and think it is about distance between points. So should I leave it as
-        //  "MAD is the average distance from each point to the mean."
         new Text( new PatternStringProperty( CenterAndVariabilityStrings.madCalculationResultPatternStringProperty, {
           mad: new DerivedProperty( [ model.madValueProperty ], madValue => madValue === null ? null : Utils.toFixed( madValue, 1 ) )
         } ), { fontSize: 18, visibleProperty: hasEnoughDataProperty, maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH, layoutOptions: { bottomMargin: 10 } } ),
