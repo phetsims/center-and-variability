@@ -14,14 +14,13 @@ import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import CAVColors from '../../common/CAVColors.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import { AlignBox, AlignGroup, ManualConstraint } from '../../../../scenery/js/imports.js';
+import { AlignGroup, ManualConstraint } from '../../../../scenery/js/imports.js';
 import DistributionRadioButtonGroup from './DistributionRadioButtonGroup.js';
 import VariabilityMeasureRadioButtonGroup from './VariabilityMeasureRadioButtonGroup.js';
 import InfoDialog from './InfoDialog.js';
 import CAVScreenView, { CAVScreenViewOptions } from '../../common/view/CAVScreenView.js';
 import VariabilityAccordionBox from './VariabilityAccordionBox.js';
 import BottomRepresentationCheckboxGroup from '../../common/view/BottomRepresentationCheckboxGroup.js';
-import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 import CAVConstants from '../../common/CAVConstants.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -91,25 +90,11 @@ export default class VariabilityScreenView extends CAVScreenView {
     } );
 
     const iconGroup = new AlignGroup();
-    const bottomCheckboxGroup = new VerticalCheckboxGroup( [
+    this.setBottomCheckboxGroup( [
       BottomRepresentationCheckboxGroup.getVariabilityCheckboxItem( iconGroup, model ),
       BottomRepresentationCheckboxGroup.getMedianCheckboxItem( iconGroup, model ),
       BottomRepresentationCheckboxGroup.getMeanCheckboxItem( iconGroup, model )
-    ], {
-      tandem: options.tandem.createTandem( 'bottomCheckboxGroup' )
-    } );
-
-    // TODO: A bit of duplication across screen views
-    // In order to use the AlignBox we need to know the distance from the top of the screen, to the top of the grass.
-    const BOTTOM_CHECKBOX_PANEL_MARGIN = 12.5;
-    const BOTTOM_CHECKBOX_PANEL_Y_MARGIN = this.layoutBounds.maxY - this.modelViewTransform.modelToViewY( 0 ) + BOTTOM_CHECKBOX_PANEL_MARGIN;
-
-    this.addChild( new AlignBox( bottomCheckboxGroup, {
-      alignBounds: this.layoutBounds,
-      xAlign: 'right', yAlign: 'bottom',
-      xMargin: BOTTOM_CHECKBOX_PANEL_MARGIN,
-      yMargin: BOTTOM_CHECKBOX_PANEL_Y_MARGIN
-    } ) );
+    ] );
   }
 }
 

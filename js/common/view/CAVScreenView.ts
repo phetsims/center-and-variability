@@ -16,7 +16,7 @@ import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.j
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
 import CAVObjectNode from './CAVObjectNode.js';
-import { Node } from '../../../../scenery/js/imports.js';
+import { AlignBox, Node } from '../../../../scenery/js/imports.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import CAVObject from '../model/CAVObject.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
@@ -36,6 +36,7 @@ import merge from '../../../../phet-core/js/merge.js';
 import KickButtonGroup from './KickButtonGroup.js';
 import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';
 import CAVAccordionBox from './CAVAccordionBox.js';
+import VerticalCheckboxGroup, { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
 
 type SelfOptions = {
   questionBarOptions: QuestionBarOptions;
@@ -320,6 +321,25 @@ export default class CAVScreenView extends ScreenView {
     this.contentLayer.addChild( this.accordionBox );
     this.accordionBox.expandedProperty.link( this.updateMedianNode );
     this.updateAccordionBoxPosition();
+  }
+
+  protected setBottomCheckboxGroup( items: VerticalCheckboxGroupItem[] ): void {
+
+    const bottomCheckboxGroup = new VerticalCheckboxGroup( items, {
+      tandem: this.tandem.createTandem( 'bottomCheckboxGroup' )
+    } );
+
+    // In order to use the AlignBox we need to know the distance from the top of the screen, to the top of the grass.
+    const BOTTOM_CHECKBOX_PANEL_MARGIN = 12.5;
+    const BOTTOM_CHECKBOX_PANEL_Y_MARGIN = this.layoutBounds.maxY - this.modelViewTransform.modelToViewY( 0 ) + BOTTOM_CHECKBOX_PANEL_MARGIN;
+
+    this.addChild( new AlignBox( bottomCheckboxGroup, {
+      alignBounds: this.layoutBounds,
+      xAlign: 'right',
+      yAlign: 'bottom',
+      xMargin: BOTTOM_CHECKBOX_PANEL_MARGIN,
+      yMargin: BOTTOM_CHECKBOX_PANEL_Y_MARGIN
+    } ) );
   }
 }
 

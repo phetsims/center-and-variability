@@ -16,8 +16,7 @@ import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import CAVScreenView, { CAVScreenViewOptions } from '../../common/view/CAVScreenView.js';
 import MedianAccordionBox from './MedianAccordionBox.js';
 import BottomRepresentationCheckboxGroup from '../../common/view/BottomRepresentationCheckboxGroup.js';
-import { AlignBox, AlignGroup } from '../../../../scenery/js/imports.js';
-import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
+import { AlignGroup } from '../../../../scenery/js/imports.js';
 import CAVConstants from '../../common/CAVConstants.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -41,24 +40,10 @@ export default class MedianScreenView extends CAVScreenView {
     this.setAccordionBox( new MedianAccordionBox( model, this.layoutBounds, options.tandem.createTandem( 'accordionBox' ), this.questionBar.bottom + CAVConstants.SCREEN_VIEW_Y_MARGIN ) );
 
     const iconGroup = new AlignGroup();
-    const bottomCheckboxGroup = new VerticalCheckboxGroup( [
+    super.setBottomCheckboxGroup( [
       BottomRepresentationCheckboxGroup.getPredictMedianCheckboxItem( iconGroup, model ),
       BottomRepresentationCheckboxGroup.getMedianCheckboxItem( iconGroup, model )
-    ], {
-      tandem: options.tandem.createTandem( 'bottomCheckboxGroup' )
-    } );
-
-    // In order to use the AlignBox we need to know the distance from the top of the screen, to the top of the grass.
-    const BOTTOM_CHECKBOX_PANEL_MARGIN = 12.5;
-    const BOTTOM_CHECKBOX_PANEL_Y_MARGIN = this.layoutBounds.maxY - this.modelViewTransform.modelToViewY( 0 ) + BOTTOM_CHECKBOX_PANEL_MARGIN;
-
-    this.addChild( new AlignBox( bottomCheckboxGroup, {
-      alignBounds: this.layoutBounds,
-      xAlign: 'right',
-      yAlign: 'bottom',
-      xMargin: BOTTOM_CHECKBOX_PANEL_MARGIN,
-      yMargin: BOTTOM_CHECKBOX_PANEL_Y_MARGIN
-    } ) );
+    ] );
   }
 }
 
