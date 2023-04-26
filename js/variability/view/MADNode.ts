@@ -16,11 +16,11 @@ type SelfOptions = {
 type RangeNodeOptions = SelfOptions & CAVPlotOptions;
 
 export default class MADNode extends CAVPlotNode {
-  public constructor( model: VariabilityModel, numberLineWidth: number, providedOptions: RangeNodeOptions ) {
+  public constructor( model: VariabilityModel, providedOptions: RangeNodeOptions ) {
 
     const options = providedOptions;
 
-    super( model, numberLineWidth, options );
+    super( model, options );
 
     const needAtLeastOneKick = new Text( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {
       fontSize: 18,

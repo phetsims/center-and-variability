@@ -23,6 +23,7 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import CAVConstants from '../CAVConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 export type CAVPlotOptions = NodeOptions & PickRequired<NodeOptions, 'tandem'>;
@@ -32,14 +33,14 @@ export default class CAVPlotNode extends Node {
   private readonly dotLayer = new Node();
   protected readonly modelViewTransform: ModelViewTransform2;
 
-  public constructor( model: CAVModel, numberLineWidth: number, providedOptions?: CAVPlotOptions ) {
+  public constructor( model: CAVModel, providedOptions?: CAVPlotOptions ) {
 
     const options = optionize<CAVPlotOptions, SelfOptions, NodeOptions>()( {}, providedOptions );
 
     super( options );
 
     // TODO: Factor out height with accordion box height
-    const backgroundNode = new Rectangle( 0, 0, numberLineWidth, 180 );
+    const backgroundNode = new Rectangle( 0, 0, CAVConstants.CHART_VIEW_WIDTH, 180 );
     this.addChild( backgroundNode );
 
     const numberLinePositionY = 127;
@@ -52,13 +53,12 @@ export default class CAVPlotNode extends Node {
     // of one ball.
     const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
       new Bounds2( model.physicalRange.min, 0, model.physicalRange.max, model.physicalRange.getLength() ),
-      new Bounds2( 0, numberLinePositionY - numberLineWidth * yScale, 0 + numberLineWidth, numberLinePositionY )
+      new Bounds2( 0, numberLinePositionY - CAVConstants.CHART_VIEW_WIDTH * yScale, 0 + CAVConstants.CHART_VIEW_WIDTH, numberLinePositionY )
     );
     this.modelViewTransform = modelViewTransform;
 
     const numberLineNode = new NumberLineNode(
       model.physicalRange,
-      numberLineWidth,
       model.meanValueProperty,
       model.isShowingTopMeanProperty,
       model.dataRangeProperty, {

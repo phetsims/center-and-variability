@@ -28,8 +28,8 @@ export default class CAVPlotNodeWithMedianBar extends CAVPlotNode {
     barStyle: 'continuous'
   } );
 
-  public constructor( model: CAVModel, numberLineWidth: number, providedOptions?: CAVPlotOptions ) {
-    super( model, numberLineWidth, providedOptions );
+  public constructor( model: CAVModel, providedOptions?: CAVPlotOptions ) {
+    super( model, providedOptions );
 
     this.addChild( this.medianBarNode );
 

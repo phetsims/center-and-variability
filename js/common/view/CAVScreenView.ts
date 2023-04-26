@@ -275,9 +275,6 @@ export default class CAVScreenView extends ScreenView {
 
     this.playAreaNumberLineNode = new NumberLineNode(
       model.physicalRange,
-
-      // TODO: Should not be parameter if constant
-      CAVConstants.CHART_VIEW_WIDTH,
       model.meanValueProperty,
       model.isShowingPlayAreaMeanProperty,
       model.dataRangeProperty, {

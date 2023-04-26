@@ -22,25 +22,25 @@ export type CAVPlotOptions = NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
 export default class VariabilityPlotNode extends Node {
 
-  public constructor( model: VariabilityModel, numberLineWidth: number, providedOptions: CAVPlotOptions ) {
+  public constructor( model: VariabilityModel, providedOptions: CAVPlotOptions ) {
     super( providedOptions );
 
     const toggleNode = new ToggleNode( model.selectedVariabilityProperty, [ {
-      createNode: tandem => new RangeNode( model, numberLineWidth, {
+      createNode: tandem => new RangeNode( model, {
         parentContext: 'accordion',
         tandem: tandem.createTandem( 'rangeNode' )
       } ),
       tandemName: 'rangeNode',
       value: VariabilityMeasure.RANGE
     }, {
-      createNode: tandem => new IQRNode( model, numberLineWidth, {
+      createNode: tandem => new IQRNode( model, {
         parentContext: 'accordion',
         tandem: tandem.createTandem( 'iqrNode' )
       } ),
       tandemName: 'iqrNode',
       value: VariabilityMeasure.IQR
     }, {
-      createNode: tandem => new MADNode( model, numberLineWidth, {
+      createNode: tandem => new MADNode( model, {
         parentContext: 'accordion',
         tandem: tandem.createTandem( 'madNode' )
       } ),

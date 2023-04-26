@@ -12,7 +12,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import MADNode from './MADNode.js';
 
 export default class MADInfoNode extends VBox {
-  public constructor( model: VariabilityModel, chartViewWidth: number, options: PickRequired<PhetioObject, 'tandem'> ) {
+  public constructor( model: VariabilityModel, options: PickRequired<PhetioObject, 'tandem'> ) {
 
     // TODO-design: Should we change this to >1 ? To show the calculation?
     const hasEnoughDataProperty = new DerivedProperty( [ model.numberOfDataPointsProperty ], numberOfDataPoints => numberOfDataPoints >= 1 );
@@ -74,7 +74,7 @@ export default class MADInfoNode extends VBox {
         } ), { fontSize: 18, visibleProperty: hasEnoughDataProperty } ),
         new VStrut( 10 ),
 
-        new MADNode( model, chartViewWidth, {
+        new MADNode( model, {
           parentContext: 'info',
           tandem: options.tandem.createTandem( 'madNode' )
         } )

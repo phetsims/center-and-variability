@@ -74,7 +74,7 @@ export default class VariabilityScreenView extends CAVScreenView {
     } );
 
     super( model, ( tandem: Tandem, top: number, layoutBounds: Bounds2, playAreaNumberLineNode: Node ) => {
-      const accordionBoxContents = new VariabilityPlotNode( model, CAVConstants.CHART_VIEW_WIDTH, {
+      const accordionBoxContents = new VariabilityPlotNode( model, {
         tandem: tandem.createTandem( 'plotNode' )
       } );
 
@@ -169,7 +169,7 @@ export default class VariabilityScreenView extends CAVScreenView {
     this.addChild( distributionRadioButtonGroup );
     this.addChild( variabilityMeasureRadioButtonGroup );
 
-    const infoDialog = new InfoDialog( model, CAVConstants.CHART_VIEW_WIDTH, {
+    const infoDialog = new InfoDialog( model, {
       tandem: options.tandem.createTandem( 'infoDialog' )
     } );
     model.isInfoShowingProperty.link( isInfoShowing => {

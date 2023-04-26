@@ -32,7 +32,7 @@ export default class IQRInfoNode extends VBox {
         } ), { fontSize: 18, visibleProperty: hasEnoughDataProperty } ),
         new VStrut( 10 ),
 
-        new IQRNode( model, chartViewWidth, {
+        new IQRNode( model, {
           parentContext: 'info',
           tandem: options.tandem.createTandem( 'iqrNode' )
         } )

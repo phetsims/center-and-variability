@@ -12,11 +12,11 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 
 export default class InfoDialog extends Dialog {
-  public constructor( model: VariabilityModel, chartViewWidth: number, options: PickRequired<PhetioObject, 'tandem'> ) {
+  public constructor( model: VariabilityModel, options: PickRequired<PhetioObject, 'tandem'> ) {
 
     const content = new ToggleNode( model.selectedVariabilityProperty, [ {
       value: VariabilityMeasure.RANGE,
-      createNode: tandem => new RangeInfoNode( model, chartViewWidth, { tandem: tandem } ),
+      createNode: tandem => new RangeInfoNode( model, { tandem: tandem } ),
       tandemName: 'rangeInfoNode'
     }, {
       value: VariabilityMeasure.IQR,
@@ -24,7 +24,7 @@ export default class InfoDialog extends Dialog {
       tandemName: 'iqrInfoNode'
     }, {
       value: VariabilityMeasure.MAD,
-      createNode: tandem => new MADInfoNode( model, chartViewWidth, { tandem: tandem } ),
+      createNode: tandem => new MADInfoNode( model, { tandem: tandem } ),
       tandemName: 'madInfoNode'
     } ], {
       tandem: options.tandem.createTandem( 'infoNode' )

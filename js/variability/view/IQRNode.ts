@@ -15,11 +15,11 @@ type SelfOptions = {
 type IQRNodeOptions = SelfOptions & CAVPlotOptions;
 
 export default class IQRNode extends CAVPlotNode {
-  public constructor( model: VariabilityModel, numberLineWidth: number, providedOptions: IQRNodeOptions ) {
+  public constructor( model: VariabilityModel, providedOptions: IQRNodeOptions ) {
 
     const options = providedOptions;
 
-    super( model, numberLineWidth, options );
+    super( model, options );
 
     const needAtLeastFiveKicks = new Text( CenterAndVariabilityStrings.needAtLeastFiveKicksStringProperty, {
       fontSize: 18,

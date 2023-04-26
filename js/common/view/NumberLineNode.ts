@@ -37,7 +37,6 @@ export default class NumberLineNode extends Node {
 
   public constructor(
     range: Range,
-    width: number,
     meanValueProperty: TReadOnlyProperty<number | null>,
     isShowingMeanIndicatorProperty: TReadOnlyProperty<boolean>,
     rangeProperty: TReadOnlyProperty<Range | null>,
@@ -54,7 +53,7 @@ export default class NumberLineNode extends Node {
     const tickMarkExtent = options.includeXAxis ? 7 : 10;
 
     const chartTransform = new ChartTransform( {
-      viewWidth: width,
+      viewWidth: CAVConstants.CHART_VIEW_WIDTH,
       modelXRange: range,
       viewHeight: tickMarkExtent / 2,
       modelYRange: new Range( 0, 1 )
@@ -107,7 +106,7 @@ export default class NumberLineNode extends Node {
     // and puts objects in the right spots.
     const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
       new Bounds2( range.min, 0, range.max, range.getLength() ),
-      new Bounds2( 0, -width, width, width )
+      new Bounds2( 0, -CAVConstants.CHART_VIEW_WIDTH, CAVConstants.CHART_VIEW_WIDTH, CAVConstants.CHART_VIEW_WIDTH )
     );
 
     const meanIndicatorNode = NumberLineNode.createMeanIndicatorNode( options.includeMeanStroke, false );

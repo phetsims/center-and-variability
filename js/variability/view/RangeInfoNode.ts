@@ -11,7 +11,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import RangeNode from './RangeNode.js';
 
 export default class RangeInfoNode extends VBox {
-  public constructor( model: VariabilityModel, chartViewWidth: number, options: PickRequired<PhetioObject, 'tandem'> ) {
+  public constructor( model: VariabilityModel, options: PickRequired<PhetioObject, 'tandem'> ) {
 
     const hasEnoughDataProperty = new DerivedProperty( [ model.numberOfDataPointsProperty ], numberOfDataPoints => numberOfDataPoints >= 1 );
     super( {
@@ -32,7 +32,7 @@ export default class RangeInfoNode extends VBox {
         } ), { fontSize: 18, visibleProperty: hasEnoughDataProperty } ),
         new VStrut( 10 ),
 
-        new RangeNode( model, chartViewWidth, {
+        new RangeNode( model, {
           parentContext: 'info',
           tandem: options.tandem.createTandem( 'rangeNode' )
         } )

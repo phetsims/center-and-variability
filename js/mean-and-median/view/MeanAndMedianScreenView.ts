@@ -18,7 +18,6 @@ import CAVScreenView, { CAVScreenViewOptions } from '../../common/view/CAVScreen
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import CAVPlotNodeWithMedianBar from './CAVPlotNodeWithMedianBar.js';
 import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
-import CAVConstants from '../../common/CAVConstants.js';
 import ValueReadoutsNode from '../../common/view/ValueReadoutsNode.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
@@ -42,12 +41,9 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
 
     super( model, ( tandem: Tandem, top: number, layoutBounds: Bounds2, playAreaNumberLineNode: Node ) => {
 
-      const accordionBoxContents = new CAVPlotNodeWithMedianBar( model,
-
-        // TODO: it's a constant, should not be a parameter
-        CAVConstants.CHART_VIEW_WIDTH, {
-          tandem: tandem.createTandem( 'plotNode' )
-        } );
+      const accordionBoxContents = new CAVPlotNodeWithMedianBar( model, {
+        tandem: tandem.createTandem( 'plotNode' )
+      } );
 
       afterInit = () => {
         // NOTE: This assumes that the NumberLineNode in the play area and in the dot plot have the same characteristics:
