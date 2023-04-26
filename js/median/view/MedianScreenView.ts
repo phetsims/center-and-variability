@@ -18,7 +18,8 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import MedianAccordionBox from './MedianAccordionBox.js';
 import BottomRepresentationCheckboxGroup from '../../common/view/BottomRepresentationCheckboxGroup.js';
-import { AlignBox } from '../../../../scenery/js/imports.js';
+import { AlignBox, AlignGroup } from '../../../../scenery/js/imports.js';
+import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 
 type SelfOptions = EmptySelfOptions;
 type MedianScreenViewOptions =
@@ -43,12 +44,11 @@ export default class MedianScreenView extends CAVScreenView {
       ( tandem: Tandem, top: number, layoutBounds: Bounds2 ) =>
         new MedianAccordionBox( model, layoutBounds, tandem, top ), options );
 
-    const bottomCheckboxGroup = new BottomRepresentationCheckboxGroup( model, {
-      includeMean: false,
-      includePredictMean: false,
-      includePredictMedian: true,
-      includeMedian: true,
-      includeVariability: false,
+    const iconGroup = new AlignGroup();
+    const bottomCheckboxGroup = new VerticalCheckboxGroup( [
+      BottomRepresentationCheckboxGroup.getPredictMedianCheckbox( iconGroup, model ),
+      BottomRepresentationCheckboxGroup.getMedianCheckbox( iconGroup, model )
+    ], {
       tandem: options.tandem.createTandem( 'bottomCheckboxGroup' )
     } );
 
@@ -56,8 +56,13 @@ export default class MedianScreenView extends CAVScreenView {
     const BOTTOM_CHECKBOX_PANEL_MARGIN = 12.5;
     const BOTTOM_CHECKBOX_PANEL_Y_MARGIN = this.layoutBounds.maxY - this.modelViewTransform.modelToViewY( 0 ) + BOTTOM_CHECKBOX_PANEL_MARGIN;
 
-    const checkboxAlignBox = new AlignBox( bottomCheckboxGroup, { alignBounds: this.layoutBounds, xAlign: 'right', yAlign: 'bottom', xMargin: BOTTOM_CHECKBOX_PANEL_MARGIN, yMargin: BOTTOM_CHECKBOX_PANEL_Y_MARGIN } );
-    this.addChild( checkboxAlignBox );
+    this.addChild( new AlignBox( bottomCheckboxGroup, {
+      alignBounds: this.layoutBounds,
+      xAlign: 'right',
+      yAlign: 'bottom',
+      xMargin: BOTTOM_CHECKBOX_PANEL_MARGIN,
+      yMargin: BOTTOM_CHECKBOX_PANEL_Y_MARGIN
+    } ) );
   }
 }
 

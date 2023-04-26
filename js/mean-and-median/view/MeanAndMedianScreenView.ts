@@ -12,13 +12,14 @@ import centerAndVariability from '../../centerAndVariability.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
 import CAVColors from '../../common/CAVColors.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import { AlignBox, ManualConstraint, Node } from '../../../../scenery/js/imports.js';
+import { AlignBox, AlignGroup, ManualConstraint, Node } from '../../../../scenery/js/imports.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import CAVScreenView, { CAVScreenViewOptions } from '../../common/view/CAVScreenView.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import MeanAndMedianAccordionBox from './MeanAndMedianAccordionBox.js';
 import BottomRepresentationCheckboxGroup from '../../common/view/BottomRepresentationCheckboxGroup.js';
+import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 
 type MeanAndMedianScreenViewOptions = StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
 
@@ -46,12 +47,13 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
         contentsWrapper.x = playAreaNumberLineNodeWrapper.x;
       } );
 
-    const bottomCheckboxGroup = new BottomRepresentationCheckboxGroup( model, {
-      includeMean: true,
-      includePredictMean: true,
-      includePredictMedian: true,
-      includeMedian: true,
-      includeVariability: false,
+    const iconGroup = new AlignGroup();
+    const bottomCheckboxGroup = new VerticalCheckboxGroup( [
+      BottomRepresentationCheckboxGroup.getPredictMedianCheckbox( iconGroup, model ),
+      BottomRepresentationCheckboxGroup.getPredictMeanCheckbox( iconGroup, model ),
+      BottomRepresentationCheckboxGroup.getMedianCheckbox( iconGroup, model ),
+      BottomRepresentationCheckboxGroup.getMeanCheckbox( iconGroup, model )
+    ], {
       tandem: options.tandem.createTandem( 'bottomCheckboxGroup' )
     } );
 
@@ -60,8 +62,13 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
     const BOTTOM_CHECKBOX_PANEL_MARGIN = 12.5;
     const BOTTOM_CHECKBOX_PANEL_Y_MARGIN = this.layoutBounds.maxY - this.modelViewTransform.modelToViewY( 0 ) + BOTTOM_CHECKBOX_PANEL_MARGIN;
 
-    const checkboxAlignBox = new AlignBox( bottomCheckboxGroup, { alignBounds: this.layoutBounds, xAlign: 'right', yAlign: 'bottom', xMargin: BOTTOM_CHECKBOX_PANEL_MARGIN, yMargin: BOTTOM_CHECKBOX_PANEL_Y_MARGIN } );
-    this.addChild( checkboxAlignBox );
+    this.addChild( new AlignBox( bottomCheckboxGroup, {
+      alignBounds: this.layoutBounds,
+      xAlign: 'right',
+      yAlign: 'bottom',
+      xMargin: BOTTOM_CHECKBOX_PANEL_MARGIN,
+      yMargin: BOTTOM_CHECKBOX_PANEL_Y_MARGIN
+    } ) );
   }
 }
 

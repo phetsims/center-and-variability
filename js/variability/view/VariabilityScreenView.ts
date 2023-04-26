@@ -14,7 +14,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import CAVColors from '../../common/CAVColors.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import { AlignBox, ManualConstraint, Node } from '../../../../scenery/js/imports.js';
+import { AlignBox, AlignGroup, ManualConstraint, Node } from '../../../../scenery/js/imports.js';
 import DistributionRadioButtonGroup from './DistributionRadioButtonGroup.js';
 import VariabilityMeasureRadioButtonGroup from './VariabilityMeasureRadioButtonGroup.js';
 import InfoDialog from './InfoDialog.js';
@@ -23,6 +23,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import VariabilityAccordionBox from './VariabilityAccordionBox.js';
 import BottomRepresentationCheckboxGroup from '../../common/view/BottomRepresentationCheckboxGroup.js';
+import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
@@ -90,12 +91,12 @@ export default class VariabilityScreenView extends CAVScreenView {
       }
     } );
 
-    const bottomCheckboxGroup = new BottomRepresentationCheckboxGroup( model, {
-      includeVariability: true,
-      includePredictMean: false,
-      includePredictMedian: false,
-      includeMean: true,
-      includeMedian: true,
+    const iconGroup = new AlignGroup();
+    const bottomCheckboxGroup = new VerticalCheckboxGroup( [
+      BottomRepresentationCheckboxGroup.getVariabilityCheckbox( iconGroup, model ),
+      BottomRepresentationCheckboxGroup.getMedianCheckbox( iconGroup, model ),
+      BottomRepresentationCheckboxGroup.getMeanCheckbox( iconGroup, model )
+    ], {
       tandem: options.tandem.createTandem( 'bottomCheckboxGroup' )
     } );
 
@@ -104,8 +105,12 @@ export default class VariabilityScreenView extends CAVScreenView {
     const BOTTOM_CHECKBOX_PANEL_MARGIN = 12.5;
     const BOTTOM_CHECKBOX_PANEL_Y_MARGIN = this.layoutBounds.maxY - this.modelViewTransform.modelToViewY( 0 ) + BOTTOM_CHECKBOX_PANEL_MARGIN;
 
-    const checkboxAlignBox = new AlignBox( bottomCheckboxGroup, { alignBounds: this.layoutBounds, xAlign: 'right', yAlign: 'bottom', xMargin: BOTTOM_CHECKBOX_PANEL_MARGIN, yMargin: BOTTOM_CHECKBOX_PANEL_Y_MARGIN } );
-    this.addChild( checkboxAlignBox );
+    this.addChild( new AlignBox( bottomCheckboxGroup, {
+      alignBounds: this.layoutBounds,
+      xAlign: 'right', yAlign: 'bottom',
+      xMargin: BOTTOM_CHECKBOX_PANEL_MARGIN,
+      yMargin: BOTTOM_CHECKBOX_PANEL_Y_MARGIN
+    } ) );
   }
 }
 
