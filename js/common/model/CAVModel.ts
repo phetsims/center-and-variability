@@ -320,95 +320,44 @@ export default class CAVModel implements TModel {
   }
 
   protected updateDataMeasures(): void {
-
     const sortedObjects = this.getSortedLandedObjects();
-    const medianObjects: CAVObject[] = [];
-
-    // Odd number of values, take the central value
-    if ( sortedObjects.length % 2 === 1 ) {
-      const midIndex = ( sortedObjects.length - 1 ) / 2;
-      this.medianValueProperty.value = sortedObjects[ midIndex ].valueProperty.value!;
-      medianObjects.push( sortedObjects[ midIndex ] );
-
-      assert && assert( !isNaN( this.medianValueProperty.value ) );
-    }
-    else if ( sortedObjects.length % 2 === 0 && sortedObjects.length >= 2 ) {
-
-      // Even number of values, average the two middle-most values
-      const mid1Index = ( sortedObjects.length - 2 ) / 2;
-      const mid2Index = ( sortedObjects.length - 0 ) / 2;
-      const mid1Value = sortedObjects[ mid1Index ].valueProperty.value!;
-      const mid2Value = sortedObjects[ mid2Index ].valueProperty.value!;
-      this.medianValueProperty.value = ( mid1Value + mid2Value ) / 2;
-
-      medianObjects.push( sortedObjects[ mid1Index ] );
-      medianObjects.push( sortedObjects[ mid2Index ] );
-
-      assert && assert( !isNaN( this.medianValueProperty.value ) );
-    }
-    else {
-
-      // Not enough values for the median to be defined
-      this.medianValueProperty.value = null;
-    }
+    const medianObjects = this.medianObjectsFromSortedArray( sortedObjects );
 
     this.objectGroup.forEach( object => {
       object.isMedianObjectProperty.value = medianObjects.includes( object );
     } );
 
     if ( sortedObjects.length > 0 ) {
+      this.medianValueProperty.value = _.mean( medianObjects.map( cavObject => cavObject.valueProperty.value ) );
       this.meanValueProperty.value = _.mean( sortedObjects.map( cavObject => cavObject.valueProperty.value ) );
 
       const min = sortedObjects[ 0 ].valueProperty.value!;
       const max = sortedObjects[ sortedObjects.length - 1 ].valueProperty.value!;
       this.dataRangeProperty.value = new Range( min, max );
+
+      assert && assert( !isNaN( this.medianValueProperty.value ) );
     }
     else {
+      this.medianValueProperty.value = null;
       this.meanValueProperty.value = null;
       this.dataRangeProperty.value = null;
     }
 
+    // there is enough data to calculate quartiles
     if ( sortedObjects.length >= 5 ) {
-      const midIndex = ( sortedObjects.length - 1 ) / 2;
-      const lowerHalf: CAVObject[] = [];
-      const upperHalf: CAVObject[] = [];
+      const splitIndex = Math.floor( sortedObjects.length / 2 );
 
-      // split the data into lower and upper halves, ignoring the median if odd number of objects
-      for ( let i = 0; i < sortedObjects.length; i++ ) {
-        if ( i < midIndex ) {
-          lowerHalf.push( sortedObjects[ i ] );
-        }
-        else if ( i > midIndex ) {
-          upperHalf.push( sortedObjects[ i ] );
-        }
-      }
+      // Split the array into lower and upper halves, ignoring the median value if there are an odd number of objects
+      const lowerHalf: CAVObject[] = sortedObjects.slice( 0, splitIndex );
+      const upperHalf: CAVObject[] = sortedObjects.slice( sortedObjects.length % 2 !== 0 ? splitIndex + 1 : splitIndex );
 
-      if ( lowerHalf.length % 2 === 1 ) {
-
-        // Split data has odd number of values, take the central value of each half
-        const quartileIndex = ( lowerHalf.length - 1 ) / 2;
-        this.q1ValueProperty.value = lowerHalf[ quartileIndex ].valueProperty.value!;
-        this.q3ValueProperty.value = upperHalf[ quartileIndex ].valueProperty.value!;
-      }
-      else {
-
-        // Split data has even number of values, average the two middle-most values in each half
-        const quartileIndex1 = ( lowerHalf.length - 2 ) / 2;
-        const quartileIndex2 = ( lowerHalf.length - 0 ) / 2;
-        const q1Value1 = lowerHalf[ quartileIndex1 ].valueProperty.value!;
-        const q1Value2 = lowerHalf[ quartileIndex2 ].valueProperty.value!;
-        const q3Value1 = upperHalf[ quartileIndex1 ].valueProperty.value!;
-        const q3Value2 = upperHalf[ quartileIndex2 ].valueProperty.value!;
-        this.q1ValueProperty.value = ( q1Value1 + q1Value2 ) / 2;
-        this.q3ValueProperty.value = ( q3Value1 + q3Value2 ) / 2;
-      }
+      this.q1ValueProperty.value = _.mean( this.medianObjectsFromSortedArray( lowerHalf ).map( obj => obj.valueProperty.value! ) );
+      this.q3ValueProperty.value = _.mean( this.medianObjectsFromSortedArray( upperHalf ).map( obj => obj.valueProperty.value! ) );
 
       assert && assert( !isNaN( this.q1ValueProperty.value ) );
       assert && assert( !isNaN( this.q3ValueProperty.value ) );
     }
     else {
-
-      // Not enough values for q1 and q3 to be defined
       this.q1ValueProperty.value = null;
       this.q3ValueProperty.value = null;
     }
@@ -534,6 +483,26 @@ export default class CAVModel implements TModel {
           this.numberOfScheduledSoccerBallsToKickProperty.value--;
         }
       }
+    }
+  }
+
+  // Returns a list of the median objects within a sorted array, based on the objects' 'value' property
+  private medianObjectsFromSortedArray( sortedObjects: CAVObject[] ): CAVObject[] {
+
+    // Odd number of values, take the central value
+    if ( sortedObjects.length % 2 === 1 ) {
+      const midIndex = ( sortedObjects.length - 1 ) / 2;
+      return [ sortedObjects[ midIndex ] ];
+    }
+    else if ( sortedObjects.length % 2 === 0 && sortedObjects.length >= 2 ) {
+
+      // Even number of values, average the two middle-most values
+      const mid1Index = ( sortedObjects.length - 2 ) / 2;
+      const mid2Index = ( sortedObjects.length - 0 ) / 2;
+      return [ sortedObjects[ mid1Index ], sortedObjects[ mid2Index ] ];
+    }
+    else {
+      return [];
     }
   }
 
