@@ -189,7 +189,7 @@ export default class CardNodeContainer extends Node {
         if ( !isPressed && !phet.joist.sim.isSettingPhetioStateProperty.value ) {
 
           // Animate the dropped card home
-          this.sendToHomeCell( cardNode, true, 0.2 );
+          this.animateToHomeCell( cardNode, 0.2 );
 
           if ( this.isReadyForCelebration ) {
             const inProgressAnimations = this.cardNodeCells.filter( cardNode => cardNode.animation )
@@ -274,11 +274,11 @@ export default class CardNodeContainer extends Node {
 
       if ( !phet.joist.sim.isSettingPhetioStateProperty.value ) {
         this.cardNodeCells.splice( targetIndex, 0, cardNode );
-        this.sendToHomeCell( cardNode, false );
+        this.setAtHomeCell( cardNode );
 
         // Animate all displaced cards
         for ( let i = targetIndex; i < this.cardNodeCells.length; i++ ) {
-          this.sendToHomeCell( this.cardNodeCells[ i ] );
+          this.animateToHomeCell( this.cardNodeCells[ i ] );
         }
 
         this.cardNodeCellsChangedEmitter.emit();
@@ -403,7 +403,7 @@ export default class CardNodeContainer extends Node {
           this.cardNodeCells[ originalCell ] = currentOccupant;
 
           // Just animated the displaced occupant
-          this.sendToHomeCell( currentOccupant, true );
+          this.animateToHomeCell( currentOccupant );
 
           // See if the user unsorted the data.  If so, uncheck the "Sort Data" checkbox
           if ( this.model.isSortingDataProperty.value && !this.isDataSorted() ) {
@@ -568,19 +568,17 @@ export default class CardNodeContainer extends Node {
     return true;
   }
 
-  // TODO: Do we like the way these are optional?
-  // TODO: Separate into two methods: animateToHomeCell vs setAtHomeCell
-  public sendToHomeCell( cardNode: CardNode, animate = true, duration = 0.3, callback = _.noop ): void {
+  private getHomePosition( cardNode: CardNode ): Vector2 {
     const homeIndex = this.cardNodeCells.indexOf( cardNode );
-    const homePosition = new Vector2( getCardPositionX( homeIndex ), 0 );
+    return new Vector2( getCardPositionX( homeIndex ), 0 );
+  }
 
-    if ( animate ) {
-      cardNode.animateTo( homePosition, duration, callback );
-    }
-    else {
-      cardNode.positionProperty.value = homePosition;
-      callback();
-    }
+  public animateToHomeCell( cardNode: CardNode, duration = 0.3 ): void {
+    cardNode.animateTo( this.getHomePosition( cardNode ), duration );
+  }
+
+  public setAtHomeCell( cardNode: CardNode ): void {
+    cardNode.positionProperty.value = this.getHomePosition( cardNode );
   }
 
   /**
@@ -606,7 +604,7 @@ export default class CardNodeContainer extends Node {
     const sorted = _.sortBy( this.cardNodeCells, cardNode => cardNode.cavObject.valueProperty.value );
     this.cardNodeCells.length = 0;
     this.cardNodeCells.push( ...sorted );
-    this.cardNodeCells.forEach( cardNode => this.sendToHomeCell( cardNode, true, 0.5 ) );
+    this.cardNodeCells.forEach( cardNode => this.animateToHomeCell( cardNode, 0.5 ) );
     this.cardNodeCellsChangedEmitter.emit(); // TODO: OK if this fires false positives?
   }
 
@@ -633,9 +631,7 @@ const CardNodeContainerIO = new IOType( 'CardNodeContainerIO', {
     const cardNodes = state.cardNodes.map( ( element: ReferenceIOState ) => CardNodeReferenceIO.fromStateObject( element ) );
     cardNodeContainer.cardNodeCells.length = 0;
     cardNodeContainer.cardNodeCells.push( ...cardNodes );
-    cardNodeContainer.cardNodeCells.forEach( cardNode => {
-      cardNodeContainer.sendToHomeCell( cardNode, false );
-    } );
+    cardNodeContainer.cardNodeCells.forEach( cardNode => cardNodeContainer.animateToHomeCell( cardNode ) );
 
     cardNodeContainer.cardNodeCellsChangedEmitter.emit();
   },
