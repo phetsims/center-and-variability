@@ -130,6 +130,7 @@ export default class VariabilityScreenView extends CAVScreenView {
         // But given those assumptions, this code moves the dot plot so that its number line matches the play area one.
         // TODO: Consider something more robust.  Using globalToLocal to exactly align based on the position of the tick marks
         // TODO: Can this be combine in a parent class? See https://github.com/phetsims/center-and-variability/issues/152
+        // TODO: Maybe if the accordion box was a subclass we could do this?
         ManualConstraint.create( this, [ playAreaNumberLineNode, accordionBoxContents ],
           ( lowerNumberLineWrapper, contentsWrapper ) => {
             contentsWrapper.x = lowerNumberLineWrapper.x;
@@ -139,15 +140,6 @@ export default class VariabilityScreenView extends CAVScreenView {
           ( variabilityRadioButtonGroupWrapper, accordionBoxWrapper ) => {
             variabilityRadioButtonGroupWrapper.centerY = accordionBoxWrapper.centerY;
           } );
-
-        // NOTE: this overlaps the accordion box top panel
-        // ManualConstraint.create( this, [ accordionBoxContents, infoButton ],
-        //   ( backgroundWrapper, infoButtonWrapper ) => {
-        //
-        //     // TODO: Is it a faux pas to move outside of the wrapper bounds? I couldn't figure how to be a child of the accordion
-        //     // box content, but overlap the title bar
-        //     infoButtonWrapper.rightTop = backgroundWrapper.rightTop.plusXY( 3, -35 );
-        //   } );
       };
       return accordionBox;
 

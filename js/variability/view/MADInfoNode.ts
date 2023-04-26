@@ -14,7 +14,7 @@ import MADNode from './MADNode.js';
 export default class MADInfoNode extends VBox {
   public constructor( model: VariabilityModel, options: PickRequired<PhetioObject, 'tandem'> ) {
 
-    // TODO-design: Should we change this to >1 ? To show the calculation?
+    // TODO-design: Should we change this to >1 ? Since you need >1 to show a calculation?
     const hasEnoughDataProperty = new DerivedProperty( [ model.numberOfDataPointsProperty ], numberOfDataPoints => numberOfDataPoints >= 1 );
 
     const numeratorText = new Text( '', { fontSize: 16 } );

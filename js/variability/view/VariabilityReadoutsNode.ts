@@ -24,7 +24,7 @@ import VariabilityMeasure from '../model/VariabilityMeasure.js';
 type SelfOptions = EmptySelfOptions;
 export type ValueReadoutNodeOptions = SelfOptions & VBoxOptions;
 
-// TODO: How to abstract and share code with ValueReadoutsNode?
+// TODO: Each scene should create its own readouts.
 export default class VariabilityReadoutsNode extends VBox {
 
   public constructor( model: VariabilityModel, providedOptions?: ValueReadoutNodeOptions ) {

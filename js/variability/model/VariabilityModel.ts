@@ -80,6 +80,7 @@ export default class VariabilityModel extends CAVModel {
     this.selectedDistributionProperty.link( distribution => {
 
       // TODO: the parent class sets this incorrectly on reset
+      // TODO: PhET-iO wants to be able to set these values
       this.distributionProperty.value =
         distribution === DistributionType.UNIFORM ? [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] :
         distribution === DistributionType.GAUSSIAN ? GAUSSIAN :

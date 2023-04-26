@@ -2,7 +2,6 @@
 
 import { Line, Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import MedianBarNode from '../../common/view/MedianBarNode.js';
@@ -31,6 +30,9 @@ export default class MADNode extends CAVPlotNode {
     const madRectangle = new Rectangle( 0, 50, 100, 72, {
       fill: '#e0c0f5',
       stroke: 'lightGray',
+
+      // TODO: the numbers should be in front of the "x" marks, but the rectangle should be behind?  Or should the rectangle
+      // TODO: be partially transparent?
       opacity: 0.5
     } );
 
@@ -99,9 +101,7 @@ export default class MADNode extends CAVPlotNode {
       }
 
       lineContainer.children = children;
-
-      // TODO: switch to 'info' and update the rest of the file accordingly, https://github.com/phetsims/center-and-variability/issues/153
-      lineContainer.visible = model.selectedVariabilityProperty.value === VariabilityMeasure.MAD && sortedDots.length > 0;
+      lineContainer.visible = sortedDots.length > 0;
 
       const mad = model.madValueProperty.value;
 
@@ -142,9 +142,6 @@ export default class MADNode extends CAVPlotNode {
     model.numberOfDataPointsProperty.link( update );
     model.meanValueProperty.link( update );
     model.madValueProperty.link( update );
-
-    // TODO: the numbers should be in front of the "x" marks, but the rectangle should be behind?  Or should the rectangle
-    // TODO: be partially transparent?
   }
 }
 
