@@ -32,6 +32,8 @@ export default class MADInfoNode extends VBox {
       denominatorText.string = values.length.toString();
 
       // TODO: If the visually displayed values don't match, adjust a value so it does match. Do this in a stable way
+      // We would have to update the values over the info bars too, so they are not out of sync
+      // This sounds very complicated
       const sum = _.reduce( mads, ( sum, mad ) => sum + mad, 0 );
       resultNumeratorText.string = Utils.toFixed( sum, 1 );
       resultDenominatorText.string = values.length.toString();
