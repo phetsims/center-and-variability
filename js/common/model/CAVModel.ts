@@ -210,24 +210,24 @@ export default class CAVModel implements TModel {
     this.isShowingPlayAreaMedianProperty.link( updateDataMeasures );
 
     // Trigger CardModel creation when a ball lands.
-    const objectCreatedListener = ( cavObject: CAVObject ) => {
+    const objectCreatedListener = ( soccerBall: CAVObject ) => {
       const listener = ( value: number | null ) => {
         if ( value !== null ) {
           if ( !phet.joist.sim.isSettingPhetioStateProperty.value ) {
-            this.objectCreated( cavObject );
-            this.objectValueBecameNonNullEmitter.emit( cavObject );
+            this.objectCreated( soccerBall );
+            this.objectValueBecameNonNullEmitter.emit( soccerBall );
           }
-          cavObject.valueProperty.unlink( listener ); // Only create the card once, then no need to listen further
+          soccerBall.valueProperty.unlink( listener ); // Only create the card once, then no need to listen further
         }
       };
-      cavObject.valueProperty.link( listener );
-      cavObject.valueProperty.link( updateDataMeasures );
-      cavObject.positionProperty.link( updateDataMeasures );
+      soccerBall.valueProperty.link( listener );
+      soccerBall.valueProperty.link( updateDataMeasures );
+      soccerBall.positionProperty.link( updateDataMeasures );
 
       // Signal to listeners that a value changed
       // TODO: Maybe should combine with temporary listener for one permanent one
-      cavObject.valueProperty.link( () => this.objectChangedEmitter.emit( cavObject ) );
-      cavObject.positionProperty.link( () => this.objectChangedEmitter.emit( cavObject ) );
+      soccerBall.valueProperty.link( () => this.objectChangedEmitter.emit( soccerBall ) );
+      soccerBall.positionProperty.link( () => this.objectChangedEmitter.emit( soccerBall ) );
     };
     this.soccerBallGroup.forEach( objectCreatedListener );
     this.soccerBallGroup.elementCreatedEmitter.addListener( objectCreatedListener );
@@ -277,7 +277,7 @@ export default class CAVModel implements TModel {
                                                     _.every( array, element => element >= 0 )
     } );
 
-    this.objectValueBecameNonNullEmitter.addListener( cavObject => {
+    this.objectValueBecameNonNullEmitter.addListener( soccerBall => {
 
       // If the soccer player that kicked that ball was still in line when the ball lands, they can leave the line now.
       this.advanceLine();
@@ -287,11 +287,11 @@ export default class CAVModel implements TModel {
       }
     } );
 
-    this.soccerBallGroup.elementCreatedEmitter.addListener( cavObject => {
-      cavObject.valueProperty.link( ( value, oldValue ) => {
+    this.soccerBallGroup.elementCreatedEmitter.addListener( soccerBall => {
+      soccerBall.valueProperty.link( ( value, oldValue ) => {
         if ( value !== null && oldValue === null ) {
           if ( !phet.joist.sim.isSettingPhetioStateProperty.value ) {
-            this.soccerBallLandedListener( cavObject, value );
+            this.soccerBallLandedListener( soccerBall, value );
           }
         }
       } );
@@ -308,7 +308,7 @@ export default class CAVModel implements TModel {
     } );
   }
 
-  protected objectCreated( cavObject: CAVObject ): void {
+  protected objectCreated( soccerBall: CAVObject ): void {
 
     // Override in subclasses
   }
