@@ -397,11 +397,12 @@ export default class CAVModel implements TModel {
     this.numberOfScheduledSoccerBallsToKickProperty.reset();
     this.timeProperty.reset();
     this.timeWhenLastBallWasKickedProperty.reset();
-    this.activeKickerIndexProperty.reset();
 
     this.soccerPlayers.forEach( soccerPlayer => soccerPlayer.reset() );
     this.soccerBallGroup.forEach( soccerBall => soccerBall.reset() );
-    this.nextBallToKickProperty.value = this.soccerBallGroup[ 0 ];
+    this.nextBallToKickProperty.value = this.getNextBallFromPool();
+
+    this.activeKickerIndexProperty.reset();
   }
 
   /**
@@ -416,8 +417,9 @@ export default class CAVModel implements TModel {
     this.isShowingPlayAreaMedianProperty.reset();
     this.isShowingMeanPredictionProperty.reset();
     this.isShowingMedianPredictionProperty.reset();
-    this.clearData();
     this.distributionProperty.value = CAVModel.chooseDistribution();
+    this.clearData();
+
     this.resetEmitter.emit();
   }
 
@@ -569,7 +571,6 @@ export default class CAVModel implements TModel {
    */
   private kickBall( soccerPlayer: SoccerPlayer, soccerBall: CAVObject ): void {
     soccerPlayer.poseProperty.value = Pose.KICKING;
-    soccerBall.isActiveProperty.value = true;
 
     // Test that the sampling engine is working properly
     // TODO: Where should these tests live? Should it be in the unit tests? Or in dot?
