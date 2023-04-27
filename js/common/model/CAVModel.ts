@@ -115,7 +115,6 @@ export default class CAVModel implements TModel {
         tandem: options.tandem.createTandem( `soccerBall${index}` ),
         position: position
       } );
-      soccerBall.isActiveProperty.value = index === 0;
 
       // TODO: Should some or all of this move into CAVObject or CAVObjectNode?
       const dragPositionListener = ( dragPosition: Vector2 ) => {
@@ -292,9 +291,7 @@ export default class CAVModel implements TModel {
       this.advanceLine();
 
       if ( this.numberOfRemainingObjectsProperty.value > 0 && this.nextBallToKickProperty.value === null ) {
-        const nextBall = this.getNextBallFromPool();
-        this.nextBallToKickProperty.value = nextBall;
-        nextBall!.isActiveProperty.value = true;
+        this.nextBallToKickProperty.value = this.getNextBallFromPool();
       }
     } );
 
@@ -419,7 +416,6 @@ export default class CAVModel implements TModel {
     this.isShowingPlayAreaMedianProperty.reset();
     this.isShowingMeanPredictionProperty.reset();
     this.isShowingMedianPredictionProperty.reset();
-    this.timeProperty.reset();
     this.clearData();
     this.distributionProperty.value = CAVModel.chooseDistribution();
     this.resetEmitter.emit();
@@ -443,7 +439,7 @@ export default class CAVModel implements TModel {
    */
   public step( dt: number ): void {
     this.timeProperty.value += dt;
-    this.getActiveSoccerBalls().forEach( cavObject => cavObject.step( dt ) );
+    this.getActiveSoccerBalls().forEach( soccerBall => soccerBall.step( dt ) );
 
     const frontPlayer = this.soccerPlayers[ this.activeKickerIndexProperty.value ];
 
@@ -527,8 +523,8 @@ export default class CAVModel implements TModel {
   /**
    * When a ball lands on the ground, animate all other balls that were at this location above the landed ball.
    */
-  private soccerBallLandedListener( cavObject: CAVObject, value: number ): void {
-    const otherObjectsInStack = this.getActiveSoccerBalls().filter( x => x.valueProperty.value === value && x !== cavObject );
+  private soccerBallLandedListener( soccerBall: CAVObject, value: number ): void {
+    const otherObjectsInStack = this.getActiveSoccerBalls().filter( x => x.valueProperty.value === value && x !== soccerBall );
     const sortedOthers = _.sortBy( otherObjectsInStack, object => object.positionProperty.value.y );
 
     sortedOthers.forEach( ( cavObject, index ) => {

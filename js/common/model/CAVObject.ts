@@ -63,6 +63,8 @@ export default class CAVObject extends PhetioObject {
 
   public static readonly CAVObjectIO = new IOType<CAVObject, CAVObjectStateType>( 'CAVObjectIO', {
     valueType: CAVObject,
+
+    // TODO: Delete most of this, see https://github.com/phetsims/center-and-variability/issues/160
     toStateObject: ( cavObject: CAVObject ) => cavObject.toStateObject(),
     stateObjectToCreateElementArguments: ( stateObject: CAVObjectStateType ) => {
       return [ {
@@ -86,7 +88,6 @@ export default class CAVObject extends PhetioObject {
       position: Vector2.ZERO,
       velocity: Vector2.ZERO,
       phetioType: CAVObject.CAVObjectIO,
-      phetioDynamicElement: true,
       value: null,
       isFirstObject: false
     }, providedOptions );
@@ -167,6 +168,7 @@ export default class CAVObject extends PhetioObject {
     this.targetX = null;
   }
 
+  // TODO: Delete for https://github.com/phetsims/center-and-variability/issues/160
   public toStateObject(): CAVObjectStateType {
     return {
       objectType: this.objectType.toString(),

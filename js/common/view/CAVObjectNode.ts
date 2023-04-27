@@ -28,7 +28,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import ballDark_png from '../../../images/ballDark_png.js';
-import Multilink, { UnknownMultilink } from '../../../../axon/js/Multilink.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 
 type SelfOptions = {
   objectViewType?: CAVObjectType;
@@ -46,12 +46,6 @@ export type CAVObjectNodeOptions =
 let index = 0;
 
 export default class CAVObjectNode extends Node {
-  private readonly dragListener: DragListener | null;
-  private readonly selfInputEnabledProperty: BooleanProperty | null;
-
-  private readonly inputEnabledMultilink: UnknownMultilink | null;
-  private readonly medianHighlightVisibleMultilink: UnknownMultilink;
-  private readonly opacityMultilink: UnknownMultilink;
 
   public constructor( cavObject: CAVObject, isShowingPlayAreaMedianProperty: TReadOnlyProperty<boolean>,
                       modelViewTransform: ModelViewTransform2, objectNodesInputEnabledProperty: TProperty<boolean>,
@@ -136,7 +130,7 @@ export default class CAVObjectNode extends Node {
 
     // only setup input-related things if dragging is enabled
     if ( options.draggingEnabled ) {
-      this.dragListener = new DragListener( {
+      const dragListener = new DragListener( {
         tandem: options.tandem.createTandem( 'dragListener' ),
         positionProperty: cavObject.dragPositionProperty,
         transform: modelViewTransform,
@@ -155,28 +149,28 @@ export default class CAVObjectNode extends Node {
       // have enough space to move that far. If we make sure that bounds surrounding the CAVObjectNode have a width
       // of 2 model units the pointer will always have enough space to drag the CAVObjectNode to a new position.
       // See https://github.com/phetsims/center-and-variability/issues/88
-      this.dragListener.createPanTargetBounds = () => {
+      dragListener.createPanTargetBounds = () => {
         const modelPosition = cavObject.positionProperty.value;
         const modelBounds = new Bounds2( modelPosition.x - 1, modelPosition.y - 1, modelPosition.x + 1, modelPosition.y + 1 );
         const viewBounds = modelViewTransform.modelToViewBounds( modelBounds );
         return this.parentToGlobalBounds( viewBounds );
       };
 
-      this.addInputListener( this.dragListener );
+      this.addInputListener( dragListener );
       this.touchArea = this.localBounds.dilatedX( 5 );
 
       // TODO: better name? (can't use inputEnabledProperty)
       // not passed through through options or assigned to super with usual 'inputEnabledProperty' name because other
       // factors affect inputEnabled, see multilink below
-      this.selfInputEnabledProperty = new BooleanProperty( true, {
+      const selfInputEnabledProperty = new BooleanProperty( true, {
         tandem: options.tandem.createTandem( 'inputEnabledProperty' )
       } );
 
       // Prevent dragging or interaction while the object does not have a value (when it is not in the play area yet),
       // when it is animating, if input for this individual node is disabled, or if input for all of the object nodes
       // ahs been disabled
-      this.inputEnabledMultilink = Multilink.multilink(
-        [ cavObject.animationModeProperty, cavObject.valueProperty, this.selfInputEnabledProperty, objectNodesInputEnabledProperty ],
+      Multilink.multilink(
+        [ cavObject.animationModeProperty, cavObject.valueProperty, selfInputEnabledProperty, objectNodesInputEnabledProperty ],
         ( mode, value, selfInputEnabled, objectsInputEnabled ) => {
           const inputEnabled = value !== null && mode === AnimationMode.NONE && selfInputEnabled && objectsInputEnabled;
 
@@ -191,14 +185,9 @@ export default class CAVObjectNode extends Node {
           this.inputEnabled = inputEnabled;
         } );
     }
-    else {
-      this.dragListener = null;
-      this.selfInputEnabledProperty = null;
-      this.inputEnabledMultilink = null;
-    }
 
     // show or hide the median highlight
-    this.medianHighlightVisibleMultilink = Multilink.multilink(
+    Multilink.multilink(
       [ cavObject.isMedianObjectProperty, isShowingPlayAreaMedianProperty, cavObject.isShowingAnimationHighlightProperty ],
       ( isMedianObject, isShowingPlayAreaMedian, isShowingAnimationHighlight ) => {
         medianHighlight.visible = options.objectViewType === CAVObjectType.DATA_POINT ? isShowingAnimationHighlight :
@@ -207,7 +196,7 @@ export default class CAVObjectNode extends Node {
 
     // The initial ready-to-kick ball is full opacity. The rest of the balls waiting to be kicked are lower opacity so
     // they don't look like part of the data set, but still look kickable.
-    this.opacityMultilink = Multilink.multilink( [ cavObject.valueProperty, cavObject.animationModeProperty ],
+    Multilink.multilink( [ cavObject.valueProperty, cavObject.animationModeProperty ],
       ( value, animationMode ) => {
         this.opacity = value === null && animationMode === AnimationMode.NONE && !cavObject.isFirstObject ? 0.4 : 1;
       } );
