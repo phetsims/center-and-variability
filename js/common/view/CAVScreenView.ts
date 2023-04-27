@@ -16,7 +16,7 @@ import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.j
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
 import CAVObjectNode from './CAVObjectNode.js';
-import { AlignBox, Node } from '../../../../scenery/js/imports.js';
+import { AlignBox, ManualConstraint, Node } from '../../../../scenery/js/imports.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import CAVObject from '../model/CAVObject.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
@@ -317,6 +317,22 @@ export default class CAVScreenView extends ScreenView {
     this.contentLayer.addChild( this.accordionBox );
     this.accordionBox.expandedProperty.link( this.updateMedianNode );
     this.updateAccordionBoxPosition();
+  }
+
+  /**
+   * Sets the accordion box and aligns its content with the play area number line node.
+   * Should be used with accordion boxes that also have a number line.
+   * The alignment  assumes that the NumberLineNode in the play area and in the dot plot have the same characteristics:
+   * - Same font
+   * -Same offset and scale
+   * Given those assumptions, this code moves the dot plot so that its number line matches the play area one.
+   */
+  protected setAccordionBoxWithAlignedContent( accordionBox: CAVAccordionBox ): void {
+    this.setAccordionBox( accordionBox );
+    ManualConstraint.create( this, [ this.playAreaNumberLineNode, accordionBox.contentNode ],
+      ( lowerNumberLineWrapper, contentsWrapper ) => {
+        contentsWrapper.x = lowerNumberLineWrapper.x;
+      } );
   }
 
   protected setBottomCheckboxGroup( items: VerticalCheckboxGroupItem[] ): void {
