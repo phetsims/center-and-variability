@@ -21,13 +21,13 @@ type StringsType = {
   'medianQuestionStringProperty': LinkableProperty<string>;
   'meanAndMedianQuestionStringProperty': LinkableProperty<string>;
   'variabilityQuestionStringProperty': LinkableProperty<string>;
-  'kickValueStringProperty': LinkableProperty<string>;
+  'kickValuePatternStringProperty': LinkableProperty<string>;
   'distanceInMetersStringProperty': LinkableProperty<string>;
   'sortDataStringProperty': LinkableProperty<string>;
-  'meanEqualsValueStringProperty': LinkableProperty<string>;
-  'medianEqualsValueStringProperty': LinkableProperty<string>;
-  'iqrEqualsValueStringProperty': LinkableProperty<string>;
-  'rangeEqualsValueStringProperty': LinkableProperty<string>;
+  'meanEqualsValuePatternStringProperty': LinkableProperty<string>;
+  'medianEqualsValuePatternStringProperty': LinkableProperty<string>;
+  'iqrEqualsValuePatternStringProperty': LinkableProperty<string>;
+  'rangeEqualsValuePatternStringProperty': LinkableProperty<string>;
   'plotTypeStringProperty': LinkableProperty<string>;
   'dotPlotStringProperty': LinkableProperty<string>;
   'linePlotStringProperty': LinkableProperty<string>;

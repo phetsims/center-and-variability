@@ -15,12 +15,10 @@ import CAVConstants from '../CAVConstants.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVModel from '../model/CAVModel.js';
-import ValueReadoutsNode from './ValueReadoutsNode.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = {
-  valueReadoutsNode: ValueReadoutsNode | null;
   leftMargin: number;
 };
 export type CAVAccordionBoxOptions =
@@ -37,8 +35,8 @@ export default class CAVAccordionBox extends AccordionBox {
   public readonly contentNode: Node;
 
   // NOTE: The positions of the passed-in nodes are modified directly, so they cannot be used in the scenery DAG
-  public constructor( model: CAVModel, contentNode: Node, checkboxPanel: Node,
-                      titleNode: Node, layoutBounds: Bounds2, providedOptions: CAVAccordionBoxOptions ) {
+  public constructor( model: CAVModel, contentNode: Node, titleNode: Node,
+                      layoutBounds: Bounds2, providedOptions: CAVAccordionBoxOptions ) {
 
     const options = optionize<CAVAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {
       titleAlignX: 'left',
@@ -76,23 +74,12 @@ export default class CAVAccordionBox extends AccordionBox {
     // add clip area so dot stacks that are taller than the accordion box are clipped appropriately
     backgroundNode.clipArea = Shape.bounds( fullBackgroundBounds );
 
-    checkboxPanel.centerY = fullBackgroundBounds.centerY;
-
-    // TODO: Maybe every subclass doesn't want a checkboxPanel
-    checkboxPanel.right = backgroundNode.right - CONTENT_MARGIN;
-    backgroundNode.addChild( checkboxPanel );
-
     // Vertical positioning
     contentNode.centerY = fullBackgroundBounds.centerY;
     if ( contentNode.bottom > fullBackgroundBounds.bottom - 5 ) {
       contentNode.bottom = fullBackgroundBounds.bottom - 5;
     }
     backgroundNode.addChild( contentNode );
-
-    if ( options.valueReadoutsNode ) {
-      options.valueReadoutsNode.centerY = fullBackgroundBounds.centerY;
-      backgroundNode.addChild( options.valueReadoutsNode );
-    }
 
     super( backgroundNode, options );
 

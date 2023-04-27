@@ -15,6 +15,7 @@ import MedianBarNode from '../../common/view/MedianBarNode.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import CAVPlotNode from '../../common/view/CAVPlotNode.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
+import TopRepresentationCheckboxGroup from '../../common/view/TopRepresentationCheckboxGroup.js';
 
 export type CAVPlotOptions = NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
@@ -33,6 +34,17 @@ export default class MedianPlotNode extends CAVPlotNode {
       dataPointFill: 'black',
       ...providedOptions
     } );
+
+    const checkboxGroup = new TopRepresentationCheckboxGroup( model, {
+      medianBarIconOptions: {
+        notchDirection: 'down',
+        barStyle: 'continuous',
+        arrowScale: 0.75
+      },
+      showMedianCheckboxIcon: true,
+      tandem: providedOptions.tandem.createTandem( 'topRepresentationCheckboxGroup' )
+    } );
+    this.addChild( checkboxGroup );
 
     this.addChild( this.medianBarNode );
 

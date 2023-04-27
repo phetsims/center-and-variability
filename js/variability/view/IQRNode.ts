@@ -2,7 +2,7 @@
 
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import MedianBarNode from '../../common/view/MedianBarNode.js';
-import { Rectangle, Text, Node, Line } from '../../../../scenery/js/imports.js';
+import { Line, Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import VariabilityModel from '../model/VariabilityModel.js';
@@ -10,6 +10,10 @@ import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVPlotNode, { CAVPlotOptions } from '../../common/view/CAVPlotNode.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import CAVColors from '../../common/CAVColors.js';
+import Checkbox from '../../../../sun/js/Checkbox.js';
+import CAVConstants from '../../common/CAVConstants.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import VariabilityReadoutText from './VariabilityReadoutText.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
@@ -25,7 +29,16 @@ export default class IQRNode extends CAVPlotNode {
       dataPointFill: CAVColors.grayDataPointFill,
       ...options
     } );
-
+    const iqrReadoutValueProperty = new DerivedProperty( [ model.rangeValueProperty ], rangeValue => {
+      return rangeValue ? `${rangeValue}` : '?';
+    } );
+    const iqrReadoutText = new VariabilityReadoutText( iqrReadoutValueProperty, CenterAndVariabilityStrings.iqrEqualsValuePatternStringProperty,
+      { fill: CAVColors.meanColorProperty, tandem: options.tandem.createTandem( 'iqrReadoutText' ), visibleProperty: model.isShowingIQRProperty } );
+    this.addChild( iqrReadoutText );
+    const iqrCheckbox = new Checkbox( model.isShowingIQRProperty, new Text( CenterAndVariabilityStrings.iqrStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ), {
+      tandem: options.tandem.createTandem( 'iqrCheckbox' )
+    } );
+    this.addChild( iqrCheckbox );
     const needAtLeastFiveKicks = new Text( CenterAndVariabilityStrings.needAtLeastFiveKicksStringProperty, {
       fontSize: 18,
       top: 100
@@ -130,7 +143,7 @@ export default class IQRNode extends CAVPlotNode {
       const enoughData = model.numberOfDataPointsProperty.value >= 5;
 
       const iqrVisibility = ( options.parentContext === 'info' && enoughData ) ||
-                              ( options.parentContext === 'accordion' && enoughData && model.isShowingIQRProperty.value );
+                            ( options.parentContext === 'accordion' && enoughData && model.isShowingIQRProperty.value );
 
       iqrRectangle.visible = iqrVisibility;
       iqrBar.visible = iqrVisibility;
@@ -157,7 +170,7 @@ export default class IQRNode extends CAVPlotNode {
 
       needAtLeastFiveKicks.center = this.modelViewTransform.modelToViewXY( 8, 2 );
       needAtLeastFiveKicks.visible = !enoughData && ( options.parentContext === 'info' ||
-                                                                                     ( options.parentContext === 'accordion' && model.isShowingIQRProperty.value ) );
+                                                      ( options.parentContext === 'accordion' && model.isShowingIQRProperty.value ) );
     };
     model.objectChangedEmitter.addListener( updateIQRNode );
     model.isShowingIQRProperty.link( updateIQRNode );

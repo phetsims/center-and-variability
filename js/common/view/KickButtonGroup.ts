@@ -79,11 +79,11 @@ export default class KickButtonGroup extends VBox {
     const kick5ButtonTandem = options.tandem.createTandem( 'kickFiveButton' );
 
     // Create labels first so their sizes can be aligned
-    const kick1PatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.kickValueStringProperty, { value: 1 } );
+    const kick1PatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.kickValuePatternStringProperty, { value: 1 } );
     const kick1Label = createLabel( kick1PatternStringProperty, kick1ButtonTandem.createTandem( 'labelText' ) );
 
     const multiKickProperty = new NumberProperty( 5 );
-    const kick5PatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.kickValueStringProperty, { value: multiKickProperty } );
+    const kick5PatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.kickValuePatternStringProperty, { value: multiKickProperty } );
     model.numberOfRemainingKickableSoccerBallsProperty.link( numberOfRemainingKickableObjects => {
       const value = Math.max( Math.min( numberOfRemainingKickableObjects, 5 ), 1 );
       multiKickProperty.value = value;

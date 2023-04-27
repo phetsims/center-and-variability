@@ -11,6 +11,7 @@ import CAVPlotNode, { CAVPlotOptions } from '../../common/view/CAVPlotNode.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import CAVColors from '../../common/CAVColors.js';
+import Checkbox from '../../../../sun/js/Checkbox.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
@@ -26,6 +27,11 @@ export default class MADNode extends CAVPlotNode {
       dataPointFill: CAVColors.grayDataPointFill,
       ...options
     } );
+
+    const madCheckbox = new Checkbox( model.isShowingMADProperty, new Text( CenterAndVariabilityStrings.madStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ), {
+      tandem: options.tandem.createTandem( 'madCheckbox' )
+    } );
+    this.addChild( madCheckbox );
 
     const needAtLeastOneKickText = new Text( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {
       fontSize: 18,

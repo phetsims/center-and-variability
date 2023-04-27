@@ -45,10 +45,10 @@ export default class ValueReadoutsNode extends VBox {
     };
 
     const meanText = createReadoutText( model.meanValueProperty, model.isShowingTopMeanProperty,
-      CenterAndVariabilityStrings.meanEqualsValueStringProperty, CAVColors.meanColorProperty );
+      CenterAndVariabilityStrings.meanEqualsValuePatternStringProperty, CAVColors.meanColorProperty );
 
     const medianText = createReadoutText( model.medianValueProperty, model.isShowingTopMedianProperty,
-      CenterAndVariabilityStrings.medianEqualsValueStringProperty, CAVColors.medianColorProperty );
+      CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty, CAVColors.medianColorProperty );
 
     const options = optionize<ValueReadoutNodeOptions, SelfOptions, VBoxOptions>()( {
       align: 'left',

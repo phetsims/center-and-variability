@@ -20,14 +20,14 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import NumberLineNode from './NumberLineNode.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import CAVConstants from '../CAVConstants.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 type SelfOptions = {
   dataPointFill: TColor;
 };
-export type CAVPlotOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
+export type CAVPlotOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
 
 export default class CAVPlotNode extends Node {
 

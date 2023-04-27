@@ -2,7 +2,6 @@
 
 import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
 import CardNodeContainer from '../../common/view/CardNodeContainer.js';
-import TopRepresentationCheckboxGroup from '../../common/view/TopRepresentationCheckboxGroup.js';
 import { Text } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
@@ -18,15 +17,6 @@ export default class MedianAccordionBox extends CAVAccordionBox {
 
         // Expose this intermediate layer to make it so that clients can hide the number cards with one call
         tandem: tandem.createTandem( 'cardNodeContainer' )
-      } ), new TopRepresentationCheckboxGroup( model, {
-        includeSortData: true,
-        includeMean: false,
-        medianBarIconOptions: {
-          notchDirection: 'up',
-          barStyle: 'continuous'
-        },
-        showMedianCheckboxIcon: false,
-        tandem: tandem.createTandem( 'checkboxGroup' )
       } ),
       new Text( CenterAndVariabilityStrings.distanceInMetersStringProperty, {
         font: new PhetFont( 16 ),
@@ -36,7 +26,6 @@ export default class MedianAccordionBox extends CAVAccordionBox {
         leftMargin: 0,
         tandem: tandem,
         top: top,
-        valueReadoutsNode: null,
         centerX: layoutBounds.centerX
       } );
   }

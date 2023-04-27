@@ -23,7 +23,7 @@
   "variabilityQuestion": {
     "value": "How spread out are the kick distances?"
   },
-  "kickValue": {
+  "kickValuePattern": {
     "value": "Kick {{value}}"
   },
   "distanceInMeters": {
@@ -32,16 +32,16 @@
   "sortData": {
     "value": "Sort Data"
   },
-  "meanEqualsValue": {
+  "meanEqualsValuePattern": {
     "value": "Mean = {{value}}"
   },
-  "medianEqualsValue": {
+  "medianEqualsValuePattern": {
     "value": "Median = {{value}}"
   },
-  "iqrEqualsValue": {
+  "iqrEqualsValuePattern": {
     "value": "IQR = {{value}}"
   },
-  "rangeEqualsValue": {
+  "rangeEqualsValuePattern": {
     "value": "Range = {{value}}"
   },
   "plotType": {

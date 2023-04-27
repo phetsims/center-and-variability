@@ -17,6 +17,9 @@ import CAVObjectType from '../../common/model/CAVObjectType.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import CAVColors from '../../common/CAVColors.js';
+import VariabilityReadoutText from './VariabilityReadoutText.js';
+import Checkbox from '../../../../sun/js/Checkbox.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
@@ -32,6 +35,30 @@ export default class RangeNode extends CAVPlotNode {
       dataPointFill: CAVColors.grayDataPointFill,
       ...options
     } );
+
+    if ( options.parentContext === 'accordion' ) {
+      const rangeReadoutValueProperty = new DerivedProperty( [ model.rangeValueProperty ], rangeValue => {
+        return rangeValue ? `${rangeValue}` : '?';
+      } );
+
+      const rangeReadoutText = new VariabilityReadoutText( rangeReadoutValueProperty,
+        CenterAndVariabilityStrings.rangeEqualsValuePatternStringProperty, {
+          fill: CAVColors.meanColorProperty,
+          visibleProperty: model.isShowingRangeProperty,
+          right: this.left,
+          y: 100, // TODO: Let's find a better way to position these.
+          tandem: options.tandem.createTandem( 'rangeReadoutText' )
+        } );
+
+      this.addChild( rangeReadoutText );
+
+      const rangeCheckbox = new Checkbox( model.isShowingRangeProperty, new Text( CenterAndVariabilityStrings.rangeStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ), {
+        tandem: options.tandem.createTandem( 'rangeCheckbox' ),
+        left: this.right,
+        y: 100
+      } );
+      this.addChild( rangeCheckbox );
+    }
 
     const needAtLeastOneKickText = new Text( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {
       fontSize: 18,
