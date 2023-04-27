@@ -339,9 +339,9 @@ export default class CAVModel implements TModel {
 
     // there is enough data to calculate quartiles
     if ( sortedObjects.length >= 5 ) {
-      const splitIndex = Math.floor( sortedObjects.length / 2 );
 
       // Split the array into lower and upper halves, ignoring the median value if there are an odd number of objects
+      const splitIndex = Math.floor( sortedObjects.length / 2 );
       const lowerHalf: CAVObject[] = sortedObjects.slice( 0, splitIndex );
       const upperHalf: CAVObject[] = sortedObjects.slice( sortedObjects.length % 2 !== 0 ? splitIndex + 1 : splitIndex );
 

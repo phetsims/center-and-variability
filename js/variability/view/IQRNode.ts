@@ -118,10 +118,10 @@ export default class IQRNode extends CAVPlotNode {
       const leftmostDot = sortedDots[ 0 ];
       const rightmostDot = sortedDots[ sortedDots.length - 1 ];
 
-      boxWhiskerMedianLine.x1 = boxWhiskerMedianLine.x2 = this.modelViewTransform.modelToViewX( model.medianValueProperty.value! );
-
       const boxLeft = this.modelViewTransform.modelToViewX( model.q1ValueProperty.value! );
       const boxRight = this.modelViewTransform.modelToViewX( model.q3ValueProperty.value! );
+
+      boxWhiskerMedianLine.x1 = boxWhiskerMedianLine.x2 = this.modelViewTransform.modelToViewX( model.medianValueProperty.value! );
 
       boxWhiskerBox.left = boxLeft;
       boxWhiskerBox.rectWidth = boxRight - boxLeft;
@@ -164,9 +164,7 @@ export default class IQRNode extends CAVPlotNode {
         iqrTextReadout.bottom = iqrBar.top - 5;
       }
 
-      const showBoxAndWhiskerPlot = model.selectedVariabilityProperty.value === VariabilityMeasure.IQR && enoughData;
-
-      boxWhiskerNode.visible = showBoxAndWhiskerPlot;
+      boxWhiskerNode.visible = model.selectedVariabilityProperty.value === VariabilityMeasure.IQR && enoughData;
 
       needAtLeastFiveKicks.center = this.modelViewTransform.modelToViewXY( 8, 2 );
       needAtLeastFiveKicks.visible = !enoughData && ( options.parentContext === 'info' ||
