@@ -110,18 +110,18 @@ export default class CAVModel implements TModel {
         tandem: tandem
       }, providedOptions );
 
-      const cavObject = new CAVObject( CAVObjectType.SOCCER_BALL, options );
+      const soccerBall = new CAVObject( CAVObjectType.SOCCER_BALL, options );
 
       // TODO: Should some or all of this move into CAVObject or CAVObjectNode?
       const dragPositionListener = ( dragPosition: Vector2 ) => {
-        cavObject.valueProperty.value = Utils.roundSymmetric( this.physicalRange.constrainValue( dragPosition.x ) );
+        soccerBall.valueProperty.value = Utils.roundSymmetric( this.physicalRange.constrainValue( dragPosition.x ) );
 
-        this.moveToTop( cavObject );
+        this.moveToTop( soccerBall );
       };
-      cavObject.dragPositionProperty.lazyLink( dragPositionListener );
-      cavObject.disposedEmitter.addListener( () => cavObject.dragPositionProperty.unlink( dragPositionListener ) );
+      soccerBall.dragPositionProperty.lazyLink( dragPositionListener );
+      soccerBall.disposedEmitter.addListener( () => soccerBall.dragPositionProperty.unlink( dragPositionListener ) );
 
-      return cavObject;
+      return soccerBall;
     }, [ {} ], {
       phetioType: PhetioGroup.PhetioGroupIO( CAVObject.CAVObjectIO ),
       tandem: options.tandem.createTandem( 'soccerBallGroup' )
