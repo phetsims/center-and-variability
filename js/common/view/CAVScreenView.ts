@@ -97,7 +97,7 @@ export default class CAVScreenView extends ScreenView {
         fill: null, // Only depict as a soccer ball
         tandem: tandem
       } );
-    }, () => [ model.objectGroup.archetype ], {
+    }, () => [ model.soccerBallGroup.archetype ], {
       phetioType: PhetioGroup.PhetioGroupIO( Node.NodeIO ),
       tandem: objectNodeGroupTandem,
       supportsDynamicState: false
@@ -128,9 +128,9 @@ export default class CAVScreenView extends ScreenView {
 
             // add the dragIndicatorArrowNode above the last object when it is added to the play area. if an object was
             // moved before this happens, don't show the dragIndicatorArrowNode
-            if ( model.objectGroup.countProperty.value === this.model.physicalRange.max &&
+            if ( model.soccerBallGroup.countProperty.value === this.model.physicalRange.max &&
                  objectNodesInputEnabledProperty.value &&
-                 _.every( model.objectGroup.getArray(), cavObject => cavObject.valueProperty.value !== null ) &&
+                 _.every( model.soccerBallGroup.getArray(), cavObject => cavObject.valueProperty.value !== null ) &&
                  !objectHasBeenDragged ) {
               dragIndicatorArrowNode.centerX = this.modelViewTransform.modelToViewX( value );
 
@@ -155,10 +155,10 @@ export default class CAVScreenView extends ScreenView {
 
       map.set( cavObject, cavObjectNode );
     };
-    model.objectGroup.forEach( createObjectNode );
-    model.objectGroup.elementCreatedEmitter.addListener( createObjectNode );
+    model.soccerBallGroup.forEach( createObjectNode );
+    model.soccerBallGroup.elementCreatedEmitter.addListener( createObjectNode );
 
-    model.objectGroup.elementDisposedEmitter.addListener( cavObject => {
+    model.soccerBallGroup.elementDisposedEmitter.addListener( cavObject => {
       const viewNode = map.get( cavObject )!;
       objectNodeGroup.disposeElement( viewNode );
       map.delete( cavObject );
@@ -174,7 +174,7 @@ export default class CAVScreenView extends ScreenView {
       if ( visible ) {
 
         // if there is a ball at that location, go above the ball
-        const ballsAtLocation = model.objectGroup.filter( cavObject => cavObject.valueProperty.value === medianValue );
+        const ballsAtLocation = model.soccerBallGroup.filter( cavObject => cavObject.valueProperty.value === medianValue );
         const modelHeight = ballsAtLocation.length * CAVObjectType.SOCCER_BALL.radius * 2; // assumes no spacing
 
         const viewHeight = this.modelViewTransform.modelToViewDeltaY( modelHeight );

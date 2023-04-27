@@ -40,7 +40,7 @@ export default class MedianPlotNode extends CAVPlotNode {
 
     const updateMedianBarNode = () => {
 
-      const sortedDots = _.sortBy( model.objectGroup.getArrayCopy().filter( object => object.valueProperty.value !== null ),
+      const sortedDots = _.sortBy( model.soccerBallGroup.getArrayCopy().filter( object => object.valueProperty.value !== null ),
         object => object.valueProperty.value );
       const leftmostDot = sortedDots[ 0 ];
 

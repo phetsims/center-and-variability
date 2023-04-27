@@ -47,7 +47,7 @@ export type CAVModelOptions = SelfOptions;
 const TIME_BETWEEN_RAPID_KICKS = 0.5; // in seconds
 
 export default class CAVModel implements TModel {
-  public readonly objectGroup: PhetioGroup<CAVObject, [ StrictOmit<CAVObjectOptions, 'tandem'> ]>;
+  public readonly soccerBallGroup: PhetioGroup<CAVObject, [ StrictOmit<CAVObjectOptions, 'tandem'> ]>;
 
   public readonly isShowingTopMeanProperty: BooleanProperty;
   public readonly isShowingTopMedianProperty: BooleanProperty;
@@ -103,12 +103,12 @@ export default class CAVModel implements TModel {
 
     const options = optionize<CAVModelOptions, SelfOptions>()( {}, providedOptions );
 
-    this.objectGroup = new PhetioGroup( ( tandem, providedOptions: StrictOmit<CAVObjectOptions, 'tandem'> ) => {
+    this.soccerBallGroup = new PhetioGroup( ( tandem, providedOptions: StrictOmit<CAVObjectOptions, 'tandem'> ) => {
 
       const options = optionize<StrictOmit<CAVObjectOptions, 'tandem'>, EmptySelfOptions, CAVObjectOptions>()( {
         // If it's the first element in the group, mark as isFirstObject. For creating archetype, the objectGroup does
         // not yet exist, so just mark it as first
-        isFirstObject: this.objectGroup ? this.objectGroup.count === 0 : true,
+        isFirstObject: this.soccerBallGroup ? this.soccerBallGroup.count === 0 : true,
         tandem: tandem
       }, providedOptions );
 
@@ -231,10 +231,10 @@ export default class CAVModel implements TModel {
       cavObject.valueProperty.link( () => this.objectChangedEmitter.emit( cavObject ) );
       cavObject.positionProperty.link( () => this.objectChangedEmitter.emit( cavObject ) );
     };
-    this.objectGroup.forEach( objectCreatedListener );
-    this.objectGroup.elementCreatedEmitter.addListener( objectCreatedListener );
+    this.soccerBallGroup.forEach( objectCreatedListener );
+    this.soccerBallGroup.elementCreatedEmitter.addListener( objectCreatedListener );
 
-    this.numberOfRemainingObjectsProperty = new DerivedProperty( [ this.objectGroup.countProperty ], count => {
+    this.numberOfRemainingObjectsProperty = new DerivedProperty( [ this.soccerBallGroup.countProperty ], count => {
       return this.maxNumberOfObjects - count;
     } );
 
@@ -289,7 +289,7 @@ export default class CAVModel implements TModel {
       }
     } );
 
-    this.objectGroup.elementCreatedEmitter.addListener( cavObject => {
+    this.soccerBallGroup.elementCreatedEmitter.addListener( cavObject => {
       cavObject.valueProperty.link( ( value, oldValue ) => {
         if ( value !== null && oldValue === null ) {
           if ( !phet.joist.sim.isSettingPhetioStateProperty.value ) {
@@ -319,7 +319,7 @@ export default class CAVModel implements TModel {
     const sortedObjects = this.getSortedLandedObjects();
     const medianObjects = this.medianObjectsFromSortedArray( sortedObjects );
 
-    this.objectGroup.forEach( object => {
+    this.soccerBallGroup.forEach( object => {
       object.isMedianObjectProperty.value = medianObjects.includes( object );
     } );
 
@@ -365,7 +365,7 @@ export default class CAVModel implements TModel {
    * Returns all other objects at the target position of the provided object.
    */
   public getOtherObjectsAtTarget( cavObject: CAVObject ): CAVObject[] {
-    return this.objectGroup.filter( ( o: CAVObject ) => {
+    return this.soccerBallGroup.filter( ( o: CAVObject ) => {
       return o.valueProperty.value === cavObject.valueProperty.value && cavObject !== o;
     } );
   }
@@ -393,7 +393,7 @@ export default class CAVModel implements TModel {
    * Clears out the data and the cards
    */
   public clearData(): void {
-    this.objectGroup.clear();
+    this.soccerBallGroup.clear();
 
     this.numberOfScheduledSoccerBallsToKickProperty.reset();
     this.timeProperty.reset();
@@ -423,7 +423,7 @@ export default class CAVModel implements TModel {
   }
 
   public getSortedLandedObjects(): CAVObject[] {
-    return _.sortBy( this.objectGroup.filter( cavObject => cavObject.valueProperty.value !== null ),
+    return _.sortBy( this.soccerBallGroup.filter( cavObject => cavObject.valueProperty.value !== null ),
 
       // The numerical value takes predence for sorting
       cavObject => cavObject.valueProperty.value,
@@ -440,7 +440,7 @@ export default class CAVModel implements TModel {
    */
   public step( dt: number ): void {
     this.timeProperty.value += dt;
-    this.objectGroup.forEach( cavObject => cavObject.step( dt ) );
+    this.soccerBallGroup.forEach( cavObject => cavObject.step( dt ) );
 
     const frontPlayer = this.soccerPlayers[ this.activeKickerIndexProperty.value ];
 
@@ -524,7 +524,7 @@ export default class CAVModel implements TModel {
     const y0 = CAVObjectType.SOCCER_BALL.radius;
     const position = new Vector2( 0, y0 );
 
-    return this.objectGroup.createNextElement( {
+    return this.soccerBallGroup.createNextElement( {
       position: position
     } );
   }
@@ -533,7 +533,7 @@ export default class CAVModel implements TModel {
    * When a ball lands on the ground, animate all other balls that were at this location above the landed ball.
    */
   private soccerBallLandedListener( cavObject: CAVObject, value: number ): void {
-    const otherObjectsInStack = this.objectGroup.filter( x => x.valueProperty.value === value && x !== cavObject );
+    const otherObjectsInStack = this.soccerBallGroup.filter( x => x.valueProperty.value === value && x !== cavObject );
     const sortedOthers = _.sortBy( otherObjectsInStack, object => object.positionProperty.value.y );
 
     sortedOthers.forEach( ( cavObject, index ) => {
