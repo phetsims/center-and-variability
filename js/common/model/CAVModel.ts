@@ -99,9 +99,7 @@ export default class CAVModel implements TModel {
   // Starting at 0, iterate through the index of the kickers. This updates the SoccerPlayer.isActiveProperty to show the current kicker
   private readonly activeKickerIndexProperty: NumberProperty;
 
-  public constructor( providedOptions: CAVModelOptions ) {
-
-    const options = optionize<CAVModelOptions, SelfOptions>()( {}, providedOptions );
+  public constructor( options: CAVModelOptions ) {
 
     this.soccerBallGroup = new PhetioGroup( ( tandem, providedOptions: StrictOmit<CAVObjectOptions, 'tandem'> ) => {
 
