@@ -9,7 +9,7 @@
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import { Node, Rectangle } from '../../../../scenery/js/imports.js';
+import { AlignBox, Node, Rectangle } from '../../../../scenery/js/imports.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import CAVConstants from '../CAVConstants.js';
 import optionize from '../../../../phet-core/js/optionize.js';
@@ -17,6 +17,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import CAVModel from '../model/CAVModel.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import VerticalCheckboxGroup, { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
 
 type SelfOptions = {
   leftMargin: number;
@@ -86,6 +87,18 @@ export default class CAVAccordionBox extends AccordionBox {
     model.resetEmitter.addListener( () => this.reset() );
 
     this.contentNode = contentNode;
+  }
+
+  protected setCheckboxGroup( items: VerticalCheckboxGroupItem[] ): void {
+    const accordionCheckboxGroup = new VerticalCheckboxGroup( items, {
+      tandem: this.tandem.createTandem( 'accordionCheckboxGroup' )
+    } );
+    this.addChild( new AlignBox( accordionCheckboxGroup, {
+      alignBounds: this.getVisibleBounds(),
+      xAlign: 'right',
+      xMargin: 80,
+      yAlign: 'top'
+    } ) );
   }
 }
 

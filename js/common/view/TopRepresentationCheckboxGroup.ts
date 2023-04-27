@@ -7,31 +7,16 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import optionize from '../../../../phet-core/js/optionize.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import VerticalCheckboxGroup, { VerticalCheckboxGroupItem, VerticalCheckboxGroupOptions } from '../../../../sun/js/VerticalCheckboxGroup.js';
-import { HBox, Line, Node, Text } from '../../../../scenery/js/imports.js';
-import CAVModel from '../model/CAVModel.js';
+import VerticalCheckboxGroup, { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
+import { AlignGroup, GridBox, Line, Node, Text } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVConstants from '../CAVConstants.js';
 import NumberLineNode from './NumberLineNode.js';
-import MedianBarNode, { MedianBarNodeOptions } from './MedianBarNode.js';
+import MedianBarNode from './MedianBarNode.js';
 import CAVColors from '../CAVColors.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import MedianModel from '../../median/model/MedianModel.js';
-
-type SelfOptions = {
-
-  // TODO: Refactor this like we did for BottomRepresentationCheckboxGroup
-  includeSortData?: boolean;
-  includeMedian?: boolean;
-  includeMean?: boolean;
-  medianBarIconOptions: MedianBarNodeOptions;
-  showMedianCheckboxIcon: boolean;
-};
-export type TopRepresentationCheckboxGroupOptions = SelfOptions & VerticalCheckboxGroupOptions &
-  PickRequired<VerticalCheckboxGroupOptions, 'tandem'>;
+import Property from '../../../../axon/js/Property.js';
 
 // constants
 const ICON_WIDTH = 24;
@@ -41,41 +26,52 @@ const LINE_WIDTH = 2;
 
 export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
-  public constructor( model: CAVModel, providedOptions?: TopRepresentationCheckboxGroupOptions ) {
+  private static createGridBox( text: Node, icon: Node, iconGroup: AlignGroup ): GridBox {
+    return new GridBox( {
+      rows: [ [ new Node( { children: [ text ], layoutOptions: { align: 'left' } } ),
+        iconGroup.createBox( icon, { xAlign: 'center', layoutOptions: { xAlign: 'right' } } ) ]
+      ]
+    } );
+  }
 
-    const options = optionize<TopRepresentationCheckboxGroupOptions, SelfOptions, VerticalCheckboxGroupOptions>()( {
-      includeSortData: false,
-      includeMean: true,
-      includeMedian: true
-    }, providedOptions );
-
-    const items: VerticalCheckboxGroupItem[] = [];
-    options.includeSortData && items.push( {
+  public static getSortDataCheckboxItem( isSortingDataProperty: Property<boolean> ): VerticalCheckboxGroupItem {
+    return {
       createNode: ( tandem: Tandem ) => new Text( CenterAndVariabilityStrings.sortDataStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
-      property: ( model as MedianModel ).isSortingDataProperty,
+      property: isSortingDataProperty,
       tandemName: 'sortDataCheckbox'
-    } );
-    options.includeMedian && items.push( {
-      createNode: ( tandem: Tandem ) => new HBox( {
-        spacing: 12,
-        children: [
+    };
+  }
+
+  public static getMedianCheckboxWithIconItem( iconGroup: AlignGroup, isShowingTopMedianProperty: Property<boolean> ): VerticalCheckboxGroupItem {
+    return {
+      createNode: ( tandem: Tandem ) => {
+        return TopRepresentationCheckboxGroup.createGridBox(
           new Text( CenterAndVariabilityStrings.medianStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
-          ...options.showMedianCheckboxIcon ? [
-            new MedianBarNode( options.medianBarIconOptions )
-              .setMedianBarShape( 0, 0, ICON_WIDTH / 2 - LINE_WIDTH / 2, ICON_WIDTH - LINE_WIDTH, true )
-          ] : []
-        ]
-      } ),
-      property: model.isShowingTopMedianProperty,
+          new MedianBarNode( {
+            notchDirection: 'up',
+            barStyle: 'continuous'
+          } )
+            .setMedianBarShape( 0, 0, ICON_WIDTH / 2 - LINE_WIDTH / 2, ICON_WIDTH - LINE_WIDTH, true ),
+          iconGroup
+        );
+      },
+      property: isShowingTopMedianProperty,
       tandemName: 'medianCheckbox'
-    } );
+    };
+  }
 
-    options.includeMean && items.push( {
-      createNode: ( tandem: Tandem ) => new HBox( {
+  public static getMedianCheckboxWithoutIconItem( isShowingTopMedianProperty: Property<boolean> ): VerticalCheckboxGroupItem {
+    return {
+      createNode: ( tandem: Tandem ) => new Text( CenterAndVariabilityStrings.medianStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
+      property: isShowingTopMedianProperty,
+      tandemName: 'medianCheckbox'
+    };
+  }
 
-        // TODO: align icons
-        spacing: 24.5,
-        children: [
+  public static getMeanCheckboxWithIconItem( iconGroup: AlignGroup, isShowingTopMeanProperty: Property<boolean> ): VerticalCheckboxGroupItem {
+    return {
+      createNode: ( tandem: Tandem ) => {
+        return TopRepresentationCheckboxGroup.createGridBox(
           new Text( CenterAndVariabilityStrings.meanStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
           new Node( {
             children: [
@@ -89,13 +85,13 @@ export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGrou
               // Triangle
               NumberLineNode.createMeanIndicatorNode( false, true )
             ]
-          } )
-        ]
-      } ),
-      property: model.isShowingTopMeanProperty,
+          } ),
+          iconGroup
+        );
+      },
+      property: isShowingTopMeanProperty,
       tandemName: 'meanCheckbox'
-    } );
-    super( items, options );
+    };
   }
 }
 

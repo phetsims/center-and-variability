@@ -41,7 +41,6 @@ import DragIndicatorArrowNode from './DragIndicatorArrowNode.js';
 import TEmitter from '../../../../axon/js/TEmitter.js';
 import MedianModel from '../../median/model/MedianModel.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
-import TopRepresentationCheckboxGroup from './TopRepresentationCheckboxGroup.js';
 
 // constants
 const CARD_SPACING = 10;
@@ -84,18 +83,6 @@ export default class CardNodeContainer extends Node {
     }, providedOptions );
 
     super( options );
-
-    const checkboxGroup = new TopRepresentationCheckboxGroup( model, {
-      includeSortData: true,
-      includeMean: false,
-      medianBarIconOptions: {
-        notchDirection: 'up',
-        barStyle: 'continuous'
-      },
-      showMedianCheckboxIcon: false,
-      tandem: options.tandem.createTandem( 'checkboxGroup' )
-    } );
-    this.addChild( checkboxGroup );
 
     this.model = model;
 
