@@ -93,7 +93,7 @@ export default class CAVPlotNode extends Node {
         tandem: tandem,
         fill: options.dataPointFill
       } );
-    }, () => [ model.objectGroup.archetype ], {
+    }, () => [ model.soccerBallGroup.archetype ], {
       phetioType: PhetioGroup.PhetioGroupIO( Node.NodeIO ),
       tandem: options.tandem.createTandem( 'dotNodeGroup' ),
       supportsDynamicState: false
@@ -112,10 +112,10 @@ export default class CAVPlotNode extends Node {
       } );
       map.set( cavObject, dotNode );
     };
-    model.objectGroup.forEach( createDotNode );
-    model.objectGroup.elementCreatedEmitter.addListener( createDotNode );
+    model.soccerBallGroup.forEach( createDotNode );
+    model.soccerBallGroup.elementCreatedEmitter.addListener( createDotNode );
 
-    model.objectGroup.elementDisposedEmitter.addListener( cavObject => {
+    model.soccerBallGroup.elementDisposedEmitter.addListener( cavObject => {
       const viewNode = map.get( cavObject )!;
       dotNodeGroup.disposeElement( viewNode );
       map.delete( cavObject );

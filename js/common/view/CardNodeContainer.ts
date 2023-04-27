@@ -135,8 +135,8 @@ export default class CardNodeContainer extends Node {
       } );
     };
 
-    model.objectGroup.forEach( objectCreatedListener );
-    model.objectGroup.elementCreatedEmitter.addListener( objectCreatedListener );
+    model.soccerBallGroup.forEach( objectCreatedListener );
+    model.soccerBallGroup.elementCreatedEmitter.addListener( objectCreatedListener );
 
     model.cardModelGroup.elementDisposedEmitter.addListener( cardModel => {
       const cardNode = this.getCardNode( cardModel.cavObject )!;

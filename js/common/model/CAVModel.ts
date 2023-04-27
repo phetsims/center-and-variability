@@ -47,7 +47,7 @@ export type CAVModelOptions = SelfOptions;
 const TIME_BETWEEN_RAPID_KICKS = 0.5; // in seconds
 
 export default class CAVModel implements TModel {
-  public readonly objectGroup: PhetioGroup<CAVObject, [ StrictOmit<CAVObjectOptions, 'tandem'> ]>;
+  public readonly soccerBallGroup: PhetioGroup<CAVObject, [ StrictOmit<CAVObjectOptions, 'tandem'> ]>;
 
   public readonly isShowingTopMeanProperty: BooleanProperty;
   public readonly isShowingTopMedianProperty: BooleanProperty;
@@ -99,31 +99,29 @@ export default class CAVModel implements TModel {
   // Starting at 0, iterate through the index of the kickers. This updates the SoccerPlayer.isActiveProperty to show the current kicker
   private readonly activeKickerIndexProperty: NumberProperty;
 
-  public constructor( providedOptions: CAVModelOptions ) {
+  public constructor( options: CAVModelOptions ) {
 
-    const options = optionize<CAVModelOptions, SelfOptions>()( {}, providedOptions );
-
-    this.objectGroup = new PhetioGroup( ( tandem, providedOptions: StrictOmit<CAVObjectOptions, 'tandem'> ) => {
+    this.soccerBallGroup = new PhetioGroup( ( tandem, providedOptions: StrictOmit<CAVObjectOptions, 'tandem'> ) => {
 
       const options = optionize<StrictOmit<CAVObjectOptions, 'tandem'>, EmptySelfOptions, CAVObjectOptions>()( {
         // If it's the first element in the group, mark as isFirstObject. For creating archetype, the objectGroup does
         // not yet exist, so just mark it as first
-        isFirstObject: this.objectGroup ? this.objectGroup.count === 0 : true,
+        isFirstObject: this.soccerBallGroup ? this.soccerBallGroup.count === 0 : true,
         tandem: tandem
       }, providedOptions );
 
-      const cavObject = new CAVObject( CAVObjectType.SOCCER_BALL, options );
+      const soccerBall = new CAVObject( CAVObjectType.SOCCER_BALL, options );
 
       // TODO: Should some or all of this move into CAVObject or CAVObjectNode?
       const dragPositionListener = ( dragPosition: Vector2 ) => {
-        cavObject.valueProperty.value = Utils.roundSymmetric( this.physicalRange.constrainValue( dragPosition.x ) );
+        soccerBall.valueProperty.value = Utils.roundSymmetric( this.physicalRange.constrainValue( dragPosition.x ) );
 
-        this.moveToTop( cavObject );
+        this.moveToTop( soccerBall );
       };
-      cavObject.dragPositionProperty.lazyLink( dragPositionListener );
-      cavObject.disposedEmitter.addListener( () => cavObject.dragPositionProperty.unlink( dragPositionListener ) );
+      soccerBall.dragPositionProperty.lazyLink( dragPositionListener );
+      soccerBall.disposedEmitter.addListener( () => soccerBall.dragPositionProperty.unlink( dragPositionListener ) );
 
-      return cavObject;
+      return soccerBall;
     }, [ {} ], {
       phetioType: PhetioGroup.PhetioGroupIO( CAVObject.CAVObjectIO ),
       tandem: options.tandem.createTandem( 'soccerBallGroup' )
@@ -212,29 +210,29 @@ export default class CAVModel implements TModel {
     this.isShowingPlayAreaMedianProperty.link( updateDataMeasures );
 
     // Trigger CardModel creation when a ball lands.
-    const objectCreatedListener = ( cavObject: CAVObject ) => {
+    const objectCreatedListener = ( soccerBall: CAVObject ) => {
       const listener = ( value: number | null ) => {
         if ( value !== null ) {
           if ( !phet.joist.sim.isSettingPhetioStateProperty.value ) {
-            this.objectCreated( cavObject );
-            this.objectValueBecameNonNullEmitter.emit( cavObject );
+            this.objectCreated( soccerBall );
+            this.objectValueBecameNonNullEmitter.emit( soccerBall );
           }
-          cavObject.valueProperty.unlink( listener ); // Only create the card once, then no need to listen further
+          soccerBall.valueProperty.unlink( listener ); // Only create the card once, then no need to listen further
         }
       };
-      cavObject.valueProperty.link( listener );
-      cavObject.valueProperty.link( updateDataMeasures );
-      cavObject.positionProperty.link( updateDataMeasures );
+      soccerBall.valueProperty.link( listener );
+      soccerBall.valueProperty.link( updateDataMeasures );
+      soccerBall.positionProperty.link( updateDataMeasures );
 
       // Signal to listeners that a value changed
       // TODO: Maybe should combine with temporary listener for one permanent one
-      cavObject.valueProperty.link( () => this.objectChangedEmitter.emit( cavObject ) );
-      cavObject.positionProperty.link( () => this.objectChangedEmitter.emit( cavObject ) );
+      soccerBall.valueProperty.link( () => this.objectChangedEmitter.emit( soccerBall ) );
+      soccerBall.positionProperty.link( () => this.objectChangedEmitter.emit( soccerBall ) );
     };
-    this.objectGroup.forEach( objectCreatedListener );
-    this.objectGroup.elementCreatedEmitter.addListener( objectCreatedListener );
+    this.soccerBallGroup.forEach( objectCreatedListener );
+    this.soccerBallGroup.elementCreatedEmitter.addListener( objectCreatedListener );
 
-    this.numberOfRemainingObjectsProperty = new DerivedProperty( [ this.objectGroup.countProperty ], count => {
+    this.numberOfRemainingObjectsProperty = new DerivedProperty( [ this.soccerBallGroup.countProperty ], count => {
       return this.maxNumberOfObjects - count;
     } );
 
@@ -279,7 +277,7 @@ export default class CAVModel implements TModel {
                                                     _.every( array, element => element >= 0 )
     } );
 
-    this.objectValueBecameNonNullEmitter.addListener( cavObject => {
+    this.objectValueBecameNonNullEmitter.addListener( soccerBall => {
 
       // If the soccer player that kicked that ball was still in line when the ball lands, they can leave the line now.
       this.advanceLine();
@@ -289,11 +287,11 @@ export default class CAVModel implements TModel {
       }
     } );
 
-    this.objectGroup.elementCreatedEmitter.addListener( cavObject => {
-      cavObject.valueProperty.link( ( value, oldValue ) => {
+    this.soccerBallGroup.elementCreatedEmitter.addListener( soccerBall => {
+      soccerBall.valueProperty.link( ( value, oldValue ) => {
         if ( value !== null && oldValue === null ) {
           if ( !phet.joist.sim.isSettingPhetioStateProperty.value ) {
-            this.soccerBallLandedListener( cavObject, value );
+            this.soccerBallLandedListener( soccerBall, value );
           }
         }
       } );
@@ -310,7 +308,7 @@ export default class CAVModel implements TModel {
     } );
   }
 
-  protected objectCreated( cavObject: CAVObject ): void {
+  protected objectCreated( soccerBall: CAVObject ): void {
 
     // Override in subclasses
   }
@@ -319,7 +317,7 @@ export default class CAVModel implements TModel {
     const sortedObjects = this.getSortedLandedObjects();
     const medianObjects = this.medianObjectsFromSortedArray( sortedObjects );
 
-    this.objectGroup.forEach( object => {
+    this.soccerBallGroup.forEach( object => {
       object.isMedianObjectProperty.value = medianObjects.includes( object );
     } );
 
@@ -365,7 +363,7 @@ export default class CAVModel implements TModel {
    * Returns all other objects at the target position of the provided object.
    */
   public getOtherObjectsAtTarget( cavObject: CAVObject ): CAVObject[] {
-    return this.objectGroup.filter( ( o: CAVObject ) => {
+    return this.soccerBallGroup.filter( ( o: CAVObject ) => {
       return o.valueProperty.value === cavObject.valueProperty.value && cavObject !== o;
     } );
   }
@@ -393,7 +391,7 @@ export default class CAVModel implements TModel {
    * Clears out the data and the cards
    */
   public clearData(): void {
-    this.objectGroup.clear();
+    this.soccerBallGroup.clear();
 
     this.numberOfScheduledSoccerBallsToKickProperty.reset();
     this.timeProperty.reset();
@@ -423,7 +421,7 @@ export default class CAVModel implements TModel {
   }
 
   public getSortedLandedObjects(): CAVObject[] {
-    return _.sortBy( this.objectGroup.filter( cavObject => cavObject.valueProperty.value !== null ),
+    return _.sortBy( this.soccerBallGroup.filter( cavObject => cavObject.valueProperty.value !== null ),
 
       // The numerical value takes predence for sorting
       cavObject => cavObject.valueProperty.value,
@@ -440,7 +438,7 @@ export default class CAVModel implements TModel {
    */
   public step( dt: number ): void {
     this.timeProperty.value += dt;
-    this.objectGroup.forEach( cavObject => cavObject.step( dt ) );
+    this.soccerBallGroup.forEach( cavObject => cavObject.step( dt ) );
 
     const frontPlayer = this.soccerPlayers[ this.activeKickerIndexProperty.value ];
 
@@ -524,7 +522,7 @@ export default class CAVModel implements TModel {
     const y0 = CAVObjectType.SOCCER_BALL.radius;
     const position = new Vector2( 0, y0 );
 
-    return this.objectGroup.createNextElement( {
+    return this.soccerBallGroup.createNextElement( {
       position: position
     } );
   }
@@ -533,7 +531,7 @@ export default class CAVModel implements TModel {
    * When a ball lands on the ground, animate all other balls that were at this location above the landed ball.
    */
   private soccerBallLandedListener( cavObject: CAVObject, value: number ): void {
-    const otherObjectsInStack = this.objectGroup.filter( x => x.valueProperty.value === value && x !== cavObject );
+    const otherObjectsInStack = this.soccerBallGroup.filter( x => x.valueProperty.value === value && x !== cavObject );
     const sortedOthers = _.sortBy( otherObjectsInStack, object => object.positionProperty.value.y );
 
     sortedOthers.forEach( ( cavObject, index ) => {

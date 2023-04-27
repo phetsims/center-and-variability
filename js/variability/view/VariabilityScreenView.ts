@@ -44,19 +44,7 @@ export default class VariabilityScreenView extends CAVScreenView {
 
     super( model, options );
 
-    this.setAccordionBox( new VariabilityAccordionBox( model, this.layoutBounds, options.tandem.createTandem( 'accordionBox' ), this.questionBar.bottom + CAVConstants.SCREEN_VIEW_Y_MARGIN ) );
-
-    // NOTE: This assumes that the NumberLineNode in the play area and in the dot plot have the same characteristics:
-    // * Same font
-    // * Same offset and scale
-    // But given those assumptions, this code moves the dot plot so that its number line matches the play area one.
-    // TODO: Consider something more robust.  Using globalToLocal to exactly align based on the position of the tick marks
-    // TODO: Can this be combine in a parent class? See https://github.com/phetsims/center-and-variability/issues/152
-    // TODO: Maybe if the accordion box was a subclass we could do this?
-    ManualConstraint.create( this, [ this.playAreaNumberLineNode, this.accordionBox!.contentNode ],
-      ( lowerNumberLineWrapper, contentsWrapper ) => {
-        contentsWrapper.x = lowerNumberLineWrapper.x;
-      } );
+    this.setAccordionBoxWithAlignedContent( new VariabilityAccordionBox( model, this.layoutBounds, options.tandem.createTandem( 'accordionBox' ), this.questionBar.bottom + CAVConstants.SCREEN_VIEW_Y_MARGIN ) );
 
     ManualConstraint.create( this, [ variabilityMeasureRadioButtonGroup, this.accordionBox! ],
       ( variabilityRadioButtonGroupWrapper, accordionBoxWrapper ) => {

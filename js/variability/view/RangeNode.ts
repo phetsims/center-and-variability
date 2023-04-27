@@ -92,7 +92,7 @@ export default class RangeNode extends CAVPlotNode {
 
     const updateRangeNode = () => {
 
-      const sortedDots = _.sortBy( model.objectGroup.getArrayCopy().filter( object => object.valueProperty.value !== null ),
+      const sortedDots = _.sortBy( model.soccerBallGroup.getArrayCopy().filter( object => object.valueProperty.value !== null ),
         object => object.valueProperty.value );
       const leftmostDot = sortedDots[ 0 ];
       const rightmostDot = sortedDots[ sortedDots.length - 1 ];

@@ -63,7 +63,7 @@ export default class MeanAndMedianModel extends CAVModel {
 
   private clearAnimation(): void {
     this.highlightAnimationIndex = null;
-    this.objectGroup.forEach( cavObject => cavObject.isShowingAnimationHighlightProperty.set( false ) );
+    this.soccerBallGroup.forEach( cavObject => cavObject.isShowingAnimationHighlightProperty.set( false ) );
   }
 
   private updateAnimation(): void {
