@@ -130,6 +130,10 @@ export default class CAVObjectNode extends Node {
       this.translation = modelViewTransform.modelToViewPosition( position );
     } );
 
+    cavObject.isActiveProperty.link( isActive => {
+      this.visible = isActive;
+    } );
+
     // only setup input-related things if dragging is enabled
     if ( options.draggingEnabled ) {
       this.dragListener = new DragListener( {
@@ -216,16 +220,6 @@ export default class CAVObjectNode extends Node {
         x: this.width / 2 + 1
       } ) );
     }
-  }
-
-  public override dispose(): void {
-    Multilink.unmultilink( this.opacityMultilink );
-    Multilink.unmultilink( this.medianHighlightVisibleMultilink );
-    this.inputEnabledMultilink && Multilink.unmultilink( this.inputEnabledMultilink );
-    this.selfInputEnabledProperty && this.selfInputEnabledProperty.dispose();
-    this.dragListener && this.hasInputListener( this.dragListener ) && this.removeInputListener( this.dragListener );
-    this.dragListener && this.dragListener.dispose();
-    super.dispose();
   }
 }
 

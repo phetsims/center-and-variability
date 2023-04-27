@@ -13,7 +13,6 @@ import { ManualConstraint, Node, NodeOptions, Rectangle, TColor, Text } from '..
 import optionize from '../../../../phet-core/js/optionize.js';
 import CAVModel from '../model/CAVModel.js';
 import CAVObject from '../model/CAVObject.js';
-import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
 import CAVObjectNode from './CAVObjectNode.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
@@ -83,26 +82,18 @@ export default class CAVPlotNode extends Node {
 
     backgroundNode.addChild( this.dotLayer );
 
-    // TODO: This overlaps with draggingEnabled
-    const dotPlotObjectNodesDraggableProperty = new BooleanProperty( false );
-
-    const dotNodeGroup = new PhetioGroup<CAVObjectNode, [ CAVObject ]>( ( tandem, cavObject ) => {
-      return new CAVObjectNode( cavObject, model.isShowingTopMedianProperty, modelViewTransform, dotPlotObjectNodesDraggableProperty, {
-        objectViewType: CAVObjectType.DATA_POINT,
-        draggingEnabled: false,
-        tandem: tandem,
-        fill: options.dataPointFill
-      } );
-    }, () => [ model.soccerBallGroup.archetype ], {
-      phetioType: PhetioGroup.PhetioGroupIO( Node.NodeIO ),
-      tandem: options.tandem.createTandem( 'dotNodeGroup' ),
-      supportsDynamicState: false
-    } );
-
     const map = new Map<CAVObject, CAVObjectNode>();
 
-    const createDotNode = ( cavObject: CAVObject ) => {
-      const dotNode = dotNodeGroup.createCorrespondingGroupElement( cavObject.tandem.name, cavObject );
+    // TODO: This overlaps with draggingEnabled
+    const dotPlotObjectNodesDraggableProperty = new BooleanProperty( false );
+    model.soccerBallGroup.map( cavObject => {
+
+      const dotNode = new CAVObjectNode( cavObject, model.isShowingTopMedianProperty, modelViewTransform, dotPlotObjectNodesDraggableProperty, {
+        objectViewType: CAVObjectType.DATA_POINT,
+        draggingEnabled: false,
+        tandem: options.tandem.createTandem( 'dotNodeGroup' ).createTandem( cavObject.tandem.name ),
+        fill: options.dataPointFill
+      } );
 
       cavObject.valueProperty.link( value => {
         dotNode.setVisible( value !== null );
@@ -111,14 +102,7 @@ export default class CAVPlotNode extends Node {
         }
       } );
       map.set( cavObject, dotNode );
-    };
-    model.soccerBallGroup.forEach( createDotNode );
-    model.soccerBallGroup.elementCreatedEmitter.addListener( createDotNode );
-
-    model.soccerBallGroup.elementDisposedEmitter.addListener( cavObject => {
-      const viewNode = map.get( cavObject )!;
-      dotNodeGroup.disposeElement( viewNode );
-      map.delete( cavObject );
+      return dotNode;
     } );
   }
 

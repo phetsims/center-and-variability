@@ -28,6 +28,8 @@ export default class SoccerPlayer {
 
   public reset(): void {
     this.poseProperty.reset();
+    this.timestampWhenPoisedBegan = null;
+    this.isActiveProperty.value = false;
   }
 }
 

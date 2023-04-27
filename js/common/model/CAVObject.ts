@@ -78,6 +78,7 @@ export default class CAVObject extends PhetioObject {
   } );
   public readonly dragStartedEmitter: TEmitter = new Emitter();
   public animation: Animation | null = null;
+  public readonly isActiveProperty: BooleanProperty;
 
   public constructor( objectType: CAVObjectType, providedOptions: CAVObjectOptions ) {
 
@@ -118,6 +119,9 @@ export default class CAVObject extends PhetioObject {
     this.isShowingAnimationHighlightProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isShowingAnimationHighlightProperty' )
     } );
+    this.isActiveProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isActiveProperty' )
+    } );
   }
 
   public step( dt: number ): void {
@@ -151,17 +155,16 @@ export default class CAVObject extends PhetioObject {
     }
   }
 
-  public override dispose(): void {
-    super.dispose();
-    this.positionProperty.dispose();
-    this.velocityProperty.dispose();
-    this.animationModeProperty.dispose();
-    this.valueProperty.dispose();
-    this.dragPositionProperty.dispose();
-    this.isMedianObjectProperty.dispose();
-    this.isShowingAnimationHighlightProperty.dispose();
-    this.disposedEmitter.emit();
-    this.disposedEmitter.dispose();
+  public reset(): void {
+    this.positionProperty.reset();
+    this.velocityProperty.reset();
+    this.animationModeProperty.reset();
+    this.valueProperty.reset();
+    this.dragPositionProperty.reset();
+    this.isMedianObjectProperty.reset();
+    this.isShowingAnimationHighlightProperty.reset();
+    this.isActiveProperty.reset();
+    this.targetX = null;
   }
 
   public toStateObject(): CAVObjectStateType {

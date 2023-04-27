@@ -49,6 +49,7 @@ const getCardPositionX = ( index: number ) => index * ( CardNode.CARD_WIDTH + CA
 type SelfOptions = EmptySelfOptions;
 export type CardNodeContainerOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
+// TODO: Move to median/
 export default class CardNodeContainer extends Node {
 
   // Each card is associated with one "cell", no two cards can be associated with the same cell.  The leftmost cell is 0.
@@ -122,8 +123,7 @@ export default class CardNodeContainer extends Node {
       } );
     };
 
-    model.soccerBallGroup.forEach( objectCreatedListener );
-    model.soccerBallGroup.elementCreatedEmitter.addListener( objectCreatedListener );
+    model.getActiveSoccerBalls().forEach( objectCreatedListener );
 
     model.cardModelGroup.elementDisposedEmitter.addListener( cardModel => {
       const cardNode = this.getCardNode( cardModel.cavObject )!;

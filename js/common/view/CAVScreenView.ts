@@ -14,7 +14,6 @@ import CAVModel from '../model/CAVModel.js';
 import CAVConstants from '../CAVConstants.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
 import CAVObjectNode from './CAVObjectNode.js';
 import { AlignBox, ManualConstraint, Node } from '../../../../scenery/js/imports.js';
 import CAVObjectType from '../model/CAVObjectType.js';
@@ -37,6 +36,7 @@ import KickButtonGroup from './KickButtonGroup.js';
 import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';
 import CAVAccordionBox from './CAVAccordionBox.js';
 import VerticalCheckboxGroup, { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
+import { AnimationMode } from '../model/AnimationMode.js';
 
 type SelfOptions = {
   questionBarOptions: QuestionBarOptions;
@@ -92,45 +92,37 @@ export default class CAVScreenView extends ScreenView {
       tandem: objectNodeGroupTandem.createTandem( 'inputEnabledProperty' )
     } );
 
-    const objectNodeGroup = new PhetioGroup<CAVObjectNode, [ CAVObject ]>( ( tandem, cavObject ) => {
-      return new CAVObjectNode( cavObject, model.isShowingPlayAreaMedianProperty, modelViewTransform, objectNodesInputEnabledProperty, {
-        fill: null, // Only depict as a soccer ball
-        tandem: tandem
-      } );
-    }, () => [ model.soccerBallGroup.archetype ], {
-      phetioType: PhetioGroup.PhetioGroupIO( Node.NodeIO ),
-      tandem: objectNodeGroupTandem,
-      supportsDynamicState: false
-    } );
-
-    this.addChild( this.contentLayer );
-    this.addChild( this.frontObjectLayer );
-
     const map = new Map<CAVObject, CAVObjectNode>();
 
-    let objectHasBeenDragged = false;
-    const dragIndicatorArrowNode = new DragIndicatorArrowNode( {
-      tandem: options.tandem.createTandem( 'dragIndicatorArrowNode' ),
-      visible: false
-    } );
-    this.backObjectLayer.addChild( dragIndicatorArrowNode );
+    model.soccerBallGroup.map( ( soccerBall, index ) => {
+      const soccerBallNode = new CAVObjectNode( soccerBall, model.isShowingPlayAreaMedianProperty, modelViewTransform, objectNodesInputEnabledProperty, {
+        fill: null, // Only depict as a soccer ball
+        tandem: options.tandem.createTandem( 'soccerBallGroup' ).createTandem( 'soccerBallNode' + index )
+      } );
 
-    const createObjectNode = ( cavObject: CAVObject ) => {
-      const cavObjectNode = objectNodeGroup.createCorrespondingGroupElement( cavObject.tandem.name, cavObject );
-      this.frontObjectLayer.addChild( cavObjectNode );
+      this.backObjectLayer.addChild( soccerBallNode );
 
-      cavObject.valueProperty.lazyLink( ( value, oldValue ) => {
+      // While flying, it should be in front in z-order, to be in front of the accordion box
+      soccerBall.animationModeProperty.lazyLink( ( animationMode, oldAnimationModel ) => {
+        if ( animationMode === AnimationMode.FLYING ) {
+          this.backObjectLayer.removeChild( soccerBallNode );
+          this.frontObjectLayer.addChild( soccerBallNode );
+        }
+        else if ( oldAnimationModel ) {
+          this.frontObjectLayer.removeChild( soccerBallNode );
+          this.backObjectLayer.addChild( soccerBallNode );
+        }
+      } );
+
+      soccerBall.valueProperty.lazyLink( ( value, oldValue ) => {
         if ( value !== null ) {
           if ( oldValue === null ) {
-            assert && assert( this.frontObjectLayer.hasChild( cavObjectNode ) );
-            this.frontObjectLayer.removeChild( cavObjectNode );
-            this.backObjectLayer.addChild( cavObjectNode );
 
             // add the dragIndicatorArrowNode above the last object when it is added to the play area. if an object was
             // moved before this happens, don't show the dragIndicatorArrowNode
-            if ( model.soccerBallGroup.countProperty.value === this.model.physicalRange.max &&
+            if ( model.soccerBallGroupCountProperty.value === this.model.physicalRange.max &&
                  objectNodesInputEnabledProperty.value &&
-                 _.every( model.soccerBallGroup.getArray(), cavObject => cavObject.valueProperty.value !== null ) &&
+                 _.every( model.soccerBallGroup, cavObject => cavObject.valueProperty.value !== null ) &&
                  !objectHasBeenDragged ) {
               dragIndicatorArrowNode.centerX = this.modelViewTransform.modelToViewX( value );
 
@@ -138,7 +130,7 @@ export default class CAVScreenView extends ScreenView {
 
               // calculate where the top object is
               const topObjectPositionY = this.modelViewTransform.modelToViewY( 0 ) -
-                                         ( model.getOtherObjectsAtTarget( cavObject ).length + 1 ) *
+                                         ( model.getOtherObjectsAtTarget( soccerBall ).length + 1 ) *
                                          Math.abs( this.modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) ) * 2 -
                                          dragIndicatorArrowNodeMargin;
 
@@ -153,16 +145,20 @@ export default class CAVScreenView extends ScreenView {
         }
       } );
 
-      map.set( cavObject, cavObjectNode );
-    };
-    model.soccerBallGroup.forEach( createObjectNode );
-    model.soccerBallGroup.elementCreatedEmitter.addListener( createObjectNode );
+      map.set( soccerBall, soccerBallNode );
 
-    model.soccerBallGroup.elementDisposedEmitter.addListener( cavObject => {
-      const viewNode = map.get( cavObject )!;
-      objectNodeGroup.disposeElement( viewNode );
-      map.delete( cavObject );
+      return soccerBallNode;
     } );
+
+    this.addChild( this.contentLayer );
+    this.addChild( this.frontObjectLayer );
+
+    let objectHasBeenDragged = false;
+    const dragIndicatorArrowNode = new DragIndicatorArrowNode( {
+      tandem: options.tandem.createTandem( 'dragIndicatorArrowNode' ),
+      visible: false
+    } );
+    this.backObjectLayer.addChild( dragIndicatorArrowNode );
 
     this.playAreaMedianIndicatorNode = new PlayAreaMedianIndicatorNode();
     this.addChild( this.playAreaMedianIndicatorNode );

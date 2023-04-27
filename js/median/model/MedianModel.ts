@@ -29,7 +29,7 @@ export default class MedianModel extends CAVModel {
       return new CardModel( cavObject, {
         tandem: tandem
       } );
-    }, () => [ this.soccerBallGroup.archetype ], {
+    }, () => [ this.soccerBallGroup[ 0 ] ], {
       phetioType: PhetioGroup.PhetioGroupIO( CardModel.CardModelIO ),
       tandem: options.tandem.createTandem( 'cardModelGroup' )
     } );

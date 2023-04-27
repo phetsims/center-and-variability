@@ -82,7 +82,7 @@ export default class MADNode extends CAVPlotNode {
 
       const children: Node[] = [];
 
-      const sortedDots = _.sortBy( model.soccerBallGroup.getArrayCopy().filter( object => object.valueProperty.value !== null ),
+      const sortedDots = _.sortBy( model.getActiveSoccerBalls().filter( soccerBall => soccerBall.valueProperty.value !== null ),
         object => object.valueProperty.value );
 
       if ( sortedDots.length > 0 ) {
