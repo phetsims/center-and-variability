@@ -42,7 +42,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
 
       // TODO: How to position this properly? Can we use AlignBox?
       top: 20,
-      right: accordionBoxContents.width + 10
+      right: accordionBoxContents.right - 10
     } );
     accordionBoxContents.addChild( infoButton );
 
