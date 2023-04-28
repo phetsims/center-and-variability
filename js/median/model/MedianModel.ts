@@ -8,7 +8,7 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import CardModel from '../../common/model/CardModel.js';
+import CardModel from '../../median/model/CardModel.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
 

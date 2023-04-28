@@ -326,7 +326,7 @@ export default class CAVModel implements TModel {
   }
 
   /**
-   * Clears out the data and the cards
+   * Clears out the data
    */
   public clearData(): void {
     this.numberOfScheduledSoccerBallsToKickProperty.reset();
