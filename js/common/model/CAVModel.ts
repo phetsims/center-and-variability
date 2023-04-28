@@ -115,23 +115,14 @@ export default class CAVModel implements TModel {
       };
       soccerBall.dragPositionProperty.lazyLink( dragPositionListener );
 
-      soccerBall.valueProperty.link( ( value, oldValue ) => {
-        if ( value !== null && oldValue === null ) {
-          if ( !phet.joist.sim.isSettingPhetioStateProperty.value ) {
-            this.soccerBallLandedListener( soccerBall, value );
-          }
-        }
-      } );
-
-      const listener = ( value: number | null ) => {
+      soccerBall.valueProperty.link( ( value: number | null ) => {
         if ( value !== null ) {
           if ( !phet.joist.sim.isSettingPhetioStateProperty.value ) {
-            this.objectCreated( soccerBall );
+            this.soccerBallLandedListener( soccerBall, value );
             this.objectValueBecameNonNullEmitter.emit( soccerBall );
           }
         }
-      };
-      soccerBall.valueProperty.link( listener );
+      } );
 
       // Signal to listeners that a value changed
       // TODO: Maybe should combine with temporary listener for one permanent one
@@ -260,11 +251,6 @@ export default class CAVModel implements TModel {
       soccerBall.valueProperty.link( updateDataMeasures );
       soccerBall.positionProperty.link( updateDataMeasures );
     } );
-  }
-
-  protected objectCreated( soccerBall: CAVObject ): void {
-
-    // Override in subclasses
   }
 
   protected updateDataMeasures(): void {
