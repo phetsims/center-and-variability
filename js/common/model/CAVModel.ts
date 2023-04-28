@@ -80,7 +80,6 @@ export default class CAVModel implements TModel {
 
   public readonly soccerPlayers: SoccerPlayer[];
 
-  private readonly nextBallToKickProperty: Property<CAVObject | null>; // Null if there is no more ball to kick
   private readonly numberOfScheduledSoccerBallsToKickProperty: NumberProperty;
   public readonly numberOfUnkickedBallsProperty: TReadOnlyProperty<number>;
   public readonly hasKickableSoccerBallsProperty: TReadOnlyProperty<boolean>;
@@ -212,10 +211,7 @@ export default class CAVModel implements TModel {
     this.soccerPlayers = _.range( 0, this.maxNumberOfObjects ).map( placeInLine => new SoccerPlayer( placeInLine ) );
 
     // Create an initial ball to show on startup
-    this.nextBallToKickProperty = new Property<CAVObject | null>( this.getNextBallFromPool(), {
-      tandem: options.tandem.createTandem( 'nextBallToKickProperty' ),
-      phetioValueType: NullableIO( ReferenceIO( CAVObject.CAVObjectIO ) )
-    } );
+    this.getNextBallFromPool();
 
     this.numberOfUnkickedBallsProperty = DerivedProperty.deriveAny( [
       this.numberOfScheduledSoccerBallsToKickProperty,
@@ -341,7 +337,7 @@ export default class CAVModel implements TModel {
 
     this.soccerPlayers.forEach( soccerPlayer => soccerPlayer.reset() );
     this.soccerBallGroup.forEach( soccerBall => soccerBall.reset() );
-    this.nextBallToKickProperty.value = this.getNextBallFromPool();
+    this.getNextBallFromPool();
 
     this.activeKickerIndexProperty.reset();
   }
@@ -398,8 +394,6 @@ export default class CAVModel implements TModel {
 
         this.advanceLine();
 
-        assert && assert( this.nextBallToKickProperty.value !== null, 'there was no ball to kick' );
-
         if ( frontPlayer.poseProperty.value === Pose.STANDING ) {
           frontPlayer.poseProperty.value = Pose.POISED_TO_KICK;
           frontPlayer.timestampWhenPoisedBegan = this.timeProperty.value;
@@ -412,7 +406,12 @@ export default class CAVModel implements TModel {
         const elapsedTime = this.timeProperty.value - frontPlayer.timestampWhenPoisedBegan!;
         if ( elapsedTime > 0.075 ) {
 
-          const soccerBall = this.nextBallToKickProperty.value!; // TODO: Probably? See https://github.com/phetsims/center-and-variability/issues/59
+          const soccerBall = this.soccerBallGroup.find( soccerBall =>
+            soccerBall.valueProperty.value === null &&
+            soccerBall.isActiveProperty.value &&
+            soccerBall.animationModeProperty.value === AnimationMode.NONE
+          )!;
+          // const soccerBall = this.nextBallToKickProperty.value!; // TODO: Probably? See https://github.com/phetsims/center-and-variability/issues/59
           this.kickBall( frontPlayer, soccerBall );
           this.numberOfScheduledSoccerBallsToKickProperty.value--;
         }
@@ -457,7 +456,7 @@ export default class CAVModel implements TModel {
         nextIndex = 0;
       }
       this.activeKickerIndexProperty.value = nextIndex;
-      this.nextBallToKickProperty.value = this.getNextBallFromPool();
+      this.getNextBallFromPool();
     }
   }
 
@@ -553,9 +552,6 @@ export default class CAVModel implements TModel {
 
     soccerBall.animationModeProperty.value = AnimationMode.FLYING;
     this.timeWhenLastBallWasKickedProperty.value = this.timeProperty.value;
-
-    // New ball will be created later in step
-    this.nextBallToKickProperty.value = null;
 
     soccerBall.soccerPlayer = soccerPlayer;
   }
