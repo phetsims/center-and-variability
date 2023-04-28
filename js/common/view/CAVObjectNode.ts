@@ -45,9 +45,10 @@ export type CAVObjectNodeOptions =
 // for debugging with ?dev
 let index = 0;
 
+// TODO: Separate this out into SoccerBallNode and DataPointNode
 export default class CAVObjectNode extends Node {
 
-  public constructor( cavObject: CAVObject, isShowingPlayAreaMedianProperty: TReadOnlyProperty<boolean>,
+  public constructor( soccerBall: CAVObject, isShowingPlayAreaMedianProperty: TReadOnlyProperty<boolean>,
                       modelViewTransform: ModelViewTransform2, objectNodesInputEnabledProperty: TProperty<boolean>,
                       providedOptions?: CAVObjectNodeOptions ) {
 
@@ -55,7 +56,7 @@ export default class CAVObjectNode extends Node {
 
       // In the Mean & Median screen and Variability screen, the objectType is SOCCER_BALL, but we render the dot plot
       // with DOT views
-      objectViewType: cavObject.objectType,
+      objectViewType: soccerBall.objectType,
       draggingEnabled: true,
       phetioDynamicElement: true,
       cursor: 'pointer'
@@ -115,32 +116,38 @@ export default class CAVObjectNode extends Node {
 
     this.addChild( childNode );
 
-    this.addLinkedElement( cavObject, {
-      tandem: options.tandem.createTandem( cavObject.objectType === CAVObjectType.SOCCER_BALL ? 'soccerBall' : 'dataPoint' ),
+    this.addLinkedElement( soccerBall, {
+      tandem: options.tandem.createTandem( soccerBall.objectType === CAVObjectType.SOCCER_BALL ? 'soccerBall' : 'dataPoint' ),
       phetioState: false
     } );
 
-    cavObject.positionProperty.link( position => {
+    soccerBall.positionProperty.link( position => {
       this.translation = modelViewTransform.modelToViewPosition( position );
     } );
 
-    cavObject.isActiveProperty.link( isActive => {
-      this.visible = isActive;
+    // Data point should be visible if the soccer ball is active AND if the soccer ball took a non-null value.
+    Multilink.multilink( [ soccerBall.isActiveProperty, soccerBall.valueProperty ], ( isActive, value ) => {
+      if ( options.objectViewType === CAVObjectType.SOCCER_BALL ) {
+        this.visible = isActive;
+      }
+      else {
+        this.visible = isActive && value !== null;
+      }
     } );
 
     // only setup input-related things if dragging is enabled
     if ( options.draggingEnabled ) {
       const dragListener = new DragListener( {
         tandem: options.tandem.createTandem( 'dragListener' ),
-        positionProperty: cavObject.dragPositionProperty,
+        positionProperty: soccerBall.dragPositionProperty,
         transform: modelViewTransform,
         start: () => {
 
           // if the user presses an object that's animating, allow it to keep animating up in the stack
-          cavObject.dragStartedEmitter.emit();
+          soccerBall.dragStartedEmitter.emit();
         },
         drag: () => {
-          cavObject.animation && cavObject.animation.stop();
+          soccerBall.animation && soccerBall.animation.stop();
         }
       } );
 
@@ -150,7 +157,7 @@ export default class CAVObjectNode extends Node {
       // of 2 model units the pointer will always have enough space to drag the CAVObjectNode to a new position.
       // See https://github.com/phetsims/center-and-variability/issues/88
       dragListener.createPanTargetBounds = () => {
-        const modelPosition = cavObject.positionProperty.value;
+        const modelPosition = soccerBall.positionProperty.value;
         const modelBounds = new Bounds2( modelPosition.x - 1, modelPosition.y - 1, modelPosition.x + 1, modelPosition.y + 1 );
         const viewBounds = modelViewTransform.modelToViewBounds( modelBounds );
         return this.parentToGlobalBounds( viewBounds );
@@ -170,7 +177,7 @@ export default class CAVObjectNode extends Node {
       // when it is animating, if input for this individual node is disabled, or if input for all of the object nodes
       // ahs been disabled
       Multilink.multilink(
-        [ cavObject.animationModeProperty, cavObject.valueProperty, selfInputEnabledProperty, objectNodesInputEnabledProperty ],
+        [ soccerBall.animationModeProperty, soccerBall.valueProperty, selfInputEnabledProperty, objectNodesInputEnabledProperty ],
         ( mode, value, selfInputEnabled, objectsInputEnabled ) => {
           const inputEnabled = value !== null && mode === AnimationMode.NONE && selfInputEnabled && objectsInputEnabled;
 
@@ -188,7 +195,7 @@ export default class CAVObjectNode extends Node {
 
     // show or hide the median highlight
     Multilink.multilink(
-      [ cavObject.isMedianObjectProperty, isShowingPlayAreaMedianProperty, cavObject.isShowingAnimationHighlightProperty ],
+      [ soccerBall.isMedianObjectProperty, isShowingPlayAreaMedianProperty, soccerBall.isShowingAnimationHighlightProperty ],
       ( isMedianObject, isShowingPlayAreaMedian, isShowingAnimationHighlight ) => {
         medianHighlight.visible = options.objectViewType === CAVObjectType.DATA_POINT ? isShowingAnimationHighlight :
                                   isShowingPlayAreaMedian && isMedianObject;
@@ -196,9 +203,9 @@ export default class CAVObjectNode extends Node {
 
     // The initial ready-to-kick ball is full opacity. The rest of the balls waiting to be kicked are lower opacity so
     // they don't look like part of the data set, but still look kickable.
-    Multilink.multilink( [ cavObject.valueProperty, cavObject.animationModeProperty ],
+    Multilink.multilink( [ soccerBall.valueProperty, soccerBall.animationModeProperty ],
       ( value, animationMode ) => {
-        this.opacity = value === null && animationMode === AnimationMode.NONE && !cavObject.isFirstObject ? 0.4 : 1;
+        this.opacity = value === null && animationMode === AnimationMode.NONE && !soccerBall.isFirstObject ? 0.4 : 1;
       } );
 
     // Show index when debugging with ?dev

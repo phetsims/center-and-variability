@@ -86,22 +86,20 @@ export default class CAVPlotNode extends Node {
 
     // TODO: This overlaps with draggingEnabled
     const dotPlotObjectNodesDraggableProperty = new BooleanProperty( false );
-    model.soccerBallGroup.map( cavObject => {
+    model.soccerBallGroup.map( soccerBall => {
 
-      const dotNode = new CAVObjectNode( cavObject, model.isShowingTopMedianProperty, modelViewTransform, dotPlotObjectNodesDraggableProperty, {
+      // TODO: This should be new DataPointNode
+      const dotNode = new CAVObjectNode( soccerBall, model.isShowingTopMedianProperty, modelViewTransform, dotPlotObjectNodesDraggableProperty, {
         objectViewType: CAVObjectType.DATA_POINT,
         draggingEnabled: false,
-        tandem: options.tandem.createTandem( 'dotNodeGroup' ).createTandem( cavObject.tandem.name ),
+        tandem: options.tandem.createTandem( 'dotNodeGroup' ).createTandem( soccerBall.tandem.name ),
         fill: options.dataPointFill
       } );
 
-      cavObject.valueProperty.link( value => {
-        dotNode.setVisible( value !== null );
-        if ( value !== null && !this.dotLayer.hasChild( dotNode ) ) {
-          this.dotLayer.addChild( dotNode );
-        }
-      } );
-      map.set( cavObject, dotNode );
+      this.dotLayer.addChild( dotNode );
+
+      // TODO: Why in a map?
+      map.set( soccerBall, dotNode );
       return dotNode;
     } );
   }
