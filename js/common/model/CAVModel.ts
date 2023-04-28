@@ -25,7 +25,6 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import TEmitter from '../../../../axon/js/TEmitter.js';
 import TModel from '../../../../joist/js/TModel.js';
 import SoccerPlayer from './SoccerPlayer.js';
-import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import CAVConstants from '../CAVConstants.js';
