@@ -91,10 +91,10 @@ export default class CAVScreenView extends ScreenView {
       tandem: objectNodeGroupTandem.createTandem( 'inputEnabledProperty' )
     } );
 
-    model.soccerBallGroup.map( ( soccerBall, index ) => {
+    model.soccerBalls.map( ( soccerBall, index ) => {
       const soccerBallNode = new CAVObjectNode( soccerBall, model.isShowingPlayAreaMedianProperty, modelViewTransform, objectNodesInputEnabledProperty, {
         fill: null, // Only depict as a soccer ball
-        tandem: options.tandem.createTandem( 'soccerBallGroup' ).createTandem( 'soccerBallNode' + index )
+        tandem: options.tandem.createTandem( 'soccerBalls' ).createTandem( 'soccerBallNode' + index )
       } );
 
       this.backObjectLayer.addChild( soccerBallNode );
@@ -117,9 +117,9 @@ export default class CAVScreenView extends ScreenView {
 
             // add the dragIndicatorArrowNode above the last object when it is added to the play area. if an object was
             // moved before this happens, don't show the dragIndicatorArrowNode
-            if ( model.soccerBallGroupCountProperty.value === this.model.physicalRange.max &&
+            if ( model.soccerBallCountProperty.value === this.model.physicalRange.max &&
                  objectNodesInputEnabledProperty.value &&
-                 _.every( model.soccerBallGroup, cavObject => cavObject.valueProperty.value !== null ) &&
+                 _.every( model.soccerBalls, cavObject => cavObject.valueProperty.value !== null ) &&
                  !objectHasBeenDragged ) {
               dragIndicatorArrowNode.centerX = this.modelViewTransform.modelToViewX( value );
 
@@ -165,7 +165,7 @@ export default class CAVScreenView extends ScreenView {
       if ( visible ) {
 
         // if there is a ball at that location, go above the ball
-        const ballsAtLocation = model.soccerBallGroup.filter( cavObject => cavObject.valueProperty.value === medianValue );
+        const ballsAtLocation = model.soccerBalls.filter( cavObject => cavObject.valueProperty.value === medianValue );
         const modelHeight = ballsAtLocation.length * CAVObjectType.SOCCER_BALL.radius * 2; // assumes no spacing
 
         const viewHeight = this.modelViewTransform.modelToViewDeltaY( modelHeight );

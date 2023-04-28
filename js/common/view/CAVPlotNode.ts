@@ -83,7 +83,7 @@ export default class CAVPlotNode extends Node {
 
     // TODO: This overlaps with draggingEnabled
     const dotPlotObjectNodesDraggableProperty = new BooleanProperty( false );
-    model.soccerBallGroup.forEach( ( soccerBall, index ) => {
+    model.soccerBalls.forEach( ( soccerBall, index ) => {
 
       // TODO: This should be new DataPointNode
       const dotNode = new CAVObjectNode( soccerBall, model.isShowingTopMedianProperty, modelViewTransform, dotPlotObjectNodesDraggableProperty, {

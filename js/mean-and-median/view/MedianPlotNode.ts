@@ -34,6 +34,7 @@ export default class MedianPlotNode extends CAVPlotNode {
       ...providedOptions
     } );
 
+    // TODO: Dead code
     // const checkboxGroup = new TopRepresentationCheckboxGroup( model, {
     //   medianBarIconOptions: {
     //     notchDirection: 'down',

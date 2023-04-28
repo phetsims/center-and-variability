@@ -43,8 +43,8 @@ export type CAVModelOptions = SelfOptions;
 const TIME_BETWEEN_RAPID_KICKS = 0.5; // in seconds
 
 export default class CAVModel implements TModel {
-  public readonly soccerBallGroup: CAVObject[];
-  public readonly soccerBallGroupCountProperty: NumberProperty;
+  public readonly soccerBalls: CAVObject[];
+  public readonly soccerBallCountProperty: NumberProperty;
 
   public readonly isShowingTopMeanProperty: BooleanProperty;
   public readonly isShowingTopMedianProperty: BooleanProperty;
@@ -92,12 +92,11 @@ export default class CAVModel implements TModel {
 
     const updateDataMeasures = () => this.updateDataMeasures();
 
-    // TODO: Rename to soccerBalls
-    this.soccerBallGroupCountProperty = new NumberProperty( 0, {
+    this.soccerBallCountProperty = new NumberProperty( 0, {
       range: new Range( 0, this.maxNumberOfObjects )
     } );
 
-    this.soccerBallGroup = _.range( 0, this.maxNumberOfObjects ).map( index => {
+    this.soccerBalls = _.range( 0, this.maxNumberOfObjects ).map( index => {
 
       const y0 = CAVObjectType.SOCCER_BALL.radius;
       const position = new Vector2( 0, y0 );
@@ -142,9 +141,9 @@ export default class CAVModel implements TModel {
       return soccerBall;
     } );
 
-    this.soccerBallGroup.forEach( soccerBall => {
+    this.soccerBalls.forEach( soccerBall => {
       soccerBall.isActiveProperty.link( isActive => {
-        this.soccerBallGroupCountProperty.value = this.getActiveSoccerBalls().length;
+        this.soccerBallCountProperty.value = this.getActiveSoccerBalls().length;
       } );
     } );
 
@@ -214,8 +213,8 @@ export default class CAVModel implements TModel {
 
     this.numberOfUnkickedBallsProperty = DerivedProperty.deriveAny( [
       this.numberOfScheduledSoccerBallsToKickProperty,
-      ...this.soccerBallGroup.map( soccerBall => soccerBall.valueProperty ),
-      ...this.soccerBallGroup.map( soccerBall => soccerBall.animationModeProperty ) ], () => {
+      ...this.soccerBalls.map( soccerBall => soccerBall.valueProperty ),
+      ...this.soccerBalls.map( soccerBall => soccerBall.animationModeProperty ) ], () => {
 
       const kickedSoccerBalls = this.getActiveSoccerBalls().filter(
         soccerBall => soccerBall.valueProperty.value !== null ||
@@ -257,7 +256,7 @@ export default class CAVModel implements TModel {
       } );
     } );
 
-    this.soccerBallGroup.forEach( soccerBall => {
+    this.soccerBalls.forEach( soccerBall => {
       soccerBall.valueProperty.link( updateDataMeasures );
       soccerBall.positionProperty.link( updateDataMeasures );
     } );
@@ -272,7 +271,7 @@ export default class CAVModel implements TModel {
     const sortedObjects = this.getSortedLandedObjects();
     const medianObjects = CAVModel.getMedianObjectsFromSortedArray( sortedObjects );
 
-    this.soccerBallGroup.forEach( object => {
+    this.soccerBalls.forEach( object => {
       object.isMedianObjectProperty.value = medianObjects.includes( object );
     } );
 
@@ -302,7 +301,7 @@ export default class CAVModel implements TModel {
    * Returns all other objects at the target position of the provided object.
    */
   public getOtherObjectsAtTarget( cavObject: CAVObject ): CAVObject[] {
-    return this.soccerBallGroup.filter( ( o: CAVObject ) => {
+    return this.soccerBalls.filter( ( o: CAVObject ) => {
       return o.valueProperty.value === cavObject.valueProperty.value && cavObject !== o;
     } );
   }
@@ -335,7 +334,7 @@ export default class CAVModel implements TModel {
     this.timeWhenLastBallWasKickedProperty.reset();
 
     this.soccerPlayers.forEach( soccerPlayer => soccerPlayer.reset() );
-    this.soccerBallGroup.forEach( soccerBall => soccerBall.reset() );
+    this.soccerBalls.forEach( soccerBall => soccerBall.reset() );
     this.getNextBallFromPool();
 
     this.activeKickerIndexProperty.reset();
@@ -405,7 +404,7 @@ export default class CAVModel implements TModel {
         const elapsedTime = this.timeProperty.value - frontPlayer.timestampWhenPoisedBegan!;
         if ( elapsedTime > 0.075 ) {
 
-          const soccerBall = this.soccerBallGroup.find( soccerBall =>
+          const soccerBall = this.soccerBalls.find( soccerBall =>
             soccerBall.valueProperty.value === null &&
             soccerBall.isActiveProperty.value &&
             soccerBall.animationModeProperty.value === AnimationMode.NONE
@@ -464,7 +463,7 @@ export default class CAVModel implements TModel {
   }
 
   public getActiveSoccerBalls(): CAVObject[] {
-    return this.soccerBallGroup.filter( soccerBall => soccerBall.isActiveProperty.value );
+    return this.soccerBalls.filter( soccerBall => soccerBall.isActiveProperty.value );
   }
 
   /**
@@ -556,7 +555,7 @@ export default class CAVModel implements TModel {
   }
 
   private getNextBallFromPool(): CAVObject | null {
-    const nextBallFromPool = this.soccerBallGroup.find( ball => !ball.isActiveProperty.value ) || null;
+    const nextBallFromPool = this.soccerBalls.find( ball => !ball.isActiveProperty.value ) || null;
     if ( nextBallFromPool ) {
       nextBallFromPool.isActiveProperty.value = true;
     }

@@ -19,7 +19,7 @@ export default class MedianModel extends CAVModel {
 
   public constructor( options: CAVModelOptions ) {
     super( options );
-    this.cards = this.soccerBallGroup.map( ( soccerBall, index ) => new CardModel( soccerBall, {
+    this.cards = this.soccerBalls.map( ( soccerBall, index ) => new CardModel( soccerBall, {
       tandem: options.tandem.createTandem( 'cards' ).createTandem( 'card' + index )
     } ) );
 
