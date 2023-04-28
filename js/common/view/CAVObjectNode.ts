@@ -45,8 +45,7 @@ export type CAVObjectNodeOptions =
 // for debugging with ?dev
 let index = 0;
 
-// TODO: Separate this out into SoccerBallNode and DataPointNode
-export default class CAVObjectNode extends Node {
+export default abstract class CAVObjectNode extends Node {
 
   public constructor( soccerBall: CAVObject, isShowingPlayAreaMedianProperty: TReadOnlyProperty<boolean>,
                       modelViewTransform: ModelViewTransform2, objectNodesInputEnabledProperty: TProperty<boolean>,

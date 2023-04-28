@@ -12,7 +12,6 @@ import centerAndVariability from '../../centerAndVariability.js';
 import { ManualConstraint, Node, NodeOptions, Rectangle, TColor, Text } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import CAVModel from '../model/CAVModel.js';
-import CAVObjectNode from './CAVObjectNode.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import NumberLineNode from './NumberLineNode.js';
@@ -21,6 +20,7 @@ import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import CAVConstants from '../CAVConstants.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import DataPointNode from './DataPointNode.js';
 
 type SelfOptions = {
   dataPointFill: TColor;
@@ -85,10 +85,7 @@ export default class CAVPlotNode extends Node {
     const dotPlotObjectNodesDraggableProperty = new BooleanProperty( false );
     model.soccerBalls.forEach( ( soccerBall, index ) => {
 
-      // TODO: This should be new DataPointNode
-      const dotNode = new CAVObjectNode( soccerBall, model.isShowingTopMedianProperty, modelViewTransform, dotPlotObjectNodesDraggableProperty, {
-        objectViewType: CAVObjectType.DATA_POINT,
-        draggingEnabled: false,
+      const dotNode = new DataPointNode( soccerBall, model.isShowingTopMedianProperty, modelViewTransform, dotPlotObjectNodesDraggableProperty, {
         tandem: options.tandem.createTandem( 'dotNodeGroup' ).createTandem( 'dataPoint' + index ),
         fill: options.dataPointFill
       } );

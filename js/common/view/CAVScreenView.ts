@@ -14,7 +14,6 @@ import CAVModel from '../model/CAVModel.js';
 import CAVConstants from '../CAVConstants.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import CAVObjectNode from './CAVObjectNode.js';
 import { AlignBox, ManualConstraint, Node } from '../../../../scenery/js/imports.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
@@ -36,6 +35,7 @@ import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';
 import CAVAccordionBox from './CAVAccordionBox.js';
 import VerticalCheckboxGroup, { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
 import { AnimationMode } from '../model/AnimationMode.js';
+import SoccerBallNode from './SoccerBallNode.js';
 
 type SelfOptions = {
   questionBarOptions: QuestionBarOptions;
@@ -92,8 +92,7 @@ export default class CAVScreenView extends ScreenView {
     } );
 
     model.soccerBalls.map( ( soccerBall, index ) => {
-      const soccerBallNode = new CAVObjectNode( soccerBall, model.isShowingPlayAreaMedianProperty, modelViewTransform, objectNodesInputEnabledProperty, {
-        fill: null, // Only depict as a soccer ball
+      const soccerBallNode = new SoccerBallNode( soccerBall, model.isShowingPlayAreaMedianProperty, modelViewTransform, objectNodesInputEnabledProperty, {
         tandem: options.tandem.createTandem( 'soccerBalls' ).createTandem( 'soccerBallNode' + index )
       } );
 
