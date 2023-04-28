@@ -24,6 +24,8 @@ type SelfOptions = EmptySelfOptions;
 type VariabilityModelOptions = SelfOptions & CAVModelOptions;
 
 export default class VariabilityModel extends CAVModel {
+  private readonly initialized: boolean = false;
+
   public readonly selectedDistributionProperty: Property<DistributionType>;
   public readonly selectedVariabilityProperty: Property<VariabilityMeasure>;
   public readonly isShowingRangeProperty: Property<boolean>;
@@ -41,6 +43,9 @@ export default class VariabilityModel extends CAVModel {
 
   public constructor( options: VariabilityModelOptions ) {
     super( options );
+
+    this.initialized = true;
+
     this.selectedDistributionProperty = new EnumerationProperty( DistributionType.KICKER_1, {
       tandem: options.tandem.createTandem( 'selectedDistributionProperty' )
     } );
@@ -116,6 +121,8 @@ export default class VariabilityModel extends CAVModel {
         distribution === DistributionType.KICKER_3 ? [ 6, 9, 11, 14, 11, 8, 6, 5, 5, 5, 5, 5, 5, 5, 5 ] :
           /*KICKER_4*/ [ 5, 5, 5, 5, 5, 5, 5, 5, 6, 8, 11, 14, 11, 9, 6 ];
     } );
+
+    this.updateDataMeasures();
   }
 
   public override reset(): void {
@@ -134,32 +141,34 @@ export default class VariabilityModel extends CAVModel {
   protected override updateDataMeasures(): void {
     super.updateDataMeasures();
 
-    const sortedObjects = this.getSortedLandedObjects();
+    if ( this.initialized ) {
+      const sortedObjects = this.getSortedLandedObjects();
 
-    // if there is enough data to calculate quartiles
-    if ( sortedObjects.length >= 5 ) {
+      // if there is enough data to calculate quartiles
+      if ( sortedObjects.length >= 5 ) {
 
-      // Split the array into lower and upper halves, ignoring the median value if there are an odd number of objects
-      const splitIndex = Math.floor( sortedObjects.length / 2 );
-      const lowerHalf = sortedObjects.slice( 0, splitIndex );
-      const upperHalf = sortedObjects.slice( sortedObjects.length % 2 !== 0 ? splitIndex + 1 : splitIndex );
+        // Split the array into lower and upper halves, ignoring the median value if there are an odd number of objects
+        const splitIndex = Math.floor( sortedObjects.length / 2 );
+        const lowerHalf = sortedObjects.slice( 0, splitIndex );
+        const upperHalf = sortedObjects.slice( sortedObjects.length % 2 !== 0 ? splitIndex + 1 : splitIndex );
 
-      // take the average to account for cases where there is more than one object contributing to the median
-      this.q1ValueProperty.value = _.mean( CAVModel.getMedianObjectsFromSortedArray( lowerHalf ).map( obj => obj.valueProperty.value! ) );
-      this.q3ValueProperty.value = _.mean( CAVModel.getMedianObjectsFromSortedArray( upperHalf ).map( obj => obj.valueProperty.value! ) );
+        // take the average to account for cases where there is more than one object contributing to the median
+        this.q1ValueProperty.value = _.mean( CAVModel.getMedianObjectsFromSortedArray( lowerHalf ).map( obj => obj.valueProperty.value! ) );
+        this.q3ValueProperty.value = _.mean( CAVModel.getMedianObjectsFromSortedArray( upperHalf ).map( obj => obj.valueProperty.value! ) );
 
-      assert && assert( !isNaN( this.q1ValueProperty.value ) );
-      assert && assert( !isNaN( this.q3ValueProperty.value ) );
-    }
-    else {
-      this.q1ValueProperty.value = null;
-      this.q3ValueProperty.value = null;
-    }
+        assert && assert( !isNaN( this.q1ValueProperty.value ) );
+        assert && assert( !isNaN( this.q3ValueProperty.value ) );
+      }
+      else {
+        this.q1ValueProperty.value = null;
+        this.q3ValueProperty.value = null;
+      }
 
-    // Support call from superclass constructor
-    if ( this.madValueProperty ) {
-      this.madValueProperty.value = sortedObjects.length === 0 ? null :
-                                    VariabilityModel.meanAbsoluteDeviation( sortedObjects.map( object => object.valueProperty.value! ) );
+      // Support call from superclass constructor
+      if ( this.madValueProperty ) {
+        this.madValueProperty.value = sortedObjects.length === 0 ? null :
+                                      VariabilityModel.meanAbsoluteDeviation( sortedObjects.map( object => object.valueProperty.value! ) );
+      }
     }
   }
 

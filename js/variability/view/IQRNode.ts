@@ -64,37 +64,41 @@ export default class IQRNode extends CAVPlotNode {
     const BOX_CENTER_Y = 78;
     const BOX_HEIGHT = 25;
     const END_CAP_HEIGHT = 15;
+    const BOX_STROKE_WIDTH = 2;
+    const MEDIAN_STROKE_WIDTH = 3;
+    const BOX_STROKE_COLOR = 'black';
+    const MEDIAN_STROKE_COLOR = 'red';
 
     const boxWhiskerNode = new Node();
 
     const boxWhiskerMedianLine = new Line( 0, BOX_CENTER_Y - BOX_HEIGHT / 2, 0, BOX_CENTER_Y + BOX_HEIGHT / 2, {
-      stroke: 'red',
-      lineWidth: 3
+      stroke: MEDIAN_STROKE_COLOR,
+      lineWidth: MEDIAN_STROKE_WIDTH
     } );
 
     const boxWhiskerBox = new Rectangle( 0, BOX_CENTER_Y - BOX_HEIGHT / 2, 100, BOX_HEIGHT, {
-      stroke: 'black',
-      lineWidth: 2
+      stroke: BOX_STROKE_COLOR,
+      lineWidth: BOX_STROKE_WIDTH
     } );
 
     const boxWhiskerLineLeft = new Line( 0, BOX_CENTER_Y, 0, BOX_CENTER_Y, {
-      stroke: 'black',
-      lineWidth: 2
+      stroke: BOX_STROKE_COLOR,
+      lineWidth: BOX_STROKE_WIDTH
     } );
 
     const boxWhiskerLineRight = new Line( 0, BOX_CENTER_Y, 0, BOX_CENTER_Y, {
-      stroke: 'black',
-      lineWidth: 2
+      stroke: BOX_STROKE_COLOR,
+      lineWidth: BOX_STROKE_WIDTH
     } );
 
     const boxWhiskerEndCapLeft = new Line( 0, BOX_CENTER_Y - END_CAP_HEIGHT / 2, 0, BOX_CENTER_Y + END_CAP_HEIGHT / 2, {
-      stroke: 'black',
-      lineWidth: 2
+      stroke: BOX_STROKE_COLOR,
+      lineWidth: BOX_STROKE_WIDTH
     } );
 
     const boxWhiskerEndCapRight = new Line( 0, BOX_CENTER_Y - END_CAP_HEIGHT / 2, 0, BOX_CENTER_Y + END_CAP_HEIGHT / 2, {
-      stroke: 'black',
-      lineWidth: 2
+      stroke: BOX_STROKE_COLOR,
+      lineWidth: BOX_STROKE_WIDTH
     } );
 
     boxWhiskerNode.addChild( boxWhiskerMedianLine );
@@ -123,7 +127,7 @@ export default class IQRNode extends CAVPlotNode {
 
       boxWhiskerMedianLine.x1 = boxWhiskerMedianLine.x2 = this.modelViewTransform.modelToViewX( model.medianValueProperty.value! );
 
-      boxWhiskerBox.left = boxLeft;
+      boxWhiskerBox.left = boxLeft - 0.5 * BOX_STROKE_WIDTH;
       boxWhiskerBox.rectWidth = boxRight - boxLeft;
 
       if ( leftmostDot && rightmostDot ) {
@@ -142,8 +146,8 @@ export default class IQRNode extends CAVPlotNode {
 
       const enoughData = model.numberOfDataPointsProperty.value >= 5;
 
-      const iqrVisibility = ( options.parentContext === 'info' && enoughData ) ||
-                            ( options.parentContext === 'accordion' && enoughData && model.isShowingIQRProperty.value );
+      const iqrVisibility = true;// ( options.parentContext === 'info' && enoughData ) ||
+                            // ( options.parentContext === 'accordion' && enoughData && model.isShowingIQRProperty.value );
 
       iqrRectangle.visible = iqrVisibility;
       iqrBar.visible = iqrVisibility;
