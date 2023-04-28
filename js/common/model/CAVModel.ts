@@ -118,7 +118,14 @@ export default class CAVModel implements TModel {
       soccerBall.valueProperty.link( ( value: number | null ) => {
         if ( value !== null ) {
           if ( !phet.joist.sim.isSettingPhetioStateProperty.value ) {
-            this.soccerBallLandedListener( soccerBall, value );
+
+            this.animateSoccerBallStack( soccerBall, value );
+
+            // If the soccer player that kicked that ball was still in line when the ball lands, they can leave the line now.
+            if ( soccerBall.soccerPlayer === this.getFrontSoccerPlayer() ) {
+              this.advanceLine();
+            }
+
             this.objectValueBecameNonNullEmitter.emit( soccerBall );
           }
         }
@@ -226,15 +233,6 @@ export default class CAVModel implements TModel {
       phetioDocumentation: 'The distribution of probabilities of where the balls will land is represented as an un-normalized array of non-negative, floating-point numbers, one value for each location in the physical range',
       isValidValue: ( array: readonly number[] ) => array.length === this.physicalRange.getLength() + 1 && // inclusive of endpoints
                                                     _.every( array, element => element >= 0 )
-    } );
-
-    // TODO: Why have this callback and soccerBallLanded callback?
-    this.objectValueBecameNonNullEmitter.addListener( soccerBall => {
-
-      // If the soccer player that kicked that ball was still in line when the ball lands, they can leave the line now.
-      if ( soccerBall.soccerPlayer === this.getFrontSoccerPlayer() ) {
-        this.advanceLine();
-      }
     } );
 
     this.activeKickerIndexProperty = new NumberProperty( 0, {
@@ -455,7 +453,7 @@ export default class CAVModel implements TModel {
   /**
    * When a ball lands on the ground, animate all other balls that were at this location above the landed ball.
    */
-  private soccerBallLandedListener( soccerBall: CAVObject, value: number ): void {
+  private animateSoccerBallStack( soccerBall: CAVObject, value: number ): void {
     const otherObjectsInStack = this.getActiveSoccerBalls().filter( x => x.valueProperty.value === value && x !== soccerBall );
     const sortedOthers = _.sortBy( otherObjectsInStack, object => object.positionProperty.value.y );
 
