@@ -10,14 +10,12 @@
 import Animation from '../../../../twixt/js/Animation.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
-import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import IOType from '../../../../tandem/js/types/IOType.js';
 import CAVObjectType from './CAVObjectType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import EnumerationIO from '../../../../tandem/js/types/EnumerationIO.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import CAVConstants from '../CAVConstants.js';
 import Property from '../../../../axon/js/Property.js';
@@ -26,7 +24,6 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import { AnimationMode } from './AnimationMode.js';
 import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
 import TEmitter from '../../../../axon/js/TEmitter.js';
 import SoccerPlayer from './SoccerPlayer.js';
 
@@ -42,7 +39,7 @@ export type CAVObjectOptions =
   & PickRequired<PhetioObjectOptions, 'tandem'>;
 
 // TODO: Separate into SoccerBall and DataPoint
-export default class CAVObject extends PhetioObject {
+export default class CAVObject {
 
   // Continuous value for the drag listener. When dragging, the object snaps to each tickmark
   public readonly dragPositionProperty: Vector2Property;
@@ -57,28 +54,11 @@ export default class CAVObject extends PhetioObject {
   public readonly isFirstObject: boolean;
 
   // Where the object is animating to, or null if not yet animating
-  public targetX: number | null = null;
+  public targetXProperty: Property<number | null>;
 
   // The value that participates in the data set.
   public valueProperty: Property<number | null>;
 
-  public static readonly CAVObjectIO = new IOType<CAVObject, CAVObjectStateType>( 'CAVObjectIO', {
-    valueType: CAVObject,
-
-    // TODO: Delete most of this, see https://github.com/phetsims/center-and-variability/issues/160
-    toStateObject: ( cavObject: CAVObject ) => cavObject.toStateObject(),
-    stateObjectToCreateElementArguments: ( stateObject: CAVObjectStateType ) => {
-      return [ {
-        targetX: stateObject.targetX,
-        isFirstObject: stateObject.isFirstObject
-      } ];
-    },
-    stateSchema: {
-      objectType: EnumerationIO( CAVObjectType ),
-      targetX: NullableIO( NumberIO ),
-      isFirstObject: BooleanIO
-    }
-  } );
   public readonly dragStartedEmitter: TEmitter = new Emitter();
   public animation: Animation | null = null;
   public readonly isActiveProperty: BooleanProperty;
@@ -89,12 +69,9 @@ export default class CAVObject extends PhetioObject {
     const options = optionize<CAVObjectOptions, SelfOptions, PhetioObjectOptions>()( {
       position: Vector2.ZERO,
       velocity: Vector2.ZERO,
-      phetioType: CAVObject.CAVObjectIO,
       value: null,
       isFirstObject: false
     }, providedOptions );
-
-    super( options );
 
     this.objectType = objectType;
     this.isFirstObject = options.isFirstObject;
@@ -125,12 +102,17 @@ export default class CAVObject extends PhetioObject {
     this.isActiveProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isActiveProperty' )
     } );
+
+    this.targetXProperty = new Property<number | null>( null, {
+      tandem: options.tandem.createTandem( 'targetXProperty' ),
+      phetioValueType: NullableIO( NumberIO )
+    } );
   }
 
   public step( dt: number ): void {
     if ( this.animationModeProperty.value === AnimationMode.FLYING ) {
 
-      assert && assert( this.targetX !== null, 'targetX should be non-null when animating' );
+      assert && assert( this.targetXProperty.value !== null, 'targetXProperty.value should be non-null when animating' );
 
       const xCoordinates = rk4( this.positionProperty.value.x, this.velocityProperty.value.x, 0, dt );
       const yCoordinates = rk4( this.positionProperty.value.y, this.velocityProperty.value.y, CAVConstants.GRAVITY, dt );
@@ -144,10 +126,10 @@ export default class CAVObject extends PhetioObject {
       let landed = false;
 
       if ( y <= this.objectType.radius ) {
-        x = this.targetX!;
+        x = this.targetXProperty.value!;
         y = this.objectType.radius;
         landed = true;
-        this.valueProperty.value = this.targetX!;
+        this.valueProperty.value = this.targetXProperty.value!;
       }
 
       this.positionProperty.value = new Vector2( x, y );
@@ -167,17 +149,8 @@ export default class CAVObject extends PhetioObject {
     this.isMedianObjectProperty.reset();
     this.isShowingAnimationHighlightProperty.reset();
     this.isActiveProperty.reset();
-    this.targetX = null;
+    this.targetXProperty.value = null;
     this.soccerPlayer = null;
-  }
-
-  // TODO: Delete for https://github.com/phetsims/center-and-variability/issues/160
-  public toStateObject(): CAVObjectStateType {
-    return {
-      objectType: this.objectType.toString(),
-      targetX: this.targetX,
-      isFirstObject: this.isFirstObject
-    };
   }
 }
 
@@ -196,7 +169,5 @@ const rk4 = ( x: number, v: number, a: number, dt: number ) => {
 
   return [ xResult, vResult ];
 };
-
-type CAVObjectStateType = { objectType: string; targetX: number | null; isFirstObject: boolean };
 
 centerAndVariability.register( 'CAVObject', CAVObject );

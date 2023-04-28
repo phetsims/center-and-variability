@@ -547,7 +547,7 @@ export default class CAVModel implements TModel {
     const velocity = Vector2.createPolar( v0, angle );
     soccerBall.velocityProperty.value = velocity;
 
-    soccerBall.targetX = x1;
+    soccerBall.targetXProperty.value = x1;
 
     soccerBall.animationModeProperty.value = AnimationMode.FLYING;
     this.timeWhenLastBallWasKickedProperty.value = this.timeProperty.value;

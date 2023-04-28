@@ -116,11 +116,6 @@ export default class CAVObjectNode extends Node {
 
     this.addChild( childNode );
 
-    this.addLinkedElement( soccerBall, {
-      tandem: options.tandem.createTandem( soccerBall.objectType === CAVObjectType.SOCCER_BALL ? 'soccerBall' : 'dataPoint' ),
-      phetioState: false
-    } );
-
     soccerBall.positionProperty.link( position => {
       this.translation = modelViewTransform.modelToViewPosition( position );
     } );
