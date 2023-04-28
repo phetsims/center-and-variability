@@ -243,13 +243,12 @@ export default class CAVModel implements TModel {
                                                     _.every( array, element => element >= 0 )
     } );
 
+    // TODO: Why have this callback and soccerBallLanded callback?
     this.objectValueBecameNonNullEmitter.addListener( soccerBall => {
 
       // If the soccer player that kicked that ball was still in line when the ball lands, they can leave the line now.
-      this.advanceLine();
-
-      if ( this.numberOfUnkickedBallsProperty.value > 0 && this.nextBallToKickProperty.value === null ) {
-        this.nextBallToKickProperty.value = this.getNextBallFromPool();
+      if ( soccerBall.soccerPlayer === this.getFrontSoccerPlayer() ) {
+        this.advanceLine();
       }
     } );
 
@@ -377,6 +376,10 @@ export default class CAVModel implements TModel {
     );
   }
 
+  public getFrontSoccerPlayer(): SoccerPlayer | null {
+    return this.soccerPlayers[ this.activeKickerIndexProperty.value ];
+  }
+
   /**
    * Steps the model.
    *
@@ -386,20 +389,12 @@ export default class CAVModel implements TModel {
     this.timeProperty.value += dt;
     this.getActiveSoccerBalls().forEach( soccerBall => soccerBall.step( dt ) );
 
-    const frontPlayer = this.soccerPlayers[ this.activeKickerIndexProperty.value ];
+    const frontPlayer = this.getFrontSoccerPlayer();
 
     if ( frontPlayer ) {
 
       if ( this.numberOfScheduledSoccerBallsToKickProperty.value > 0 &&
            this.timeProperty.value >= this.timeWhenLastBallWasKickedProperty.value + TIME_BETWEEN_RAPID_KICKS ) {
-
-        if ( this.nextBallToKickProperty.value === null ) {
-
-          // Create the next ball.
-
-          // TODO-UX-HIGH: A ball is being created too soon, when using the multikick button
-          this.nextBallToKickProperty.value = this.getNextBallFromPool();
-        }
 
         this.advanceLine();
 
@@ -449,6 +444,7 @@ export default class CAVModel implements TModel {
   // TODO: We observed that if Player A's ball is still in flight after Player B kicks, then the landing of Player A's ball will trigger advanceLine for Player B
 
   // When a ball lands, or when the next player is supposed to kick (before the ball lands), move the line forward
+  // and queue up the next ball as well
   private advanceLine(): void {
 
     // Allow kicking another ball while one is already in the air.
@@ -461,6 +457,7 @@ export default class CAVModel implements TModel {
         nextIndex = 0;
       }
       this.activeKickerIndexProperty.value = nextIndex;
+      this.nextBallToKickProperty.value = this.getNextBallFromPool();
     }
   }
 
@@ -559,6 +556,8 @@ export default class CAVModel implements TModel {
 
     // New ball will be created later in step
     this.nextBallToKickProperty.value = null;
+
+    soccerBall.soccerPlayer = soccerPlayer;
   }
 
   private getNextBallFromPool(): CAVObject | null {

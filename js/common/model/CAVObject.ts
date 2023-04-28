@@ -28,6 +28,7 @@ import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
 import TEmitter from '../../../../axon/js/TEmitter.js';
+import SoccerPlayer from './SoccerPlayer.js';
 
 type SelfOptions = {
   position?: Vector2;
@@ -82,6 +83,7 @@ export default class CAVObject extends PhetioObject {
   public readonly dragStartedEmitter: TEmitter = new Emitter();
   public animation: Animation | null = null;
   public readonly isActiveProperty: BooleanProperty;
+  public soccerPlayer: SoccerPlayer | null = null;
 
   public constructor( objectType: CAVObjectType, providedOptions: CAVObjectOptions ) {
 
@@ -167,6 +169,7 @@ export default class CAVObject extends PhetioObject {
     this.isShowingAnimationHighlightProperty.reset();
     this.isActiveProperty.reset();
     this.targetX = null;
+    this.soccerPlayer = null;
   }
 
   // TODO: Delete for https://github.com/phetsims/center-and-variability/issues/160
