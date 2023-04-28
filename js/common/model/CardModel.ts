@@ -37,10 +37,6 @@ export default class CardModel {
         this.isActiveProperty.value = isActive && animationMode !== AnimationMode.FLYING && value !== null;
       } );
   }
-
-  public reset(): void {
-    this.isActiveProperty.reset(); // TODO: unnecessary if we reset the soccerBall
-  }
 }
 
 centerAndVariability.register( 'CardModel', CardModel );

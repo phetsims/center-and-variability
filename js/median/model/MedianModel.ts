@@ -28,15 +28,9 @@ export default class MedianModel extends CAVModel {
     } );
   }
 
-  public override clearData(): void {
-    super.clearData();
-    this.cards.forEach( card => card.reset() );
-  }
-
   public override reset(): void {
-    super.reset();
-    this.clearData();
     this.isSortingDataProperty.reset();
+    super.reset();
   }
 }
 
