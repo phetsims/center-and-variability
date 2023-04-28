@@ -11,7 +11,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import { DragListener, Node, NodeOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import CAVObject from '../../common/model/CAVObject.js';
+import SoccerBall from '../../common/model/SoccerBall.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Animation from '../../../../twixt/js/Animation.js';
@@ -35,7 +35,7 @@ export default class CardNode extends Node {
     parameters: [ { valueType: 'number' } ]
   } );
 
-  public readonly cavObject: CAVObject;
+  public readonly soccerBall: SoccerBall;
   public animation: Animation | null = null;
   private animationTo: Vector2 | null = null;
 
@@ -72,7 +72,7 @@ export default class CardNode extends Node {
       valueComparisonStrategy: 'equalsFunction'
     } );
 
-    this.cavObject = cardModel.soccerBall;
+    this.soccerBall = cardModel.soccerBall;
 
     this.positionProperty.link( position => {
       const range = getDragRange();
@@ -90,7 +90,7 @@ export default class CardNode extends Node {
     } );
     this.addInputListener( this.dragListener );
 
-    this.cavObject.dragStartedEmitter.addListener( () => this.moveToFront() );
+    this.soccerBall.dragStartedEmitter.addListener( () => this.moveToFront() );
   }
 
   public animateTo( destination: Vector2, duration: number, callback = _.noop ): void {

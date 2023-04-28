@@ -1,7 +1,7 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * Base class which renders a Node for the CAVObject.
+ * Base class which renders a Node for the SoccerBall.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
@@ -11,7 +11,7 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import { Circle, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
-import CAVObject from '../model/CAVObject.js';
+import SoccerBall from '../model/SoccerBall.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import { AnimationMode } from '../model/AnimationMode.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
@@ -33,7 +33,7 @@ export default abstract class CAVObjectNode extends Node {
 
   protected readonly medianHighlight: Circle;
 
-  public constructor( soccerBall: CAVObject, isShowingPlayAreaMedianProperty: TReadOnlyProperty<boolean>,
+  public constructor( soccerBall: SoccerBall, isShowingPlayAreaMedianProperty: TReadOnlyProperty<boolean>,
                       modelViewTransform: ModelViewTransform2,
                       modelRadius: number,
                       providedOptions?: CAVObjectNodeOptions ) {

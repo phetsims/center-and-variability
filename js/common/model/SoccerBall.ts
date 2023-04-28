@@ -11,7 +11,6 @@ import Animation from '../../../../twixt/js/Animation.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import CAVObjectType from './CAVObjectType.js';
@@ -39,7 +38,7 @@ export type CAVObjectOptions =
   & PickRequired<PhetioObjectOptions, 'tandem'>;
 
 // TODO: Separate into SoccerBall and DataPoint
-export default class CAVObject {
+export default class SoccerBall {
 
   // Continuous value for the drag listener. When dragging, the object snaps to each tickmark
   public readonly dragPositionProperty: Vector2Property;
@@ -50,7 +49,6 @@ export default class CAVObject {
   public readonly animationModeProperty: Property<AnimationMode>;
   public readonly isMedianObjectProperty: BooleanProperty;
   public readonly isShowingAnimationHighlightProperty: BooleanProperty;
-  public readonly objectType: CAVObjectType;
   public readonly isFirstObject: boolean;
 
   // Where the object is animating to, or null if not yet animating
@@ -64,7 +62,7 @@ export default class CAVObject {
   public readonly isActiveProperty: BooleanProperty;
   public soccerPlayer: SoccerPlayer | null = null;
 
-  public constructor( objectType: CAVObjectType, providedOptions: CAVObjectOptions ) {
+  public constructor( providedOptions: CAVObjectOptions ) {
 
     const options = optionize<CAVObjectOptions, SelfOptions, PhetioObjectOptions>()( {
       position: Vector2.ZERO,
@@ -73,16 +71,13 @@ export default class CAVObject {
       isFirstObject: false
     }, providedOptions );
 
-    this.objectType = objectType;
     this.isFirstObject = options.isFirstObject;
 
     this.positionProperty = new Vector2Property( options.position, {
       tandem: options.tandem.createTandem( 'positionProperty' )
     } );
     this.velocityProperty = new Vector2Property( options.velocity, {
-      tandem: objectType === CAVObjectType.SOCCER_BALL ?
-              options.tandem.createTandem( 'velocityProperty' ) :
-              Tandem.OPT_OUT
+      tandem: options.tandem.createTandem( 'velocityProperty' )
     } );
     this.animationModeProperty = new EnumerationProperty( AnimationMode.NONE, {
       tandem: options.tandem.createTandem( 'animationModeProperty' )
@@ -125,9 +120,9 @@ export default class CAVObject {
 
       let landed = false;
 
-      if ( y <= this.objectType.radius ) {
+      if ( y <= CAVObjectType.SOCCER_BALL.radius ) {
         x = this.targetXProperty.value!;
-        y = this.objectType.radius;
+        y = CAVObjectType.SOCCER_BALL.radius;
         landed = true;
         this.valueProperty.value = this.targetXProperty.value!;
       }
@@ -170,4 +165,4 @@ const rk4 = ( x: number, v: number, a: number, dt: number ) => {
   return [ xResult, vResult ];
 };
 
-centerAndVariability.register( 'CAVObject', CAVObject );
+centerAndVariability.register( 'SoccerBall', SoccerBall );

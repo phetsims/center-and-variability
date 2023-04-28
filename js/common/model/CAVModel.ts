@@ -9,7 +9,7 @@
 
 import centerAndVariability from '../../centerAndVariability.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import CAVObject from './CAVObject.js';
+import SoccerBall from './SoccerBall.js';
 import CAVObjectType from './CAVObjectType.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Range from '../../../../dot/js/Range.js';
@@ -43,7 +43,7 @@ export type CAVModelOptions = SelfOptions;
 const TIME_BETWEEN_RAPID_KICKS = 0.5; // in seconds
 
 export default class CAVModel implements TModel {
-  public readonly soccerBalls: CAVObject[];
+  public readonly soccerBalls: SoccerBall[];
   public readonly soccerBallCountProperty: NumberProperty;
 
   public readonly isShowingTopMeanProperty: BooleanProperty;
@@ -63,8 +63,8 @@ export default class CAVModel implements TModel {
   public readonly dataRangeProperty: Property<Range | null>;
 
   // Signify whenever any object's value or position changes
-  public readonly objectChangedEmitter: TEmitter<[ CAVObject ]> = new Emitter<[ CAVObject ]>( {
-    parameters: [ { valueType: CAVObject } ]
+  public readonly objectChangedEmitter: TEmitter<[ SoccerBall ]> = new Emitter<[ SoccerBall ]>( {
+    parameters: [ { valueType: SoccerBall } ]
   } );
 
   // Null until the user has made a prediction.
@@ -73,7 +73,7 @@ export default class CAVModel implements TModel {
 
   protected readonly timeProperty: NumberProperty;
 
-  protected readonly objectValueBecameNonNullEmitter: TEmitter<[ CAVObject ]>;
+  protected readonly objectValueBecameNonNullEmitter: TEmitter<[ SoccerBall ]>;
   public readonly resetEmitter: TEmitter = new Emitter();
   public readonly numberOfDataPointsProperty: NumberProperty;
 
@@ -101,13 +101,13 @@ export default class CAVModel implements TModel {
       const y0 = CAVObjectType.SOCCER_BALL.radius;
       const position = new Vector2( 0, y0 );
 
-      const soccerBall = new CAVObject( CAVObjectType.SOCCER_BALL, {
+      const soccerBall = new SoccerBall( {
         isFirstObject: index === 0,
         tandem: options.tandem.createTandem( `soccerBall${index}` ),
         position: position
       } );
 
-      // TODO: Should some or all of this move into CAVObject or CAVObjectNode?
+      // TODO: Should some or all of this move into SoccerBall or CAVObjectNode?
       const dragPositionListener = ( dragPosition: Vector2 ) => {
         soccerBall.valueProperty.value = Utils.roundSymmetric( this.physicalRange.constrainValue( dragPosition.x ) );
 
@@ -193,8 +193,8 @@ export default class CAVModel implements TModel {
 
     this.isShowingPlayAreaMedianProperty.link( updateDataMeasures );
 
-    this.objectValueBecameNonNullEmitter = new Emitter<[ CAVObject ]>( {
-      parameters: [ { valueType: CAVObject } ]
+    this.objectValueBecameNonNullEmitter = new Emitter<[ SoccerBall ]>( {
+      parameters: [ { valueType: SoccerBall } ]
     } );
 
     this.numberOfScheduledSoccerBallsToKickProperty = new NumberProperty( 0, {
@@ -262,9 +262,9 @@ export default class CAVModel implements TModel {
     if ( sortedObjects.length > 0 ) {
 
       // take the average to account for cases where there is more than one object contributing to the median
-      this.medianValueProperty.value = _.mean( medianObjects.map( cavObject => cavObject.valueProperty.value ) );
+      this.medianValueProperty.value = _.mean( medianObjects.map( soccerBall => soccerBall.valueProperty.value ) );
 
-      this.meanValueProperty.value = _.mean( sortedObjects.map( cavObject => cavObject.valueProperty.value ) );
+      this.meanValueProperty.value = _.mean( sortedObjects.map( soccerBall => soccerBall.valueProperty.value ) );
 
       const min = sortedObjects[ 0 ].valueProperty.value!;
       const max = sortedObjects[ sortedObjects.length - 1 ].valueProperty.value!;
@@ -284,28 +284,28 @@ export default class CAVModel implements TModel {
   /**
    * Returns all other objects at the target position of the provided object.
    */
-  public getOtherObjectsAtTarget( cavObject: CAVObject ): CAVObject[] {
-    return this.soccerBalls.filter( ( o: CAVObject ) => {
-      return o.valueProperty.value === cavObject.valueProperty.value && cavObject !== o;
+  public getOtherObjectsAtTarget( soccerBall: SoccerBall ): SoccerBall[] {
+    return this.soccerBalls.filter( ( o: SoccerBall ) => {
+      return o.valueProperty.value === soccerBall.valueProperty.value && soccerBall !== o;
     } );
   }
 
   /**
    * Set the position of the parameter object to be on top of the other objects at that target position.
    */
-  protected moveToTop( cavObject: CAVObject ): void {
+  protected moveToTop( soccerBall: SoccerBall ): void {
 
-    const objectsAtTarget = this.getOtherObjectsAtTarget( cavObject );
+    const objectsAtTarget = this.getOtherObjectsAtTarget( soccerBall );
 
     // Sort from bottom to top, so they can be re-stacked. The specified object will appear at the top.
     const sortedOthers = _.sortBy( objectsAtTarget, object => object.positionProperty.value.y );
-    const sorted = [ ...sortedOthers, cavObject ];
+    const sorted = [ ...sortedOthers, soccerBall ];
 
     // collapse the rest of the stack. NOTE: This assumes the radii are the same.
-    let position = cavObject.objectType.radius;
+    let position = CAVObjectType.SOCCER_BALL.radius;
     sorted.forEach( object => {
-      object.positionProperty.value = new Vector2( cavObject.valueProperty.value!, position );
-      position += object.objectType.radius * 2;
+      object.positionProperty.value = new Vector2( soccerBall.valueProperty.value!, position );
+      position += CAVObjectType.SOCCER_BALL.radius * 2;
     } );
   }
 
@@ -343,14 +343,14 @@ export default class CAVModel implements TModel {
     this.resetEmitter.emit();
   }
 
-  public getSortedLandedObjects(): CAVObject[] {
-    return _.sortBy( this.getActiveSoccerBalls().filter( cavObject => cavObject.valueProperty.value !== null ),
+  public getSortedLandedObjects(): SoccerBall[] {
+    return _.sortBy( this.getActiveSoccerBalls().filter( soccerBall => soccerBall.valueProperty.value !== null ),
 
       // The numerical value takes predence for sorting
-      cavObject => cavObject.valueProperty.value,
+      soccerBall => soccerBall.valueProperty.value,
 
       // Then consider the height within the stack
-      cavObject => cavObject.positionProperty.value.y
+      soccerBall => soccerBall.positionProperty.value.y
     );
   }
 
@@ -401,7 +401,7 @@ export default class CAVModel implements TModel {
   }
 
   // Returns a list of the median objects within a sorted array, based on the objects' 'value' property
-  protected static getMedianObjectsFromSortedArray( sortedObjects: CAVObject[] ): CAVObject[] {
+  protected static getMedianObjectsFromSortedArray( sortedObjects: SoccerBall[] ): SoccerBall[] {
 
     // Odd number of values, take the central value
     if ( sortedObjects.length % 2 === 1 ) {
@@ -442,32 +442,32 @@ export default class CAVModel implements TModel {
     return dotRandom.nextBoolean() ? CAVConstants.LEFT_SKEWED_DATA : CAVConstants.RIGHT_SKEWED_DATA;
   }
 
-  public getActiveSoccerBalls(): CAVObject[] {
+  public getActiveSoccerBalls(): SoccerBall[] {
     return this.soccerBalls.filter( soccerBall => soccerBall.isActiveProperty.value );
   }
 
   /**
    * When a ball lands on the ground, animate all other balls that were at this location above the landed ball.
    */
-  private animateSoccerBallStack( soccerBall: CAVObject, value: number ): void {
+  private animateSoccerBallStack( soccerBall: SoccerBall, value: number ): void {
     const otherObjectsInStack = this.getActiveSoccerBalls().filter( x => x.valueProperty.value === value && x !== soccerBall );
     const sortedOthers = _.sortBy( otherObjectsInStack, object => object.positionProperty.value.y );
 
-    sortedOthers.forEach( ( cavObject, index ) => {
+    sortedOthers.forEach( ( soccerBall, index ) => {
 
-      const diameter = cavObject.objectType.radius * 2;
-      const targetPositionY = ( index + 1 ) * diameter + cavObject.objectType.radius;
-      const positionYProperty = new NumberProperty( cavObject.positionProperty.value.y );
+      const diameter = CAVObjectType.SOCCER_BALL.radius * 2;
+      const targetPositionY = ( index + 1 ) * diameter + CAVObjectType.SOCCER_BALL.radius;
+      const positionYProperty = new NumberProperty( soccerBall.positionProperty.value.y );
 
-      // TODO: Use cavObject.positionProperty in the Animation?
+      // TODO: Use soccerBall.positionProperty in the Animation?
       positionYProperty.link( positionY => {
-        cavObject.positionProperty.value = new Vector2( cavObject.positionProperty.value.x, positionY );
+        soccerBall.positionProperty.value = new Vector2( soccerBall.positionProperty.value.x, positionY );
       } );
 
-      if ( cavObject.animation ) {
-        cavObject.animation.stop();
+      if ( soccerBall.animation ) {
+        soccerBall.animation.stop();
       }
-      cavObject.animation = new Animation( {
+      soccerBall.animation = new Animation( {
         duration: 0.15,
         targets: [ {
           property: positionYProperty,
@@ -476,10 +476,10 @@ export default class CAVModel implements TModel {
         } ]
       } );
 
-      cavObject.animation.endedEmitter.addListener( () => {
-        cavObject.animation = null;
+      soccerBall.animation.endedEmitter.addListener( () => {
+        soccerBall.animation = null;
       } );
-      cavObject.animation.start();
+      soccerBall.animation.start();
     } );
   }
 
@@ -493,7 +493,7 @@ export default class CAVModel implements TModel {
   /**
    * Select a target location for the nextBallToKick, set its velocity and mark it for animation.
    */
-  private kickBall( soccerPlayer: SoccerPlayer, soccerBall: CAVObject ): void {
+  private kickBall( soccerPlayer: SoccerPlayer, soccerBall: SoccerBall ): void {
     soccerPlayer.poseProperty.value = Pose.KICKING;
 
     // Test that the sampling engine is working properly
@@ -534,7 +534,7 @@ export default class CAVModel implements TModel {
     soccerBall.soccerPlayer = soccerPlayer;
   }
 
-  private getNextBallFromPool(): CAVObject | null {
+  private getNextBallFromPool(): SoccerBall | null {
     const nextBallFromPool = this.soccerBalls.find( ball => !ball.isActiveProperty.value ) || null;
     if ( nextBallFromPool ) {
       nextBallFromPool.isActiveProperty.value = true;

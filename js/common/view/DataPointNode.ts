@@ -2,7 +2,7 @@
 
 import CAVObjectNode, { CAVObjectNodeOptions } from './CAVObjectNode.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import CAVObject from '../model/CAVObject.js';
+import SoccerBall from '../model/SoccerBall.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import CAVObjectType from '../model/CAVObjectType.js';
@@ -15,7 +15,7 @@ import Multilink from '../../../../axon/js/Multilink.js';
 
 export default class DataPointNode extends CAVObjectNode {
 
-  public constructor( soccerBall: CAVObject, isShowingPlayAreaMedianProperty: TReadOnlyProperty<boolean>,
+  public constructor( soccerBall: SoccerBall, isShowingPlayAreaMedianProperty: TReadOnlyProperty<boolean>,
                       modelViewTransform: ModelViewTransform2,
                       options: CAVObjectNodeOptions & { fill: TColor } ) {
 

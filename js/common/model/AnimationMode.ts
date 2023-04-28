@@ -5,7 +5,7 @@ import EnumerationValue from '../../../../phet-core/js/EnumerationValue.js';
 import centerAndVariability from '../../centerAndVariability.js';
 
 /**
- * AnimationMode is used to identify what type of animation a CAVObject is undergoing.
+ * AnimationMode is used to identify what type of animation a SoccerBall is undergoing.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

@@ -117,7 +117,7 @@ export default class CAVScreenView extends ScreenView {
             // moved before this happens, don't show the dragIndicatorArrowNode
             if ( model.soccerBallCountProperty.value === this.model.physicalRange.max &&
                  objectNodesInputEnabledProperty.value &&
-                 _.every( model.soccerBalls, cavObject => cavObject.valueProperty.value !== null ) &&
+                 _.every( model.soccerBalls, soccerBall => soccerBall.valueProperty.value !== null ) &&
                  !objectHasBeenDragged ) {
               dragIndicatorArrowNode.centerX = this.modelViewTransform.modelToViewX( value );
 
@@ -163,7 +163,7 @@ export default class CAVScreenView extends ScreenView {
       if ( visible ) {
 
         // if there is a ball at that location, go above the ball
-        const ballsAtLocation = model.soccerBalls.filter( cavObject => cavObject.valueProperty.value === medianValue );
+        const ballsAtLocation = model.soccerBalls.filter( soccerBall => soccerBall.valueProperty.value === medianValue );
         const modelHeight = ballsAtLocation.length * CAVObjectType.SOCCER_BALL.radius * 2; // assumes no spacing
 
         const viewHeight = this.modelViewTransform.modelToViewDeltaY( modelHeight );

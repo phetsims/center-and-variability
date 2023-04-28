@@ -10,7 +10,7 @@
 import centerAndVariability from '../../centerAndVariability.js';
 import { LinearGradient, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import CAVObject from '../../common/model/CAVObject.js';
+import SoccerBall from '../../common/model/SoccerBall.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import CardNode from './CardNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -188,8 +188,8 @@ export default class CardNodeContainer extends Node {
 
           let targetIndex = this.cardNodeCells.length;
           if ( this.model.isSortingDataProperty.value ) {
-            const newValue = cardNode.cavObject.valueProperty.value!;
-            const existingLowerCardNodes = this.cardNodeCells.filter( cardNode => cardNode.cavObject.valueProperty.value! <= newValue );
+            const newValue = cardNode.soccerBall.valueProperty.value!;
+            const existingLowerCardNodes = this.cardNodeCells.filter( cardNode => cardNode.soccerBall.valueProperty.value! <= newValue );
 
             const lowerNeighborCardNode = _.maxBy( existingLowerCardNodes, cardNode => this.cardNodeCells.indexOf( cardNode ) );
             targetIndex = lowerNeighborCardNode ? this.cardNodeCells.indexOf( lowerNeighborCardNode ) + 1 : 0;
@@ -212,10 +212,10 @@ export default class CardNodeContainer extends Node {
 
     this.addChild( this.medianBarNode );
 
-    const objectCreatedListener = ( cavObject: CAVObject ) => {
+    const objectCreatedListener = ( soccerBall: SoccerBall ) => {
 
       // A ball landed OR a value changed
-      cavObject.valueProperty.link( value => {
+      soccerBall.valueProperty.link( value => {
         if ( this.model.isSortingDataProperty.value && value !== null ) {
           this.sortData();
         }
@@ -527,7 +527,7 @@ export default class CardNodeContainer extends Node {
   private isDataSorted(): boolean {
     let lastValue = null;
     for ( let i = 0; i < this.cardNodeCells.length; i++ ) {
-      const value = this.cardNodeCells[ i ].cavObject.valueProperty.value!;
+      const value = this.cardNodeCells[ i ].soccerBall.valueProperty.value!;
 
       if ( lastValue !== null && value < lastValue ) {
         return false;
@@ -563,14 +563,14 @@ export default class CardNodeContainer extends Node {
     }
   }
 
-  private getCardNode( cavObject: CAVObject ): CardNode | null {
-    return this.cardNodeCells.find( cardNode => cardNode.cavObject === cavObject ) || null;
+  private getCardNode( soccerBall: SoccerBall ): CardNode | null {
+    return this.cardNodeCells.find( cardNode => cardNode.soccerBall === soccerBall ) || null;
   }
 
   private sortData(): void {
 
     // If the card is visible, the value property should be non-null
-    const sorted = _.sortBy( this.cardNodeCells, cardNode => cardNode.cavObject.valueProperty.value );
+    const sorted = _.sortBy( this.cardNodeCells, cardNode => cardNode.soccerBall.valueProperty.value );
     this.cardNodeCells.length = 0;
     this.cardNodeCells.push( ...sorted );
     this.cardNodeCells.forEach( cardNode => this.animateToHomeCell( cardNode, 0.5 ) );

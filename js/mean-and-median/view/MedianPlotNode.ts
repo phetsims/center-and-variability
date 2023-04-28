@@ -15,6 +15,7 @@ import MedianBarNode from '../../common/view/MedianBarNode.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import CAVPlotNode from '../../common/view/CAVPlotNode.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
+import CAVObjectType from '../../common/model/CAVObjectType.js';
 
 export type CAVPlotOptions = NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
@@ -42,16 +43,16 @@ export default class MedianPlotNode extends CAVPlotNode {
 
       const sortedDots = _.sortBy( model.getActiveSoccerBalls().filter( soccerBall => soccerBall.valueProperty.value !== null ),
         object => object.valueProperty.value );
-      const leftmostDot = sortedDots[ 0 ];
+      const leftmostSoccerBall = sortedDots[ 0 ];
 
       const medianValue = model.medianValueProperty.value;
 
       const MARGIN_Y = 5;
 
       // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card
-      if ( model.isShowingTopMedianProperty.value && leftmostDot ) {
+      if ( model.isShowingTopMedianProperty.value && leftmostSoccerBall ) {
         const highestDot = _.maxBy( sortedDots, object => object.positionProperty.value.y );
-        const dotRadius = Math.abs( modelViewTransform.modelToViewDeltaY( leftmostDot.objectType.radius ) );
+        const dotRadius = Math.abs( modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) );
 
         // assumes all of the dots have the same radius
         // TODO: do we need to know notch height here?
@@ -59,8 +60,8 @@ export default class MedianPlotNode extends CAVPlotNode {
                                dotRadius - MARGIN_Y - MedianBarNode.NOTCH_HEIGHT, MARGIN_TO_TOP_OF_ACCORDION_BOX );
 
         const rightmostDot = sortedDots[ sortedDots.length - 1 ];
-        assert && assert( leftmostDot.valueProperty.value !== null );
-        const left = modelViewTransform.modelToViewX( leftmostDot.valueProperty.value! );
+        assert && assert( leftmostSoccerBall.valueProperty.value !== null );
+        const left = modelViewTransform.modelToViewX( leftmostSoccerBall.valueProperty.value! );
         assert && assert( rightmostDot.valueProperty.value !== null );
         const right = modelViewTransform.modelToViewX( rightmostDot.valueProperty.value! );
         assert && assert( medianValue !== null );

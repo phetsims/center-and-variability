@@ -6,7 +6,7 @@
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */
-import CAVObject from '../../common/model/CAVObject.js';
+import SoccerBall from '../../common/model/SoccerBall.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
@@ -20,10 +20,10 @@ type CardModelOptions = SelfOptions & PhetioObjectOptions & PickRequired<PhetioO
 
 export default class CardModel {
 
-  public readonly soccerBall: CAVObject;
+  public readonly soccerBall: SoccerBall;
   public readonly isActiveProperty: BooleanProperty;
 
-  public constructor( soccerBall: CAVObject, options: CardModelOptions ) {
+  public constructor( soccerBall: SoccerBall, options: CardModelOptions ) {
     this.soccerBall = soccerBall;
     this.isActiveProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isActiveProperty' )
