@@ -132,7 +132,6 @@ export default class CAVModel implements TModel {
             this.objectCreated( soccerBall );
             this.objectValueBecameNonNullEmitter.emit( soccerBall );
           }
-          soccerBall.valueProperty.unlink( listener ); // Only create the card once, then no need to listen further
         }
       };
       soccerBall.valueProperty.link( listener );
@@ -223,7 +222,7 @@ export default class CAVModel implements TModel {
       ...this.soccerBallGroup.map( soccerBall => soccerBall.valueProperty ),
       ...this.soccerBallGroup.map( soccerBall => soccerBall.animationModeProperty ) ], () => {
 
-      const kickedSoccerBalls = this.soccerBallGroup.filter(
+      const kickedSoccerBalls = this.getActiveSoccerBalls().filter(
         soccerBall => soccerBall.valueProperty.value !== null ||
                       soccerBall.animationModeProperty.value === AnimationMode.FLYING ||
                       soccerBall.animationModeProperty.value === AnimationMode.STACKING
@@ -361,6 +360,7 @@ export default class CAVModel implements TModel {
     this.isShowingMeanPredictionProperty.reset();
     this.isShowingMedianPredictionProperty.reset();
     this.distributionProperty.value = CAVModel.chooseDistribution();
+
     this.clearData();
 
     this.resetEmitter.emit();
