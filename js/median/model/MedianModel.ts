@@ -8,7 +8,7 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import CardModel from '../../common/model/CardModel.js';
+import CardModel from '../../median/model/CardModel.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
 
@@ -19,7 +19,7 @@ export default class MedianModel extends CAVModel {
 
   public constructor( options: CAVModelOptions ) {
     super( options );
-    this.cards = this.soccerBallGroup.map( ( soccerBall, index ) => new CardModel( soccerBall, {
+    this.cards = this.soccerBalls.map( ( soccerBall, index ) => new CardModel( soccerBall, {
       tandem: options.tandem.createTandem( 'cards' ).createTandem( 'card' + index )
     } ) );
 
@@ -28,15 +28,9 @@ export default class MedianModel extends CAVModel {
     } );
   }
 
-  public override clearData(): void {
-    super.clearData();
-    this.cards.forEach( card => card.reset() );
-  }
-
   public override reset(): void {
-    super.reset();
-    this.clearData();
     this.isSortingDataProperty.reset();
+    super.reset();
   }
 }
 

@@ -10,16 +10,16 @@
 import centerAndVariability from '../../centerAndVariability.js';
 import { LinearGradient, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import CAVObject from '../model/CAVObject.js';
+import CAVObject from '../../common/model/CAVObject.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import CardNode from './CardNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Range from '../../../../dot/js/Range.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import Panel from '../../../../sun/js/Panel.js';
-import CAVConstants from '../CAVConstants.js';
+import CAVConstants from '../../common/CAVConstants.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import MedianBarNode from './MedianBarNode.js';
+import MedianBarNode from '../../common/view/MedianBarNode.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
@@ -28,11 +28,11 @@ import stepTimer from '../../../../axon/js/stepTimer.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
-import AsyncCounter from '../model/AsyncCounter.js';
+import AsyncCounter from '../../common/model/AsyncCounter.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Matrix3 from '../../../../dot/js/Matrix3.js';
-import DragIndicatorArrowNode from './DragIndicatorArrowNode.js';
+import DragIndicatorArrowNode from '../../common/view/DragIndicatorArrowNode.js';
 import TEmitter from '../../../../axon/js/TEmitter.js';
 import MedianModel from '../../median/model/MedianModel.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
@@ -195,8 +195,6 @@ export default class CardNodeContainer extends Node {
             const lowerNeighborCardNode = _.maxBy( existingLowerCardNodes, cardNode => this.cardNodeCells.indexOf( cardNode ) );
             targetIndex = lowerNeighborCardNode ? this.cardNodeCells.indexOf( lowerNeighborCardNode ) + 1 : 0;
           }
-
-          console.log( targetIndex );
 
           this.cardNodeCells.splice( targetIndex, 0, cardNode );
           this.setAtHomeCell( cardNode );

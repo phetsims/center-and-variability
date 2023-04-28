@@ -6,14 +6,14 @@
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */
-import CAVObject from './CAVObject.js';
+import CAVObject from '../../common/model/CAVObject.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
-import { AnimationMode } from './AnimationMode.js';
+import { AnimationMode } from '../../common/model/AnimationMode.js';
 
 type SelfOptions = EmptySelfOptions;
 type CardModelOptions = SelfOptions & PhetioObjectOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
@@ -36,10 +36,6 @@ export default class CardModel {
       ( isActive, animationMode, value ) => {
         this.isActiveProperty.value = isActive && animationMode !== AnimationMode.FLYING && value !== null;
       } );
-  }
-
-  public reset(): void {
-    this.isActiveProperty.reset(); // TODO: unnecessary if we reset the soccerBall
   }
 }
 

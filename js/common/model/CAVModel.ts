@@ -43,8 +43,8 @@ export type CAVModelOptions = SelfOptions;
 const TIME_BETWEEN_RAPID_KICKS = 0.5; // in seconds
 
 export default class CAVModel implements TModel {
-  public readonly soccerBallGroup: CAVObject[];
-  public readonly soccerBallGroupCountProperty: NumberProperty;
+  public readonly soccerBalls: CAVObject[];
+  public readonly soccerBallCountProperty: NumberProperty;
 
   public readonly isShowingTopMeanProperty: BooleanProperty;
   public readonly isShowingTopMedianProperty: BooleanProperty;
@@ -92,12 +92,11 @@ export default class CAVModel implements TModel {
 
     const updateDataMeasures = () => this.updateDataMeasures();
 
-    // TODO: Rename to soccerBalls
-    this.soccerBallGroupCountProperty = new NumberProperty( 0, {
+    this.soccerBallCountProperty = new NumberProperty( 0, {
       range: new Range( 0, this.maxNumberOfObjects )
     } );
 
-    this.soccerBallGroup = _.range( 0, this.maxNumberOfObjects ).map( index => {
+    this.soccerBalls = _.range( 0, this.maxNumberOfObjects ).map( index => {
 
       const y0 = CAVObjectType.SOCCER_BALL.radius;
       const position = new Vector2( 0, y0 );
@@ -116,23 +115,21 @@ export default class CAVModel implements TModel {
       };
       soccerBall.dragPositionProperty.lazyLink( dragPositionListener );
 
-      soccerBall.valueProperty.link( ( value, oldValue ) => {
-        if ( value !== null && oldValue === null ) {
-          if ( !phet.joist.sim.isSettingPhetioStateProperty.value ) {
-            this.soccerBallLandedListener( soccerBall, value );
-          }
-        }
-      } );
-
-      const listener = ( value: number | null ) => {
+      soccerBall.valueProperty.link( ( value: number | null ) => {
         if ( value !== null ) {
           if ( !phet.joist.sim.isSettingPhetioStateProperty.value ) {
-            this.objectCreated( soccerBall );
+
+            this.animateSoccerBallStack( soccerBall, value );
+
+            // If the soccer player that kicked that ball was still in line when the ball lands, they can leave the line now.
+            if ( soccerBall.soccerPlayer === this.getFrontSoccerPlayer() ) {
+              this.advanceLine();
+            }
+
             this.objectValueBecameNonNullEmitter.emit( soccerBall );
           }
         }
-      };
-      soccerBall.valueProperty.link( listener );
+      } );
 
       // Signal to listeners that a value changed
       // TODO: Maybe should combine with temporary listener for one permanent one
@@ -142,9 +139,9 @@ export default class CAVModel implements TModel {
       return soccerBall;
     } );
 
-    this.soccerBallGroup.forEach( soccerBall => {
+    this.soccerBalls.forEach( soccerBall => {
       soccerBall.isActiveProperty.link( isActive => {
-        this.soccerBallGroupCountProperty.value = this.getActiveSoccerBalls().length;
+        this.soccerBallCountProperty.value = this.getActiveSoccerBalls().length;
       } );
     } );
 
@@ -214,8 +211,8 @@ export default class CAVModel implements TModel {
 
     this.numberOfUnkickedBallsProperty = DerivedProperty.deriveAny( [
       this.numberOfScheduledSoccerBallsToKickProperty,
-      ...this.soccerBallGroup.map( soccerBall => soccerBall.valueProperty ),
-      ...this.soccerBallGroup.map( soccerBall => soccerBall.animationModeProperty ) ], () => {
+      ...this.soccerBalls.map( soccerBall => soccerBall.valueProperty ),
+      ...this.soccerBalls.map( soccerBall => soccerBall.animationModeProperty ) ], () => {
 
       const kickedSoccerBalls = this.getActiveSoccerBalls().filter(
         soccerBall => soccerBall.valueProperty.value !== null ||
@@ -238,15 +235,6 @@ export default class CAVModel implements TModel {
                                                     _.every( array, element => element >= 0 )
     } );
 
-    // TODO: Why have this callback and soccerBallLanded callback?
-    this.objectValueBecameNonNullEmitter.addListener( soccerBall => {
-
-      // If the soccer player that kicked that ball was still in line when the ball lands, they can leave the line now.
-      if ( soccerBall.soccerPlayer === this.getFrontSoccerPlayer() ) {
-        this.advanceLine();
-      }
-    } );
-
     this.activeKickerIndexProperty = new NumberProperty( 0, {
       tandem: options.tandem.createTandem( 'activeKickerIndexProperty' )
     } );
@@ -257,22 +245,17 @@ export default class CAVModel implements TModel {
       } );
     } );
 
-    this.soccerBallGroup.forEach( soccerBall => {
+    this.soccerBalls.forEach( soccerBall => {
       soccerBall.valueProperty.link( updateDataMeasures );
       soccerBall.positionProperty.link( updateDataMeasures );
     } );
-  }
-
-  protected objectCreated( soccerBall: CAVObject ): void {
-
-    // Override in subclasses
   }
 
   protected updateDataMeasures(): void {
     const sortedObjects = this.getSortedLandedObjects();
     const medianObjects = CAVModel.getMedianObjectsFromSortedArray( sortedObjects );
 
-    this.soccerBallGroup.forEach( object => {
+    this.soccerBalls.forEach( object => {
       object.isMedianObjectProperty.value = medianObjects.includes( object );
     } );
 
@@ -302,7 +285,7 @@ export default class CAVModel implements TModel {
    * Returns all other objects at the target position of the provided object.
    */
   public getOtherObjectsAtTarget( cavObject: CAVObject ): CAVObject[] {
-    return this.soccerBallGroup.filter( ( o: CAVObject ) => {
+    return this.soccerBalls.filter( ( o: CAVObject ) => {
       return o.valueProperty.value === cavObject.valueProperty.value && cavObject !== o;
     } );
   }
@@ -327,7 +310,7 @@ export default class CAVModel implements TModel {
   }
 
   /**
-   * Clears out the data and the cards
+   * Clears out the data
    */
   public clearData(): void {
     this.numberOfScheduledSoccerBallsToKickProperty.reset();
@@ -335,7 +318,7 @@ export default class CAVModel implements TModel {
     this.timeWhenLastBallWasKickedProperty.reset();
 
     this.soccerPlayers.forEach( soccerPlayer => soccerPlayer.reset() );
-    this.soccerBallGroup.forEach( soccerBall => soccerBall.reset() );
+    this.soccerBalls.forEach( soccerBall => soccerBall.reset() );
     this.getNextBallFromPool();
 
     this.activeKickerIndexProperty.reset();
@@ -405,12 +388,11 @@ export default class CAVModel implements TModel {
         const elapsedTime = this.timeProperty.value - frontPlayer.timestampWhenPoisedBegan!;
         if ( elapsedTime > 0.075 ) {
 
-          const soccerBall = this.soccerBallGroup.find( soccerBall =>
+          const soccerBall = this.soccerBalls.find( soccerBall =>
             soccerBall.valueProperty.value === null &&
             soccerBall.isActiveProperty.value &&
             soccerBall.animationModeProperty.value === AnimationMode.NONE
           )!;
-          // const soccerBall = this.nextBallToKickProperty.value!; // TODO: Probably? See https://github.com/phetsims/center-and-variability/issues/59
           this.kickBall( frontPlayer, soccerBall );
           this.numberOfScheduledSoccerBallsToKickProperty.value--;
         }
@@ -438,9 +420,6 @@ export default class CAVModel implements TModel {
     }
   }
 
-  // TODO: Only advance the line if the CURRENT active player's ball has landed, or the timer after the kick has fired
-  // TODO: We observed that if Player A's ball is still in flight after Player B kicks, then the landing of Player A's ball will trigger advanceLine for Player B
-
   // When a ball lands, or when the next player is supposed to kick (before the ball lands), move the line forward
   // and queue up the next ball as well
   private advanceLine(): void {
@@ -464,13 +443,13 @@ export default class CAVModel implements TModel {
   }
 
   public getActiveSoccerBalls(): CAVObject[] {
-    return this.soccerBallGroup.filter( soccerBall => soccerBall.isActiveProperty.value );
+    return this.soccerBalls.filter( soccerBall => soccerBall.isActiveProperty.value );
   }
 
   /**
    * When a ball lands on the ground, animate all other balls that were at this location above the landed ball.
    */
-  private soccerBallLandedListener( soccerBall: CAVObject, value: number ): void {
+  private animateSoccerBallStack( soccerBall: CAVObject, value: number ): void {
     const otherObjectsInStack = this.getActiveSoccerBalls().filter( x => x.valueProperty.value === value && x !== soccerBall );
     const sortedOthers = _.sortBy( otherObjectsInStack, object => object.positionProperty.value.y );
 
@@ -556,7 +535,7 @@ export default class CAVModel implements TModel {
   }
 
   private getNextBallFromPool(): CAVObject | null {
-    const nextBallFromPool = this.soccerBallGroup.find( ball => !ball.isActiveProperty.value ) || null;
+    const nextBallFromPool = this.soccerBalls.find( ball => !ball.isActiveProperty.value ) || null;
     if ( nextBallFromPool ) {
       nextBallFromPool.isActiveProperty.value = true;
     }
