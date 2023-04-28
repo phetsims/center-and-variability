@@ -456,6 +456,8 @@ export default class CAVModel implements TModel {
           this.nextBallToKickProperty.value = this.getNextBallFromPool();
         }
 
+        this.advanceLine();
+
         assert && assert( this.nextBallToKickProperty.value !== null, 'there was no ball to kick' );
 
         if ( frontPlayer.poseProperty.value === Pose.STANDING ) {
@@ -501,11 +503,17 @@ export default class CAVModel implements TModel {
   // When a ball lands, or when the next player is supposed to kick (before the ball lands), move the line forward
   private advanceLine(): void {
 
-    let nextIndex = this.activeKickerIndexProperty.value + 1;
-    if ( nextIndex > this.maxNumberOfObjects ) {
-      nextIndex = 0;
+    // Allow kicking another ball while one is already in the air.
+    // if the previous ball was still in the air, we need to move the line forward so the next player can kick
+    const kickers = this.soccerPlayers.filter( soccerPlayer => soccerPlayer.isActiveProperty.value &&
+                                                               soccerPlayer.poseProperty.value === Pose.KICKING );
+    if ( kickers.length > 0 ) {
+      let nextIndex = this.activeKickerIndexProperty.value + 1;
+      if ( nextIndex > this.maxNumberOfObjects ) {
+        nextIndex = 0;
+      }
+      this.activeKickerIndexProperty.value = nextIndex;
     }
-    this.activeKickerIndexProperty.value = nextIndex;
   }
 
   private static chooseDistribution(): ReadonlyArray<number> {
