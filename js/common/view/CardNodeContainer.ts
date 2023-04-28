@@ -196,8 +196,6 @@ export default class CardNodeContainer extends Node {
             targetIndex = lowerNeighborCardNode ? this.cardNodeCells.indexOf( lowerNeighborCardNode ) + 1 : 0;
           }
 
-          console.log( targetIndex );
-
           this.cardNodeCells.splice( targetIndex, 0, cardNode );
           this.setAtHomeCell( cardNode );
 
