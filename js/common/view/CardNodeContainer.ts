@@ -9,17 +9,12 @@
 
 import centerAndVariability from '../../centerAndVariability.js';
 import { LinearGradient, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import CAVObject from '../model/CAVObject.js';
-import PhetioGroup from '../../../../tandem/js/PhetioGroup.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import CardNode from './CardNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Range from '../../../../dot/js/Range.js';
-import IOType from '../../../../tandem/js/types/IOType.js';
-import ReferenceIO, { ReferenceIOState } from '../../../../tandem/js/types/ReferenceIO.js';
-import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
-import CardModel from '../model/CardModel.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import Panel from '../../../../sun/js/Panel.js';
 import CAVConstants from '../CAVConstants.js';
@@ -60,7 +55,7 @@ export default class CardNodeContainer extends Node {
   public readonly cardNodeCellsChangedEmitter: TEmitter = new Emitter<[]>();
 
   private readonly model: MedianModel;
-  private readonly cardNodeGroup: PhetioGroup<CardNode, [ CardModel ]>;
+  public readonly cardNodes: CardNode[];
   private readonly medianBarNode = new MedianBarNode( {
     notchDirection: 'up',
     barStyle: 'split'
@@ -76,12 +71,7 @@ export default class CardNodeContainer extends Node {
   private dataSortedNodeAnimation: Animation | null = null;
   private wasSortedBefore = true;
 
-  public constructor( model: MedianModel, providedOptions: CardNodeContainerOptions ) {
-
-    const options = optionize<CardNodeContainerOptions, SelfOptions, NodeOptions>()( {
-      phetioType: CardNodeContainerIO,
-      phetioState: true
-    }, providedOptions );
+  public constructor( model: MedianModel, options: CardNodeContainerOptions ) {
 
     super( options );
 
@@ -98,80 +88,11 @@ export default class CardNodeContainer extends Node {
       return totalDragDistance > 15;
     } );
 
-    this.cardNodeGroup = new PhetioGroup( ( tandem, cardModel ) => {
-      return new CardNode( cardModel, new Vector2( 0, 0 ), () => this.getDragRange(), {
-        tandem: tandem
+    this.cardNodes = model.cards.map( ( cardModel, index ) => {
+      const cardNode = new CardNode( cardModel, new Vector2( 0, 0 ), () => this.getDragRange(), {
+        tandem: options.tandem.createTandem( 'cardNodes' ).createTandem( 'cardNode' + index )
       } );
-    }, () => [ model.cardModelGroup.archetype ], {
-      phetioType: PhetioGroup.PhetioGroupIO( Node.NodeIO ),
-      tandem: options.tandem.createTandem( 'cardNodeGroup' ),
-      supportsDynamicState: false
-    } );
 
-    this.addChild( this.medianBarNode );
-
-    const objectCreatedListener = ( cavObject: CAVObject ) => {
-
-      // A ball landed OR a value changed
-      cavObject.valueProperty.link( value => {
-        if ( this.model.isSortingDataProperty.value && value !== null ) {
-
-          // TODO: Much of this listener code moved to the CAVModel. Should this move there as well?  We could make
-          // the model track cardModelCells instead of the view tracking cardNodeCells
-          this.sortData();
-        }
-      } );
-    };
-
-    model.getActiveSoccerBalls().forEach( objectCreatedListener );
-
-    model.cardModelGroup.elementDisposedEmitter.addListener( cardModel => {
-      const cardNode = this.getCardNode( cardModel.cavObject )!;
-      assert && assert( cardNode, 'card node should exist' );
-
-      arrayRemove( this.cardNodeCells, cardNode );
-
-      this.cardNodeGroup.disposeElement( cardNode );
-      this.cardNodeCellsChangedEmitter.emit();
-    } );
-
-    model.isSortingDataProperty.link( isSortingData => {
-      if ( isSortingData ) {
-        this.sortData();
-      }
-    } );
-
-    const dataSortedTextNode = new Text( CenterAndVariabilityStrings.youSortedTheDataStringProperty, {
-      font: new PhetFont( 15 )
-    } );
-    const dataSortedNode = new Panel( dataSortedTextNode, {
-      stroke: null,
-      cornerRadius: 4,
-      lineWidth: 2,
-      visible: false
-    } );
-
-    // create a rotated linear gradient
-    const gradientMargin = 20;
-    const startPoint = new Vector2( dataSortedNode.left + gradientMargin, dataSortedNode.top + gradientMargin );
-    const endPoint = new Vector2( dataSortedNode.right - gradientMargin, dataSortedNode.bottom - gradientMargin );
-    const gradient = new LinearGradient( startPoint.x, startPoint.y, endPoint.x, endPoint.y );
-    gradient.addColorStop( 0, '#fa9696' );
-    gradient.addColorStop( 0.2, '#ffa659' );
-    gradient.addColorStop( 0.4, '#ebd75e' );
-    gradient.addColorStop( 0.6, '#8ce685' );
-    gradient.addColorStop( 0.8, '#7fd7f0' );
-    gradient.addColorStop( 1, '#927feb' );
-    gradient.setTransformMatrix( Matrix3.rotationAroundPoint( Math.PI / 4 * 1.2, dataSortedNode.center ) );
-    dataSortedNode.stroke = gradient;
-
-    this.addChild( dataSortedNode );
-
-    this.addChild( this.cardLayer );
-
-    model.cardModelGroup.elementCreatedEmitter.addListener( cardModel => {
-
-      const cardNode = this.cardNodeGroup.createCorrespondingGroupElement( cardModel.tandem.name, cardModel );
       this.cardLayer.addChild( cardNode );
 
       // Update the position of all cards (via animation) whenever any card is dragged
@@ -263,27 +184,85 @@ export default class CardNodeContainer extends Node {
         totalDragDistanceProperty.value += distance;
       } );
 
-      let targetIndex = this.cardNodeCells.length;
-      if ( this.model.isSortingDataProperty.value ) {
-        const newValue = cardNode.cavObject.valueProperty.value!;
-        const existingLowerCardNodes = this.cardNodeCells.filter( cardNode => cardNode.cavObject.valueProperty.value! <= newValue );
+      cardModel.isActiveProperty.link( isActive => {
+        if ( isActive && !phet.joist.sim.isSettingPhetioStateProperty.value ) {
 
-        const lowerNeighborCardNode = _.maxBy( existingLowerCardNodes, cardNode => this.cardNodeCells.indexOf( cardNode ) );
-        targetIndex = lowerNeighborCardNode ? this.cardNodeCells.indexOf( lowerNeighborCardNode ) + 1 : 0;
-      }
+          let targetIndex = this.cardNodeCells.length;
+          if ( this.model.isSortingDataProperty.value ) {
+            const newValue = cardNode.cavObject.valueProperty.value!;
+            const existingLowerCardNodes = this.cardNodeCells.filter( cardNode => cardNode.cavObject.valueProperty.value! <= newValue );
 
-      if ( !phet.joist.sim.isSettingPhetioStateProperty.value ) {
-        this.cardNodeCells.splice( targetIndex, 0, cardNode );
-        this.setAtHomeCell( cardNode );
+            const lowerNeighborCardNode = _.maxBy( existingLowerCardNodes, cardNode => this.cardNodeCells.indexOf( cardNode ) );
+            targetIndex = lowerNeighborCardNode ? this.cardNodeCells.indexOf( lowerNeighborCardNode ) + 1 : 0;
+          }
 
-        // Animate all displaced cards
-        for ( let i = targetIndex; i < this.cardNodeCells.length; i++ ) {
-          this.animateToHomeCell( this.cardNodeCells[ i ] );
+          console.log( targetIndex );
+
+          this.cardNodeCells.splice( targetIndex, 0, cardNode );
+          this.setAtHomeCell( cardNode );
+
+          // Animate all displaced cards
+          for ( let i = targetIndex; i < this.cardNodeCells.length; i++ ) {
+            this.animateToHomeCell( this.cardNodeCells[ i ] );
+          }
+
+          this.cardNodeCellsChangedEmitter.emit();
         }
+      } );
 
-        this.cardNodeCellsChangedEmitter.emit();
+      return cardNode;
+    } );
+
+    this.addChild( this.medianBarNode );
+
+    const objectCreatedListener = ( cavObject: CAVObject ) => {
+
+      // A ball landed OR a value changed
+      cavObject.valueProperty.link( value => {
+        if ( this.model.isSortingDataProperty.value && value !== null ) {
+
+          // TODO: Much of this listener code moved to the CAVModel. Should this move there as well?  We could make
+          // the model track cardModelCells instead of the view tracking cardNodeCells
+          this.sortData();
+        }
+      } );
+    };
+
+    model.getActiveSoccerBalls().forEach( objectCreatedListener );
+
+    model.isSortingDataProperty.link( isSortingData => {
+      if ( isSortingData ) {
+        this.sortData();
       }
     } );
+
+    const dataSortedTextNode = new Text( CenterAndVariabilityStrings.youSortedTheDataStringProperty, {
+      font: new PhetFont( 15 )
+    } );
+    const dataSortedNode = new Panel( dataSortedTextNode, {
+      stroke: null,
+      cornerRadius: 4,
+      lineWidth: 2,
+      visible: false
+    } );
+
+    // create a rotated linear gradient
+    const gradientMargin = 20;
+    const startPoint = new Vector2( dataSortedNode.left + gradientMargin, dataSortedNode.top + gradientMargin );
+    const endPoint = new Vector2( dataSortedNode.right - gradientMargin, dataSortedNode.bottom - gradientMargin );
+    const gradient = new LinearGradient( startPoint.x, startPoint.y, endPoint.x, endPoint.y );
+    gradient.addColorStop( 0, '#fa9696' );
+    gradient.addColorStop( 0.2, '#ffa659' );
+    gradient.addColorStop( 0.4, '#ebd75e' );
+    gradient.addColorStop( 0.6, '#8ce685' );
+    gradient.addColorStop( 0.8, '#7fd7f0' );
+    gradient.addColorStop( 1, '#927feb' );
+    gradient.setTransformMatrix( Matrix3.rotationAroundPoint( Math.PI / 4 * 1.2, dataSortedNode.center ) );
+    dataSortedNode.stroke = gradient;
+
+    this.addChild( dataSortedNode );
+
+    this.addChild( this.cardLayer );
 
     this.dragIndicatorArrowNode = new DragIndicatorArrowNode( {
       tandem: options.tandem.createTandem( 'dragIndicatorArrowNode' )
@@ -609,31 +588,5 @@ export default class CardNodeContainer extends Node {
     return new Range( 0, maxX );
   }
 }
-
-type CardNodeContainerState = {
-  cardNodes: ReferenceIOState[];
-};
-
-// Track the order of the cards as self-state, so that the downstream sim can get the cards in the desired cells
-const CardNodeReferenceIO = ReferenceIO( Node.NodeIO );
-const CardNodeContainerIO = new IOType( 'CardNodeContainerIO', {
-  valueType: CardNodeContainer,
-  toStateObject: ( cardNodeContainer: CardNodeContainer ) => {
-    return {
-      cardNodes: cardNodeContainer.cardNodeCells.map( cardNode => CardNodeReferenceIO.toStateObject( cardNode ) )
-    };
-  },
-  applyState: ( cardNodeContainer: CardNodeContainer, state: CardNodeContainerState ) => {
-    const cardNodes = state.cardNodes.map( ( element: ReferenceIOState ) => CardNodeReferenceIO.fromStateObject( element ) );
-    cardNodeContainer.cardNodeCells.length = 0;
-    cardNodeContainer.cardNodeCells.push( ...cardNodes );
-    cardNodeContainer.cardNodeCells.forEach( cardNode => cardNodeContainer.animateToHomeCell( cardNode ) );
-
-    cardNodeContainer.cardNodeCellsChangedEmitter.emit();
-  },
-  stateSchema: {
-    cardNodes: ArrayIO( ReferenceIO( CardNodeReferenceIO ) )
-  }
-} );
 
 centerAndVariability.register( 'CardNodeContainer', CardNodeContainer );

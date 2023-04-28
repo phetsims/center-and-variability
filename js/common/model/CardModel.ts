@@ -8,46 +8,38 @@
  */
 import CAVObject from './CAVObject.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
-import IOType from '../../../../tandem/js/types/IOType.js';
-import StringIO from '../../../../tandem/js/types/StringIO.js';
-import ReferenceIO, { ReferenceIOState } from '../../../../tandem/js/types/ReferenceIO.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import CAVObjectType from './CAVObjectType.js';
+import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-
-const CAVObjectReferenceIO = ReferenceIO( CAVObject.CAVObjectIO );
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import Multilink from '../../../../axon/js/Multilink.js';
+import { AnimationMode } from './AnimationMode.js';
 
 type SelfOptions = EmptySelfOptions;
 type CardModelOptions = SelfOptions & PhetioObjectOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
-export default class CardModel extends PhetioObject {
+export default class CardModel {
 
-  public cavObject: CAVObject;
-  public static readonly CardModelIO = new IOType( 'CardModelIO', {
-    valueType: CardModel,
-    toStateObject: ( cardModel: CardModel ) => CAVObjectReferenceIO.toStateObject( cardModel.cavObject ),
-    stateObjectToCreateElementArguments: ( stateObject: ReferenceIOState ) => {
-      return [ CAVObjectReferenceIO.fromStateObject( stateObject ) ];
-    },
-    stateSchema: {
-      phetioID: StringIO
-    }
-  } );
+  public readonly soccerBall: CAVObject;
+  public readonly isActiveProperty: BooleanProperty;
 
-  public constructor( cavObject: CAVObject, providedOptions?: CardModelOptions ) {
-
-    const options = optionize<CardModelOptions, SelfOptions, PhetioObjectOptions>()( {
-      phetioType: CardModel.CardModelIO,
-      phetioDynamicElement: true
-    }, providedOptions );
-
-    super( options );
-    this.cavObject = cavObject;
-
-    this.addLinkedElement( cavObject, {
-      tandem: options.tandem.createTandem( cavObject.objectType === CAVObjectType.SOCCER_BALL ? 'soccerBall' : 'dataPoint' )
+  public constructor( soccerBall: CAVObject, options: CardModelOptions ) {
+    this.soccerBall = soccerBall;
+    this.isActiveProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isActiveProperty' )
     } );
+
+    Multilink.multilink( [
+        soccerBall.isActiveProperty,
+        soccerBall.animationModeProperty,
+        soccerBall.valueProperty ],
+      ( isActive, animationMode, value ) => {
+        this.isActiveProperty.value = isActive && animationMode !== AnimationMode.FLYING && value !== null;
+      } );
+  }
+
+  public reset(): void {
+    this.isActiveProperty.reset(); // TODO: unnecessary if we reset the soccerBall
   }
 }
 

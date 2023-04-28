@@ -53,11 +53,6 @@ export default class CardNode extends Node {
       font: new PhetFont( 24 )
     } );
 
-    cardModel.cavObject.valueProperty.link( value => {
-      text.string = value + '';
-      text.center = rectangle.center;
-    } );
-
     const options = optionize<CardNodeOptions, SelfOptions, NodeOptions>()( {
       children: [ rectangle, text ],
       cursor: 'pointer',
@@ -66,12 +61,18 @@ export default class CardNode extends Node {
 
     super( options );
 
+    cardModel.soccerBall.valueProperty.link( value => {
+      text.string = value === null ? '' : value + '';
+      text.center = rectangle.center;
+      this.visible = value !== null;
+    } );
+
     this.positionProperty = new Vector2Property( position, {
       tandem: options.tandem.createTandem( 'positionProperty' ),
       valueComparisonStrategy: 'equalsFunction'
     } );
 
-    this.cavObject = cardModel.cavObject;
+    this.cavObject = cardModel.soccerBall;
 
     this.positionProperty.link( position => {
       const range = getDragRange();
@@ -90,10 +91,6 @@ export default class CardNode extends Node {
     this.addInputListener( this.dragListener );
 
     this.cavObject.dragStartedEmitter.addListener( () => this.moveToFront() );
-
-    this.addLinkedElement( cardModel, {
-      tandem: options.tandem.createTandem( 'cardModel' )
-    } );
   }
 
   public animateTo( destination: Vector2, duration: number, callback = _.noop ): void {
@@ -139,12 +136,6 @@ export default class CardNode extends Node {
     } );
 
     this.animation.start();
-  }
-
-  public override dispose(): void {
-    this.positionProperty.dispose();
-    this.dragListener.dispose();
-    super.dispose();
   }
 }
 

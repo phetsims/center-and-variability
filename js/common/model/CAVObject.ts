@@ -55,7 +55,6 @@ export default class CAVObject extends PhetioObject {
   public readonly isShowingAnimationHighlightProperty: BooleanProperty;
   public readonly objectType: CAVObjectType;
   public readonly isFirstObject: boolean;
-  public readonly disposedEmitter: TEmitter = new Emitter();
 
   // Where the object is animating to, or null if not yet animating
   public targetX: number | null = null;
