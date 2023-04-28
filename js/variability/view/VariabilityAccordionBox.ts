@@ -40,9 +40,9 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         model.isInfoShowingProperty.value = true;
       },
 
-      // TODO: How to position this properly?
-      top: 10,
-      right: accordionBoxContents.width + 130
+      // TODO: How to position this properly? Can we use AlignBox?
+      top: 20,
+      right: accordionBoxContents.width + 10
     } );
     accordionBoxContents.addChild( infoButton );
 
