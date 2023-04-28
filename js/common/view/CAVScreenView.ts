@@ -53,13 +53,12 @@ export default class CAVScreenView extends ScreenView {
   protected readonly model: CAVModel;
   protected readonly frontObjectLayer = new Node();
 
-  // TODO: We haven't enforced the "exactly half a ball should be occluded if anything is occluded" idea.
+  // TODO: We haven't enforced the "exactly half a ball should be occluded if anything is occluded" design
   protected readonly backObjectLayer = new Node();
   protected readonly playAreaMedianIndicatorNode: ArrowNode;
   protected readonly eraseButton: EraserButton;
 
   // Subclasses use this to add to for correct z-ordering and correct tab navigation order
-  // TODO: investigate if this is needed
   protected readonly contentLayer = new Node();
 
   protected readonly medianPredictionNode: PredictionSlider;

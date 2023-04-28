@@ -113,8 +113,9 @@ export default class VariabilityModel extends CAVModel {
 
     this.selectedDistributionProperty.link( distribution => {
 
-      // TODO: the parent class sets this incorrectly on reset
-      // TODO: PhET-iO wants to be able to set these values
+      // TODO: the parent class sets this incorrectly on reset.
+      // TODO: PhET-iO wants to be able to set these values. Maybe in the preferences, we would also add a "custom"
+      //  option that would allow the user to specify the distribution parameters. Or for PhET-iO, and query parameters
       this.distributionProperty.value =
         distribution === DistributionType.KICKER_1 ? [ 0, 0, 0, 1, 3, 10, 18, 20, 18, 10, 3, 1, 0, 0, 0 ] :
         distribution === DistributionType.KICKER_2 ? [ 5, 5, 10, 10, 25, 30, 40, 50, 40, 30, 25, 10, 10, 5, 5 ] :

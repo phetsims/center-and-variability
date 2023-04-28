@@ -45,12 +45,10 @@ export default class IQRNode extends CAVPlotNode {
     } );
     this.addChild( needAtLeastFiveKicks );
 
-    // TODO: Combine into a single node?
     const iqrTextReadout = new Text( '', {
       font: new PhetFont( 13 )
     } );
 
-    // TODO: Rename if we continue to use it here like this
     const iqrBar = new MedianBarNode( {
       notchDirection: 'down',
       barStyle: 'continuous',
@@ -147,7 +145,7 @@ export default class IQRNode extends CAVPlotNode {
       const enoughData = model.numberOfDataPointsProperty.value >= 5;
 
       const iqrVisibility = true;// ( options.parentContext === 'info' && enoughData ) ||
-                            // ( options.parentContext === 'accordion' && enoughData && model.isShowingIQRProperty.value );
+      // ( options.parentContext === 'accordion' && enoughData && model.isShowingIQRProperty.value );
 
       iqrRectangle.visible = iqrVisibility;
       iqrBar.visible = iqrVisibility;
@@ -162,7 +160,7 @@ export default class IQRNode extends CAVPlotNode {
         // TODO: In the info dialog, this should be above the topmost data point (in the accordion box it's ok to overlap)
         iqrBar.setMedianBarShape( iqrRectangle.top - MedianBarNode.NOTCH_HEIGHT - 2, iqrRectangle.left, 0, iqrRectangle.right, false );
 
-        // TODO: How to simplify this logic? Or will it help when things are combined?
+        // TODO: Should we have model.iqrValueProperty?
         iqrTextReadout.string = model.q3ValueProperty.value! - model.q1ValueProperty.value!;
         iqrTextReadout.centerX = iqrRectangle.centerX;
         iqrTextReadout.bottom = iqrBar.top - 5;

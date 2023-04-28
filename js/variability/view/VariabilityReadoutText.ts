@@ -27,7 +27,6 @@ export default class VariabilityReadoutText extends Text {
       maxWidth: 100
     }, providedOptions );
 
-
     super( new PatternStringProperty( textProperty, { value: valueProperty } ), options );
   }
 }

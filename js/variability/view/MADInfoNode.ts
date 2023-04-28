@@ -35,8 +35,8 @@ export default class MADInfoNode extends VBox {
       // TODO: If the visually displayed values don't match, adjust a value so it does match. Do this in a stable way
       // We would have to update the values over the info bars too, so they are not out of sync
       // This sounds very complicated, and could have students see that something like 0.44 got rounded to 0.5
-      // TODO: Maybe if the rounded values don't sum to the rounded total, then add a decimal point and run it again?
-      // TODO: Or use an approx-equals sign?
+      // Maybe if the rounded values don't sum to the rounded total, then add a decimal point and run it again?
+      // Or use an approx-equals sign?
       const sum = _.reduce( mads, ( sum, mad ) => sum + mad, 0 );
       resultNumeratorText.string = Utils.toFixed( sum, 1 );
       resultDenominatorText.string = values.length.toString();

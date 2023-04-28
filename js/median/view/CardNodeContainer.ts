@@ -44,7 +44,6 @@ const getCardPositionX = ( index: number ) => index * ( CardNode.CARD_WIDTH + CA
 type SelfOptions = EmptySelfOptions;
 export type CardNodeContainerOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
-// TODO: Move to median/
 export default class CardNodeContainer extends Node {
 
   // Each card is associated with one "cell", no two cards can be associated with the same cell.  The leftmost cell is 0.
@@ -218,9 +217,6 @@ export default class CardNodeContainer extends Node {
       // A ball landed OR a value changed
       cavObject.valueProperty.link( value => {
         if ( this.model.isSortingDataProperty.value && value !== null ) {
-
-          // TODO: Much of this listener code moved to the CAVModel. Should this move there as well?  We could make
-          // the model track cardModelCells instead of the view tracking cardNodeCells
           this.sortData();
         }
       } );
@@ -578,7 +574,7 @@ export default class CardNodeContainer extends Node {
     this.cardNodeCells.length = 0;
     this.cardNodeCells.push( ...sorted );
     this.cardNodeCells.forEach( cardNode => this.animateToHomeCell( cardNode, 0.5 ) );
-    this.cardNodeCellsChangedEmitter.emit(); // TODO: OK if this fires false positives?
+    this.cardNodeCellsChangedEmitter.emit();
   }
 
   private getDragRange(): Range {

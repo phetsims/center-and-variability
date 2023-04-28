@@ -18,7 +18,6 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import CAVColors from '../CAVColors.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import TProperty from '../../../../axon/js/TProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 
 export type CAVObjectNodeOptions =
@@ -35,7 +34,7 @@ export default abstract class CAVObjectNode extends Node {
   protected readonly medianHighlight: Circle;
 
   public constructor( soccerBall: CAVObject, isShowingPlayAreaMedianProperty: TReadOnlyProperty<boolean>,
-                      modelViewTransform: ModelViewTransform2, objectNodesInputEnabledProperty: TProperty<boolean>,
+                      modelViewTransform: ModelViewTransform2,
                       modelRadius: number,
                       providedOptions?: CAVObjectNodeOptions ) {
 
@@ -46,9 +45,6 @@ export default abstract class CAVObjectNode extends Node {
 
     const viewRadius = modelViewTransform.modelToViewDeltaX( modelRadius );
 
-    // TODO-UX: These should be edge to edge
-    // TODO-UX: For small dots, there is an optical illusion or rasterizing/roundoff/aliasing issue that makes it
-    // look lopsided (heavier on the left)
     // TODO: Make sure it is always in the front in z-ordering, sometimes it gets obscured by adjacent soccer balls
     this.medianHighlight = new Circle( viewRadius + 1.75, {
       fill: CAVColors.medianColorProperty

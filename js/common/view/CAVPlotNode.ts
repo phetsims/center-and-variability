@@ -17,7 +17,6 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import NumberLineNode from './NumberLineNode.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import CAVConstants from '../CAVConstants.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import DataPointNode from './DataPointNode.js';
@@ -75,17 +74,15 @@ export default class CAVPlotNode extends Node {
 
     ManualConstraint.create( this, [ numberLineNode, distanceInMetersText ], ( numberLineProxy, textProxy ) => {
 
-      // TODO-UX: This may be asymmetrical if it accounts for edge labels
+      // TODO-UX: This may be asymmetrical if it accounts for edge labels. Maybe use NumberLineNode.tickMarks (not the labels)
       textProxy.centerX = numberLineProxy.centerX;
     } );
 
     backgroundNode.addChild( this.dotLayer );
 
-    // TODO: This overlaps with draggingEnabled
-    const dotPlotObjectNodesDraggableProperty = new BooleanProperty( false );
     model.soccerBalls.forEach( ( soccerBall, index ) => {
 
-      const dotNode = new DataPointNode( soccerBall, model.isShowingTopMedianProperty, modelViewTransform, dotPlotObjectNodesDraggableProperty, {
+      const dotNode = new DataPointNode( soccerBall, model.isShowingTopMedianProperty, modelViewTransform, {
         tandem: options.tandem.createTandem( 'dotNodeGroup' ).createTandem( 'dataPoint' + index ),
         fill: options.dataPointFill
       } );

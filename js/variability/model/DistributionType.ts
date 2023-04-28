@@ -16,8 +16,6 @@ export default class DistributionType extends EnumerationValue {
   public static readonly KICKER_3 = new DistributionType();
   public static readonly KICKER_4 = new DistributionType();
 
-  // TODO: Maybe in the preferences, we would also add a "custom" option that would allow the user to specify the
-  //  distribution parameters. Or for PhET-iO, and query parameters
   private static readonly enumeration = new Enumeration( DistributionType, {} );
 }
 

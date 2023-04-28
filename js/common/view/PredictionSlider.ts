@@ -57,8 +57,6 @@ export default class PredictionSlider extends AccessibleSlider( Node, 0 ) {
 
     dragPositionProperty.lazyLink( dragPosition => {
       const constrainedValue = dragRange.constrainValue( modelViewTransform.viewToModelX( dragPosition.x ) );
-
-      // TODO-UX: Dragging seems to lag and is sluggish.  Maybe rasterize the node?????
       predictionProperty.value = options.roundToInterval === null ?
                                  constrainedValue :
                                  Utils.roundToInterval( constrainedValue, options.roundToInterval );

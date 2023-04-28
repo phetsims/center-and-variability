@@ -24,7 +24,7 @@ export default class SoccerBallNode extends CAVObjectNode {
 
     const viewRadius = modelViewTransform.modelToViewDeltaX( CAVObjectType.SOCCER_BALL.radius );
 
-    super( soccerBall, isShowingPlayAreaMedianProperty, modelViewTransform, objectNodesInputEnabledProperty, CAVObjectType.SOCCER_BALL.radius, options );
+    super( soccerBall, isShowingPlayAreaMedianProperty, modelViewTransform, CAVObjectType.SOCCER_BALL.radius, options );
 
     // The dark soccer ball is used for when a ball has input disabled.
     const soccerBallNode = new Image( ball_png );
@@ -71,11 +71,9 @@ export default class SoccerBallNode extends CAVObjectNode {
     this.addInputListener( dragListener );
     this.touchArea = this.localBounds.dilatedX( 5 );
 
-    // TODO: better name? (can't use inputEnabledProperty)
-    // not passed through through options or assigned to super with usual 'inputEnabledProperty' name because other
-    // factors affect inputEnabled, see multilink below
+    // For PhET-iO, allow clients to shut off interactivity via this Property.
     const selfInputEnabledProperty = new BooleanProperty( true, {
-      tandem: options.tandem.createTandem( 'inputEnabledProperty' )
+      tandem: options.tandem.createTandem( 'selfInputEnabledProperty' )
     } );
 
     // Prevent dragging or interaction while the object does not have a value (when it is not in the play area yet),
