@@ -17,7 +17,6 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import CAVObjectNode from './CAVObjectNode.js';
 import { AlignBox, ManualConstraint, Node } from '../../../../scenery/js/imports.js';
 import CAVObjectType from '../model/CAVObjectType.js';
-import CAVObject from '../model/CAVObject.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import PredictionSlider from './PredictionSlider.js';
@@ -92,8 +91,6 @@ export default class CAVScreenView extends ScreenView {
       tandem: objectNodeGroupTandem.createTandem( 'inputEnabledProperty' )
     } );
 
-    const map = new Map<CAVObject, CAVObjectNode>();
-
     model.soccerBallGroup.map( ( soccerBall, index ) => {
       const soccerBallNode = new CAVObjectNode( soccerBall, model.isShowingPlayAreaMedianProperty, modelViewTransform, objectNodesInputEnabledProperty, {
         fill: null, // Only depict as a soccer ball
@@ -144,8 +141,6 @@ export default class CAVScreenView extends ScreenView {
           }
         }
       } );
-
-      map.set( soccerBall, soccerBallNode );
 
       return soccerBallNode;
     } );

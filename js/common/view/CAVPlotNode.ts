@@ -12,7 +12,6 @@ import centerAndVariability from '../../centerAndVariability.js';
 import { ManualConstraint, Node, NodeOptions, Rectangle, TColor, Text } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import CAVModel from '../model/CAVModel.js';
-import CAVObject from '../model/CAVObject.js';
 import CAVObjectNode from './CAVObjectNode.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
@@ -82,11 +81,9 @@ export default class CAVPlotNode extends Node {
 
     backgroundNode.addChild( this.dotLayer );
 
-    const map = new Map<CAVObject, CAVObjectNode>();
-
     // TODO: This overlaps with draggingEnabled
     const dotPlotObjectNodesDraggableProperty = new BooleanProperty( false );
-    model.soccerBallGroup.map( soccerBall => {
+    model.soccerBallGroup.forEach( soccerBall => {
 
       // TODO: This should be new DataPointNode
       const dotNode = new CAVObjectNode( soccerBall, model.isShowingTopMedianProperty, modelViewTransform, dotPlotObjectNodesDraggableProperty, {
@@ -97,10 +94,6 @@ export default class CAVPlotNode extends Node {
       } );
 
       this.dotLayer.addChild( dotNode );
-
-      // TODO: Why in a map?
-      map.set( soccerBall, dotNode );
-      return dotNode;
     } );
   }
 
