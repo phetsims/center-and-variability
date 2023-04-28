@@ -58,10 +58,7 @@ export default class IQRNode extends CAVPlotNode {
       lineWidth: 1
     } );
     const iqrRectangle = new Rectangle( 0, 50, 100, 70, {
-      fill: '#99ffff',
-
-      // TODO: moveToBack like in MADNode, and set opacity to 1.0
-      opacity: 0.5
+      fill: '#99ffff'
     } );
 
     const BOX_CENTER_Y = 78;
@@ -100,16 +97,19 @@ export default class IQRNode extends CAVPlotNode {
       lineWidth: 2
     } );
 
-    boxWhiskerNode.addChild( iqrBar );
-    boxWhiskerNode.addChild( iqrRectangle );
-    boxWhiskerNode.addChild( iqrTextReadout );
     boxWhiskerNode.addChild( boxWhiskerMedianLine );
     boxWhiskerNode.addChild( boxWhiskerBox );
     boxWhiskerNode.addChild( boxWhiskerLineLeft );
     boxWhiskerNode.addChild( boxWhiskerLineRight );
     boxWhiskerNode.addChild( boxWhiskerEndCapLeft );
     boxWhiskerNode.addChild( boxWhiskerEndCapRight );
+
+    this.addChild( iqrBar );
+    this.addChild( iqrRectangle );
+    this.addChild( iqrTextReadout );
     this.addChild( boxWhiskerNode );
+
+    iqrRectangle.moveToBack();
 
     const updateIQRNode = () => {
 

@@ -14,6 +14,8 @@ import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import VariabilityMeasure from './VariabilityMeasure.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
@@ -30,6 +32,11 @@ export default class VariabilityModel extends CAVModel {
   public readonly isInfoShowingProperty: Property<boolean>;
   public readonly isShowingPlayAreaVariabilityProperty: BooleanProperty;
 
+  public readonly maxValueProperty: TReadOnlyProperty<number | null>;
+  public readonly minValueProperty: TReadOnlyProperty<number | null>;
+  public readonly rangeValueProperty: TReadOnlyProperty<number | null>;
+  public readonly q1ValueProperty: Property<number | null>;
+  public readonly q3ValueProperty: Property<number | null>;
   public readonly madValueProperty: Property<number | null>;
 
   public constructor( options: VariabilityModelOptions ) {
@@ -56,6 +63,38 @@ export default class VariabilityModel extends CAVModel {
 
     this.isInfoShowingProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isInfoShowingProperty' )
+    } );
+
+    this.maxValueProperty = new DerivedProperty( [ this.dataRangeProperty ], dataRange => {
+      return dataRange === null ? null : dataRange.max;
+    }, {
+      tandem: options.tandem.createTandem( 'maxValueProperty' ),
+      phetioValueType: NullableIO( NumberIO )
+    } );
+    this.minValueProperty = new DerivedProperty( [ this.dataRangeProperty ], dataRange => {
+      return dataRange === null ? null : dataRange.min;
+    }, {
+      tandem: options.tandem.createTandem( 'minValueProperty' ),
+      phetioValueType: NullableIO( NumberIO )
+    } );
+
+    this.rangeValueProperty = new DerivedProperty( [ this.maxValueProperty, this.minValueProperty ], ( max, min ) => {
+      return ( max === null || min === null ) ? null : max - min;
+    }, {
+      tandem: options.tandem.createTandem( 'rangeValueProperty' ),
+      phetioValueType: NullableIO( NumberIO )
+    } );
+
+
+    this.q1ValueProperty = new Property<number | null>( null, {
+      tandem: options.tandem.createTandem( 'q1ValueProperty' ),
+      phetioValueType: NullableIO( NumberIO ),
+      phetioReadOnly: true
+    } );
+    this.q3ValueProperty = new Property<number | null>( null, {
+      tandem: options.tandem.createTandem( 'q3ValueProperty' ),
+      phetioValueType: NullableIO( NumberIO ),
+      phetioReadOnly: true
     } );
 
     this.madValueProperty = new Property<number | null>( null, {
@@ -95,9 +134,30 @@ export default class VariabilityModel extends CAVModel {
   protected override updateDataMeasures(): void {
     super.updateDataMeasures();
 
+    const sortedObjects = this.getSortedLandedObjects();
+
+    // if there is enough data to calculate quartiles
+    if ( sortedObjects.length >= 5 ) {
+
+      // Split the array into lower and upper halves, ignoring the median value if there are an odd number of objects
+      const splitIndex = Math.floor( sortedObjects.length / 2 );
+      const lowerHalf = sortedObjects.slice( 0, splitIndex );
+      const upperHalf = sortedObjects.slice( sortedObjects.length % 2 !== 0 ? splitIndex + 1 : splitIndex );
+
+      // take the average to account for cases where there is more than one object contributing to the median
+      this.q1ValueProperty.value = _.mean( CAVModel.getMedianObjectsFromSortedArray( lowerHalf ).map( obj => obj.valueProperty.value! ) );
+      this.q3ValueProperty.value = _.mean( CAVModel.getMedianObjectsFromSortedArray( upperHalf ).map( obj => obj.valueProperty.value! ) );
+
+      assert && assert( !isNaN( this.q1ValueProperty.value ) );
+      assert && assert( !isNaN( this.q3ValueProperty.value ) );
+    }
+    else {
+      this.q1ValueProperty.value = null;
+      this.q3ValueProperty.value = null;
+    }
+
     // Support call from superclass constructor
     if ( this.madValueProperty ) {
-      const sortedObjects = this.getSortedLandedObjects();
       this.madValueProperty.value = sortedObjects.length === 0 ? null :
                                     VariabilityModel.meanAbsoluteDeviation( sortedObjects.map( object => object.valueProperty.value! ) );
     }

@@ -59,14 +59,9 @@ export default class CAVModel implements TModel {
 
   public readonly medianValueProperty: Property<number | null>;
   public readonly meanValueProperty: Property<number | null>;
-  public readonly q1ValueProperty: Property<number | null>;
-  public readonly q3ValueProperty: Property<number | null>;
 
   // Indicates the max and min values in the data set, or null if there are no values in the data set
   public readonly dataRangeProperty: Property<Range | null>;
-  public readonly maxValueProperty: TReadOnlyProperty<number | null>;
-  public readonly minValueProperty: TReadOnlyProperty<number | null>;
-  public readonly rangeValueProperty: TReadOnlyProperty<number | null>;
 
   // Signify whenever any object's value or position changes
   public readonly objectChangedEmitter: TEmitter<[ CAVObject ]> = new Emitter<[ CAVObject ]>( {
@@ -185,41 +180,8 @@ export default class CAVModel implements TModel {
       phetioValueType: NullableIO( NumberIO ),
       phetioReadOnly: true
     } );
-    this.q1ValueProperty = new Property<number | null>( null, {
-      tandem: options.tandem.createTandem( 'q1ValueProperty' ),
-      phetioValueType: NullableIO( NumberIO ),
-      phetioReadOnly: true
-    } );
-    this.q3ValueProperty = new Property<number | null>( null, {
-      tandem: options.tandem.createTandem( 'q3ValueProperty' ),
-      phetioValueType: NullableIO( NumberIO ),
-      phetioReadOnly: true
-    } );
     this.dataRangeProperty = new Property<Range | null>( null );
 
-    this.maxValueProperty = new DerivedProperty( [ this.dataRangeProperty ], dataRange => {
-      return dataRange === null ? null : dataRange.max;
-    }, {
-      tandem: options.tandem.createTandem( 'maxValueProperty' ),
-      phetioValueType: NullableIO( NumberIO )
-    } );
-    this.minValueProperty = new DerivedProperty( [ this.dataRangeProperty ], dataRange => {
-      return dataRange === null ? null : dataRange.min;
-    }, {
-      tandem: options.tandem.createTandem( 'minValueProperty' ),
-      phetioValueType: NullableIO( NumberIO )
-    } );
-    this.rangeValueProperty = new DerivedProperty( [ this.maxValueProperty, this.minValueProperty ], ( max, min ) => {
-      if ( max === null || min === null ) {
-        return null;
-      }
-      else {
-        return max - min;
-      }
-    }, {
-      tandem: options.tandem.createTandem( 'rangeValueProperty' ),
-      phetioValueType: NullableIO( NumberIO )
-    } );
     this.numberOfDataPointsProperty = new NumberProperty( 0 );
 
     this.medianPredictionProperty = new NumberProperty( 1, {
@@ -315,14 +277,17 @@ export default class CAVModel implements TModel {
 
   protected updateDataMeasures(): void {
     const sortedObjects = this.getSortedLandedObjects();
-    const medianObjects = this.medianObjectsFromSortedArray( sortedObjects );
+    const medianObjects = CAVModel.getMedianObjectsFromSortedArray( sortedObjects );
 
     this.soccerBallGroup.forEach( object => {
       object.isMedianObjectProperty.value = medianObjects.includes( object );
     } );
 
     if ( sortedObjects.length > 0 ) {
+
+      // take the average to account for cases where there is more than one object contributing to the median
       this.medianValueProperty.value = _.mean( medianObjects.map( cavObject => cavObject.valueProperty.value ) );
+
       this.meanValueProperty.value = _.mean( sortedObjects.map( cavObject => cavObject.valueProperty.value ) );
 
       const min = sortedObjects[ 0 ].valueProperty.value!;
@@ -335,25 +300,6 @@ export default class CAVModel implements TModel {
       this.medianValueProperty.value = null;
       this.meanValueProperty.value = null;
       this.dataRangeProperty.value = null;
-    }
-
-    // there is enough data to calculate quartiles
-    if ( sortedObjects.length >= 5 ) {
-
-      // Split the array into lower and upper halves, ignoring the median value if there are an odd number of objects
-      const splitIndex = Math.floor( sortedObjects.length / 2 );
-      const lowerHalf: CAVObject[] = sortedObjects.slice( 0, splitIndex );
-      const upperHalf: CAVObject[] = sortedObjects.slice( sortedObjects.length % 2 !== 0 ? splitIndex + 1 : splitIndex );
-
-      this.q1ValueProperty.value = _.mean( this.medianObjectsFromSortedArray( lowerHalf ).map( obj => obj.valueProperty.value! ) );
-      this.q3ValueProperty.value = _.mean( this.medianObjectsFromSortedArray( upperHalf ).map( obj => obj.valueProperty.value! ) );
-
-      assert && assert( !isNaN( this.q1ValueProperty.value ) );
-      assert && assert( !isNaN( this.q3ValueProperty.value ) );
-    }
-    else {
-      this.q1ValueProperty.value = null;
-      this.q3ValueProperty.value = null;
     }
 
     this.numberOfDataPointsProperty.value = sortedObjects.length;
@@ -481,7 +427,7 @@ export default class CAVModel implements TModel {
   }
 
   // Returns a list of the median objects within a sorted array, based on the objects' 'value' property
-  private medianObjectsFromSortedArray( sortedObjects: CAVObject[] ): CAVObject[] {
+  protected static getMedianObjectsFromSortedArray( sortedObjects: CAVObject[] ): CAVObject[] {
 
     // Odd number of values, take the central value
     if ( sortedObjects.length % 2 === 1 ) {
