@@ -393,7 +393,6 @@ export default class CAVModel implements TModel {
             soccerBall.isActiveProperty.value &&
             soccerBall.animationModeProperty.value === AnimationMode.NONE
           )!;
-          // const soccerBall = this.nextBallToKickProperty.value!; // TODO: Probably? See https://github.com/phetsims/center-and-variability/issues/59
           this.kickBall( frontPlayer, soccerBall );
           this.numberOfScheduledSoccerBallsToKickProperty.value--;
         }
@@ -420,9 +419,6 @@ export default class CAVModel implements TModel {
       return [];
     }
   }
-
-  // TODO: Only advance the line if the CURRENT active player's ball has landed, or the timer after the kick has fired
-  // TODO: We observed that if Player A's ball is still in flight after Player B kicks, then the landing of Player A's ball will trigger advanceLine for Player B
 
   // When a ball lands, or when the next player is supposed to kick (before the ball lands), move the line forward
   // and queue up the next ball as well
