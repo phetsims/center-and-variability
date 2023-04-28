@@ -14,7 +14,6 @@ import centerAndVariability from '../../centerAndVariability.js';
 export class AnimationMode extends EnumerationValue {
   public static readonly FLYING = new AnimationMode();
   public static readonly STACKING = new AnimationMode();
-  public static readonly RETURNING = new AnimationMode();
   public static readonly NONE = new AnimationMode();
   private static readonly enumeration = new Enumeration( AnimationMode );
 }

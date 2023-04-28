@@ -48,7 +48,7 @@ export default class CAVObject extends PhetioObject {
   // Continuous position during animation. After landing, it's discrete.
   public readonly positionProperty: Vector2Property;
   public readonly velocityProperty: Vector2Property;
-  public animationModeProperty: Property<AnimationMode>;
+  public readonly animationModeProperty: Property<AnimationMode>;
   public readonly isMedianObjectProperty: BooleanProperty;
   public readonly isShowingAnimationHighlightProperty: BooleanProperty;
   public readonly objectType: CAVObjectType;

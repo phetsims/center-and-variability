@@ -57,7 +57,6 @@ export default class CAVModel implements TModel {
   protected readonly maxNumberOfObjects = CAVConstants.NUMBER_OF_OBJECTS;
   public readonly physicalRange = new Range( 1, 15 );
 
-  protected readonly numberOfRemainingObjectsProperty: TReadOnlyProperty<number>;
   public readonly medianValueProperty: Property<number | null>;
   public readonly meanValueProperty: Property<number | null>;
   public readonly q1ValueProperty: Property<number | null>;
@@ -238,11 +237,6 @@ export default class CAVModel implements TModel {
 
     this.isShowingPlayAreaMedianProperty.link( updateDataMeasures );
 
-    this.numberOfRemainingObjectsProperty = DerivedProperty.deriveAny( this.soccerBallGroup.map( ball => ball.isActiveProperty ), () => {
-      const count = this.getActiveSoccerBalls().length;
-      return this.maxNumberOfObjects - count;
-    } );
-
     this.objectValueBecameNonNullEmitter = new Emitter<[ CAVObject ]>( {
       parameters: [ { valueType: CAVObject } ]
     } );
@@ -262,16 +256,19 @@ export default class CAVModel implements TModel {
       phetioValueType: NullableIO( ReferenceIO( CAVObject.CAVObjectIO ) )
     } );
 
-    // TODO: Simplify now that we have pools
-    this.numberOfRemainingKickableSoccerBallsProperty = new DerivedProperty( [
-      this.numberOfRemainingObjectsProperty,
+    this.numberOfRemainingKickableSoccerBallsProperty = DerivedProperty.deriveAny( [
       this.numberOfScheduledSoccerBallsToKickProperty,
-      this.nextBallToKickProperty ], ( numberOfRemainingObjects,
-                                       numberOfScheduledBallsToKick,
-                                       nextBallToKick ) => {
+      ...this.soccerBallGroup.map( soccerBall => soccerBall.valueProperty ),
+      ...this.soccerBallGroup.map( soccerBall => soccerBall.animationModeProperty ) ], () => {
 
-      const numberOfCreatedButKickableBalls = nextBallToKick === null ? 0 : 1;
-      return numberOfRemainingObjects - numberOfScheduledBallsToKick + numberOfCreatedButKickableBalls;
+      const kickedSoccerBalls = this.soccerBallGroup.filter(
+        soccerBall => soccerBall.valueProperty.value !== null ||
+                      soccerBall.animationModeProperty.value === AnimationMode.FLYING ||
+                      soccerBall.animationModeProperty.value === AnimationMode.STACKING
+      );
+      const value = this.maxNumberOfObjects - kickedSoccerBalls.length - this.numberOfScheduledSoccerBallsToKickProperty.value;
+
+      return value;
     } );
 
     this.hasKickableSoccerBallsProperty = new DerivedProperty( [ this.numberOfRemainingKickableSoccerBallsProperty ],
@@ -290,7 +287,7 @@ export default class CAVModel implements TModel {
       // If the soccer player that kicked that ball was still in line when the ball lands, they can leave the line now.
       this.advanceLine();
 
-      if ( this.numberOfRemainingObjectsProperty.value > 0 && this.nextBallToKickProperty.value === null ) {
+      if ( this.numberOfRemainingKickableSoccerBallsProperty.value > 0 && this.nextBallToKickProperty.value === null ) {
         this.nextBallToKickProperty.value = this.getNextBallFromPool();
       }
     } );
@@ -447,11 +444,8 @@ export default class CAVModel implements TModel {
 
     if ( frontPlayer ) {
 
-      // TODO: number of balls that exist but haven't been kicked???  See KickButtonGroup. Also this may change if we ditch PhetioGroup
-      const numberBallsThatExistButHaventBeenKicked = this.nextBallToKickProperty.value === null ? 0 : 1;
-
       if ( this.numberOfScheduledSoccerBallsToKickProperty.value > 0 &&
-           this.numberOfRemainingObjectsProperty.value + numberBallsThatExistButHaventBeenKicked > 0 &&
+           this.numberOfRemainingKickableSoccerBallsProperty.value > 0 &&
            this.timeProperty.value >= this.timeWhenLastBallWasKickedProperty.value + TIME_BETWEEN_RAPID_KICKS ) {
 
         if ( this.nextBallToKickProperty.value === null ) {
@@ -563,7 +557,7 @@ export default class CAVModel implements TModel {
    * Adds the provided number of balls to the scheduled balls to kick
    */
   public scheduleKicks( numberOfBallsToKick: number ): void {
-    this.numberOfScheduledSoccerBallsToKickProperty.value += Math.min( numberOfBallsToKick, this.numberOfRemainingObjectsProperty.value );
+    this.numberOfScheduledSoccerBallsToKickProperty.value += Math.min( numberOfBallsToKick, this.numberOfRemainingKickableSoccerBallsProperty.value );
   }
 
   /**
