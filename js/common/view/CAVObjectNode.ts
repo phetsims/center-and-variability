@@ -7,38 +7,23 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import optionize from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import { Circle, DragListener, Image, Node, NodeOptions, Path, TColor, Text } from '../../../../scenery/js/imports.js';
+import { Circle, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
 import CAVObject from '../model/CAVObject.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import CAVObjectType from '../model/CAVObjectType.js';
-import ball_png from '../../../images/ball_png.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
 import { AnimationMode } from '../model/AnimationMode.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import CAVColors from '../CAVColors.js';
-import PlotType from '../model/PlotType.js';
-import timesSolidShape from '../../../../sherpa/js/fontawesome-5/timesSolidShape.js';
-import CAVConstants from '../CAVConstants.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import Bounds2 from '../../../../dot/js/Bounds2.js';
 import TProperty from '../../../../axon/js/TProperty.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import ballDark_png from '../../../images/ballDark_png.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 
-type SelfOptions = {
-  objectViewType?: CAVObjectType;
-  draggingEnabled?: boolean;
-  fill: TColor;
-};
 export type CAVObjectNodeOptions =
-  SelfOptions
 
-  // Take all options from NodeOptions, but do not allow passing through inputEnabledProperty since it requires special handling in multilink
+// Take all options from NodeOptions, but do not allow passing through inputEnabledProperty since it requires special handling in multilink
   & StrictOmit<NodeOptions, 'inputEnabledProperty'>
   & PickRequired<NodeOptions, 'tandem'>;
 
@@ -47,153 +32,32 @@ let index = 0;
 
 export default abstract class CAVObjectNode extends Node {
 
+  protected readonly medianHighlight: Circle;
+
   public constructor( soccerBall: CAVObject, isShowingPlayAreaMedianProperty: TReadOnlyProperty<boolean>,
                       modelViewTransform: ModelViewTransform2, objectNodesInputEnabledProperty: TProperty<boolean>,
+                      modelRadius: number,
                       providedOptions?: CAVObjectNodeOptions ) {
 
-    const options = optionize<CAVObjectNodeOptions, SelfOptions, NodeOptions>()( {
-
-      // In the Mean & Median screen and Variability screen, the objectType is SOCCER_BALL, but we render the dot plot
-      // with DOT views
-      objectViewType: soccerBall.objectType,
-      draggingEnabled: true,
-      phetioDynamicElement: true,
+    const options = optionize<CAVObjectNodeOptions, EmptySelfOptions, NodeOptions>()( {
       cursor: 'pointer'
     }, providedOptions );
     super( options );
 
-    const viewRadius = modelViewTransform.modelToViewDeltaX( options.objectViewType.radius );
+    const viewRadius = modelViewTransform.modelToViewDeltaX( modelRadius );
 
     // TODO-UX: These should be edge to edge
     // TODO-UX: For small dots, there is an optical illusion or rasterizing/roundoff/aliasing issue that makes it
     // look lopsided (heavier on the left)
     // TODO: Make sure it is always in the front in z-ordering, sometimes it gets obscured by adjacent soccer balls
-    const medianHighlight = new Circle( viewRadius + 1.75, {
+    this.medianHighlight = new Circle( viewRadius + 1.75, {
       fill: CAVColors.medianColorProperty
     } );
-    this.addChild( medianHighlight );
-
-    const createPlotMarker = () => {
-      const circle = new Circle( viewRadius, {
-        fill: options.fill,
-        center: Vector2.ZERO
-      } );
-      const cross = new Path( timesSolidShape, {
-
-        // Leave some spacing between the stacked 'x' marks
-        fill: options.fill,
-        maxWidth: viewRadius * 2 * 0.8,
-        center: Vector2.ZERO
-      } );
-      CAVConstants.PLOT_TYPE_PROPERTY.link( plotType => {
-        circle.visible = plotType === PlotType.DOT_PLOT;
-        cross.visible = plotType === PlotType.LINE_PLOT;
-      } );
-      const node = new Node( {
-        children: [ circle, cross ]
-      } );
-      return node;
-    };
-
-    // The dark soccer ball is used for when a ball has input disabled.
-    const soccerBallNode = new Image( ball_png );
-    const soccerBallDarkNode = new Image( ballDark_png );
-    const soccerBallNodes = new Node( {
-      children: [ soccerBallNode, soccerBallDarkNode ]
-    } );
-
-    const childNode = options.objectViewType === CAVObjectType.SOCCER_BALL ? soccerBallNodes :
-                      createPlotMarker();
-
-    // if the child node is non-square, it should still fit within specified dimensions. Note: this does not change the
-    // aspect ratio.
-    childNode.maxWidth = viewRadius * 2;
-    childNode.maxHeight = viewRadius * 2;
-
-    // Center the nested Node for compatibility with DragListener
-    childNode.center = Vector2.ZERO;
-
-    this.addChild( childNode );
+    this.addChild( this.medianHighlight );
 
     soccerBall.positionProperty.link( position => {
       this.translation = modelViewTransform.modelToViewPosition( position );
     } );
-
-    // Data point should be visible if the soccer ball is active AND if the soccer ball took a non-null value.
-    Multilink.multilink( [ soccerBall.isActiveProperty, soccerBall.valueProperty ], ( isActive, value ) => {
-      if ( options.objectViewType === CAVObjectType.SOCCER_BALL ) {
-        this.visible = isActive;
-      }
-      else {
-        this.visible = isActive && value !== null;
-      }
-    } );
-
-    // only setup input-related things if dragging is enabled
-    if ( options.draggingEnabled ) {
-      const dragListener = new DragListener( {
-        tandem: options.tandem.createTandem( 'dragListener' ),
-        positionProperty: soccerBall.dragPositionProperty,
-        transform: modelViewTransform,
-        start: () => {
-
-          // if the user presses an object that's animating, allow it to keep animating up in the stack
-          soccerBall.dragStartedEmitter.emit();
-        },
-        drag: () => {
-          soccerBall.animation && soccerBall.animation.stop();
-        }
-      } );
-
-      // pan and zoom - In order to move the CAVObjectNode to a new position the pointer has to move more than half the
-      // unit model length. When the CAVObjectNode is near the edge of the screen while zoomed in, the pointer doesn't
-      // have enough space to move that far. If we make sure that bounds surrounding the CAVObjectNode have a width
-      // of 2 model units the pointer will always have enough space to drag the CAVObjectNode to a new position.
-      // See https://github.com/phetsims/center-and-variability/issues/88
-      dragListener.createPanTargetBounds = () => {
-        const modelPosition = soccerBall.positionProperty.value;
-        const modelBounds = new Bounds2( modelPosition.x - 1, modelPosition.y - 1, modelPosition.x + 1, modelPosition.y + 1 );
-        const viewBounds = modelViewTransform.modelToViewBounds( modelBounds );
-        return this.parentToGlobalBounds( viewBounds );
-      };
-
-      this.addInputListener( dragListener );
-      this.touchArea = this.localBounds.dilatedX( 5 );
-
-      // TODO: better name? (can't use inputEnabledProperty)
-      // not passed through through options or assigned to super with usual 'inputEnabledProperty' name because other
-      // factors affect inputEnabled, see multilink below
-      const selfInputEnabledProperty = new BooleanProperty( true, {
-        tandem: options.tandem.createTandem( 'inputEnabledProperty' )
-      } );
-
-      // Prevent dragging or interaction while the object does not have a value (when it is not in the play area yet),
-      // when it is animating, if input for this individual node is disabled, or if input for all of the object nodes
-      // ahs been disabled
-      Multilink.multilink(
-        [ soccerBall.animationModeProperty, soccerBall.valueProperty, selfInputEnabledProperty, objectNodesInputEnabledProperty ],
-        ( mode, value, selfInputEnabled, objectsInputEnabled ) => {
-          const inputEnabled = value !== null && mode === AnimationMode.NONE && selfInputEnabled && objectsInputEnabled;
-
-          if ( options.objectViewType === CAVObjectType.SOCCER_BALL ) {
-
-            // if input is disabled and the ball is in the play area, show the darker version
-            const showDisabledSoccerBall = !inputEnabled && value !== null;
-            soccerBallDarkNode.visible = showDisabledSoccerBall;
-            soccerBallNode.visible = !showDisabledSoccerBall;
-          }
-
-          this.inputEnabled = inputEnabled;
-        } );
-    }
-
-    // show or hide the median highlight
-    Multilink.multilink(
-      [ soccerBall.isMedianObjectProperty, isShowingPlayAreaMedianProperty, soccerBall.isShowingAnimationHighlightProperty ],
-      ( isMedianObject, isShowingPlayAreaMedian, isShowingAnimationHighlight ) => {
-        medianHighlight.visible = options.objectViewType === CAVObjectType.DATA_POINT ? isShowingAnimationHighlight :
-                                  isShowingPlayAreaMedian && isMedianObject;
-      } );
 
     // The initial ready-to-kick ball is full opacity. The rest of the balls waiting to be kicked are lower opacity so
     // they don't look like part of the data set, but still look kickable.

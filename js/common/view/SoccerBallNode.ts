@@ -6,22 +6,107 @@ import CAVObject from '../model/CAVObject.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import TProperty from '../../../../axon/js/TProperty.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-
-type SoccerBallNodeOptions = StrictOmit<CAVObjectNodeOptions, 'fill'>;
+import { DragListener, Image, Node } from '../../../../scenery/js/imports.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import Multilink from '../../../../axon/js/Multilink.js';
+import { AnimationMode } from '../model/AnimationMode.js';
+import CAVObjectType from '../model/CAVObjectType.js';
+import ballDark_png from '../../../images/ballDark_png.js';
+import ball_png from '../../../images/ball_png.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
 
 export default class SoccerBallNode extends CAVObjectNode {
 
   public constructor( soccerBall: CAVObject, isShowingPlayAreaMedianProperty: TReadOnlyProperty<boolean>,
                       modelViewTransform: ModelViewTransform2, objectNodesInputEnabledProperty: TProperty<boolean>,
-                      providedOptions?: SoccerBallNodeOptions ) {
+                      options: CAVObjectNodeOptions ) {
 
-    const options = optionize<SoccerBallNodeOptions, EmptySelfOptions, CAVObjectNodeOptions>()( {
-      fill: null
-    }, providedOptions );
+    const viewRadius = modelViewTransform.modelToViewDeltaX( CAVObjectType.SOCCER_BALL.radius );
 
-    super( soccerBall, isShowingPlayAreaMedianProperty, modelViewTransform, objectNodesInputEnabledProperty, options );
+    super( soccerBall, isShowingPlayAreaMedianProperty, modelViewTransform, objectNodesInputEnabledProperty, CAVObjectType.SOCCER_BALL.radius, options );
+
+    // The dark soccer ball is used for when a ball has input disabled.
+    const soccerBallNode = new Image( ball_png );
+    const soccerBallDarkNode = new Image( ballDark_png );
+    const soccerBallNodes = new Node( {
+      children: [ soccerBallNode, soccerBallDarkNode ],
+
+      // if the child node is non-square, it should still fit within specified dimensions. Note: this does not change the
+      // aspect ratio.
+      maxWidth: viewRadius * 2,
+      maxHeight: viewRadius * 2,
+
+      // Center the nested Node for compatibility with DragListener
+      center: Vector2.ZERO
+    } );
+
+    // only setup input-related things if dragging is enabled
+    const dragListener = new DragListener( {
+      tandem: options.tandem.createTandem( 'dragListener' ),
+      positionProperty: soccerBall.dragPositionProperty,
+      transform: modelViewTransform,
+      start: () => {
+
+        // if the user presses an object that's animating, allow it to keep animating up in the stack
+        soccerBall.dragStartedEmitter.emit();
+      },
+      drag: () => {
+        soccerBall.animation && soccerBall.animation.stop();
+      }
+    } );
+
+    // pan and zoom - In order to move the CAVObjectNode to a new position the pointer has to move more than half the
+    // unit model length. When the CAVObjectNode is near the edge of the screen while zoomed in, the pointer doesn't
+    // have enough space to move that far. If we make sure that bounds surrounding the CAVObjectNode have a width
+    // of 2 model units the pointer will always have enough space to drag the CAVObjectNode to a new position.
+    // See https://github.com/phetsims/center-and-variability/issues/88
+    dragListener.createPanTargetBounds = () => {
+      const modelPosition = soccerBall.positionProperty.value;
+      const modelBounds = new Bounds2( modelPosition.x - 1, modelPosition.y - 1, modelPosition.x + 1, modelPosition.y + 1 );
+      const viewBounds = modelViewTransform.modelToViewBounds( modelBounds );
+      return this.parentToGlobalBounds( viewBounds );
+    };
+
+    this.addInputListener( dragListener );
+    this.touchArea = this.localBounds.dilatedX( 5 );
+
+    // TODO: better name? (can't use inputEnabledProperty)
+    // not passed through through options or assigned to super with usual 'inputEnabledProperty' name because other
+    // factors affect inputEnabled, see multilink below
+    const selfInputEnabledProperty = new BooleanProperty( true, {
+      tandem: options.tandem.createTandem( 'inputEnabledProperty' )
+    } );
+
+    // Prevent dragging or interaction while the object does not have a value (when it is not in the play area yet),
+    // when it is animating, if input for this individual node is disabled, or if input for all of the object nodes
+    // ahs been disabled
+    Multilink.multilink(
+      [ soccerBall.animationModeProperty, soccerBall.valueProperty, selfInputEnabledProperty, objectNodesInputEnabledProperty ],
+      ( mode, value, selfInputEnabled, objectsInputEnabled ) => {
+        const inputEnabled = value !== null && mode === AnimationMode.NONE && selfInputEnabled && objectsInputEnabled;
+
+        // if input is disabled and the ball is in the play area, show the darker version
+        const showDisabledSoccerBall = !inputEnabled && value !== null;
+        soccerBallDarkNode.visible = showDisabledSoccerBall;
+        soccerBallNode.visible = !showDisabledSoccerBall;
+
+        this.inputEnabled = inputEnabled;
+      } );
+
+    this.addChild( soccerBallNodes );
+
+    // Data point should be visible if the soccer ball is active AND if the soccer ball took a non-null value.
+    Multilink.multilink( [ soccerBall.isActiveProperty, soccerBall.valueProperty ], ( isActive, value ) => {
+      this.visible = isActive;
+    } );
+
+    // show or hide the median highlight
+    Multilink.multilink(
+      [ soccerBall.isMedianObjectProperty, isShowingPlayAreaMedianProperty, soccerBall.isShowingAnimationHighlightProperty ],
+      ( isMedianObject, isShowingPlayAreaMedian, isShowingAnimationHighlight ) => {
+        this.medianHighlight.visible = isShowingPlayAreaMedian && isMedianObject;
+      } );
   }
 }
 
