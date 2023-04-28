@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
-import { Node, Text } from '../../../../scenery/js/imports.js';
+import { AlignGroup, Node, Text } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
@@ -9,26 +9,37 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
 import MedianPlotNode from './MedianPlotNode.js';
+import TopRepresentationCheckboxGroup from '../../common/view/TopRepresentationCheckboxGroup.js';
+import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 
 export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
 
   public constructor( model: MeanAndMedianModel, layoutBounds: Bounds2, tandem: Tandem, top: number, playAreaNumberLineNode: Node ) {
+    const iconGroup = new AlignGroup();
 
-    const accordionBoxContents = new MedianPlotNode( model, {
-      tandem: tandem.createTandem( 'plotNode' )
+    const checkboxGroup = new VerticalCheckboxGroup( [
+      TopRepresentationCheckboxGroup.getMedianCheckboxWithIconItem( iconGroup, model.isShowingTopMedianProperty ),
+      TopRepresentationCheckboxGroup.getMeanCheckboxWithIconItem( iconGroup, model.isShowingTopMeanProperty )
+    ], {
+      tandem: tandem.createTandem( 'accordionCheckboxGroup' )
     } );
+    const plotNode = new MedianPlotNode( model, { tandem: tandem.createTandem( 'plotNode' ) } );
 
-    super( model, accordionBoxContents,
+    super( model, plotNode,
       new Text( CenterAndVariabilityStrings.distanceInMetersStringProperty, {
         font: new PhetFont( 16 ),
         maxWidth: 300
       } ),
-      layoutBounds, {
+      layoutBounds,
+      checkboxGroup,
+      {
         leftMargin: 0,
         tandem: tandem,
         top: top,
         centerX: layoutBounds.centerX
-      } );
+      }
+    );
+
   }
 }
 

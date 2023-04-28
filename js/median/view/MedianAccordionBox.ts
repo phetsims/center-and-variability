@@ -10,15 +10,22 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import TopRepresentationCheckboxGroup from '../../common/view/TopRepresentationCheckboxGroup.js';
+import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 
 export default class MedianAccordionBox extends CAVAccordionBox {
 
   public constructor( model: MedianModel, layoutBounds: Bounds2, tandem: Tandem, top: number ) {
 
     const cardNodeContainer = new CardNodeContainer( model, {
-
       // Expose this intermediate layer to make it so that clients can hide the number cards with one call
       tandem: tandem.createTandem( 'cardNodeContainer' )
+    } );
+
+    const checkboxGroup = new VerticalCheckboxGroup( [
+      TopRepresentationCheckboxGroup.getSortDataCheckboxItem( model.isSortingDataProperty ),
+      TopRepresentationCheckboxGroup.getMedianCheckboxWithoutIconItem( model.isShowingTopMedianProperty )
+    ], {
+      tandem: tandem.createTandem( 'accordionCheckboxGroup' )
     } );
 
     super( model, cardNodeContainer,
@@ -26,18 +33,14 @@ export default class MedianAccordionBox extends CAVAccordionBox {
         font: new PhetFont( 16 ),
         maxWidth: 300
       } ),
-      layoutBounds, {
+      layoutBounds,
+      checkboxGroup,
+      {
         leftMargin: 0,
         tandem: tandem,
         top: top,
         centerX: layoutBounds.centerX
       } );
-
-    this.setCheckboxGroup( [
-        TopRepresentationCheckboxGroup.getSortDataCheckboxItem( model.isSortingDataProperty ),
-        TopRepresentationCheckboxGroup.getMedianCheckboxWithoutIconItem( model.isShowingTopMedianProperty )
-      ]
-    );
   }
 
 

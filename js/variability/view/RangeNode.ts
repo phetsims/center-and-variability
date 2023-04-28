@@ -18,7 +18,6 @@ import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import CAVColors from '../../common/CAVColors.js';
 import VariabilityReadoutText from './VariabilityReadoutText.js';
-import Checkbox from '../../../../sun/js/Checkbox.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 type SelfOptions = {
@@ -51,13 +50,6 @@ export default class RangeNode extends CAVPlotNode {
         } );
 
       this.addChild( rangeReadoutText );
-
-      const rangeCheckbox = new Checkbox( model.isShowingRangeProperty, new Text( CenterAndVariabilityStrings.rangeStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ), {
-        tandem: options.tandem.createTandem( 'rangeCheckbox' ),
-        left: this.right,
-        y: 100
-      } );
-      this.addChild( rangeCheckbox );
     }
 
     const needAtLeastOneKickText = new Text( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {

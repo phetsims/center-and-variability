@@ -28,7 +28,10 @@ export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGrou
 
   private static createGridBox( text: Node, icon: Node, iconGroup: AlignGroup ): GridBox {
     return new GridBox( {
-      rows: [ [ new Node( { children: [ text ], layoutOptions: { align: 'left' } } ),
+      spacing: 10,
+      stretch: true,
+      grow: 1,
+      rows: [ [ new Node( { children: [ text ], layoutOptions: { xAlign: 'left' } } ),
         iconGroup.createBox( icon, { xAlign: 'center', layoutOptions: { xAlign: 'right' } } ) ]
       ]
     } );
@@ -48,8 +51,9 @@ export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGrou
         return TopRepresentationCheckboxGroup.createGridBox(
           new Text( CenterAndVariabilityStrings.medianStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
           new MedianBarNode( {
-            notchDirection: 'up',
-            barStyle: 'continuous'
+            notchDirection: 'down',
+            barStyle: 'continuous',
+            arrowScale: 0.75
           } )
             .setMedianBarShape( 0, 0, ICON_WIDTH / 2 - LINE_WIDTH / 2, ICON_WIDTH - LINE_WIDTH, true ),
           iconGroup
@@ -91,6 +95,87 @@ export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGrou
       },
       property: isShowingTopMeanProperty,
       tandemName: 'meanCheckbox'
+    };
+  }
+
+  public static getRangeCheckboxWithIconItem( iconGroup: AlignGroup, isShowingRangeProperty: Property<boolean> ): VerticalCheckboxGroupItem {
+    return {
+      createNode: ( tandem: Tandem ) => {
+        return TopRepresentationCheckboxGroup.createGridBox(
+          new Text( CenterAndVariabilityStrings.rangeStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
+          // TODO: Replace with range icon.
+          new Node( {
+            children: [
+
+              // Horizontal line above the triangle
+              new Line( -ICON_WIDTH / 2, -LINE_WIDTH / 2, ICON_WIDTH / 2, -LINE_WIDTH / 2, {
+                stroke: CAVColors.meanColorProperty,
+                lineWidth: LINE_WIDTH
+              } ),
+
+              // Triangle
+              NumberLineNode.createMeanIndicatorNode( false, true )
+            ]
+          } ),
+          iconGroup
+        );
+      },
+      property: isShowingRangeProperty,
+      tandemName: 'rangeCheckbox'
+    };
+  }
+
+  public static getIQRCheckboxWithIconItem( iconGroup: AlignGroup, isShowingIQRProperty: Property<boolean> ): VerticalCheckboxGroupItem {
+    return {
+      createNode: ( tandem: Tandem ) => {
+        return TopRepresentationCheckboxGroup.createGridBox(
+          new Text( CenterAndVariabilityStrings.iqrStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
+          // TODO: Replace with IQR icon.
+          new Node( {
+            children: [
+
+              // Horizontal line above the triangle
+              new Line( -ICON_WIDTH / 2, -LINE_WIDTH / 2, ICON_WIDTH / 2, -LINE_WIDTH / 2, {
+                stroke: CAVColors.meanColorProperty,
+                lineWidth: LINE_WIDTH
+              } ),
+
+              // Triangle
+              NumberLineNode.createMeanIndicatorNode( false, true )
+            ]
+          } ),
+          iconGroup
+        );
+      },
+      property: isShowingIQRProperty,
+      tandemName: 'iqrCheckbox'
+    };
+  }
+
+  public static getMADCheckboxWithIconItem( iconGroup: AlignGroup, isShowingMADProperty: Property<boolean> ): VerticalCheckboxGroupItem {
+    return {
+      createNode: ( tandem: Tandem ) => {
+        return TopRepresentationCheckboxGroup.createGridBox(
+          new Text( CenterAndVariabilityStrings.meanAbsoluteDeviationMADStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
+          // TODO: Replace with MAD icon.
+          new Node( {
+            children: [
+
+              // Horizontal line above the triangle
+              new Line( -ICON_WIDTH / 2, -LINE_WIDTH / 2, ICON_WIDTH / 2, -LINE_WIDTH / 2, {
+                stroke: CAVColors.meanColorProperty,
+                lineWidth: LINE_WIDTH
+              } ),
+
+              // Triangle
+              NumberLineNode.createMeanIndicatorNode( false, true )
+            ]
+          } ),
+          iconGroup
+        );
+      },
+      property: isShowingMADProperty,
+      tandemName: 'madCheckbox'
     };
   }
 }

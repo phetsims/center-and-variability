@@ -320,7 +320,7 @@ export default class CAVScreenView extends ScreenView {
    */
   protected setAccordionBoxWithAlignedContent( accordionBox: CAVAccordionBox ): void {
     this.setAccordionBox( accordionBox );
-    ManualConstraint.create( this, [ this.playAreaNumberLineNode, accordionBox.contentNode ],
+    ManualConstraint.create( this, [ this.playAreaNumberLineNode, accordionBox.plotNode ],
       ( lowerNumberLineWrapper, contentsWrapper ) => {
         contentsWrapper.x = lowerNumberLineWrapper.x;
       } );

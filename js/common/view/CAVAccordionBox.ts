@@ -17,7 +17,6 @@ import centerAndVariability from '../../centerAndVariability.js';
 import CAVModel from '../model/CAVModel.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import VerticalCheckboxGroup, { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
 
 type SelfOptions = {
   leftMargin: number;
@@ -33,11 +32,11 @@ const BUTTON_SIDE_LENGTH = 20;
 
 export default class CAVAccordionBox extends AccordionBox {
 
-  public readonly contentNode: Node;
+  public readonly plotNode: Node;
 
   // NOTE: The positions of the passed-in nodes are modified directly, so they cannot be used in the scenery DAG
-  public constructor( model: CAVModel, contentNode: Node, titleNode: Node,
-                      layoutBounds: Bounds2, providedOptions: CAVAccordionBoxOptions ) {
+  public constructor( model: CAVModel, plotNode: Node, titleNode: Node,
+                      layoutBounds: Bounds2, checkboxGroup: Node, providedOptions: CAVAccordionBoxOptions ) {
 
     const options = optionize<CAVAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {
       titleAlignX: 'left',
@@ -76,30 +75,24 @@ export default class CAVAccordionBox extends AccordionBox {
     backgroundNode.clipArea = Shape.bounds( fullBackgroundBounds );
 
     // Vertical positioning
-    contentNode.centerY = fullBackgroundBounds.centerY;
-    if ( contentNode.bottom > fullBackgroundBounds.bottom - 5 ) {
-      contentNode.bottom = fullBackgroundBounds.bottom - 5;
+    plotNode.centerY = fullBackgroundBounds.centerY;
+    if ( plotNode.bottom > fullBackgroundBounds.bottom - 5 ) {
+      plotNode.bottom = fullBackgroundBounds.bottom - 5;
     }
-    backgroundNode.addChild( contentNode );
+    backgroundNode.addChild( plotNode );
+
+    const checkboxAlignBox = new AlignBox( checkboxGroup,
+      { xAlign: 'right', yAlign: 'center', rightMargin: 20, alignBounds: fullBackgroundBounds } );
+
+    backgroundNode.addChild( checkboxAlignBox );
 
     super( backgroundNode, options );
 
     model.resetEmitter.addListener( () => this.reset() );
 
-    this.contentNode = contentNode;
+    this.plotNode = plotNode;
   }
 
-  protected setCheckboxGroup( items: VerticalCheckboxGroupItem[] ): void {
-    const accordionCheckboxGroup = new VerticalCheckboxGroup( items, {
-      tandem: this.tandem.createTandem( 'accordionCheckboxGroup' )
-    } );
-    this.addChild( new AlignBox( accordionCheckboxGroup, {
-      alignBounds: this.getVisibleBounds(),
-      xAlign: 'right',
-      xMargin: 80,
-      yAlign: 'top'
-    } ) );
-  }
 }
 
 centerAndVariability.register( 'CAVAccordionBox', CAVAccordionBox );

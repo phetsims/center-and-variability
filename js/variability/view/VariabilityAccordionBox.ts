@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
-import { Text } from '../../../../scenery/js/imports.js';
+import { AlignGroup, Text } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
@@ -14,6 +14,9 @@ import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
+import ToggleNode from '../../../../sun/js/ToggleNode.js';
+import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
+import TopRepresentationCheckboxGroup from '../../common/view/TopRepresentationCheckboxGroup.js';
 
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 
@@ -46,12 +49,39 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     } );
     accordionBoxContents.addChild( infoButton );
 
+    const iconGroup = new AlignGroup();
+    const checkboxToggleNode = new ToggleNode( model.selectedVariabilityProperty, [
+      {
+        createNode: tandem => new VerticalCheckboxGroup( [
+          TopRepresentationCheckboxGroup.getRangeCheckboxWithIconItem( iconGroup, model.isShowingRangeProperty )
+        ], { tandem: tandem.createTandem( 'rangeAccordionCheckboxGroup' ) } ),
+        tandemName: 'rangeAccordionCheckboxGroup',
+        value: VariabilityMeasure.RANGE
+      },
+      {
+        createNode: tandem => new VerticalCheckboxGroup( [
+          TopRepresentationCheckboxGroup.getIQRCheckboxWithIconItem( iconGroup, model.isShowingIQRProperty )
+        ], { tandem: tandem.createTandem( 'iqrAccordionCheckboxGroup' ) } ),
+        tandemName: 'iqrAccordionCheckboxGroup',
+        value: VariabilityMeasure.IQR
+      },
+      {
+        createNode: tandem => new VerticalCheckboxGroup( [
+          TopRepresentationCheckboxGroup.getMADCheckboxWithIconItem( iconGroup, model.isShowingMADProperty )
+        ], { tandem: tandem.createTandem( 'madAccordionCheckboxGroup' ) } ),
+        tandemName: 'madAccordionCheckboxGroup',
+        value: VariabilityMeasure.MAD
+      }
+    ] );
+
     super( model, accordionBoxContents,
       new Text( accordionBoxTitleProperty, {
         font: new PhetFont( 16 ),
         maxWidth: 300
       } ),
-      layoutBounds, {
+      layoutBounds,
+      checkboxToggleNode,
+      {
         leftMargin: 70,
         tandem: tandem,
         top: top,

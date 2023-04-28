@@ -34,17 +34,6 @@ export default class MedianPlotNode extends CAVPlotNode {
       ...providedOptions
     } );
 
-    // const checkboxGroup = new TopRepresentationCheckboxGroup( model, {
-    //   medianBarIconOptions: {
-    //     notchDirection: 'down',
-    //     barStyle: 'continuous',
-    //     arrowScale: 0.75
-    //   },
-    //   showMedianCheckboxIcon: true,
-    //   tandem: providedOptions.tandem.createTandem( 'topRepresentationCheckboxGroup' )
-    // } );
-    // this.addChild( checkboxGroup );
-
     this.addChild( this.medianBarNode );
 
     const modelViewTransform = this.modelViewTransform;
