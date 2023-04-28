@@ -445,6 +445,9 @@ export default class CAVModel implements TModel {
     }
   }
 
+  // TODO: Only advance the line if the CURRENT active player's ball has landed, or the timer after the kick has fired
+  // TODO: We observed that if Player A's ball is still in flight after Player B kicks, then the landing of Player A's ball will trigger advanceLine for Player B
+
   // When a ball lands, or when the next player is supposed to kick (before the ball lands), move the line forward
   private advanceLine(): void {
 
