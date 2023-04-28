@@ -82,7 +82,7 @@ export default class CAVModel implements TModel {
 
   private readonly nextBallToKickProperty: Property<CAVObject | null>; // Null if there is no more ball to kick
   private readonly numberOfScheduledSoccerBallsToKickProperty: NumberProperty;
-  public readonly numberOfRemainingKickableSoccerBallsProperty: TReadOnlyProperty<number>;
+  public readonly numberOfUnkickedBallsProperty: TReadOnlyProperty<number>;
   public readonly hasKickableSoccerBallsProperty: TReadOnlyProperty<boolean>;
   private readonly timeWhenLastBallWasKickedProperty: NumberProperty;
   protected readonly distributionProperty: Property<ReadonlyArray<number>>;
@@ -217,7 +217,7 @@ export default class CAVModel implements TModel {
       phetioValueType: NullableIO( ReferenceIO( CAVObject.CAVObjectIO ) )
     } );
 
-    this.numberOfRemainingKickableSoccerBallsProperty = DerivedProperty.deriveAny( [
+    this.numberOfUnkickedBallsProperty = DerivedProperty.deriveAny( [
       this.numberOfScheduledSoccerBallsToKickProperty,
       ...this.soccerBallGroup.map( soccerBall => soccerBall.valueProperty ),
       ...this.soccerBallGroup.map( soccerBall => soccerBall.animationModeProperty ) ], () => {
@@ -232,8 +232,8 @@ export default class CAVModel implements TModel {
       return value;
     } );
 
-    this.hasKickableSoccerBallsProperty = new DerivedProperty( [ this.numberOfRemainingKickableSoccerBallsProperty ],
-      numberOfRemainingKickableObjects => numberOfRemainingKickableObjects > 0 );
+    this.hasKickableSoccerBallsProperty = new DerivedProperty( [ this.numberOfUnkickedBallsProperty ],
+      numberOfUnkickedBalls => numberOfUnkickedBalls > 0 );
 
     this.distributionProperty = new Property( CAVModel.chooseDistribution(), {
       tandem: options.tandem.createTandem( 'distributionProperty' ),
@@ -248,7 +248,7 @@ export default class CAVModel implements TModel {
       // If the soccer player that kicked that ball was still in line when the ball lands, they can leave the line now.
       this.advanceLine();
 
-      if ( this.numberOfRemainingKickableSoccerBallsProperty.value > 0 && this.nextBallToKickProperty.value === null ) {
+      if ( this.numberOfUnkickedBallsProperty.value > 0 && this.nextBallToKickProperty.value === null ) {
         this.nextBallToKickProperty.value = this.getNextBallFromPool();
       }
     } );
@@ -391,7 +391,6 @@ export default class CAVModel implements TModel {
     if ( frontPlayer ) {
 
       if ( this.numberOfScheduledSoccerBallsToKickProperty.value > 0 &&
-           this.numberOfRemainingKickableSoccerBallsProperty.value > 0 &&
            this.timeProperty.value >= this.timeWhenLastBallWasKickedProperty.value + TIME_BETWEEN_RAPID_KICKS ) {
 
         if ( this.nextBallToKickProperty.value === null ) {
@@ -511,7 +510,7 @@ export default class CAVModel implements TModel {
    * Adds the provided number of balls to the scheduled balls to kick
    */
   public scheduleKicks( numberOfBallsToKick: number ): void {
-    this.numberOfScheduledSoccerBallsToKickProperty.value += Math.min( numberOfBallsToKick, this.numberOfRemainingKickableSoccerBallsProperty.value );
+    this.numberOfScheduledSoccerBallsToKickProperty.value += Math.min( numberOfBallsToKick, this.numberOfUnkickedBallsProperty.value );
   }
 
   /**
@@ -560,11 +559,11 @@ export default class CAVModel implements TModel {
   }
 
   private getNextBallFromPool(): CAVObject | null {
-    const newVar = this.soccerBallGroup.find( ball => !ball.isActiveProperty.value ) || null;
-    if ( newVar ) {
-      newVar.isActiveProperty.value = true;
+    const nextBallFromPool = this.soccerBallGroup.find( ball => !ball.isActiveProperty.value ) || null;
+    if ( nextBallFromPool ) {
+      nextBallFromPool.isActiveProperty.value = true;
     }
-    return newVar;
+    return nextBallFromPool;
   }
 }
 

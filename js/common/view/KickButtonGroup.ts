@@ -84,7 +84,7 @@ export default class KickButtonGroup extends VBox {
 
     const multiKickProperty = new NumberProperty( 5 );
     const kick5PatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.kickValuePatternStringProperty, { value: multiKickProperty } );
-    model.numberOfRemainingKickableSoccerBallsProperty.link( numberOfRemainingKickableObjects => {
+    model.numberOfUnkickedBallsProperty.link( numberOfRemainingKickableObjects => {
       const value = Math.max( Math.min( numberOfRemainingKickableObjects, 5 ), 1 );
       multiKickProperty.value = value;
     } );
