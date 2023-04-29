@@ -487,22 +487,6 @@ export default class CAVModel implements TModel {
   private kickBall( soccerPlayer: SoccerPlayer, soccerBall: SoccerBall ): void {
     soccerPlayer.poseProperty.value = Pose.KICKING;
 
-    // Test that the sampling engine is working properly
-    // TODO: Where should these tests live? Should it be in the unit tests? Or in dot?
-    // const array = new Array( weights.length );
-    // _.fill( array, 0, 0, array.length );
-    // for ( let i = 0; i < 1000000; i++ ) {
-    //   const index = dotRandom.sampleProbabilities( weights );
-    //   array[ index ]++;
-    // }
-    //
-
-    // const inputNormalized = weights.map( element => ( element / _.sum( weights ) ) );
-    // const resultNormalized = array.map( element => ( element / _.sum( array ) ) );
-    // console.log( '....' );
-    // console.log( inputNormalized );
-    // console.log( resultNormalized );
-
     const weights = this.distributionProperty.value;
 
     assert && assert( weights.length === this.physicalRange.getLength() + 1, 'weight array should match the model range' );
