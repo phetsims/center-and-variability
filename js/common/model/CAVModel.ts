@@ -107,13 +107,11 @@ export default class CAVModel implements TModel {
         position: position
       } );
 
-      // TODO: Should some or all of this move into SoccerBall or CAVObjectNode?
-      const dragPositionListener = ( dragPosition: Vector2 ) => {
+      // When the soccer ball drag position changes, constrain it to the physical range and move it to the top, if necessary
+      soccerBall.dragPositionProperty.lazyLink( ( dragPosition: Vector2 ) => {
         soccerBall.valueProperty.value = Utils.roundSymmetric( this.physicalRange.constrainValue( dragPosition.x ) );
-
         this.moveToTop( soccerBall );
-      };
-      soccerBall.dragPositionProperty.lazyLink( dragPositionListener );
+      } );
 
       soccerBall.valueProperty.link( ( value: number | null ) => {
         if ( value !== null ) {
