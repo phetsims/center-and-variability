@@ -130,7 +130,6 @@ export default class CAVModel implements TModel {
       } );
 
       // Signal to listeners that a value changed
-      // TODO: Maybe should combine with temporary listener for one permanent one
       soccerBall.valueProperty.link( () => this.objectChangedEmitter.emit( soccerBall ) );
       soccerBall.positionProperty.link( () => this.objectChangedEmitter.emit( soccerBall ) );
 
