@@ -454,12 +454,6 @@ export default class CAVModel implements TModel {
 
       const diameter = CAVObjectType.SOCCER_BALL.radius * 2;
       const targetPositionY = ( index + 1 ) * diameter + CAVObjectType.SOCCER_BALL.radius;
-      const positionYProperty = new NumberProperty( soccerBall.positionProperty.value.y );
-
-      // TODO: Use soccerBall.positionProperty in the Animation?
-      positionYProperty.link( positionY => {
-        soccerBall.positionProperty.value = new Vector2( soccerBall.positionProperty.value.x, positionY );
-      } );
 
       if ( soccerBall.animation ) {
         soccerBall.animation.stop();
@@ -467,8 +461,8 @@ export default class CAVModel implements TModel {
       soccerBall.animation = new Animation( {
         duration: 0.15,
         targets: [ {
-          property: positionYProperty,
-          to: targetPositionY,
+          property: soccerBall.positionProperty,
+          to: new Vector2( soccerBall.positionProperty.value.x, targetPositionY ),
           easing: Easing.QUADRATIC_IN_OUT
         } ]
       } );
