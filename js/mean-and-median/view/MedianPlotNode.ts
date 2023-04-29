@@ -50,7 +50,7 @@ export default class MedianPlotNode extends CAVPlotNode {
       const MARGIN_Y = 5;
 
       // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card
-      if ( model.isShowingTopMedianProperty.value && leftmostSoccerBall ) {
+      if ( model.isShowingTopMedianProperty.value && leftmostSoccerBall && medianValue !== null ) {
         const highestDot = _.maxBy( sortedDots, object => object.positionProperty.value.y );
         const dotRadius = Math.abs( modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) );
 
