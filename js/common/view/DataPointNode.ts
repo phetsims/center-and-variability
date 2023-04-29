@@ -1,4 +1,4 @@
-// Copyright 2022-2023, University of Colorado Boulder
+// Copyright 2023, University of Colorado Boulder
 
 import CAVObjectNode, { CAVObjectNodeOptions } from './CAVObjectNode.js';
 import centerAndVariability from '../../centerAndVariability.js';
