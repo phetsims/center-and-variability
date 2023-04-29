@@ -14,7 +14,6 @@ import centerAndVariability from '../../centerAndVariability.js';
 export default class CAVObjectType extends EnumerationValue {
   public readonly radius: number;
 
-  // TODO: Search for occurrences of SOCCER_BALL.radius and see if we want to do that a different way
   public static readonly SOCCER_BALL = new CAVObjectType( 0.3 ); // In the play area
   public static readonly DATA_POINT = new CAVObjectType( 0.127 ); // In the charts
 

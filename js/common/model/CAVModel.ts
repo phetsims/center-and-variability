@@ -98,8 +98,7 @@ export default class CAVModel implements TModel {
 
     this.soccerBalls = _.range( 0, this.maxNumberOfObjects ).map( index => {
 
-      const y0 = CAVObjectType.SOCCER_BALL.radius;
-      const position = new Vector2( 0, y0 );
+      const position = new Vector2( 0, CAVObjectType.SOCCER_BALL.radius );
 
       const soccerBall = new SoccerBall( {
         isFirstObject: index === 0,
