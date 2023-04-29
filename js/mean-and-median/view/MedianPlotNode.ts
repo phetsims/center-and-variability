@@ -65,7 +65,7 @@ export default class MedianPlotNode extends CAVPlotNode {
         assert && assert( rightmostDot.valueProperty.value !== null );
         const right = modelViewTransform.modelToViewX( rightmostDot.valueProperty.value! );
         assert && assert( medianValue !== null );
-        const medianPositionX = modelViewTransform.modelToViewX( medianValue! );
+        const medianPositionX = modelViewTransform.modelToViewX( medianValue );
 
         this.medianBarNode.setMedianBarShape( barY, left, medianPositionX, right, ( model as MeanAndMedianModel ).isMedianAnimationCompleteProperty.value );
       }
