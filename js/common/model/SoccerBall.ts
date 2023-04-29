@@ -37,7 +37,6 @@ export type CAVObjectOptions =
   & PhetioObjectOptions
   & PickRequired<PhetioObjectOptions, 'tandem'>;
 
-// TODO: Separate into SoccerBall and DataPoint
 export default class SoccerBall {
 
   // Continuous value for the drag listener. When dragging, the object snaps to each tickmark
