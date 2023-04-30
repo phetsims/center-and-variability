@@ -388,9 +388,13 @@ export default class CAVModel implements TModel {
             soccerBall.valueProperty.value === null &&
             soccerBall.isActiveProperty.value &&
             soccerBall.animationModeProperty.value === AnimationMode.NONE
-          )!;
-          this.kickBall( frontPlayer, soccerBall );
-          this.numberOfScheduledSoccerBallsToKickProperty.value--;
+          );
+
+          // In fuzzing, sometimes there are no soccer balls available
+          if ( soccerBall ) {
+            this.kickBall( frontPlayer, soccerBall );
+            this.numberOfScheduledSoccerBallsToKickProperty.value--;
+          }
         }
       }
     }

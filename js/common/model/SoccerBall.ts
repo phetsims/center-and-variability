@@ -83,7 +83,6 @@ export default class SoccerBall {
     } );
     this.dragPositionProperty = new Vector2Property( options.position );
     this.valueProperty = new Property<number | null>( options.value, {
-      hasListenerOrderDependencies: true, // TODO: https://github.com/phetsims/center-and-variability/issues/143
       tandem: options.tandem.createTandem( 'valueProperty' ),
       phetioValueType: NullableIO( NumberIO )
     } );
