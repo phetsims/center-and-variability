@@ -48,10 +48,7 @@ export default class CAVPlotNode extends Node {
     // 15 balls as the high point. Consider instead something like above, where we just base the y scaling on the height
     // of one ball.
     const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
-      new Bounds2( model.physicalRange.min, 0, model.physicalRange.max,
-
-        // TODO: Should this be maxDataPoints?
-        model.maxSoccerBalls ),
+      new Bounds2( model.physicalRange.min, 0, model.physicalRange.max, model.maxSoccerBalls ),
       new Bounds2( 0, numberLinePositionY - CAVConstants.CHART_VIEW_WIDTH * yScale, 0 + CAVConstants.CHART_VIEW_WIDTH, numberLinePositionY )
     );
     this.modelViewTransform = modelViewTransform;
