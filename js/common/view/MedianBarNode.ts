@@ -25,9 +25,6 @@ type SelfOptions = {
 };
 export type MedianBarNodeOptions = SelfOptions & PathOptions;
 
-// constants
-const LINE_WIDTH = 2;
-
 export default class MedianBarNode extends Path {
   private readonly notchDirection: NotchDirection;
   private readonly barStyle: BarStyle;
@@ -38,7 +35,7 @@ export default class MedianBarNode extends Path {
   public constructor( providedOptions: MedianBarNodeOptions ) {
 
     const options = optionize<MedianBarNodeOptions, SelfOptions, PathOptions>()( {
-      lineWidth: LINE_WIDTH,
+      lineWidth: MedianBarNode.LINE_WIDTH,
       stroke: CAVColors.medianColorProperty,
       arrowScale: 1,
       excludeInvisibleChildrenFromBounds: true
@@ -53,7 +50,7 @@ export default class MedianBarNode extends Path {
       scale: options.arrowScale,
       headHeight: 8,
       headWidth: 9,
-      tailWidth: LINE_WIDTH,
+      tailWidth: MedianBarNode.LINE_WIDTH,
       fill: CAVColors.medianColorProperty,
       stroke: null,
       visible: false
@@ -94,6 +91,8 @@ export default class MedianBarNode extends Path {
     this.shape = null;
     this.medianArrowNode.visible = false;
   }
+
+  public static readonly LINE_WIDTH = 2;
 }
 
 centerAndVariability.register( 'MedianBarNode', MedianBarNode );

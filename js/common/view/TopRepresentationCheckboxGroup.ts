@@ -21,9 +21,9 @@ import Property from '../../../../axon/js/Property.js';
 // constants
 const ICON_WIDTH = 24;
 
-// TODO: Unify with line with in MedianBarNode?
-const LINE_WIDTH = 2;
+const LINE_WIDTH = MedianBarNode.LINE_WIDTH;
 
+// TODO: Split this up into separate classes for each screen?
 export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
   private static createGridBox( text: Node, icon: Node, iconGroup: AlignGroup ): GridBox {

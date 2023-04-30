@@ -45,10 +45,13 @@ export default class CAVPlotNode extends Node {
     const numberLinePositionY = 127;
 
     // TODO: we currently define the y range with the x width because we are thinking of it as a square, with a stack of
-    //  15 balls as the high point. Consider instead something like above, where we just base the y scaling on the height
+    // 15 balls as the high point. Consider instead something like above, where we just base the y scaling on the height
     // of one ball.
     const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
-      new Bounds2( model.physicalRange.min, 0, model.physicalRange.max, model.physicalRange.getLength() ),
+      new Bounds2( model.physicalRange.min, 0, model.physicalRange.max,
+
+        // TODO: Should this be maxDataPoints?
+        model.physicalRange.getLength() ),
       new Bounds2( 0, numberLinePositionY - CAVConstants.CHART_VIEW_WIDTH * yScale, 0 + CAVConstants.CHART_VIEW_WIDTH, numberLinePositionY )
     );
     this.modelViewTransform = modelViewTransform;

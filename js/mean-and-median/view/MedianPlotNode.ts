@@ -54,8 +54,7 @@ export default class MedianPlotNode extends CAVPlotNode {
         const highestDot = _.maxBy( sortedDots, object => object.positionProperty.value.y );
         const dotRadius = Math.abs( modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) );
 
-        // assumes all of the dots have the same radius
-        // TODO: do we need to know notch height here?
+        // assumes all of the dots have the same radius. Also move up based on the notch height
         const barY = Math.max( modelViewTransform.modelToViewY( highestDot!.positionProperty.value.y ) -
                                dotRadius - MARGIN_Y - MedianBarNode.NOTCH_HEIGHT, MARGIN_TO_TOP_OF_ACCORDION_BOX );
 

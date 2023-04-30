@@ -32,6 +32,8 @@ export default class IQRNode extends CAVPlotNode {
     const iqrReadoutValueProperty = new DerivedProperty( [ model.rangeValueProperty ], rangeValue => {
       return rangeValue ? `${rangeValue}` : '?';
     } );
+
+    // TODO: I think we need one of these in MadNode?
     const iqrReadoutText = new VariabilityReadoutText( iqrReadoutValueProperty, CenterAndVariabilityStrings.iqrEqualsValuePatternStringProperty,
       { fill: CAVColors.meanColorProperty, tandem: options.tandem.createTandem( 'iqrReadoutText' ), visibleProperty: model.isShowingIQRProperty } );
     this.addChild( iqrReadoutText );

@@ -18,7 +18,6 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 type SelfOptions = EmptySelfOptions;
 export type ValueReadoutTextOptions = SelfOptions & TextOptions;
 
-// TODO: Each scene should create its own readouts.
 export default class VariabilityReadoutText extends Text {
 
   public constructor( valueProperty: TReadOnlyProperty<string>, textProperty: LinkableProperty<string>, providedOptions: ValueReadoutTextOptions ) {
