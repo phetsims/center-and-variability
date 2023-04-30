@@ -51,7 +51,7 @@ export default class CAVPlotNode extends Node {
       new Bounds2( model.physicalRange.min, 0, model.physicalRange.max,
 
         // TODO: Should this be maxDataPoints?
-        model.physicalRange.getLength() ),
+        model.maxSoccerBalls ),
       new Bounds2( 0, numberLinePositionY - CAVConstants.CHART_VIEW_WIDTH * yScale, 0 + CAVConstants.CHART_VIEW_WIDTH, numberLinePositionY )
     );
     this.modelViewTransform = modelViewTransform;

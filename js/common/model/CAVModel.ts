@@ -53,7 +53,7 @@ export default class CAVModel implements TModel {
   public readonly isShowingMeanPredictionProperty: BooleanProperty;
   public readonly isShowingMedianPredictionProperty: BooleanProperty;
 
-  protected readonly maxNumberOfObjects = CAVConstants.NUMBER_OF_OBJECTS;
+  public readonly maxSoccerBalls = CAVConstants.NUMBER_OF_OBJECTS;
   public readonly physicalRange = new Range( 1, 15 );
 
   public readonly medianValueProperty: Property<number | null>;
@@ -93,10 +93,10 @@ export default class CAVModel implements TModel {
     const updateDataMeasures = () => this.updateDataMeasures();
 
     this.soccerBallCountProperty = new NumberProperty( 0, {
-      range: new Range( 0, this.maxNumberOfObjects )
+      range: new Range( 0, this.maxSoccerBalls )
     } );
 
-    this.soccerBalls = _.range( 0, this.maxNumberOfObjects ).map( index => {
+    this.soccerBalls = _.range( 0, this.maxSoccerBalls ).map( index => {
 
       const position = new Vector2( 0, CAVObjectType.SOCCER_BALL.radius );
 
@@ -200,7 +200,7 @@ export default class CAVModel implements TModel {
       tandem: options.tandem.createTandem( 'timeWhenLastBallWasKickedProperty' )
     } );
 
-    this.soccerPlayers = _.range( 0, this.maxNumberOfObjects ).map( placeInLine => new SoccerPlayer( placeInLine ) );
+    this.soccerPlayers = _.range( 0, this.maxSoccerBalls ).map( placeInLine => new SoccerPlayer( placeInLine ) );
 
     // Create an initial ball to show on startup
     this.getNextBallFromPool();
@@ -215,7 +215,7 @@ export default class CAVModel implements TModel {
                       soccerBall.animationModeProperty.value === AnimationMode.FLYING ||
                       soccerBall.animationModeProperty.value === AnimationMode.STACKING
       );
-      const value = this.maxNumberOfObjects - kickedSoccerBalls.length - this.numberOfScheduledSoccerBallsToKickProperty.value;
+      const value = this.maxSoccerBalls - kickedSoccerBalls.length - this.numberOfScheduledSoccerBallsToKickProperty.value;
 
       return value;
     } );
@@ -430,7 +430,7 @@ export default class CAVModel implements TModel {
                                                                soccerPlayer.poseProperty.value === Pose.KICKING );
     if ( kickers.length > 0 ) {
       let nextIndex = this.activeKickerIndexProperty.value + 1;
-      if ( nextIndex > this.maxNumberOfObjects ) {
+      if ( nextIndex > this.maxSoccerBalls ) {
         nextIndex = 0;
       }
       this.activeKickerIndexProperty.value = nextIndex;
