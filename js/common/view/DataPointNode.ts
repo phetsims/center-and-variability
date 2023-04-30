@@ -60,6 +60,12 @@ export default class DataPointNode extends CAVObjectNode {
       [ soccerBall.isMedianObjectProperty, isShowingPlayAreaMedianProperty, soccerBall.isShowingAnimationHighlightProperty ],
       ( isMedianObject, isShowingPlayAreaMedian, isShowingAnimationHighlight ) => {
         this.medianHighlight.visible = isShowingAnimationHighlight;
+
+        // Median highlights should be in front in z-ordering. Rather than accomplishing this via a different layer,
+        // move this to the front when it is visible.
+        if ( this.medianHighlight.visible ) {
+          this.moveToFront();
+        }
       } );
   }
 }

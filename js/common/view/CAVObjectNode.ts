@@ -45,7 +45,8 @@ export default abstract class CAVObjectNode extends Node {
 
     const viewRadius = modelViewTransform.modelToViewDeltaX( modelRadius );
 
-    // TODO: Make sure it is always in the front in z-ordering, sometimes it gets obscured by adjacent soccer balls
+    // Visibilty controlled by subclass logic. Also this whole node is moved to front when the medianHighlight is shown
+    // so it will appear in front (unless the user drags another object on top of it).
     this.medianHighlight = new Circle( viewRadius + 1.75, {
       fill: CAVColors.medianColorProperty
     } );
