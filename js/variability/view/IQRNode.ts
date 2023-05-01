@@ -101,6 +101,8 @@ export default class IQRNode extends CAVPlotNode {
       lineWidth: BOX_STROKE_WIDTH
     } );
 
+    boxWhiskerNode.addChild( iqrTextReadout );
+    boxWhiskerNode.addChild( iqrBar );
     boxWhiskerNode.addChild( boxWhiskerMedianLine );
     boxWhiskerNode.addChild( boxWhiskerBox );
     boxWhiskerNode.addChild( boxWhiskerLineLeft );
@@ -108,9 +110,7 @@ export default class IQRNode extends CAVPlotNode {
     boxWhiskerNode.addChild( boxWhiskerEndCapLeft );
     boxWhiskerNode.addChild( boxWhiskerEndCapRight );
 
-    this.addChild( iqrBar );
     this.addChild( iqrRectangle );
-    this.addChild( iqrTextReadout );
     this.addChild( boxWhiskerNode );
 
     iqrRectangle.moveToBack();
@@ -146,8 +146,8 @@ export default class IQRNode extends CAVPlotNode {
 
       const enoughData = model.numberOfDataPointsProperty.value >= 5;
 
-      const iqrVisibility = true;// ( options.parentContext === 'info' && enoughData ) ||
-      // ( options.parentContext === 'accordion' && enoughData && model.isShowingIQRProperty.value );
+      const iqrVisibility = ( options.parentContext === 'info' && enoughData ) ||
+                            ( options.parentContext === 'accordion' && enoughData && model.isShowingIQRProperty.value );
 
       iqrRectangle.visible = iqrVisibility;
       iqrBar.visible = iqrVisibility;

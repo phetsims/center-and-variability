@@ -1,12 +1,12 @@
 // Copyright 2023, University of Colorado Boulder
 
-import { Text } from '../../../../scenery/js/imports.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import Dialog from '../../../../sun/js/Dialog.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import RangeInfoNode from './RangeInfoNode.js';
+import IQRInfoNode from './IQRInfoNode.js';
 import MADInfoNode from './MADInfoNode.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
@@ -20,7 +20,7 @@ export default class InfoDialog extends Dialog {
       tandemName: 'rangeInfoNode'
     }, {
       value: VariabilityMeasure.IQR,
-      createNode: tandem => new Text( 'IQR' ),
+      createNode: tandem => new IQRInfoNode( model, { tandem: tandem } ),
       tandemName: 'iqrInfoNode'
     }, {
       value: VariabilityMeasure.MAD,
