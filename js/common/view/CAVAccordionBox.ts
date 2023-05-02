@@ -52,6 +52,10 @@ export default class CAVAccordionBox extends AccordionBox {
       expandCollapseButtonOptions: {
         sideLength: BUTTON_SIDE_LENGTH
       },
+      // TODO: This is currently highlighting a layout issues with AccordionBox, see: https://github.com/phetsims/center-and-variability/issues/166
+      titleBarOptions: {
+        stroke: 'black'
+      },
       titleNode: titleNode
     }, providedOptions );
 
@@ -59,10 +63,6 @@ export default class CAVAccordionBox extends AccordionBox {
       rectHeight: 140,
       rectWidth: layoutBounds.width - CAVConstants.SCREEN_VIEW_X_MARGIN * 2 - CONTENT_MARGIN * 2 - options.leftMargin
     } );
-
-    // Explicitly set the local bounds so they don't change. This lets content appear next to the accordion box title.
-    // TODO: Let's review how the bounds are being used here.
-    backgroundNode.localBounds = backgroundNode.localBounds.copy();
 
     // Since the title is visible while the accordion box is open, this background will not any area above the bottom of
     // the expand/collapse button. To vertically-center things, make a new set of bounds that includes the missing space.
