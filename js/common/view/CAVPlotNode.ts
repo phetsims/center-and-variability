@@ -71,10 +71,8 @@ export default class CAVPlotNode extends Node {
     } );
     backgroundNode.addChild( distanceInMetersText );
 
-    ManualConstraint.create( this, [ numberLineNode, distanceInMetersText ], ( numberLineProxy, textProxy ) => {
-
-      // TODO-UX: This may be asymmetrical if it accounts for edge labels. Maybe use NumberLineNode.tickMarks (not the labels)
-      textProxy.centerX = numberLineProxy.centerX;
+    ManualConstraint.create( this, [ numberLineNode.tickMarkSet, distanceInMetersText ], ( tickMarkSetProxy, textProxy ) => {
+      textProxy.centerX = tickMarkSetProxy.centerX;
     } );
 
     backgroundNode.addChild( this.dotLayer );

@@ -35,6 +35,9 @@ export type NumberLineNodeOptions = SelfOptions & NodeOptions & PickRequired<Nod
 
 export default class NumberLineNode extends Node {
 
+  // For layout
+  public readonly tickMarkSet: TickMarkSet;
+
   public constructor(
     range: Range,
     meanValueProperty: TReadOnlyProperty<number | null>,
@@ -63,6 +66,8 @@ export default class NumberLineNode extends Node {
       extent: tickMarkExtent
     } );
     this.addChild( tickMarkSet );
+
+    this.tickMarkSet = tickMarkSet;
 
     const tickLabelSet = new TickLabelSet( chartTransform, Orientation.HORIZONTAL, 1, {
       extent: tickMarkExtent + 12,
