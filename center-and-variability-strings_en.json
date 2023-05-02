@@ -93,7 +93,7 @@
     "value": "Range is the distance between the maximum and minimum data points."
   },
   "iqrDescription": {
-    "value": "IQR is the middle 50%, or the distance between quartile 1 and quartile 3 = Q3 - Q1"
+    "value": "IQR is the middle 50% of the data = Q3 - Q1"
   },
   "iqrDistances": {
     "value": "Distances:"
