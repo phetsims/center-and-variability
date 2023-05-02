@@ -10,8 +10,6 @@ import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVPlotNode, { CAVPlotOptions } from '../../common/view/CAVPlotNode.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import CAVColors from '../../common/CAVColors.js';
-import Checkbox from '../../../../sun/js/Checkbox.js';
-import CAVConstants from '../../common/CAVConstants.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import VariabilityReadoutText from './VariabilityReadoutText.js';
 
@@ -29,19 +27,22 @@ export default class IQRNode extends CAVPlotNode {
       dataPointFill: CAVColors.grayDataPointFill,
       ...options
     } );
-    const iqrReadoutValueProperty = new DerivedProperty( [ model.rangeValueProperty ], rangeValue => {
-      return rangeValue ? `${rangeValue}` : '?';
-    } );
+
 
     if ( providedOptions.parentContext === 'accordion' ) {
-      // TODO: I think we need one of these in MadNode?
-      const iqrReadoutText = new VariabilityReadoutText( iqrReadoutValueProperty, CenterAndVariabilityStrings.iqrEqualsValuePatternStringProperty,
-        { fill: CAVColors.meanColorProperty, tandem: options.tandem.createTandem( 'iqrReadoutText' ), visibleProperty: model.isShowingIQRProperty } );
-      this.addChild( iqrReadoutText );
-      const iqrCheckbox = new Checkbox( model.isShowingIQRProperty, new Text( CenterAndVariabilityStrings.iqrStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ), {
-        tandem: options.tandem.createTandem( 'iqrCheckbox' )
+      const iqrReadoutValueProperty = new DerivedProperty( [ model.iqrValueProperty ], iqrValue => {
+        return iqrValue ? `${iqrValue}` : '?';
       } );
-      this.addChild( iqrCheckbox );
+
+      // TODO: I think we need one of these in MadNode?
+      const iqrReadoutText = new VariabilityReadoutText( iqrReadoutValueProperty, CenterAndVariabilityStrings.iqrEqualsValuePatternStringProperty, {
+        fill: CAVColors.meanColorProperty,
+        visibleProperty: model.isShowingIQRProperty,
+        right: this.left,
+        y: this.centerY,
+        tandem: options.tandem.createTandem( 'iqrReadoutText' )
+      } );
+      this.addChild( iqrReadoutText );
     }
 
     const needAtLeastFiveKicks = new Text( CenterAndVariabilityStrings.needAtLeastFiveKicksStringProperty, {
@@ -242,6 +243,6 @@ export default class IQRNode extends CAVPlotNode {
     model.selectedVariabilityProperty.link( updateIQRNode );
     model.numberOfDataPointsProperty.link( updateIQRNode );
   }
-  }
+}
 
-    centerAndVariability.register( 'IQRNode', IQRNode );
+centerAndVariability.register( 'IQRNode', IQRNode );

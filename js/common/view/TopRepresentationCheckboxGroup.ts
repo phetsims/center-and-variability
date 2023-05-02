@@ -156,7 +156,7 @@ export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGrou
     return {
       createNode: ( tandem: Tandem ) => {
         return TopRepresentationCheckboxGroup.createGridBox(
-          new Text( CenterAndVariabilityStrings.meanAbsoluteDeviationMADStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
+          new Text( CenterAndVariabilityStrings.madStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
           // TODO: Replace with MAD icon.
           new Node( {
             children: [

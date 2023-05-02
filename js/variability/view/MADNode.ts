@@ -11,7 +11,8 @@ import CAVPlotNode, { CAVPlotOptions } from '../../common/view/CAVPlotNode.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import CAVColors from '../../common/CAVColors.js';
-import Checkbox from '../../../../sun/js/Checkbox.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import VariabilityReadoutText from './VariabilityReadoutText.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
@@ -28,10 +29,23 @@ export default class MADNode extends CAVPlotNode {
       ...options
     } );
 
-    const madCheckbox = new Checkbox( model.isShowingMADProperty, new Text( CenterAndVariabilityStrings.madStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ), {
-      tandem: options.tandem.createTandem( 'madCheckbox' )
-    } );
-    this.addChild( madCheckbox );
+    if ( options.parentContext === 'accordion' ) {
+      const madReadoutValueProperty = new DerivedProperty( [ model.meanValueProperty ], meanValue => {
+        return meanValue ? `${meanValue}` : '?';
+      } );
+
+      const madReadoutText = new VariabilityReadoutText( madReadoutValueProperty,
+        CenterAndVariabilityStrings.meanEqualsValuePatternStringProperty, {
+          fill: CAVColors.meanColorProperty,
+          visibleProperty: model.isShowingMADProperty,
+          right: this.left,
+          y: this.centerY,
+          tandem: options.tandem.createTandem( 'rangeReadoutText' )
+        } );
+
+      this.addChild( madReadoutText );
+    }
+
 
     const needAtLeastOneKickText = new Text( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {
       fontSize: 18,

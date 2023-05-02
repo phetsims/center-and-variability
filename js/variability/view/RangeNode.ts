@@ -45,7 +45,7 @@ export default class RangeNode extends CAVPlotNode {
           fill: CAVColors.meanColorProperty,
           visibleProperty: model.isShowingRangeProperty,
           right: this.left,
-          y: 100, // TODO: Let's find a better way to position these.
+          y: this.centerY,
           tandem: options.tandem.createTandem( 'rangeReadoutText' )
         } );
 
