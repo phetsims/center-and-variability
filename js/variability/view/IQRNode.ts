@@ -34,7 +34,6 @@ export default class IQRNode extends CAVPlotNode {
         return iqrValue ? `${iqrValue}` : '?';
       } );
 
-      // TODO: I think we need one of these in MadNode?
       const iqrReadoutText = new VariabilityReadoutText( iqrReadoutValueProperty, CenterAndVariabilityStrings.iqrEqualsValuePatternStringProperty, {
         fill: CAVColors.meanColorProperty,
         visibleProperty: model.isShowingIQRProperty,
