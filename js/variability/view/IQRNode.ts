@@ -60,6 +60,14 @@ export default class IQRNode extends CAVPlotNode {
       stroke: 'black',
       lineWidth: 1
     } );
+
+    const iqrInfoBar = new MedianBarNode( {
+      notchDirection: 'up',
+      barStyle: 'continuous',
+      stroke: 'black',
+      lineWidth: 1
+    } );
+
     const iqrRectangle = new Rectangle( 0, 50, 100, 70, {
       fill: '#99ffff'
     } );
@@ -73,39 +81,41 @@ export default class IQRNode extends CAVPlotNode {
     const MEDIAN_STROKE_COLOR = 'red';
 
     const boxWhiskerNode = new Node();
+    boxWhiskerNode.y = BOX_CENTER_Y;
 
-    const boxWhiskerMedianLine = new Line( 0, BOX_CENTER_Y - BOX_HEIGHT / 2, 0, BOX_CENTER_Y + BOX_HEIGHT / 2, {
+    const boxWhiskerMedianLine = new Line( 0, -BOX_HEIGHT / 2, 0, BOX_HEIGHT / 2, {
       stroke: MEDIAN_STROKE_COLOR,
       lineWidth: MEDIAN_STROKE_WIDTH
     } );
 
-    const boxWhiskerBox = new Rectangle( 0, BOX_CENTER_Y - BOX_HEIGHT / 2, 100, BOX_HEIGHT, {
+    const boxWhiskerBox = new Rectangle( 0, -BOX_HEIGHT / 2, 100, BOX_HEIGHT, {
       stroke: BOX_STROKE_COLOR,
       lineWidth: BOX_STROKE_WIDTH
     } );
 
-    const boxWhiskerLineLeft = new Line( 0, BOX_CENTER_Y, 0, BOX_CENTER_Y, {
+    const boxWhiskerLineLeft = new Line( 0, 0, 0, 0, {
       stroke: BOX_STROKE_COLOR,
       lineWidth: BOX_STROKE_WIDTH
     } );
 
-    const boxWhiskerLineRight = new Line( 0, BOX_CENTER_Y, 0, BOX_CENTER_Y, {
+    const boxWhiskerLineRight = new Line( 0, 0, 0, 0, {
       stroke: BOX_STROKE_COLOR,
       lineWidth: BOX_STROKE_WIDTH
     } );
 
-    const boxWhiskerEndCapLeft = new Line( 0, BOX_CENTER_Y - END_CAP_HEIGHT / 2, 0, BOX_CENTER_Y + END_CAP_HEIGHT / 2, {
+    const boxWhiskerEndCapLeft = new Line( 0, -END_CAP_HEIGHT / 2, 0, END_CAP_HEIGHT / 2, {
       stroke: BOX_STROKE_COLOR,
       lineWidth: BOX_STROKE_WIDTH
     } );
 
-    const boxWhiskerEndCapRight = new Line( 0, BOX_CENTER_Y - END_CAP_HEIGHT / 2, 0, BOX_CENTER_Y + END_CAP_HEIGHT / 2, {
+    const boxWhiskerEndCapRight = new Line( 0, -END_CAP_HEIGHT / 2, 0, END_CAP_HEIGHT / 2, {
       stroke: BOX_STROKE_COLOR,
       lineWidth: BOX_STROKE_WIDTH
     } );
 
     boxWhiskerNode.addChild( iqrTextReadout );
     boxWhiskerNode.addChild( iqrBar );
+    boxWhiskerNode.addChild( iqrInfoBar );
     boxWhiskerNode.addChild( boxWhiskerMedianLine );
     boxWhiskerNode.addChild( boxWhiskerBox );
     boxWhiskerNode.addChild( boxWhiskerLineLeft );
@@ -179,8 +189,8 @@ export default class IQRNode extends CAVPlotNode {
 
         minTextLabel.string = min;
         maxTextLabel.string = max;
-        minTextLabelNode.x = minPositionX;
-        maxTextLabelNode.x = maxPositionX;
+        minTextLabelNode.centerX = minPositionX;
+        maxTextLabelNode.centerX = maxPositionX;
       }
 
       const enoughData = model.numberOfDataPointsProperty.value >= 5;
@@ -188,8 +198,8 @@ export default class IQRNode extends CAVPlotNode {
       const iqrVisibility = ( options.parentContext === 'accordion' && enoughData && model.isShowingIQRProperty.value );
 
       iqrRectangle.visible = iqrVisibility;
-      iqrBar.visible = iqrVisibility;
-      iqrTextReadout.visible = iqrVisibility;
+      iqrBar.visible = iqrVisibility || options.parentContext === 'info';
+      iqrTextReadout.visible = iqrVisibility || options.parentContext === 'info';
 
       if ( iqrVisibility ) {
         const floor = this.modelViewTransform.modelToViewY( 0 );
@@ -200,7 +210,6 @@ export default class IQRNode extends CAVPlotNode {
         // TODO: In the info dialog, this should be above the topmost data point (in the accordion box it's ok to overlap)
         iqrBar.setMedianBarShape( iqrRectangle.top - MedianBarNode.NOTCH_HEIGHT - 2, iqrRectangle.left, 0, iqrRectangle.right, false );
 
-        // TODO: Should we have model.iqrValueProperty?
         iqrTextReadout.string = model.iqrValueProperty.value!;
         iqrTextReadout.centerX = iqrRectangle.centerX;
         iqrTextReadout.bottom = iqrBar.top - 5;
@@ -213,14 +222,21 @@ export default class IQRNode extends CAVPlotNode {
                                                       ( options.parentContext === 'accordion' && model.isShowingIQRProperty.value ) );
 
       infoNumberLabels.visible = options.parentContext === 'info';
+      iqrInfoBar.visible = options.parentContext === 'info';
 
       if ( options.parentContext === 'info' && q1 && q3 ) {
-        q1TextLabelNode.x = boxLeft;
-        q3TextLabelNode.x = boxRight;
+        q1TextLabelNode.centerX = boxLeft;
+        q3TextLabelNode.centerX = boxRight;
         q1TextLabel.string = q1;
         q3TextLabel.string = q3;
+
+        iqrInfoBar.setMedianBarShape( boxWhiskerNode.y + BOX_HEIGHT + MedianBarNode.NOTCH_HEIGHT + 20, boxLeft, 0, boxRight, false );
+        iqrTextReadout.string = 'IQR = ' + model.iqrValueProperty.value!;
+        iqrTextReadout.centerX = ( boxLeft + boxRight ) / 2;
+        iqrTextReadout.top = iqrInfoBar.bottom + 5;
       }
     };
+
     model.objectChangedEmitter.addListener( updateIQRNode );
     model.isShowingIQRProperty.link( updateIQRNode );
     model.selectedVariabilityProperty.link( updateIQRNode );
