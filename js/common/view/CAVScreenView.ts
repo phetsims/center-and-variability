@@ -18,12 +18,8 @@ import { AlignBox, ManualConstraint, Node } from '../../../../scenery/js/imports
 import CAVObjectType from '../model/CAVObjectType.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
-import PredictionSlider from './PredictionSlider.js';
-import CAVColors from '../CAVColors.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DragIndicatorArrowNode from './DragIndicatorArrowNode.js';
-import Property from '../../../../axon/js/Property.js';
-import Range from '../../../../dot/js/Range.js';
 import QuestionBar, { QuestionBarOptions } from '../../../../scenery-phet/js/QuestionBar.js';
 import NumberLineNode from './NumberLineNode.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
@@ -36,6 +32,11 @@ import CAVAccordionBox from './CAVAccordionBox.js';
 import VerticalCheckboxGroup, { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
 import { AnimationMode } from '../model/AnimationMode.js';
 import SoccerBallNode from './SoccerBallNode.js';
+import PredictionSlider from './PredictionSlider.js';
+import CAVColors from '../CAVColors.js';
+import Property from '../../../../axon/js/Property.js';
+import Range from '../../../../dot/js/Range.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 type SelfOptions = {
   questionBarOptions: QuestionBarOptions;
@@ -61,9 +62,6 @@ export default class CAVScreenView extends ScreenView {
 
   // Subclasses use this to add to for correct z-ordering and correct tab navigation order
   protected readonly contentLayer = new Node();
-
-  protected readonly medianPredictionNode: PredictionSlider;
-  protected readonly meanPredictionNode: PredictionSlider;
 
   protected accordionBox: CAVAccordionBox | null = null;
 
@@ -186,26 +184,6 @@ export default class CAVScreenView extends ScreenView {
     model.objectChangedEmitter.addListener( this.updateMedianNode );
     model.isShowingPlayAreaMedianProperty.link( this.updateMedianNode );
 
-    this.medianPredictionNode = new PredictionSlider( model.medianPredictionProperty, this.modelViewTransform, model.physicalRange, {
-      predictionThumbNodeOptions: {
-        color: CAVColors.medianColorProperty
-      },
-      valueProperty: model.medianPredictionProperty,
-      enabledRangeProperty: new Property<Range>( model.physicalRange ),
-      roundToInterval: 0.5,
-      visibleProperty: model.isShowingMedianPredictionProperty,
-      tandem: options.tandem.createTandem( 'medianPredictionNode' )
-    } );
-    this.meanPredictionNode = new PredictionSlider( model.meanPredictionProperty, this.modelViewTransform, model.physicalRange, {
-      predictionThumbNodeOptions: {
-        color: CAVColors.meanColorProperty
-      },
-      valueProperty: model.meanPredictionProperty,
-      enabledRangeProperty: new Property<Range>( model.physicalRange ),
-      roundToInterval: null, // continuous
-      visibleProperty: model.isShowingMeanPredictionProperty,
-      tandem: options.tandem.createTandem( 'meanPredictionNode' )
-    } );
 
     this.resetAllButton = new ResetAllButton( {
       listener: () => {
@@ -276,12 +254,6 @@ export default class CAVScreenView extends ScreenView {
 
     // Soccer balls go behind the accordion box after they land
     this.contentLayer.addChild( this.backObjectLayer );
-
-    // Add in the same order as the checkboxes, so the z-order matches the checkbox order
-
-    // TODO: meanPredictionNode should only exist in MeanAndMedianScreenView. Neither should exist in VariabilityScreenView
-    this.contentLayer.addChild( this.meanPredictionNode );
-    this.contentLayer.addChild( this.medianPredictionNode );
   }
 
   private updateAccordionBoxPosition(): void {
@@ -342,6 +314,22 @@ export default class CAVScreenView extends ScreenView {
       xMargin: BOTTOM_CHECKBOX_PANEL_MARGIN,
       yMargin: BOTTOM_CHECKBOX_PANEL_Y_MARGIN
     } ) );
+  }
+
+  /**
+   * The MedianPredictionNode is shared in the Median screen and MeanAndMedianScreen, so factored out here.
+   */
+  public static createMedianPredictionNode( model: CAVModel, modelViewTransform: ModelViewTransform2, tandem: Tandem ): PredictionSlider {
+    return new PredictionSlider( model.medianPredictionProperty, modelViewTransform, model.physicalRange, {
+      predictionThumbNodeOptions: {
+        color: CAVColors.medianColorProperty
+      },
+      valueProperty: model.medianPredictionProperty,
+      enabledRangeProperty: new Property<Range>( model.physicalRange ),
+      roundToInterval: 0.5,
+      visibleProperty: model.isShowingMedianPredictionProperty,
+      tandem: tandem
+    } );
   }
 }
 

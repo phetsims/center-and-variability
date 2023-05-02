@@ -13,11 +13,14 @@ import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
 import CAVColors from '../../common/CAVColors.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import { AlignGroup } from '../../../../scenery/js/imports.js';
+import Range from '../../../../dot/js/Range.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import CAVScreenView, { CAVScreenViewOptions } from '../../common/view/CAVScreenView.js';
 import MeanAndMedianAccordionBox from './MeanAndMedianAccordionBox.js';
 import BottomRepresentationCheckboxGroup from '../../common/view/BottomRepresentationCheckboxGroup.js';
 import CAVConstants from '../../common/CAVConstants.js';
+import PredictionSlider from '../../common/view/PredictionSlider.js';
+import Property from '../../../../axon/js/Property.js';
 
 type MeanAndMedianScreenViewOptions = StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
 
@@ -43,6 +46,22 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
       BottomRepresentationCheckboxGroup.getMedianCheckboxItem( iconGroup, model ),
       BottomRepresentationCheckboxGroup.getMeanCheckboxItem( iconGroup, model )
     ] );
+
+    this.contentLayer.addChild( new PredictionSlider( model.meanPredictionProperty, this.modelViewTransform, model.physicalRange, {
+      predictionThumbNodeOptions: {
+        color: CAVColors.meanColorProperty
+      },
+      valueProperty: model.meanPredictionProperty,
+      enabledRangeProperty: new Property<Range>( model.physicalRange ),
+      roundToInterval: null, // continuous
+      visibleProperty: model.isShowingMeanPredictionProperty,
+      tandem: options.tandem.createTandem( 'meanPredictionNode' )
+    } ) );
+    this.contentLayer.addChild( CAVScreenView.createMedianPredictionNode(
+      model,
+      this.modelViewTransform,
+      options.tandem.createTandem( 'medianPredictionNode' )
+    ) );
   }
 }
 
