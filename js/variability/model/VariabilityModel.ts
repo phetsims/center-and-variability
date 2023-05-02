@@ -39,6 +39,7 @@ export default class VariabilityModel extends CAVModel {
   public readonly rangeValueProperty: TReadOnlyProperty<number | null>;
   public readonly q1ValueProperty: Property<number | null>;
   public readonly q3ValueProperty: Property<number | null>;
+  public readonly iqrValueProperty: TReadOnlyProperty<number | null>;
   public readonly madValueProperty: Property<number | null>;
 
   public constructor( options: VariabilityModelOptions ) {
@@ -100,6 +101,9 @@ export default class VariabilityModel extends CAVModel {
       tandem: options.tandem.createTandem( 'q3ValueProperty' ),
       phetioValueType: NullableIO( NumberIO ),
       phetioReadOnly: true
+    } );
+    this.iqrValueProperty = new DerivedProperty( [ this.q1ValueProperty, this.q3ValueProperty ], ( q1, q3 ) => {
+      return q3! - q1!;
     } );
 
     this.madValueProperty = new Property<number | null>( null, {

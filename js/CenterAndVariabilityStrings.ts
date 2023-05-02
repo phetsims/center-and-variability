@@ -44,6 +44,9 @@ type StringsType = {
   'valueUnknownStringProperty': LinkableProperty<string>;
   'youSortedTheDataStringProperty': LinkableProperty<string>;
   'rangeDescriptionStringProperty': LinkableProperty<string>;
+  'iqrDescriptionStringProperty': LinkableProperty<string>;
+  'iqrDistancesStringProperty': LinkableProperty<string>;
+  'iqrCalculationPatternStringProperty': LinkableProperty<string>;
   'madDescriptionStringProperty': LinkableProperty<string>;
   'madCalculationPatternStringProperty': LinkableProperty<string>;
   'madCalculationResultPatternStringProperty': LinkableProperty<string>;

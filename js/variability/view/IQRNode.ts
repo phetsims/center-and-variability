@@ -33,14 +33,17 @@ export default class IQRNode extends CAVPlotNode {
       return rangeValue ? `${rangeValue}` : '?';
     } );
 
-    // TODO: I think we need one of these in MadNode?
-    const iqrReadoutText = new VariabilityReadoutText( iqrReadoutValueProperty, CenterAndVariabilityStrings.iqrEqualsValuePatternStringProperty,
-      { fill: CAVColors.meanColorProperty, tandem: options.tandem.createTandem( 'iqrReadoutText' ), visibleProperty: model.isShowingIQRProperty } );
-    this.addChild( iqrReadoutText );
-    const iqrCheckbox = new Checkbox( model.isShowingIQRProperty, new Text( CenterAndVariabilityStrings.iqrStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ), {
-      tandem: options.tandem.createTandem( 'iqrCheckbox' )
-    } );
-    this.addChild( iqrCheckbox );
+    if ( providedOptions.parentContext === 'accordion' ) {
+      // TODO: I think we need one of these in MadNode?
+      const iqrReadoutText = new VariabilityReadoutText( iqrReadoutValueProperty, CenterAndVariabilityStrings.iqrEqualsValuePatternStringProperty,
+        { fill: CAVColors.meanColorProperty, tandem: options.tandem.createTandem( 'iqrReadoutText' ), visibleProperty: model.isShowingIQRProperty } );
+      this.addChild( iqrReadoutText );
+      const iqrCheckbox = new Checkbox( model.isShowingIQRProperty, new Text( CenterAndVariabilityStrings.iqrStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ), {
+        tandem: options.tandem.createTandem( 'iqrCheckbox' )
+      } );
+      this.addChild( iqrCheckbox );
+    }
+
     const needAtLeastFiveKicks = new Text( CenterAndVariabilityStrings.needAtLeastFiveKicksStringProperty, {
       fontSize: 18,
       top: 100
@@ -61,7 +64,7 @@ export default class IQRNode extends CAVPlotNode {
       fill: '#99ffff'
     } );
 
-    const BOX_CENTER_Y = 78;
+    const BOX_CENTER_Y = options.parentContext === 'info' ? -20 : 78;
     const BOX_HEIGHT = 25;
     const END_CAP_HEIGHT = 15;
     const BOX_STROKE_WIDTH = 2;
@@ -115,6 +118,32 @@ export default class IQRNode extends CAVPlotNode {
 
     iqrRectangle.moveToBack();
 
+    const infoNumberLabels = new Node();
+
+    infoNumberLabels.y = -40;
+
+    const minTextLabelNode = new Node();
+    const maxTextLabelNode = new Node();
+    const q1TextLabelNode = new Node();
+    const q3TextLabelNode = new Node();
+
+    const minTextLabel = new Text( '', { fontSize: 18 } );
+    const maxTextLabel = new Text( '', { fontSize: 18 } );
+    const q1TextLabel = new Text( '', { fontSize: 18 } );
+    const q3TextLabel = new Text( '', { fontSize: 18 } );
+
+    minTextLabelNode.addChild( minTextLabel );
+    maxTextLabelNode.addChild( maxTextLabel );
+    q1TextLabelNode.addChild( q1TextLabel );
+    q3TextLabelNode.addChild( q3TextLabel );
+
+    infoNumberLabels.addChild( minTextLabelNode );
+    infoNumberLabels.addChild( maxTextLabelNode );
+    infoNumberLabels.addChild( q1TextLabelNode );
+    infoNumberLabels.addChild( q3TextLabelNode );
+
+    this.addChild( infoNumberLabels );
+
     const updateIQRNode = () => {
 
       const sortedDots = _.sortBy( model.getActiveSoccerBalls().filter( object => object.valueProperty.value !== null ),
@@ -122,8 +151,11 @@ export default class IQRNode extends CAVPlotNode {
       const leftmostDot = sortedDots[ 0 ];
       const rightmostDot = sortedDots[ sortedDots.length - 1 ];
 
-      const boxLeft = this.modelViewTransform.modelToViewX( model.q1ValueProperty.value! );
-      const boxRight = this.modelViewTransform.modelToViewX( model.q3ValueProperty.value! );
+      const q1 = model.q1ValueProperty.value!;
+      const q3 = model.q3ValueProperty.value!;
+
+      const boxLeft = this.modelViewTransform.modelToViewX( q1 );
+      const boxRight = this.modelViewTransform.modelToViewX( q3 );
 
       boxWhiskerMedianLine.x1 = boxWhiskerMedianLine.x2 = this.modelViewTransform.modelToViewX( model.medianValueProperty.value! );
 
@@ -131,23 +163,29 @@ export default class IQRNode extends CAVPlotNode {
       boxWhiskerBox.rectWidth = boxRight - boxLeft;
 
       if ( leftmostDot && rightmostDot ) {
-        const minValue = this.modelViewTransform.modelToViewX( leftmostDot.valueProperty.value! );
-        const maxValue = this.modelViewTransform.modelToViewX( rightmostDot.valueProperty.value! );
+        const min = leftmostDot.valueProperty.value!;
+        const max = rightmostDot.valueProperty.value!;
+        const minPositionX = this.modelViewTransform.modelToViewX( min );
+        const maxPositionX = this.modelViewTransform.modelToViewX( max );
 
-        boxWhiskerLineLeft.x1 = boxWhiskerEndCapLeft.x1 = boxWhiskerEndCapLeft.x2 = minValue;
+        boxWhiskerLineLeft.x1 = boxWhiskerEndCapLeft.x1 = boxWhiskerEndCapLeft.x2 = minPositionX;
         boxWhiskerLineLeft.x2 = boxLeft;
 
         boxWhiskerLineRight.x1 = boxRight;
-        boxWhiskerLineRight.x2 = boxWhiskerEndCapRight.x1 = boxWhiskerEndCapRight.x2 = maxValue;
+        boxWhiskerLineRight.x2 = boxWhiskerEndCapRight.x1 = boxWhiskerEndCapRight.x2 = maxPositionX;
 
-        boxWhiskerEndCapLeft.visible = boxLeft !== minValue;
-        boxWhiskerEndCapRight.visible = boxRight !== maxValue;
+        boxWhiskerEndCapLeft.visible = boxLeft !== minPositionX;
+        boxWhiskerEndCapRight.visible = boxRight !== maxPositionX;
+
+        minTextLabel.string = min;
+        maxTextLabel.string = max;
+        minTextLabelNode.x = minPositionX;
+        maxTextLabelNode.x = maxPositionX;
       }
 
       const enoughData = model.numberOfDataPointsProperty.value >= 5;
 
-      const iqrVisibility = ( options.parentContext === 'info' && enoughData ) ||
-                            ( options.parentContext === 'accordion' && enoughData && model.isShowingIQRProperty.value );
+      const iqrVisibility = ( options.parentContext === 'accordion' && enoughData && model.isShowingIQRProperty.value );
 
       iqrRectangle.visible = iqrVisibility;
       iqrBar.visible = iqrVisibility;
@@ -163,7 +201,7 @@ export default class IQRNode extends CAVPlotNode {
         iqrBar.setMedianBarShape( iqrRectangle.top - MedianBarNode.NOTCH_HEIGHT - 2, iqrRectangle.left, 0, iqrRectangle.right, false );
 
         // TODO: Should we have model.iqrValueProperty?
-        iqrTextReadout.string = model.q3ValueProperty.value! - model.q1ValueProperty.value!;
+        iqrTextReadout.string = model.iqrValueProperty.value!;
         iqrTextReadout.centerX = iqrRectangle.centerX;
         iqrTextReadout.bottom = iqrBar.top - 5;
       }
@@ -173,12 +211,21 @@ export default class IQRNode extends CAVPlotNode {
       needAtLeastFiveKicks.center = this.modelViewTransform.modelToViewXY( 8, 2 );
       needAtLeastFiveKicks.visible = !enoughData && ( options.parentContext === 'info' ||
                                                       ( options.parentContext === 'accordion' && model.isShowingIQRProperty.value ) );
+
+      infoNumberLabels.visible = options.parentContext === 'info';
+
+      if ( options.parentContext === 'info' && q1 && q3 ) {
+        q1TextLabelNode.x = boxLeft;
+        q3TextLabelNode.x = boxRight;
+        q1TextLabel.string = q1;
+        q3TextLabel.string = q3;
+      }
     };
     model.objectChangedEmitter.addListener( updateIQRNode );
     model.isShowingIQRProperty.link( updateIQRNode );
     model.selectedVariabilityProperty.link( updateIQRNode );
     model.numberOfDataPointsProperty.link( updateIQRNode );
   }
-}
+  }
 
-centerAndVariability.register( 'IQRNode', IQRNode );
+    centerAndVariability.register( 'IQRNode', IQRNode );
