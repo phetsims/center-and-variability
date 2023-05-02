@@ -12,7 +12,6 @@ import centerAndVariability from '../../centerAndVariability.js';
 import { ManualConstraint, Node, NodeOptions, Rectangle, TColor, Text } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import CAVModel from '../model/CAVModel.js';
-import CAVObjectType from '../model/CAVObjectType.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import NumberLineNode from './NumberLineNode.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
@@ -40,16 +39,16 @@ export default class CAVPlotNode extends Node {
     const backgroundNode = new Rectangle( 0, 0, CAVConstants.CHART_VIEW_WIDTH, 180 );
     this.addChild( backgroundNode );
 
-    // scale down in the y direction to support smaller object nodes
-    const yScale = CAVObjectType.DATA_POINT.radius / CAVObjectType.SOCCER_BALL.radius;
     const numberLinePositionY = 127;
 
-    // TODO: we currently define the y range with the x width because we are thinking of it as a square, with a stack of
-    // 15 balls as the high point. Consider instead something like above, where we just base the y scaling on the height
-    // of one ball.
+    // Empirically determined
+    const dataPointHeight = 17;
+
+    // Coordinates here are somewhat unusual, since x dimension is based off of meters, and y dimension is based off of
+    // number of objects.
     const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
-      new Bounds2( model.physicalRange.min, 0, model.physicalRange.max, model.maxSoccerBalls ),
-      new Bounds2( 0, numberLinePositionY - CAVConstants.CHART_VIEW_WIDTH * yScale, 0 + CAVConstants.CHART_VIEW_WIDTH, numberLinePositionY )
+      new Bounds2( model.physicalRange.min, 0, model.physicalRange.max, 1 ),
+      new Bounds2( 0, numberLinePositionY - dataPointHeight, CAVConstants.CHART_VIEW_WIDTH, numberLinePositionY )
     );
     this.modelViewTransform = modelViewTransform;
 
