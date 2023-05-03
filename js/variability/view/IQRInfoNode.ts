@@ -32,10 +32,21 @@ export default class IQRInfoNode extends VBox {
 
         // TODO: String key name
         distancesText,
+<<<<<<< HEAD
         new Text( new PatternStringProperty( CenterAndVariabilityStrings.iqrCalculationPatternStringProperty, {
           q1: sceneModel.q1ValueProperty,
           q3: sceneModel.q3ValueProperty,
           iqr: sceneModel.iqrValueProperty
+=======
+
+        new Text( new PatternStringProperty( CenterAndVariabilityStrings.iqrCalculationPattern1StringProperty, {
+          q1: model.q1ValueProperty,
+          q3: model.q3ValueProperty
+        } ), { fontSize: 18, visibleProperty: hasEnoughDataProperty, maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH } ),
+
+        new Text( new PatternStringProperty( CenterAndVariabilityStrings.iqrCalculationPattern2StringProperty, {
+          iqr: model.iqrValueProperty
+>>>>>>> b8b9d98 (Update text in IQRNode info display - see https://github.com/phetsims/center-and-variability/issues/160)
         } ), { fontSize: 18, visibleProperty: hasEnoughDataProperty, maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH, layoutOptions: { bottomMargin: 10 } } ),
 
         new IQRNode( model, sceneModel, {

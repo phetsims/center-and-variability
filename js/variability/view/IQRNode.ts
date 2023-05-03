@@ -82,7 +82,6 @@ export default class IQRNode extends CAVPlotNode {
     this.addChild( medianTextLabel );
     this.addChild( medianArrowNode );
 
-
     const BOX_CENTER_Y = options.parentContext === 'info' ? -20 : 78;
     const BOX_HEIGHT = 25;
     const END_CAP_HEIGHT = 15;
@@ -200,8 +199,12 @@ export default class IQRNode extends CAVPlotNode {
         maxTextLabel.centerX = maxPositionX;
       }
 
+<<<<<<< HEAD
       const enoughData = sceneModel.numberOfDataPointsProperty.value >= 5;
 
+=======
+      const enoughData = model.numberOfDataPointsProperty.value >= 5;
+>>>>>>> b8b9d98 (Update text in IQRNode info display - see https://github.com/phetsims/center-and-variability/issues/160)
       const iqrVisibility = ( options.parentContext === 'accordion' && enoughData && model.isShowingIQRProperty.value );
 
       iqrRectangle.visible = iqrVisibility;

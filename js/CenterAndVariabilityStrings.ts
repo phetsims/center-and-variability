@@ -46,7 +46,8 @@ type StringsType = {
   'rangeDescriptionStringProperty': LinkableProperty<string>;
   'iqrDescriptionStringProperty': LinkableProperty<string>;
   'iqrDistancesStringProperty': LinkableProperty<string>;
-  'iqrCalculationPatternStringProperty': LinkableProperty<string>;
+  'iqrCalculationPattern1StringProperty': LinkableProperty<string>;
+  'iqrCalculationPattern2StringProperty': LinkableProperty<string>;
   'madDescriptionStringProperty': LinkableProperty<string>;
   'madEqualsStringProperty': LinkableProperty<string>;
   'madCalculationResultPatternStringProperty': LinkableProperty<string>;
