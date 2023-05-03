@@ -199,12 +199,7 @@ export default class IQRNode extends CAVPlotNode {
         maxTextLabel.centerX = maxPositionX;
       }
 
-<<<<<<< HEAD
       const enoughData = sceneModel.numberOfDataPointsProperty.value >= 5;
-
-=======
-      const enoughData = model.numberOfDataPointsProperty.value >= 5;
->>>>>>> b8b9d98 (Update text in IQRNode info display - see https://github.com/phetsims/center-and-variability/issues/160)
       const iqrVisibility = ( options.parentContext === 'accordion' && enoughData && model.isShowingIQRProperty.value );
 
       iqrRectangle.visible = iqrVisibility;
