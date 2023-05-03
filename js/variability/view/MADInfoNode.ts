@@ -70,7 +70,7 @@ export default class MADInfoNode extends VBox {
         new HBox( {
           spacing: 10,
           children: [
-            new Text( CenterAndVariabilityStrings.madCalculationPatternStringProperty, { fontSize: 18 } ),
+            new Text( CenterAndVariabilityStrings.madEqualsStringProperty, { fontSize: 18 } ),
             calculationFraction,
             new Text( MathSymbols.EQUAL_TO, { fontSize: 18 } ),
             resultFraction
