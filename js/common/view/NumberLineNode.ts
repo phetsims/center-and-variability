@@ -39,7 +39,6 @@ export default class NumberLineNode extends Node {
   public readonly tickMarkSet: TickMarkSet;
 
   public constructor(
-    range: Range,
     meanValueProperty: TReadOnlyProperty<number | null>,
     isShowingMeanIndicatorProperty: TReadOnlyProperty<boolean>,
     rangeProperty: TReadOnlyProperty<Range | null>,
@@ -57,7 +56,7 @@ export default class NumberLineNode extends Node {
 
     const chartTransform = new ChartTransform( {
       viewWidth: CAVConstants.CHART_VIEW_WIDTH,
-      modelXRange: range,
+      modelXRange: CAVConstants.PHYSICAL_RANGE,
       viewHeight: tickMarkExtent / 2,
       modelYRange: new Range( 0, 1 )
     } );
@@ -109,7 +108,7 @@ export default class NumberLineNode extends Node {
     // TODO: Can we make a 1d MVT since that's all that's needed here, or should this be using the same MVT as the outer MVT?  Like the one that positions the number line node
     // and puts objects in the right spots.
     const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
-      new Bounds2( range.min, 0, range.max, range.getLength() ),
+      new Bounds2( CAVConstants.PHYSICAL_RANGE.min, 0, CAVConstants.PHYSICAL_RANGE.max, CAVConstants.PHYSICAL_RANGE.getLength() ),
       new Bounds2( 0, -CAVConstants.CHART_VIEW_WIDTH, CAVConstants.CHART_VIEW_WIDTH, CAVConstants.CHART_VIEW_WIDTH )
     );
 

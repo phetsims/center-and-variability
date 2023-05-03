@@ -13,6 +13,7 @@ import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import CAVColors from '../../common/CAVColors.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import VariabilityReadoutText from './VariabilityReadoutText.js';
+import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
@@ -20,18 +21,18 @@ type SelfOptions = {
 type IQRNodeOptions = SelfOptions & StrictOmit<CAVPlotOptions, 'dataPointFill'>;
 
 export default class IQRNode extends CAVPlotNode {
-  public constructor( model: VariabilityModel, providedOptions: IQRNodeOptions ) {
+  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, providedOptions: IQRNodeOptions ) {
 
     const options = providedOptions;
 
-    super( model, {
+    super( model, sceneModel, {
       dataPointFill: CAVColors.grayDataPointFill,
       ...options
     } );
 
 
     if ( providedOptions.parentContext === 'accordion' ) {
-      const iqrReadoutValueProperty = new DerivedProperty( [ model.iqrValueProperty ], iqrValue => {
+      const iqrReadoutValueProperty = new DerivedProperty( [ sceneModel.iqrValueProperty ], iqrValue => {
         return iqrValue ? `${iqrValue}` : '?';
       } );
 
@@ -156,22 +157,22 @@ export default class IQRNode extends CAVPlotNode {
 
     const updateIQRNode = () => {
 
-      const sortedDots = _.sortBy( model.getActiveSoccerBalls().filter( object => object.valueProperty.value !== null ),
+      const sortedDots = _.sortBy( sceneModel.getActiveSoccerBalls().filter( object => object.valueProperty.value !== null ),
         object => object.valueProperty.value );
       const leftmostDot = sortedDots[ 0 ];
       const rightmostDot = sortedDots[ sortedDots.length - 1 ];
 
-      const q1 = model.q1ValueProperty.value!;
-      const q3 = model.q3ValueProperty.value!;
+      const q1 = sceneModel.q1ValueProperty.value!;
+      const q3 = sceneModel.q3ValueProperty.value!;
 
       const boxLeft = this.modelViewTransform.modelToViewX( q1 );
       const boxRight = this.modelViewTransform.modelToViewX( q3 );
 
-      const medianPositionX = this.modelViewTransform.modelToViewX( model.medianValueProperty.value! );
+      const medianPositionX = this.modelViewTransform.modelToViewX( sceneModel.medianValueProperty.value! );
       boxWhiskerMedianLine.x1 = boxWhiskerMedianLine.x2 = medianPositionX;
 
       medianArrowNode.setTailAndTip( medianPositionX, MEDIAN_ARROW_OFFSET_Y, medianPositionX, MEDIAN_ARROW_OFFSET_Y + INFO_ARROW_LENGTH );
-      medianTextLabel.string = 'median = ' + model.medianValueProperty.value!;
+      medianTextLabel.string = 'median = ' + sceneModel.medianValueProperty.value!;
       medianTextLabel.centerX = medianPositionX;
       medianTextLabel.bottom = medianArrowNode.tailY - 6;
 
@@ -199,7 +200,7 @@ export default class IQRNode extends CAVPlotNode {
         maxTextLabel.centerX = maxPositionX;
       }
 
-      const enoughData = model.numberOfDataPointsProperty.value >= 5;
+      const enoughData = sceneModel.numberOfDataPointsProperty.value >= 5;
 
       const iqrVisibility = ( options.parentContext === 'accordion' && enoughData && model.isShowingIQRProperty.value );
 
@@ -216,7 +217,7 @@ export default class IQRNode extends CAVPlotNode {
         // TODO: In the info dialog, this should be above the topmost data point (in the accordion box it's ok to overlap)
         iqrBar.setMedianBarShape( iqrRectangle.top - MedianBarNode.NOTCH_HEIGHT - 2, iqrRectangle.left, 0, iqrRectangle.right, false );
 
-        iqrTextReadout.string = model.iqrValueProperty.value!;
+        iqrTextReadout.string = sceneModel.iqrValueProperty.value!;
         iqrTextReadout.centerX = iqrRectangle.centerX;
         iqrTextReadout.bottom = iqrBar.top - 5;
       }
@@ -239,16 +240,16 @@ export default class IQRNode extends CAVPlotNode {
         q3TextLabel.string = q3;
 
         iqrInfoBar.setMedianBarShape( boxWhiskerNode.y + BOX_HEIGHT + MedianBarNode.NOTCH_HEIGHT + 20, boxLeft, 0, boxRight, false );
-        iqrTextReadout.string = 'IQR = ' + model.iqrValueProperty.value!;
+        iqrTextReadout.string = 'IQR = ' + sceneModel.iqrValueProperty.value!;
         iqrTextReadout.centerX = ( boxLeft + boxRight ) / 2;
         iqrTextReadout.top = iqrInfoBar.bottom + 5;
       }
     };
 
-    model.objectChangedEmitter.addListener( updateIQRNode );
+    sceneModel.objectChangedEmitter.addListener( updateIQRNode );
     model.isShowingIQRProperty.link( updateIQRNode );
     model.selectedVariabilityProperty.link( updateIQRNode );
-    model.numberOfDataPointsProperty.link( updateIQRNode );
+    sceneModel.numberOfDataPointsProperty.link( updateIQRNode );
   }
 }
 

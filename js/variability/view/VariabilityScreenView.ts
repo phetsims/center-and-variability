@@ -22,6 +22,7 @@ import CAVScreenView, { CAVScreenViewOptions } from '../../common/view/CAVScreen
 import VariabilityAccordionBox from './VariabilityAccordionBox.js';
 import BottomRepresentationCheckboxGroup from '../../common/view/BottomRepresentationCheckboxGroup.js';
 import CAVConstants from '../../common/CAVConstants.js';
+import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
@@ -51,7 +52,7 @@ export default class VariabilityScreenView extends CAVScreenView {
         variabilityRadioButtonGroupWrapper.centerY = accordionBoxWrapper.centerY;
       } );
 
-    const distributionRadioButtonGroup = new DistributionRadioButtonGroup( model.selectedDistributionProperty, {
+    const distributionRadioButtonGroup = new DistributionRadioButtonGroup( model.selectedSceneModelProperty, {
       left: 10,
       tandem: options.tandem.createTandem( 'distributionRadioButtonGroup' )
     } );
@@ -65,16 +66,22 @@ export default class VariabilityScreenView extends CAVScreenView {
     this.addChild( distributionRadioButtonGroup );
     this.addChild( variabilityMeasureRadioButtonGroup );
 
-    const infoDialog = new InfoDialog( model, {
-      tandem: options.tandem.createTandem( 'infoDialog' )
-    } );
-    model.isInfoShowingProperty.link( isInfoShowing => {
-      if ( isInfoShowing ) {
-        infoDialog.show();
-      }
-      else {
-        infoDialog.hide();
-      }
+    model.sceneModels.forEach( sceneModel => {
+
+      // TODO: VariabilityModel should know the scene models
+      // TODO: Should the info dialogs be in SceneView? Probably.
+      // TODO: Only show the one for the selected scene
+      const infoDialog = new InfoDialog( model, sceneModel as VariabilitySceneModel, {
+        tandem: options.tandem.createTandem( 'infoDialog' )
+      } );
+      model.isInfoShowingProperty.link( isInfoShowing => {
+        if ( isInfoShowing ) {
+          infoDialog.show();
+        }
+        else {
+          infoDialog.hide();
+        }
+      } );
     } );
 
     const iconGroup = new AlignGroup();

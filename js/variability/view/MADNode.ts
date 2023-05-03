@@ -13,6 +13,7 @@ import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import CAVColors from '../../common/CAVColors.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import VariabilityReadoutText from './VariabilityReadoutText.js';
+import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
@@ -20,17 +21,17 @@ type SelfOptions = {
 type RangeNodeOptions = SelfOptions & StrictOmit<CAVPlotOptions, 'dataPointFill'>;
 
 export default class MADNode extends CAVPlotNode {
-  public constructor( model: VariabilityModel, providedOptions: RangeNodeOptions ) {
+  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, providedOptions: RangeNodeOptions ) {
 
     const options = providedOptions;
 
-    super( model, {
+    super( model, sceneModel, {
       dataPointFill: CAVColors.grayDataPointFill,
       ...options
     } );
 
     if ( options.parentContext === 'accordion' ) {
-      const madReadoutValueProperty = new DerivedProperty( [ model.meanValueProperty ], meanValue => {
+      const madReadoutValueProperty = new DerivedProperty( [ sceneModel.meanValueProperty ], meanValue => {
         return meanValue ? `${meanValue}` : '?';
       } );
 
@@ -96,7 +97,7 @@ export default class MADNode extends CAVPlotNode {
 
       const children: Node[] = [];
 
-      const sortedDots = _.sortBy( model.getActiveSoccerBalls().filter( soccerBall => soccerBall.valueProperty.value !== null ),
+      const sortedDots = _.sortBy( sceneModel.getActiveSoccerBalls().filter( soccerBall => soccerBall.valueProperty.value !== null ),
         object => object.valueProperty.value );
 
       if ( sortedDots.length > 0 ) {
@@ -114,7 +115,7 @@ export default class MADNode extends CAVPlotNode {
           children.push( line );
 
           if ( options.parentContext === 'info' ) {
-            const distanceToMean = Math.abs( dot.valueProperty.value! - model.meanValueProperty.value! );
+            const distanceToMean = Math.abs( dot.valueProperty.value! - sceneModel.meanValueProperty.value! );
             const text = new Text( Utils.toFixed( distanceToMean, 1 ), {
               font: new PhetFont( 13 ),
               centerBottom: line.centerTop
@@ -130,13 +131,13 @@ export default class MADNode extends CAVPlotNode {
       lineContainer.children = children;
       lineContainer.visible = sortedDots.length > 0;
 
-      const mad = model.madValueProperty.value;
+      const mad = sceneModel.madValueProperty.value;
 
       madRectangle.rectWidth = this.modelViewTransform.modelToViewDeltaX( mad === null ? 0 : mad * 2 );
       madRectangle.visible = ( options.parentContext === 'info' || model.isShowingMADProperty.value ) && mad !== null;
 
       if ( mad !== null ) {
-        const viewCenterX = this.modelViewTransform.modelToViewX( model.meanValueProperty.value! );
+        const viewCenterX = this.modelViewTransform.modelToViewX( sceneModel.meanValueProperty.value! );
         const viewFloorY = this.modelViewTransform.modelToViewY( 0 );
 
         if ( options.parentContext === 'info' ) {
@@ -160,14 +161,14 @@ export default class MADNode extends CAVPlotNode {
       leftReadout.visible = ( options.parentContext === 'info' || model.isShowingMADProperty.value ) && mad !== null && sortedDots.length > 1;
       rightReadout.visible = ( options.parentContext === 'info' || model.isShowingMADProperty.value ) && mad !== null && sortedDots.length > 1;
 
-      needAtLeastOneKickText.visible = model.numberOfDataPointsProperty.value === 0 && ( options.parentContext === 'info' || model.isShowingMADProperty.value );
+      needAtLeastOneKickText.visible = sceneModel.numberOfDataPointsProperty.value === 0 && ( options.parentContext === 'info' || model.isShowingMADProperty.value );
     };
-    model.objectChangedEmitter.addListener( update );
+    sceneModel.objectChangedEmitter.addListener( update );
     model.isShowingMADProperty.link( update );
     model.selectedVariabilityProperty.link( update );
-    model.numberOfDataPointsProperty.link( update );
-    model.meanValueProperty.link( update );
-    model.madValueProperty.link( update );
+    sceneModel.numberOfDataPointsProperty.link( update );
+    sceneModel.meanValueProperty.link( update );
+    sceneModel.madValueProperty.link( update );
   }
 }
 

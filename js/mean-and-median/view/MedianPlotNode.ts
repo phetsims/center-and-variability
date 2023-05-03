@@ -16,6 +16,7 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import CAVPlotNode from '../../common/view/CAVPlotNode.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
 import CAVObjectType from '../../common/model/CAVObjectType.js';
+import CAVModel from '../../common/model/CAVModel.js';
 
 export type CAVPlotOptions = NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
@@ -29,8 +30,8 @@ export default class MedianPlotNode extends CAVPlotNode {
     barStyle: 'continuous'
   } );
 
-  public constructor( model: CAVSceneModel, providedOptions: CAVPlotOptions ) {
-    super( model, {
+  public constructor( model: CAVModel, sceneModel: CAVSceneModel, providedOptions: CAVPlotOptions ) {
+    super( model, sceneModel, {
       dataPointFill: 'black',
       ...providedOptions
     } );
@@ -41,11 +42,11 @@ export default class MedianPlotNode extends CAVPlotNode {
 
     const updateMedianBarNode = () => {
 
-      const sortedDots = _.sortBy( model.getActiveSoccerBalls().filter( soccerBall => soccerBall.valueProperty.value !== null ),
+      const sortedDots = _.sortBy( sceneModel.getActiveSoccerBalls().filter( soccerBall => soccerBall.valueProperty.value !== null ),
         object => object.valueProperty.value );
       const leftmostSoccerBall = sortedDots[ 0 ];
 
-      const medianValue = model.medianValueProperty.value;
+      const medianValue = sceneModel.medianValueProperty.value;
 
       const MARGIN_Y = 5;
 
@@ -72,7 +73,7 @@ export default class MedianPlotNode extends CAVPlotNode {
         this.medianBarNode.clear();
       }
     };
-    model.objectChangedEmitter.addListener( updateMedianBarNode );
+    sceneModel.objectChangedEmitter.addListener( updateMedianBarNode );
     model.isShowingTopMedianProperty.link( updateMedianBarNode );
     if ( model instanceof MeanAndMedianModel ) {
       model.isMedianAnimationCompleteProperty.link( updateMedianBarNode );

@@ -9,13 +9,14 @@
 
 import centerAndVariability from '../../centerAndVariability.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import CAVSceneModel, { CAVModelOptions } from '../../common/model/CAVSceneModel.js';
+import CAVSceneModel from '../../common/model/CAVSceneModel.js';
+import CAVModel from '../../common/model/CAVModel.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 // constants
 const HIGHLIGHT_ANIMATION_TIME_STEP = 0.25; // in seconds
 
-export default class MeanAndMedianModel extends CAVSceneModel {
-
+export default class MeanAndMedianModel extends CAVModel {
 
   // Indicates how far the show median animation has progressed, or null if not animating. Not PhET-iO instrumented since
   // it represents a transient value.
@@ -24,8 +25,13 @@ export default class MeanAndMedianModel extends CAVSceneModel {
   private lastHighlightAnimationStepTime = 0;
   public readonly isMedianAnimationCompleteProperty = new BooleanProperty( false );
 
-  public constructor( options: CAVModelOptions ) {
-    super( options );
+  public constructor( options: { tandem: Tandem } ) {
+
+    const scene = new CAVSceneModel( { tandem: options.tandem.createTandem( 'sceneModel' ) } );
+    super( [ scene ], {
+      ...options,
+      instrumentMeanPredictionProperty: true
+    } );
 
     // Don't show animation on startup or when setting PhET-iO state
     this.isShowingTopMedianProperty.lazyLink( isShowingTopMedian => {
@@ -33,7 +39,7 @@ export default class MeanAndMedianModel extends CAVSceneModel {
 
         if ( !phet.joist.sim.isSettingPhetioStateProperty.value ) {
           this.highlightAnimationIndex = 0;
-          this.lastHighlightAnimationStepTime = this.timeProperty.value;
+          this.lastHighlightAnimationStepTime = scene.timeProperty.value;
         }
         else {
 
@@ -47,7 +53,7 @@ export default class MeanAndMedianModel extends CAVSceneModel {
       }
     } );
 
-    this.objectValueBecameNonNullEmitter.addListener( () => this.updateAnimation() );
+    scene.objectValueBecameNonNullEmitter.addListener( () => this.updateAnimation() );
   }
 
   public override reset(): void {
@@ -63,12 +69,12 @@ export default class MeanAndMedianModel extends CAVSceneModel {
 
   private clearAnimation(): void {
     this.highlightAnimationIndex = null;
-    this.soccerBalls.forEach( soccerBall => soccerBall.isShowingAnimationHighlightProperty.set( false ) );
+    this.selectedSceneModelProperty.value.soccerBalls.forEach( soccerBall => soccerBall.isShowingAnimationHighlightProperty.set( false ) );
   }
 
   private updateAnimation(): void {
 
-    const sortedObjects = this.getSortedLandedObjects();
+    const sortedObjects = this.selectedSceneModelProperty.value.getSortedLandedObjects();
 
     for ( let i = 0; i < sortedObjects.length / 2; i++ ) {
       const isHighlighted = i === this.highlightAnimationIndex;
@@ -86,11 +92,11 @@ export default class MeanAndMedianModel extends CAVSceneModel {
       this.isMedianAnimationCompleteProperty.value = true;
     }
     else if ( this.highlightAnimationIndex !== null &&
-              this.timeProperty.value > this.lastHighlightAnimationStepTime + HIGHLIGHT_ANIMATION_TIME_STEP ) {
+              this.selectedSceneModelProperty.value.timeProperty.value > this.lastHighlightAnimationStepTime + HIGHLIGHT_ANIMATION_TIME_STEP ) {
 
       // if the animation has already started, step it to the next animation index
       this.highlightAnimationIndex++;
-      this.lastHighlightAnimationStepTime = this.timeProperty.value;
+      this.lastHighlightAnimationStepTime = this.selectedSceneModelProperty.value.timeProperty.value;
     }
   }
 }

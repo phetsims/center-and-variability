@@ -23,9 +23,13 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
     ], {
       tandem: tandem.createTandem( 'accordionCheckboxGroup' )
     } );
-    const plotNode = new MedianPlotNode( model, { tandem: tandem.createTandem( 'plotNode' ) } );
 
-    super( model, plotNode,
+    // There is only one scene in the mean and median screen
+    const sceneModel = model.selectedSceneModelProperty.value;
+
+    const plotNode = new MedianPlotNode( model, sceneModel, { tandem: tandem.createTandem( 'plotNode' ) } );
+
+    super( sceneModel.resetEmitter, plotNode,
       new Text( CenterAndVariabilityStrings.distanceInMetersStringProperty, {
         font: new PhetFont( 16 ),
         maxWidth: 300
@@ -39,7 +43,6 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
         centerX: layoutBounds.centerX
       }
     );
-
   }
 }
 

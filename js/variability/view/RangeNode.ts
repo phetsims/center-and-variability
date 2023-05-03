@@ -19,6 +19,7 @@ import CAVConstants from '../../common/CAVConstants.js';
 import CAVColors from '../../common/CAVColors.js';
 import VariabilityReadoutText from './VariabilityReadoutText.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
@@ -26,17 +27,17 @@ type SelfOptions = {
 type RangeNodeOptions = SelfOptions & StrictOmit<CAVPlotOptions, 'dataPointFill'>;
 
 export default class RangeNode extends CAVPlotNode {
-  public constructor( model: VariabilityModel, providedOptions: RangeNodeOptions ) {
+  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, providedOptions: RangeNodeOptions ) {
 
     const options = providedOptions;
 
-    super( model, {
+    super( model, sceneModel, {
       dataPointFill: CAVColors.grayDataPointFill,
       ...options
     } );
 
     if ( options.parentContext === 'accordion' ) {
-      const rangeReadoutValueProperty = new DerivedProperty( [ model.rangeValueProperty ], rangeValue => {
+      const rangeReadoutValueProperty = new DerivedProperty( [ sceneModel.rangeValueProperty ], rangeValue => {
         return rangeValue ? `${rangeValue}` : '?';
       } );
 
@@ -84,7 +85,7 @@ export default class RangeNode extends CAVPlotNode {
 
     const updateRangeNode = () => {
 
-      const sortedDots = _.sortBy( model.getActiveSoccerBalls().filter( soccerBall => soccerBall.valueProperty.value !== null ),
+      const sortedDots = _.sortBy( sceneModel.getActiveSoccerBalls().filter( soccerBall => soccerBall.valueProperty.value !== null ),
         object => object.valueProperty.value );
       const leftmostDot = sortedDots[ 0 ];
       const rightmostDot = sortedDots[ sortedDots.length - 1 ];
@@ -112,7 +113,7 @@ export default class RangeNode extends CAVPlotNode {
 
         rangeBar.setMedianBarShape( rangeRectangle.top - MedianBarNode.NOTCH_HEIGHT - 2, rangeRectangle.left, 0, rangeRectangle.right, false );
 
-        rangeTextReadout.string = model.rangeValueProperty.value + '';
+        rangeTextReadout.string = sceneModel.rangeValueProperty.value + '';
         rangeTextReadout.centerX = rangeRectangle.centerX;
         rangeTextReadout.bottom = rangeBar.top - 5;
       }
@@ -121,13 +122,13 @@ export default class RangeNode extends CAVPlotNode {
       rangeRectangle.visible = rangeVisibility;
       rangeBar.visible = rangeVisibility;
       rangeTextReadout.visible = rangeVisibility;
-      needAtLeastOneKickText.visible = model.numberOfDataPointsProperty.value === 0 && ( options.parentContext === 'info' ||
-                                                                                         ( options.parentContext === 'accordion' && model.isShowingRangeProperty.value ) );
+      needAtLeastOneKickText.visible = sceneModel.numberOfDataPointsProperty.value === 0 && ( options.parentContext === 'info' ||
+                                                                                              ( options.parentContext === 'accordion' && model.isShowingRangeProperty.value ) );
     };
-    model.objectChangedEmitter.addListener( updateRangeNode );
+    sceneModel.objectChangedEmitter.addListener( updateRangeNode );
     model.isShowingRangeProperty.link( updateRangeNode );
     model.selectedVariabilityProperty.link( updateRangeNode );
-    model.numberOfDataPointsProperty.link( updateRangeNode );
+    sceneModel.numberOfDataPointsProperty.link( updateRangeNode );
     rangeRectangle.moveToBack();
   }
 }

@@ -9,7 +9,7 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import { NodeOptions, Node } from '../../../../scenery/js/imports.js';
+import { Node, NodeOptions } from '../../../../scenery/js/imports.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import RangeNode from './RangeNode.js';
@@ -17,30 +17,31 @@ import IQRNode from './IQRNode.js';
 import MADNode from './MADNode.js';
 import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
+import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 
 export type CAVPlotOptions = NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
 export default class VariabilityPlotNode extends Node {
 
-  public constructor( model: VariabilityModel, providedOptions: CAVPlotOptions ) {
+  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, providedOptions: CAVPlotOptions ) {
     super( providedOptions );
 
     const toggleNode = new ToggleNode( model.selectedVariabilityProperty, [ {
-      createNode: tandem => new RangeNode( model, {
+      createNode: tandem => new RangeNode( model, sceneModel, {
         parentContext: 'accordion',
         tandem: tandem.createTandem( 'rangeNode' )
       } ),
       tandemName: 'rangeNode',
       value: VariabilityMeasure.RANGE
     }, {
-      createNode: tandem => new IQRNode( model, {
+      createNode: tandem => new IQRNode( model, sceneModel, {
         parentContext: 'accordion',
         tandem: tandem.createTandem( 'iqrNode' )
       } ),
       tandemName: 'iqrNode',
       value: VariabilityMeasure.IQR
     }, {
-      createNode: tandem => new MADNode( model, {
+      createNode: tandem => new MADNode( model, sceneModel, {
         parentContext: 'accordion',
         tandem: tandem.createTandem( 'madNode' )
       } ),

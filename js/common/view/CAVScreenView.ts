@@ -10,33 +10,27 @@
 import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import CAVSceneModel from '../model/CAVSceneModel.js';
 import CAVConstants from '../CAVConstants.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import { AlignBox, ManualConstraint, Node } from '../../../../scenery/js/imports.js';
-import CAVObjectType from '../model/CAVObjectType.js';
-import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import DragIndicatorArrowNode from './DragIndicatorArrowNode.js';
 import QuestionBar, { QuestionBarOptions } from '../../../../scenery-phet/js/QuestionBar.js';
 import NumberLineNode from './NumberLineNode.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import BackgroundNode from './BackgroundNode.js';
-import SoccerPlayerNode from './SoccerPlayerNode.js';
 import merge from '../../../../phet-core/js/merge.js';
-import KickButtonGroup from './KickButtonGroup.js';
-import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';
 import CAVAccordionBox from './CAVAccordionBox.js';
 import VerticalCheckboxGroup, { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
-import { AnimationMode } from '../model/AnimationMode.js';
-import SoccerBallNode from './SoccerBallNode.js';
 import PredictionSlider from './PredictionSlider.js';
 import CAVColors from '../CAVColors.js';
 import Property from '../../../../axon/js/Property.js';
 import Range from '../../../../dot/js/Range.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import CAVModel from '../model/CAVModel.js';
+import SceneView from './SceneView.js';
+import KickButtonGroup from './KickButtonGroup.js';
+import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 
 type SelfOptions = {
   questionBarOptions: QuestionBarOptions;
@@ -51,13 +45,13 @@ export default class CAVScreenView extends ScreenView {
 
   protected readonly resetAllButton: ResetAllButton;
   protected readonly modelViewTransform: ModelViewTransform2;
-  protected readonly model: CAVSceneModel;
+  protected readonly model: CAVModel;
   protected readonly frontObjectLayer = new Node();
 
   // TODO: We haven't enforced the "exactly half a ball should be occluded if anything is occluded" design,
   // May need https://github.com/phetsims/center-and-variability/issues/166 to be addressed first
   protected readonly backObjectLayer = new Node();
-  protected readonly playAreaMedianIndicatorNode: ArrowNode;
+
   protected readonly eraseButton: EraserButton;
 
   // Subclasses use this to add to for correct z-ordering and correct tab navigation order
@@ -67,14 +61,13 @@ export default class CAVScreenView extends ScreenView {
 
   protected readonly questionBar: QuestionBar;
   protected readonly playAreaNumberLineNode: NumberLineNode;
-  private readonly updateMedianNode: () => void;
 
-  public constructor( model: CAVSceneModel, providedOptions: CAVScreenViewOptions ) {
+  public constructor( model: CAVModel, providedOptions: CAVScreenViewOptions ) {
     const options = optionize<CAVScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
 
     // The ground is at y=0
     const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
-      new Bounds2( model.physicalRange.min, 0, model.physicalRange.max, model.physicalRange.getLength() ),
+      new Bounds2( CAVConstants.PHYSICAL_RANGE.min, 0, CAVConstants.PHYSICAL_RANGE.max, CAVConstants.PHYSICAL_RANGE.getLength() ),
       new Bounds2( CAVConstants.NUMBER_LINE_MARGIN_X, GROUND_POSITION_Y - CAVConstants.CHART_VIEW_WIDTH, CAVConstants.NUMBER_LINE_MARGIN_X + CAVConstants.CHART_VIEW_WIDTH, GROUND_POSITION_Y )
     );
 
@@ -83,108 +76,17 @@ export default class CAVScreenView extends ScreenView {
     this.modelViewTransform = modelViewTransform;
     this.model = model;
 
-    const objectNodeGroupTandem = options.tandem.createTandem( 'soccerBallNodeGroup' );
-
-    const objectNodesInputEnabledProperty = new BooleanProperty( true, {
-      tandem: objectNodeGroupTandem.createTandem( 'inputEnabledProperty' )
-    } );
-
-    model.soccerBalls.map( ( soccerBall, index ) => {
-      const soccerBallNode = new SoccerBallNode( soccerBall, model.isShowingPlayAreaMedianProperty, modelViewTransform, objectNodesInputEnabledProperty, {
-        tandem: options.tandem.createTandem( 'soccerBalls' ).createTandem( 'soccerBallNode' + index )
-      } );
-
-      this.backObjectLayer.addChild( soccerBallNode );
-
-      // While flying, it should be in front in z-order, to be in front of the accordion box
-      soccerBall.animationModeProperty.lazyLink( ( animationMode, oldAnimationModel ) => {
-        if ( animationMode === AnimationMode.FLYING ) {
-          this.backObjectLayer.removeChild( soccerBallNode );
-          this.frontObjectLayer.addChild( soccerBallNode );
-        }
-        else if ( oldAnimationModel ) {
-          this.frontObjectLayer.removeChild( soccerBallNode );
-          this.backObjectLayer.addChild( soccerBallNode );
-        }
-      } );
-
-      soccerBall.valueProperty.lazyLink( ( value, oldValue ) => {
-        if ( value !== null ) {
-          if ( oldValue === null ) {
-
-            // add the dragIndicatorArrowNode above the last object when it is added to the play area. if an object was
-            // moved before this happens, don't show the dragIndicatorArrowNode
-            if ( model.soccerBallCountProperty.value === this.model.physicalRange.max &&
-                 objectNodesInputEnabledProperty.value &&
-                 _.every( model.soccerBalls, soccerBall => soccerBall.valueProperty.value !== null ) &&
-                 !objectHasBeenDragged ) {
-              dragIndicatorArrowNode.centerX = this.modelViewTransform.modelToViewX( value );
-
-              const dragIndicatorArrowNodeMargin = 6;
-
-              // calculate where the top object is
-              const topObjectPositionY = this.modelViewTransform.modelToViewY( 0 ) -
-                                         ( model.getOtherObjectsAtTarget( soccerBall ).length + 1 ) *
-                                         Math.abs( this.modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) ) * 2 -
-                                         dragIndicatorArrowNodeMargin;
-
-              dragIndicatorArrowNode.bottom = topObjectPositionY;
-              dragIndicatorArrowNode.visible = true;
-            }
-          }
-          else {
-            objectHasBeenDragged = true;
-            dragIndicatorArrowNode.visible = false;
-          }
-        }
-      } );
-
-      return soccerBallNode;
-    } );
+    // Soccer balls go behind the accordion box after they land
+    // this.contentLayer.addChild( this.backObjectLayer );
 
     this.addChild( this.contentLayer );
     this.addChild( this.frontObjectLayer );
 
-    let objectHasBeenDragged = false;
-    const dragIndicatorArrowNode = new DragIndicatorArrowNode( {
-      tandem: options.tandem.createTandem( 'dragIndicatorArrowNode' ),
-      visible: false
-    } );
-    this.backObjectLayer.addChild( dragIndicatorArrowNode );
 
-    this.playAreaMedianIndicatorNode = new PlayAreaMedianIndicatorNode();
-    this.addChild( this.playAreaMedianIndicatorNode );
-
-    this.updateMedianNode = () => {
-      const medianValue = model.medianValueProperty.value;
-      const visible = medianValue !== null && model.isShowingPlayAreaMedianProperty.value;
-
-      if ( visible ) {
-
-        // if there is a ball at that location, go above the ball
-        const ballsAtLocation = model.soccerBalls.filter( soccerBall => soccerBall.valueProperty.value === medianValue );
-        const modelHeight = ballsAtLocation.length * CAVObjectType.SOCCER_BALL.radius * 2; // assumes no spacing
-
-        const viewHeight = this.modelViewTransform.modelToViewDeltaY( modelHeight );
-
-        this.playAreaMedianIndicatorNode.centerX = this.modelViewTransform.modelToViewX( medianValue );
-        this.playAreaMedianIndicatorNode.bottom = this.modelViewTransform.modelToViewY( 0 ) + viewHeight;
-
-        // The arrow shouldn't overlap the accordion box
-        if ( this.accordionBox ) {
-          const accordionBoxHeight = this.accordionBox.expandedProperty.value ? this.accordionBox.getExpandedBoxHeight() : this.accordionBox.getCollapsedBoxHeight();
-          if ( this.playAreaMedianIndicatorNode.top < this.accordionBox.top + accordionBoxHeight ) {
-            this.playAreaMedianIndicatorNode.top = this.accordionBox.top + accordionBoxHeight + 4;
-          }
-        }
-      }
-      this.playAreaMedianIndicatorNode.visible = visible;
-    };
-    model.medianValueProperty.link( this.updateMedianNode );
-    model.objectChangedEmitter.addListener( this.updateMedianNode );
-    model.isShowingPlayAreaMedianProperty.link( this.updateMedianNode );
-
-
+    model.sceneModels.map( sceneModel => new SceneView( model, sceneModel, this.backObjectLayer, this.frontObjectLayer,
+      modelViewTransform, () => this.accordionBox, {
+        tandem: options.tandem.createTandem( 'sceneView' )
+      } ) );
     this.resetAllButton = new ResetAllButton( {
       listener: () => {
         this.interruptSubtreeInput(); // cancel interactions that may be in progress
@@ -192,8 +94,7 @@ export default class CAVScreenView extends ScreenView {
         model.reset();
 
         // hide the dragIndicatorArrowNode and reset the flag for if it has been dragged already
-        objectHasBeenDragged = false;
-        dragIndicatorArrowNode.visible = false;
+        // dragIndicatorArrowNode.visible = false;
       },
       right: this.layoutBounds.maxX - CAVConstants.SCREEN_VIEW_X_MARGIN,
       bottom: this.layoutBounds.maxY - CAVConstants.SCREEN_VIEW_Y_MARGIN,
@@ -207,10 +108,10 @@ export default class CAVScreenView extends ScreenView {
         // Interrupt dragging of existing objects
         this.interruptSubtreeInput();
 
-        model.clearData();
+        model.selectedSceneModelProperty.value.clearData();
 
         // hide the dragIndicatorArrowNode but don't reset objectHasBeenDragged
-        dragIndicatorArrowNode.visible = false;
+        // dragIndicatorArrowNode.visible = false;
       },
       iconWidth: 26,
       right: this.resetAllButton.left - CAVConstants.SCREEN_VIEW_X_MARGIN,
@@ -222,10 +123,13 @@ export default class CAVScreenView extends ScreenView {
     this.contentLayer.addChild( new BackgroundNode( GROUND_POSITION_Y, this.visibleBoundsProperty ) );
 
     this.playAreaNumberLineNode = new NumberLineNode(
-      model.physicalRange,
-      model.meanValueProperty,
+      new DynamicProperty( model.selectedSceneModelProperty, {
+        derive: 'meanValueProperty'
+      } ),
       model.isShowingPlayAreaMeanProperty,
-      model.dataRangeProperty, {
+      new DynamicProperty( model.selectedSceneModelProperty, {
+        derive: 'dataRangeProperty'
+      } ), {
         includeXAxis: false,
         includeMeanStroke: true,
         tandem: options.tandem.createTandem( 'playAreaNumberLineNode' ),
@@ -233,10 +137,6 @@ export default class CAVScreenView extends ScreenView {
         y: GROUND_POSITION_Y
       } );
     this.contentLayer.addChild( this.playAreaNumberLineNode );
-
-    const soccerPlayerNodes = model.soccerPlayers.map( soccerPlayer => new SoccerPlayerNode( soccerPlayer, this.modelViewTransform ) );
-
-    soccerPlayerNodes.forEach( soccerPlayerNode => this.contentLayer.addChild( soccerPlayerNode ) );
 
     this.questionBar = new QuestionBar( this.layoutBounds, this.visibleBoundsProperty, merge( {
       tandem: options.tandem.createTandem( 'questionBar' )
@@ -253,6 +153,7 @@ export default class CAVScreenView extends ScreenView {
     } ) );
 
     // Soccer balls go behind the accordion box after they land
+    // TODO: Why is the back layer in the front?
     this.contentLayer.addChild( this.backObjectLayer );
   }
 
@@ -277,7 +178,6 @@ export default class CAVScreenView extends ScreenView {
   protected setAccordionBox( accordionBox: CAVAccordionBox ): void {
     this.accordionBox = accordionBox;
     this.contentLayer.addChild( this.accordionBox );
-    this.accordionBox.expandedProperty.link( this.updateMedianNode );
     this.updateAccordionBoxPosition();
   }
 
@@ -319,13 +219,13 @@ export default class CAVScreenView extends ScreenView {
   /**
    * The MedianPredictionNode is shared in the Median screen and MeanAndMedianScreen, so factored out here.
    */
-  public static createMedianPredictionNode( model: CAVSceneModel, modelViewTransform: ModelViewTransform2, tandem: Tandem ): PredictionSlider {
-    return new PredictionSlider( model.medianPredictionProperty, modelViewTransform, model.physicalRange, {
+  public static createMedianPredictionNode( model: CAVModel, modelViewTransform: ModelViewTransform2, tandem: Tandem ): PredictionSlider {
+    return new PredictionSlider( model.medianPredictionProperty, modelViewTransform, CAVConstants.PHYSICAL_RANGE, {
       predictionThumbNodeOptions: {
         color: CAVColors.medianColorProperty
       },
       valueProperty: model.medianPredictionProperty,
-      enabledRangeProperty: new Property<Range>( model.physicalRange ),
+      enabledRangeProperty: new Property<Range>( CAVConstants.PHYSICAL_RANGE ),
       roundToInterval: 0.5,
       visibleProperty: model.isShowingMedianPredictionProperty,
       tandem: tandem

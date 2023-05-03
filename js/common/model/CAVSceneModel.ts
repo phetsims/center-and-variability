@@ -16,7 +16,6 @@ import Range from '../../../../dot/js/Range.js';
 import Property from '../../../../axon/js/Property.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
@@ -32,12 +31,7 @@ import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import Pose from './Pose.js';
 import { AnimationMode } from './AnimationMode.js';
-
-type SelfOptions = {
-  tandem: Tandem;
-  instrumentMeanPredictionProperty: boolean;
-};
-export type CAVModelOptions = SelfOptions;
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 
 // constants
 const TIME_BETWEEN_RAPID_KICKS = 0.5; // in seconds
@@ -46,16 +40,7 @@ export default class CAVSceneModel implements TModel {
   public readonly soccerBalls: SoccerBall[];
   public readonly soccerBallCountProperty: NumberProperty;
 
-  // TODO: Some of these should move to subclasses
-  public readonly isShowingTopMeanProperty: BooleanProperty;
-  public readonly isShowingTopMedianProperty: BooleanProperty;
-  public readonly isShowingPlayAreaMedianProperty: BooleanProperty;
-  public readonly isShowingPlayAreaMeanProperty: BooleanProperty;
-  public readonly isShowingMeanPredictionProperty: BooleanProperty;
-  public readonly isShowingMedianPredictionProperty: BooleanProperty;
-
   public readonly maxSoccerBalls = CAVConstants.NUMBER_OF_OBJECTS;
-  public readonly physicalRange = new Range( 1, 15 );
 
   public readonly medianValueProperty: Property<number | null>;
   public readonly meanValueProperty: Property<number | null>;
@@ -63,18 +48,16 @@ export default class CAVSceneModel implements TModel {
   // Indicates the max and min values in the data set, or null if there are no values in the data set
   public readonly dataRangeProperty: Property<Range | null>;
 
+  public isVisibleProperty: Property<boolean> = new BooleanProperty( true );
+
   // Signify whenever any object's value or position changes
   public readonly objectChangedEmitter: TEmitter<[ SoccerBall ]> = new Emitter<[ SoccerBall ]>( {
     parameters: [ { valueType: SoccerBall } ]
   } );
 
-  // Null until the user has made a prediction.
-  public readonly medianPredictionProperty: NumberProperty;
-  public readonly meanPredictionProperty: NumberProperty;
+  public readonly timeProperty: NumberProperty;
 
-  protected readonly timeProperty: NumberProperty;
-
-  protected readonly objectValueBecameNonNullEmitter: TEmitter<[ SoccerBall ]>;
+  public readonly objectValueBecameNonNullEmitter: TEmitter<[ SoccerBall ]>;
   public readonly resetEmitter: TEmitter = new Emitter();
   public readonly numberOfDataPointsProperty: NumberProperty;
 
@@ -89,7 +72,7 @@ export default class CAVSceneModel implements TModel {
   // Starting at 0, iterate through the index of the kickers. This updates the SoccerPlayer.isActiveProperty to show the current kicker
   private readonly activeKickerIndexProperty: NumberProperty;
 
-  public constructor( options: CAVModelOptions ) {
+  public constructor( options: { tandem: Tandem } ) {
 
     const updateDataMeasures = () => this.updateDataMeasures();
 
@@ -109,7 +92,7 @@ export default class CAVSceneModel implements TModel {
 
       // When the soccer ball drag position changes, constrain it to the physical range and move it to the top, if necessary
       soccerBall.dragPositionProperty.lazyLink( ( dragPosition: Vector2 ) => {
-        soccerBall.valueProperty.value = Utils.roundSymmetric( this.physicalRange.constrainValue( dragPosition.x ) );
+        soccerBall.valueProperty.value = Utils.roundSymmetric( CAVConstants.PHYSICAL_RANGE.constrainValue( dragPosition.x ) );
         this.moveToTop( soccerBall );
       } );
 
@@ -142,25 +125,6 @@ export default class CAVSceneModel implements TModel {
       } );
     } );
 
-    this.isShowingTopMeanProperty = new BooleanProperty( false, {
-      tandem: options.instrumentMeanPredictionProperty ? options.tandem.createTandem( 'isShowingTopMeanProperty' ) : Tandem.OPT_OUT
-    } );
-    this.isShowingTopMedianProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isShowingTopMedianProperty' )
-    } );
-    this.isShowingPlayAreaMeanProperty = new BooleanProperty( false, {
-      tandem: options.instrumentMeanPredictionProperty ? options.tandem.createTandem( 'isShowingPlayAreaMeanProperty' ) : Tandem.OPT_OUT
-    } );
-    this.isShowingPlayAreaMedianProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isShowingPlayAreaMedianProperty' )
-    } );
-    this.isShowingMeanPredictionProperty = new BooleanProperty( false, {
-      tandem: options.instrumentMeanPredictionProperty ? options.tandem.createTandem( 'isShowingMeanPredictionProperty' ) : Tandem.OPT_OUT
-    } );
-    this.isShowingMedianPredictionProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isShowingMedianPredictionProperty' )
-    } );
-
     this.medianValueProperty = new Property<number | null>( null, {
       tandem: options.tandem.createTandem( 'medianValueProperty' ),
       phetioValueType: NullableIO( NumberIO ),
@@ -175,20 +139,9 @@ export default class CAVSceneModel implements TModel {
 
     this.numberOfDataPointsProperty = new NumberProperty( 0 );
 
-    this.medianPredictionProperty = new NumberProperty( 1, {
-      range: this.physicalRange,
-      tandem: options.tandem.createTandem( 'medianPredictionProperty' )
-    } );
-    this.meanPredictionProperty = new NumberProperty( 1.5, {
-      range: this.physicalRange,
-      tandem: options.instrumentMeanPredictionProperty ? options.tandem.createTandem( 'meanPredictionProperty' ) : Tandem.OPT_OUT
-    } );
-
     this.timeProperty = new NumberProperty( 0, {
       tandem: options.tandem.createTandem( 'timeProperty' )
     } );
-
-    this.isShowingPlayAreaMedianProperty.link( updateDataMeasures );
 
     this.objectValueBecameNonNullEmitter = new Emitter<[ SoccerBall ]>( {
       parameters: [ { valueType: SoccerBall } ]
@@ -228,7 +181,7 @@ export default class CAVSceneModel implements TModel {
       tandem: options.tandem.createTandem( 'distributionProperty' ),
       phetioValueType: ArrayIO( NumberIO ),
       phetioDocumentation: 'The distribution of probabilities of where the balls will land is represented as an un-normalized array of non-negative, floating-point numbers, one value for each location in the physical range',
-      isValidValue: ( array: readonly number[] ) => array.length === this.physicalRange.getLength() + 1 && // inclusive of endpoints
+      isValidValue: ( array: readonly number[] ) => array.length === CAVConstants.PHYSICAL_RANGE.getLength() + 1 && // inclusive of endpoints
                                                     _.every( array, element => element >= 0 )
     } );
 
@@ -325,14 +278,6 @@ export default class CAVSceneModel implements TModel {
    * Resets the model.
    */
   public reset(): void {
-    this.medianPredictionProperty.reset();
-    this.meanPredictionProperty.reset();
-    this.isShowingTopMeanProperty.reset();
-    this.isShowingTopMedianProperty.reset();
-    this.isShowingPlayAreaMeanProperty.reset();
-    this.isShowingPlayAreaMedianProperty.reset();
-    this.isShowingMeanPredictionProperty.reset();
-    this.isShowingMedianPredictionProperty.reset();
     this.distributionProperty.value = CAVSceneModel.chooseDistribution();
 
     this.clearData();
@@ -493,7 +438,7 @@ export default class CAVSceneModel implements TModel {
 
     const weights = this.distributionProperty.value;
 
-    assert && assert( weights.length === this.physicalRange.getLength() + 1, 'weight array should match the model range' );
+    assert && assert( weights.length === CAVConstants.PHYSICAL_RANGE.getLength() + 1, 'weight array should match the model range' );
     const x1 = dotRandom.sampleProbabilities( weights ) + 1;
 
     // Range equation is R=v0^2 sin(2 theta0) / g, see https://openstax.org/books/university-physics-volume-1/pages/4-3-projectile-motion

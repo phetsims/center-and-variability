@@ -19,6 +19,7 @@ import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVConstants from '../CAVConstants.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import DataPointNode from './DataPointNode.js';
+import CAVModel from '../model/CAVModel.js';
 
 type SelfOptions = {
   dataPointFill: TColor;
@@ -30,7 +31,7 @@ export default class CAVPlotNode extends Node {
   private readonly dotLayer = new Node();
   protected readonly modelViewTransform: ModelViewTransform2;
 
-  public constructor( model: CAVSceneModel, providedOptions?: CAVPlotOptions ) {
+  public constructor( model: CAVModel, sceneModel: CAVSceneModel, providedOptions?: CAVPlotOptions ) {
 
     const options = optionize<CAVPlotOptions, SelfOptions, NodeOptions>()( {}, providedOptions );
 
@@ -47,16 +48,15 @@ export default class CAVPlotNode extends Node {
     // Coordinates here are somewhat unusual, since x dimension is based off of meters, and y dimension is based off of
     // number of objects.
     const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
-      new Bounds2( model.physicalRange.min, 0, model.physicalRange.max, 1 ),
+      new Bounds2( CAVConstants.PHYSICAL_RANGE.min, 0, CAVConstants.PHYSICAL_RANGE.max, 1 ),
       new Bounds2( 0, numberLinePositionY - dataPointHeight, CAVConstants.CHART_VIEW_WIDTH, numberLinePositionY )
     );
     this.modelViewTransform = modelViewTransform;
 
     const numberLineNode = new NumberLineNode(
-      model.physicalRange,
-      model.meanValueProperty,
+      sceneModel.meanValueProperty,
       model.isShowingTopMeanProperty,
-      model.dataRangeProperty, {
+      sceneModel.dataRangeProperty, {
         color: 'black',
         includeXAxis: true,
         includeMeanStroke: false,
@@ -77,14 +77,24 @@ export default class CAVPlotNode extends Node {
 
     backgroundNode.addChild( this.dotLayer );
 
-    model.soccerBalls.forEach( ( soccerBall, index ) => {
+    model.sceneModels.forEach( scene => {
 
-      const dotNode = new DataPointNode( soccerBall, model.isShowingTopMedianProperty, modelViewTransform, {
-        tandem: options.tandem.createTandem( 'dotNodeGroup' ).createTandem( 'dataPoint' + index ),
-        fill: options.dataPointFill
+      const dataPointLayer = new Node( {
+        visibleProperty: scene.isVisibleProperty
       } );
 
-      this.dotLayer.addChild( dotNode );
+      // Create the data points for that scene
+      scene.soccerBalls.forEach( ( soccerBall, index ) => {
+
+        const dotNode = new DataPointNode( soccerBall, model.isShowingTopMedianProperty, modelViewTransform, {
+          tandem: options.tandem.createTandem( 'dotNodeGroup' ).createTandem( 'dataPoint' + index ),
+          fill: options.dataPointFill
+        } );
+
+        dataPointLayer.addChild( dotNode );
+      } );
+
+      this.dotLayer.addChild( dataPointLayer );
     } );
   }
 

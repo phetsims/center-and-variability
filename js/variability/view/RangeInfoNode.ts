@@ -10,11 +10,12 @@ import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import RangeNode from './RangeNode.js';
 import CAVConstants from '../../common/CAVConstants.js';
+import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 
 export default class RangeInfoNode extends VBox {
-  public constructor( model: VariabilityModel, options: PickRequired<PhetioObject, 'tandem'> ) {
+  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, options: PickRequired<PhetioObject, 'tandem'> ) {
 
-    const hasEnoughDataProperty = new DerivedProperty( [ model.numberOfDataPointsProperty ], numberOfDataPoints => numberOfDataPoints >= 1 );
+    const hasEnoughDataProperty = new DerivedProperty( [ sceneModel.numberOfDataPointsProperty ], numberOfDataPoints => numberOfDataPoints >= 1 );
     super( {
       align: 'left',
       spacing: 5,
@@ -28,14 +29,14 @@ export default class RangeInfoNode extends VBox {
 
         // TODO: String key name
         new Text( new PatternStringProperty( CenterAndVariabilityStrings.rangeCalculationPatternStringProperty, {
-          max: model.maxValueProperty,
-          min: model.minValueProperty
+          max: sceneModel.maxValueProperty,
+          min: sceneModel.minValueProperty
         } ), { fontSize: 18, visibleProperty: hasEnoughDataProperty, maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH } ),
         new Text( new PatternStringProperty( CenterAndVariabilityStrings.rangeCalculationResultPatternStringProperty, {
-          range: model.rangeValueProperty
+          range: sceneModel.rangeValueProperty
         } ), { fontSize: 18, visibleProperty: hasEnoughDataProperty, maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH, layoutOptions: { bottomMargin: 10 } } ),
 
-        new RangeNode( model, {
+        new RangeNode( model, sceneModel, {
           parentContext: 'info',
           tandem: options.tandem.createTandem( 'rangeNode' )
         } )

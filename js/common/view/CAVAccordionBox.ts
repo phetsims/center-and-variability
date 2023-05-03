@@ -14,9 +14,9 @@ import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionB
 import CAVConstants from '../CAVConstants.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import CAVSceneModel from '../model/CAVSceneModel.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import TEmitter from '../../../../axon/js/TEmitter.js';
 
 type SelfOptions = {
   leftMargin: number;
@@ -35,7 +35,7 @@ export default class CAVAccordionBox extends AccordionBox {
   public readonly plotNode: Node;
 
   // NOTE: The positions of the passed-in nodes are modified directly, so they cannot be used in the scenery DAG
-  public constructor( model: CAVSceneModel, plotNode: Node, titleNode: Node,
+  public constructor( resetEmitter: TEmitter, plotNode: Node, titleNode: Node,
                       layoutBounds: Bounds2, checkboxGroup: Node, providedOptions: CAVAccordionBoxOptions ) {
 
     const options = optionize<CAVAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {
@@ -88,7 +88,7 @@ export default class CAVAccordionBox extends AccordionBox {
 
     super( backgroundNode, options );
 
-    model.resetEmitter.addListener( () => this.reset() );
+    resetEmitter.addListener( () => this.reset() );
 
     this.plotNode = plotNode;
   }

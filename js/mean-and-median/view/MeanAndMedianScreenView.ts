@@ -47,12 +47,12 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
       BottomRepresentationCheckboxGroup.getMeanCheckboxItem( iconGroup, model )
     ] );
 
-    this.contentLayer.addChild( new PredictionSlider( model.meanPredictionProperty, this.modelViewTransform, model.physicalRange, {
+    this.contentLayer.addChild( new PredictionSlider( model.meanPredictionProperty, this.modelViewTransform, CAVConstants.PHYSICAL_RANGE, {
       predictionThumbNodeOptions: {
         color: CAVColors.meanColorProperty
       },
       valueProperty: model.meanPredictionProperty,
-      enabledRangeProperty: new Property<Range>( model.physicalRange ),
+      enabledRangeProperty: new Property<Range>( CAVConstants.PHYSICAL_RANGE ),
       roundToInterval: null, // continuous
       visibleProperty: model.isShowingMeanPredictionProperty,
       tandem: options.tandem.createTandem( 'meanPredictionNode' )

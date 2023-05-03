@@ -12,12 +12,13 @@ import Utils from '../../../../dot/js/Utils.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import MADNode from './MADNode.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
+import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 
 export default class MADInfoNode extends VBox {
-  public constructor( model: VariabilityModel, options: PickRequired<PhetioObject, 'tandem'> ) {
+  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, options: PickRequired<PhetioObject, 'tandem'> ) {
 
     // TODO: The design calls for a depiction of the mean location.  This is not yet implemented.
-    const hasEnoughDataProperty = new DerivedProperty( [ model.numberOfDataPointsProperty ], numberOfDataPoints => numberOfDataPoints >= 1 );
+    const hasEnoughDataProperty = new DerivedProperty( [ sceneModel.numberOfDataPointsProperty ], numberOfDataPoints => numberOfDataPoints >= 1 );
 
     const numeratorText = new Text( '', { fontSize: 16 } );
     const denominatorText = new Text( '', { fontSize: 16 } );
@@ -25,9 +26,9 @@ export default class MADInfoNode extends VBox {
     const resultNumeratorText = new Text( '', { fontSize: 16 } );
     const resultDenominatorText = new Text( '', { fontSize: 16 } );
 
-    model.objectChangedEmitter.addListener( () => {
-      const values = model.getSortedLandedObjects().map( landedObject => landedObject.valueProperty.value! );
-      const mads = values.map( value => Math.abs( value - model.meanValueProperty.value! ) );
+    sceneModel.objectChangedEmitter.addListener( () => {
+      const values = sceneModel.getSortedLandedObjects().map( landedObject => landedObject.valueProperty.value! );
+      const mads = values.map( value => Math.abs( value - sceneModel.meanValueProperty.value! ) );
       const madStrings = mads.map( mad => Utils.toFixed( mad, 1 ) );
       numeratorText.string = madStrings.join( ' + ' );
       denominatorText.string = values.length.toString();
@@ -78,10 +79,10 @@ export default class MADInfoNode extends VBox {
         } ),
 
         new Text( new PatternStringProperty( CenterAndVariabilityStrings.madCalculationResultPatternStringProperty, {
-          mad: new DerivedProperty( [ model.madValueProperty ], madValue => madValue === null ? null : Utils.toFixed( madValue, 1 ) )
+          mad: new DerivedProperty( [ sceneModel.madValueProperty ], madValue => madValue === null ? null : Utils.toFixed( madValue, 1 ) )
         } ), { fontSize: 18, visibleProperty: hasEnoughDataProperty, maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH, layoutOptions: { bottomMargin: 10 } } ),
 
-        new MADNode( model, {
+        new MADNode( model, sceneModel, {
           parentContext: 'info',
           tandem: options.tandem.createTandem( 'madNode' )
         } )

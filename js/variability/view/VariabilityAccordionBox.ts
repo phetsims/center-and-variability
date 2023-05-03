@@ -30,9 +30,16 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
 
     const accordionBoxTitleProperty = new DynamicProperty<string, unknown, unknown>( currentProperty );
 
-    const accordionBoxContents = new VariabilityPlotNode( model, {
-      tandem: tandem.createTandem( 'plotNode' )
+    const contents = _.range( 4 ).map( i => {
+      return {
+        value: model.sceneModels[ i ],
+        createNode: ( tandem: Tandem ) => new VariabilityPlotNode( model, model.variabilitySceneModels[ i ], {
+          tandem: tandem.createTandem( 'plotNode' + i )
+        } )
+      };
     } );
+
+    const accordionBoxContents = new ToggleNode( model.selectedSceneModelProperty, contents );
 
     const infoButton = new InfoButton( {
       iconFill: 'cornflowerblue',
@@ -74,7 +81,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       }
     ] );
 
-    super( model, accordionBoxContents,
+    super( model.resetEmitter, accordionBoxContents,
       new Text( accordionBoxTitleProperty, {
         font: new PhetFont( 16 ),
         maxWidth: 300

@@ -10,16 +10,23 @@
 import centerAndVariability from '../../centerAndVariability.js';
 import CardModel from '../../median/model/CardModel.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import CAVSceneModel, { CAVModelOptions } from '../../common/model/CAVSceneModel.js';
+import CAVSceneModel from '../../common/model/CAVSceneModel.js';
+import CAVModel from '../../common/model/CAVModel.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
-export default class MedianModel extends CAVSceneModel {
+export default class MedianModel extends CAVModel {
 
   public readonly cards: CardModel[];
   public readonly isSortingDataProperty: BooleanProperty;
 
-  public constructor( options: CAVModelOptions ) {
-    super( options );
-    this.cards = this.soccerBalls.map( ( soccerBall, index ) => new CardModel( soccerBall, {
+  public constructor( options: { tandem: Tandem } ) {
+    const scene = new CAVSceneModel( { tandem: options.tandem.createTandem( 'sceneModel' ) } );
+    super( [ scene ], {
+      ...options,
+      instrumentMeanPredictionProperty: false
+    } );
+
+    this.cards = this.sceneModels[ 0 ].soccerBalls.map( ( soccerBall, index ) => new CardModel( soccerBall, {
       tandem: options.tandem.createTandem( 'cards' ).createTandem( 'card' + index )
     } ) );
 

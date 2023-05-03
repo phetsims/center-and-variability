@@ -12,9 +12,9 @@ import simLauncher from '../../joist/js/simLauncher.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import CenterAndVariabilityStrings from './CenterAndVariabilityStrings.js';
 import MedianScreen from './median/MedianScreen.js';
-import MeanAndMedianScreen from './mean-and-median/MeanAndMedianScreen.js';
 import SimulationPreferencesContentNode from './common/view/SimulationPreferencesContentNode.js';
 import PreferencesModel from '../../joist/js/preferences/PreferencesModel.js';
+import MeanAndMedianScreen from './mean-and-median/MeanAndMedianScreen.js';
 import VariabilityScreen from './variability/VariabilityScreen.js';
 
 const centerAndVariabilityTitleStringProperty = CenterAndVariabilityStrings[ 'center-and-variability' ].titleStringProperty;

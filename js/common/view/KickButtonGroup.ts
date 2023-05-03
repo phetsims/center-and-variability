@@ -20,6 +20,8 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import CAVModel from '../model/CAVModel.js';
+import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import CAVSceneModel from '../model/CAVSceneModel.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -30,7 +32,7 @@ const TEXT_MAX_WIDTH = 80;
 
 export default class KickButtonGroup extends VBox {
 
-  public constructor( model: CAVSceneModel, providedOptions?: KickButtonGroupOptions ) {
+  public constructor( model: CAVModel, providedOptions?: KickButtonGroupOptions ) {
 
     const options = optionize<KickButtonGroupOptions, SelfOptions, VBoxOptions>()( {
       spacing: 2
@@ -55,14 +57,24 @@ export default class KickButtonGroup extends VBox {
         tandem: tandem.createTandem( 'visibleProperty' )
       } );
 
+
+      const hasKickableSoccerBallsProperty = new DynamicProperty<boolean, unknown, CAVSceneModel>( model.selectedSceneModelProperty, {
+        derive: 'hasKickableSoccerBallsProperty'
+      } );
+
+      // const hasKickableSoccerBallsProperty =
+      //   DerivedProperty.deriveAny( [ model.selectedSceneModelProperty, ...model.sceneModels.map( scene => scene.hasKickableSoccerBallsProperty ) ], () => {
+      //     return model.selectedSceneModelProperty.value.hasKickableSoccerBallsProperty.value;
+      //   } );
+
       return new RectangularPushButton( {
-        visibleProperty: DerivedProperty.and( [ model.hasKickableSoccerBallsProperty, buttonVisibleProperty ] ),
+        visibleProperty: DerivedProperty.and( [ hasKickableSoccerBallsProperty, buttonVisibleProperty ] ),
         content: content.label,
         baseColor: CAVColors.kickButtonFillColorProperty,
         xMargin: 12,
         yMargin: 12,
         tandem: tandem,
-        listener: () => model.scheduleKicks( numberToKick ),
+        listener: () => model.selectedSceneModelProperty.value.scheduleKicks( numberToKick ),
 
         // The Kick 1 button can be held down for repeat kicks, but the Kick 5 cannot.
         fireOnHold: !multikick,
@@ -84,7 +96,11 @@ export default class KickButtonGroup extends VBox {
 
     const multiKickProperty = new NumberProperty( 5 );
     const kick5PatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.kickValuePatternStringProperty, { value: multiKickProperty } );
-    model.numberOfUnkickedBallsProperty.link( numberOfRemainingKickableObjects => {
+
+    const numberOfUnkickedBallsProperty = new DynamicProperty<number, unknown, CAVSceneModel>( model.selectedSceneModelProperty, {
+      derive: 'numberOfUnkickedBallsProperty'
+    } );
+    numberOfUnkickedBallsProperty.link( numberOfRemainingKickableObjects => {
       const value = Math.max( Math.min( numberOfRemainingKickableObjects, 5 ), 1 );
       multiKickProperty.value = value;
     } );

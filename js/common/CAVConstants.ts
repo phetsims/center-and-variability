@@ -14,6 +14,7 @@ import centerAndVariability from '../centerAndVariability.js';
 import CAVQueryParameters from './CAVQueryParameters.js';
 import PlotType from './model/PlotType.js';
 import ScreenView from '../../../joist/js/ScreenView.js';
+import Range from '../../../dot/js/Range.js';
 
 // Right skewed means most of the data is on the left, see https://github.com/phetsims/center-and-variability/issues/112
 const RIGHT_SKEWED_DATA = [
@@ -50,7 +51,9 @@ const CAVConstants = {
   CHECKBOX_TEXT_OPTIONS: {
     font: MAIN_FONT,
     maxWidth: 90
-  }
+  },
+
+  PHYSICAL_RANGE: new Range( 1, 15 )
 };
 
 centerAndVariability.register( 'CAVConstants', CAVConstants );

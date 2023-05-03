@@ -1,20 +1,21 @@
 // Copyright 2023, University of Colorado Boulder
 
 import RectangularRadioButtonGroup, { RectangularRadioButtonGroupOptions } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
-import DistributionType from '../model/DistributionType.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Property from '../../../../axon/js/Property.js';
-import { Path, Text, Node } from '../../../../scenery/js/imports.js';
+import { Node, Path, Text } from '../../../../scenery/js/imports.js';
 import tshirtSolidShape from '../../../../sherpa/js/fontawesome-5/tshirtSolidShape.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import CAVSceneModel from '../../common/model/CAVSceneModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type DistributionRadioButtonGroupOptions = SelfOptions & RectangularRadioButtonGroupOptions;
 
-export default class DistributionRadioButtonGroup extends RectangularRadioButtonGroup<DistributionType> {
+// TODO: Rename to SceneRadioButtonGroup, see https://github.com/phetsims/center-and-variability/issues/164
+export default class DistributionRadioButtonGroup extends RectangularRadioButtonGroup<CAVSceneModel> {
 
-  public constructor( property: Property<DistributionType>, providedOptions: DistributionRadioButtonGroupOptions ) {
+  public constructor( property: Property<CAVSceneModel>, providedOptions: DistributionRadioButtonGroupOptions ) {
     const options = optionize<DistributionRadioButtonGroupOptions, SelfOptions, RectangularRadioButtonGroupOptions>()( {
       radioButtonOptions: {
         baseColor: 'white'
@@ -41,19 +42,21 @@ export default class DistributionRadioButtonGroup extends RectangularRadioButton
       } );
     };
     super( property, [ {
-      value: DistributionType.KICKER_1,
+      value: property.validValues![ 0 ],
       createNode: tandem => createTShirtIcon( tandem, '1', '#ec5f3a' ),
       tandemName: 'uniformRadioButton'
     }, {
-      value: DistributionType.KICKER_2,
+      value: property.validValues![ 1 ],
       createNode: tandem => createTShirtIcon( tandem, '2', '#5bc760' ),
       tandemName: 'gaussianRadioButton'
     }, {
-      value: DistributionType.KICKER_3,
+      value: property.validValues![ 2 ],
       createNode: tandem => createTShirtIcon( tandem, '3', '#fdf454' ),
       tandemName: 'skewedRadioButton'
     }, {
-      value: DistributionType.KICKER_4,
+
+      // TODO: Be explicit about the possible scenes (don't pass through validValues), see https://github.com/phetsims/center-and-variability/issues/164
+      value: property.validValues![ 3 ],
       createNode: tandem => createTShirtIcon( tandem, '4', '#9078e5' ),
       tandemName: 'bimodalRadioButton'
     } ], options );

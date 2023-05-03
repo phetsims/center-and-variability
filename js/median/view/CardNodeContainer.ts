@@ -222,7 +222,7 @@ export default class CardNodeContainer extends Node {
       } );
     };
 
-    model.getActiveSoccerBalls().forEach( objectCreatedListener );
+    model.selectedSceneModelProperty.value.getActiveSoccerBalls().forEach( objectCreatedListener );
 
     model.isSortingDataProperty.link( isSortingData => {
       if ( isSortingData ) {
@@ -286,7 +286,7 @@ export default class CardNodeContainer extends Node {
     this.cardNodeCellsChangedEmitter.addListener( updateDragIndicator );
     this.hasDraggedCardProperty.link( updateDragIndicator );
 
-    const medianTextNode = new Text( new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty, { value: model.medianValueProperty } ), {
+    const medianTextNode = new Text( new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty, { value: model.selectedSceneModelProperty.value.medianValueProperty } ), {
       font: CAVConstants.MAIN_FONT,
       maxWidth: 300
     } );
@@ -331,12 +331,12 @@ export default class CardNodeContainer extends Node {
       }
     };
     this.cardNodeCellsChangedEmitter.addListener( updateMedianNode );
-    model.medianValueProperty.link( updateMedianNode );
+    model.selectedSceneModelProperty.value.medianValueProperty.link( updateMedianNode );
     model.isShowingTopMedianProperty.link( updateMedianNode );
-    model.objectChangedEmitter.addListener( updateMedianNode );
+    model.selectedSceneModelProperty.value.objectChangedEmitter.addListener( updateMedianNode );
     medianTextNode.boundsProperty.link( updateMedianNode );
 
-    this.model.resetEmitter.addListener( () => {
+    model.selectedSceneModelProperty.value.resetEmitter.addListener( () => {
       totalDragDistanceProperty.reset();
       dataSortedNode.visible = false;
       if ( this.dataSortedNodeAnimation ) {

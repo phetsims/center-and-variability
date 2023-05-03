@@ -10,11 +10,12 @@ import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import IQRNode from './IQRNode.js';
+import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 
 export default class IQRInfoNode extends VBox {
-  public constructor( model: VariabilityModel, options: PickRequired<PhetioObject, 'tandem'> ) {
+  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, options: PickRequired<PhetioObject, 'tandem'> ) {
 
-    const hasEnoughDataProperty = new DerivedProperty( [ model.numberOfDataPointsProperty ], numberOfDataPoints => numberOfDataPoints >= 5 );
+    const hasEnoughDataProperty = new DerivedProperty( [ sceneModel.numberOfDataPointsProperty ], numberOfDataPoints => numberOfDataPoints >= 5 );
 
     const distancesText = new Text( '', { fontSize: 18, maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH } );
 
@@ -32,12 +33,12 @@ export default class IQRInfoNode extends VBox {
         // TODO: String key name
         distancesText,
         new Text( new PatternStringProperty( CenterAndVariabilityStrings.iqrCalculationPatternStringProperty, {
-          q1: model.q1ValueProperty,
-          q3: model.q3ValueProperty,
-          iqr: model.iqrValueProperty
+          q1: sceneModel.q1ValueProperty,
+          q3: sceneModel.q3ValueProperty,
+          iqr: sceneModel.iqrValueProperty
         } ), { fontSize: 18, visibleProperty: hasEnoughDataProperty, maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH, layoutOptions: { bottomMargin: 10 } } ),
 
-        new IQRNode( model, {
+        new IQRNode( model, sceneModel, {
           parentContext: 'info',
           tandem: options.tandem.createTandem( 'iqrNode' ),
           layoutOptions: {
@@ -50,7 +51,7 @@ export default class IQRInfoNode extends VBox {
     const updateText = () => {
       let distanceTextString = CenterAndVariabilityStrings.iqrDistancesStringProperty.value;
 
-      model.getSortedLandedObjects().forEach( obj => {
+      sceneModel.getSortedLandedObjects().forEach( obj => {
         distanceTextString = distanceTextString.concat( ' ' + obj.valueProperty.value! + ',' );
       } );
 
@@ -60,8 +61,8 @@ export default class IQRInfoNode extends VBox {
       distancesText.string = distanceTextString;
     };
 
-    model.objectChangedEmitter.addListener( updateText );
-    model.numberOfDataPointsProperty.link( updateText );
+    sceneModel.objectChangedEmitter.addListener( updateText );
+    sceneModel.numberOfDataPointsProperty.link( updateText );
   }
 }
 

@@ -10,21 +10,22 @@ import IQRInfoNode from './IQRInfoNode.js';
 import MADInfoNode from './MADInfoNode.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
+import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 
 export default class InfoDialog extends Dialog {
-  public constructor( model: VariabilityModel, options: PickRequired<PhetioObject, 'tandem'> ) {
+  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, options: PickRequired<PhetioObject, 'tandem'> ) {
 
     const content = new ToggleNode( model.selectedVariabilityProperty, [ {
       value: VariabilityMeasure.RANGE,
-      createNode: tandem => new RangeInfoNode( model, { tandem: tandem } ),
+      createNode: tandem => new RangeInfoNode( model, sceneModel, { tandem: tandem } ),
       tandemName: 'rangeInfoNode'
     }, {
       value: VariabilityMeasure.IQR,
-      createNode: tandem => new IQRInfoNode( model, { tandem: tandem } ),
+      createNode: tandem => new IQRInfoNode( model, sceneModel, { tandem: tandem } ),
       tandemName: 'iqrInfoNode'
     }, {
       value: VariabilityMeasure.MAD,
-      createNode: tandem => new MADInfoNode( model, { tandem: tandem } ),
+      createNode: tandem => new MADInfoNode( model, sceneModel, { tandem: tandem } ),
       tandemName: 'madInfoNode'
     } ], {
       tandem: options.tandem.createTandem( 'infoNode' )

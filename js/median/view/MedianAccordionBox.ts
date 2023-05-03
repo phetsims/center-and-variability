@@ -28,7 +28,7 @@ export default class MedianAccordionBox extends CAVAccordionBox {
       tandem: tandem.createTandem( 'accordionCheckboxGroup' )
     } );
 
-    super( model, cardNodeContainer,
+    super( model.selectedSceneModelProperty.value.resetEmitter, cardNodeContainer,
       new Text( CenterAndVariabilityStrings.distanceInMetersStringProperty, {
         font: new PhetFont( 16 ),
         maxWidth: 300
