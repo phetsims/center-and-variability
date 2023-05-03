@@ -46,6 +46,7 @@ export default class CAVModel implements TModel {
   public readonly soccerBalls: SoccerBall[];
   public readonly soccerBallCountProperty: NumberProperty;
 
+  // TODO: Some of these should move to subclasses
   public readonly isShowingTopMeanProperty: BooleanProperty;
   public readonly isShowingTopMedianProperty: BooleanProperty;
   public readonly isShowingPlayAreaMedianProperty: BooleanProperty;
