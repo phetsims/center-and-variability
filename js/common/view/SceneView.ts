@@ -38,7 +38,7 @@ export default class SceneView {
       tandem: objectNodeGroupTandem.createTandem( 'inputEnabledProperty' )
     } );
     sceneModel.soccerBalls.map( ( soccerBall, index ) => {
-      const soccerBallNode = new SoccerBallNode( soccerBall, model.isShowingPlayAreaMedianProperty, modelViewTransform, objectNodesInputEnabledProperty, {
+      const soccerBallNode = new SoccerBallNode( soccerBall, sceneModel.isVisibleProperty, model.isShowingPlayAreaMedianProperty, modelViewTransform, objectNodesInputEnabledProperty, {
         tandem: options.tandem.createTandem( 'soccerBalls' ).createTandem( 'soccerBallNode' + index )
       } );
 
@@ -102,7 +102,7 @@ export default class SceneView {
 
     this.updateMedianNode = () => {
       const medianValue = sceneModel.medianValueProperty.value;
-      const visible = medianValue !== null && model.isShowingPlayAreaMedianProperty.value;
+      const visible = medianValue !== null && model.isShowingPlayAreaMedianProperty.value && sceneModel.isVisibleProperty.value;
 
       if ( visible ) {
 
@@ -129,8 +129,9 @@ export default class SceneView {
     };
     sceneModel.medianValueProperty.link( this.updateMedianNode );
     sceneModel.objectChangedEmitter.addListener( this.updateMedianNode );
+    sceneModel.isVisibleProperty.link( this.updateMedianNode );
 
-    const soccerPlayerNodes = sceneModel.soccerPlayers.map( soccerPlayer => new SoccerPlayerNode( soccerPlayer, modelViewTransform ) );
+    const soccerPlayerNodes = sceneModel.soccerPlayers.map( soccerPlayer => new SoccerPlayerNode( soccerPlayer, modelViewTransform, sceneModel.isVisibleProperty ) );
 
     soccerPlayerNodes.forEach( soccerPlayerNode => frontObjectLayer.addChild( soccerPlayerNode ) );
 

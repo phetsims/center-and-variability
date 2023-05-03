@@ -18,7 +18,7 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 
 export default class SoccerBallNode extends CAVObjectNode {
 
-  public constructor( soccerBall: SoccerBall, isShowingPlayAreaMedianProperty: TReadOnlyProperty<boolean>,
+  public constructor( soccerBall: SoccerBall, isSceneVisibleProperty: TReadOnlyProperty<boolean>, isShowingPlayAreaMedianProperty: TReadOnlyProperty<boolean>,
                       modelViewTransform: ModelViewTransform2, objectNodesInputEnabledProperty: TProperty<boolean>,
                       options: CAVObjectNodeOptions ) {
 
@@ -94,9 +94,9 @@ export default class SoccerBallNode extends CAVObjectNode {
 
     this.addChild( soccerBallNodes );
 
-    // Data point should be visible if the soccer ball is active AND if the soccer ball took a non-null value.
-    Multilink.multilink( [ soccerBall.isActiveProperty, soccerBall.valueProperty ], ( isActive, value ) => {
-      this.visible = isActive;
+    // Data point should be visible if the soccer ball is active AND if the scene is visible.
+    Multilink.multilink( [ soccerBall.isActiveProperty, isSceneVisibleProperty ], ( isActive, isSceneVisible ) => {
+      this.visible = isActive && isSceneVisible;
     } );
 
     // show or hide the median highlight

@@ -67,6 +67,12 @@ export default class CAVModel {
       tandem: options.tandem.createTandem( 'selectedSceneModelProperty' )
     } );
 
+    this.selectedSceneModelProperty.link( selectedScene => {
+      this.sceneModels.forEach( sceneModel => {
+        sceneModel.isVisibleProperty.value = sceneModel === selectedScene;
+      } );
+    } );
+
     // this.isShowingPlayAreaMedianProperty.link( updateDataMeasures );
   }
 
