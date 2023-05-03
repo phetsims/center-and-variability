@@ -3,6 +3,7 @@
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import MedianBarNode from '../../common/view/MedianBarNode.js';
 import { Line, Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import VariabilityModel from '../model/VariabilityModel.js';
@@ -72,6 +73,15 @@ export default class IQRNode extends CAVPlotNode {
       fill: '#99ffff'
     } );
 
+    const INFO_ARROW_LENGTH = 25;
+    const MEDIAN_ARROW_OFFSET_Y = -90;
+
+    const medianTextLabel = new Text( '', { fontSize: 18, fill: 'red' } );
+    const medianArrowNode = new ArrowNode( 0, 0, 0, 0, { fill: 'red', stroke: 'white' } );
+    this.addChild( medianTextLabel );
+    this.addChild( medianArrowNode );
+
+
     const BOX_CENTER_Y = options.parentContext === 'info' ? -20 : 78;
     const BOX_HEIGHT = 25;
     const END_CAP_HEIGHT = 15;
@@ -132,25 +142,15 @@ export default class IQRNode extends CAVPlotNode {
 
     infoNumberLabels.y = -40;
 
-    const minTextLabelNode = new Node();
-    const maxTextLabelNode = new Node();
-    const q1TextLabelNode = new Node();
-    const q3TextLabelNode = new Node();
-
     const minTextLabel = new Text( '', { fontSize: 18 } );
     const maxTextLabel = new Text( '', { fontSize: 18 } );
     const q1TextLabel = new Text( '', { fontSize: 18 } );
     const q3TextLabel = new Text( '', { fontSize: 18 } );
 
-    minTextLabelNode.addChild( minTextLabel );
-    maxTextLabelNode.addChild( maxTextLabel );
-    q1TextLabelNode.addChild( q1TextLabel );
-    q3TextLabelNode.addChild( q3TextLabel );
-
-    infoNumberLabels.addChild( minTextLabelNode );
-    infoNumberLabels.addChild( maxTextLabelNode );
-    infoNumberLabels.addChild( q1TextLabelNode );
-    infoNumberLabels.addChild( q3TextLabelNode );
+    infoNumberLabels.addChild( minTextLabel );
+    infoNumberLabels.addChild( maxTextLabel );
+    infoNumberLabels.addChild( q1TextLabel );
+    infoNumberLabels.addChild( q3TextLabel );
 
     this.addChild( infoNumberLabels );
 
@@ -167,7 +167,13 @@ export default class IQRNode extends CAVPlotNode {
       const boxLeft = this.modelViewTransform.modelToViewX( q1 );
       const boxRight = this.modelViewTransform.modelToViewX( q3 );
 
-      boxWhiskerMedianLine.x1 = boxWhiskerMedianLine.x2 = this.modelViewTransform.modelToViewX( model.medianValueProperty.value! );
+      const medianPositionX = this.modelViewTransform.modelToViewX( model.medianValueProperty.value! );
+      boxWhiskerMedianLine.x1 = boxWhiskerMedianLine.x2 = medianPositionX;
+
+      medianArrowNode.setTailAndTip( medianPositionX, MEDIAN_ARROW_OFFSET_Y, medianPositionX, MEDIAN_ARROW_OFFSET_Y + INFO_ARROW_LENGTH );
+      medianTextLabel.string = 'median = ' + model.medianValueProperty.value!;
+      medianTextLabel.centerX = medianPositionX;
+      medianTextLabel.bottom = medianArrowNode.tailY - 6;
 
       boxWhiskerBox.left = boxLeft - 0.5 * BOX_STROKE_WIDTH;
       boxWhiskerBox.rectWidth = boxRight - boxLeft;
@@ -189,8 +195,8 @@ export default class IQRNode extends CAVPlotNode {
 
         minTextLabel.string = min;
         maxTextLabel.string = max;
-        minTextLabelNode.centerX = minPositionX;
-        maxTextLabelNode.centerX = maxPositionX;
+        minTextLabel.centerX = minPositionX;
+        maxTextLabel.centerX = maxPositionX;
       }
 
       const enoughData = model.numberOfDataPointsProperty.value >= 5;
@@ -223,10 +229,12 @@ export default class IQRNode extends CAVPlotNode {
 
       infoNumberLabels.visible = options.parentContext === 'info';
       iqrInfoBar.visible = options.parentContext === 'info';
+      medianTextLabel.visible = options.parentContext === 'info';
+      medianArrowNode.visible = options.parentContext === 'info';
 
       if ( options.parentContext === 'info' && q1 && q3 ) {
-        q1TextLabelNode.centerX = boxLeft;
-        q3TextLabelNode.centerX = boxRight;
+        q1TextLabel.centerX = boxLeft;
+        q3TextLabel.centerX = boxRight;
         q1TextLabel.string = q1;
         q3TextLabel.string = q3;
 
