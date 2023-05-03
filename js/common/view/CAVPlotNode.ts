@@ -11,7 +11,7 @@
 import centerAndVariability from '../../centerAndVariability.js';
 import { ManualConstraint, Node, NodeOptions, Rectangle, TColor, Text } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import CAVModel from '../model/CAVModel.js';
+import CAVSceneModel from '../model/CAVSceneModel.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import NumberLineNode from './NumberLineNode.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
@@ -30,7 +30,7 @@ export default class CAVPlotNode extends Node {
   private readonly dotLayer = new Node();
   protected readonly modelViewTransform: ModelViewTransform2;
 
-  public constructor( model: CAVModel, providedOptions?: CAVPlotOptions ) {
+  public constructor( model: CAVSceneModel, providedOptions?: CAVPlotOptions ) {
 
     const options = optionize<CAVPlotOptions, SelfOptions, NodeOptions>()( {}, providedOptions );
 

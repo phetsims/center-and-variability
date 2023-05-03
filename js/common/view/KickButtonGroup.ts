@@ -20,7 +20,7 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import CAVModel from '../model/CAVModel.js';
+import CAVSceneModel from '../model/CAVSceneModel.js';
 
 type SelfOptions = EmptySelfOptions;
 export type KickButtonGroupOptions = SelfOptions & VBoxOptions & PickRequired<VBoxOptions, 'tandem'>;
@@ -30,7 +30,7 @@ const TEXT_MAX_WIDTH = 80;
 
 export default class KickButtonGroup extends VBox {
 
-  public constructor( model: CAVModel, providedOptions?: KickButtonGroupOptions ) {
+  public constructor( model: CAVSceneModel, providedOptions?: KickButtonGroupOptions ) {
 
     const options = optionize<KickButtonGroupOptions, SelfOptions, VBoxOptions>()( {
       spacing: 2
@@ -68,7 +68,7 @@ export default class KickButtonGroup extends VBox {
         fireOnHold: !multikick,
         fireOnHoldDelay: 750,
 
-        // This needs to be longer than CAVModel.TIME_BETWEEN_RAPID_KICKS plus the poise time, see
+        // This needs to be longer than CAVSceneModel.TIME_BETWEEN_RAPID_KICKS plus the poise time, see
         // https://github.com/phetsims/center-and-variability/issues/102
         fireOnHoldInterval: 650
       } );

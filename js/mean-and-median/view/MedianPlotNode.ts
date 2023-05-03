@@ -10,7 +10,7 @@
 
 import centerAndVariability from '../../centerAndVariability.js';
 import { NodeOptions } from '../../../../scenery/js/imports.js';
-import CAVModel from '../../common/model/CAVModel.js';
+import CAVSceneModel from '../../common/model/CAVSceneModel.js';
 import MedianBarNode from '../../common/view/MedianBarNode.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import CAVPlotNode from '../../common/view/CAVPlotNode.js';
@@ -29,7 +29,7 @@ export default class MedianPlotNode extends CAVPlotNode {
     barStyle: 'continuous'
   } );
 
-  public constructor( model: CAVModel, providedOptions: CAVPlotOptions ) {
+  public constructor( model: CAVSceneModel, providedOptions: CAVPlotOptions ) {
     super( model, {
       dataPointFill: 'black',
       ...providedOptions

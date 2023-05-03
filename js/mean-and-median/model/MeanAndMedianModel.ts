@@ -9,12 +9,12 @@
 
 import centerAndVariability from '../../centerAndVariability.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
+import CAVSceneModel, { CAVModelOptions } from '../../common/model/CAVSceneModel.js';
 
 // constants
 const HIGHLIGHT_ANIMATION_TIME_STEP = 0.25; // in seconds
 
-export default class MeanAndMedianModel extends CAVModel {
+export default class MeanAndMedianModel extends CAVSceneModel {
 
 
   // Indicates how far the show median animation has progressed, or null if not animating. Not PhET-iO instrumented since

@@ -13,7 +13,7 @@ import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VerticalCheckboxGroup, { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
 import { AlignGroup, GridBox, Node, TColor, Text } from '../../../../scenery/js/imports.js';
-import CAVModel from '../model/CAVModel.js';
+import CAVSceneModel from '../model/CAVSceneModel.js';
 import CAVConstants from '../CAVConstants.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVColors from '../CAVColors.js';
@@ -56,7 +56,7 @@ export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxG
     };
   }
 
-  public static getMedianCheckboxItem( alignGroup: AlignGroup, model: CAVModel ): VerticalCheckboxGroupItem {
+  public static getMedianCheckboxItem( alignGroup: AlignGroup, model: CAVSceneModel ): VerticalCheckboxGroupItem {
     return {
       createNode: ( tandem: Tandem ) => {
         return BottomRepresentationCheckboxGroup.createGridBox(
@@ -75,7 +75,7 @@ export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxG
     };
   }
 
-  public static getMeanCheckboxItem( alignGroup: AlignGroup, model: CAVModel ): VerticalCheckboxGroupItem {
+  public static getMeanCheckboxItem( alignGroup: AlignGroup, model: CAVSceneModel ): VerticalCheckboxGroupItem {
     return {
       createNode: ( tandem: Tandem ) => BottomRepresentationCheckboxGroup.createGridBox( new Text( CenterAndVariabilityStrings.meanStringProperty, TEXT_OPTIONS ),
         NumberLineNode.createMeanIndicatorNode( true, true ), alignGroup ),
@@ -98,7 +98,7 @@ export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxG
     };
   }
 
-  public static getPredictMedianCheckboxItem( alignGroup: AlignGroup, model: CAVModel ): VerticalCheckboxGroupItem {
+  public static getPredictMedianCheckboxItem( alignGroup: AlignGroup, model: CAVSceneModel ): VerticalCheckboxGroupItem {
     return BottomRepresentationCheckboxGroup.createPredictionItem(
       model.isShowingMedianPredictionProperty,
       CenterAndVariabilityStrings.predictMedianStringProperty,
@@ -109,7 +109,7 @@ export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxG
     );
   }
 
-  public static getPredictMeanCheckboxItem( alignGroup: AlignGroup, model: CAVModel ): VerticalCheckboxGroupItem {
+  public static getPredictMeanCheckboxItem( alignGroup: AlignGroup, model: CAVSceneModel ): VerticalCheckboxGroupItem {
     return BottomRepresentationCheckboxGroup.createPredictionItem(
       model.isShowingMeanPredictionProperty,
       CenterAndVariabilityStrings.predictMeanStringProperty,

@@ -42,7 +42,7 @@ export type CAVModelOptions = SelfOptions;
 // constants
 const TIME_BETWEEN_RAPID_KICKS = 0.5; // in seconds
 
-export default class CAVModel implements TModel {
+export default class CAVSceneModel implements TModel {
   public readonly soccerBalls: SoccerBall[];
   public readonly soccerBallCountProperty: NumberProperty;
 
@@ -224,7 +224,7 @@ export default class CAVModel implements TModel {
     this.hasKickableSoccerBallsProperty = new DerivedProperty( [ this.numberOfUnkickedBallsProperty ],
       numberOfUnkickedBalls => numberOfUnkickedBalls > 0 );
 
-    this.distributionProperty = new Property( CAVModel.chooseDistribution(), {
+    this.distributionProperty = new Property( CAVSceneModel.chooseDistribution(), {
       tandem: options.tandem.createTandem( 'distributionProperty' ),
       phetioValueType: ArrayIO( NumberIO ),
       phetioDocumentation: 'The distribution of probabilities of where the balls will land is represented as an un-normalized array of non-negative, floating-point numbers, one value for each location in the physical range',
@@ -250,7 +250,7 @@ export default class CAVModel implements TModel {
 
   protected updateDataMeasures(): void {
     const sortedObjects = this.getSortedLandedObjects();
-    const medianObjects = CAVModel.getMedianObjectsFromSortedArray( sortedObjects );
+    const medianObjects = CAVSceneModel.getMedianObjectsFromSortedArray( sortedObjects );
 
     this.soccerBalls.forEach( object => {
       object.isMedianObjectProperty.value = medianObjects.includes( object );
@@ -333,7 +333,7 @@ export default class CAVModel implements TModel {
     this.isShowingPlayAreaMedianProperty.reset();
     this.isShowingMeanPredictionProperty.reset();
     this.isShowingMedianPredictionProperty.reset();
-    this.distributionProperty.value = CAVModel.chooseDistribution();
+    this.distributionProperty.value = CAVSceneModel.chooseDistribution();
 
     this.clearData();
 
@@ -522,4 +522,4 @@ export default class CAVModel implements TModel {
   }
 }
 
-centerAndVariability.register( 'CAVModel', CAVModel );
+centerAndVariability.register( 'CAVSceneModel', CAVSceneModel );

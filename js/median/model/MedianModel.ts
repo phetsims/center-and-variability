@@ -10,9 +10,9 @@
 import centerAndVariability from '../../centerAndVariability.js';
 import CardModel from '../../median/model/CardModel.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
+import CAVSceneModel, { CAVModelOptions } from '../../common/model/CAVSceneModel.js';
 
-export default class MedianModel extends CAVModel {
+export default class MedianModel extends CAVSceneModel {
 
   public readonly cards: CardModel[];
   public readonly isSortingDataProperty: BooleanProperty;

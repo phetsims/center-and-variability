@@ -10,7 +10,7 @@
 import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import CAVModel from '../model/CAVModel.js';
+import CAVSceneModel from '../model/CAVSceneModel.js';
 import CAVConstants from '../CAVConstants.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
@@ -51,7 +51,7 @@ export default class CAVScreenView extends ScreenView {
 
   protected readonly resetAllButton: ResetAllButton;
   protected readonly modelViewTransform: ModelViewTransform2;
-  protected readonly model: CAVModel;
+  protected readonly model: CAVSceneModel;
   protected readonly frontObjectLayer = new Node();
 
   // TODO: We haven't enforced the "exactly half a ball should be occluded if anything is occluded" design,
@@ -69,7 +69,7 @@ export default class CAVScreenView extends ScreenView {
   protected readonly playAreaNumberLineNode: NumberLineNode;
   private readonly updateMedianNode: () => void;
 
-  public constructor( model: CAVModel, providedOptions: CAVScreenViewOptions ) {
+  public constructor( model: CAVSceneModel, providedOptions: CAVScreenViewOptions ) {
     const options = optionize<CAVScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
 
     // The ground is at y=0
@@ -319,7 +319,7 @@ export default class CAVScreenView extends ScreenView {
   /**
    * The MedianPredictionNode is shared in the Median screen and MeanAndMedianScreen, so factored out here.
    */
-  public static createMedianPredictionNode( model: CAVModel, modelViewTransform: ModelViewTransform2, tandem: Tandem ): PredictionSlider {
+  public static createMedianPredictionNode( model: CAVSceneModel, modelViewTransform: ModelViewTransform2, tandem: Tandem ): PredictionSlider {
     return new PredictionSlider( model.medianPredictionProperty, modelViewTransform, model.physicalRange, {
       predictionThumbNodeOptions: {
         color: CAVColors.medianColorProperty

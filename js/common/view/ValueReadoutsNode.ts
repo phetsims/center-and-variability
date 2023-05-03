@@ -10,7 +10,7 @@
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import { TPaint, Text, VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
-import CAVModel from '../model/CAVModel.js';
+import CAVSceneModel from '../model/CAVSceneModel.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import Utils from '../../../../dot/js/Utils.js';
@@ -24,7 +24,7 @@ export type ValueReadoutNodeOptions = SelfOptions & VBoxOptions;
 
 export default class ValueReadoutsNode extends VBox {
 
-  public constructor( model: CAVModel, providedOptions?: ValueReadoutNodeOptions ) {
+  public constructor( model: CAVSceneModel, providedOptions?: ValueReadoutNodeOptions ) {
 
     const createReadoutText = ( valueProperty: TReadOnlyProperty<number | null>, visibleProperty: TReadOnlyProperty<boolean>,
                                 stringTemplate: LinkableProperty<string>, fill: TPaint ) => {

@@ -18,12 +18,12 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
+import CAVSceneModel, { CAVModelOptions } from '../../common/model/CAVSceneModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityModelOptions = SelfOptions & CAVModelOptions;
 
-export default class VariabilityModel extends CAVModel {
+export default class VariabilityModel extends CAVSceneModel {
   private readonly initialized: boolean = false;
 
   public readonly selectedDistributionProperty: Property<DistributionType>;
@@ -158,8 +158,8 @@ export default class VariabilityModel extends CAVModel {
         const upperHalf = sortedObjects.slice( sortedObjects.length % 2 !== 0 ? splitIndex + 1 : splitIndex );
 
         // take the average to account for cases where there is more than one object contributing to the median
-        this.q1ValueProperty.value = _.mean( CAVModel.getMedianObjectsFromSortedArray( lowerHalf ).map( obj => obj.valueProperty.value! ) );
-        this.q3ValueProperty.value = _.mean( CAVModel.getMedianObjectsFromSortedArray( upperHalf ).map( obj => obj.valueProperty.value! ) );
+        this.q1ValueProperty.value = _.mean( CAVSceneModel.getMedianObjectsFromSortedArray( lowerHalf ).map( obj => obj.valueProperty.value! ) );
+        this.q3ValueProperty.value = _.mean( CAVSceneModel.getMedianObjectsFromSortedArray( upperHalf ).map( obj => obj.valueProperty.value! ) );
 
         assert && assert( !isNaN( this.q1ValueProperty.value ) );
         assert && assert( !isNaN( this.q3ValueProperty.value ) );
