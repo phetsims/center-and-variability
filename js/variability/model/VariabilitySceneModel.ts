@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2022-2023, University of Colorado Boulder
 
 import CAVSceneModel from '../../common/model/CAVSceneModel.js';
 import centerAndVariability from '../../centerAndVariability.js';
