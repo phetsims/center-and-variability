@@ -35,21 +35,6 @@ export default class VariabilityModel extends CAVModel {
 
   public constructor( options: VariabilityModelOptions ) {
 
-    const sceneModels = [
-
-      // TODO: Each of these should have its own distribution
-      new VariabilitySceneModel( { tandem: options.tandem.createTandem( 'sceneModel1' ) } ),
-      new VariabilitySceneModel( { tandem: options.tandem.createTandem( 'sceneModel2' ) } ),
-      new VariabilitySceneModel( { tandem: options.tandem.createTandem( 'sceneModel3' ) } ),
-      new VariabilitySceneModel( { tandem: options.tandem.createTandem( 'sceneModel4' ) } )
-    ];
-    super( sceneModels, options );
-
-    this.initialized = true;
-
-    this.variabilitySceneModels = sceneModels;
-
-    // TODO: When the selected scene model changes, make the old one invisible and make the new one visible, see https://github.com/phetsims/center-and-variability/issues/164
 
     // this.selectedDistributionProperty.link( distribution => {
     //
@@ -62,6 +47,20 @@ export default class VariabilityModel extends CAVModel {
     //     distribution === DistributionType.KICKER_3 ? [ 6, 9, 11, 14, 11, 8, 6, 5, 5, 5, 5, 5, 5, 5, 5 ] :
     //       /*KICKER_4*/ [ 5, 5, 5, 5, 5, 5, 5, 5, 6, 8, 11, 14, 11, 9, 6 ];
     // } );
+    const sceneModels = [
+
+      // TODO: Each of these should have its own distribution
+      new VariabilitySceneModel( [ 0, 0, 0, 1, 3, 10, 18, 20, 18, 10, 3, 1, 0, 0, 0 ], { tandem: options.tandem.createTandem( 'sceneModel1' ) } ),
+      new VariabilitySceneModel( [ 5, 5, 10, 10, 25, 30, 40, 50, 40, 30, 25, 10, 10, 5, 5 ], { tandem: options.tandem.createTandem( 'sceneModel2' ) } ),
+      new VariabilitySceneModel( [ 6, 9, 11, 14, 11, 8, 6, 5, 5, 5, 5, 5, 5, 5, 5 ], { tandem: options.tandem.createTandem( 'sceneModel3' ) } ),
+      new VariabilitySceneModel( [ 5, 5, 5, 5, 5, 5, 5, 5, 6, 8, 11, 14, 11, 9, 6 ], { tandem: options.tandem.createTandem( 'sceneModel4' ) } )
+    ];
+    super( sceneModels, options );
+
+    this.initialized = true;
+
+    this.variabilitySceneModels = sceneModels;
+
 
     this.selectedVariabilityProperty = new EnumerationProperty( VariabilityMeasure.RANGE, {
       tandem: options.tandem.createTandem( 'selectedVariabilityProperty' )

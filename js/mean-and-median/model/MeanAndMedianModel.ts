@@ -27,7 +27,7 @@ export default class MeanAndMedianModel extends CAVModel {
 
   public constructor( options: { tandem: Tandem } ) {
 
-    const scene = new CAVSceneModel( { tandem: options.tandem.createTandem( 'sceneModel' ) } );
+    const scene = new CAVSceneModel( CAVSceneModel.chooseDistribution(), { tandem: options.tandem.createTandem( 'sceneModel' ) } );
     super( [ scene ], {
       ...options,
       instrumentMeanPredictionProperty: true

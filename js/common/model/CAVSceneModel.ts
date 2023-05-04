@@ -72,7 +72,7 @@ export default class CAVSceneModel implements TModel {
   // Starting at 0, iterate through the index of the kickers. This updates the SoccerPlayer.isActiveProperty to show the current kicker
   private readonly activeKickerIndexProperty: NumberProperty;
 
-  public constructor( options: { tandem: Tandem } ) {
+  public constructor( initialDistribution: ReadonlyArray<number>, options: { tandem: Tandem } ) {
 
     const updateDataMeasures = () => this.updateDataMeasures();
 
@@ -177,7 +177,7 @@ export default class CAVSceneModel implements TModel {
     this.hasKickableSoccerBallsProperty = new DerivedProperty( [ this.numberOfUnkickedBallsProperty ],
       numberOfUnkickedBalls => numberOfUnkickedBalls > 0 );
 
-    this.distributionProperty = new Property( CAVSceneModel.chooseDistribution(), {
+    this.distributionProperty = new Property( initialDistribution, {
       tandem: options.tandem.createTandem( 'distributionProperty' ),
       phetioValueType: ArrayIO( NumberIO ),
       phetioDocumentation: 'The distribution of probabilities of where the balls will land is represented as an un-normalized array of non-negative, floating-point numbers, one value for each location in the physical range',
@@ -278,6 +278,8 @@ export default class CAVSceneModel implements TModel {
    * Resets the model.
    */
   public reset(): void {
+
+    // TODO: This should only be in MedianSceneModel and MeanAndMedianSceneModel
     this.distributionProperty.value = CAVSceneModel.chooseDistribution();
 
     this.clearData();
@@ -384,7 +386,7 @@ export default class CAVSceneModel implements TModel {
     }
   }
 
-  private static chooseDistribution(): ReadonlyArray<number> {
+  public static chooseDistribution(): ReadonlyArray<number> {
     return dotRandom.nextBoolean() ? CAVConstants.LEFT_SKEWED_DATA : CAVConstants.RIGHT_SKEWED_DATA;
   }
 

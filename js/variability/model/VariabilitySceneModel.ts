@@ -22,8 +22,8 @@ export default class VariabilitySceneModel extends CAVSceneModel {
 
   private readonly initialized: boolean = false;
 
-  public constructor( options: { tandem: Tandem } ) {
-    super( options );
+  public constructor( distribution: ReadonlyArray<number>, options: { tandem: Tandem } ) {
+    super( distribution, options );
 
     this.maxValueProperty = new DerivedProperty( [ this.dataRangeProperty ], dataRange => {
       return dataRange === null ? null : dataRange.max;

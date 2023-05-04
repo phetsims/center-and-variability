@@ -20,7 +20,7 @@ export default class MedianModel extends CAVModel {
   public readonly isSortingDataProperty: BooleanProperty;
 
   public constructor( options: { tandem: Tandem } ) {
-    const scene = new CAVSceneModel( { tandem: options.tandem.createTandem( 'sceneModel' ) } );
+    const scene = new CAVSceneModel( CAVSceneModel.chooseDistribution(), { tandem: options.tandem.createTandem( 'sceneModel' ) } );
     super( [ scene ], {
       ...options,
       instrumentMeanPredictionProperty: false
