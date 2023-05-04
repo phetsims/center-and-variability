@@ -68,7 +68,6 @@ export default class VariabilityScreenView extends CAVScreenView {
 
     model.sceneModels.forEach( sceneModel => {
 
-      // TODO: VariabilityModel should know the scene models
       // TODO: Should the info dialogs be in SceneView? Probably.
       // TODO: Only show the one for the selected scene
       const infoDialog = new InfoDialog( model, sceneModel as VariabilitySceneModel, {

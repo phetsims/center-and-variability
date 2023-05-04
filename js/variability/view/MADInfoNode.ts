@@ -33,11 +33,7 @@ export default class MADInfoNode extends VBox {
       numeratorText.string = madStrings.join( ' + ' );
       denominatorText.string = values.length.toString();
 
-      // TODO: If the visually displayed values don't match, adjust a value so it does match. Do this in a stable way
-      // We would have to update the values over the info bars too, so they are not out of sync
-      // This sounds very complicated, and could have students see that something like 0.44 got rounded to 0.5
-      // Maybe if the rounded values don't sum to the rounded total, then add a decimal point and run it again?
-      // Or use an approx-equals sign?
+      // TODO: Due to rounding, these values could not add up correctly, see https://github.com/phetsims/center-and-variability/issues/169
       const sum = _.reduce( mads, ( sum, mad ) => sum + mad, 0 );
       resultNumeratorText.string = Utils.toFixed( sum, 1 );
       resultDenominatorText.string = values.length.toString();
