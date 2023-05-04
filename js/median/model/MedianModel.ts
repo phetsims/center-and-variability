@@ -18,6 +18,7 @@ export default class MedianModel extends CAVModel {
 
   public readonly cards: CardModel[];
   public readonly isSortingDataProperty: BooleanProperty;
+  public readonly isShowingTopMedianProperty: BooleanProperty;
 
   public constructor( options: { tandem: Tandem } ) {
     const scene = new CAVSceneModel( CAVSceneModel.chooseDistribution(), { tandem: options.tandem.createTandem( 'sceneModel' ) } );
@@ -33,11 +34,16 @@ export default class MedianModel extends CAVModel {
     this.isSortingDataProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isSortingDataProperty' )
     } );
+
+    this.isShowingTopMedianProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isShowingTopMedianProperty' )
+    } );
   }
 
   public override reset(): void {
-    this.isSortingDataProperty.reset();
     super.reset();
+    this.isSortingDataProperty.reset();
+    this.isShowingTopMedianProperty.reset();
   }
 }
 

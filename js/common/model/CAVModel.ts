@@ -17,8 +17,6 @@ export type CAVModelOptions = SelfOptions;
 export default class CAVModel {
 
   // TODO: Some of these should move to subclasses
-  public readonly isShowingTopMeanProperty: BooleanProperty;
-  public readonly isShowingTopMedianProperty: BooleanProperty;
   public readonly isShowingPlayAreaMedianProperty: BooleanProperty;
   public readonly isShowingPlayAreaMeanProperty: BooleanProperty;
   public readonly isShowingMeanPredictionProperty: BooleanProperty;
@@ -32,12 +30,6 @@ export default class CAVModel {
 
   public constructor( public readonly sceneModels: CAVSceneModel[], options: CAVModelOptions ) {
 
-    this.isShowingTopMeanProperty = new BooleanProperty( false, {
-      tandem: options.instrumentMeanPredictionProperty ? options.tandem.createTandem( 'isShowingTopMeanProperty' ) : Tandem.OPT_OUT
-    } );
-    this.isShowingTopMedianProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isShowingTopMedianProperty' )
-    } );
     this.isShowingPlayAreaMeanProperty = new BooleanProperty( false, {
       tandem: options.instrumentMeanPredictionProperty ? options.tandem.createTandem( 'isShowingPlayAreaMeanProperty' ) : Tandem.OPT_OUT
     } );
@@ -87,8 +79,6 @@ export default class CAVModel {
   public reset(): void {
     this.medianPredictionProperty.reset();
     this.meanPredictionProperty.reset();
-    this.isShowingTopMeanProperty.reset();
-    this.isShowingTopMedianProperty.reset();
     this.isShowingPlayAreaMeanProperty.reset();
     this.isShowingPlayAreaMedianProperty.reset();
     this.isShowingMeanPredictionProperty.reset();

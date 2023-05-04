@@ -20,6 +20,8 @@ import CAVConstants from '../CAVConstants.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import DataPointNode from './DataPointNode.js';
 import CAVModel from '../model/CAVModel.js';
+import MeanAndMedianModel from '../../mean-and-median/model/MeanAndMedianModel.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 
 type SelfOptions = {
   dataPointFill: TColor;
@@ -55,7 +57,7 @@ export default class CAVPlotNode extends Node {
 
     const numberLineNode = new NumberLineNode(
       sceneModel.meanValueProperty,
-      model.isShowingTopMeanProperty,
+      model instanceof MeanAndMedianModel ? model.isShowingTopMeanProperty : new BooleanProperty( false ),
       sceneModel.dataRangeProperty, {
         color: 'black',
         includeXAxis: true,
@@ -86,7 +88,7 @@ export default class CAVPlotNode extends Node {
       // Create the data points for that scene
       scene.soccerBalls.forEach( ( soccerBall, index ) => {
 
-        const dotNode = new DataPointNode( soccerBall, model.isShowingTopMedianProperty, modelViewTransform, {
+        const dotNode = new DataPointNode( soccerBall, ( model instanceof MeanAndMedianModel ) ? model.isShowingTopMedianProperty : new BooleanProperty( false ), modelViewTransform, {
           tandem: options.tandem.createTandem( 'dotNodeGroup' ).createTandem( 'dataPoint' + index ),
           fill: options.dataPointFill
         } );

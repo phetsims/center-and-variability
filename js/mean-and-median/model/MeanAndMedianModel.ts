@@ -24,6 +24,8 @@ export default class MeanAndMedianModel extends CAVModel {
 
   private lastHighlightAnimationStepTime = 0;
   public readonly isMedianAnimationCompleteProperty = new BooleanProperty( false );
+  public readonly isShowingTopMedianProperty: BooleanProperty;
+  public readonly isShowingTopMeanProperty: BooleanProperty;
 
   public constructor( options: { tandem: Tandem } ) {
 
@@ -31,6 +33,13 @@ export default class MeanAndMedianModel extends CAVModel {
     super( [ scene ], {
       ...options,
       instrumentMeanPredictionProperty: true
+    } );
+
+    this.isShowingTopMeanProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isShowingTopMeanProperty' )
+    } );
+    this.isShowingTopMedianProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isShowingTopMedianProperty' )
     } );
 
     // Don't show animation on startup or when setting PhET-iO state
@@ -60,6 +69,8 @@ export default class MeanAndMedianModel extends CAVModel {
     super.reset();
     this.highlightAnimationIndex = null;
     this.isMedianAnimationCompleteProperty.reset();
+    this.isShowingTopMeanProperty.reset();
+    this.isShowingTopMedianProperty.reset();
   }
 
   public override step( dt: number ): void {

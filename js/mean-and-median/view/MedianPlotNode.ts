@@ -16,7 +16,6 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import CAVPlotNode from '../../common/view/CAVPlotNode.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
 import CAVObjectType from '../../common/model/CAVObjectType.js';
-import CAVModel from '../../common/model/CAVModel.js';
 
 export type CAVPlotOptions = NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
@@ -30,7 +29,7 @@ export default class MedianPlotNode extends CAVPlotNode {
     barStyle: 'continuous'
   } );
 
-  public constructor( model: CAVModel, sceneModel: CAVSceneModel, providedOptions: CAVPlotOptions ) {
+  public constructor( model: MeanAndMedianModel, sceneModel: CAVSceneModel, providedOptions: CAVPlotOptions ) {
     super( model, sceneModel, {
       dataPointFill: 'black',
       ...providedOptions
@@ -67,7 +66,7 @@ export default class MedianPlotNode extends CAVPlotNode {
         assert && assert( medianValue !== null );
         const medianPositionX = modelViewTransform.modelToViewX( medianValue );
 
-        this.medianBarNode.setMedianBarShape( barY, left, medianPositionX, right, ( model as MeanAndMedianModel ).isMedianAnimationCompleteProperty.value );
+        this.medianBarNode.setMedianBarShape( barY, left, medianPositionX, right, model.isMedianAnimationCompleteProperty.value );
       }
       else {
         this.medianBarNode.clear();
