@@ -102,7 +102,8 @@ export default class SceneView {
       soccerBall.valueProperty.link( ( value, oldValue ) => {
 
         // If the value changed from numeric to numeric, it must have been by user dragging it.
-        // TODO: Wire up to the listener directly?
+        // It's simpler to have the listener here because in the model or drag listener, there is rounding/snapping
+        // And we only want to hide the indicator of the user dragged the ball a full tick mark
         if ( oldValue !== null ) {
           model.soccerBallHasBeenDraggedProperty.value = true;
         }

@@ -16,11 +16,12 @@ export type CAVModelOptions = SelfOptions;
 
 export default class CAVModel {
 
-  // TODO: Some of these should move to subclasses
-  public readonly isShowingPlayAreaMedianProperty: BooleanProperty;
-  public readonly isShowingPlayAreaMeanProperty: BooleanProperty;
-  public readonly isShowingMedianPredictionProperty: BooleanProperty;
-  public readonly medianPredictionProperty: NumberProperty;
+  public readonly isShowingPlayAreaMedianProperty: BooleanProperty; // Screens 1-3
+
+  // TODO: Should some of these should move to subclasses?
+  public readonly isShowingPlayAreaMeanProperty: BooleanProperty;  // Screens 2-3
+  public readonly isShowingMedianPredictionProperty: BooleanProperty; // Screens 1-2
+  public readonly medianPredictionProperty: NumberProperty; // Screens 1-2
 
   public readonly selectedSceneModelProperty: Property<CAVSceneModel>;
   public readonly soccerBallHasBeenDraggedProperty: Property<boolean>;

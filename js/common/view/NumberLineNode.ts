@@ -106,7 +106,7 @@ export default class NumberLineNode extends Node {
     }
 
     // TODO: Can we make a 1d MVT since that's all that's needed here, or should this be using the same MVT as the outer MVT?  Like the one that positions the number line node
-    // and puts objects in the right spots.
+    // and puts objects in the right spots. Related to https://github.com/phetsims/center-and-variability/issues/168
     const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
       new Bounds2( CAVConstants.PHYSICAL_RANGE.min, 0, CAVConstants.PHYSICAL_RANGE.max, CAVConstants.PHYSICAL_RANGE.getLength() ),
       new Bounds2( 0, -CAVConstants.CHART_VIEW_WIDTH, CAVConstants.CHART_VIEW_WIDTH, CAVConstants.CHART_VIEW_WIDTH )
