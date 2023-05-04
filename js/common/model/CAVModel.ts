@@ -19,11 +19,8 @@ export default class CAVModel {
   // TODO: Some of these should move to subclasses
   public readonly isShowingPlayAreaMedianProperty: BooleanProperty;
   public readonly isShowingPlayAreaMeanProperty: BooleanProperty;
-  public readonly isShowingMeanPredictionProperty: BooleanProperty;
   public readonly isShowingMedianPredictionProperty: BooleanProperty;
-
   public readonly medianPredictionProperty: NumberProperty;
-  public readonly meanPredictionProperty: NumberProperty;
 
   public readonly selectedSceneModelProperty: Property<CAVSceneModel>;
   public readonly soccerBallHasBeenDraggedProperty: Property<boolean>;
@@ -36,9 +33,7 @@ export default class CAVModel {
     this.isShowingPlayAreaMedianProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isShowingPlayAreaMedianProperty' )
     } );
-    this.isShowingMeanPredictionProperty = new BooleanProperty( false, {
-      tandem: options.instrumentMeanPredictionProperty ? options.tandem.createTandem( 'isShowingMeanPredictionProperty' ) : Tandem.OPT_OUT
-    } );
+
     this.isShowingMedianPredictionProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isShowingMedianPredictionProperty' )
     } );
@@ -48,10 +43,6 @@ export default class CAVModel {
       // Assumes all physical ranges are the same
       range: CAVConstants.PHYSICAL_RANGE,
       tandem: options.tandem.createTandem( 'medianPredictionProperty' )
-    } );
-    this.meanPredictionProperty = new NumberProperty( 1.5, {
-      range: CAVConstants.PHYSICAL_RANGE,
-      tandem: options.instrumentMeanPredictionProperty ? options.tandem.createTandem( 'meanPredictionProperty' ) : Tandem.OPT_OUT
     } );
 
     this.selectedSceneModelProperty = new Property( sceneModels[ 0 ], {
@@ -78,10 +69,10 @@ export default class CAVModel {
 
   public reset(): void {
     this.medianPredictionProperty.reset();
-    this.meanPredictionProperty.reset();
+
     this.isShowingPlayAreaMeanProperty.reset();
     this.isShowingPlayAreaMedianProperty.reset();
-    this.isShowingMeanPredictionProperty.reset();
+
     this.isShowingMedianPredictionProperty.reset();
 
     this.sceneModels.forEach( sceneModel => sceneModel.reset() );

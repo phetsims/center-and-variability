@@ -21,6 +21,7 @@ import PredictionThumbNode from './PredictionThumbNode.js';
 import LinkableProperty from '../../../../axon/js/LinkableProperty.js';
 import VariabilityModel from '../../variability/model/VariabilityModel.js';
 import CAVModel from '../model/CAVModel.js';
+import MeanAndMedianModel from '../../mean-and-median/model/MeanAndMedianModel.js';
 
 // constants
 const TEXT_OPTIONS = {
@@ -109,7 +110,7 @@ export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxG
     );
   }
 
-  public static getPredictMeanCheckboxItem( alignGroup: AlignGroup, model: CAVModel ): VerticalCheckboxGroupItem {
+  public static getPredictMeanCheckboxItem( alignGroup: AlignGroup, model: MeanAndMedianModel ): VerticalCheckboxGroupItem {
     return BottomRepresentationCheckboxGroup.createPredictionItem(
       model.isShowingMeanPredictionProperty,
       CenterAndVariabilityStrings.predictMeanStringProperty,

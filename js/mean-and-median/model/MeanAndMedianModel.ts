@@ -12,6 +12,8 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import CAVSceneModel from '../../common/model/CAVSceneModel.js';
 import CAVModel from '../../common/model/CAVModel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import CAVConstants from '../../common/CAVConstants.js';
 
 // constants
 const HIGHLIGHT_ANIMATION_TIME_STEP = 0.25; // in seconds
@@ -26,6 +28,8 @@ export default class MeanAndMedianModel extends CAVModel {
   public readonly isMedianAnimationCompleteProperty = new BooleanProperty( false );
   public readonly isShowingTopMedianProperty: BooleanProperty;
   public readonly isShowingTopMeanProperty: BooleanProperty;
+  public readonly isShowingMeanPredictionProperty: BooleanProperty;
+  public readonly meanPredictionProperty: NumberProperty;
 
   public constructor( options: { tandem: Tandem } ) {
 
@@ -62,6 +66,14 @@ export default class MeanAndMedianModel extends CAVModel {
       }
     } );
 
+    this.meanPredictionProperty = new NumberProperty( 1.5, {
+      range: CAVConstants.PHYSICAL_RANGE,
+      tandem: options.tandem.createTandem( 'meanPredictionProperty' )
+    } );
+    this.isShowingMeanPredictionProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isShowingMeanPredictionProperty' )
+    } );
+
     scene.objectValueBecameNonNullEmitter.addListener( () => this.updateAnimation() );
   }
 
@@ -71,6 +83,8 @@ export default class MeanAndMedianModel extends CAVModel {
     this.isMedianAnimationCompleteProperty.reset();
     this.isShowingTopMeanProperty.reset();
     this.isShowingTopMedianProperty.reset();
+    this.meanPredictionProperty.reset();
+    this.isShowingMeanPredictionProperty.reset();
   }
 
   public override step( dt: number ): void {
