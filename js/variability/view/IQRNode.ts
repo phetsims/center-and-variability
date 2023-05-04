@@ -34,6 +34,7 @@ export default class IQRNode extends CAVPlotNode {
 
     if ( providedOptions.parentContext === 'accordion' ) {
 
+      // TODO: Look for a way to achieve this layout with fewer magic numbers
       const textReadoutGroup = new VBox( {
         x: -110,
         y: this.centerY - 20,
