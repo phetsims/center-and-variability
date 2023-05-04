@@ -27,9 +27,7 @@ export default class CAVModel {
   public readonly medianPredictionProperty: NumberProperty;
   public readonly meanPredictionProperty: NumberProperty;
 
-  // TODO: Why should this have an exclamation point?
-  public readonly selectedSceneModelProperty!: Property<CAVSceneModel>;
-
+  public readonly selectedSceneModelProperty: Property<CAVSceneModel>;
   public readonly soccerBallHasBeenDraggedProperty: Property<boolean>;
 
   public constructor( public readonly sceneModels: CAVSceneModel[], options: CAVModelOptions ) {
