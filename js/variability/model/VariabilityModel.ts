@@ -35,21 +35,10 @@ export default class VariabilityModel extends CAVModel {
 
   public constructor( options: VariabilityModelOptions ) {
 
-
-    // this.selectedDistributionProperty.link( distribution => {
-    //
-    //   // TODO: the parent class sets this incorrectly on reset.
-    //   // TODO: PhET-iO wants to be able to set these values. Maybe in the preferences, we would also add a "custom"
-    //   //  option that would allow the user to specify the distribution parameters. Or for PhET-iO, and query parameters
-    //   this.distributionProperty.value =
-    //     distribution === DistributionType.KICKER_1 ? [ 0, 0, 0, 1, 3, 10, 18, 20, 18, 10, 3, 1, 0, 0, 0 ] :
-    //     distribution === DistributionType.KICKER_2 ? [ 5, 5, 10, 10, 25, 30, 40, 50, 40, 30, 25, 10, 10, 5, 5 ] :
-    //     distribution === DistributionType.KICKER_3 ? [ 6, 9, 11, 14, 11, 8, 6, 5, 5, 5, 5, 5, 5, 5, 5 ] :
-    //       /*KICKER_4*/ [ 5, 5, 5, 5, 5, 5, 5, 5, 6, 8, 11, 14, 11, 9, 6 ];
-    // } );
+    // TODO: the parent class sets this incorrectly on reset.
+    // TODO: PhET-iO wants to be able to set these values. Maybe in the preferences, we would also add a "custom"
+    //       option that would allow the user to specify the distribution parameters. Or for PhET-iO, and query parameters
     const sceneModels = [
-
-      // TODO: Each of these should have its own distribution
       new VariabilitySceneModel( [ 0, 0, 0, 1, 3, 10, 18, 20, 18, 10, 3, 1, 0, 0, 0 ], { tandem: options.tandem.createTandem( 'sceneModel1' ) } ),
       new VariabilitySceneModel( [ 5, 5, 10, 10, 25, 30, 40, 50, 40, 30, 25, 10, 10, 5, 5 ], { tandem: options.tandem.createTandem( 'sceneModel2' ) } ),
       new VariabilitySceneModel( [ 6, 9, 11, 14, 11, 8, 6, 5, 5, 5, 5, 5, 5, 5, 5 ], { tandem: options.tandem.createTandem( 'sceneModel3' ) } ),

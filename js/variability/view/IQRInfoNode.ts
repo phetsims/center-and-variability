@@ -28,9 +28,10 @@ export default class IQRInfoNode extends VBox {
           maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
           layoutOptions: { bottomMargin: 10 }
         } ),
+
+        // TODO: Double check all string key names
         new Text( CenterAndVariabilityStrings.iqrDescriptionStringProperty, { fontSize: 18, maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH } ),
 
-        // TODO: String key name
         distancesText,
 
         new Text( new PatternStringProperty( CenterAndVariabilityStrings.iqrCalculationPattern1StringProperty, {
