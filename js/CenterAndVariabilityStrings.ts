@@ -36,6 +36,10 @@ type StringsType = {
   'rangeStringProperty': LinkableProperty<string>;
   'interquartileRangeIQRStringProperty': LinkableProperty<string>;
   'iqrStringProperty': LinkableProperty<string>;
+  'minStringProperty': LinkableProperty<string>;
+  'maxStringProperty': LinkableProperty<string>;
+  'q1StringProperty': LinkableProperty<string>;
+  'q3StringProperty': LinkableProperty<string>;
   'meanAbsoluteDeviationMADStringProperty': LinkableProperty<string>;
   'madStringProperty': LinkableProperty<string>;
   'variabilityStringProperty': LinkableProperty<string>;

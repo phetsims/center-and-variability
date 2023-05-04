@@ -2,7 +2,7 @@
 
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import MedianBarNode from '../../common/view/MedianBarNode.js';
-import { Line, Node, Rectangle, Text, VBox } from '../../../../scenery/js/imports.js';
+import { Circle, Line, Node, ProfileColorProperty, Rectangle, Text, VBox } from '../../../../scenery/js/imports.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
@@ -11,7 +11,7 @@ import CAVPlotNode, { CAVPlotOptions } from '../../common/view/CAVPlotNode.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import CAVColors from '../../common/CAVColors.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import VariabilityReadoutText from './VariabilityReadoutText.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 
@@ -71,7 +71,7 @@ export default class IQRNode extends CAVPlotNode {
     this.addChild( needAtLeastFiveKicks );
 
     const iqrTextReadout = new Text( '', {
-      font: new PhetFont( 13 )
+      font: new PhetFont( 16 )
     } );
     const iqrBar = new MedianBarNode( {
       notchDirection: 'down',
@@ -83,6 +83,36 @@ export default class IQRNode extends CAVPlotNode {
     const iqrRectangle = new Rectangle( 0, 0, 0, 0, {
       fill: CAVColors.quartileColorProperty
     } );
+
+    const boxWhiskerArrowNode = ( fillColor: ProfileColorProperty ) => {
+      return new ArrowNode( 0, 0, 0, 26, {
+        fill: fillColor,
+        stroke: null,
+        lineWidth: 0.2,
+        headHeight: 12,
+        headWidth: 15,
+        maxHeight: 18
+      } );
+    };
+
+    const boxWhiskerTextNode = ( fillColor: ProfileColorProperty, labelTextProperty: TReadOnlyProperty<string>, isQuartile: boolean ) => {
+      const textNodeChildren: Node[] = [ new Text( labelTextProperty, {
+        fontSize: 16,
+        fill: fillColor,
+        centerX: 0,
+        centerY: 0
+      } ) ];
+      if ( isQuartile ) {
+        textNodeChildren.unshift( new Circle( 12, { fill: CAVColors.quartileColorProperty } ) );
+      }
+      return new Node( { children: textNodeChildren, centerY: isQuartile ? -12 : -10 } );
+    };
+
+    const boxWhiskerLabelNode = ( fillColor: ProfileColorProperty, labelTextProperty: TReadOnlyProperty<string>, isQuartile: boolean ) => {
+      const arrowNode = boxWhiskerArrowNode( fillColor );
+      const textNode = boxWhiskerTextNode( fillColor, labelTextProperty, isQuartile );
+      return new Node( { children: [ textNode, arrowNode ] } );
+    };
 
     const BOX_CENTER_Y = options.parentContext === 'info' ? -20 : 78;
     const BOX_HEIGHT = 25;
@@ -122,20 +152,17 @@ export default class IQRNode extends CAVPlotNode {
       lineWidth: BOX_STROKE_WIDTH
     } );
 
-    const medianArrowNode = new ArrowNode( 0, 0, 0, 26, {
-      fill: CAVColors.medianColorProperty,
-      stroke: null,
-      lineWidth: 0.2,
-      headHeight: 12,
-      headWidth: 15,
-      maxHeight: 18,
-      y: -31
-    } );
-    const medianTextLabel = new Text( new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty,
-      { value: sceneModel.medianValueProperty } ), {
-      fontSize: 14, fill: CAVColors.medianColorProperty,
-      bottom: medianArrowNode.y - 2
-    } );
+    const medianArrowNode = boxWhiskerArrowNode( CAVColors.medianColorProperty );
+    const medianTextNode = boxWhiskerTextNode( CAVColors.medianColorProperty, CenterAndVariabilityStrings.medianStringProperty, false );
+    const medianLabelNode = new Node( { children: [ medianArrowNode, medianTextNode ], y: -32 } );
+
+    const minLabelNode = boxWhiskerLabelNode( CAVColors.iqrColorProperty, CenterAndVariabilityStrings.minStringProperty, false );
+    const maxLabelNode = boxWhiskerLabelNode( CAVColors.iqrColorProperty, CenterAndVariabilityStrings.maxStringProperty, false );
+    const q1LabelNode = boxWhiskerLabelNode( CAVColors.iqrColorProperty, CenterAndVariabilityStrings.q1StringProperty, true );
+    const q3LabelNode = boxWhiskerLabelNode( CAVColors.iqrColorProperty, CenterAndVariabilityStrings.q3StringProperty, true );
+
+    minLabelNode.y = maxLabelNode.y = -28;
+    q1LabelNode.y = q3LabelNode.y = -33;
 
     boxWhiskerNode.addChild( boxWhiskerMedianLine );
     boxWhiskerNode.addChild( boxWhiskerBox );
@@ -143,8 +170,11 @@ export default class IQRNode extends CAVPlotNode {
     boxWhiskerNode.addChild( boxWhiskerLineRight );
     boxWhiskerNode.addChild( boxWhiskerEndCapLeft );
     boxWhiskerNode.addChild( boxWhiskerEndCapRight );
-    boxWhiskerNode.addChild( medianTextLabel );
-    boxWhiskerNode.addChild( medianArrowNode );
+    boxWhiskerNode.addChild( q1LabelNode );
+    boxWhiskerNode.addChild( q3LabelNode );
+    boxWhiskerNode.addChild( minLabelNode );
+    boxWhiskerNode.addChild( maxLabelNode );
+    boxWhiskerNode.addChild( medianLabelNode );
 
     this.addChild( iqrRectangle );
     this.addChild( boxWhiskerNode );
@@ -152,22 +182,6 @@ export default class IQRNode extends CAVPlotNode {
     this.addChild( iqrBar );
 
     iqrRectangle.moveToBack();
-
-    const infoNumberLabels = new Node();
-
-    infoNumberLabels.y = -40;
-
-    const minTextLabel = new Text( '', { fontSize: 18 } );
-    const maxTextLabel = new Text( '', { fontSize: 18 } );
-    const q1TextLabel = new Text( '', { fontSize: 18 } );
-    const q3TextLabel = new Text( '', { fontSize: 18 } );
-
-    infoNumberLabels.addChild( minTextLabel );
-    infoNumberLabels.addChild( maxTextLabel );
-    infoNumberLabels.addChild( q1TextLabel );
-    infoNumberLabels.addChild( q3TextLabel );
-
-    this.addChild( infoNumberLabels );
 
     const updateIQRNode = () => {
       const floor = this.modelViewTransform.modelToViewY( 0 );
@@ -186,8 +200,7 @@ export default class IQRNode extends CAVPlotNode {
       const medianPositionX = this.modelViewTransform.modelToViewX( sceneModel.medianValueProperty.value! );
       boxWhiskerMedianLine.x1 = boxWhiskerMedianLine.x2 = medianPositionX;
 
-      medianArrowNode.x = medianPositionX;
-      medianTextLabel.centerX = medianPositionX;
+      medianLabelNode.x = medianPositionX;
 
       boxWhiskerBox.left = boxLeft - 0.5 * BOX_STROKE_WIDTH;
       boxWhiskerBox.rectWidth = boxRight - boxLeft;
@@ -207,10 +220,10 @@ export default class IQRNode extends CAVPlotNode {
         boxWhiskerEndCapLeft.visible = boxLeft !== minPositionX;
         boxWhiskerEndCapRight.visible = boxRight !== maxPositionX;
 
-        minTextLabel.string = min;
-        maxTextLabel.string = max;
-        minTextLabel.centerX = minPositionX;
-        maxTextLabel.centerX = maxPositionX;
+        minLabelNode.x = minPositionX;
+        maxLabelNode.x = maxPositionX;
+        q1LabelNode.x = boxLeft;
+        q3LabelNode.x = boxRight;
       }
 
       const enoughDataForMedian = sceneModel.numberOfDataPointsProperty.value >= 1;
@@ -219,8 +232,11 @@ export default class IQRNode extends CAVPlotNode {
 
       boxWhiskerNode.visible = enoughDataForIQR;
       iqrRectangle.visible = iqrHighlightVisibility;
+
       medianArrowNode.visible = enoughDataForMedian;
-      medianTextLabel.visible = options.parentContext === 'info' && enoughDataForIQR;
+
+      const showBoxWhiskerLabels = options.parentContext === 'info' && enoughDataForIQR;
+      medianTextNode.visible = minLabelNode.visible = maxLabelNode.visible = q1LabelNode.visible = q3LabelNode.visible = showBoxWhiskerLabels;
 
       needAtLeastFiveKicks.center = this.modelViewTransform.modelToViewXY( 8, 2 );
       needAtLeastFiveKicks.visible = !enoughDataForIQR && ( options.parentContext === 'info' ||
@@ -236,22 +252,13 @@ export default class IQRNode extends CAVPlotNode {
       iqrBar.visible = iqrHighlightVisibility;
       iqrTextReadout.visible = iqrHighlightVisibility;
 
-      infoNumberLabels.visible = options.parentContext === 'info' && enoughDataForIQR;
-
       if ( iqrHighlightVisibility ) {
-        const IQR_BAR_OFFSET_Y = options.parentContext === 'info' ? 40 : 13;
+        const IQR_BAR_OFFSET_Y = options.parentContext === 'info' ? 50 : 22;
         iqrBar.setMedianBarShape( iqrRectangle.top - MedianBarNode.NOTCH_HEIGHT - IQR_BAR_OFFSET_Y, iqrRectangle.left, 0, iqrRectangle.right, false );
 
         iqrTextReadout.string = sceneModel.iqrValueProperty.value!;
         iqrTextReadout.centerX = iqrRectangle.centerX;
         iqrTextReadout.bottom = iqrBar.top - 2;
-      }
-
-      if ( options.parentContext === 'info' && q1 && q3 ) {
-        q1TextLabel.centerX = boxLeft;
-        q3TextLabel.centerX = boxRight;
-        q1TextLabel.string = q1;
-        q3TextLabel.string = q3;
       }
     };
 
