@@ -8,13 +8,14 @@ import { Node, Path, Text } from '../../../../scenery/js/imports.js';
 import tshirtSolidShape from '../../../../sherpa/js/fontawesome-5/tshirtSolidShape.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CAVSceneModel from '../../common/model/CAVSceneModel.js';
+import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type SceneRadioButtonGroupOptions = SelfOptions & RectangularRadioButtonGroupOptions;
 
 export default class SceneRadioButtonGroup extends RectangularRadioButtonGroup<CAVSceneModel> {
 
-  public constructor( property: Property<CAVSceneModel>, providedOptions: SceneRadioButtonGroupOptions ) {
+  public constructor( sceneModels: VariabilitySceneModel[], property: Property<CAVSceneModel>, providedOptions: SceneRadioButtonGroupOptions ) {
     const options = optionize<SceneRadioButtonGroupOptions, SelfOptions, RectangularRadioButtonGroupOptions>()( {
       radioButtonOptions: {
         baseColor: 'white'
@@ -41,21 +42,19 @@ export default class SceneRadioButtonGroup extends RectangularRadioButtonGroup<C
       } );
     };
     super( property, [ {
-      value: property.validValues![ 0 ],
+      value: sceneModels[ 0 ],
       createNode: tandem => createTShirtIcon( tandem, '1', '#ec5f3a' ),
       tandemName: 'uniformRadioButton'
     }, {
-      value: property.validValues![ 1 ],
+      value: sceneModels[ 1 ],
       createNode: tandem => createTShirtIcon( tandem, '2', '#5bc760' ),
       tandemName: 'gaussianRadioButton'
     }, {
-      value: property.validValues![ 2 ],
+      value: sceneModels[ 2 ],
       createNode: tandem => createTShirtIcon( tandem, '3', '#fdf454' ),
       tandemName: 'skewedRadioButton'
     }, {
-
-      // TODO: Be explicit about the possible scenes (don't pass through validValues), see https://github.com/phetsims/center-and-variability/issues/164
-      value: property.validValues![ 3 ],
+      value: sceneModels[ 3 ],
       createNode: tandem => createTShirtIcon( tandem, '4', '#9078e5' ),
       tandemName: 'bimodalRadioButton'
     } ], options );

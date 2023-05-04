@@ -52,7 +52,7 @@ export default class VariabilityScreenView extends CAVScreenView {
         variabilityRadioButtonGroupWrapper.centerY = accordionBoxWrapper.centerY;
       } );
 
-    const sceneRadioButtonGroup = new SceneRadioButtonGroup( model.selectedSceneModelProperty, {
+    const sceneRadioButtonGroup = new SceneRadioButtonGroup( model.variabilitySceneModels, model.selectedSceneModelProperty, {
       left: 10,
       tandem: options.tandem.createTandem( 'sceneRadioButtonGroup' )
     } );
