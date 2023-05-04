@@ -38,6 +38,8 @@ const TIME_BETWEEN_RAPID_KICKS = 0.5; // in seconds
 
 export default class CAVSceneModel implements TModel {
   public readonly soccerBalls: SoccerBall[];
+
+  // TODO: Document - is this the number active or number kicked?
   public readonly soccerBallCountProperty: NumberProperty;
 
   public readonly maxSoccerBalls = CAVConstants.NUMBER_OF_OBJECTS;

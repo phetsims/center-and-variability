@@ -18,7 +18,6 @@ import AccordionBox from '../../../../sun/js/AccordionBox.js';
 export default class SceneView {
 
   private readonly updateMedianNode: () => void;
-  private objectHasBeenDragged: boolean;
 
   public constructor(
     model: CAVModel,
@@ -29,13 +28,51 @@ export default class SceneView {
     getAccordionBox: () => AccordionBox | null,
     options: { tandem: Tandem } ) {
 
-    // TODO: This shouldn't be per-scene
-    this.objectHasBeenDragged = false;
     const objectNodeGroupTandem = options.tandem.createTandem( 'soccerBallNodeGroup' );
 
     const objectNodesInputEnabledProperty = new BooleanProperty( true, {
       tandem: objectNodeGroupTandem.createTandem( 'inputEnabledProperty' )
     } );
+
+    const dragIndicatorArrowNode = new DragIndicatorArrowNode( {
+      tandem: options.tandem.createTandem( 'dragIndicatorArrowNode' ),
+      visible: false
+    } );
+
+    backObjectLayer.addChild( dragIndicatorArrowNode );
+
+    const updateDragIndictatorVisible = () => {
+
+      // add the dragIndicatorArrowNode above the last object when it is added to the play area. if an object was
+      // moved before this happens, don't show the dragIndicatorArrowNode
+      if ( sceneModel.soccerBallCountProperty.value === sceneModel.maxSoccerBalls &&
+           objectNodesInputEnabledProperty.value &&
+           _.every( sceneModel.soccerBalls, soccerBall => soccerBall.valueProperty.value !== null ) &&
+           !model.soccerBallHasBeenDraggedProperty.value ) {
+
+        const lastBall = sceneModel.soccerBalls[ sceneModel.soccerBalls.length - 1 ];
+        const value = lastBall.valueProperty.value!;
+
+        dragIndicatorArrowNode.centerX = modelViewTransform.modelToViewX( value );
+
+        const dragIndicatorArrowNodeMargin = 6;
+
+        // calculate where the top object is
+        const topObjectPositionY = modelViewTransform.modelToViewY( 0 ) -
+                                   ( sceneModel.getOtherObjectsAtTarget( lastBall ).length + 1 ) *
+                                   Math.abs( modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) ) * 2 -
+                                   dragIndicatorArrowNodeMargin;
+
+        dragIndicatorArrowNode.bottom = topObjectPositionY;
+        dragIndicatorArrowNode.visible = true;
+      }
+      else {
+        dragIndicatorArrowNode.visible = false;
+      }
+    };
+
+    model.soccerBallHasBeenDraggedProperty.link( updateDragIndictatorVisible );
+
     sceneModel.soccerBalls.forEach( ( soccerBall, index ) => {
       const soccerBallNode = new SoccerBallNode(
         soccerBall,
@@ -59,40 +96,15 @@ export default class SceneView {
           backObjectLayer.addChild( soccerBallNode );
         }
       } );
-      const dragIndicatorArrowNode = new DragIndicatorArrowNode( {
-        tandem: options.tandem.createTandem( 'dragIndicatorArrowNode' ),
-        visible: false
-      } );
 
-      // TODO: https://github.com/phetsims/center-and-variability/issues/164 should only have one across scenes
-      backObjectLayer.addChild( dragIndicatorArrowNode );
+      soccerBall.valueProperty.link( ( value, oldValue ) => updateDragIndictatorVisible() );
 
       soccerBall.valueProperty.link( ( value, oldValue ) => {
-        if ( value !== null && oldValue === null ) {
 
-          // add the dragIndicatorArrowNode above the last object when it is added to the play area. if an object was
-          // moved before this happens, don't show the dragIndicatorArrowNode
-          if ( sceneModel.soccerBallCountProperty.value === sceneModel.maxSoccerBalls &&
-               objectNodesInputEnabledProperty.value &&
-               _.every( sceneModel.soccerBalls, soccerBall => soccerBall.valueProperty.value !== null ) &&
-               !this.objectHasBeenDragged ) {
-            dragIndicatorArrowNode.centerX = modelViewTransform.modelToViewX( value );
-
-            const dragIndicatorArrowNodeMargin = 6;
-
-            // calculate where the top object is
-            const topObjectPositionY = modelViewTransform.modelToViewY( 0 ) -
-                                       ( sceneModel.getOtherObjectsAtTarget( soccerBall ).length + 1 ) *
-                                       Math.abs( modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) ) * 2 -
-                                       dragIndicatorArrowNodeMargin;
-
-            dragIndicatorArrowNode.bottom = topObjectPositionY;
-            dragIndicatorArrowNode.visible = true;
-          }
-          else {
-            this.objectHasBeenDragged = true;
-            dragIndicatorArrowNode.visible = false;
-          }
+        // If the value changed from numeric to numeric, it must have been by user dragging it.
+        // TODO: Wire up to the listener directly?
+        if ( oldValue !== null ) {
+          model.soccerBallHasBeenDraggedProperty.value = true;
         }
       } );
     } );
@@ -136,10 +148,6 @@ export default class SceneView {
     soccerPlayerNodes.forEach( soccerPlayerNode => frontObjectLayer.addChild( soccerPlayerNode ) );
 
     model.isShowingPlayAreaMedianProperty.link( this.updateMedianNode );
-  }
-
-  public reset(): void {
-    this.objectHasBeenDragged = false;
   }
 }
 

@@ -24,11 +24,13 @@ export default class CAVModel {
   public readonly isShowingMeanPredictionProperty: BooleanProperty;
   public readonly isShowingMedianPredictionProperty: BooleanProperty;
 
-  // Null until the user has made a prediction. TODO: is this comment correct?
   public readonly medianPredictionProperty: NumberProperty;
   public readonly meanPredictionProperty: NumberProperty;
 
+  // TODO: Why should this have an exclamation point?
   public readonly selectedSceneModelProperty!: Property<CAVSceneModel>;
+
+  public readonly soccerBallHasBeenDraggedProperty: Property<boolean>;
 
   public constructor( public readonly sceneModels: CAVSceneModel[], options: CAVModelOptions ) {
 
@@ -73,7 +75,9 @@ export default class CAVModel {
       } );
     } );
 
-    // this.isShowingPlayAreaMedianProperty.link( updateDataMeasures );
+    this.soccerBallHasBeenDraggedProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'soccerBallHasBeenDraggedProperty' )
+    } );
   }
 
   public step( dt: number ): void {
@@ -94,6 +98,7 @@ export default class CAVModel {
 
     this.sceneModels.forEach( sceneModel => sceneModel.reset() );
     this.selectedSceneModelProperty.reset();
+    this.soccerBallHasBeenDraggedProperty.reset();
   }
 }
 
