@@ -47,6 +47,8 @@ export default class SoccerBall {
   public readonly velocityProperty: Vector2Property;
   public readonly animationModeProperty: Property<AnimationMode>;
   public readonly isMedianObjectProperty: BooleanProperty;
+  public readonly isQ1ObjectProperty: BooleanProperty;
+  public readonly isQ3ObjectProperty: BooleanProperty;
   public readonly isShowingAnimationHighlightProperty: BooleanProperty;
   public readonly isFirstObject: boolean;
 
@@ -88,6 +90,12 @@ export default class SoccerBall {
     } );
     this.isMedianObjectProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isMedianObjectProperty' )
+    } );
+    this.isQ1ObjectProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isQ1ObjectProperty' )
+    } );
+    this.isQ3ObjectProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isQ3ObjectProperty' )
     } );
     this.isShowingAnimationHighlightProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isShowingAnimationHighlightProperty' )
@@ -140,6 +148,8 @@ export default class SoccerBall {
     this.valueProperty.reset();
     this.dragPositionProperty.reset();
     this.isMedianObjectProperty.reset();
+    this.isQ1ObjectProperty.reset();
+    this.isQ3ObjectProperty.reset();
     this.isShowingAnimationHighlightProperty.reset();
     this.isActiveProperty.reset();
     this.targetXProperty.value = null;

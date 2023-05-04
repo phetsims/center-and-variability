@@ -5,7 +5,6 @@ import MedianBarNode from '../../common/view/MedianBarNode.js';
 import { Line, Node, Rectangle, Text, VBox } from '../../../../scenery/js/imports.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVPlotNode, { CAVPlotOptions } from '../../common/view/CAVPlotNode.js';
@@ -81,8 +80,8 @@ export default class IQRNode extends CAVPlotNode {
       lineWidth: 1
     } );
 
-    const iqrRectangle = new Rectangle( 0, 0, 0, 80, {
-      fill: '#99ffff'
+    const iqrRectangle = new Rectangle( 0, 0, 0, 0, {
+      fill: CAVColors.quartileColorProperty
     } );
 
     const BOX_CENTER_Y = options.parentContext === 'info' ? -20 : 78;
@@ -123,17 +122,19 @@ export default class IQRNode extends CAVPlotNode {
       lineWidth: BOX_STROKE_WIDTH
     } );
 
-    const medianTextLabel = new Text( new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty,
-      { value: sceneModel.medianValueProperty } ), { fontSize: 18, fill: CAVColors.medianColorProperty } );
-
-    const medianArrowNode = new ArrowNode( 0, 0, 0, 23, {
+    const medianArrowNode = new ArrowNode( 0, 0, 0, 26, {
       fill: CAVColors.medianColorProperty,
       stroke: null,
       lineWidth: 0.2,
-      headHeight: 10,
-      headWidth: 14,
+      headHeight: 12,
+      headWidth: 15,
       maxHeight: 18,
       y: -31
+    } );
+    const medianTextLabel = new Text( new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty,
+      { value: sceneModel.medianValueProperty } ), {
+      fontSize: 14, fill: CAVColors.medianColorProperty,
+      bottom: medianArrowNode.y - 2
     } );
 
     boxWhiskerNode.addChild( boxWhiskerMedianLine );
@@ -169,6 +170,7 @@ export default class IQRNode extends CAVPlotNode {
     this.addChild( infoNumberLabels );
 
     const updateIQRNode = () => {
+      const floor = this.modelViewTransform.modelToViewY( 0 );
 
       const sortedDots = _.sortBy( sceneModel.getActiveSoccerBalls().filter( object => object.valueProperty.value !== null ),
         object => object.valueProperty.value );
@@ -186,7 +188,6 @@ export default class IQRNode extends CAVPlotNode {
 
       medianArrowNode.x = medianPositionX;
       medianTextLabel.centerX = medianPositionX;
-      medianTextLabel.bottom = medianArrowNode.tailY - 6;
 
       boxWhiskerBox.left = boxLeft - 0.5 * BOX_STROKE_WIDTH;
       boxWhiskerBox.rectWidth = boxRight - boxLeft;
@@ -214,35 +215,37 @@ export default class IQRNode extends CAVPlotNode {
 
       const enoughDataForMedian = sceneModel.numberOfDataPointsProperty.value >= 1;
       const enoughDataForIQR = sceneModel.numberOfDataPointsProperty.value >= 5;
-      const iqrVisibility = ( options.parentContext === 'accordion' && enoughDataForIQR && model.isShowingIQRProperty.value );
+      const iqrHighlightVisibility = enoughDataForIQR && ( options.parentContext === 'info' || model.isShowingIQRProperty.value );
 
-      boxWhiskerNode.visible = model.selectedVariabilityProperty.value === VariabilityMeasure.IQR && enoughDataForIQR;
-      medianTextLabel.visible = options.parentContext === 'info';
+      boxWhiskerNode.visible = enoughDataForIQR;
+      iqrRectangle.visible = iqrHighlightVisibility;
       medianArrowNode.visible = enoughDataForMedian;
+      medianTextLabel.visible = options.parentContext === 'info' && enoughDataForIQR;
 
       needAtLeastFiveKicks.center = this.modelViewTransform.modelToViewXY( 8, 2 );
       needAtLeastFiveKicks.visible = !enoughDataForIQR && ( options.parentContext === 'info' ||
                                                             ( options.parentContext === 'accordion' && model.isShowingIQRProperty.value ) );
 
-      iqrRectangle.visible = iqrVisibility;
-      iqrBar.visible = iqrVisibility;
-      iqrTextReadout.visible = iqrVisibility;
-
-      if ( iqrVisibility ) {
-        const floor = this.modelViewTransform.modelToViewY( 0 );
+      if ( iqrHighlightVisibility ) {
+        iqrRectangle.rectHeight = floor - BOX_CENTER_Y + 0.5 * BOX_HEIGHT;
         iqrRectangle.rectWidth = boxRight - boxLeft;
         iqrRectangle.left = boxLeft;
         iqrRectangle.bottom = floor;
+      }
 
-        // TODO: In the info dialog, this should be above the topmost data point (in the accordion box it's ok to overlap)
-        iqrBar.setMedianBarShape( iqrRectangle.top - MedianBarNode.NOTCH_HEIGHT - 2, iqrRectangle.left, 0, iqrRectangle.right, false );
+      iqrBar.visible = iqrHighlightVisibility;
+      iqrTextReadout.visible = iqrHighlightVisibility;
+
+      infoNumberLabels.visible = options.parentContext === 'info' && enoughDataForIQR;
+
+      if ( iqrHighlightVisibility ) {
+        const IQR_BAR_OFFSET_Y = options.parentContext === 'info' ? 40 : 13;
+        iqrBar.setMedianBarShape( iqrRectangle.top - MedianBarNode.NOTCH_HEIGHT - IQR_BAR_OFFSET_Y, iqrRectangle.left, 0, iqrRectangle.right, false );
 
         iqrTextReadout.string = sceneModel.iqrValueProperty.value!;
         iqrTextReadout.centerX = iqrRectangle.centerX;
-        iqrTextReadout.bottom = iqrBar.top - 5;
+        iqrTextReadout.bottom = iqrBar.top - 2;
       }
-
-      infoNumberLabels.visible = options.parentContext === 'info';
 
       if ( options.parentContext === 'info' && q1 && q3 ) {
         q1TextLabel.centerX = boxLeft;

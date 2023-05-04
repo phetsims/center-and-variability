@@ -9,6 +9,7 @@ import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import VariabilityModel from './VariabilityModel.js';
+import SoccerBall from '../../common/model/SoccerBall.js';
 
 export default class VariabilitySceneModel extends CAVSceneModel {
 
@@ -90,9 +91,17 @@ export default class VariabilitySceneModel extends CAVSceneModel {
         const lowerHalf = sortedObjects.slice( 0, splitIndex );
         const upperHalf = sortedObjects.slice( sortedObjects.length % 2 !== 0 ? splitIndex + 1 : splitIndex );
 
+        const q1Objects: SoccerBall[] = CAVSceneModel.getMedianObjectsFromSortedArray( lowerHalf );
+        const q3Objects: SoccerBall[] = CAVSceneModel.getMedianObjectsFromSortedArray( upperHalf );
+
         // take the average to account for cases where there is more than one object contributing to the median
-        this.q1ValueProperty.value = _.mean( CAVSceneModel.getMedianObjectsFromSortedArray( lowerHalf ).map( obj => obj.valueProperty.value! ) );
-        this.q3ValueProperty.value = _.mean( CAVSceneModel.getMedianObjectsFromSortedArray( upperHalf ).map( obj => obj.valueProperty.value! ) );
+        this.q1ValueProperty.value = _.mean( q1Objects.map( obj => obj.valueProperty.value! ) );
+        this.q3ValueProperty.value = _.mean( q3Objects.map( obj => obj.valueProperty.value! ) );
+
+        this.soccerBalls.forEach( object => {
+          object.isQ1ObjectProperty.value = q1Objects.includes( object );
+          object.isQ3ObjectProperty.value = q3Objects.includes( object );
+        } );
 
         assert && assert( !isNaN( this.q1ValueProperty.value ) );
         assert && assert( !isNaN( this.q3ValueProperty.value ) );
