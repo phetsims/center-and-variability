@@ -15,7 +15,7 @@ import VariabilityModel from '../model/VariabilityModel.js';
 import CAVColors from '../../common/CAVColors.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import { AlignGroup, ManualConstraint } from '../../../../scenery/js/imports.js';
-import DistributionRadioButtonGroup from './DistributionRadioButtonGroup.js';
+import SceneRadioButtonGroup from './SceneRadioButtonGroup.js';
 import VariabilityMeasureRadioButtonGroup from './VariabilityMeasureRadioButtonGroup.js';
 import InfoDialog from './InfoDialog.js';
 import CAVScreenView, { CAVScreenViewOptions } from '../../common/view/CAVScreenView.js';
@@ -52,18 +52,18 @@ export default class VariabilityScreenView extends CAVScreenView {
         variabilityRadioButtonGroupWrapper.centerY = accordionBoxWrapper.centerY;
       } );
 
-    const distributionRadioButtonGroup = new DistributionRadioButtonGroup( model.selectedSceneModelProperty, {
+    const sceneRadioButtonGroup = new SceneRadioButtonGroup( model.selectedSceneModelProperty, {
       left: 10,
-      tandem: options.tandem.createTandem( 'distributionRadioButtonGroup' )
+      tandem: options.tandem.createTandem( 'sceneRadioButtonGroup' )
     } );
 
     // Float above the ground
-    ManualConstraint.create( this, [ this.playAreaNumberLineNode, distributionRadioButtonGroup ],
-      ( lowerNumberLineWrapper, distributionRadioButtonGroupWrapper ) => {
-        distributionRadioButtonGroupWrapper.bottom = lowerNumberLineWrapper.top - 10;
+    ManualConstraint.create( this, [ this.playAreaNumberLineNode, sceneRadioButtonGroup ],
+      ( lowerNumberLineWrapper, sceneRadioButtonGroupWrapper ) => {
+        sceneRadioButtonGroupWrapper.bottom = lowerNumberLineWrapper.top - 10;
       } );
 
-    this.addChild( distributionRadioButtonGroup );
+    this.addChild( sceneRadioButtonGroup );
     this.addChild( variabilityMeasureRadioButtonGroup );
 
     model.sceneModels.forEach( sceneModel => {

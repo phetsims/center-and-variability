@@ -136,9 +136,6 @@ export default class SceneView {
     soccerPlayerNodes.forEach( soccerPlayerNode => frontObjectLayer.addChild( soccerPlayerNode ) );
 
     model.isShowingPlayAreaMedianProperty.link( this.updateMedianNode );
-
-    // TODO: https://github.com/phetsims/center-and-variability/issues/164
-    // this.accordionBox.expandedProperty.link( this.updateMedianNode );
   }
 
   public reset(): void {

@@ -10,13 +10,12 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import CAVSceneModel from '../../common/model/CAVSceneModel.js';
 
 type SelfOptions = EmptySelfOptions;
-type DistributionRadioButtonGroupOptions = SelfOptions & RectangularRadioButtonGroupOptions;
+type SceneRadioButtonGroupOptions = SelfOptions & RectangularRadioButtonGroupOptions;
 
-// TODO: Rename to SceneRadioButtonGroup, see https://github.com/phetsims/center-and-variability/issues/164
-export default class DistributionRadioButtonGroup extends RectangularRadioButtonGroup<CAVSceneModel> {
+export default class SceneRadioButtonGroup extends RectangularRadioButtonGroup<CAVSceneModel> {
 
-  public constructor( property: Property<CAVSceneModel>, providedOptions: DistributionRadioButtonGroupOptions ) {
-    const options = optionize<DistributionRadioButtonGroupOptions, SelfOptions, RectangularRadioButtonGroupOptions>()( {
+  public constructor( property: Property<CAVSceneModel>, providedOptions: SceneRadioButtonGroupOptions ) {
+    const options = optionize<SceneRadioButtonGroupOptions, SelfOptions, RectangularRadioButtonGroupOptions>()( {
       radioButtonOptions: {
         baseColor: 'white'
       }
@@ -63,4 +62,4 @@ export default class DistributionRadioButtonGroup extends RectangularRadioButton
   }
 }
 
-centerAndVariability.register( 'DistributionRadioButtonGroup', DistributionRadioButtonGroup );
+centerAndVariability.register( 'SceneRadioButtonGroup', SceneRadioButtonGroup );
