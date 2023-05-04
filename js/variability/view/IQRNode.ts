@@ -35,8 +35,8 @@ export default class IQRNode extends CAVPlotNode {
     if ( providedOptions.parentContext === 'accordion' ) {
 
       const textReadoutGroup = new VBox( {
-        y: this.centerY,
-        left: this.left,
+        x: -110,
+        y: this.centerY - 20,
         align: 'left',
         spacing: 10
       } );
