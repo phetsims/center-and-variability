@@ -17,12 +17,10 @@ import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import { AlignGroup, ManualConstraint } from '../../../../scenery/js/imports.js';
 import SceneRadioButtonGroup from './SceneRadioButtonGroup.js';
 import VariabilityMeasureRadioButtonGroup from './VariabilityMeasureRadioButtonGroup.js';
-import InfoDialog from './InfoDialog.js';
 import CAVScreenView, { CAVScreenViewOptions } from '../../common/view/CAVScreenView.js';
 import VariabilityAccordionBox from './VariabilityAccordionBox.js';
 import BottomRepresentationCheckboxGroup from '../../common/view/BottomRepresentationCheckboxGroup.js';
 import CAVConstants from '../../common/CAVConstants.js';
-import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
@@ -65,23 +63,6 @@ export default class VariabilityScreenView extends CAVScreenView {
 
     this.addChild( sceneRadioButtonGroup );
     this.addChild( variabilityMeasureRadioButtonGroup );
-
-    model.sceneModels.forEach( sceneModel => {
-
-      // TODO: Should the info dialogs be in SceneView? Probably.
-      // TODO: Only show the one for the selected scene
-      const infoDialog = new InfoDialog( model, sceneModel as VariabilitySceneModel, {
-        tandem: options.tandem.createTandem( 'infoDialog' )
-      } );
-      model.isInfoShowingProperty.link( isInfoShowing => {
-        if ( isInfoShowing ) {
-          infoDialog.show();
-        }
-        else {
-          infoDialog.hide();
-        }
-      } );
-    } );
 
     const iconGroup = new AlignGroup();
     this.setBottomCheckboxGroup( [

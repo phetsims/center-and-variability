@@ -14,6 +14,10 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import DragIndicatorArrowNode from './DragIndicatorArrowNode.js';
 import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
+import InfoDialog from '../../variability/view/InfoDialog.js';
+import VariabilitySceneModel from '../../variability/model/VariabilitySceneModel.js';
+import VariabilityModel from '../../variability/model/VariabilityModel.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 
 export default class SceneView {
 
@@ -147,6 +151,25 @@ export default class SceneView {
     const soccerPlayerNodes = sceneModel.soccerPlayers.map( soccerPlayer => new SoccerPlayerNode( soccerPlayer, modelViewTransform, sceneModel.isVisibleProperty ) );
 
     soccerPlayerNodes.forEach( soccerPlayerNode => frontObjectLayer.addChild( soccerPlayerNode ) );
+
+    const varModel = model as VariabilityModel;
+    const varSceneModel = sceneModel as VariabilitySceneModel;
+
+    if ( varModel && varModel.isInfoShowingProperty && varModel.selectedSceneModelProperty && varSceneModel ) {
+      const infoDialog = new InfoDialog( varModel, varSceneModel, {
+        tandem: options.tandem.createTandem( 'infoDialog' )
+      } );
+
+      Multilink.multilink( [ varModel.isInfoShowingProperty, varSceneModel.isVisibleProperty ],
+        ( isInfoShowing, isVisible ) => {
+          if ( isInfoShowing && isVisible ) {
+            infoDialog.show();
+          }
+          else {
+            infoDialog.hide();
+          }
+        } );
+    }
 
     model.isShowingPlayAreaMedianProperty.link( this.updateMedianNode );
   }
