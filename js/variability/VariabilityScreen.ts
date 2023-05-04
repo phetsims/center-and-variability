@@ -9,11 +9,14 @@
 
 import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
 import CAVColors from '../common/CAVColors.js';
+import { Image } from '../../../scenery/js/imports.js';
 import centerAndVariability from '../centerAndVariability.js';
 import VariabilityModel from './model/VariabilityModel.js';
 import CAVScreen, { CAVScreenOptions } from '../common/CAVScreen.js';
 import VariabilityScreenView from './view/VariabilityScreenView.js';
+import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import CenterAndVariabilityStrings from '../CenterAndVariabilityStrings.js';
+import variabilityScreenIcon_png from '../../images/variabilityScreenIcon_png.js';
 
 type VariabilityScreenOptions = CAVScreenOptions;
 
@@ -23,6 +26,10 @@ export default class VariabilityScreen extends CAVScreen<VariabilityModel, Varia
 
     const options = optionize<VariabilityScreenOptions, EmptySelfOptions, CAVScreenOptions>()( {
       name: CenterAndVariabilityStrings.screen.variabilityStringProperty,
+      homeScreenIcon: new ScreenIcon( new Image( variabilityScreenIcon_png ), {
+        maxIconWidthProportion: 1,
+        maxIconHeightProportion: 1
+      } ),
       backgroundColorProperty: CAVColors.screenBackgroundColorProperty
     }, providedOptions );
 
