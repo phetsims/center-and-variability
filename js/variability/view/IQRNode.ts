@@ -30,10 +30,8 @@ export default class IQRNode extends CAVPlotNode {
       ...options
     } );
 
-
     if ( providedOptions.parentContext === 'accordion' ) {
 
-      // TODO: Look for a way to achieve this layout with fewer magic numbers
       const textReadoutGroup = new VBox( {
         x: -110,
         y: this.centerY - 20,
@@ -105,7 +103,7 @@ export default class IQRNode extends CAVPlotNode {
       if ( isQuartile ) {
         textNodeChildren.unshift( new Circle( 12, { fill: CAVColors.quartileColorProperty } ) );
       }
-      return new Node( { children: textNodeChildren, centerY: isQuartile ? -12 : -10 } );
+      return new Node( { children: textNodeChildren, centerY: isQuartile ? -14 : -10 } );
     };
 
     const boxWhiskerLabelNode = ( fillColor: ProfileColorProperty, labelTextProperty: TReadOnlyProperty<string>, isQuartile: boolean ) => {
