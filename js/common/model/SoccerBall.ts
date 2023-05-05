@@ -37,6 +37,9 @@ export type CAVObjectOptions =
   & PhetioObjectOptions
   & PickRequired<PhetioObjectOptions, 'tandem'>;
 
+// Global counter for debugging
+let count = 0;
+
 export default class SoccerBall {
 
   // Continuous value for the drag listener. When dragging, the object snaps to each tickmark
@@ -62,6 +65,9 @@ export default class SoccerBall {
   public animation: Animation | null = null;
   public readonly isActiveProperty: BooleanProperty;
   public soccerPlayer: SoccerPlayer | null = null;
+
+  // Global index for debugging
+  public readonly index = count++;
 
   public constructor( providedOptions: CAVObjectOptions ) {
 

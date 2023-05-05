@@ -18,6 +18,10 @@ import InfoDialog from '../../variability/view/InfoDialog.js';
 import VariabilitySceneModel from '../../variability/model/VariabilitySceneModel.js';
 import VariabilityModel from '../../variability/model/VariabilityModel.js';
 import Multilink from '../../../../axon/js/Multilink.js';
+import SoccerBall from '../model/SoccerBall.js';
+import { Shape } from '../../../../kite/js/imports.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
+import CAVConstants from '../CAVConstants.js';
 
 export default class SceneView {
 
@@ -77,7 +81,9 @@ export default class SceneView {
 
     model.soccerBallHasBeenDraggedProperty.link( updateDragIndictatorVisible );
 
-    sceneModel.soccerBalls.forEach( ( soccerBall, index ) => {
+    const soccerBallMap = new Map<SoccerBall, SoccerBallNode>();
+
+    const soccerBallNodes = sceneModel.soccerBalls.map( ( soccerBall, index ) => {
       const soccerBallNode = new SoccerBallNode(
         soccerBall,
         sceneModel.isVisibleProperty,
@@ -112,7 +118,49 @@ export default class SceneView {
           model.soccerBallHasBeenDraggedProperty.value = true;
         }
       } );
+
+      soccerBallMap.set( soccerBall, soccerBallNode );
+
+      return soccerBallNode;
     } );
+
+    const updateAllStacks = () => {
+      for ( let i = CAVConstants.PHYSICAL_RANGE.min; i <= CAVConstants.PHYSICAL_RANGE.max; i++ ) {
+        const stack = sceneModel.getStackAtLocation( i );
+
+        let bounds: Bounds2 | null = null;
+
+        for ( let i = 0; i < stack.length; i++ ) {
+
+          const soccerBallNode = soccerBallMap.get( stack[ i ] )!;
+
+          if ( i === 0 ) {
+            bounds = soccerBallNode.globalBounds;
+          }
+          else {
+            bounds!.includeBounds( soccerBallNode.globalBounds );
+          }
+
+          if ( i === stack.length - 1 ) {
+            const pointerArea = Shape.bounds( soccerBallNode.globalToLocalBounds( bounds!.dilated( 5 ) ) );
+            soccerBallNode.mouseArea = pointerArea;
+            soccerBallNode.touchArea = pointerArea;
+            soccerBallNode.pickable = true;
+          }
+          else {
+            soccerBallNode.pickable = false;
+
+            // To make it easier to see when using ?showPointerAreas
+            soccerBallNode.mouseArea = Shape.rectangle( 0, 0, 0, 0 );
+            soccerBallNode.touchArea = Shape.rectangle( 0, 0, 0, 0 );
+          }
+        }
+      }
+    };
+
+    // Update pointer areas when topmost ball changes
+    soccerBallNodes.forEach( soccerBallNode => soccerBallNode.soccerBall.valueProperty.lazyLink( updateAllStacks ) );
+    sceneModel.stackChangedEmitter.addListener( updateAllStacks );
 
     const playAreaMedianIndicatorNode = new PlayAreaMedianIndicatorNode();
     frontObjectLayer.addChild( playAreaMedianIndicatorNode );

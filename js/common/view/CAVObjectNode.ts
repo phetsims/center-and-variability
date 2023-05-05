@@ -26,14 +26,11 @@ export type CAVObjectNodeOptions =
   & StrictOmit<NodeOptions, 'inputEnabledProperty'>
   & PickRequired<NodeOptions, 'tandem'>;
 
-// for debugging with ?dev
-let index = 0;
-
 export default abstract class CAVObjectNode extends Node {
 
   protected readonly medianHighlight: Circle;
 
-  public constructor( soccerBall: SoccerBall, isShowingPlayAreaMedianProperty: TReadOnlyProperty<boolean>,
+  public constructor( public readonly soccerBall: SoccerBall, isShowingPlayAreaMedianProperty: TReadOnlyProperty<boolean>,
                       modelViewTransform: ModelViewTransform2,
                       modelRadius: number,
                       providedOptions?: CAVObjectNodeOptions ) {
@@ -65,7 +62,7 @@ export default abstract class CAVObjectNode extends Node {
 
     // Show index when debugging with ?dev
     if ( phet.chipper.queryParameters.dev ) {
-      this.addChild( new Text( index++ + '', {
+      this.addChild( new Text( soccerBall.index + '', {
         font: new PhetFont( 14 ),
         fill: 'red',
         x: this.width / 2 + 1

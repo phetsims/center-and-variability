@@ -69,7 +69,6 @@ export default class SoccerBallNode extends CAVObjectNode {
     };
 
     this.addInputListener( dragListener );
-    this.touchArea = this.localBounds.dilatedX( 5 );
 
     // For PhET-iO, allow clients to shut off interactivity via this Property.
     const selfInputEnabledProperty = new BooleanProperty( true, {

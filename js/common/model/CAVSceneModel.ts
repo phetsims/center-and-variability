@@ -74,6 +74,9 @@ export default class CAVSceneModel implements TModel {
   // Starting at 0, iterate through the index of the kickers. This updates the SoccerPlayer.isActiveProperty to show the current kicker
   private readonly activeKickerIndexProperty: NumberProperty;
 
+  // Called when the location of a ball changed within a stack, so the pointer areas can be updated
+  public readonly stackChangedEmitter = new Emitter();
+
   public constructor( initialDistribution: ReadonlyArray<number>, options: { tandem: Tandem } ) {
 
     const updateDataMeasures = () => this.updateDataMeasures();
@@ -243,6 +246,14 @@ export default class CAVSceneModel implements TModel {
   }
 
   /**
+   * Returns all objects at the target location
+   */
+  public getStackAtLocation( location: number ): SoccerBall[] {
+    const activeSoccerBallsAtLocation = this.getActiveSoccerBalls().filter( soccerBall => soccerBall.valueProperty.value === location );
+    return _.sortBy( activeSoccerBallsAtLocation, soccerBall => soccerBall.positionProperty.value.y );
+  }
+
+  /**
    * Set the position of the parameter object to be on top of the other objects at that target position.
    */
   protected moveToTop( soccerBall: SoccerBall ): void {
@@ -259,6 +270,8 @@ export default class CAVSceneModel implements TModel {
       object.positionProperty.value = new Vector2( soccerBall.valueProperty.value!, position );
       position += CAVObjectType.SOCCER_BALL.radius * 2;
     } );
+
+    this.stackChangedEmitter.emit();
   }
 
   /**
@@ -292,7 +305,7 @@ export default class CAVSceneModel implements TModel {
   public getSortedLandedObjects(): SoccerBall[] {
     return _.sortBy( this.getActiveSoccerBalls().filter( soccerBall => soccerBall.valueProperty.value !== null ),
 
-      // The numerical value takes predence for sorting
+      // The numerical value takes precedence for sorting
       soccerBall => soccerBall.valueProperty.value,
 
       // Then consider the height within the stack
@@ -421,7 +434,10 @@ export default class CAVSceneModel implements TModel {
       } );
 
       soccerBall.animation.endedEmitter.addListener( () => {
+
         soccerBall.animation = null;
+
+        this.stackChangedEmitter.emit();
       } );
       soccerBall.animation.start();
     } );
