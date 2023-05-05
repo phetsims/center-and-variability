@@ -112,7 +112,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
           if ( !phet.joist.sim.isSettingPhetioStateProperty.value ) {
 
             // Only animate the stack when the ball lands, not when it is dragged
-            if ( oldValue !== undefined ) {
+            if ( oldValue === undefined ) {
               this.animateSoccerBallStack( soccerBall, value );
             }
 
