@@ -313,6 +313,8 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     this.getNextBallFromPool();
 
     this.activeKickerIndexProperty.reset();
+
+    this.updateDataMeasures();
   }
 
   /**
