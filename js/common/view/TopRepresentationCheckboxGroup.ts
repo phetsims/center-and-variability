@@ -23,7 +23,7 @@ const ICON_WIDTH = 24;
 
 const LINE_WIDTH = MedianBarNode.LINE_WIDTH;
 
-// TODO: Split this up into separate classes for each screen?
+// TODO: Split this up into separate classes for each screen? https://github.com/phetsims/center-and-variability/issues/153
 export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
 
   private static createGridBox( text: Node, icon: Node, iconGroup: AlignGroup ): GridBox {
@@ -103,7 +103,7 @@ export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGrou
       createNode: ( tandem: Tandem ) => {
         return TopRepresentationCheckboxGroup.createGridBox(
           new Text( CenterAndVariabilityStrings.rangeStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
-          // TODO: Replace with range icon.
+          // TODO: Replace with range icon, see https://github.com/phetsims/center-and-variability/issues/156
           new Node( {
             children: [
 
@@ -130,7 +130,7 @@ export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGrou
       createNode: ( tandem: Tandem ) => {
         return TopRepresentationCheckboxGroup.createGridBox(
           new Text( CenterAndVariabilityStrings.iqrStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
-          // TODO: Replace with IQR icon.
+          // TODO: Replace with IQR icon, see https://github.com/phetsims/center-and-variability/issues/156
           new Node( {
             children: [
 
@@ -157,7 +157,7 @@ export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGrou
       createNode: ( tandem: Tandem ) => {
         return TopRepresentationCheckboxGroup.createGridBox(
           new Text( CenterAndVariabilityStrings.madStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
-          // TODO: Replace with MAD icon.
+          // TODO: Replace with MAD icon, see https://github.com/phetsims/center-and-variability/issues/156
           new Node( {
             children: [
 

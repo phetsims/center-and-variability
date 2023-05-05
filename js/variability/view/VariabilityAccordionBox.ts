@@ -50,7 +50,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         model.isInfoShowingProperty.value = true;
       },
 
-      // TODO: How to position this properly? Can we use AlignBox?
+      // TODO: How to position this properly? Can we use AlignBox? See https://github.com/phetsims/center-and-variability/issues/170
       top: 20,
       right: accordionBoxContents.right - 10
     } );

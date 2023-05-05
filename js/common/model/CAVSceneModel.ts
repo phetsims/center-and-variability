@@ -281,7 +281,7 @@ export default class CAVSceneModel implements TModel {
    */
   public reset(): void {
 
-    // TODO: This should only be in MedianSceneModel and MeanAndMedianSceneModel
+    // TODO: This should only be in MedianSceneModel and MeanAndMedianSceneModel, see https://github.com/phetsims/center-and-variability/issues/153
     this.distributionProperty.value = CAVSceneModel.chooseDistribution();
 
     this.clearData();

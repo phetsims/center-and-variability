@@ -18,7 +18,7 @@ export default class CAVModel {
 
   public readonly isShowingPlayAreaMedianProperty: BooleanProperty; // Screens 1-3
 
-  // TODO: Should some of these should move to subclasses?
+  // TODO: Should some of these should move to subclasses? https://github.com/phetsims/center-and-variability/issues/153
   public readonly isShowingPlayAreaMeanProperty: BooleanProperty;  // Screens 2-3
   public readonly isShowingMedianPredictionProperty: BooleanProperty; // Screens 1-2
   public readonly medianPredictionProperty: NumberProperty; // Screens 1-2

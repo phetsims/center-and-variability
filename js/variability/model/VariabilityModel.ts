@@ -36,7 +36,7 @@ export default class VariabilityModel extends CAVModel {
   public constructor( options: VariabilityModelOptions ) {
 
     // TODO: the parent class sets this incorrectly on reset.
-    // TODO: PhET-iO wants to be able to set these values. Maybe in the preferences, we would also add a "custom"
+    // TODO: See https://github.com/phetsims/center-and-variability/issues/117. PhET-iO wants to be able to set these values. Maybe in the preferences, we would also add a "custom"
     //       option that would allow the user to specify the distribution parameters. Or for PhET-iO, and query parameters
     const sceneModels = [
       new VariabilitySceneModel( [ 0, 0, 0, 1, 3, 10, 18, 20, 18, 10, 3, 1, 0, 0, 0 ], { tandem: options.tandem.createTandem( 'sceneModel1' ) } ),

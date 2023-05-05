@@ -72,7 +72,7 @@ export default class VariabilitySceneModel extends CAVSceneModel {
   public override reset(): void {
     super.reset();
 
-    // TODO: Should this be called in the parent class? Or at least make sure not to forget it
+    // TODO: https://github.com/phetsims/center-and-variability/issues/164 Should this be called in the parent class? Or at least make sure not to forget it
     // in any of the subclasses?
     this.updateDataMeasures();
   }
