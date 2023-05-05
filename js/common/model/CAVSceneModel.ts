@@ -104,7 +104,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
       // When the soccer ball drag position changes, constrain it to the physical range and move it to the top, if necessary
       soccerBall.dragPositionProperty.lazyLink( ( dragPosition: Vector2 ) => {
         soccerBall.valueProperty.value = Utils.roundSymmetric( CAVConstants.PHYSICAL_RANGE.constrainValue( dragPosition.x ) );
-        this.moveToTop( soccerBall );
+        this.restackWithTopBall( soccerBall );
       } );
 
       soccerBall.valueProperty.link( ( value: number | null, oldValue: number | null | undefined ) => {
@@ -121,7 +121,16 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
               this.advanceLine();
             }
 
-            this.objectValueBecameNonNullEmitter.emit( soccerBall );
+            if ( oldValue === null ) {
+              this.objectValueBecameNonNullEmitter.emit( soccerBall );
+            }
+
+            if ( oldValue !== null && oldValue !== undefined ) {
+              const stack = this.getStackAtLocation( oldValue );
+              if ( stack.length > 0 ) {
+                this.restackWithTopBall( stack[ stack.length - 1 ] );
+              }
+            }
           }
         }
       } );
@@ -264,8 +273,9 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
 
   /**
    * Set the position of the parameter object to be on top of the other objects at that target position.
+   * Cease all animations in the stack and reorganize the stack.
    */
-  protected moveToTop( soccerBall: SoccerBall ): void {
+  protected restackWithTopBall( soccerBall: SoccerBall ): void {
 
     const objectsAtTarget = this.getOtherObjectsAtTarget( soccerBall );
 
@@ -275,8 +285,15 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
 
     // collapse the rest of the stack. NOTE: This assumes the radii are the same.
     let position = CAVObjectType.SOCCER_BALL.radius;
-    sorted.forEach( object => {
-      object.positionProperty.value = new Vector2( soccerBall.valueProperty.value!, position );
+    sorted.forEach( soccerBall => {
+
+      // If a ball was animating to the top of the stack, stop it. This prevents a floating ball if a lower ball
+      // is moved out from underneath
+      if ( soccerBall.animation ) {
+        soccerBall.animation.stop();
+        soccerBall.animation = null;
+      }
+      soccerBall.positionProperty.value = new Vector2( soccerBall.valueProperty.value!, position );
       position += CAVObjectType.SOCCER_BALL.radius * 2;
     } );
 
