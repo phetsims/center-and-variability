@@ -124,7 +124,7 @@ export default class SceneView {
       return soccerBallNode;
     } );
 
-    const updateAllStacks = () => {
+    const updateStackPointerAreas = () => {
       for ( let i = CAVConstants.PHYSICAL_RANGE.min; i <= CAVConstants.PHYSICAL_RANGE.max; i++ ) {
         const stack = sceneModel.getStackAtLocation( i );
 
@@ -159,8 +159,8 @@ export default class SceneView {
     };
 
     // Update pointer areas when topmost ball changes
-    soccerBallNodes.forEach( soccerBallNode => soccerBallNode.soccerBall.valueProperty.lazyLink( updateAllStacks ) );
-    sceneModel.stackChangedEmitter.addListener( updateAllStacks );
+    soccerBallNodes.forEach( soccerBallNode => soccerBallNode.soccerBall.valueProperty.lazyLink( updateStackPointerAreas ) );
+    sceneModel.stackChangedEmitter.addListener( updateStackPointerAreas );
 
     const playAreaMedianIndicatorNode = new PlayAreaMedianIndicatorNode();
     frontObjectLayer.addChild( playAreaMedianIndicatorNode );
