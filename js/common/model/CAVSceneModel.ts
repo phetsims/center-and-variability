@@ -112,7 +112,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
           if ( !phet.joist.sim.isSettingPhetioStateProperty.value ) {
 
             // Only animate the stack when the ball lands, not when it is dragged
-            if ( oldValue === undefined ) {
+            if ( oldValue === null || oldValue === undefined ) {
               this.animateSoccerBallStack( soccerBall, value );
             }
 
@@ -423,33 +423,31 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
    */
   private animateSoccerBallStack( soccerBall: SoccerBall, value: number ): void {
     const otherObjectsInStack = this.getActiveSoccerBalls().filter( x => x.valueProperty.value === value && x !== soccerBall );
-    const sortedOthers = _.sortBy( otherObjectsInStack, object => object.positionProperty.value.y );
 
-    sortedOthers.forEach( ( soccerBall, index ) => {
+    const targetIndex = otherObjectsInStack.length;
 
-      const diameter = CAVObjectType.SOCCER_BALL.radius * 2;
-      const targetPositionY = ( index + 1 ) * diameter + CAVObjectType.SOCCER_BALL.radius;
+    const diameter = CAVObjectType.SOCCER_BALL.radius * 2;
+    const targetPositionY = targetIndex * diameter + CAVObjectType.SOCCER_BALL.radius;
 
-      if ( soccerBall.animation ) {
-        soccerBall.animation.stop();
-      }
-      soccerBall.animation = new Animation( {
-        duration: 0.15,
-        targets: [ {
-          property: soccerBall.positionProperty,
-          to: new Vector2( soccerBall.positionProperty.value.x, targetPositionY ),
-          easing: Easing.QUADRATIC_IN_OUT
-        } ]
-      } );
+    if ( soccerBall.animation ) {
+      soccerBall.animation.stop();
+    }
+    soccerBall.animation = new Animation( {
+      duration: 0.15,
+      targets: [ {
+        property: soccerBall.positionProperty,
 
-      soccerBall.animation.endedEmitter.addListener( () => {
-
-        soccerBall.animation = null;
-
-        this.stackChangedEmitter.emit();
-      } );
-      soccerBall.animation.start();
+        // TODO: Without rounding, the soccer ball stacks are lopsided. Why? See https://github.com/phetsims/center-and-variability/issues/165
+        to: new Vector2( Utils.roundSymmetric( soccerBall.positionProperty.value.x ), targetPositionY ),
+        easing: Easing.QUADRATIC_IN_OUT
+      } ]
     } );
+
+    soccerBall.animation.endedEmitter.addListener( () => {
+      soccerBall.animation = null;
+      this.stackChangedEmitter.emit();
+    } );
+    soccerBall.animation.start();
   }
 
   /**
