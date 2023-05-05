@@ -101,11 +101,14 @@ export default class CAVSceneModel implements TModel {
         this.moveToTop( soccerBall );
       } );
 
-      soccerBall.valueProperty.link( ( value: number | null ) => {
+      soccerBall.valueProperty.link( ( value: number | null, oldValue: number | null | undefined ) => {
         if ( value !== null ) {
           if ( !phet.joist.sim.isSettingPhetioStateProperty.value ) {
 
-            this.animateSoccerBallStack( soccerBall, value );
+            // Only animate the stack when the ball lands, not when it is dragged
+            if ( oldValue !== undefined ) {
+              this.animateSoccerBallStack( soccerBall, value );
+            }
 
             // If the soccer player that kicked that ball was still in line when the ball lands, they can leave the line now.
             if ( soccerBall.soccerPlayer === this.getFrontSoccerPlayer() ) {
