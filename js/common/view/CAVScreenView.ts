@@ -153,7 +153,7 @@ export default class CAVScreenView extends ScreenView {
     } ) );
 
     // Soccer balls go behind the accordion box after they land
-    // TODO: Why is the back layer in the front?
+    // TODO: Why is the back layer in the front? See https://github.com/phetsims/center-and-variability/issues/176
     this.contentLayer.addChild( this.backObjectLayer );
   }
 

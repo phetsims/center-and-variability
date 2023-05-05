@@ -33,7 +33,7 @@ export default class InfoDialog extends Dialog {
 
     super( content, {
 
-      // TODO: It seems there are 2 ways to hide the dialog. Is there a better way?
+      // TODO: It seems there are 2 ways to hide the dialog. Is there a better way? See https://github.com/phetsims/center-and-variability/issues/179
       hideCallback: () => model.isInfoShowingProperty.set( false )
     } );
   }

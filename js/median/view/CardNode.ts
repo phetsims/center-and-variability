@@ -102,7 +102,7 @@ export default class CardNode extends Node {
       if ( destination.equals( this.animationTo! ) ) {
 
         // Already moving to the desired destination.
-        // TODO: should this callback be called from the finishEmitter of the existing animation?
+        // TODO: should this callback be called from the finishEmitter of the existing animation? See https://github.com/phetsims/center-and-variability/issues/177
         callback();
         return;
       }

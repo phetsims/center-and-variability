@@ -102,7 +102,7 @@ export default class CardNodeContainer extends Node {
 
         if ( isPressed ) {
 
-          // TODO: multitouch concerns.  Should it be null|true|false?  Or maybe after celebration, set it to true because we know it is sorted?
+          // TODO: multitouch concerns.  Should it be null|true|false?  Or maybe after celebration, set it to true because we know it is sorted? See https://github.com/phetsims/center-and-variability/issues/178
           this.wasSortedBefore = this.isDataSorted();
         }
 
