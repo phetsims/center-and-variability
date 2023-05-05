@@ -52,7 +52,7 @@ export default class CAVAccordionBox extends AccordionBox {
       expandCollapseButtonOptions: {
         sideLength: BUTTON_SIDE_LENGTH
       },
-      // TODO: This is currently highlighting a layout issues with AccordionBox, see: https://github.com/phetsims/center-and-variability/issues/166
+      // TODO: This is currently highlighting a layout issues with AccordionBox, see: https://github.com/phetsims/center-and-variability/issues/170
       titleBarOptions: {
         stroke: 'black'
       },

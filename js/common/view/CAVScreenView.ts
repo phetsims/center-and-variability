@@ -49,7 +49,7 @@ export default class CAVScreenView extends ScreenView {
   protected readonly frontObjectLayer = new Node();
 
   // TODO: We haven't enforced the "exactly half a ball should be occluded if anything is occluded" design, see https://github.com/phetsims/center-and-variability/issues/175
-  // May need https://github.com/phetsims/center-and-variability/issues/166 to be addressed first
+  // May need https://github.com/phetsims/center-and-variability/issues/170 to be addressed first
   protected readonly backObjectLayer = new Node();
 
   protected readonly eraseButton: EraserButton;
