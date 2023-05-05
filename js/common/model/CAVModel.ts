@@ -7,6 +7,8 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import CAVConstants from '../CAVConstants.js';
 import Property from '../../../../axon/js/Property.js';
 import CAVSceneModel from './CAVSceneModel.js';
+import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
+import IOType from '../../../../tandem/js/types/IOType.js';
 
 type SelfOptions = {
   tandem: Tandem;
@@ -48,7 +50,8 @@ export default class CAVModel {
 
     this.selectedSceneModelProperty = new Property( sceneModels[ 0 ], {
       validValues: sceneModels,
-      tandem: options.tandem.createTandem( 'selectedSceneModelProperty' )
+      tandem: options.tandem.createTandem( 'selectedSceneModelProperty' ),
+      phetioValueType: ReferenceIO( IOType.ObjectIO )
     } );
 
     this.selectedSceneModelProperty.link( selectedScene => {

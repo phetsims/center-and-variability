@@ -79,7 +79,8 @@ export default class CAVPlotNode extends Node {
 
     backgroundNode.addChild( this.dotLayer );
 
-    model.sceneModels.forEach( scene => {
+    // TODO: Scene names, see https://github.com/phetsims/center-and-variability/issues/184
+    model.sceneModels.forEach( ( scene, sceneIndex ) => {
 
       const dataPointLayer = new Node( {
         visibleProperty: scene.isVisibleProperty
@@ -89,7 +90,7 @@ export default class CAVPlotNode extends Node {
       scene.soccerBalls.forEach( ( soccerBall, index ) => {
 
         const dotNode = new DataPointNode( soccerBall, ( model instanceof MeanAndMedianModel ) ? model.isShowingTopMedianProperty : new BooleanProperty( false ), modelViewTransform, {
-          tandem: options.tandem.createTandem( 'dotNodeGroup' ).createTandem( 'dataPoint' + index ),
+          tandem: options.tandem.createTandem( 'scene' + sceneIndex ).createTandem( 'dotNodeGroup' ).createTandem( 'dataPoint' + index ),
           fill: options.dataPointFill
         } );
 

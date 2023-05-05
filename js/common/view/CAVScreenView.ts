@@ -82,10 +82,10 @@ export default class CAVScreenView extends ScreenView {
     this.addChild( this.contentLayer );
     this.addChild( this.frontObjectLayer );
 
-
-    model.sceneModels.map( sceneModel => new SceneView( model, sceneModel, this.backObjectLayer, this.frontObjectLayer,
+    // TODO: Scene names, see https://github.com/phetsims/center-and-variability/issues/184
+    model.sceneModels.map( ( sceneModel, index ) => new SceneView( model, sceneModel, this.backObjectLayer, this.frontObjectLayer,
       modelViewTransform, () => this.accordionBox, {
-        tandem: options.tandem.createTandem( 'sceneView' )
+        tandem: options.tandem.createTandem( 'sceneView' + index )
       } ) );
     this.resetAllButton = new ResetAllButton( {
       listener: () => {

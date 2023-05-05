@@ -32,11 +32,12 @@ import Easing from '../../../../twixt/js/Easing.js';
 import Pose from './Pose.js';
 import { AnimationMode } from './AnimationMode.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 
 // constants
 const TIME_BETWEEN_RAPID_KICKS = 0.5; // in seconds
 
-export default class CAVSceneModel implements TModel {
+export default class CAVSceneModel extends PhetioObject implements TModel {
   public readonly soccerBalls: SoccerBall[];
 
   // The number of active soccer balls (includes soccer balls created but not yet kicked)
@@ -78,6 +79,11 @@ export default class CAVSceneModel implements TModel {
   public readonly stackChangedEmitter = new Emitter();
 
   public constructor( initialDistribution: ReadonlyArray<number>, options: { tandem: Tandem } ) {
+
+    super( {
+      phetioState: false,
+      ...options
+    } );
 
     const updateDataMeasures = () => this.updateDataMeasures();
 
