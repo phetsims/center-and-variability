@@ -25,37 +25,41 @@ export default class IQRInfoNode extends VBox {
       maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH
     } );
 
-    const dataValueNode = ( distance: number, isLastValue: boolean, isMedian: boolean, isQuartile: boolean ) => {
-      const distanceLabelNode = new Node();
-      const dataValueText = new Text( distance, { fontSize: 18, centerX: 0, centerY: 0 } );
+    const dataValue = ( distance: number, isLastValue: boolean, isMedian: boolean, isQuartile: boolean ) => {
+      const dataValueNode = new Node( {
+        layoutOptions: {
+          xMargin: isQuartile ? -6 : 0
+        }
+      } );
+      const dataValueText = new Text( distance, { fontSize: 18, centerX: 0, centerY: 0, layoutOptions: { align: 'center' } } );
 
       if ( isMedian ) {
         const MEDIAN_UNDERLINE_RECT_WIDTH = 16;
         const underlineRect = new Rectangle( -0.5 * MEDIAN_UNDERLINE_RECT_WIDTH, 8, MEDIAN_UNDERLINE_RECT_WIDTH, 3, { fill: CAVColors.medianColorProperty } );
-        distanceLabelNode.addChild( underlineRect );
+        dataValueNode.addChild( underlineRect );
       }
 
       if ( isQuartile ) {
-        const backgroundCircle = new Circle( 14, { fill: CAVColors.quartileColorProperty } );
-        distanceLabelNode.addChild( backgroundCircle );
+        const backgroundCircle = new Circle( 12, { fill: CAVColors.quartileColorProperty } );
+        dataValueNode.addChild( backgroundCircle );
       }
 
-      distanceLabelNode.addChild( dataValueText );
+      dataValueNode.addChild( dataValueText );
 
-      const dataValueNodeChildren = [ distanceLabelNode ];
+      const dataValueChildren = [ dataValueNode ];
 
       if ( !isLastValue ) {
-        dataValueNodeChildren.push( new Text( ',', { fontSize: 18 } ) );
+        dataValueChildren.push( new Text( ',', { fontSize: 18 } ) );
       }
 
-      return new Node( { children: dataValueNodeChildren } );
+      return new HBox( { children: dataValueChildren } );
     };
 
     const dataValues: Node[] = [];
     const dataValuesContainer = new HBox( {
-      spacing: 5,
+      spacing: 6,
       children: dataValues,
-      layoutOptions: { leftMargin: 5 }
+      layoutOptions: { leftMargin: 6 }
     } );
     const dataValuesDisplay = new HBox( {
       visibleProperty: hasAtLeastOneDataPointProperty,
@@ -110,9 +114,9 @@ export default class IQRInfoNode extends VBox {
       const sortedObjects = sceneModel.getSortedLandedObjects();
       const sortedData = sortedObjects.map( object => object.valueProperty.value );
 
-      dataValuesContainer.setChildren( sortedData.map( ( dataValue, index ) => {
+      dataValuesContainer.setChildren( sortedData.map( ( value, index ) => {
         const soccerBall = sortedObjects[ index ];
-        return dataValueNode( dataValue!, index === sortedData.length - 1, soccerBall.isMedianObjectProperty.value,
+        return dataValue( value!, index === sortedData.length - 1, soccerBall.isMedianObjectProperty.value,
           soccerBall.isQ1ObjectProperty.value || soccerBall.isQ3ObjectProperty.value );
       } ) );
     };
