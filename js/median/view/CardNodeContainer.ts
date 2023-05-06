@@ -205,6 +205,11 @@ export default class CardNodeContainer extends Node {
 
           this.cardNodeCellsChangedEmitter.emit();
         }
+        else if ( !isActive ) {
+          const index = this.cardNodeCells.indexOf( cardNode );
+          this.cardNodeCells.splice( index, 1 );
+          this.cardNodeCellsChangedEmitter.emit();
+        }
       } );
 
       return cardNode;
