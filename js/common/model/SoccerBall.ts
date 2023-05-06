@@ -154,11 +154,15 @@ export default class SoccerBall {
   }
 
   public reset(): void {
+
+    // Reset the drag position first, since it triggers a change in the position property and the value property (if it is clamped)
+    // TODO: It is odd and awkward that it takes this value through value = 1 during reset, should we fix it? See https://github.com/phetsims/center-and-variability/issues/172
+    this.dragPositionProperty.reset();
+
     this.positionProperty.reset();
     this.velocityProperty.reset();
     this.animationModeProperty.reset();
     this.valueProperty.reset();
-    this.dragPositionProperty.reset();
     this.isMedianObjectProperty.reset();
     this.isQ1ObjectProperty.reset();
     this.isQ3ObjectProperty.reset();

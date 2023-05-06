@@ -183,6 +183,15 @@ export default class CardNodeContainer extends Node {
         totalDragDistanceProperty.value += distance;
       } );
 
+      const removeCardCell = ( cardNode: CardNode ) => {
+        const index = this.cardNodeCells.indexOf( cardNode );
+
+        if ( index >= 0 ) {
+          this.cardNodeCells.splice( index, 1 );
+          this.cardNodeCellsChangedEmitter.emit();
+        }
+      };
+
       cardModel.isActiveProperty.link( isActive => {
         if ( isActive && !phet.joist.sim.isSettingPhetioStateProperty.value ) {
 
@@ -206,9 +215,13 @@ export default class CardNodeContainer extends Node {
           this.cardNodeCellsChangedEmitter.emit();
         }
         else if ( !isActive ) {
-          const index = this.cardNodeCells.indexOf( cardNode );
-          this.cardNodeCells.splice( index, 1 );
-          this.cardNodeCellsChangedEmitter.emit();
+          removeCardCell( cardNode );
+        }
+      } );
+
+      cardModel.soccerBall.valueProperty.link( value => {
+        if ( value === null ) {
+          removeCardCell( cardNode );
         }
       } );
 
