@@ -60,7 +60,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
 
   public readonly timeProperty: NumberProperty;
 
-  public readonly objectValueBecameNonNullEmitter: TEmitter<[ SoccerBall ]>;
+  public readonly objectValueBecameNonNullEmitter: TEmitter;
   public readonly resetEmitter: TEmitter = new Emitter();
   public readonly numberOfDataPointsProperty: NumberProperty;
 
@@ -107,30 +107,22 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
         this.restackWithTopBall( soccerBall );
       } );
 
-      soccerBall.valueProperty.link( ( value: number | null, oldValue: number | null | undefined ) => {
-        if ( value !== null ) {
-          if ( !phet.joist.sim.isSettingPhetioStateProperty.value ) {
+      soccerBall.soccerBallLandedEmitter.addListener( soccerBall => {
+        this.animateSoccerBallStack( soccerBall, soccerBall.valueProperty.value! );
 
-            // Only animate the stack when the ball lands, not when it is dragged
-            if ( oldValue === null || oldValue === undefined ) {
-              this.animateSoccerBallStack( soccerBall, value );
-            }
+        // If the soccer player that kicked that ball was still in line when the ball lands, they can leave the line now.
+        if ( soccerBall.soccerPlayer === this.getFrontSoccerPlayer() ) {
+          this.advanceLine();
+        }
 
-            // If the soccer player that kicked that ball was still in line when the ball lands, they can leave the line now.
-            if ( soccerBall.soccerPlayer === this.getFrontSoccerPlayer() ) {
-              this.advanceLine();
-            }
+        this.objectValueBecameNonNullEmitter.emit();
+      } );
 
-            if ( oldValue === null ) {
-              this.objectValueBecameNonNullEmitter.emit( soccerBall );
-            }
-
-            if ( oldValue !== null && oldValue !== undefined ) {
-              const stack = this.getStackAtLocation( oldValue );
-              if ( stack.length > 0 ) {
-                this.restackWithTopBall( stack[ stack.length - 1 ] );
-              }
-            }
+      soccerBall.valueProperty.lazyLink( ( value: number | null, oldValue: number | null ) => {
+        if ( value !== null && !phet.joist.sim.isSettingPhetioStateProperty.value && oldValue !== null ) {
+          const stack = this.getStackAtLocation( oldValue );
+          if ( stack.length > 0 ) {
+            this.restackWithTopBall( stack[ stack.length - 1 ] );
           }
         }
       } );
@@ -166,9 +158,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
       tandem: options.tandem.createTandem( 'timeProperty' )
     } );
 
-    this.objectValueBecameNonNullEmitter = new Emitter<[ SoccerBall ]>( {
-      parameters: [ { valueType: SoccerBall } ]
-    } );
+    this.objectValueBecameNonNullEmitter = new Emitter();
 
     this.numberOfScheduledSoccerBallsToKickProperty = new NumberProperty( 0, {
       tandem: options.tandem.createTandem( 'numberOfScheduledSoccerBallsToKickProperty' )

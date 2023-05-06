@@ -69,6 +69,10 @@ export default class SoccerBall {
   // Global index for debugging
   public readonly index = count++;
 
+  public readonly soccerBallLandedEmitter = new Emitter<[ SoccerBall ]>( {
+    parameters: [ { valueType: SoccerBall } ]
+  } );
+
   public constructor( providedOptions: CAVObjectOptions ) {
 
     const options = optionize<CAVObjectOptions, SelfOptions, PhetioObjectOptions>()( {
@@ -143,6 +147,8 @@ export default class SoccerBall {
 
       if ( landed ) {
         this.animationModeProperty.value = AnimationMode.NONE;
+
+        this.soccerBallLandedEmitter.emit( this );
       }
     }
   }
