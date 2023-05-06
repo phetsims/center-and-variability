@@ -118,7 +118,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
         this.objectValueBecameNonNullEmitter.emit();
       } );
 
-      soccerBall.valueProperty.lazyLink( ( value: number | null, oldValue: number | null ) => {
+      soccerBall.valueProperty.lazyLink( ( value, oldValue ) => {
         if ( value !== null && !phet.joist.sim.isSettingPhetioStateProperty.value && oldValue !== null ) {
           const stack = this.getStackAtLocation( oldValue );
           if ( stack.length > 0 ) {
