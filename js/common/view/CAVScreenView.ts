@@ -76,10 +76,12 @@ export default class CAVScreenView extends ScreenView {
     this.modelViewTransform = modelViewTransform;
     this.model = model;
 
-    // Soccer balls go behind the accordion box after they land
-    // this.contentLayer.addChild( this.backObjectLayer );
-
     this.addChild( this.contentLayer );
+
+    this.contentLayer.addChild( new BackgroundNode( GROUND_POSITION_Y, this.visibleBoundsProperty ) );
+
+    // Soccer balls go behind the accordion box after they land
+    this.contentLayer.addChild( this.backObjectLayer );
     this.addChild( this.frontObjectLayer );
 
     // TODO: Scene names, see https://github.com/phetsims/center-and-variability/issues/184
@@ -94,6 +96,7 @@ export default class CAVScreenView extends ScreenView {
         model.reset();
 
         // hide the dragIndicatorArrowNode and reset the flag for if it has been dragged already
+        // TODO: See also https://github.com/phetsims/center-and-variability/issues/129
         // dragIndicatorArrowNode.visible = false;
       },
       right: this.layoutBounds.maxX - CAVConstants.SCREEN_VIEW_X_MARGIN,
@@ -119,8 +122,6 @@ export default class CAVScreenView extends ScreenView {
     } );
     this.addChild( this.eraseButton );
     this.addChild( this.resetAllButton );
-
-    this.contentLayer.addChild( new BackgroundNode( GROUND_POSITION_Y, this.visibleBoundsProperty ) );
 
     this.playAreaNumberLineNode = new NumberLineNode(
       new DynamicProperty( model.selectedSceneModelProperty, {
@@ -151,10 +152,6 @@ export default class CAVScreenView extends ScreenView {
       centerY: ( GROUND_POSITION_Y + this.layoutBounds.maxY ) / 2 + 2,
       tandem: options.tandem.createTandem( 'kickButtonGroup' )
     } ) );
-
-    // Soccer balls go behind the accordion box after they land
-    // TODO: Why is the back layer in the front? See https://github.com/phetsims/center-and-variability/issues/176
-    this.contentLayer.addChild( this.backObjectLayer );
   }
 
   private updateAccordionBoxPosition(): void {
@@ -177,7 +174,7 @@ export default class CAVScreenView extends ScreenView {
    */
   protected setAccordionBox( accordionBox: CAVAccordionBox ): void {
     this.accordionBox = accordionBox;
-    this.contentLayer.addChild( this.accordionBox );
+    this.frontObjectLayer.addChild( this.accordionBox );
     this.updateAccordionBoxPosition();
   }
 
