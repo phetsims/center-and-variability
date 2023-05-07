@@ -21,7 +21,6 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import CAVColors from '../CAVColors.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import Bounds2 from '../../../../dot/js/Bounds2.js';
 import CAVConstants from '../CAVConstants.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Multilink from '../../../../axon/js/Multilink.js';
@@ -40,6 +39,7 @@ export default class NumberLineNode extends Node {
 
   public constructor(
     meanValueProperty: TReadOnlyProperty<number | null>,
+    modelViewTransform: ModelViewTransform2,
     isShowingMeanIndicatorProperty: TReadOnlyProperty<boolean>,
     rangeProperty: TReadOnlyProperty<Range | null>,
     providedOptions?: NumberLineNodeOptions
@@ -104,14 +104,6 @@ export default class NumberLineNode extends Node {
 
       this.addChild( rangeNode );
     }
-
-    // TODO: See see https://github.com/phetsims/center-and-variability/issues/168, Can we make a 1d MVT since that's
-    // all that's needed here, or should this be using the same MVT as the outer MVT?  Like the one that positions the number line node,
-    // and puts objects in the right spots.
-    const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
-      new Bounds2( CAVConstants.PHYSICAL_RANGE.min, 0, CAVConstants.PHYSICAL_RANGE.max, CAVConstants.PHYSICAL_RANGE.getLength() ),
-      new Bounds2( 0, -CAVConstants.CHART_VIEW_WIDTH, CAVConstants.CHART_VIEW_WIDTH, CAVConstants.CHART_VIEW_WIDTH )
-    );
 
     const meanIndicatorNode = NumberLineNode.createMeanIndicatorNode( options.includeMeanStroke, false );
     this.addChild( meanIndicatorNode );

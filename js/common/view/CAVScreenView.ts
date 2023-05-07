@@ -65,10 +65,13 @@ export default class CAVScreenView extends ScreenView {
   public constructor( model: CAVModel, providedOptions: CAVScreenViewOptions ) {
     const options = optionize<CAVScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
 
+    // View size of a soccer ball
+    const objectHeight = 41;
+
     // The ground is at y=0
     const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
-      new Bounds2( CAVConstants.PHYSICAL_RANGE.min, 0, CAVConstants.PHYSICAL_RANGE.max, CAVConstants.PHYSICAL_RANGE.getLength() ),
-      new Bounds2( CAVConstants.NUMBER_LINE_MARGIN_X, GROUND_POSITION_Y - CAVConstants.CHART_VIEW_WIDTH, CAVConstants.NUMBER_LINE_MARGIN_X + CAVConstants.CHART_VIEW_WIDTH, GROUND_POSITION_Y )
+      new Bounds2( CAVConstants.PHYSICAL_RANGE.min, 0, CAVConstants.PHYSICAL_RANGE.max, 1 ),
+      new Bounds2( CAVConstants.NUMBER_LINE_MARGIN_X, GROUND_POSITION_Y - objectHeight, CAVConstants.NUMBER_LINE_MARGIN_X + CAVConstants.CHART_VIEW_WIDTH, GROUND_POSITION_Y )
     );
 
     super( options );
@@ -127,6 +130,7 @@ export default class CAVScreenView extends ScreenView {
       new DynamicProperty( model.selectedSceneModelProperty, {
         derive: 'meanValueProperty'
       } ),
+      modelViewTransform,
       model.isShowingPlayAreaMeanProperty,
       new DynamicProperty( model.selectedSceneModelProperty, {
         derive: 'dataRangeProperty'

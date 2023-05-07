@@ -44,7 +44,7 @@ export default class CAVPlotNode extends Node {
 
     const numberLinePositionY = 127;
 
-    // Empirically determined
+    // View size of a data point in the chart
     const dataPointHeight = 17;
 
     // Coordinates here are somewhat unusual, since x dimension is based off of meters, and y dimension is based off of
@@ -57,6 +57,7 @@ export default class CAVPlotNode extends Node {
 
     const numberLineNode = new NumberLineNode(
       sceneModel.meanValueProperty,
+      modelViewTransform,
       model instanceof MeanAndMedianModel ? model.isShowingTopMeanProperty : new BooleanProperty( false ),
       sceneModel.dataRangeProperty, {
         color: 'black',
