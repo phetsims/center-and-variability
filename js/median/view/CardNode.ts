@@ -55,8 +55,7 @@ export default class CardNode extends Node {
 
     const options = optionize<CardNodeOptions, SelfOptions, NodeOptions>()( {
       children: [ rectangle, text ],
-      cursor: 'pointer',
-      phetioDynamicElement: true
+      cursor: 'pointer'
     }, providedOptions );
 
     super( options );
