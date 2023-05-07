@@ -83,7 +83,7 @@ import Multilink from '../../../../axon/js/Multilink.js';
 type SelfOptions = EmptySelfOptions;
 type SoccerPlayerNodeOptions = SelfOptions & NodeOptions;
 
-const playerGroups = [ {
+const standardKickerGroup = [ {
   standing: player01Standing_png,
   poisedToKick: player01PoisedToKick_png,
   kicking: player01Kicking_png
@@ -162,6 +162,8 @@ const variabilityPlayerGroups = [ {
   poisedToKick: variabilityPlayer04PoisedToKick_png,
   kicking: variabilityPlayer04Kicking_png
 } ];
+
+const playerGroups = [ ...standardKickerGroup, ...standardKickerGroup ];
 
 const SCALE = 0.155;
 
