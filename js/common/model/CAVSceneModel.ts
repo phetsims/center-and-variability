@@ -33,6 +33,7 @@ import Pose from './Pose.js';
 import { AnimationMode } from './AnimationMode.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 
 // constants
 const TIME_BETWEEN_RAPID_KICKS = 0.5; // in seconds
@@ -205,9 +206,9 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
       tandem: options.tandem.createTandem( 'activeKickerIndexProperty' )
     } );
 
-    this.activeKickerIndexProperty.link( activeKickerIndex => {
+    Multilink.multilink( [ this.activeKickerIndexProperty, this.maxKicksProperty ], ( activeKickerIndex, maxKicks ) => {
       this.soccerPlayers.forEach( ( soccerPlayer, index ) => {
-        soccerPlayer.isActiveProperty.value = index === activeKickerIndex;
+        soccerPlayer.isActiveProperty.value = index === activeKickerIndex && index < maxKicks;
       } );
     } );
 
@@ -503,7 +504,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
 
   private getNextBallFromPool(): SoccerBall | null {
     const nextBallFromPool = this.soccerBalls.find( ball => !ball.isActiveProperty.value ) || null;
-    if ( nextBallFromPool ) {
+    if ( nextBallFromPool && this.soccerBalls.indexOf( nextBallFromPool ) < this.maxKicksProperty.value ) {
       nextBallFromPool.isActiveProperty.value = true;
     }
     return nextBallFromPool;
