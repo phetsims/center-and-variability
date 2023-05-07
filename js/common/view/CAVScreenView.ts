@@ -21,7 +21,6 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import BackgroundNode from './BackgroundNode.js';
 import merge from '../../../../phet-core/js/merge.js';
 import CAVAccordionBox from './CAVAccordionBox.js';
-import VerticalCheckboxGroup, { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
 import PredictionSlider from './PredictionSlider.js';
 import CAVColors from '../CAVColors.js';
 import Property from '../../../../axon/js/Property.js';
@@ -198,17 +197,13 @@ export default class CAVScreenView extends ScreenView {
       } );
   }
 
-  protected setBottomCheckboxGroup( items: VerticalCheckboxGroupItem[] ): void {
-
-    const bottomCheckboxGroup = new VerticalCheckboxGroup( items, {
-      tandem: this.tandem.createTandem( 'bottomCheckboxGroup' )
-    } );
+  protected setBottomControls( controlNode: Node ): void {
 
     // In order to use the AlignBox we need to know the distance from the top of the screen, to the top of the grass.
     const BOTTOM_CHECKBOX_PANEL_MARGIN = 12.5;
     const BOTTOM_CHECKBOX_PANEL_Y_MARGIN = this.layoutBounds.maxY - this.modelViewTransform.modelToViewY( 0 ) + BOTTOM_CHECKBOX_PANEL_MARGIN;
 
-    this.addChild( new AlignBox( bottomCheckboxGroup, {
+    this.addChild( new AlignBox( controlNode, {
       alignBounds: this.layoutBounds,
       xAlign: 'right',
       yAlign: 'bottom',

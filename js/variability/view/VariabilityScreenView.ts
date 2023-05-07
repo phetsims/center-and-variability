@@ -14,13 +14,15 @@ import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import CAVColors from '../../common/CAVColors.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import { AlignGroup, ManualConstraint } from '../../../../scenery/js/imports.js';
+import { AlignGroup, ManualConstraint, VBox } from '../../../../scenery/js/imports.js';
 import SceneRadioButtonGroup from './SceneRadioButtonGroup.js';
 import VariabilityMeasureRadioButtonGroup from './VariabilityMeasureRadioButtonGroup.js';
 import CAVScreenView, { CAVScreenViewOptions } from '../../common/view/CAVScreenView.js';
 import VariabilityAccordionBox from './VariabilityAccordionBox.js';
 import BottomRepresentationCheckboxGroup from '../../common/view/BottomRepresentationCheckboxGroup.js';
 import CAVConstants from '../../common/CAVConstants.js';
+import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
+import MaxKicksControlNode from '../../common/view/MaxKicksControlNode.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
@@ -65,11 +67,22 @@ export default class VariabilityScreenView extends CAVScreenView {
     this.addChild( variabilityMeasureRadioButtonGroup );
 
     const iconGroup = new AlignGroup();
-    this.setBottomCheckboxGroup( [
-      BottomRepresentationCheckboxGroup.getVariabilityCheckboxItem( iconGroup, model ),
-      BottomRepresentationCheckboxGroup.getMedianCheckboxItem( iconGroup, model ),
-      BottomRepresentationCheckboxGroup.getMeanCheckboxItem( iconGroup, model )
-    ] );
+
+    this.setBottomControls( new VBox( {
+      spacing: 15,
+      children: [
+        new VerticalCheckboxGroup( [
+          BottomRepresentationCheckboxGroup.getVariabilityCheckboxItem( iconGroup, model ),
+          BottomRepresentationCheckboxGroup.getMedianCheckboxItem( iconGroup, model ),
+          BottomRepresentationCheckboxGroup.getMeanCheckboxItem( iconGroup, model )
+        ], {
+          tandem: this.tandem.createTandem( 'bottomCheckboxGroup' )
+        } ),
+        new MaxKicksControlNode( model.maxKicksProperty, this, {
+          tandem: this.tandem.createTandem( 'maxKicksControlNode' )
+        } )
+      ]
+    } ) );
   }
 }
 

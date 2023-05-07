@@ -21,6 +21,7 @@ import BottomRepresentationCheckboxGroup from '../../common/view/BottomRepresent
 import CAVConstants from '../../common/CAVConstants.js';
 import PredictionSlider from '../../common/view/PredictionSlider.js';
 import Property from '../../../../axon/js/Property.js';
+import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 
 type MeanAndMedianScreenViewOptions = StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
 
@@ -40,12 +41,14 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
     this.setAccordionBoxWithAlignedContent( new MeanAndMedianAccordionBox( model, this.layoutBounds, options.tandem.createTandem( 'accordionBox' ), this.questionBar.bottom + CAVConstants.SCREEN_VIEW_Y_MARGIN, this.playAreaNumberLineNode ) );
 
     const iconGroup = new AlignGroup();
-    super.setBottomCheckboxGroup( [
+    this.setBottomControls( new VerticalCheckboxGroup( [
       BottomRepresentationCheckboxGroup.getPredictMedianCheckboxItem( iconGroup, model ),
       BottomRepresentationCheckboxGroup.getPredictMeanCheckboxItem( iconGroup, model ),
       BottomRepresentationCheckboxGroup.getMedianCheckboxItem( iconGroup, model ),
       BottomRepresentationCheckboxGroup.getMeanCheckboxItem( iconGroup, model )
-    ] );
+    ], {
+      tandem: this.tandem.createTandem( 'bottomCheckboxGroup' )
+    } ) );
 
     this.contentLayer.addChild( new PredictionSlider( model.meanPredictionProperty, this.modelViewTransform, CAVConstants.PHYSICAL_RANGE, {
       predictionThumbNodeOptions: {

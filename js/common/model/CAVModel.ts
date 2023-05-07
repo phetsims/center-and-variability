@@ -28,6 +28,8 @@ export default class CAVModel {
   public readonly selectedSceneModelProperty: Property<CAVSceneModel>;
   public readonly soccerBallHasBeenDraggedProperty: Property<boolean>;
 
+  public readonly maxKicksProperty: Property<number>;
+
   public constructor( public readonly sceneModels: CAVSceneModel[], options: CAVModelOptions ) {
 
     this.isShowingPlayAreaMeanProperty = new BooleanProperty( false, {
@@ -62,6 +64,11 @@ export default class CAVModel {
 
     this.soccerBallHasBeenDraggedProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'soccerBallHasBeenDraggedProperty' )
+    } );
+
+    this.maxKicksProperty = new NumberProperty( 15, {
+      validValues: [ 15, 20, 25, 30 ],
+      tandem: options.tandem.createTandem( 'maxKicksProperty' )
     } );
   }
 

@@ -18,6 +18,7 @@ import MedianAccordionBox from './MedianAccordionBox.js';
 import BottomRepresentationCheckboxGroup from '../../common/view/BottomRepresentationCheckboxGroup.js';
 import { AlignGroup } from '../../../../scenery/js/imports.js';
 import CAVConstants from '../../common/CAVConstants.js';
+import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 
 type SelfOptions = EmptySelfOptions;
 type MedianScreenViewOptions =
@@ -40,10 +41,13 @@ export default class MedianScreenView extends CAVScreenView {
     this.setAccordionBox( new MedianAccordionBox( model, this.layoutBounds, options.tandem.createTandem( 'accordionBox' ), this.questionBar.bottom + CAVConstants.SCREEN_VIEW_Y_MARGIN ) );
 
     const iconGroup = new AlignGroup();
-    super.setBottomCheckboxGroup( [
+
+    this.setBottomControls( new VerticalCheckboxGroup( [
       BottomRepresentationCheckboxGroup.getPredictMedianCheckboxItem( iconGroup, model ),
       BottomRepresentationCheckboxGroup.getMedianCheckboxItem( iconGroup, model )
-    ] );
+    ], {
+      tandem: this.tandem.createTandem( 'bottomCheckboxGroup' )
+    } ) );
 
     this.contentLayer.addChild( CAVScreenView.createMedianPredictionNode(
       model,
