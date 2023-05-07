@@ -33,8 +33,13 @@ export default class MeanAndMedianModel extends CAVModel {
 
   public constructor( options: { tandem: Tandem } ) {
 
-    const scene = new CAVSceneModel( CAVSceneModel.chooseDistribution(), { tandem: options.tandem.createTandem( 'sceneModel' ) } );
-    super( [ scene ], {
+    const maxKicksProperty = new NumberProperty( 15, {
+      validValues: CAVConstants.MAX_KICKS_VALUES,
+      tandem: options.tandem.createTandem( 'maxKicksProperty' )
+    } );
+
+    const scene = new CAVSceneModel( maxKicksProperty, CAVConstants.MAX_KICKS_VALUES, CAVSceneModel.chooseDistribution(), { tandem: options.tandem.createTandem( 'sceneModel' ) } );
+    super( maxKicksProperty, [ scene ], {
       ...options,
       instrumentMeanPredictionProperty: true
     } );

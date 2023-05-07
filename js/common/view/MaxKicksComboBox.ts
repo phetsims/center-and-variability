@@ -9,7 +9,7 @@ import CAVConstants from '../CAVConstants.js';
 export default class MaxKicksComboBox extends ComboBox<number> {
 
   public constructor( maxKicksProperty: LinkableProperty<number>, listParent: Node, providedOptions?: ComboBoxOptions ) {
-    super( maxKicksProperty, [ 15, 20, 25, 30 ].map( value => {
+    super( maxKicksProperty, CAVConstants.MAX_KICKS_VALUES.map( value => {
       return {
         value: value,
         createNode: tandem => new Text( '' + value, {
@@ -17,7 +17,6 @@ export default class MaxKicksComboBox extends ComboBox<number> {
         } )
       };
     } ), listParent, providedOptions );
-    // public constructor( property: LinkableProperty<T>, items: ComboBoxItem<T>[], listParent: Node, providedOptions?: ComboBoxOptions ) {
   }
 }
 

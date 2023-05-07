@@ -13,6 +13,7 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import CAVSceneModel from '../../common/model/CAVSceneModel.js';
 import CAVModel from '../../common/model/CAVModel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 
 export default class MedianModel extends CAVModel {
 
@@ -21,8 +22,14 @@ export default class MedianModel extends CAVModel {
   public readonly isShowingTopMedianProperty: BooleanProperty;
 
   public constructor( options: { tandem: Tandem } ) {
-    const scene = new CAVSceneModel( CAVSceneModel.chooseDistribution(), { tandem: options.tandem.createTandem( 'sceneModel' ) } );
-    super( [ scene ], {
+
+    const maxKicksProperty = new NumberProperty( 15, {
+      validValues: [ 15 ],
+      tandem: options.tandem.createTandem( 'maxKicksProperty' )
+    } );
+
+    const scene = new CAVSceneModel( maxKicksProperty, [ 15 ], CAVSceneModel.chooseDistribution(), { tandem: options.tandem.createTandem( 'sceneModel' ) } );
+    super( maxKicksProperty, [ scene ], {
       ...options,
       instrumentMeanPredictionProperty: false
     } );

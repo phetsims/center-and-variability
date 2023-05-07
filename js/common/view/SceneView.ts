@@ -53,7 +53,7 @@ export default class SceneView {
 
       // add the dragIndicatorArrowNode above the last object when it is added to the play area. if an object was
       // moved before this happens, don't show the dragIndicatorArrowNode
-      if ( sceneModel.soccerBallCountProperty.value === sceneModel.maxSoccerBalls &&
+      if ( sceneModel.soccerBallCountProperty.value === sceneModel.maxKicksProperty.value &&
            objectNodesInputEnabledProperty.value &&
            _.every( sceneModel.soccerBalls, soccerBall => soccerBall.valueProperty.value !== null ) &&
            !model.soccerBallHasBeenDraggedProperty.value ) {
@@ -80,6 +80,7 @@ export default class SceneView {
     };
 
     model.soccerBallHasBeenDraggedProperty.link( updateDragIndictatorVisible );
+    model.maxKicksProperty.link( updateDragIndictatorVisible );
 
     const soccerBallMap = new Map<SoccerBall, SoccerBallNode>();
 

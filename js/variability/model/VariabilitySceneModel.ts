@@ -10,6 +10,7 @@ import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import VariabilityModel from './VariabilityModel.js';
 import SoccerBall from '../../common/model/SoccerBall.js';
+import CAVConstants from '../../common/CAVConstants.js';
 
 export default class VariabilitySceneModel extends CAVSceneModel {
 
@@ -23,8 +24,8 @@ export default class VariabilitySceneModel extends CAVSceneModel {
 
   private readonly initialized: boolean = false;
 
-  public constructor( distribution: ReadonlyArray<number>, options: { tandem: Tandem } ) {
-    super( distribution, options );
+  public constructor( maxKicksProperty: TReadOnlyProperty<number>, distribution: ReadonlyArray<number>, options: { tandem: Tandem } ) {
+    super( maxKicksProperty, CAVConstants.MAX_KICKS_VALUES, distribution, options );
 
     this.maxValueProperty = new DerivedProperty( [ this.dataRangeProperty ], dataRange => {
       return dataRange === null ? null : dataRange.max;

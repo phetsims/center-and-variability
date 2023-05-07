@@ -53,7 +53,8 @@ const CAVConstants = {
     maxWidth: 90
   },
 
-  PHYSICAL_RANGE: new Range( 1, 15 )
+  PHYSICAL_RANGE: new Range( 1, 15 ),
+  MAX_KICKS_VALUES: [ 15, 20, 25, 30 ]
 };
 
 centerAndVariability.register( 'CAVConstants', CAVConstants );

@@ -43,7 +43,8 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
   // The number of active soccer balls (includes soccer balls created but not yet kicked)
   public readonly soccerBallCountProperty: NumberProperty;
 
-  public readonly maxSoccerBalls = CAVConstants.NUMBER_OF_OBJECTS;
+  // The max kickable (highest value in the combo box, if there is one)
+  private readonly maxKicksLimit: number;
 
   public readonly medianValueProperty: Property<number | null>;
   public readonly meanValueProperty: Property<number | null>;
@@ -78,7 +79,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
   // Called when the location of a ball changed within a stack, so the pointer areas can be updated
   public readonly stackChangedEmitter = new Emitter();
 
-  public constructor( initialDistribution: ReadonlyArray<number>, options: { tandem: Tandem } ) {
+  public constructor( public readonly maxKicksProperty: TReadOnlyProperty<number>, maxKicksChoices: number[], initialDistribution: ReadonlyArray<number>, options: { tandem: Tandem } ) {
 
     super( {
       phetioState: false,
@@ -87,11 +88,12 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
 
     const updateDataMeasures = () => this.updateDataMeasures();
 
-    this.soccerBallCountProperty = new NumberProperty( 0, {
-      range: new Range( 0, this.maxSoccerBalls )
-    } );
+    this.maxKicksLimit = Math.max( ...maxKicksChoices );
 
-    this.soccerBalls = _.range( 0, this.maxSoccerBalls ).map( index => {
+    this.soccerBallCountProperty = new NumberProperty( 0, {
+      range: new Range( 0, this.maxKicksLimit )
+    } );
+    this.soccerBalls = _.range( 0, this.maxKicksLimit ).map( index => {
 
       const position = new Vector2( 0, CAVObjectType.SOCCER_BALL.radius );
 
@@ -167,12 +169,13 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
       tandem: options.tandem.createTandem( 'timeWhenLastBallWasKickedProperty' )
     } );
 
-    this.soccerPlayers = _.range( 0, this.maxSoccerBalls ).map( placeInLine => new SoccerPlayer( placeInLine ) );
+    this.soccerPlayers = _.range( 0, this.maxKicksLimit ).map( placeInLine => new SoccerPlayer( placeInLine ) );
 
     // Create an initial ball to show on startup
     this.getNextBallFromPool();
 
     this.numberOfUnkickedBallsProperty = DerivedProperty.deriveAny( [
+      this.maxKicksProperty,
       this.numberOfScheduledSoccerBallsToKickProperty,
       ...this.soccerBalls.map( soccerBall => soccerBall.valueProperty ),
       ...this.soccerBalls.map( soccerBall => soccerBall.animationModeProperty ) ], () => {
@@ -182,7 +185,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
                       soccerBall.animationModeProperty.value === AnimationMode.FLYING ||
                       soccerBall.animationModeProperty.value === AnimationMode.STACKING
       );
-      const value = this.maxSoccerBalls - kickedSoccerBalls.length - this.numberOfScheduledSoccerBallsToKickProperty.value;
+      const value = this.maxKicksProperty.value - kickedSoccerBalls.length - this.numberOfScheduledSoccerBallsToKickProperty.value;
 
       return value;
     } );
@@ -211,6 +214,10 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     this.soccerBalls.forEach( soccerBall => {
       soccerBall.valueProperty.link( updateDataMeasures );
       soccerBall.positionProperty.link( updateDataMeasures );
+    } );
+
+    maxKicksProperty.link( maxKicks => {
+      this.clearData();
     } );
   }
 
@@ -411,7 +418,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
                                                                soccerPlayer.poseProperty.value === Pose.KICKING );
     if ( kickers.length > 0 ) {
       let nextIndex = this.activeKickerIndexProperty.value + 1;
-      if ( nextIndex > this.maxSoccerBalls ) {
+      if ( nextIndex > this.maxKicksProperty.value ) {
         nextIndex = 0;
       }
       this.activeKickerIndexProperty.value = nextIndex;
