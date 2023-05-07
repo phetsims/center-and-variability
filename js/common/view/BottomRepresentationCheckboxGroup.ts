@@ -22,6 +22,7 @@ import LinkableProperty from '../../../../axon/js/LinkableProperty.js';
 import VariabilityModel from '../../variability/model/VariabilityModel.js';
 import CAVModel from '../model/CAVModel.js';
 import MeanAndMedianModel from '../../mean-and-median/model/MeanAndMedianModel.js';
+import IntervalToolIconNode from '../../variability/view/IntervalToolIconNode.js';
 
 // constants
 const TEXT_OPTIONS = {
@@ -48,7 +49,7 @@ export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxG
       createNode: ( tandem: Tandem ) => {
         return BottomRepresentationCheckboxGroup.createGridBox(
           new Text( CenterAndVariabilityStrings.variabilityStringProperty, TEXT_OPTIONS ),
-          NumberLineNode.createMeanIndicatorNode( true, true ),
+          new IntervalToolIconNode(),
           alignGroup
         );
       },
