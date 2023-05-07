@@ -196,12 +196,27 @@ export default class SceneView {
     sceneModel.objectChangedEmitter.addListener( this.updateMedianNode );
     sceneModel.isVisibleProperty.link( this.updateMedianNode );
 
-    const soccerPlayerNodes = sceneModel.soccerPlayers.map( soccerPlayer => new SoccerPlayerNode( soccerPlayer, modelViewTransform, sceneModel.isVisibleProperty ) );
-
-    soccerPlayerNodes.forEach( soccerPlayerNode => frontObjectLayer.addChild( soccerPlayerNode ) );
-
+    // TODO: See https://github.com/phetsims/center-and-variability/issues/153
     const varModel = model as VariabilityModel;
     const varSceneModel = sceneModel as VariabilitySceneModel;
+
+    // TODO: Do we want this information in the model? Do we want one player that re-kicks, or a list of clones? https://github.com/phetsims/center-and-variability/issues/154
+    const isVariabilityModel = !!varModel.isInfoShowingProperty;
+    let sceneIndex = 0;
+    if ( isVariabilityModel ) {
+      sceneIndex = varModel.variabilitySceneModels.indexOf( varSceneModel );
+    }
+
+    const soccerPlayerNodes = sceneModel.soccerPlayers.map( soccerPlayer => {
+      return new SoccerPlayerNode(
+        soccerPlayer,
+        isVariabilityModel ? sceneIndex : null,
+        modelViewTransform,
+        sceneModel.isVisibleProperty
+      );
+    } );
+
+    soccerPlayerNodes.forEach( soccerPlayerNode => frontObjectLayer.addChild( soccerPlayerNode ) );
 
     if ( varModel && varModel.isInfoShowingProperty && varModel.selectedSceneModelProperty && varSceneModel ) {
       const infoDialog = new InfoDialog( varModel, varSceneModel, {

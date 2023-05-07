@@ -55,6 +55,23 @@ import player15Kicking_png from '../../../images/player15Kicking_png.js';
 import player15Standing_png from '../../../images/player15Standing_png.js';
 import player15PoisedToKick_png from '../../../images/player15PoisedToKick_png.js';
 import player05Kicking_png from '../../../images/player05Kicking_png.js';
+
+import variabilityPlayer01Standing_png from '../../../images/variabilityPlayer01Standing_png.js';
+import variabilityPlayer01PoisedToKick_png from '../../../images/variabilityPlayer01PoisedToKick_png.js';
+import variabilityPlayer01Kicking_png from '../../../images/variabilityPlayer01Kicking_png.js';
+
+import variabilityPlayer02Standing_png from '../../../images/variabilityPlayer02Standing_png.js';
+import variabilityPlayer02PoisedToKick_png from '../../../images/variabilityPlayer02PoisedToKick_png.js';
+import variabilityPlayer02Kicking_png from '../../../images/variabilityPlayer02Kicking_png.js';
+
+import variabilityPlayer03Standing_png from '../../../images/variabilityPlayer03Standing_png.js';
+import variabilityPlayer03PoisedToKick_png from '../../../images/variabilityPlayer03PoisedToKick_png.js';
+import variabilityPlayer03Kicking_png from '../../../images/variabilityPlayer03Kicking_png.js';
+
+import variabilityPlayer04Standing_png from '../../../images/variabilityPlayer04Standing_png.js';
+import variabilityPlayer04PoisedToKick_png from '../../../images/variabilityPlayer04PoisedToKick_png.js';
+import variabilityPlayer04Kicking_png from '../../../images/variabilityPlayer04Kicking_png.js';
+
 import SoccerPlayer from '../model/SoccerPlayer.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -128,25 +145,45 @@ const playerGroups = [ {
   kicking: player15Kicking_png
 } ];
 
+const variabilityPlayerGroups = [ {
+  standing: variabilityPlayer01Standing_png,
+  poisedToKick: variabilityPlayer01PoisedToKick_png,
+  kicking: variabilityPlayer01Kicking_png
+}, {
+  standing: variabilityPlayer02Standing_png,
+  poisedToKick: variabilityPlayer02PoisedToKick_png,
+  kicking: variabilityPlayer02Kicking_png
+}, {
+  standing: variabilityPlayer03Standing_png,
+  poisedToKick: variabilityPlayer03PoisedToKick_png,
+  kicking: variabilityPlayer03Kicking_png
+}, {
+  standing: variabilityPlayer04Standing_png,
+  poisedToKick: variabilityPlayer04PoisedToKick_png,
+  kicking: variabilityPlayer04Kicking_png
+} ];
+
 const SCALE = 0.155;
 
 export default class SoccerPlayerNode extends Node {
   public readonly soccerPlayer: SoccerPlayer;
 
-  public constructor( soccerPlayer: SoccerPlayer, modelViewTransform: ModelViewTransform2, isSceneVisibleProperty: TReadOnlyProperty<boolean>, providedOptions?: SoccerPlayerNodeOptions ) {
+  public constructor( soccerPlayer: SoccerPlayer, sceneIndex: number | null, modelViewTransform: ModelViewTransform2, isSceneVisibleProperty: TReadOnlyProperty<boolean>, providedOptions?: SoccerPlayerNodeOptions ) {
     super();
 
     this.soccerPlayer = soccerPlayer;
 
     const imageNumber = soccerPlayer.initialPlaceInLine;
 
-    const standingNode = new Image( playerGroups[ imageNumber ].standing );
+    const playerGroup = sceneIndex === null ? playerGroups[ imageNumber ] : variabilityPlayerGroups[ sceneIndex ];
+
+    const standingNode = new Image( playerGroup.standing );
     this.addChild( standingNode );
 
-    const poisedToKickNode = new Image( playerGroups[ imageNumber ].poisedToKick );
+    const poisedToKickNode = new Image( playerGroup.poisedToKick );
     this.addChild( poisedToKickNode );
 
-    const kickingNode = new Image( playerGroups[ imageNumber ].kicking );
+    const kickingNode = new Image( playerGroup.kicking );
     this.addChild( kickingNode );
 
     this.setScaleMagnitude( SCALE );

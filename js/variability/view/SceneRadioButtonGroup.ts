@@ -32,10 +32,14 @@ export default class SceneRadioButtonGroup extends RectangularRadioButtonGroup<C
       } );
 
       const text = new Text( label, {
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: 'bold',
-        fill: 'black',
-        center: path.center
+        fill: 'white',
+
+        // Adjust for offcentering
+        center: path.center.plusXY( -0.5, 0 ),
+        stroke: 'black',
+        lineWidth: 0.8
       } );
       return new Node( {
         children: [ path, text ]
@@ -43,19 +47,19 @@ export default class SceneRadioButtonGroup extends RectangularRadioButtonGroup<C
     };
     super( property, [ {
       value: sceneModels[ 0 ],
-      createNode: tandem => createTShirtIcon( tandem, '1', '#ec5f3a' ),
+      createNode: tandem => createTShirtIcon( tandem, '1', '#7bb772' ),
       tandemName: 'uniformRadioButton'
     }, {
       value: sceneModels[ 1 ],
-      createNode: tandem => createTShirtIcon( tandem, '2', '#5bc760' ),
+      createNode: tandem => createTShirtIcon( tandem, '2', '#4f61b4' ),
       tandemName: 'gaussianRadioButton'
     }, {
       value: sceneModels[ 2 ],
-      createNode: tandem => createTShirtIcon( tandem, '3', '#fdf454' ),
+      createNode: tandem => createTShirtIcon( tandem, '3', '#c15156' ),
       tandemName: 'skewedRadioButton'
     }, {
       value: sceneModels[ 3 ],
-      createNode: tandem => createTShirtIcon( tandem, '4', '#9078e5' ),
+      createNode: tandem => createTShirtIcon( tandem, '4', '#eeda63' ),
       tandemName: 'bimodalRadioButton'
     } ], options );
   }
