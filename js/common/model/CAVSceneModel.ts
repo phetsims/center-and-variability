@@ -100,7 +100,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
 
       const soccerBall = new SoccerBall( {
         isFirstObject: index === 0,
-        tandem: options.tandem.createTandem( `soccerBall${index}` ),
+        tandem: options.tandem.createTandem( 'soccerBalls' ).createTandem( `soccerBall${index}` ),
         position: position
       } );
 

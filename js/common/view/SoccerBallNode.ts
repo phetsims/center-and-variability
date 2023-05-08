@@ -110,6 +110,10 @@ export default class SoccerBallNode extends CAVObjectNode {
           this.moveToFront();
         }
       } );
+
+    this.addLinkedElement( soccerBall, {
+      tandem: options.tandem.createTandem( 'soccerBall' )
+    } );
   }
 }
 

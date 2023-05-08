@@ -91,7 +91,7 @@ export default class SceneView {
         model.isShowingPlayAreaMedianProperty,
         modelViewTransform,
         objectNodesInputEnabledProperty, {
-          tandem: options.tandem.createTandem( 'soccerBalls' ).createTandem( 'soccerBallNode' + index )
+          tandem: options.tandem.createTandem( 'soccerBallNodes' ).createTandem( 'soccerBallNode' + index )
         } );
 
       backObjectLayer.addChild( soccerBallNode );

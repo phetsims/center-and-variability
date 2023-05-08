@@ -10,7 +10,7 @@
 import Animation from '../../../../twixt/js/Animation.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
-import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import CAVObjectType from './CAVObjectType.js';
@@ -40,7 +40,7 @@ export type CAVObjectOptions =
 // Global counter for debugging
 let count = 0;
 
-export default class SoccerBall {
+export default class SoccerBall extends PhetioObject {
 
   // Continuous value for the drag listener. When dragging, the object snaps to each tickmark
   public readonly dragPositionProperty: Vector2Property;
@@ -81,6 +81,11 @@ export default class SoccerBall {
       value: null,
       isFirstObject: false
     }, providedOptions );
+
+    super( {
+      ...options,
+      phetioState: false
+    } );
 
     this.isFirstObject = options.isFirstObject;
 
