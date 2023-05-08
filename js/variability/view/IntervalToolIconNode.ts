@@ -22,13 +22,13 @@ export default class IntervalToolIconNode extends Node {
       fill: rectangleFill
     } );
 
-    const createBeam = ( options: NodeTransformOptions ) => new Rectangle( 0, 0, 2, mainRectangle.height + 8, {
+    const createHandle = ( options: NodeTransformOptions ) => new Rectangle( 0, 0, 2, mainRectangle.height + 8, {
       fill: rectangleFill,
       ...options
     } );
 
-    const leftBeam = createBeam( { leftTop: mainRectangle.leftTop } );
-    const rightBeam = createBeam( { rightTop: mainRectangle.rightTop } );
+    const leftHandle = createHandle( { leftTop: mainRectangle.leftTop } );
+    const rightHandle = createHandle( { rightTop: mainRectangle.rightTop } );
 
     const createSphereNode = ( options: NodeTransformOptions ) => new ShadedSphereNode( 10, {
       mainColor: CAVColors.intervalToolIconShadedSphereMainColorProperty,
@@ -38,8 +38,8 @@ export default class IntervalToolIconNode extends Node {
       ...options
     } );
 
-    const leftSphereNode = createSphereNode( { center: leftBeam.centerBottom } );
-    const rightSphereNode = createSphereNode( { center: rightBeam.centerBottom } );
+    const leftSphereNode = createSphereNode( { center: leftHandle.centerBottom } );
+    const rightSphereNode = createSphereNode( { center: rightHandle.centerBottom } );
 
     const arrowNode = new ArrowNode( 0, 0, mainRectangle.width, 0, {
       fill: 'black',
@@ -54,9 +54,9 @@ export default class IntervalToolIconNode extends Node {
     super( {
       children: [
 
-        // Beams go behind so there is no seam between the rectangle and the beam
-        leftBeam,
-        rightBeam,
+        // Handles go behind so there is no seam between the rectangle and the handle
+        leftHandle,
+        rightHandle,
 
         mainRectangle,
         arrowNode,
