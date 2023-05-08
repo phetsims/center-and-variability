@@ -82,6 +82,8 @@ export default class CAVModel {
     this.sceneModels.forEach( sceneModel => sceneModel.reset() );
     this.selectedSceneModelProperty.reset();
     this.soccerBallHasBeenDraggedProperty.reset();
+
+    this.maxKicksProperty.reset();
   }
 }
 
