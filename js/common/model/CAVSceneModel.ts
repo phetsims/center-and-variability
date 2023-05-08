@@ -289,8 +289,6 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
       soccerBall.positionProperty.value = new Vector2( soccerBall.valueProperty.value!, position );
       position += CAVObjectType.SOCCER_BALL.radius * 2;
     } );
-
-    this.stackChangedEmitter.emit();
   }
 
   /**
