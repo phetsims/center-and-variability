@@ -91,7 +91,8 @@ export default class SoccerBall extends PhetioObject {
 
     this.positionProperty = new Vector2Property( options.position, {
       tandem: options.tandem.createTandem( 'positionProperty' ),
-      valueComparisonStrategy: 'equalsFunction'
+      valueComparisonStrategy: 'equalsFunction',
+      phetioReadOnly: true
     } );
     this.velocityProperty = new Vector2Property( options.velocity, {
       tandem: options.tandem.createTandem( 'velocityProperty' )
