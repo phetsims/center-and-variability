@@ -84,7 +84,7 @@ export default class SceneView {
 
     const soccerBallMap = new Map<SoccerBall, SoccerBallNode>();
 
-    const soccerBallNodes = sceneModel.soccerBalls.map( ( soccerBall, index ) => {
+    sceneModel.soccerBalls.map( ( soccerBall, index ) => {
       const soccerBallNode = new SoccerBallNode(
         soccerBall,
         sceneModel.isVisibleProperty,
