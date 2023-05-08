@@ -67,7 +67,7 @@ export default class SceneView {
 
         // calculate where the top object is
         const topObjectPositionY = modelViewTransform.modelToViewY( 0 ) -
-                                   ( sceneModel.getOtherObjectsAtTarget( lastBall ).length + 1 ) *
+                                   ( sceneModel.getStackAtLocation( value ).length ) *
                                    Math.abs( modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) ) * 2 -
                                    dragIndicatorArrowNodeMargin;
 

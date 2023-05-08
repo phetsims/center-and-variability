@@ -127,10 +127,16 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
         if ( value !== null && !phet.joist.sim.isSettingPhetioStateProperty.value && oldValue !== null ) {
           const oldStack = this.getStackAtLocation( oldValue );
           if ( oldStack.length > 0 ) {
-            this.restackWithTopBall( oldStack[ oldStack.length - 1 ] );
+            this.reorganizeStack( oldStack );
           }
 
-          this.restackWithTopBall( soccerBall );
+          const objectsAtTarget = this.soccerBalls.filter( otherSoccerBall => {
+            return otherSoccerBall.valueProperty.value === soccerBall.valueProperty.value && soccerBall !== otherSoccerBall;
+          } );
+
+          // Sort from bottom to top, so they can be re-stacked. The specified object will appear at the top.
+          const sortedOthers = _.sortBy( objectsAtTarget, object => object.positionProperty.value.y );
+          this.reorganizeStack( [ ...sortedOthers, soccerBall ] );
         }
       } );
 
@@ -257,15 +263,6 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
   }
 
   /**
-   * Returns all other objects at the target position of the provided object.
-   */
-  public getOtherObjectsAtTarget( soccerBall: SoccerBall ): SoccerBall[] {
-    return this.soccerBalls.filter( ( o: SoccerBall ) => {
-      return o.valueProperty.value === soccerBall.valueProperty.value && soccerBall !== o;
-    } );
-  }
-
-  /**
    * Returns all objects at the target location
    */
   public getStackAtLocation( location: number ): SoccerBall[] {
@@ -277,12 +274,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
    * Set the position of the parameter object to be on top of the other objects at that target position.
    * Cease all animations in the stack and reorganize the stack.
    */
-  protected restackWithTopBall( soccerBall: SoccerBall ): void {
-    const objectsAtTarget = this.getOtherObjectsAtTarget( soccerBall );
-
-    // Sort from bottom to top, so they can be re-stacked. The specified object will appear at the top.
-    const sortedOthers = _.sortBy( objectsAtTarget, object => object.positionProperty.value.y );
-    const sorted = [ ...sortedOthers, soccerBall ];
+  protected reorganizeStack( sorted: SoccerBall[] ): void {
 
     // collapse the rest of the stack. NOTE: This assumes the radii are the same.
     let position = CAVObjectType.SOCCER_BALL.radius;
