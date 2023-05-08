@@ -10,6 +10,7 @@ import { Node, NodeOptions, NodeTransformOptions, Rectangle } from '../../../../
 import centerAndVariability from '../../centerAndVariability.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import ShadedSphereNode from '../../../../scenery-phet/js/ShadedSphereNode.js';
+import CAVColors from '../../common/CAVColors.js';
 
 export default class IntervalToolIconNode extends Node {
   public constructor( providedOptions?: NodeOptions ) {
@@ -30,9 +31,9 @@ export default class IntervalToolIconNode extends Node {
     const rightBeam = createBeam( { rightTop: mainRectangle.rightTop } );
 
     const createSphereNode = ( options: NodeTransformOptions ) => new ShadedSphereNode( 10, {
-      mainColor: '#e0d987',
-      highlightColor: '#fefbcc',
-      shadowColor: '#545034',
+      mainColor: CAVColors.intervalToolIconShadedSphereMainColorProperty,
+      highlightColor: CAVColors.intervalToolIconShadedSphereHighlightColorProperty,
+      shadowColor: CAVColors.intervalToolIconShadedSphereShadowColorProperty,
       highlightDiameterRatio: 0.35,
       ...options
     } );
