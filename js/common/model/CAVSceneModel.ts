@@ -274,7 +274,6 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
    * Cease all animations in the stack and reorganize the stack.
    */
   protected restackWithTopBall( soccerBall: SoccerBall ): void {
-
     const objectsAtTarget = this.getOtherObjectsAtTarget( soccerBall );
 
     // Sort from bottom to top, so they can be re-stacked. The specified object will appear at the top.
@@ -446,15 +445,15 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     const diameter = CAVObjectType.SOCCER_BALL.radius * 2;
     const targetPositionY = targetIndex * diameter + CAVObjectType.SOCCER_BALL.radius;
 
+    const animationTime = 0.06 * this.getStackAtLocation( value ).length;
+
     if ( soccerBall.animation ) {
       soccerBall.animation.stop();
     }
     soccerBall.animation = new Animation( {
-      duration: 0.15,
+      duration: animationTime,
       targets: [ {
         property: soccerBall.positionProperty,
-
-        // TODO: Without rounding, the soccer ball stacks are lopsided. Why? See https://github.com/phetsims/center-and-variability/issues/165
         to: new Vector2( Utils.roundSymmetric( soccerBall.positionProperty.value.x ), targetPositionY ),
         easing: Easing.QUADRATIC_IN_OUT
       } ]
