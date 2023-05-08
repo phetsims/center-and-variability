@@ -107,7 +107,6 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
       // When the soccer ball drag position changes, constrain it to the physical range and move it to the top, if necessary
       soccerBall.dragPositionProperty.lazyLink( ( dragPosition: Vector2 ) => {
         soccerBall.valueProperty.value = Utils.roundSymmetric( CAVConstants.PHYSICAL_RANGE.constrainValue( dragPosition.x ) );
-        this.restackWithTopBall( soccerBall );
       } );
 
       soccerBall.soccerBallLandedEmitter.addListener( soccerBall => {
@@ -121,12 +120,17 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
         this.objectValueBecameNonNullEmitter.emit();
       } );
 
+      // We only want this to fire if the valueProperty of a ball is changed after it has landed.
+      // If oldValue is null, it means that the ball is going from FLYING to STACKING,
+      // in which case we want it to animate to the top of the stack.
       soccerBall.valueProperty.lazyLink( ( value, oldValue ) => {
         if ( value !== null && !phet.joist.sim.isSettingPhetioStateProperty.value && oldValue !== null ) {
-          const stack = this.getStackAtLocation( oldValue );
-          if ( stack.length > 0 ) {
-            this.restackWithTopBall( stack[ stack.length - 1 ] );
+          const oldStack = this.getStackAtLocation( oldValue );
+          if ( oldStack.length > 0 ) {
+            this.restackWithTopBall( oldStack[ oldStack.length - 1 ] );
           }
+
+          this.restackWithTopBall( soccerBall );
         }
       } );
 
