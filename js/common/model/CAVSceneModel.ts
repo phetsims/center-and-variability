@@ -289,6 +289,8 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
       soccerBall.positionProperty.value = new Vector2( soccerBall.valueProperty.value!, position );
       position += CAVObjectType.SOCCER_BALL.radius * 2;
     } );
+
+    this.stackChangedEmitter.emit();
   }
 
   /**
@@ -455,7 +457,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
 
     soccerBall.animation.endedEmitter.addListener( () => {
       soccerBall.animation = null;
-      this.stackChangedEmitter.emit();
+      this.reorganizeStack( [ ...otherObjectsInStack, soccerBall ] );
     } );
     soccerBall.animation.start();
   }

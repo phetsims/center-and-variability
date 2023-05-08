@@ -160,7 +160,6 @@ export default class SceneView {
     };
 
     // Update pointer areas when topmost ball changes
-    soccerBallNodes.forEach( soccerBallNode => soccerBallNode.soccerBall.valueProperty.lazyLink( updateStackPointerAreas ) );
     sceneModel.stackChangedEmitter.addListener( updateStackPointerAreas );
 
     const playAreaMedianIndicatorNode = new PlayAreaMedianIndicatorNode();
