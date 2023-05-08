@@ -85,7 +85,8 @@ export default class SoccerBall {
     this.isFirstObject = options.isFirstObject;
 
     this.positionProperty = new Vector2Property( options.position, {
-      tandem: options.tandem.createTandem( 'positionProperty' )
+      tandem: options.tandem.createTandem( 'positionProperty' ),
+      valueComparisonStrategy: 'equalsFunction'
     } );
     this.velocityProperty = new Vector2Property( options.velocity, {
       tandem: options.tandem.createTandem( 'velocityProperty' )
