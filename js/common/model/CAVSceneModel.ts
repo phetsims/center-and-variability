@@ -79,7 +79,12 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
   private readonly activeKickerIndexProperty: NumberProperty;
 
   // Called when the location of a ball changed within a stack, so the pointer areas can be updated
-  public readonly stackChangedEmitter = new Emitter();
+  public readonly stackChangedEmitter = new Emitter<[ SoccerBall[] ]>( {
+
+    // We don't really need a runtime type check because TypeScript checks at type checking time
+    // But we need a way to describe this parameter
+    parameters: [ { isValidValue: element => Array.isArray( element ) } ]
+  } );
 
   public constructor( public readonly maxKicksProperty: TReadOnlyProperty<number>, maxKicksChoices: number[], initialDistribution: ReadonlyArray<number>, options: { tandem: Tandem } ) {
 
@@ -275,11 +280,11 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
    * Set the position of the parameter object to be on top of the other objects at that target position.
    * Cease all animations in the stack and reorganize the stack.
    */
-  protected reorganizeStack( sorted: SoccerBall[] ): void {
+  protected reorganizeStack( soccerBallStack: SoccerBall[] ): void {
 
     // collapse the rest of the stack. NOTE: This assumes the radii are the same.
     let position = CAVObjectType.SOCCER_BALL.radius;
-    sorted.forEach( soccerBall => {
+    soccerBallStack.forEach( soccerBall => {
 
       // If a ball was animating to the top of the stack, stop it. This prevents a floating ball if a lower ball
       // is moved out from underneath
@@ -291,7 +296,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
       position += CAVObjectType.SOCCER_BALL.radius * 2;
     } );
 
-    this.stackChangedEmitter.emit();
+    this.stackChangedEmitter.emit( soccerBallStack );
   }
 
   /**

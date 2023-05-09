@@ -21,7 +21,6 @@ import Multilink from '../../../../axon/js/Multilink.js';
 import SoccerBall from '../model/SoccerBall.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import CAVConstants from '../CAVConstants.js';
 
 export default class SceneView {
 
@@ -125,42 +124,60 @@ export default class SceneView {
       return soccerBallNode;
     } );
 
-    const updateStackPointerAreas = () => {
-      for ( let i = CAVConstants.PHYSICAL_RANGE.min; i <= CAVConstants.PHYSICAL_RANGE.max; i++ ) {
-        const stack = sceneModel.getStackAtLocation( i );
+    // Update pointer areas when topmost ball changes
+    sceneModel.stackChangedEmitter.addListener( stack => {
 
-        let bounds: Bounds2 | null = null;
+      let bounds: Bounds2 | null = null;
 
-        for ( let i = 0; i < stack.length; i++ ) {
+      for ( let i = 0; i < stack.length; i++ ) {
 
-          const soccerBallNode = soccerBallMap.get( stack[ i ] )!;
+        const soccerBallNode = soccerBallMap.get( stack[ i ] )!;
 
-          if ( i === 0 ) {
-            bounds = soccerBallNode.globalBounds;
-          }
-          else {
-            bounds!.includeBounds( soccerBallNode.globalBounds );
-          }
+        if ( i === 0 ) {
+          bounds = soccerBallNode.globalBounds;
+        }
+        else {
+          bounds!.includeBounds( soccerBallNode.globalBounds );
+        }
 
-          if ( i === stack.length - 1 ) {
-            const pointerArea = Shape.bounds( soccerBallNode.globalToLocalBounds( bounds!.dilated( 5 ) ) );
-            soccerBallNode.mouseArea = pointerArea;
-            soccerBallNode.touchArea = pointerArea;
-            soccerBallNode.pickable = true;
-          }
-          else {
-            soccerBallNode.pickable = false;
+        if ( i === stack.length - 1 ) {
+          const pointerArea = Shape.bounds( soccerBallNode.globalToLocalBounds( bounds!.dilated( 5 ) ) );
+          soccerBallNode.mouseArea = pointerArea;
+          soccerBallNode.touchArea = pointerArea;
+          soccerBallNode.pickable = true;
+        }
+        else {
+          soccerBallNode.pickable = false;
 
-            // To make it easier to see when using ?showPointerAreas
-            soccerBallNode.mouseArea = Shape.rectangle( 0, 0, 0, 0 );
-            soccerBallNode.touchArea = Shape.rectangle( 0, 0, 0, 0 );
-          }
+          // To make it easier to see when using ?showPointerAreas
+          soccerBallNode.mouseArea = Shape.rectangle( 0, 0, 0, 0 );
+          soccerBallNode.touchArea = Shape.rectangle( 0, 0, 0, 0 );
         }
       }
-    };
 
-    // Update pointer areas when topmost ball changes
-    sceneModel.stackChangedEmitter.addListener( updateStackPointerAreas );
+      // Also do the z-ordering
+      for ( let i = 0; i < stack.length; i++ ) {
+
+        const soccerBallNode = soccerBallMap.get( stack[ i ] )!;
+        const selfZIndex = soccerBallNode.parent!.indexOfChild( soccerBallNode );
+
+        let isMisorded = false;
+
+        const lowerNeighborIndex = i - 1;
+        if ( lowerNeighborIndex >= 0 ) {
+          const lowerSoccerBall = soccerBallMap.get( stack[ lowerNeighborIndex ] )!;
+          const otherZIndex = lowerSoccerBall.parent!.indexOfChild( lowerSoccerBall );
+
+          if ( selfZIndex < otherZIndex ) {
+            isMisorded = true;
+          }
+        }
+
+        if ( isMisorded ) {
+          soccerBallNode.moveToFront();
+        }
+      }
+    } );
 
     const playAreaMedianIndicatorNode = new PlayAreaMedianIndicatorNode();
     frontObjectLayer.addChild( playAreaMedianIndicatorNode );
