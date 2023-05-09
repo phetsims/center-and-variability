@@ -34,6 +34,7 @@ import { AnimationMode } from './AnimationMode.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import Multilink from '../../../../axon/js/Multilink.js';
+import CAVQueryParameters from '../CAVQueryParameters.js';
 
 // constants
 const TIME_BETWEEN_RAPID_KICKS = 0.5; // in seconds
@@ -441,7 +442,8 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     const diameter = CAVObjectType.SOCCER_BALL.radius * 2;
     const targetPositionY = targetIndex * diameter + CAVObjectType.SOCCER_BALL.radius;
 
-    const animationTime = 0.06 * this.getStackAtLocation( value ).length;
+    const animationSlowdownFactor = CAVQueryParameters.slowAnimation ? 10 : 1;
+    const animationTime = animationSlowdownFactor * 0.06 * this.getStackAtLocation( value ).length;
 
     if ( soccerBall.animation ) {
       soccerBall.animation.stop();
@@ -478,7 +480,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     const weights = this.distributionProperty.value;
 
     assert && assert( weights.length === CAVConstants.PHYSICAL_RANGE.getLength() + 1, 'weight array should match the model range' );
-    const x1 = dotRandom.sampleProbabilities( weights ) + 1;
+    const x1 = CAVQueryParameters.sameSpot ? 8 : dotRandom.sampleProbabilities( weights ) + 1;
 
     // Range equation is R=v0^2 sin(2 theta0) / g, see https://openstax.org/books/university-physics-volume-1/pages/4-3-projectile-motion
     // Equation 4.26

@@ -15,6 +15,12 @@ const CAVQueryParameters = QueryStringMachine.getAll( {
     validValues: [ 'dotPlot', 'linePlot' ],
     defaultValue: 'linePlot',
     public: true
+  },
+  slowAnimation: {
+    type: 'flag'
+  },
+  sameSpot: {
+    type: 'flag'
   }
 } );
 
