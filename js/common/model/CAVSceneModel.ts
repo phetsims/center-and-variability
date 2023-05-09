@@ -288,7 +288,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
         soccerBall.animation = null;
       }
       soccerBall.positionProperty.value = new Vector2( soccerBall.valueProperty.value!, position );
-      position += CAVObjectType.SOCCER_BALL.radius * 2;
+      position += CAVObjectType.SOCCER_BALL.radius * 2 * ( 1 - CAVConstants.SOCCER_BALL_OVERLAP );
     } );
 
     this.stackChangedEmitter.emit();
@@ -440,7 +440,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     const targetIndex = otherObjectsInStack.length;
 
     const diameter = CAVObjectType.SOCCER_BALL.radius * 2;
-    const targetPositionY = targetIndex * diameter + CAVObjectType.SOCCER_BALL.radius;
+    const targetPositionY = targetIndex * diameter * ( 1 - CAVConstants.SOCCER_BALL_OVERLAP ) + CAVObjectType.SOCCER_BALL.radius;
 
     const animationSlowdownFactor = CAVQueryParameters.slowAnimation ? 10 : 1;
     const animationTime = animationSlowdownFactor * 0.06 * this.getStackAtLocation( value ).length;
