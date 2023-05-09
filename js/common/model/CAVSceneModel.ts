@@ -464,6 +464,9 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
 
     soccerBall.animation.endedEmitter.addListener( () => {
       soccerBall.animation = null;
+
+      // Identify the soccer balls in the stack at the time the animation ended
+      const otherObjectsInStack = this.getActiveSoccerBalls().filter( x => x.valueProperty.value === value && x !== soccerBall );
       this.reorganizeStack( [ ...otherObjectsInStack, soccerBall ] );
     } );
     soccerBall.animation.start();
