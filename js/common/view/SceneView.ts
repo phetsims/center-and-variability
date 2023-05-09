@@ -22,6 +22,10 @@ import SoccerBall from '../model/SoccerBall.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 
+/**
+ * Renders view elements for a CAVSceneModel. Note that to satisfy the correct z-ordering, elements
+ * populate the backObjectLayer and frontObjectLayer in the parent.
+ */
 export default class SceneView {
 
   private readonly updateMedianNode: () => void;
