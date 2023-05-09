@@ -54,10 +54,11 @@ export default class SceneView {
       // moved before this happens, don't show the dragIndicatorArrowNode
       if ( sceneModel.soccerBallCountProperty.value === sceneModel.maxKicksProperty.value &&
            objectNodesInputEnabledProperty.value &&
-           _.every( sceneModel.soccerBalls, soccerBall => soccerBall.valueProperty.value !== null ) &&
-           !model.soccerBallHasBeenDraggedProperty.value ) {
+           _.every( sceneModel.getActiveSoccerBalls(), soccerBall => soccerBall.valueProperty.value !== null ) &&
+           !model.soccerBallHasBeenDraggedProperty.value &&
+           model.selectedSceneModelProperty.value === sceneModel ) {
 
-        const lastBall = sceneModel.soccerBalls[ sceneModel.soccerBalls.length - 1 ];
+        const lastBall = sceneModel.getActiveSoccerBalls()[ sceneModel.getActiveSoccerBalls().length - 1 ];
         const value = lastBall.valueProperty.value!;
 
         dragIndicatorArrowNode.centerX = modelViewTransform.modelToViewX( value );
@@ -80,6 +81,7 @@ export default class SceneView {
 
     model.soccerBallHasBeenDraggedProperty.link( updateDragIndictatorVisible );
     model.maxKicksProperty.link( updateDragIndictatorVisible );
+    model.selectedSceneModelProperty.link( updateDragIndictatorVisible );
 
     const soccerBallMap = new Map<SoccerBall, SoccerBallNode>();
 
