@@ -151,6 +151,8 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
           return new VariabilityReadoutText( rangeReadoutValueProperty,
             CenterAndVariabilityStrings.rangeEqualsValuePatternStringProperty, {
               fill: CAVColors.meanColorProperty,
+
+              // TODO: See https://github.com/phetsims/center-and-variability/issues/170, putting this as the visibleProperty means ToggleNode checks the checkbox when it makes the node visible
               visibleProperty: model.isShowingRangeProperty,
               left: 0,
               centerY: backgroundNode.height / 2,
