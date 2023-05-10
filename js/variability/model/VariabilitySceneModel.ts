@@ -26,6 +26,11 @@ export default class VariabilitySceneModel extends CAVSceneModel {
     this.initialized = true;
   }
 
+  public resetScene(): void {
+
+    // Nothing to do here, the distribution is set in the constructor (and not re-randomized like in the other screens)
+  }
+
   protected override updateDataMeasures(): void {
     super.updateDataMeasures();
 

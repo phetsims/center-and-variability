@@ -40,7 +40,7 @@ import CAVQueryParameters from '../CAVQueryParameters.js';
 // constants
 const TIME_BETWEEN_RAPID_KICKS = 0.5; // in seconds
 
-export default class CAVSceneModel extends PhetioObject implements TModel {
+export default abstract class CAVSceneModel extends PhetioObject implements TModel {
   public readonly soccerBalls: SoccerBall[];
 
   // The number of active soccer balls (includes soccer balls created but not yet kicked)
@@ -96,7 +96,12 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     parameters: [ { isValidValue: element => Array.isArray( element ) } ]
   } );
 
-  public constructor( public readonly maxKicksProperty: TReadOnlyProperty<number>, maxKicksChoices: number[], initialDistribution: ReadonlyArray<number>, options: { tandem: Tandem } ) {
+  public constructor(
+    public readonly maxKicksProperty: TReadOnlyProperty<number>,
+    maxKicksChoices: number[],
+    initialDistribution: ReadonlyArray<number>,
+    options: { tandem: Tandem }
+  ) {
 
     super( {
       phetioState: false,
@@ -371,8 +376,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
    */
   public reset(): void {
 
-    // TODO: This should only be in MedianSceneModel and MeanAndMedianSceneModel, see https://github.com/phetsims/center-and-variability/issues/153
-    this.distributionProperty.value = CAVSceneModel.chooseDistribution();
+    this.resetScene();
 
     this.clearData();
 
@@ -563,6 +567,8 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     }
     return nextBallFromPool;
   }
+
+  public abstract resetScene(): void;
 }
 
 centerAndVariability.register( 'CAVSceneModel', CAVSceneModel );

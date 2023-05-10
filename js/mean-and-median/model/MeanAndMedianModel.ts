@@ -14,6 +14,7 @@ import CAVModel from '../../common/model/CAVModel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import CAVConstants from '../../common/CAVConstants.js';
+import MeanAndOrMedianSceneModel from '../../common/model/MeanAndOrMedianSceneModel.js';
 
 // constants
 const HIGHLIGHT_ANIMATION_TIME_STEP = 0.25; // in seconds
@@ -38,8 +39,8 @@ export default class MeanAndMedianModel extends CAVModel {
       tandem: options.tandem.createTandem( 'maxKicksProperty' )
     } );
 
-    const scene = new CAVSceneModel( maxKicksProperty, CAVConstants.MAX_KICKS_VALUES, CAVSceneModel.chooseDistribution(), { tandem: options.tandem.createTandem( 'sceneModel' ) } );
-    super( maxKicksProperty, [ scene ], {
+    const sceneModel = new MeanAndOrMedianSceneModel( maxKicksProperty, CAVConstants.MAX_KICKS_VALUES, CAVSceneModel.chooseDistribution(), { tandem: options.tandem.createTandem( 'sceneModel' ) } );
+    super( maxKicksProperty, [ sceneModel ], {
       ...options,
       instrumentMeanPredictionProperty: true
     } );
@@ -57,7 +58,7 @@ export default class MeanAndMedianModel extends CAVModel {
 
         if ( !phet.joist.sim.isSettingPhetioStateProperty.value ) {
           this.highlightAnimationIndex = 0;
-          this.lastHighlightAnimationStepTime = scene.timeProperty.value;
+          this.lastHighlightAnimationStepTime = sceneModel.timeProperty.value;
         }
         else {
 
@@ -79,7 +80,7 @@ export default class MeanAndMedianModel extends CAVModel {
       tandem: options.tandem.createTandem( 'isShowingMeanPredictionProperty' )
     } );
 
-    scene.objectValueBecameNonNullEmitter.addListener( () => this.updateAnimation() );
+    sceneModel.objectValueBecameNonNullEmitter.addListener( () => this.updateAnimation() );
   }
 
   public override reset(): void {
