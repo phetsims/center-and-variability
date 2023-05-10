@@ -23,12 +23,13 @@ import CAVPlotNode from '../../common/view/CAVPlotNode.js';
 export type CAVPlotOptions = NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
 export default class VariabilityPlotNode extends Node {
-  private toggleNode: ToggleNode<VariabilityMeasure | null>;
+  private toggleNode: ToggleNode<VariabilityMeasure, CAVPlotNode>;
 
   public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, providedOptions: CAVPlotOptions ) {
     super( providedOptions );
 
-    const toggleNode = new ToggleNode( model.selectedVariabilityProperty, [ {
+    // TODO: Why can't it infer reasonable types here? See https://github.com/phetsims/center-and-variability/issues/170
+    const toggleNode = new ToggleNode<VariabilityMeasure, CAVPlotNode>( model.selectedVariabilityProperty, [ {
       createNode: tandem => new RangeNode( model, sceneModel, {
         parentContext: 'accordion',
         tandem: tandem.createTandem( 'rangeNode' )
@@ -59,12 +60,7 @@ export default class VariabilityPlotNode extends Node {
   }
 
   public alignWithPlayAreaNumberLineNode( x: number ): void {
-
-    // TODO: This could be a lot better https://github.com/phetsims/center-and-variability/issues/170
-    this.toggleNode.children.forEach( child => {
-      const plotNode = child as CAVPlotNode;
-      plotNode.alignWithPlayAreaNumberLineNode( x );
-    } );
+    this.toggleNode.nodes.forEach( plotNode => plotNode.alignWithPlayAreaNumberLineNode( x ) );
   }
 }
 

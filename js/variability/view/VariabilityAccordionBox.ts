@@ -20,12 +20,11 @@ import CAVColors from '../../common/CAVColors.js';
 import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import CAVSceneModel from '../../common/model/CAVSceneModel.js';
-import CAVPlotNode from '../../common/view/CAVPlotNode.js';
 
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 
   // private plotNode: Node;
-  private plotToggleNode: ToggleNode<CAVSceneModel | null>;
+  private plotToggleNode: ToggleNode<CAVSceneModel, VariabilityPlotNode>;
 
   public constructor( model: VariabilityModel, layoutBounds: Bounds2, tandem: Tandem, top: number ) {
 
@@ -139,14 +138,15 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       return model.selectedSceneModelProperty.value.madValueProperty.value;
     } );
 
-    const readoutsToggleNode = new ToggleNode( model.selectedVariabilityProperty, [
+    // TODO: Why can't this infer the type parameter? See https://github.com/phetsims/center-and-variability/issues/170
+    const readoutsToggleNode = new ToggleNode<VariabilityMeasure>( model.selectedVariabilityProperty, [
       {
         value: VariabilityMeasure.RANGE,
         tandemName: 'rangeReadoutToggleNode',
         createNode: tandem => {
           const rangeReadoutValueProperty = new DerivedProperty( [ rangeValueProperty ],
             rangeValue => rangeValue === null ? '?' : `${rangeValue}`
-            );
+          );
 
           return new VariabilityReadoutText( rangeReadoutValueProperty,
             CenterAndVariabilityStrings.rangeEqualsValuePatternStringProperty, {
@@ -162,12 +162,9 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         tandemName: 'iqrReadoutToggleNode',
         createNode: tandem => {
           const textReadoutGroup = new VBox( {
-            // x: -110,
-            // y: this.centerY - 20,
             align: 'left',
             spacing: 10
           } );
-          // this.addChild( textReadoutGroup );
 
           const medianReadoutValueProperty = new DerivedProperty( [ medianValueProperty ],
             medianValue => medianValue === null ? '?' : `${medianValue}`
@@ -225,12 +222,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
   }
 
   public alignWithPlayAreaNumberLineNode( x: number ): void {
-
-    // TODO: HACK ALERT, see https://github.com/phetsims/center-and-variability/issues/170
-    this.plotToggleNode.children.forEach( child => {
-      const plotNode = child as CAVPlotNode;
-      plotNode.alignWithPlayAreaNumberLineNode( x );
-    } );
+    this.plotToggleNode.nodes.forEach( plotNode => plotNode.alignWithPlayAreaNumberLineNode( x ) );
   }
 }
 
