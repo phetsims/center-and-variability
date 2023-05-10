@@ -1,6 +1,10 @@
 // Copyright 2023, University of Colorado Boulder
+
 /**
- * TODO: Describe file, https://github.com/phetsims/center-and-variability/issues/164
+ * Depicts a single scene in the CAV screen.  This includes the soccer balls, soccer players, and drag indicator arrow.
+ * The scene is rendered in two layers in the ScreenView, the backObjectLayer and frontObjectLayer, to ensure the correct z-ordering.
+ * The backObjectLayer is rendered behind the number line, and the frontObjectLayer is rendered in front of the number
+ * line.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

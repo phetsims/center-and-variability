@@ -1,11 +1,10 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * TODO: Describe file, https://github.com/phetsims/center-and-variability/issues/164
+ * Model for the "Variability" screen. This has 4 scene models with different distributions.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-
 
 import CAVSceneModel from '../../common/model/CAVSceneModel.js';
 import centerAndVariability from '../../centerAndVariability.js';

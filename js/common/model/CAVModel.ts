@@ -1,7 +1,8 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * TODO: Describe file, https://github.com/phetsims/center-and-variability/issues/164
+ * The model for the "Center and Variability" simulation. Contains 1+ sceneModels which contains the data itself.
+ * Also includes settings, like selections for checkboxes.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

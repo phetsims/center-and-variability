@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * TODO: Describe file, https://github.com/phetsims/center-and-variability/issues/164
+ * Radio button group for the scene selection.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
