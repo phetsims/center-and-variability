@@ -92,6 +92,8 @@ export default class VariabilityScreenView extends CAVScreenView {
     } ) );
 
     model.variabilitySceneModels.forEach( ( sceneModel, index ) => {
+
+      // TODO: https://github.com/phetsims/center-and-variability/issues/164 Do we really want to create 12 of these?
       const infoDialog = new InfoDialog( model, sceneModel, {
         tandem: options.tandem.createTandem( 'scene' + index ).createTandem( 'infoDialog' )
       } );
