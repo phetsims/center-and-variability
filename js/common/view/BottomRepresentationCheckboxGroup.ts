@@ -11,7 +11,7 @@ import Property from '../../../../axon/js/Property.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import VerticalCheckboxGroup, { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
+import { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
 import { AlignGroup, GridBox, Node, TColor, Text } from '../../../../scenery/js/imports.js';
 import CAVConstants from '../CAVConstants.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
@@ -30,7 +30,7 @@ const TEXT_OPTIONS = {
   maxWidth: CAVConstants.CHECKBOX_TEXT_MAX_WIDTH
 };
 
-export default class BottomRepresentationCheckboxGroup extends VerticalCheckboxGroup {
+export default class BottomRepresentationCheckboxGroup {
 
   private static createGridBox( text: Node, icon: Node, iconGroup: AlignGroup ): GridBox {
     return new GridBox( {
