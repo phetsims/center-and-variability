@@ -32,6 +32,7 @@ export default class CAVPlotNode extends Node {
 
   private readonly dotLayer = new Node();
   protected readonly modelViewTransform: ModelViewTransform2;
+  private readonly numberLineNode: NumberLineNode;
 
   public constructor( model: CAVModel, sceneModel: CAVSceneModel, providedOptions?: CAVPlotOptions ) {
 
@@ -55,7 +56,7 @@ export default class CAVPlotNode extends Node {
     );
     this.modelViewTransform = modelViewTransform;
 
-    const numberLineNode = new NumberLineNode(
+    this.numberLineNode = new NumberLineNode(
       sceneModel.meanValueProperty,
       modelViewTransform,
       model instanceof MeanAndMedianModel ? model.isShowingTopMeanProperty : new BooleanProperty( false ),
@@ -66,15 +67,15 @@ export default class CAVPlotNode extends Node {
         tandem: options.tandem.createTandem( 'numberLineNode' ),
         y: numberLinePositionY
       } );
-    backgroundNode.addChild( numberLineNode );
+    backgroundNode.addChild( this.numberLineNode );
 
     const distanceInMetersText = new Text( CenterAndVariabilityStrings.distanceInMetersStringProperty, {
-      top: numberLineNode.bottom + 2,
+      top: this.numberLineNode.bottom + 2,
       maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH
     } );
     backgroundNode.addChild( distanceInMetersText );
 
-    ManualConstraint.create( this, [ numberLineNode.tickMarkSet, distanceInMetersText ], ( tickMarkSetProxy, textProxy ) => {
+    ManualConstraint.create( this, [ this.numberLineNode.tickMarkSet, distanceInMetersText ], ( tickMarkSetProxy, textProxy ) => {
       textProxy.centerX = tickMarkSetProxy.centerX;
     } );
 
@@ -104,6 +105,18 @@ export default class CAVPlotNode extends Node {
 
   public reset(): void {
     // No implementation because this node is powered by the model. Reset needed for uniformity with CardNodeContainer.
+  }
+
+  // Assumes this node has been added to the scene graph, so we can use the scene graph to determine the coordinate transforms
+  public alignWithPlayAreaNumberLineNode( x: number ): void {
+
+    const numberLineGlobalBounds = this.numberLineNode.globalBounds;
+    const globalOffset = x - numberLineGlobalBounds.x;
+
+    // This wouldn't be correct if there were a scale transform, but there isn't.
+    // Also, if either number line had children that went out of bounds, it would throw off
+    // this calculation
+    this.translate( globalOffset, 0 );
   }
 }
 

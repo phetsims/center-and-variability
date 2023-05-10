@@ -18,10 +18,12 @@ import MADNode from './MADNode.js';
 import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
+import CAVPlotNode from '../../common/view/CAVPlotNode.js';
 
 export type CAVPlotOptions = NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
 export default class VariabilityPlotNode extends Node {
+  private toggleNode: ToggleNode<VariabilityMeasure | null>;
 
   public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, providedOptions: CAVPlotOptions ) {
     super( providedOptions );
@@ -52,6 +54,17 @@ export default class VariabilityPlotNode extends Node {
     } );
     this.addChild( toggleNode );
     toggleNode.moveToBack();
+
+    this.toggleNode = toggleNode;
+  }
+
+  public alignWithPlayAreaNumberLineNode( x: number ): void {
+
+    // TODO: This could be a lot better https://github.com/phetsims/center-and-variability/issues/170
+    this.toggleNode.children.forEach( child => {
+      const plotNode = child as CAVPlotNode;
+      plotNode.alignWithPlayAreaNumberLineNode( x );
+    } );
   }
 }
 

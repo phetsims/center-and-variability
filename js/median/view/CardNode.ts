@@ -39,12 +39,12 @@ export default class CardNode extends Node {
   public animation: Animation | null = null;
   private animationTo: Vector2 | null = null;
 
-  public static readonly CARD_WIDTH = 43;
+  public static readonly CARD_DIMENSION = 43;
 
   public constructor( cardModel: CardModel, position: Vector2, getDragRange: () => Range, providedOptions: CardNodeOptions ) {
 
     const cornerRadius = 10;
-    const rectangle = new Rectangle( 0, 0, CardNode.CARD_WIDTH, CardNode.CARD_WIDTH, cornerRadius, cornerRadius, {
+    const rectangle = new Rectangle( 0, 0, CardNode.CARD_DIMENSION, CardNode.CARD_DIMENSION, cornerRadius, cornerRadius, {
       stroke: 'black',
       lineWidth: 1,
       fill: 'white'

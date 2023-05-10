@@ -1,9 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
-import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
-import { AlignGroup, Text } from '../../../../scenery/js/imports.js';
+import { AlignGroup, Color, Path, Text, VBox } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
@@ -11,16 +9,31 @@ import VariabilityModel from '../model/VariabilityModel.js';
 import VariabilityPlotNode from './VariabilityPlotNode.js';
 import InfoButton from '../../../../scenery-phet/js/buttons/InfoButton.js';
 import VariabilityMeasure from '../model/VariabilityMeasure.js';
-import CAVConstants from '../../common/CAVConstants.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 import TopRepresentationCheckboxGroup from '../../common/view/TopRepresentationCheckboxGroup.js';
+import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import VariabilityReadoutText from './VariabilityReadoutText.js';
+import CAVColors from '../../common/CAVColors.js';
+import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
+import CAVConstants from '../../common/CAVConstants.js';
+import CAVSceneModel from '../../common/model/CAVSceneModel.js';
+import CAVPlotNode from '../../common/view/CAVPlotNode.js';
 
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 
+  // private plotNode: Node;
+  private plotToggleNode: ToggleNode<CAVSceneModel | null>;
+
   public constructor( model: VariabilityModel, layoutBounds: Bounds2, tandem: Tandem, top: number ) {
+
+    const backgroundShape = CAVConstants.ACCORDION_BOX_CONTENTS_SHAPE_VARIABILITY;
+    const backgroundNode = new Path( backgroundShape, {
+      clipArea: backgroundShape,
+      fill: new Color( 255, 0, 0, 0.2 )
+    } );
 
     const currentProperty = new DerivedProperty( [ model.selectedVariabilityProperty ], selectedVariability =>
       selectedVariability === VariabilityMeasure.RANGE ? CenterAndVariabilityStrings.rangeStringProperty :
@@ -34,12 +47,15 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       return {
         value: model.sceneModels[ i ],
         createNode: ( tandem: Tandem ) => new VariabilityPlotNode( model, model.variabilitySceneModels[ i ], {
-          tandem: tandem.createTandem( 'plotNode' + i )
+          tandem: tandem.createTandem( 'plotNode' + i ),
+          bottom: backgroundNode.height
         } )
       };
     } );
 
-    const accordionBoxContents = new ToggleNode( model.selectedSceneModelProperty, contents );
+    const plotToggleNode = new ToggleNode( model.selectedSceneModelProperty, contents, {
+      bottom: backgroundNode.height
+    } );
 
     const infoButton = new InfoButton( {
       iconFill: 'cornflowerblue',
@@ -51,14 +67,16 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       },
 
       // TODO: How to position this properly? Can we use AlignBox? See https://github.com/phetsims/center-and-variability/issues/170
-      top: 20,
-      right: accordionBoxContents.right - 10
+      top: 0,
+      right: backgroundNode.right
     } );
-    accordionBoxContents.addChild( infoButton );
+    backgroundNode.addChild( infoButton );
 
     const iconGroup = new AlignGroup();
     const checkboxToggleNode = new ToggleNode( model.selectedVariabilityProperty, [
       {
+
+        // TODO: Why should these be "group"? see https://github.com/phetsims/center-and-variability/issues/170
         createNode: tandem => new VerticalCheckboxGroup( [
           TopRepresentationCheckboxGroup.getRangeCheckboxWithIconItem( iconGroup, model.isShowingRangeProperty )
         ], { tandem: tandem.createTandem( 'rangeAccordionCheckboxGroup' ) } ),
@@ -79,21 +97,140 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         tandemName: 'madAccordionCheckboxGroup',
         value: VariabilityMeasure.MAD
       }
-    ] );
+    ], {
+      rightCenter: backgroundNode.rightCenter,
+      alignChildren: ToggleNode.LEFT
+    } );
 
-    super( model.resetEmitter, accordionBoxContents,
-      new Text( accordionBoxTitleProperty, {
+    // Since the title is visible while the accordion box is open, this background will not any area above the bottom of
+    // the expand/collapse button. To vertically-center things, make a new set of bounds that includes the missing space.
+    // Values come from the height of the expand/collapse button plus the y margin above and below it. Also add the
+    // horizontal content margin that is not part of backgroundNode so these bounds are the full area of the accordion box.
+    // const fullBackgroundBounds =
+    //   backgroundNode.localBounds.withOffsets( CONTENT_MARGIN, CONTENT_MARGIN * 2 + BUTTON_SIDE_LENGTH, CONTENT_MARGIN, 0 );
+
+    // add clip area so dot stacks that are taller than the accordion box are clipped appropriately
+    // backgroundNode.clipArea = Shape.bounds( fullBackgroundBounds );
+
+    // plotToggleNode.bottom = backgroundNode.height;
+
+    // Will later be centered by a ManualConstraint to align with the one in the play area
+    // plotToggleNode.left = backgroundNode.left;
+    backgroundNode.addChild( plotToggleNode );
+    backgroundNode.addChild( checkboxToggleNode );
+
+    // const rangeReadoutValueProperty = new DerivedProperty( [ model.variabilitySceneModels[ 0 ].rangeValueProperty ], rangeValue => {
+    //   return rangeValue ? `${rangeValue}` : '?';
+    // } );
+
+    const rangeValueProperty = DerivedProperty.deriveAny( [ model.selectedSceneModelProperty, ...model.variabilitySceneModels.map( vsm => vsm.rangeValueProperty ) ], () => {
+      return model.selectedSceneModelProperty.value.rangeValueProperty.value;
+    } );
+
+    const medianValueProperty = DerivedProperty.deriveAny( [ model.selectedSceneModelProperty, ...model.variabilitySceneModels.map( vsm => vsm.medianValueProperty ) ], () => {
+      return model.selectedSceneModelProperty.value.medianValueProperty.value;
+    } );
+
+    const iqrValueProperty = DerivedProperty.deriveAny( [ model.selectedSceneModelProperty, ...model.variabilitySceneModels.map( vsm => vsm.iqrValueProperty ) ], () => {
+      return model.selectedSceneModelProperty.value.iqrValueProperty.value;
+    } );
+
+    const madValueProperty = DerivedProperty.deriveAny( [ model.selectedSceneModelProperty, ...model.variabilitySceneModels.map( vsm => vsm.madValueProperty ) ], () => {
+      return model.selectedSceneModelProperty.value.madValueProperty.value;
+    } );
+
+    const readoutsToggleNode = new ToggleNode( model.selectedVariabilityProperty, [
+      {
+        value: VariabilityMeasure.RANGE,
+        tandemName: 'rangeReadoutToggleNode',
+        createNode: tandem => {
+          const rangeReadoutValueProperty = new DerivedProperty( [ rangeValueProperty ],
+            rangeValue => rangeValue === null ? '?' : `${rangeValue}`
+            );
+
+          return new VariabilityReadoutText( rangeReadoutValueProperty,
+            CenterAndVariabilityStrings.rangeEqualsValuePatternStringProperty, {
+              fill: CAVColors.meanColorProperty,
+              visibleProperty: model.isShowingRangeProperty,
+              left: 0,
+              centerY: backgroundNode.height / 2,
+              tandem: tandem.createTandem( 'rangeReadoutText' )
+            } );
+        }
+      }, {
+        value: VariabilityMeasure.IQR,
+        tandemName: 'iqrReadoutToggleNode',
+        createNode: tandem => {
+          const textReadoutGroup = new VBox( {
+            // x: -110,
+            // y: this.centerY - 20,
+            align: 'left',
+            spacing: 10
+          } );
+          // this.addChild( textReadoutGroup );
+
+          const medianReadoutValueProperty = new DerivedProperty( [ medianValueProperty ],
+            medianValue => medianValue === null ? '?' : `${medianValue}`
+          );
+          const iqrReadoutValueProperty = new DerivedProperty( [ iqrValueProperty ], iqrValue => {
+            return iqrValue ? `${iqrValue}` : '?';
+          } );
+
+          const medianReadoutText = new VariabilityReadoutText( medianReadoutValueProperty, CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty, {
+            fill: CAVColors.medianColorProperty
+            // tandem: options.tandem.createTandem( 'medianReadoutText' )
+          } );
+          const iqrReadoutText = new VariabilityReadoutText( iqrReadoutValueProperty, CenterAndVariabilityStrings.iqrEqualsValuePatternStringProperty, {
+            fill: CAVColors.iqrColorProperty,
+            visibleProperty: model.isShowingIQRProperty
+            // tandem: options.tandem.createTandem( 'iqrReadoutText' )
+          } );
+
+          textReadoutGroup.addChild( medianReadoutText );
+          textReadoutGroup.addChild( iqrReadoutText );
+
+          return textReadoutGroup;
+        }
+      },
+      {
+        value: VariabilityMeasure.MAD,
+        tandemName: 'madReadoutToggleNode',
+        createNode: tandem => {
+          const madReadoutValueProperty = new DerivedProperty( [ madValueProperty ], madValue => {
+            return madValue ? `${madValue}` : '?';
+          } );
+
+          return new VariabilityReadoutText( madReadoutValueProperty,
+            CenterAndVariabilityStrings.meanEqualsValuePatternStringProperty, {
+              fill: CAVColors.meanColorProperty,
+              visibleProperty: model.isShowingMADProperty
+              // tandem: options.tandem.createTandem( 'rangeReadoutText' )
+            } );
+        }
+      } ]
+    );
+
+    backgroundNode.addChild( readoutsToggleNode );
+
+    super( backgroundNode, {
+      tandem: tandem,
+      titleNode: new Text( accordionBoxTitleProperty, {
         font: new PhetFont( 16 ),
         maxWidth: 300
       } ),
-      layoutBounds,
-      checkboxToggleNode,
-      {
-        leftMargin: 70,
-        tandem: tandem,
-        top: top,
-        right: layoutBounds.right - CAVConstants.SCREEN_VIEW_X_MARGIN
-      } );
+      left: 100
+    } );
+
+    this.plotToggleNode = plotToggleNode;
+  }
+
+  public alignWithPlayAreaNumberLineNode( x: number ): void {
+
+    // TODO: HACK ALERT, see https://github.com/phetsims/center-and-variability/issues/170
+    this.plotToggleNode.children.forEach( child => {
+      const plotNode = child as CAVPlotNode;
+      plotNode.alignWithPlayAreaNumberLineNode( x );
+    } );
   }
 }
 

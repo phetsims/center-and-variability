@@ -2,7 +2,7 @@
 
 import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
 import CardNodeContainer from './CardNodeContainer.js';
-import { Text } from '../../../../scenery/js/imports.js';
+import { Path, Text } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import MedianModel from '../model/MedianModel.js';
@@ -11,39 +11,48 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import TopRepresentationCheckboxGroup from '../../common/view/TopRepresentationCheckboxGroup.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
+import CardNode from './CardNode.js';
+import CAVConstants from '../../common/CAVConstants.js';
 
 export default class MedianAccordionBox extends CAVAccordionBox {
 
   public constructor( model: MedianModel, layoutBounds: Bounds2, tandem: Tandem, top: number ) {
 
-    const cardNodeContainer = new CardNodeContainer( model, {
-      // Expose this intermediate layer to make it so that clients can hide the number cards with one call
-      tandem: tandem.createTandem( 'cardNodeContainer' )
+    const backgroundShape = CAVConstants.ACCORDION_BOX_CONTENTS_SHAPE_MEAN_AND_OR_MEDIAN;
+    const backgroundNode = new Path( backgroundShape, {
+      clipArea: backgroundShape
     } );
 
     const checkboxGroup = new VerticalCheckboxGroup( [
       TopRepresentationCheckboxGroup.getSortDataCheckboxItem( model.isSortingDataProperty ),
       TopRepresentationCheckboxGroup.getMedianCheckboxWithoutIconItem( model.isShowingTopMedianProperty )
     ], {
-      tandem: tandem.createTandem( 'accordionCheckboxGroup' )
+      tandem: tandem.createTandem( 'accordionCheckboxGroup' ),
+      right: backgroundNode.width - 12.5,
+      centerY: backgroundNode.height / 2
     } );
 
-    super( model.selectedSceneModelProperty.value.resetEmitter, cardNodeContainer,
-      new Text( CenterAndVariabilityStrings.distanceInMetersStringProperty, {
+    const cardNodeContainer = new CardNodeContainer( model, {
+
+      // Expose this intermediate layer to make it so that clients can hide the number cards with one call
+      tandem: tandem.createTandem( 'cardNodeContainer' ),
+      x: 12.5,
+      y: backgroundNode.height / 2 - CardNode.CARD_DIMENSION / 2 - 10
+    } );
+
+    backgroundNode.addChild( cardNodeContainer );
+    backgroundNode.addChild( checkboxGroup );
+
+    super( backgroundNode, {
+      tandem: tandem,
+      top: top,
+      centerX: layoutBounds.centerX,
+      titleNode: new Text( CenterAndVariabilityStrings.distanceInMetersStringProperty, {
         font: new PhetFont( 16 ),
         maxWidth: 300
-      } ),
-      layoutBounds,
-      checkboxGroup,
-      {
-        leftMargin: 0,
-        tandem: tandem,
-        top: top,
-        centerX: layoutBounds.centerX
-      } );
+      } )
+    } );
   }
-
-
 }
 
 centerAndVariability.register( 'MedianAccordionBox', MedianAccordionBox );

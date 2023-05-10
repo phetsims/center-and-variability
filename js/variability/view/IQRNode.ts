@@ -2,7 +2,7 @@
 
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import MedianBarNode from '../../common/view/MedianBarNode.js';
-import { Circle, Line, Node, ProfileColorProperty, Rectangle, Text, VBox } from '../../../../scenery/js/imports.js';
+import { Circle, Line, Node, ProfileColorProperty, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
@@ -10,9 +10,7 @@ import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVPlotNode, { CAVPlotOptions } from '../../common/view/CAVPlotNode.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import CAVColors from '../../common/CAVColors.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import VariabilityReadoutText from './VariabilityReadoutText.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 
 type SelfOptions = {
@@ -30,38 +28,7 @@ export default class IQRNode extends CAVPlotNode {
       ...options
     } );
 
-    if ( providedOptions.parentContext === 'accordion' ) {
-
-      const textReadoutGroup = new VBox( {
-        x: -110,
-        y: this.centerY - 20,
-        align: 'left',
-        spacing: 10
-      } );
-      this.addChild( textReadoutGroup );
-
-      const medianReadoutValueProperty = new DerivedProperty( [ sceneModel.numberOfDataPointsProperty, sceneModel.medianValueProperty ],
-        numberOfDataPoints => {
-          return numberOfDataPoints >= 1 ? `${sceneModel.medianValueProperty.value}` : '?';
-        } );
-      const iqrReadoutValueProperty = new DerivedProperty( [ sceneModel.iqrValueProperty ], iqrValue => {
-        return iqrValue ? `${iqrValue}` : '?';
-      } );
-
-      const medianReadoutText = new VariabilityReadoutText( medianReadoutValueProperty, CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty, {
-        fill: CAVColors.medianColorProperty,
-        tandem: options.tandem.createTandem( 'medianReadoutText' )
-      } );
-      const iqrReadoutText = new VariabilityReadoutText( iqrReadoutValueProperty, CenterAndVariabilityStrings.iqrEqualsValuePatternStringProperty, {
-        fill: CAVColors.iqrColorProperty,
-        visibleProperty: model.isShowingIQRProperty,
-        tandem: options.tandem.createTandem( 'iqrReadoutText' )
-      } );
-
-      textReadoutGroup.addChild( medianReadoutText );
-      textReadoutGroup.addChild( iqrReadoutText );
-    }
-
+    // TODO: get rid of context === accordion, see https://github.com/phetsims/center-and-variability/issues/170
     const needAtLeastFiveKicksOffsetY = options.parentContext === 'info' ? 90 : 20;
     const needAtLeastFiveKicks = new Text( CenterAndVariabilityStrings.needAtLeastFiveKicksStringProperty, {
       fontSize: 18,

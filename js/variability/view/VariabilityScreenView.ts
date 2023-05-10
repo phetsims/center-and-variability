@@ -45,7 +45,9 @@ export default class VariabilityScreenView extends CAVScreenView {
 
     super( model, options );
 
-    this.setAccordionBoxWithAlignedContent( new VariabilityAccordionBox( model, this.layoutBounds, options.tandem.createTandem( 'accordionBox' ), this.questionBar.bottom + CAVConstants.SCREEN_VIEW_Y_MARGIN ) );
+    const variabilityAccordionBox = new VariabilityAccordionBox( model, this.layoutBounds, options.tandem.createTandem( 'accordionBox' ), this.questionBar.bottom + CAVConstants.SCREEN_VIEW_Y_MARGIN );
+    this.setAccordionBox( variabilityAccordionBox );
+    variabilityAccordionBox.alignWithPlayAreaNumberLineNode( this.playAreaNumberLineNode.globalBounds.x );
 
     ManualConstraint.create( this, [ variabilityMeasureRadioButtonGroup, this.accordionBox! ],
       ( variabilityRadioButtonGroupWrapper, accordionBoxWrapper ) => {

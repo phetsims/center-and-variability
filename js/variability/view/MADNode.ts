@@ -11,8 +11,6 @@ import CAVPlotNode, { CAVPlotOptions } from '../../common/view/CAVPlotNode.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import CAVColors from '../../common/CAVColors.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import VariabilityReadoutText from './VariabilityReadoutText.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 
 type SelfOptions = {
@@ -29,24 +27,6 @@ export default class MADNode extends CAVPlotNode {
       dataPointFill: CAVColors.grayDataPointFill,
       ...options
     } );
-
-    if ( options.parentContext === 'accordion' ) {
-      const madReadoutValueProperty = new DerivedProperty( [ sceneModel.meanValueProperty ], meanValue => {
-        return meanValue ? `${meanValue}` : '?';
-      } );
-
-      const madReadoutText = new VariabilityReadoutText( madReadoutValueProperty,
-        CenterAndVariabilityStrings.meanEqualsValuePatternStringProperty, {
-          fill: CAVColors.meanColorProperty,
-          visibleProperty: model.isShowingMADProperty,
-          right: this.left,
-          y: this.centerY,
-          tandem: options.tandem.createTandem( 'rangeReadoutText' )
-        } );
-
-      this.addChild( madReadoutText );
-    }
-
 
     const needAtLeastOneKickText = new Text( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {
       fontSize: 18,

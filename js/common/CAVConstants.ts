@@ -15,6 +15,7 @@ import CAVQueryParameters from './CAVQueryParameters.js';
 import PlotType from './model/PlotType.js';
 import ScreenView from '../../../joist/js/ScreenView.js';
 import Range from '../../../dot/js/Range.js';
+import { Shape } from '../../../kite/js/imports.js';
 
 // Right skewed means most of the data is on the left, see https://github.com/phetsims/center-and-variability/issues/112
 const RIGHT_SKEWED_DATA = [
@@ -56,7 +57,10 @@ const CAVConstants = {
   },
 
   PHYSICAL_RANGE: new Range( 1, 15 ),
-  MAX_KICKS_VALUES: [ 15, 20, 25, 30 ]
+  MAX_KICKS_VALUES: [ 15, 20, 25, 30 ],
+
+  ACCORDION_BOX_CONTENTS_SHAPE_MEAN_AND_OR_MEDIAN: Shape.rect( 0, 0, 1000, 140 ),
+  ACCORDION_BOX_CONTENTS_SHAPE_VARIABILITY: Shape.rect( 0, 0, 920, 140 )
 };
 
 centerAndVariability.register( 'CAVConstants', CAVConstants );

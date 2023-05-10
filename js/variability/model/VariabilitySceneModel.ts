@@ -3,10 +3,6 @@
 import CAVSceneModel from '../../common/model/CAVSceneModel.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import Property from '../../../../axon/js/Property.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import NullableIO from '../../../../tandem/js/types/NullableIO.js';
-import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import VariabilityModel from './VariabilityModel.js';
 import SoccerBall from '../../common/model/SoccerBall.js';
@@ -14,57 +10,10 @@ import CAVConstants from '../../common/CAVConstants.js';
 
 export default class VariabilitySceneModel extends CAVSceneModel {
 
-  public readonly maxValueProperty: TReadOnlyProperty<number | null>;
-  public readonly minValueProperty: TReadOnlyProperty<number | null>;
-  public readonly rangeValueProperty: TReadOnlyProperty<number | null>;
-  public readonly q1ValueProperty: Property<number | null>;
-  public readonly q3ValueProperty: Property<number | null>;
-  public readonly iqrValueProperty: TReadOnlyProperty<number | null>;
-  public readonly madValueProperty: Property<number | null>;
-
   private readonly initialized: boolean = false;
 
   public constructor( maxKicksProperty: TReadOnlyProperty<number>, distribution: ReadonlyArray<number>, options: { tandem: Tandem } ) {
     super( maxKicksProperty, CAVConstants.MAX_KICKS_VALUES, distribution, options );
-
-    this.maxValueProperty = new DerivedProperty( [ this.dataRangeProperty ], dataRange => {
-      return dataRange === null ? null : dataRange.max;
-    }, {
-      tandem: options.tandem.createTandem( 'maxValueProperty' ),
-      phetioValueType: NullableIO( NumberIO )
-    } );
-    this.minValueProperty = new DerivedProperty( [ this.dataRangeProperty ], dataRange => {
-      return dataRange === null ? null : dataRange.min;
-    }, {
-      tandem: options.tandem.createTandem( 'minValueProperty' ),
-      phetioValueType: NullableIO( NumberIO )
-    } );
-
-    this.rangeValueProperty = new DerivedProperty( [ this.maxValueProperty, this.minValueProperty ], ( max, min ) => {
-      return ( max === null || min === null ) ? null : max - min;
-    }, {
-      tandem: options.tandem.createTandem( 'rangeValueProperty' ),
-      phetioValueType: NullableIO( NumberIO )
-    } );
-
-    this.q1ValueProperty = new Property<number | null>( null, {
-      tandem: options.tandem.createTandem( 'q1ValueProperty' ),
-      phetioValueType: NullableIO( NumberIO ),
-      phetioReadOnly: true
-    } );
-    this.q3ValueProperty = new Property<number | null>( null, {
-      tandem: options.tandem.createTandem( 'q3ValueProperty' ),
-      phetioValueType: NullableIO( NumberIO ),
-      phetioReadOnly: true
-    } );
-    this.iqrValueProperty = new DerivedProperty( [ this.q1ValueProperty, this.q3ValueProperty ], ( q1, q3 ) => {
-      return q3! - q1!;
-    } );
-
-    this.madValueProperty = new Property<number | null>( null, {
-      tandem: options.tandem.createTandem( 'madValueProperty' ),
-      phetioValueType: NullableIO( NumberIO )
-    } );
 
     this.updateDataMeasures();
     this.initialized = true;

@@ -39,7 +39,7 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 
 // constants
 const CARD_SPACING = 10;
-const getCardPositionX = ( index: number ) => index * ( CardNode.CARD_WIDTH + CARD_SPACING );
+const getCardPositionX = ( index: number ) => index * ( CardNode.CARD_DIMENSION + CARD_SPACING );
 
 type SelfOptions = EmptySelfOptions;
 export type CardNodeContainerOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
