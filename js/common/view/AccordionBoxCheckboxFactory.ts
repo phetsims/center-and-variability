@@ -1,14 +1,14 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * Supports any combination of checkboxes for each of the screens.
+ * Factory that creates checkboxes for the AccordionBox.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import VerticalCheckboxGroup, { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
+import { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
 import { AlignGroup, GridBox, Line, Node, Text } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVConstants from '../CAVConstants.js';
@@ -24,7 +24,7 @@ const ICON_WIDTH = 24;
 const LINE_WIDTH = MedianBarNode.LINE_WIDTH;
 
 // TODO: Split this up into separate classes for each screen? https://github.com/phetsims/center-and-variability/issues/153
-export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGroup {
+export default class AccordionBoxCheckboxFactory {
 
   private static createGridBox( text: Node, icon: Node, iconGroup: AlignGroup ): GridBox {
     return new GridBox( {
@@ -48,7 +48,7 @@ export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGrou
   public static getMedianCheckboxWithIconItem( iconGroup: AlignGroup, isShowingTopMedianProperty: Property<boolean> ): VerticalCheckboxGroupItem {
     return {
       createNode: ( tandem: Tandem ) => {
-        return TopRepresentationCheckboxGroup.createGridBox(
+        return AccordionBoxCheckboxFactory.createGridBox(
           new Text( CenterAndVariabilityStrings.medianStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
           new MedianBarNode( {
             notchDirection: 'down',
@@ -75,7 +75,7 @@ export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGrou
   public static getMeanCheckboxWithIconItem( iconGroup: AlignGroup, isShowingTopMeanProperty: Property<boolean> ): VerticalCheckboxGroupItem {
     return {
       createNode: ( tandem: Tandem ) => {
-        return TopRepresentationCheckboxGroup.createGridBox(
+        return AccordionBoxCheckboxFactory.createGridBox(
           new Text( CenterAndVariabilityStrings.meanStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
           new Node( {
             children: [
@@ -101,7 +101,7 @@ export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGrou
   public static getRangeCheckboxWithIconItem( iconGroup: AlignGroup, isShowingRangeProperty: Property<boolean> ): VerticalCheckboxGroupItem {
     return {
       createNode: ( tandem: Tandem ) => {
-        return TopRepresentationCheckboxGroup.createGridBox(
+        return AccordionBoxCheckboxFactory.createGridBox(
           new Text( CenterAndVariabilityStrings.rangeStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
           // TODO: Replace with range icon, see https://github.com/phetsims/center-and-variability/issues/156
           new Node( {
@@ -128,7 +128,7 @@ export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGrou
   public static getIQRCheckboxWithIconItem( iconGroup: AlignGroup, isShowingIQRProperty: Property<boolean> ): VerticalCheckboxGroupItem {
     return {
       createNode: ( tandem: Tandem ) => {
-        return TopRepresentationCheckboxGroup.createGridBox(
+        return AccordionBoxCheckboxFactory.createGridBox(
           new Text( CenterAndVariabilityStrings.iqrStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
           // TODO: Replace with IQR icon, see https://github.com/phetsims/center-and-variability/issues/156
           new Node( {
@@ -155,7 +155,7 @@ export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGrou
   public static getMADCheckboxWithIconItem( iconGroup: AlignGroup, isShowingMADProperty: Property<boolean> ): VerticalCheckboxGroupItem {
     return {
       createNode: ( tandem: Tandem ) => {
-        return TopRepresentationCheckboxGroup.createGridBox(
+        return AccordionBoxCheckboxFactory.createGridBox(
           new Text( CenterAndVariabilityStrings.madStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
           // TODO: Replace with MAD icon, see https://github.com/phetsims/center-and-variability/issues/156
           new Node( {
@@ -180,4 +180,4 @@ export default class TopRepresentationCheckboxGroup extends VerticalCheckboxGrou
   }
 }
 
-centerAndVariability.register( 'TopRepresentationCheckboxGroup', TopRepresentationCheckboxGroup );
+centerAndVariability.register( 'AccordionBoxCheckboxFactory', AccordionBoxCheckboxFactory );

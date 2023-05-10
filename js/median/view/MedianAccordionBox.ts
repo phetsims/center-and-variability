@@ -9,7 +9,7 @@ import MedianModel from '../model/MedianModel.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import TopRepresentationCheckboxGroup from '../../common/view/TopRepresentationCheckboxGroup.js';
+import AccordionBoxCheckboxFactory from '../../common/view/AccordionBoxCheckboxFactory.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 import CardNode from './CardNode.js';
 import CAVConstants from '../../common/CAVConstants.js';
@@ -24,8 +24,8 @@ export default class MedianAccordionBox extends CAVAccordionBox {
     } );
 
     const checkboxGroup = new VerticalCheckboxGroup( [
-      TopRepresentationCheckboxGroup.getSortDataCheckboxItem( model.isSortingDataProperty ),
-      TopRepresentationCheckboxGroup.getMedianCheckboxWithoutIconItem( model.isShowingTopMedianProperty )
+      AccordionBoxCheckboxFactory.getSortDataCheckboxItem( model.isSortingDataProperty ),
+      AccordionBoxCheckboxFactory.getMedianCheckboxWithoutIconItem( model.isShowingTopMedianProperty )
     ], {
       tandem: tandem.createTandem( 'accordionCheckboxGroup' ),
       right: backgroundNode.width - 12.5,

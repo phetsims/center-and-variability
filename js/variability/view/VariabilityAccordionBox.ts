@@ -12,7 +12,7 @@ import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
-import TopRepresentationCheckboxGroup from '../../common/view/TopRepresentationCheckboxGroup.js';
+import AccordionBoxCheckboxFactory from '../../common/view/AccordionBoxCheckboxFactory.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import VariabilityReadoutText from './VariabilityReadoutText.js';
@@ -77,21 +77,21 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
 
         // TODO: Why should these be "group"? see https://github.com/phetsims/center-and-variability/issues/170
         createNode: tandem => new VerticalCheckboxGroup( [
-          TopRepresentationCheckboxGroup.getRangeCheckboxWithIconItem( iconGroup, model.isShowingRangeProperty )
+          AccordionBoxCheckboxFactory.getRangeCheckboxWithIconItem( iconGroup, model.isShowingRangeProperty )
         ], { tandem: tandem.createTandem( 'rangeAccordionCheckboxGroup' ) } ),
         tandemName: 'rangeAccordionCheckboxGroup',
         value: VariabilityMeasure.RANGE
       },
       {
         createNode: tandem => new VerticalCheckboxGroup( [
-          TopRepresentationCheckboxGroup.getIQRCheckboxWithIconItem( iconGroup, model.isShowingIQRProperty )
+          AccordionBoxCheckboxFactory.getIQRCheckboxWithIconItem( iconGroup, model.isShowingIQRProperty )
         ], { tandem: tandem.createTandem( 'iqrAccordionCheckboxGroup' ) } ),
         tandemName: 'iqrAccordionCheckboxGroup',
         value: VariabilityMeasure.IQR
       },
       {
         createNode: tandem => new VerticalCheckboxGroup( [
-          TopRepresentationCheckboxGroup.getMADCheckboxWithIconItem( iconGroup, model.isShowingMADProperty )
+          AccordionBoxCheckboxFactory.getMADCheckboxWithIconItem( iconGroup, model.isShowingMADProperty )
         ], { tandem: tandem.createTandem( 'madAccordionCheckboxGroup' ) } ),
         tandemName: 'madAccordionCheckboxGroup',
         value: VariabilityMeasure.MAD
