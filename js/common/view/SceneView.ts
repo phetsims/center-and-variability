@@ -1,4 +1,9 @@
 // Copyright 2023, University of Colorado Boulder
+/**
+ * TODO: Describe file, https://github.com/phetsims/center-and-variability/issues/164
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
 
 import { Node } from '../../../../scenery/js/imports.js';
 import SoccerBallNode from './SoccerBallNode.js';
@@ -170,7 +175,7 @@ export default class SceneView {
         const soccerBallNode = soccerBallMap.get( stack[ i ] )!;
         const selfZIndex = soccerBallNode.parent!.indexOfChild( soccerBallNode );
 
-        let isMisorded = false;
+        let isMisordered = false;
 
         const lowerNeighborIndex = i - 1;
         if ( lowerNeighborIndex >= 0 ) {
@@ -178,11 +183,11 @@ export default class SceneView {
           const otherZIndex = lowerSoccerBall.parent!.indexOfChild( lowerSoccerBall );
 
           if ( selfZIndex < otherZIndex ) {
-            isMisorded = true;
+            isMisordered = true;
           }
         }
 
-        if ( isMisorded ) {
+        if ( isMisordered ) {
           soccerBallNode.moveToFront();
         }
       }

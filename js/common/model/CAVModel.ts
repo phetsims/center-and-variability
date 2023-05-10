@@ -1,5 +1,11 @@
 // Copyright 2023, University of Colorado Boulder
 
+/**
+ * TODO: Describe file, https://github.com/phetsims/center-and-variability/issues/164
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import centerAndVariability from '../../centerAndVariability.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';

@@ -1,5 +1,11 @@
 // Copyright 2023, University of Colorado Boulder
 
+/**
+ * TODO: Describe file, https://github.com/phetsims/center-and-variability/issues/164
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import RectangularRadioButtonGroup, { RectangularRadioButtonGroupOptions } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
@@ -36,7 +42,7 @@ export default class SceneRadioButtonGroup extends RectangularRadioButtonGroup<C
         fontWeight: 'bold',
         fill: 'white',
 
-        // Adjust for offcentering
+        // Adjust for off-centering
         center: path.center.plusXY( -0.5, 0 ),
         stroke: 'black',
         lineWidth: 0.8
@@ -45,6 +51,7 @@ export default class SceneRadioButtonGroup extends RectangularRadioButtonGroup<C
         children: [ path, text ]
       } );
     };
+
     super( property, [ {
       value: sceneModels[ 0 ],
       createNode: tandem => createTShirtIcon( tandem, '1', '#7bb772' ),
