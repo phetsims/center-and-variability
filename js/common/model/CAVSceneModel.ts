@@ -63,8 +63,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
   public readonly iqrValueProperty: TReadOnlyProperty<number | null>;
   public readonly madValueProperty: Property<number | null>;
 
-
-  public isVisibleProperty: Property<boolean> = new BooleanProperty( true );
+  public readonly isVisibleProperty: Property<boolean> = new BooleanProperty( true );
 
   // Signify whenever any object's value or position changes
   public readonly objectChangedEmitter: TEmitter<[ SoccerBall ]> = new Emitter<[ SoccerBall ]>( {

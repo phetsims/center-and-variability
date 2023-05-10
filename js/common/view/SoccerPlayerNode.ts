@@ -163,29 +163,29 @@ const variabilityPlayerGroups = [ {
   kicking: variabilityPlayer04Kicking_png
 } ];
 
-const playerGroups = [ ...standardKickerGroup, ...standardKickerGroup ];
+export type SoccerPlayerImageSet = {
+  standing: HTMLImageElement;
+  poisedToKick: HTMLImageElement;
+  kicking: HTMLImageElement;
+};
 
 const SCALE = 0.155;
 
 export default class SoccerPlayerNode extends Node {
   public readonly soccerPlayer: SoccerPlayer;
 
-  public constructor( soccerPlayer: SoccerPlayer, sceneIndex: number | null, modelViewTransform: ModelViewTransform2, isSceneVisibleProperty: TReadOnlyProperty<boolean>, providedOptions?: SoccerPlayerNodeOptions ) {
+  public constructor( soccerPlayer: SoccerPlayer, playerImageSet: SoccerPlayerImageSet, modelViewTransform: ModelViewTransform2, isSceneVisibleProperty: TReadOnlyProperty<boolean>, providedOptions?: SoccerPlayerNodeOptions ) {
     super();
 
     this.soccerPlayer = soccerPlayer;
 
-    const imageNumber = soccerPlayer.initialPlaceInLine;
-
-    const playerGroup = sceneIndex === null ? playerGroups[ imageNumber ] : variabilityPlayerGroups[ sceneIndex ];
-
-    const standingNode = new Image( playerGroup.standing );
+    const standingNode = new Image( playerImageSet.standing );
     this.addChild( standingNode );
 
-    const poisedToKickNode = new Image( playerGroup.poisedToKick );
+    const poisedToKickNode = new Image( playerImageSet.poisedToKick );
     this.addChild( poisedToKickNode );
 
-    const kickingNode = new Image( playerGroup.kicking );
+    const kickingNode = new Image( playerImageSet.kicking );
     this.addChild( kickingNode );
 
     this.setScaleMagnitude( SCALE );
@@ -217,6 +217,9 @@ export default class SoccerPlayerNode extends Node {
 
     this.mutate( options );
   }
+
+  public static readonly MULTI_GROUP = [ ...standardKickerGroup, ...standardKickerGroup ];
+  public static readonly VARIABILITY_GROUP = variabilityPlayerGroups;
 }
 
 centerAndVariability.register( 'SoccerPlayerNode', SoccerPlayerNode );

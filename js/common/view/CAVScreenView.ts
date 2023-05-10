@@ -30,6 +30,9 @@ import CAVModel from '../model/CAVModel.js';
 import SceneView from './SceneView.js';
 import KickButtonGroup from './KickButtonGroup.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
+import SoccerPlayerNode, { SoccerPlayerImageSet } from './SoccerPlayerNode.js';
+import SoccerPlayer from '../model/SoccerPlayer.js';
+import CAVSceneModel from '../model/CAVSceneModel.js';
 
 type SelfOptions = {
   questionBarOptions: QuestionBarOptions;
@@ -86,7 +89,12 @@ export default class CAVScreenView extends ScreenView {
     this.addChild( this.frontObjectLayer );
 
     // TODO: Scene names, see https://github.com/phetsims/center-and-variability/issues/184
-    model.sceneModels.map( ( sceneModel, index ) => new SceneView( model, sceneModel, this.backObjectLayer, this.frontObjectLayer,
+    model.sceneModels.map( ( sceneModel, index ) => new SceneView(
+      model,
+      sceneModel,
+      this.backObjectLayer,
+      this.frontObjectLayer,
+      ( soccerPlayer, sceneModel ) => this.getSoccerPlayerImageSet( soccerPlayer, sceneModel ),
       modelViewTransform, () => this.accordionBox, {
         tandem: options.tandem.createTandem( 'sceneView' + index )
       } ) );
@@ -193,6 +201,10 @@ export default class CAVScreenView extends ScreenView {
       xMargin: BOTTOM_CHECKBOX_PANEL_MARGIN,
       yMargin: BOTTOM_CHECKBOX_PANEL_Y_MARGIN
     } ) );
+  }
+
+  public getSoccerPlayerImageSet( soccerPlayer: SoccerPlayer, sceneModel: CAVSceneModel ): SoccerPlayerImageSet {
+    return SoccerPlayerNode.MULTI_GROUP[ soccerPlayer.initialPlaceInLine ];
   }
 
   /**

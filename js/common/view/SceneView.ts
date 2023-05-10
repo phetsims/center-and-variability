@@ -5,7 +5,7 @@ import SoccerBallNode from './SoccerBallNode.js';
 import { AnimationMode } from '../model/AnimationMode.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import CAVSceneModel from '../model/CAVSceneModel.js';
-import SoccerPlayerNode from './SoccerPlayerNode.js';
+import SoccerPlayerNode, { SoccerPlayerImageSet } from './SoccerPlayerNode.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CAVModel from '../model/CAVModel.js';
@@ -14,13 +14,10 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import DragIndicatorArrowNode from './DragIndicatorArrowNode.js';
 import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
-import InfoDialog from '../../variability/view/InfoDialog.js';
-import VariabilitySceneModel from '../../variability/model/VariabilitySceneModel.js';
-import VariabilityModel from '../../variability/model/VariabilityModel.js';
-import Multilink from '../../../../axon/js/Multilink.js';
 import SoccerBall from '../model/SoccerBall.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import SoccerPlayer from '../model/SoccerPlayer.js';
 
 /**
  * Renders view elements for a CAVSceneModel. Note that to satisfy the correct z-ordering, elements
@@ -35,6 +32,7 @@ export default class SceneView {
     sceneModel: CAVSceneModel,
     backObjectLayer: Node,
     frontObjectLayer: Node,
+    getSoccerPlayerImageSet: ( soccerPlayer: SoccerPlayer, sceneModel: CAVSceneModel ) => SoccerPlayerImageSet,
     modelViewTransform: ModelViewTransform2,
     getAccordionBox: () => AccordionBox | null,
     options: { tandem: Tandem } ) {
@@ -222,44 +220,14 @@ export default class SceneView {
     sceneModel.objectChangedEmitter.addListener( this.updateMedianNode );
     sceneModel.isVisibleProperty.link( this.updateMedianNode );
 
-    // TODO: See https://github.com/phetsims/center-and-variability/issues/153
-    const varModel = model as VariabilityModel;
-    const varSceneModel = sceneModel as VariabilitySceneModel;
-
-    // TODO: Do we want this information in the model? Do we want one player that re-kicks, or a list of clones? https://github.com/phetsims/center-and-variability/issues/154
-    const isVariabilityModel = !!varModel.isInfoShowingProperty;
-    let sceneIndex = 0;
-    if ( isVariabilityModel ) {
-      sceneIndex = varModel.variabilitySceneModels.indexOf( varSceneModel );
-    }
-
-    const soccerPlayerNodes = sceneModel.soccerPlayers.map( soccerPlayer => {
-      return new SoccerPlayerNode(
+    const soccerPlayerNodes = sceneModel.soccerPlayers.map( soccerPlayer =>
+      new SoccerPlayerNode(
         soccerPlayer,
-        isVariabilityModel ? sceneIndex : null,
+        getSoccerPlayerImageSet( soccerPlayer, sceneModel ),
         modelViewTransform,
-        sceneModel.isVisibleProperty
-      );
-    } );
+        sceneModel.isVisibleProperty ) );
 
     soccerPlayerNodes.forEach( soccerPlayerNode => frontObjectLayer.addChild( soccerPlayerNode ) );
-
-    if ( varModel && varModel.isInfoShowingProperty && varModel.selectedSceneModelProperty && varSceneModel ) {
-      const infoDialog = new InfoDialog( varModel, varSceneModel, {
-        tandem: options.tandem.createTandem( 'infoDialog' )
-      } );
-
-      Multilink.multilink( [ varModel.isInfoShowingProperty, varSceneModel.isVisibleProperty ],
-        ( isInfoShowing, isVisible ) => {
-          if ( isInfoShowing && isVisible ) {
-            infoDialog.show();
-          }
-          else {
-            infoDialog.hide();
-          }
-        } );
-    }
-
     model.isShowingPlayAreaMedianProperty.link( this.updateMedianNode );
   }
 }

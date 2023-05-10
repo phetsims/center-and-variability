@@ -23,6 +23,11 @@ import BottomRepresentationCheckboxGroup from '../../common/view/BottomRepresent
 import CAVConstants from '../../common/CAVConstants.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 import MaxKicksControlNode from '../../common/view/MaxKicksControlNode.js';
+import SoccerPlayer from '../../common/model/SoccerPlayer.js';
+import SoccerPlayerNode, { SoccerPlayerImageSet } from '../../common/view/SoccerPlayerNode.js';
+import CAVSceneModel from '../../common/model/CAVSceneModel.js';
+import InfoDialog from './InfoDialog.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
@@ -85,6 +90,27 @@ export default class VariabilityScreenView extends CAVScreenView {
         } )
       ]
     } ) );
+
+    model.variabilitySceneModels.forEach( ( sceneModel, index ) => {
+      const infoDialog = new InfoDialog( model, sceneModel, {
+        tandem: options.tandem.createTandem( 'scene' + index ).createTandem( 'infoDialog' )
+      } );
+
+      Multilink.multilink( [ model.isInfoShowingProperty, sceneModel.isVisibleProperty ],
+        ( isInfoShowing, isVisible ) => {
+          if ( isInfoShowing && isVisible ) {
+            infoDialog.show();
+          }
+          else {
+            infoDialog.hide();
+          }
+        } );
+    } );
+  }
+
+  public override getSoccerPlayerImageSet( soccerPlayer: SoccerPlayer, sceneModel: CAVSceneModel ): SoccerPlayerImageSet {
+    const index = this.model.sceneModels.indexOf( sceneModel );
+    return SoccerPlayerNode.VARIABILITY_GROUP[ index ];
   }
 }
 
