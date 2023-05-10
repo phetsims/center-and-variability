@@ -8,7 +8,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
-import MedianPlotNode from './MedianPlotNode.js';
+import MeanAndMedianPlotNode from './MeanAndMedianPlotNode.js';
 import TopRepresentationCheckboxGroup from '../../common/view/TopRepresentationCheckboxGroup.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 import CAVConstants from '../../common/CAVConstants.js';
@@ -16,7 +16,7 @@ import CAVConstants from '../../common/CAVConstants.js';
 const MARGIN = 12.5;
 
 export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
-  private readonly medianPlotNode: MedianPlotNode;
+  private readonly medianPlotNode: MeanAndMedianPlotNode;
 
   public constructor( model: MeanAndMedianModel, layoutBounds: Bounds2, tandem: Tandem, top: number, playAreaNumberLineNode: Node ) {
     const iconGroup = new AlignGroup();
@@ -30,8 +30,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
     // There is only one scene in the mean and median screen
     const sceneModel = model.selectedSceneModelProperty.value;
 
-    // TODO: https://github.com/phetsims/center-and-variability/issues/170 Why is this called the MedianPlotNode?
-    const medianPlotNode = new MedianPlotNode( model, sceneModel, {
+    const meanAndMedianPlotNode = new MeanAndMedianPlotNode( model, sceneModel, {
       tandem: tandem.createTandem( 'plotNode' )
     } ).mutate( {
       bottom: backgroundNode.height
@@ -47,7 +46,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
     } );
 
     backgroundNode.addChild( checkboxGroup );
-    backgroundNode.addChild( medianPlotNode );
+    backgroundNode.addChild( meanAndMedianPlotNode );
 
     super( backgroundNode, {
         titleNode: new Text( CenterAndVariabilityStrings.distanceInMetersStringProperty, {
@@ -60,7 +59,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
       }
     );
 
-    this.medianPlotNode = medianPlotNode;
+    this.medianPlotNode = meanAndMedianPlotNode;
   }
 
   public alignWithPlayAreaNumberLineNode( x: number ): void {
