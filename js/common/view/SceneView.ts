@@ -52,6 +52,9 @@ export default class SceneView {
 
     backObjectLayer.addChild( dragIndicatorArrowNode );
 
+    // TODO: https://github.com/phetsims/center-and-variability/issues/189 Move this to CAVScreenView
+    // TODO: Move parts to the model as appropriate https://github.com/phetsims/center-and-variability/issues/189
+    // TODO: When the selectedSceneModel changes (or any of its components change), check if we should show the arrow https://github.com/phetsims/center-and-variability/issues/189
     const updateDragIndictatorVisible = () => {
 
       // add the dragIndicatorArrowNode above the last object when it is added to the play area. if an object was
@@ -218,6 +221,8 @@ export default class SceneView {
     sceneModel.medianValueProperty.link( this.updateMedianNode );
     sceneModel.objectChangedEmitter.addListener( this.updateMedianNode );
     sceneModel.isVisibleProperty.link( this.updateMedianNode );
+
+    const sceneIndex = model.getSceneIndexForSoccerPlayerNode( sceneModel );
 
     // TODO: See https://github.com/phetsims/center-and-variability/issues/153
     const varModel = model as VariabilityModel;
