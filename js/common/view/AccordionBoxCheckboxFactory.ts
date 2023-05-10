@@ -23,7 +23,6 @@ const ICON_WIDTH = 24;
 
 const LINE_WIDTH = MedianBarNode.LINE_WIDTH;
 
-// TODO: Split this up into separate classes for each screen? https://github.com/phetsims/center-and-variability/issues/153
 export default class AccordionBoxCheckboxFactory {
 
   private static createGridBox( text: Node, icon: Node, iconGroup: AlignGroup ): GridBox {
