@@ -26,7 +26,11 @@
     "supportsOutputJS": true,
     "simFeatures": {
       "supportsInteractiveDescription": true
-    }
+    },
+    "screenNameKeys": [
+      "CENTER_AND_VARIABILITY/screen.median",
+      "CENTER_AND_VARIABILITY/screen.meanAndMedian"
+    ]
   },
   "eslintConfig": {
     "extends": "../chipper/eslint/sim_eslintrc.js"
