@@ -1,5 +1,12 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
+/**
+ * TODO: Describe file, https://github.com/phetsims/center-and-variability/issues/164
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
+
 import CAVSceneModel from '../../common/model/CAVSceneModel.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';

@@ -1,7 +1,8 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * Base class for the model in every screen.
+ * Base class for the scene model in a screen. The Median and Mean & Median screens only have one scene model.
+ * The Variability screen has 4 scene models.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
@@ -545,8 +546,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     const angle = dotRandom.nextDoubleBetween( degreesToRadians( 25 ), degreesToRadians( 70 ) );
     const v0 = Math.sqrt( Math.abs( x1 * Math.abs( CAVConstants.GRAVITY ) / Math.sin( 2 * angle ) ) );
 
-    const velocity = Vector2.createPolar( v0, angle );
-    soccerBall.velocityProperty.value = velocity;
+    soccerBall.velocityProperty.value = Vector2.createPolar( v0, angle );
 
     soccerBall.targetXProperty.value = x1;
 
