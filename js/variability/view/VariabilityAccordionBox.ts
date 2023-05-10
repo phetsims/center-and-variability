@@ -1,6 +1,6 @@
 // Copyright 2023, University of Colorado Boulder
 
-import { AlignGroup, Color, Path, Text, VBox } from '../../../../scenery/js/imports.js';
+import { AlignGroup, Color, Path, Text, VBox, Node } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -148,16 +148,17 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
             rangeValue => rangeValue === null ? '?' : `${rangeValue}`
           );
 
-          return new VariabilityReadoutText( rangeReadoutValueProperty,
-            CenterAndVariabilityStrings.rangeEqualsValuePatternStringProperty, {
-              fill: CAVColors.meanColorProperty,
-
-              // TODO: See https://github.com/phetsims/center-and-variability/issues/170, putting this as the visibleProperty means ToggleNode checks the checkbox when it makes the node visible
-              visibleProperty: model.isShowingRangeProperty,
-              left: 0,
-              centerY: backgroundNode.height / 2,
-              tandem: tandem.createTandem( 'rangeReadoutText' )
-            } );
+          // Nest in a new Node so that ToggleNode has independent control over the visibility
+          return new Node( {
+            children: [ new VariabilityReadoutText( rangeReadoutValueProperty,
+              CenterAndVariabilityStrings.rangeEqualsValuePatternStringProperty, {
+                fill: CAVColors.meanColorProperty,
+                visibleProperty: model.isShowingRangeProperty,
+                left: 0,
+                centerY: backgroundNode.height / 2,
+                tandem: tandem.createTandem( 'rangeReadoutText' )
+              } ) ]
+          } );
         }
       }, {
         value: VariabilityMeasure.IQR,
@@ -199,12 +200,15 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
             return madValue ? `${madValue}` : '?';
           } );
 
-          return new VariabilityReadoutText( madReadoutValueProperty,
-            CenterAndVariabilityStrings.meanEqualsValuePatternStringProperty, {
-              fill: CAVColors.meanColorProperty,
-              visibleProperty: model.isShowingMADProperty
-              // tandem: options.tandem.createTandem( 'rangeReadoutText' )
-            } );
+          // Nest in a new Node so that ToggleNode has independent control over the visibility
+          return new Node( {
+            children: [ new VariabilityReadoutText( madReadoutValueProperty,
+              CenterAndVariabilityStrings.meanEqualsValuePatternStringProperty, {
+                fill: CAVColors.meanColorProperty,
+                visibleProperty: model.isShowingMADProperty
+                // tandem: options.tandem.createTandem( 'rangeReadoutText' )
+              } ) ]
+          } );
         }
       } ]
     );
