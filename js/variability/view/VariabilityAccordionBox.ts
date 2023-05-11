@@ -20,6 +20,7 @@ import CAVColors from '../../common/CAVColors.js';
 import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import CAVSceneModel from '../../common/model/CAVSceneModel.js';
+import Utils from '../../../../dot/js/Utils.js';
 
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 
@@ -187,13 +188,13 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       tandemName: 'madReadoutToggleNode',
       createNode: tandem => {
         const madReadoutValueProperty = new DerivedProperty( [ madValueProperty ], madValue => {
-          return madValue ? `${madValue}` : '?';
+          return madValue ? `${Utils.toFixed( madValue, 2 )}` : '?';
         } );
 
         // Nest in a new Node so that ToggleNode has independent control over the visibility
         return new Node( {
           children: [ new VariabilityReadoutText( madReadoutValueProperty,
-            CenterAndVariabilityStrings.meanEqualsValuePatternStringProperty, {
+            CenterAndVariabilityStrings.madEqualsValuePatternStringProperty, {
               fill: CAVColors.meanColorProperty,
               visibleProperty: model.isMADVisibleProperty
               // tandem: options.tandem.createTandem( 'rangeReadoutText' )

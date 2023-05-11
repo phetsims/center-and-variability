@@ -28,6 +28,7 @@ type StringsType = {
   'medianEqualsValuePatternStringProperty': LinkableProperty<string>;
   'iqrEqualsValuePatternStringProperty': LinkableProperty<string>;
   'rangeEqualsValuePatternStringProperty': LinkableProperty<string>;
+  'madEqualsValuePatternStringProperty': LinkableProperty<string>;
   'plotTypeStringProperty': LinkableProperty<string>;
   'dotPlotStringProperty': LinkableProperty<string>;
   'linePlotStringProperty': LinkableProperty<string>;
