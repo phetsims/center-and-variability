@@ -39,7 +39,9 @@ let count = 0;
 
 export default class SoccerBall extends PhetioObject {
 
-  // Continuous value for the drag listener. When dragging, the object snaps to each tickmark
+  // Continuous value for the drag listener. When dragging, the object snaps to each tickmark. This is an implementation
+  // detail for the drag listener that is only used for deltas, and the absolute value does not matter.
+  // Therefore, it should not be reset (because resetting it would take the model through an incorrect transient state).
   public readonly dragPositionProperty: Vector2Property;
 
   // Continuous position during animation. After landing, it's discrete.
@@ -154,12 +156,13 @@ export default class SoccerBall extends PhetioObject {
     }
   }
 
+  /**
+   * Restore the initial conditions.
+   *
+   * NOTE: Do not reset the dragPositionProperty, since it is an implementation detail for the drag listener. Resetting
+   * would take listeners through an incorrect transient state.
+   */
   public reset(): void {
-
-    // Reset the drag position first, since it triggers a change in the position property and the value property (if it is clamped)
-    // TODO: It is odd and awkward that it takes this value through value = 1 during reset, should we fix it? See https://github.com/phetsims/center-and-variability/issues/172
-    this.dragPositionProperty.reset();
-
     this.positionProperty.reset();
     this.velocityProperty.reset();
     this.animationModeProperty.reset();
