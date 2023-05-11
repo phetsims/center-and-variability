@@ -30,6 +30,7 @@ import InfoDialog from './InfoDialog.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import PredictionSlider from '../../common/view/PredictionSlider.js';
 import Property from '../../../../axon/js/Property.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import IntervalToolPlayAreaNode from './IntervalToolPlayAreaNode.js';
 
@@ -86,10 +87,7 @@ export default class VariabilityScreenView extends CAVScreenView {
       } );
 
     const intervalToolPlayAreaNode = new IntervalToolPlayAreaNode( model.intervalTool1ValueProperty, model.intervalTool2ValueProperty, this.modelViewTransform,
-      variabilityAccordionBox.boundsProperty );
-    model.isShowingIntervalToolProperty.link( isShowingPlayAreaVariability => {
-      intervalToolPlayAreaNode.visible = isShowingPlayAreaVariability;
-    } );
+      new DerivedProperty( [ variabilityAccordionBox.boundsProperty ], bounds => bounds.top ), { visibleProperty: model.isShowingIntervalToolProperty } );
     this.intervalToolLayer.addChild( intervalToolPlayAreaNode );
 
     const sceneRadioButtonGroup = new SceneRadioButtonGroup( model.variabilitySceneModels, model.selectedSceneModelProperty, {

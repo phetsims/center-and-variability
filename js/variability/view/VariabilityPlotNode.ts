@@ -10,6 +10,7 @@
 
 import centerAndVariability from '../../centerAndVariability.js';
 import { Node, NodeOptions } from '../../../../scenery/js/imports.js';
+import Property from '../../../../axon/js/Property.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import RangeNode from './RangeNode.js';
@@ -19,6 +20,7 @@ import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import CAVPlotNode from '../../common/view/CAVPlotNode.js';
+import IntervalToolPlayAreaNode from './IntervalToolPlayAreaNode.js';
 
 export type CAVPlotOptions = NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
@@ -57,6 +59,12 @@ export default class VariabilityPlotNode extends Node {
     toggleNode.moveToBack();
 
     this.toggleNode = toggleNode;
+
+    const intervalToolPlayAreaNode = new IntervalToolPlayAreaNode( model.intervalTool1ValueProperty,
+      model.intervalTool2ValueProperty, toggleNode.nodes[ 0 ].modelViewTransform, new Property( 50 ),
+      { visibleProperty: model.isShowingIntervalToolProperty } );
+
+    toggleNode.nodes.forEach( node => node.insertChild( 0, intervalToolPlayAreaNode ) );
   }
 
   public alignWithPlayAreaNumberLineNode( x: number ): void {

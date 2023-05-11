@@ -31,7 +31,7 @@ export type CAVPlotOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
 export default class CAVPlotNode extends Node {
 
   private readonly dotLayer = new Node();
-  protected readonly modelViewTransform: ModelViewTransform2;
+  public readonly modelViewTransform: ModelViewTransform2;
   private readonly numberLineNode: NumberLineNode;
 
   public constructor( model: CAVModel, sceneModel: CAVSceneModel, providedOptions?: CAVPlotOptions ) {
