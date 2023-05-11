@@ -96,6 +96,10 @@ export default class VariabilityModel extends CAVModel {
     this.isMADVisibleProperty.reset();
     this.isInfoVisibleProperty.reset();
 
+    this.isIntervalToolVisibleProperty.reset();
+    this.intervalTool1ValueProperty.reset();
+    this.intervalTool2ValueProperty.reset();
+
     this.resetEmitter.emit();
   }
 
