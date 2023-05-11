@@ -85,8 +85,7 @@ export default class RangeNode extends CAVPlotNode {
         const floor = this.modelViewTransform.modelToViewY( 0 );
 
         if ( options.parentContext === 'info' ) {
-          rangeRectangle.rectHeight = Math.max( floor - highestYValue + this.modelViewTransform.modelToViewDeltaX( CAVObjectType.DATA_POINT.radius ),
-            rectangleHeight );
+          rangeRectangle.rectHeight = floor - highestYValue + this.modelViewTransform.modelToViewDeltaX( CAVObjectType.DATA_POINT.radius );
         }
         rangeRectangle.rectWidth = right - left;
         rangeRectangle.left = left;
