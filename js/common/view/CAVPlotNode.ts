@@ -22,6 +22,9 @@ import DataPointNode from './DataPointNode.js';
 import CAVModel from '../model/CAVModel.js';
 import MeanAndMedianModel from '../../mean-and-median/model/MeanAndMedianModel.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import VariabilityModel from '../../variability/model/VariabilityModel.js';
+import VariabilityMeasure from '../../variability/model/VariabilityMeasure.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 type SelfOptions = {
   dataPointFill: TColor;
@@ -59,7 +62,11 @@ export default class CAVPlotNode extends Node {
     this.numberLineNode = new NumberLineNode(
       sceneModel.meanValueProperty,
       modelViewTransform,
-      model instanceof MeanAndMedianModel ? model.isTopMeanVisibleProperty : new BooleanProperty( false ),
+      model instanceof MeanAndMedianModel ? model.isTopMeanVisibleProperty :
+
+        // TODO: The design calls for a different "look" for the mean. But why? See https://github.com/phetsims/center-and-variability/issues/180
+      model instanceof VariabilityModel ? DerivedProperty.valueEqualsConstant( model.selectedVariabilityProperty, VariabilityMeasure.MAD ) :
+      new BooleanProperty( true ),
       sceneModel.dataRangeProperty, {
         color: 'black',
         includeXAxis: true,
