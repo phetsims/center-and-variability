@@ -114,10 +114,6 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     backgroundNode.addChild( plotToggleNode );
     backgroundNode.addChild( checkboxToggleNode );
 
-    // const rangeReadoutValueProperty = new DerivedProperty( [ model.variabilitySceneModels[ 0 ].rangeValueProperty ], rangeValue => {
-    //   return rangeValue ? `${rangeValue}` : '?';
-    // } );
-
     const rangeValueProperty = DerivedProperty.deriveAny( [ model.selectedSceneModelProperty, ...model.variabilitySceneModels.map( vsm => vsm.rangeValueProperty ) ], () => {
       return model.selectedSceneModelProperty.value.rangeValueProperty.value;
     } );
@@ -204,7 +200,9 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
             } ) ]
         } );
       }
-    } ] );
+    } ], {
+      left: 5
+    } );
 
     backgroundNode.addChild( readoutsToggleNode );
 
@@ -220,6 +218,9 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     this.plotToggleNode = plotToggleNode;
   }
 
+  // TODO https://github.com/phetsims/center-and-variability/issues/170 do the checkboxes in the accordion box need to
+  // align with the checkboxes in the play area?  If so, consider laying out "accordion box" items in the play area,
+  // and just pretending they are in the accordion box?
   public alignWithPlayAreaNumberLineNode( x: number ): void {
     this.plotToggleNode.nodes.forEach( plotNode => plotNode.alignWithPlayAreaNumberLineNode( x ) );
   }
