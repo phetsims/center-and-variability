@@ -174,7 +174,10 @@ export default class CAVScreenView extends ScreenView {
     this.contentLayer.addChild( this.questionBar );
 
     this.contentLayer.addChild( new KickButtonGroup( model, {
-      left: 25,
+
+      // Center under where the soccer player nodes will be. Since the SoccerPlayerNode are positioned in the
+      // SceneView, we can't use those node bounds to position the kick buttons, so this is a manually tuned magic number.
+      centerX: modelViewTransform.modelToViewX( 0 ) - 63,
 
       // Center between the ground and the bottom of the layout bounds.  Adjust because of the asymmetries:
       // the soccer player foot falls beneath the ground, and the shading of the buttons.
