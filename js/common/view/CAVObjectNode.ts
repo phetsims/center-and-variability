@@ -58,7 +58,7 @@ export default abstract class CAVObjectNode extends Node {
     // they don't look like part of the data set, but still look kickable.
     Multilink.multilink( [ soccerBall.valueProperty, soccerBall.animationModeProperty ],
       ( value, animationMode ) => {
-        this.opacity = value === null && animationMode === AnimationMode.NONE && soccerBall.isFirstSoccerBall ? 1 : 0.4;
+        this.opacity = ( value === null && animationMode === AnimationMode.NONE && !soccerBall.isFirstSoccerBall ) ? 0.4 : 1;
       } );
 
     // Show index when debugging with ?dev
