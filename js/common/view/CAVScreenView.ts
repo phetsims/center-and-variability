@@ -33,6 +33,9 @@ import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import SoccerPlayerNode, { SoccerPlayerImageSet } from './SoccerPlayerNode.js';
 import SoccerPlayer from '../model/SoccerPlayer.js';
 import CAVSceneModel from '../model/CAVSceneModel.js';
+import DragIndicatorArrowNode from './DragIndicatorArrowNode.js';
+import CAVObjectType from '../model/CAVObjectType.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 
 type SelfOptions = {
   questionBarOptions: QuestionBarOptions;
@@ -162,6 +165,32 @@ export default class CAVScreenView extends ScreenView {
       centerY: ( GROUND_POSITION_Y + this.layoutBounds.maxY ) / 2 + 2,
       tandem: options.tandem.createTandem( 'kickButtonGroup' )
     } ) );
+
+    const dragIndicatorArrowNode = new DragIndicatorArrowNode( {
+      tandem: options.tandem.createTandem( 'dragIndicatorArrowNode' )
+    } );
+
+    Multilink.multilink( [ model.dragIndicatorVisibleProperty, model.dragIndicatorValueProperty ],
+      ( dragIndicatorVisible, dragIndicatorValue ) => {
+        dragIndicatorArrowNode.visible = dragIndicatorVisible;
+
+        if ( dragIndicatorVisible && dragIndicatorValue ) {
+          const selectedSceneModel = model.selectedSceneModelProperty.value;
+
+          dragIndicatorArrowNode.centerX = modelViewTransform.modelToViewX( dragIndicatorValue );
+          const dragIndicatorArrowNodeMargin = 6;
+
+          // calculate where the top object is
+          const topObjectPositionY = modelViewTransform.modelToViewY( 0 ) -
+                                     ( selectedSceneModel.getStackAtLocation( dragIndicatorValue ).length ) *
+                                     Math.abs( modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) ) * 2 -
+                                     dragIndicatorArrowNodeMargin;
+
+          dragIndicatorArrowNode.bottom = topObjectPositionY;
+        }
+      } );
+
+    this.backObjectLayer.addChild( dragIndicatorArrowNode );
   }
 
   private updateAccordionBoxPosition(): void {

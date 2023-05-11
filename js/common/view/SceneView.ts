@@ -15,12 +15,10 @@ import { AnimationMode } from '../model/AnimationMode.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import CAVSceneModel from '../model/CAVSceneModel.js';
 import SoccerPlayerNode, { SoccerPlayerImageSet } from './SoccerPlayerNode.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CAVModel from '../model/CAVModel.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import DragIndicatorArrowNode from './DragIndicatorArrowNode.js';
 import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import SoccerBall from '../model/SoccerBall.js';
@@ -46,56 +44,6 @@ export default class SceneView {
     getAccordionBox: () => AccordionBox | null,
     options: { tandem: Tandem } ) {
 
-    const objectNodeGroupTandem = options.tandem.createTandem( 'soccerBallNodeGroup' );
-
-    const objectNodesInputEnabledProperty = new BooleanProperty( true, {
-      tandem: objectNodeGroupTandem.createTandem( 'inputEnabledProperty' )
-    } );
-
-    const dragIndicatorArrowNode = new DragIndicatorArrowNode( {
-      tandem: options.tandem.createTandem( 'dragIndicatorArrowNode' ),
-      visible: false
-    } );
-
-    backObjectLayer.addChild( dragIndicatorArrowNode );
-
-    // TODO: https://github.com/phetsims/center-and-variability/issues/189 Move this to CAVScreenView
-    // TODO: Move parts to the model as appropriate https://github.com/phetsims/center-and-variability/issues/189
-    // TODO: When the selectedSceneModel changes (or any of its components change), check if we should show the arrow https://github.com/phetsims/center-and-variability/issues/189
-    const updateDragIndictatorVisible = () => {
-
-      // add the dragIndicatorArrowNode above the last object when it is added to the play area. if an object was
-      // moved before this happens, don't show the dragIndicatorArrowNode
-      if ( sceneModel.soccerBallCountProperty.value === sceneModel.maxKicksProperty.value &&
-           objectNodesInputEnabledProperty.value &&
-           _.every( sceneModel.getActiveSoccerBalls(), soccerBall => soccerBall.valueProperty.value !== null ) &&
-           !model.soccerBallHasBeenDraggedProperty.value &&
-           model.selectedSceneModelProperty.value === sceneModel ) {
-
-        const lastBall = sceneModel.getActiveSoccerBalls()[ sceneModel.getActiveSoccerBalls().length - 1 ];
-        const value = lastBall.valueProperty.value!;
-
-        dragIndicatorArrowNode.centerX = modelViewTransform.modelToViewX( value );
-
-        const dragIndicatorArrowNodeMargin = 6;
-
-        // calculate where the top object is
-        const topObjectPositionY = modelViewTransform.modelToViewY( 0 ) -
-                                   ( sceneModel.getStackAtLocation( value ).length ) *
-                                   Math.abs( modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) ) * 2 -
-                                   dragIndicatorArrowNodeMargin;
-
-        dragIndicatorArrowNode.bottom = topObjectPositionY;
-        dragIndicatorArrowNode.visible = true;
-      }
-      else {
-        dragIndicatorArrowNode.visible = false;
-      }
-    };
-
-    model.soccerBallHasBeenDraggedProperty.link( updateDragIndictatorVisible );
-    model.maxKicksProperty.link( updateDragIndictatorVisible );
-    model.selectedSceneModelProperty.link( updateDragIndictatorVisible );
 
     const soccerBallMap = new Map<SoccerBall, SoccerBallNode>();
 
@@ -105,7 +53,7 @@ export default class SceneView {
         sceneModel.isVisibleProperty,
         model.isShowingPlayAreaMedianProperty,
         modelViewTransform,
-        objectNodesInputEnabledProperty, {
+        model.objectNodesInputEnabledProperty, {
           tandem: options.tandem.createTandem( 'soccerBallNodes' ).createTandem( 'soccerBallNode' + index )
         } );
 
@@ -124,8 +72,6 @@ export default class SceneView {
       } );
 
       soccerBall.valueProperty.link( ( value, oldValue ) => {
-
-        updateDragIndictatorVisible();
 
         // If the value changed from numeric to numeric, it must have been by user dragging it.
         // It's simpler to have the listener here because in the model or drag listener, there is rounding/snapping
