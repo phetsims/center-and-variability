@@ -15,11 +15,11 @@ import Multilink from '../../../../axon/js/Multilink.js';
 
 export default class DataPointNode extends CAVObjectNode {
 
-  public constructor( soccerBall: SoccerBall, isShowingPlayAreaMedianProperty: TReadOnlyProperty<boolean>,
+  public constructor( soccerBall: SoccerBall, isPlayAreaMedianVisibleProperty: TReadOnlyProperty<boolean>,
                       modelViewTransform: ModelViewTransform2,
                       options: CAVObjectNodeOptions & { fill: TColor } ) {
 
-    super( soccerBall, isShowingPlayAreaMedianProperty, modelViewTransform, CAVObjectType.DATA_POINT.radius, options );
+    super( soccerBall, isPlayAreaMedianVisibleProperty, modelViewTransform, CAVObjectType.DATA_POINT.radius, options );
 
     const viewRadius = modelViewTransform.modelToViewDeltaX( CAVObjectType.DATA_POINT.radius );
 
@@ -57,9 +57,9 @@ export default class DataPointNode extends CAVObjectNode {
 
     // show or hide the median highlight
     Multilink.multilink(
-      [ soccerBall.isMedianObjectProperty, isShowingPlayAreaMedianProperty, soccerBall.isShowingAnimationHighlightProperty ],
-      ( isMedianObject, isShowingPlayAreaMedian, isShowingAnimationHighlight ) => {
-        this.medianHighlight.visible = isShowingAnimationHighlight;
+      [ soccerBall.isMedianObjectProperty, isPlayAreaMedianVisibleProperty, soccerBall.isAnimationHighlightVisibleProperty ],
+      ( isMedianObject, isPlayAreaMedianVisible, isAnimationHighlightVisible ) => {
+        this.medianHighlight.visible = isAnimationHighlightVisible;
 
         // Median highlights should be in front in z-ordering. Rather than accomplishing this via a different layer,
         // move this to the front when it is visible.

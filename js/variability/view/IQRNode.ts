@@ -184,7 +184,7 @@ export default class IQRNode extends CAVPlotNode {
 
       const enoughDataForMedian = sceneModel.numberOfDataPointsProperty.value >= 1;
       const enoughDataForIQR = sceneModel.numberOfDataPointsProperty.value >= 5;
-      const showHighlightRectangle = enoughDataForIQR && ( options.parentContext === 'info' || model.isShowingIQRProperty.value );
+      const showHighlightRectangle = enoughDataForIQR && ( options.parentContext === 'info' || model.isIQRVisibleProperty.value );
       const showBoxWhiskerLabels = options.parentContext === 'info' && enoughDataForIQR;
 
       medianArrowNode.visible = enoughDataForMedian;
@@ -193,7 +193,7 @@ export default class IQRNode extends CAVPlotNode {
       medianTextNode.visible = minLabelNode.visible = maxLabelNode.visible = q1LabelNode.visible = q3LabelNode.visible = showBoxWhiskerLabels;
 
       needAtLeastFiveKicks.centerX = this.modelViewTransform.modelToViewX( 8 );
-      needAtLeastFiveKicks.visible = !enoughDataForIQR && ( model.isShowingIQRProperty.value || options.parentContext === 'info' );
+      needAtLeastFiveKicks.visible = !enoughDataForIQR && ( model.isIQRVisibleProperty.value || options.parentContext === 'info' );
 
       if ( showHighlightRectangle ) {
         iqrRectangle.rectHeight = floor - BOX_CENTER_Y + 0.5 * BOX_HEIGHT;
@@ -210,7 +210,7 @@ export default class IQRNode extends CAVPlotNode {
     };
 
     sceneModel.objectChangedEmitter.addListener( updateIQRNode );
-    model.isShowingIQRProperty.link( updateIQRNode );
+    model.isIQRVisibleProperty.link( updateIQRNode );
     model.selectedVariabilityProperty.link( updateIQRNode );
     sceneModel.numberOfDataPointsProperty.link( updateIQRNode );
   }

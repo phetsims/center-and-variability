@@ -44,7 +44,7 @@ export default class AccordionBoxCheckboxFactory {
     };
   }
 
-  public static getMedianCheckboxWithIconItem( iconGroup: AlignGroup, isShowingTopMedianProperty: Property<boolean> ): VerticalCheckboxGroupItem {
+  public static getMedianCheckboxWithIconItem( iconGroup: AlignGroup, isTopMedianVisibleProperty: Property<boolean> ): VerticalCheckboxGroupItem {
     return {
       createNode: ( tandem: Tandem ) => {
         return AccordionBoxCheckboxFactory.createGridBox(
@@ -58,20 +58,20 @@ export default class AccordionBoxCheckboxFactory {
           iconGroup
         );
       },
-      property: isShowingTopMedianProperty,
+      property: isTopMedianVisibleProperty,
       tandemName: 'medianCheckbox'
     };
   }
 
-  public static getMedianCheckboxWithoutIconItem( isShowingTopMedianProperty: Property<boolean> ): VerticalCheckboxGroupItem {
+  public static getMedianCheckboxWithoutIconItem( isTopMedianVisibleProperty: Property<boolean> ): VerticalCheckboxGroupItem {
     return {
       createNode: ( tandem: Tandem ) => new Text( CenterAndVariabilityStrings.medianStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
-      property: isShowingTopMedianProperty,
+      property: isTopMedianVisibleProperty,
       tandemName: 'medianCheckbox'
     };
   }
 
-  public static getMeanCheckboxWithIconItem( iconGroup: AlignGroup, isShowingTopMeanProperty: Property<boolean> ): VerticalCheckboxGroupItem {
+  public static getMeanCheckboxWithIconItem( iconGroup: AlignGroup, isTopMeanVisibleProperty: Property<boolean> ): VerticalCheckboxGroupItem {
     return {
       createNode: ( tandem: Tandem ) => {
         return AccordionBoxCheckboxFactory.createGridBox(
@@ -92,12 +92,12 @@ export default class AccordionBoxCheckboxFactory {
           iconGroup
         );
       },
-      property: isShowingTopMeanProperty,
+      property: isTopMeanVisibleProperty,
       tandemName: 'meanCheckbox'
     };
   }
 
-  public static getRangeCheckboxWithIconItem( iconGroup: AlignGroup, isShowingRangeProperty: Property<boolean> ): VerticalCheckboxGroupItem {
+  public static getRangeCheckboxWithIconItem( iconGroup: AlignGroup, isRangeVisibleProperty: Property<boolean> ): VerticalCheckboxGroupItem {
     return {
       createNode: ( tandem: Tandem ) => {
         return AccordionBoxCheckboxFactory.createGridBox(
@@ -119,12 +119,12 @@ export default class AccordionBoxCheckboxFactory {
           iconGroup
         );
       },
-      property: isShowingRangeProperty,
+      property: isRangeVisibleProperty,
       tandemName: 'rangeCheckbox'
     };
   }
 
-  public static getIQRCheckboxWithIconItem( iconGroup: AlignGroup, isShowingIQRProperty: Property<boolean> ): VerticalCheckboxGroupItem {
+  public static getIQRCheckboxWithIconItem( iconGroup: AlignGroup, isIQRVisibleProperty: Property<boolean> ): VerticalCheckboxGroupItem {
     return {
       createNode: ( tandem: Tandem ) => {
         return AccordionBoxCheckboxFactory.createGridBox(
@@ -146,12 +146,12 @@ export default class AccordionBoxCheckboxFactory {
           iconGroup
         );
       },
-      property: isShowingIQRProperty,
+      property: isIQRVisibleProperty,
       tandemName: 'iqrCheckbox'
     };
   }
 
-  public static getMADCheckboxWithIconItem( iconGroup: AlignGroup, isShowingMADProperty: Property<boolean> ): VerticalCheckboxGroupItem {
+  public static getMADCheckboxWithIconItem( iconGroup: AlignGroup, isMADVisibleProperty: Property<boolean> ): VerticalCheckboxGroupItem {
     return {
       createNode: ( tandem: Tandem ) => {
         return AccordionBoxCheckboxFactory.createGridBox(
@@ -173,7 +173,7 @@ export default class AccordionBoxCheckboxFactory {
           iconGroup
         );
       },
-      property: isShowingMADProperty,
+      property: isMADVisibleProperty,
       tandemName: 'madCheckbox'
     };
   }

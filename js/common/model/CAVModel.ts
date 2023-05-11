@@ -29,14 +29,13 @@ export type CAVModelOptions = SelfOptions;
 
 export default class CAVModel {
 
-  public readonly dragIndicatorVisibleProperty: Property<boolean>; // Screens 1-3
+  public readonly isDragIndicatorVisibleProperty: Property<boolean>; // Screens 1-3
   public readonly dragIndicatorValueProperty: Property<number | null>;
   public readonly objectNodesInputEnabledProperty: Property<boolean>; // Screens 1-3
 
-  // TODO: Should these be playAreaMedianVisibleProperty? https://github.com/phetsims/center-and-variability/issues/189
-  public readonly isShowingPlayAreaMedianProperty: BooleanProperty; // Screens 1-3
-  public readonly isShowingPlayAreaMeanProperty: BooleanProperty;  // Screens 2-3
-  public readonly isShowingMedianPredictionProperty: BooleanProperty; // Screens 1-2
+  public readonly isPlayAreaMedianVisibleProperty: BooleanProperty; // Screens 1-3
+  public readonly isPlayAreaMeanVisibleProperty: BooleanProperty;  // Screens 2-3
+  public readonly isMedianPredictionVisibleProperty: BooleanProperty; // Screens 1-2
   public readonly medianPredictionProperty: NumberProperty; // Screens 1-2
 
   public readonly selectedSceneModelProperty: Property<CAVSceneModel>;
@@ -44,15 +43,15 @@ export default class CAVModel {
 
   public constructor( public readonly maxKicksProperty: Property<number>, public readonly sceneModels: CAVSceneModel[], options: CAVModelOptions ) {
 
-    this.isShowingPlayAreaMeanProperty = new BooleanProperty( false, {
-      tandem: options.instrumentMeanPredictionProperty ? options.tandem.createTandem( 'isShowingPlayAreaMeanProperty' ) : Tandem.OPT_OUT
+    this.isPlayAreaMeanVisibleProperty = new BooleanProperty( false, {
+      tandem: options.instrumentMeanPredictionProperty ? options.tandem.createTandem( 'isPlayAreaMeanVisibleProperty' ) : Tandem.OPT_OUT
     } );
-    this.isShowingPlayAreaMedianProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isShowingPlayAreaMedianProperty' )
+    this.isPlayAreaMedianVisibleProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isPlayAreaMedianVisibleProperty' )
     } );
 
-    this.isShowingMedianPredictionProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isShowingMedianPredictionProperty' )
+    this.isMedianPredictionVisibleProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isMedianPredictionVisibleProperty' )
     } );
 
     this.medianPredictionProperty = new NumberProperty( 1, {
@@ -93,7 +92,7 @@ export default class CAVModel {
       derive: 'maxKicksProperty'
     } );
 
-    this.dragIndicatorVisibleProperty = new BooleanProperty( false, { tandem: options.tandem.createTandem( 'dragIndicatorVisibleProperty' ) } );
+    this.isDragIndicatorVisibleProperty = new BooleanProperty( false, { tandem: options.tandem.createTandem( 'isDragIndicatorVisibleProperty' ) } );
     this.dragIndicatorValueProperty = new Property<number | null>( null, {
       tandem: options.tandem.createTandem( 'dragIndicatorValueProperty' ),
       phetioValueType: NullableIO( NumberIO )
@@ -131,7 +130,7 @@ export default class CAVModel {
                              this.objectNodesInputEnabledProperty.value &&
                              _.every( selectedSceneModel?.getActiveSoccerBalls(), soccerBall => soccerBall.valueProperty.value !== null ) &&
                              !soccerBallHasBeenDragged;
-    this.dragIndicatorVisibleProperty.value = indicatorVisible;
+    this.isDragIndicatorVisibleProperty.value = indicatorVisible;
 
     if ( indicatorVisible ) {
       const selectedSceneModel = this.selectedSceneModelProperty.value;
@@ -159,10 +158,10 @@ export default class CAVModel {
   public reset(): void {
     this.medianPredictionProperty.reset();
 
-    this.isShowingPlayAreaMeanProperty.reset();
-    this.isShowingPlayAreaMedianProperty.reset();
+    this.isPlayAreaMeanVisibleProperty.reset();
+    this.isPlayAreaMedianVisibleProperty.reset();
 
-    this.isShowingMedianPredictionProperty.reset();
+    this.isMedianPredictionVisibleProperty.reset();
 
     this.sceneModels.forEach( sceneModel => sceneModel.reset() );
     this.selectedSceneModelProperty.reset();

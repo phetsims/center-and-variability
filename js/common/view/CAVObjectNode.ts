@@ -31,7 +31,7 @@ export default abstract class CAVObjectNode extends Node {
   protected readonly medianHighlight: Circle;
 
   public constructor( public readonly soccerBall: SoccerBall,
-                      isShowingPlayAreaMedianProperty: TReadOnlyProperty<boolean>,
+                      isPlayAreaMedianVisibleProperty: TReadOnlyProperty<boolean>,
                       modelViewTransform: ModelViewTransform2,
                       modelRadius: number,
                       providedOptions?: CAVObjectNodeOptions ) {

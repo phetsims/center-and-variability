@@ -26,11 +26,11 @@ export default class VariabilityModel extends CAVModel {
   private readonly initialized: boolean = false;
 
   public readonly selectedVariabilityProperty: Property<VariabilityMeasure>;
-  public readonly isShowingRangeProperty: Property<boolean>;
-  public readonly isShowingIQRProperty: Property<boolean>;
-  public readonly isShowingMADProperty: Property<boolean>;
-  public readonly isInfoShowingProperty: Property<boolean>;
-  public readonly isShowingIntervalToolProperty: BooleanProperty;
+  public readonly isRangeVisibleProperty: Property<boolean>;
+  public readonly isIQRVisibleProperty: Property<boolean>;
+  public readonly isMADVisibleProperty: Property<boolean>;
+  public readonly isInfoVisibleProperty: Property<boolean>;
+  public readonly isIntervalToolVisibleProperty: BooleanProperty;
   public readonly intervalTool1ValueProperty: NumberProperty;
   public readonly intervalTool2ValueProperty: NumberProperty;
 
@@ -62,24 +62,24 @@ export default class VariabilityModel extends CAVModel {
       tandem: options.tandem.createTandem( 'selectedVariabilityProperty' )
     } );
 
-    this.isShowingRangeProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isShowingRangeProperty' )
+    this.isRangeVisibleProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isRangeVisibleProperty' )
     } );
 
-    this.isShowingIQRProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isShowingIQRProperty' )
+    this.isIQRVisibleProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isIQRVisibleProperty' )
     } );
 
-    this.isShowingMADProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isShowingMADProperty' )
+    this.isMADVisibleProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isMADVisibleProperty' )
     } );
 
-    this.isInfoShowingProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isInfoShowingProperty' )
+    this.isInfoVisibleProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isInfoVisibleProperty' )
     } );
 
-    this.isShowingIntervalToolProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isShowingIntervalToolProperty' )
+    this.isIntervalToolVisibleProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isIntervalToolVisibleProperty' )
     } );
 
     this.intervalTool1ValueProperty = new NumberProperty( 2, {
@@ -96,10 +96,10 @@ export default class VariabilityModel extends CAVModel {
     super.reset();
 
     this.selectedVariabilityProperty.reset();
-    this.isShowingRangeProperty.reset();
-    this.isShowingIQRProperty.reset();
-    this.isShowingMADProperty.reset();
-    this.isInfoShowingProperty.reset();
+    this.isRangeVisibleProperty.reset();
+    this.isIQRVisibleProperty.reset();
+    this.isMADVisibleProperty.reset();
+    this.isInfoVisibleProperty.reset();
 
     this.resetEmitter.emit();
   }

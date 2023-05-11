@@ -156,7 +156,7 @@ export default class CAVScreenView extends ScreenView {
         derive: 'meanValueProperty'
       } ),
       modelViewTransform,
-      model.isShowingPlayAreaMeanProperty,
+      model.isPlayAreaMeanVisibleProperty,
       new DynamicProperty( model.selectedSceneModelProperty, {
         derive: 'dataRangeProperty'
       } ), {
@@ -186,7 +186,7 @@ export default class CAVScreenView extends ScreenView {
       tandem: options.tandem.createTandem( 'dragIndicatorArrowNode' )
     } );
 
-    Multilink.multilink( [ model.dragIndicatorVisibleProperty, model.dragIndicatorValueProperty ],
+    Multilink.multilink( [ model.isDragIndicatorVisibleProperty, model.dragIndicatorValueProperty ],
       ( dragIndicatorVisible, dragIndicatorValue ) => {
         dragIndicatorArrowNode.visible = dragIndicatorVisible;
 
@@ -263,7 +263,7 @@ export default class CAVScreenView extends ScreenView {
       valueProperty: model.medianPredictionProperty,
       enabledRangeProperty: new Property<Range>( CAVConstants.PHYSICAL_RANGE ),
       roundToInterval: 0.5,
-      visibleProperty: model.isShowingMedianPredictionProperty,
+      visibleProperty: model.isMedianPredictionVisibleProperty,
       tandem: tandem
     } );
   }

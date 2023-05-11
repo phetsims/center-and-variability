@@ -51,7 +51,7 @@ export default class SceneView {
       const soccerBallNode = new SoccerBallNode(
         soccerBall,
         sceneModel.isVisibleProperty,
-        model.isShowingPlayAreaMedianProperty,
+        model.isPlayAreaMedianVisibleProperty,
         modelViewTransform,
         model.objectNodesInputEnabledProperty, {
           tandem: options.tandem.createTandem( 'soccerBallNodes' ).createTandem( 'soccerBallNode' + index )
@@ -146,7 +146,7 @@ export default class SceneView {
 
     this.updateMedianNode = () => {
       const medianValue = sceneModel.medianValueProperty.value;
-      const visible = medianValue !== null && model.isShowingPlayAreaMedianProperty.value;
+      const visible = medianValue !== null && model.isPlayAreaMedianVisibleProperty.value;
 
       if ( visible ) {
 
@@ -181,7 +181,7 @@ export default class SceneView {
         modelViewTransform ) );
 
     soccerPlayerNodes.forEach( soccerPlayerNode => frontLayer.addChild( soccerPlayerNode ) );
-    model.isShowingPlayAreaMedianProperty.link( this.updateMedianNode );
+    model.isPlayAreaMedianVisibleProperty.link( this.updateMedianNode );
 
     this.backLayer = backLayer;
     this.frontLayer = frontLayer;

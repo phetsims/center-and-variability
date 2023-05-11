@@ -53,7 +53,7 @@ export default class BottomRepresentationCheckboxGroup {
           alignGroup
         );
       },
-      property: model.isShowingIntervalToolProperty,
+      property: model.isIntervalToolVisibleProperty,
       tandemName: 'variabilityCheckbox'
     };
   }
@@ -72,7 +72,7 @@ export default class BottomRepresentationCheckboxGroup {
             maxHeight: 20
           } ), alignGroup );
       },
-      property: model.isShowingPlayAreaMedianProperty,
+      property: model.isPlayAreaMedianVisibleProperty,
       tandemName: 'medianCheckbox'
     };
   }
@@ -81,7 +81,7 @@ export default class BottomRepresentationCheckboxGroup {
     return {
       createNode: ( tandem: Tandem ) => BottomRepresentationCheckboxGroup.createGridBox( new Text( CenterAndVariabilityStrings.meanStringProperty, TEXT_OPTIONS ),
         NumberLineNode.createMeanIndicatorNode( true, true ), alignGroup ),
-      property: model.isShowingPlayAreaMeanProperty,
+      property: model.isPlayAreaMeanVisibleProperty,
       tandemName: 'meanCheckbox'
     };
   }
@@ -102,7 +102,7 @@ export default class BottomRepresentationCheckboxGroup {
 
   public static getPredictMedianCheckboxItem( alignGroup: AlignGroup, model: CAVModel ): VerticalCheckboxGroupItem {
     return BottomRepresentationCheckboxGroup.createPredictionItem(
-      model.isShowingMedianPredictionProperty,
+      model.isMedianPredictionVisibleProperty,
       CenterAndVariabilityStrings.predictMedianStringProperty,
       CAVColors.medianColorProperty,
       8,
@@ -113,7 +113,7 @@ export default class BottomRepresentationCheckboxGroup {
 
   public static getPredictMeanCheckboxItem( alignGroup: AlignGroup, model: MeanAndMedianModel ): VerticalCheckboxGroupItem {
     return BottomRepresentationCheckboxGroup.createPredictionItem(
-      model.isShowingMeanPredictionProperty,
+      model.isMeanPredictionVisibleProperty,
       CenterAndVariabilityStrings.predictMeanStringProperty,
       CAVColors.meanColorProperty,
       20.3,
