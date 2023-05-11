@@ -62,7 +62,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       touchAreaDilation: 5,
       tandem: tandem.createTandem( 'infoButton' ),
       listener: () => {
-        model.isInfoShowingProperty.value = true;
+        model.isInfoVisibleProperty.value = true;
       },
 
       // TODO: How to position this properly? Can we use AlignBox? See https://github.com/phetsims/center-and-variability/issues/170
@@ -76,19 +76,19 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
 
       // TODO: Why should these be "group"? see https://github.com/phetsims/center-and-variability/issues/170
       createNode: tandem => new VerticalCheckboxGroup( [
-        AccordionBoxCheckboxFactory.getRangeCheckboxWithIconItem( iconGroup, model.isShowingRangeProperty )
+        AccordionBoxCheckboxFactory.getRangeCheckboxWithIconItem( iconGroup, model.isRangeVisibleProperty )
       ], { tandem: tandem.createTandem( 'rangeAccordionCheckboxGroup' ) } ),
       tandemName: 'rangeAccordionCheckboxGroup',
       value: VariabilityMeasure.RANGE
     }, {
       createNode: tandem => new VerticalCheckboxGroup( [
-        AccordionBoxCheckboxFactory.getIQRCheckboxWithIconItem( iconGroup, model.isShowingIQRProperty )
+        AccordionBoxCheckboxFactory.getIQRCheckboxWithIconItem( iconGroup, model.isIQRVisibleProperty )
       ], { tandem: tandem.createTandem( 'iqrAccordionCheckboxGroup' ) } ),
       tandemName: 'iqrAccordionCheckboxGroup',
       value: VariabilityMeasure.IQR
     }, {
       createNode: tandem => new VerticalCheckboxGroup( [
-        AccordionBoxCheckboxFactory.getMADCheckboxWithIconItem( iconGroup, model.isShowingMADProperty )
+        AccordionBoxCheckboxFactory.getMADCheckboxWithIconItem( iconGroup, model.isMADVisibleProperty )
       ], { tandem: tandem.createTandem( 'madAccordionCheckboxGroup' ) } ),
       tandemName: 'madAccordionCheckboxGroup',
       value: VariabilityMeasure.MAD
@@ -144,7 +144,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
           children: [ new VariabilityReadoutText( rangeReadoutValueProperty,
             CenterAndVariabilityStrings.rangeEqualsValuePatternStringProperty, {
               fill: CAVColors.meanColorProperty,
-              visibleProperty: model.isShowingRangeProperty,
+              visibleProperty: model.isRangeVisibleProperty,
               left: 0,
               centerY: backgroundNode.height / 2,
               tandem: tandem.createTandem( 'rangeReadoutText' )
@@ -173,7 +173,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         } );
         const iqrReadoutText = new VariabilityReadoutText( iqrReadoutValueProperty, CenterAndVariabilityStrings.iqrEqualsValuePatternStringProperty, {
           fill: CAVColors.iqrColorProperty,
-          visibleProperty: model.isShowingIQRProperty
+          visibleProperty: model.isIQRVisibleProperty
           // tandem: options.tandem.createTandem( 'iqrReadoutText' )
         } );
 
@@ -195,7 +195,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
           children: [ new VariabilityReadoutText( madReadoutValueProperty,
             CenterAndVariabilityStrings.meanEqualsValuePatternStringProperty, {
               fill: CAVColors.meanColorProperty,
-              visibleProperty: model.isShowingMADProperty
+              visibleProperty: model.isMADVisibleProperty
               // tandem: options.tandem.createTandem( 'rangeReadoutText' )
             } ) ]
         } );

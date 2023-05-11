@@ -18,13 +18,13 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 
 export default class SoccerBallNode extends CAVObjectNode {
 
-  public constructor( soccerBall: SoccerBall, isSceneVisibleProperty: TReadOnlyProperty<boolean>, isShowingPlayAreaMedianProperty: TReadOnlyProperty<boolean>,
+  public constructor( soccerBall: SoccerBall, isSceneVisibleProperty: TReadOnlyProperty<boolean>, isPlayAreaMedianVisibleProperty: TReadOnlyProperty<boolean>,
                       modelViewTransform: ModelViewTransform2, objectNodesInputEnabledProperty: TProperty<boolean>,
                       options: CAVObjectNodeOptions ) {
 
     const viewRadius = modelViewTransform.modelToViewDeltaX( CAVObjectType.SOCCER_BALL.radius );
 
-    super( soccerBall, isShowingPlayAreaMedianProperty, modelViewTransform, CAVObjectType.SOCCER_BALL.radius, options );
+    super( soccerBall, isPlayAreaMedianVisibleProperty, modelViewTransform, CAVObjectType.SOCCER_BALL.radius, options );
 
     // The dark soccer ball is used for when a ball has input disabled.
     const soccerBallNode = new Image( ball_png );
@@ -100,9 +100,9 @@ export default class SoccerBallNode extends CAVObjectNode {
 
     // show or hide the median highlight
     Multilink.multilink(
-      [ soccerBall.isMedianObjectProperty, isShowingPlayAreaMedianProperty, soccerBall.isShowingAnimationHighlightProperty ],
-      ( isMedianObject, isShowingPlayAreaMedian, isShowingAnimationHighlight ) => {
-        this.medianHighlight.visible = isShowingPlayAreaMedian && isMedianObject;
+      [ soccerBall.isMedianObjectProperty, isPlayAreaMedianVisibleProperty, soccerBall.isAnimationHighlightVisibleProperty ],
+      ( isMedianObject, isPlayAreaMedianVisible, isAnimationHighlightVisible ) => {
+        this.medianHighlight.visible = isPlayAreaMedianVisible && isMedianObject;
 
         // Median highlights should be in front in z-ordering. Rather than accomplishing this via a different layer,
         // move this to the front when it is visible.

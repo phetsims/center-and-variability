@@ -61,7 +61,7 @@ export default class VariabilityScreenView extends CAVScreenView {
       valueProperty: model.intervalTool1ValueProperty,
       enabledRangeProperty: new Property<Range>( CAVConstants.PHYSICAL_RANGE ),
       roundToInterval: null, // continuous
-      visibleProperty: model.isShowingIntervalToolProperty,
+      visibleProperty: model.isIntervalToolVisibleProperty,
       tandem: options.tandem.createTandem( 'variabilityIntervalPredictionTool1ValueNode' )
     } ) );
 
@@ -72,7 +72,7 @@ export default class VariabilityScreenView extends CAVScreenView {
       valueProperty: model.intervalTool2ValueProperty,
       enabledRangeProperty: new Property<Range>( CAVConstants.PHYSICAL_RANGE ),
       roundToInterval: null, // continuous
-      visibleProperty: model.isShowingIntervalToolProperty,
+      visibleProperty: model.isIntervalToolVisibleProperty,
       tandem: options.tandem.createTandem( 'variabilityIntervalPredictionTool2ValueNode' )
     } ) );
 
@@ -86,7 +86,7 @@ export default class VariabilityScreenView extends CAVScreenView {
       } );
 
     const intervalToolPlayAreaNode = new IntervalToolPlayAreaNode( model.intervalTool1ValueProperty, model.intervalTool2ValueProperty, this.modelViewTransform,
-      new DerivedProperty( [ variabilityAccordionBox.boundsProperty ], bounds => bounds.top ), { visibleProperty: model.isShowingIntervalToolProperty } );
+      new DerivedProperty( [ variabilityAccordionBox.boundsProperty ], bounds => bounds.top ), { visibleProperty: model.isIntervalToolVisibleProperty } );
     this.intervalToolLayer.addChild( intervalToolPlayAreaNode );
 
     const sceneRadioButtonGroup = new SceneRadioButtonGroup( model.variabilitySceneModels, model.selectedSceneModelProperty, {
@@ -125,7 +125,7 @@ export default class VariabilityScreenView extends CAVScreenView {
         tandem: options.tandem.createTandem( 'scene' + index ).createTandem( 'infoDialog' )
       } );
 
-      Multilink.multilink( [ model.isInfoShowingProperty, sceneModel.isVisibleProperty ],
+      Multilink.multilink( [ model.isInfoVisibleProperty, sceneModel.isVisibleProperty ],
         ( isInfoShowing, isVisible ) => {
           if ( isInfoShowing && isVisible ) {
             infoDialog.show();

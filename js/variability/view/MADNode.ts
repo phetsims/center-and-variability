@@ -114,7 +114,7 @@ export default class MADNode extends CAVPlotNode {
       const mad = sceneModel.madValueProperty.value;
 
       madRectangle.rectWidth = this.modelViewTransform.modelToViewDeltaX( mad === null ? 0 : mad * 2 );
-      madRectangle.visible = ( options.parentContext === 'info' || model.isShowingMADProperty.value ) && mad !== null;
+      madRectangle.visible = ( options.parentContext === 'info' || model.isMADVisibleProperty.value ) && mad !== null;
 
       if ( mad !== null ) {
         const viewCenterX = this.modelViewTransform.modelToViewX( sceneModel.meanValueProperty.value! );
@@ -136,15 +136,15 @@ export default class MADNode extends CAVPlotNode {
         leftReadout.centerBottom = leftBar.centerTop;
         rightReadout.centerBottom = rightBar.centerTop;
       }
-      leftBar.visible = ( options.parentContext === 'info' || model.isShowingMADProperty.value ) && mad !== null && sortedDots.length > 1;
-      rightBar.visible = ( options.parentContext === 'info' || model.isShowingMADProperty.value ) && mad !== null && sortedDots.length > 1;
-      leftReadout.visible = ( options.parentContext === 'info' || model.isShowingMADProperty.value ) && mad !== null && sortedDots.length > 1;
-      rightReadout.visible = ( options.parentContext === 'info' || model.isShowingMADProperty.value ) && mad !== null && sortedDots.length > 1;
+      leftBar.visible = ( options.parentContext === 'info' || model.isMADVisibleProperty.value ) && mad !== null && sortedDots.length > 1;
+      rightBar.visible = ( options.parentContext === 'info' || model.isMADVisibleProperty.value ) && mad !== null && sortedDots.length > 1;
+      leftReadout.visible = ( options.parentContext === 'info' || model.isMADVisibleProperty.value ) && mad !== null && sortedDots.length > 1;
+      rightReadout.visible = ( options.parentContext === 'info' || model.isMADVisibleProperty.value ) && mad !== null && sortedDots.length > 1;
 
-      needAtLeastOneKickText.visible = sceneModel.numberOfDataPointsProperty.value === 0 && ( options.parentContext === 'info' || model.isShowingMADProperty.value );
+      needAtLeastOneKickText.visible = sceneModel.numberOfDataPointsProperty.value === 0 && ( options.parentContext === 'info' || model.isMADVisibleProperty.value );
     };
     sceneModel.objectChangedEmitter.addListener( update );
-    model.isShowingMADProperty.link( update );
+    model.isMADVisibleProperty.link( update );
     model.selectedVariabilityProperty.link( update );
     sceneModel.numberOfDataPointsProperty.link( update );
     sceneModel.meanValueProperty.link( update );

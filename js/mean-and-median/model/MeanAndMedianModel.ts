@@ -27,9 +27,9 @@ export default class MeanAndMedianModel extends CAVModel {
 
   private lastHighlightAnimationStepTime = 0;
   public readonly isMedianAnimationCompleteProperty = new BooleanProperty( false );
-  public readonly isShowingTopMedianProperty: BooleanProperty;
-  public readonly isShowingTopMeanProperty: BooleanProperty;
-  public readonly isShowingMeanPredictionProperty: BooleanProperty;
+  public readonly isTopMedianVisibleProperty: BooleanProperty;
+  public readonly isTopMeanVisibleProperty: BooleanProperty;
+  public readonly isMeanPredictionVisibleProperty: BooleanProperty;
   public readonly meanPredictionProperty: NumberProperty;
 
   public constructor( options: { tandem: Tandem } ) {
@@ -40,16 +40,16 @@ export default class MeanAndMedianModel extends CAVModel {
       instrumentMeanPredictionProperty: true
     } );
 
-    this.isShowingTopMeanProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isShowingTopMeanProperty' )
+    this.isTopMeanVisibleProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isTopMeanVisibleProperty' )
     } );
-    this.isShowingTopMedianProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isShowingTopMedianProperty' )
+    this.isTopMedianVisibleProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isTopMedianVisibleProperty' )
     } );
 
     // Don't show animation on startup or when setting PhET-iO state
-    this.isShowingTopMedianProperty.lazyLink( isShowingTopMedian => {
-      if ( isShowingTopMedian ) {
+    this.isTopMedianVisibleProperty.lazyLink( isTopMedianVisible => {
+      if ( isTopMedianVisible ) {
 
         if ( !phet.joist.sim.isSettingPhetioStateProperty.value ) {
           this.highlightAnimationIndex = 0;
@@ -71,8 +71,8 @@ export default class MeanAndMedianModel extends CAVModel {
       range: CAVConstants.PHYSICAL_RANGE,
       tandem: options.tandem.createTandem( 'meanPredictionProperty' )
     } );
-    this.isShowingMeanPredictionProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isShowingMeanPredictionProperty' )
+    this.isMeanPredictionVisibleProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isMeanPredictionVisibleProperty' )
     } );
 
     sceneModel.objectValueBecameNonNullEmitter.addListener( () => this.updateAnimation() );
@@ -82,10 +82,10 @@ export default class MeanAndMedianModel extends CAVModel {
     super.reset();
     this.highlightAnimationIndex = null;
     this.isMedianAnimationCompleteProperty.reset();
-    this.isShowingTopMeanProperty.reset();
-    this.isShowingTopMedianProperty.reset();
+    this.isTopMeanVisibleProperty.reset();
+    this.isTopMedianVisibleProperty.reset();
     this.meanPredictionProperty.reset();
-    this.isShowingMeanPredictionProperty.reset();
+    this.isMeanPredictionVisibleProperty.reset();
   }
 
   public override step( dt: number ): void {
@@ -95,7 +95,7 @@ export default class MeanAndMedianModel extends CAVModel {
 
   private clearAnimation(): void {
     this.highlightAnimationIndex = null;
-    this.selectedSceneModelProperty.value.soccerBalls.forEach( soccerBall => soccerBall.isShowingAnimationHighlightProperty.set( false ) );
+    this.selectedSceneModelProperty.value.soccerBalls.forEach( soccerBall => soccerBall.isAnimationHighlightVisibleProperty.set( false ) );
   }
 
   private updateAnimation(): void {
@@ -104,10 +104,10 @@ export default class MeanAndMedianModel extends CAVModel {
 
     for ( let i = 0; i < sortedObjects.length / 2; i++ ) {
       const isHighlighted = i === this.highlightAnimationIndex;
-      sortedObjects[ i ].isShowingAnimationHighlightProperty.value = isHighlighted;
+      sortedObjects[ i ].isAnimationHighlightVisibleProperty.value = isHighlighted;
 
       const upperIndex = sortedObjects.length - 1 - i;
-      sortedObjects[ upperIndex ].isShowingAnimationHighlightProperty.value = isHighlighted;
+      sortedObjects[ upperIndex ].isAnimationHighlightVisibleProperty.value = isHighlighted;
     }
 
     const isAnimationFinished = this.highlightAnimationIndex !== null &&

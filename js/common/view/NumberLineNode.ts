@@ -40,7 +40,7 @@ export default class NumberLineNode extends Node {
   public constructor(
     meanValueProperty: TReadOnlyProperty<number | null>,
     modelViewTransform: ModelViewTransform2,
-    isShowingMeanIndicatorProperty: TReadOnlyProperty<boolean>,
+    isMeanIndicatorVisibleProperty: TReadOnlyProperty<boolean>,
     rangeProperty: TReadOnlyProperty<Range | null>,
     providedOptions?: NumberLineNodeOptions
   ) {
@@ -90,8 +90,8 @@ export default class NumberLineNode extends Node {
         stroke: CAVColors.meanColorProperty,
         lineWidth: 3.2
       } );
-      Multilink.multilink( [ rangeProperty, isShowingMeanIndicatorProperty ],
-        ( range, isShowingMeanIndicator ) => {
+      Multilink.multilink( [ rangeProperty, isMeanIndicatorVisibleProperty ],
+        ( range, isMeanIndicatorVisible ) => {
           if ( range !== null ) {
 
             // Do not show any area or text above the data point if the range is 0
@@ -99,7 +99,7 @@ export default class NumberLineNode extends Node {
               .moveTo( modelViewTransform.modelToViewX( range.min ), 0 )
               .lineTo( modelViewTransform.modelToViewX( range.max ), 0 );
           }
-          rangeNode.visible = isShowingMeanIndicator && range !== null;
+          rangeNode.visible = isMeanIndicatorVisible && range !== null;
         } );
 
       this.addChild( rangeNode );
@@ -108,12 +108,12 @@ export default class NumberLineNode extends Node {
     const meanIndicatorNode = NumberLineNode.createMeanIndicatorNode( options.includeMeanStroke, false );
     this.addChild( meanIndicatorNode );
 
-    Multilink.multilink( [ meanValueProperty, isShowingMeanIndicatorProperty ],
-      ( meanValue, isShowingMeanIndicator ) => {
+    Multilink.multilink( [ meanValueProperty, isMeanIndicatorVisibleProperty ],
+      ( meanValue, isMeanIndicatorVisible ) => {
         if ( meanValue !== null ) {
           meanIndicatorNode.centerTop = new Vector2( modelViewTransform.modelToViewX( meanValue ), 0 );
         }
-        meanIndicatorNode.visible = isShowingMeanIndicator && meanValue !== null;
+        meanIndicatorNode.visible = isMeanIndicatorVisible && meanValue !== null;
       } );
 
     this.mutate( options );

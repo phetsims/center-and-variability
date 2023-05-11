@@ -20,7 +20,7 @@ export default class MedianModel extends CAVModel {
 
   public readonly cards: CardModel[];
   public readonly isSortingDataProperty: BooleanProperty;
-  public readonly isShowingTopMedianProperty: BooleanProperty;
+  public readonly isTopMedianVisibleProperty: BooleanProperty;
 
   public constructor( options: { tandem: Tandem } ) {
 
@@ -43,15 +43,15 @@ export default class MedianModel extends CAVModel {
       tandem: options.tandem.createTandem( 'isSortingDataProperty' )
     } );
 
-    this.isShowingTopMedianProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isShowingTopMedianProperty' )
+    this.isTopMedianVisibleProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isTopMedianVisibleProperty' )
     } );
   }
 
   public override reset(): void {
     super.reset();
     this.isSortingDataProperty.reset();
-    this.isShowingTopMedianProperty.reset();
+    this.isTopMedianVisibleProperty.reset();
   }
 }
 

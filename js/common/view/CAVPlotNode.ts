@@ -59,7 +59,7 @@ export default class CAVPlotNode extends Node {
     this.numberLineNode = new NumberLineNode(
       sceneModel.meanValueProperty,
       modelViewTransform,
-      model instanceof MeanAndMedianModel ? model.isShowingTopMeanProperty : new BooleanProperty( false ),
+      model instanceof MeanAndMedianModel ? model.isTopMeanVisibleProperty : new BooleanProperty( false ),
       sceneModel.dataRangeProperty, {
         color: 'black',
         includeXAxis: true,
@@ -91,7 +91,7 @@ export default class CAVPlotNode extends Node {
       // Create the data points for that scene
       scene.soccerBalls.forEach( ( soccerBall, index ) => {
 
-        const dotNode = new DataPointNode( soccerBall, ( model instanceof MeanAndMedianModel ) ? model.isShowingTopMedianProperty : new BooleanProperty( false ), modelViewTransform, {
+        const dotNode = new DataPointNode( soccerBall, ( model instanceof MeanAndMedianModel ) ? model.isTopMedianVisibleProperty : new BooleanProperty( false ), modelViewTransform, {
           tandem: options.tandem.createTandem( 'scene' + sceneIndex ).createTandem( 'dataPointNodes' ).createTandem( 'dataPointNode' + index ),
           fill: options.dataPointFill
         } );

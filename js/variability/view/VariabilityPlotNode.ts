@@ -62,7 +62,7 @@ export default class VariabilityPlotNode extends Node {
 
     const intervalToolPlayAreaNode = new IntervalToolPlayAreaNode( model.intervalTool1ValueProperty,
       model.intervalTool2ValueProperty, toggleNode.nodes[ 0 ].modelViewTransform, new Property( 50 ),
-      { visibleProperty: model.isShowingIntervalToolProperty } );
+      { visibleProperty: model.isIntervalToolVisibleProperty } );
 
     toggleNode.nodes.forEach( node => node.insertChild( 0, intervalToolPlayAreaNode ) );
   }

@@ -50,7 +50,7 @@ export default class MeanAndMedianPlotNode extends CAVPlotNode {
       const MARGIN_Y = 5;
 
       // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card
-      if ( model.isShowingTopMedianProperty.value && leftmostSoccerBall && medianValue !== null ) {
+      if ( model.isTopMedianVisibleProperty.value && leftmostSoccerBall && medianValue !== null ) {
         const highestDot = _.maxBy( sortedDots, object => object.positionProperty.value.y );
         const dotRadius = Math.abs( modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) );
 
@@ -73,7 +73,7 @@ export default class MeanAndMedianPlotNode extends CAVPlotNode {
       }
     };
     sceneModel.objectChangedEmitter.addListener( updateMedianBarNode );
-    model.isShowingTopMedianProperty.link( updateMedianBarNode );
+    model.isTopMedianVisibleProperty.link( updateMedianBarNode );
     if ( model instanceof MeanAndMedianModel ) {
       model.isMedianAnimationCompleteProperty.link( updateMedianBarNode );
     }

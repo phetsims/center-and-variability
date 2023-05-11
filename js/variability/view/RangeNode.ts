@@ -98,15 +98,15 @@ export default class RangeNode extends CAVPlotNode {
         rangeTextReadout.bottom = rangeBar.top - 5;
       }
       const rangeVisibility = ( options.parentContext === 'info' && hasNonZeroRange ) ||
-                              ( options.parentContext === 'accordion' && hasNonZeroRange && model.isShowingRangeProperty.value );
+                              ( options.parentContext === 'accordion' && hasNonZeroRange && model.isRangeVisibleProperty.value );
       rangeRectangle.visible = rangeVisibility;
       rangeBar.visible = rangeVisibility;
       rangeTextReadout.visible = rangeVisibility;
       needAtLeastOneKickText.visible = sceneModel.numberOfDataPointsProperty.value === 0 && ( options.parentContext === 'info' ||
-                                                                                              ( options.parentContext === 'accordion' && model.isShowingRangeProperty.value ) );
+                                                                                              ( options.parentContext === 'accordion' && model.isRangeVisibleProperty.value ) );
     };
     sceneModel.objectChangedEmitter.addListener( updateRangeNode );
-    model.isShowingRangeProperty.link( updateRangeNode );
+    model.isRangeVisibleProperty.link( updateRangeNode );
     model.selectedVariabilityProperty.link( updateRangeNode );
     sceneModel.numberOfDataPointsProperty.link( updateRangeNode );
     rangeRectangle.moveToBack();

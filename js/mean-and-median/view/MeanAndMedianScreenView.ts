@@ -59,7 +59,7 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
       valueProperty: model.meanPredictionProperty,
       enabledRangeProperty: new Property<Range>( CAVConstants.PHYSICAL_RANGE ),
       roundToInterval: null, // continuous
-      visibleProperty: model.isShowingMeanPredictionProperty,
+      visibleProperty: model.isMeanPredictionVisibleProperty,
       tandem: options.tandem.createTandem( 'meanPredictionNode' )
     } ) );
     this.contentLayer.addChild( CAVScreenView.createMedianPredictionNode(
