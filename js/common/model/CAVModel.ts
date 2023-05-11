@@ -18,6 +18,8 @@ import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
+import NullableIO from '../../../../tandem/js/types/NullableIO.js';
+import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 
 type SelfOptions = {
   tandem: Tandem;
@@ -92,7 +94,10 @@ export default class CAVModel {
     } );
 
     this.dragIndicatorVisibleProperty = new BooleanProperty( false, { tandem: options.tandem.createTandem( 'dragIndicatorVisibleProperty' ) } );
-    this.dragIndicatorValueProperty = new Property<number | null>( null, { tandem: options.tandem.createTandem( 'dragIndicatorValueProperty' ) } );
+    this.dragIndicatorValueProperty = new Property<number | null>( null, {
+      tandem: options.tandem.createTandem( 'dragIndicatorValueProperty' ),
+      phetioValueType: NullableIO( NumberIO )
+    } );
 
     Multilink.multilink( [ this.selectedSceneModelProperty,
         this.soccerBallHasBeenDraggedProperty, selectedSceneSoccerBallCountProperty,

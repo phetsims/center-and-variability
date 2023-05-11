@@ -2,9 +2,7 @@
 
 /**
  * Depicts a single scene in the CAV screen.  This includes the soccer balls, soccer players, and drag indicator arrow.
- * The scene is rendered in two layers in the ScreenView, the backObjectLayer and frontObjectLayer, to ensure the correct z-ordering.
- * The backObjectLayer is rendered behind the number line, and the frontObjectLayer is rendered in front of the number
- * line.
+ * The scene is rendered in two layers to ensure the correct z-ordering.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
@@ -33,19 +31,21 @@ import SoccerPlayer from '../model/SoccerPlayer.js';
 export default class SceneView {
 
   private readonly updateMedianNode: () => void;
+  public readonly backLayer: Node;
+  public readonly frontLayer: Node;
 
   public constructor(
     model: CAVModel,
-    sceneModel: CAVSceneModel,
-    backObjectLayer: Node,
-    frontObjectLayer: Node,
+    public readonly sceneModel: CAVSceneModel,
     getSoccerPlayerImageSet: ( soccerPlayer: SoccerPlayer, sceneModel: CAVSceneModel ) => SoccerPlayerImageSet,
     modelViewTransform: ModelViewTransform2,
     getAccordionBox: () => AccordionBox | null,
     options: { tandem: Tandem } ) {
 
-
     const soccerBallMap = new Map<SoccerBall, SoccerBallNode>();
+
+    const backLayer = new Node();
+    const frontLayer = new Node();
 
     sceneModel.soccerBalls.map( ( soccerBall, index ) => {
       const soccerBallNode = new SoccerBallNode(
@@ -57,17 +57,17 @@ export default class SceneView {
           tandem: options.tandem.createTandem( 'soccerBallNodes' ).createTandem( 'soccerBallNode' + index )
         } );
 
-      backObjectLayer.addChild( soccerBallNode );
+      backLayer.addChild( soccerBallNode );
 
       // While flying, it should be in front in z-order, to be in front of the accordion box
       soccerBall.animationModeProperty.lazyLink( ( animationMode, oldAnimationModel ) => {
         if ( animationMode === AnimationMode.FLYING ) {
-          backObjectLayer.removeChild( soccerBallNode );
-          frontObjectLayer.addChild( soccerBallNode );
+          backLayer.removeChild( soccerBallNode );
+          frontLayer.addChild( soccerBallNode );
         }
-        else if ( oldAnimationModel ) {
-          frontObjectLayer.removeChild( soccerBallNode );
-          backObjectLayer.addChild( soccerBallNode );
+        else {
+          frontLayer.removeChild( soccerBallNode );
+          backLayer.addChild( soccerBallNode );
         }
       } );
 
@@ -142,11 +142,11 @@ export default class SceneView {
     } );
 
     const playAreaMedianIndicatorNode = new PlayAreaMedianIndicatorNode();
-    frontObjectLayer.addChild( playAreaMedianIndicatorNode );
+    frontLayer.addChild( playAreaMedianIndicatorNode );
 
     this.updateMedianNode = () => {
       const medianValue = sceneModel.medianValueProperty.value;
-      const visible = medianValue !== null && model.isShowingPlayAreaMedianProperty.value && sceneModel.isVisibleProperty.value;
+      const visible = medianValue !== null && model.isShowingPlayAreaMedianProperty.value;
 
       if ( visible ) {
 
@@ -173,17 +173,18 @@ export default class SceneView {
     };
     sceneModel.medianValueProperty.link( this.updateMedianNode );
     sceneModel.objectChangedEmitter.addListener( this.updateMedianNode );
-    sceneModel.isVisibleProperty.link( this.updateMedianNode );
 
     const soccerPlayerNodes = sceneModel.soccerPlayers.map( soccerPlayer =>
       new SoccerPlayerNode(
         soccerPlayer,
         getSoccerPlayerImageSet( soccerPlayer, sceneModel ),
-        modelViewTransform,
-        sceneModel.isVisibleProperty ) );
+        modelViewTransform ) );
 
-    soccerPlayerNodes.forEach( soccerPlayerNode => frontObjectLayer.addChild( soccerPlayerNode ) );
+    soccerPlayerNodes.forEach( soccerPlayerNode => frontLayer.addChild( soccerPlayerNode ) );
     model.isShowingPlayAreaMedianProperty.link( this.updateMedianNode );
+
+    this.backLayer = backLayer;
+    this.frontLayer = frontLayer;
   }
 }
 

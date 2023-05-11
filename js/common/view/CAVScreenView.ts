@@ -36,6 +36,7 @@ import CAVSceneModel from '../model/CAVSceneModel.js';
 import DragIndicatorArrowNode from './DragIndicatorArrowNode.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import Multilink from '../../../../axon/js/Multilink.js';
+import ToggleNode from '../../../../sun/js/ToggleNode.js';
 
 type SelfOptions = {
   questionBarOptions: QuestionBarOptions;
@@ -92,15 +93,27 @@ export default class CAVScreenView extends ScreenView {
     this.addChild( this.frontObjectLayer );
 
     // TODO: Scene names, see https://github.com/phetsims/center-and-variability/issues/184
-    model.sceneModels.map( ( sceneModel, index ) => new SceneView(
+    const sceneViews = model.sceneModels.map( ( sceneModel, index ) => new SceneView(
       model,
       sceneModel,
-      this.backObjectLayer,
-      this.frontObjectLayer,
       ( soccerPlayer, sceneModel ) => this.getSoccerPlayerImageSet( soccerPlayer, sceneModel ),
       modelViewTransform, () => this.accordionBox, {
         tandem: options.tandem.createTandem( 'sceneView' + index )
       } ) );
+
+    const createToggleNode = ( pickLayer: ( sceneView: SceneView ) => Node ) => new ToggleNode( model.selectedSceneModelProperty, sceneViews.map( sceneView => {
+        return {
+          value: sceneView.sceneModel,
+          createNode: tandem => pickLayer( sceneView )
+        };
+      }
+    ), {
+      alignChildren: ToggleNode.NONE
+    } );
+
+    this.backObjectLayer.addChild( createToggleNode( sceneView => sceneView.backLayer ) );
+    this.frontObjectLayer.addChild( createToggleNode( sceneView => sceneView.frontLayer ) );
+
     this.resetAllButton = new ResetAllButton( {
       listener: () => {
         this.interruptSubtreeInput(); // cancel interactions that may be in progress
@@ -213,7 +226,7 @@ export default class CAVScreenView extends ScreenView {
    */
   protected setAccordionBox( accordionBox: CAVAccordionBox ): void {
     this.accordionBox = accordionBox;
-    this.frontObjectLayer.addChild( this.accordionBox );
+    this.backObjectLayer.addChild( this.accordionBox );
     this.updateAccordionBoxPosition();
   }
 

@@ -77,7 +77,6 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Pose from '../model/Pose.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -174,7 +173,7 @@ const SCALE = 0.155;
 export default class SoccerPlayerNode extends Node {
   public readonly soccerPlayer: SoccerPlayer;
 
-  public constructor( soccerPlayer: SoccerPlayer, playerImageSet: SoccerPlayerImageSet, modelViewTransform: ModelViewTransform2, isSceneVisibleProperty: TReadOnlyProperty<boolean>, providedOptions?: SoccerPlayerNodeOptions ) {
+  public constructor( soccerPlayer: SoccerPlayer, playerImageSet: SoccerPlayerImageSet, modelViewTransform: ModelViewTransform2, providedOptions?: SoccerPlayerNodeOptions ) {
     super();
 
     this.soccerPlayer = soccerPlayer;
@@ -206,8 +205,8 @@ export default class SoccerPlayerNode extends Node {
       this.centerBottom = modelViewTransform.modelToViewPosition( new Vector2( 0, 0 ) ).plusXY( -28, 8.5 );
     } );
 
-    Multilink.multilink( [ soccerPlayer.isActiveProperty, isSceneVisibleProperty ], ( isActive, isSceneVisible ) => {
-      this.visible = isActive && isSceneVisible;
+    Multilink.multilink( [ soccerPlayer.isActiveProperty ], isActive => {
+      this.visible = isActive;
     } );
 
     const options = optionize<SoccerPlayerNodeOptions, SelfOptions, NodeOptions>()( {
