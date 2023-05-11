@@ -135,79 +135,76 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     } );
 
     // TODO: Why can't this infer the type parameter? See https://github.com/phetsims/center-and-variability/issues/170
-    const readoutsToggleNode = new ToggleNode<VariabilityMeasure>( model.selectedVariabilityProperty, [
-      {
-        value: VariabilityMeasure.RANGE,
-        tandemName: 'rangeReadoutToggleNode',
-        createNode: tandem => {
-          const rangeReadoutValueProperty = new DerivedProperty( [ rangeValueProperty ],
-            rangeValue => rangeValue === null ? '?' : `${rangeValue}`
-          );
+    const readoutsToggleNode = new ToggleNode<VariabilityMeasure>( model.selectedVariabilityProperty, [ {
+      value: VariabilityMeasure.RANGE,
+      tandemName: 'rangeReadoutToggleNode',
+      createNode: tandem => {
+        const rangeReadoutValueProperty = new DerivedProperty( [ rangeValueProperty ],
+          rangeValue => rangeValue === null ? '?' : `${rangeValue}`
+        );
 
-          // Nest in a new Node so that ToggleNode has independent control over the visibility
-          return new Node( {
-            children: [ new VariabilityReadoutText( rangeReadoutValueProperty,
-              CenterAndVariabilityStrings.rangeEqualsValuePatternStringProperty, {
-                fill: CAVColors.meanColorProperty,
-                visibleProperty: model.isShowingRangeProperty,
-                left: 0,
-                centerY: backgroundNode.height / 2,
-                tandem: tandem.createTandem( 'rangeReadoutText' )
-              } ) ]
-          } );
-        }
-      }, {
-        value: VariabilityMeasure.IQR,
-        tandemName: 'iqrReadoutToggleNode',
-        createNode: tandem => {
-          const textReadoutGroup = new VBox( {
-            align: 'left',
-            spacing: 10
-          } );
+        // Nest in a new Node so that ToggleNode has independent control over the visibility
+        return new Node( {
+          children: [ new VariabilityReadoutText( rangeReadoutValueProperty,
+            CenterAndVariabilityStrings.rangeEqualsValuePatternStringProperty, {
+              fill: CAVColors.meanColorProperty,
+              visibleProperty: model.isShowingRangeProperty,
+              left: 0,
+              centerY: backgroundNode.height / 2,
+              tandem: tandem.createTandem( 'rangeReadoutText' )
+            } ) ]
+        } );
+      }
+    }, {
+      value: VariabilityMeasure.IQR,
+      tandemName: 'iqrReadoutToggleNode',
+      createNode: tandem => {
+        const textReadoutGroup = new VBox( {
+          align: 'left',
+          spacing: 10
+        } );
 
-          const medianReadoutValueProperty = new DerivedProperty( [ medianValueProperty ],
-            medianValue => medianValue === null ? '?' : `${medianValue}`
-          );
-          const iqrReadoutValueProperty = new DerivedProperty( [ iqrValueProperty ], iqrValue => {
-            return iqrValue ? `${iqrValue}` : '?';
-          } );
+        const medianReadoutValueProperty = new DerivedProperty( [ medianValueProperty ],
+          medianValue => medianValue === null ? '?' : `${medianValue}`
+        );
+        const iqrReadoutValueProperty = new DerivedProperty( [ iqrValueProperty ], iqrValue => {
+          return iqrValue ? `${iqrValue}` : '?';
+        } );
 
-          const medianReadoutText = new VariabilityReadoutText( medianReadoutValueProperty, CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty, {
-            fill: CAVColors.medianColorProperty
-            // tandem: options.tandem.createTandem( 'medianReadoutText' )
-          } );
-          const iqrReadoutText = new VariabilityReadoutText( iqrReadoutValueProperty, CenterAndVariabilityStrings.iqrEqualsValuePatternStringProperty, {
-            fill: CAVColors.iqrColorProperty,
-            visibleProperty: model.isShowingIQRProperty
-            // tandem: options.tandem.createTandem( 'iqrReadoutText' )
-          } );
+        const medianReadoutText = new VariabilityReadoutText( medianReadoutValueProperty, CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty, {
+          fill: CAVColors.medianColorProperty
+          // tandem: options.tandem.createTandem( 'medianReadoutText' )
+        } );
+        const iqrReadoutText = new VariabilityReadoutText( iqrReadoutValueProperty, CenterAndVariabilityStrings.iqrEqualsValuePatternStringProperty, {
+          fill: CAVColors.iqrColorProperty,
+          visibleProperty: model.isShowingIQRProperty
+          // tandem: options.tandem.createTandem( 'iqrReadoutText' )
+        } );
 
-          textReadoutGroup.addChild( medianReadoutText );
-          textReadoutGroup.addChild( iqrReadoutText );
+        textReadoutGroup.addChild( medianReadoutText );
+        textReadoutGroup.addChild( iqrReadoutText );
 
-          return textReadoutGroup;
-        }
-      },
-      {
-        value: VariabilityMeasure.MAD,
-        tandemName: 'madReadoutToggleNode',
-        createNode: tandem => {
-          const madReadoutValueProperty = new DerivedProperty( [ madValueProperty ], madValue => {
-            return madValue ? `${madValue}` : '?';
-          } );
+        return textReadoutGroup;
+      }
+    }, {
+      value: VariabilityMeasure.MAD,
+      tandemName: 'madReadoutToggleNode',
+      createNode: tandem => {
+        const madReadoutValueProperty = new DerivedProperty( [ madValueProperty ], madValue => {
+          return madValue ? `${madValue}` : '?';
+        } );
 
-          // Nest in a new Node so that ToggleNode has independent control over the visibility
-          return new Node( {
-            children: [ new VariabilityReadoutText( madReadoutValueProperty,
-              CenterAndVariabilityStrings.meanEqualsValuePatternStringProperty, {
-                fill: CAVColors.meanColorProperty,
-                visibleProperty: model.isShowingMADProperty
-                // tandem: options.tandem.createTandem( 'rangeReadoutText' )
-              } ) ]
-          } );
-        }
-      } ]
-    );
+        // Nest in a new Node so that ToggleNode has independent control over the visibility
+        return new Node( {
+          children: [ new VariabilityReadoutText( madReadoutValueProperty,
+            CenterAndVariabilityStrings.meanEqualsValuePatternStringProperty, {
+              fill: CAVColors.meanColorProperty,
+              visibleProperty: model.isShowingMADProperty
+              // tandem: options.tandem.createTandem( 'rangeReadoutText' )
+            } ) ]
+        } );
+      }
+    } ] );
 
     backgroundNode.addChild( readoutsToggleNode );
 
