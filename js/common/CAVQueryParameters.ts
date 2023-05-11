@@ -10,6 +10,13 @@
 import centerAndVariability from '../centerAndVariability.js';
 
 const CAVQueryParameters = QueryStringMachine.getAll( {
+
+  maxKicks: {
+    type: 'number',
+    defaultValue: 15,
+    validValues: [ 15, 20, 25, 30 ],
+    public: true
+  },
   plotType: {
     type: 'string',
     validValues: [ 'dotPlot', 'linePlot' ],

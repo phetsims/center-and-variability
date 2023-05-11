@@ -64,8 +64,9 @@ const CAVConstants = {
   ACCORDION_BOX_CONTENTS_SHAPE_VARIABILITY: Shape.rect( 0, 0, 920, 140 ),
 
   // TODO: https://github.com/phetsims/center-and-variability/issues/148 phet-io and query parameter
-  MAX_KICKS_PROPERTY: new NumberProperty( 15, {
-    validValues: [ 15, 20, 25, 30 ]
+  MAX_KICKS_PROPERTY: new NumberProperty( CAVQueryParameters.maxKicks, {
+    validValues: [ 15, 20, 25, 30 ],
+    tandem: Tandem.PREFERENCES.createTandem( 'maxKicksProperty' )
   } )
 };
 
