@@ -22,7 +22,6 @@ import VariabilityAccordionBox from './VariabilityAccordionBox.js';
 import BottomRepresentationCheckboxGroup from '../../common/view/BottomRepresentationCheckboxGroup.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
-import MaxKicksControlNode from '../../common/view/MaxKicksControlNode.js';
 import SoccerPlayer from '../../common/model/SoccerPlayer.js';
 import SoccerPlayerNode, { SoccerPlayerImageSet } from '../../common/view/SoccerPlayerNode.js';
 import CAVSceneModel from '../../common/model/CAVSceneModel.js';
@@ -115,9 +114,6 @@ export default class VariabilityScreenView extends CAVScreenView {
           BottomRepresentationCheckboxGroup.getIntervalToolCheckboxItem( iconGroup, model )
         ], {
           tandem: this.tandem.createTandem( 'bottomCheckboxGroup' )
-        } ),
-        new MaxKicksControlNode( model.maxKicksProperty, this, {
-          tandem: this.tandem.createTandem( 'maxKicksControlNode' )
         } )
       ]
     } ) );

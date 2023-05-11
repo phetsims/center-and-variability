@@ -8,18 +8,19 @@
  */
 
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
-import { Text, VBox } from '../../../../scenery/js/imports.js';
+import { Text, VBox, Node } from '../../../../scenery/js/imports.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import PlotType from '../model/PlotType.js';
 import CAVConstants from '../CAVConstants.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PreferencesDialog from '../../../../joist/js/preferences/PreferencesDialog.js';
+import MaxKicksControlNode from './MaxKicksControlNode.js';
 
 export default class SimulationPreferencesContentNode extends VBox {
   private readonly disposeSimulationPreferencesContentNode: () => void;
 
-  public constructor( tandem: Tandem ) {
+  public constructor( tandem: Tandem, parentNode: Node ) {
 
     const title = new Text( CenterAndVariabilityStrings.plotTypeStringProperty, {
       font: PreferencesDialog.PANEL_SECTION_LABEL_FONT
@@ -43,7 +44,9 @@ export default class SimulationPreferencesContentNode extends VBox {
 
     // VBox is used to make it easy to add additional controls
     super( {
-      children: [ title, radioButtonGroup ],
+      children: [ title, radioButtonGroup, new MaxKicksControlNode( CAVConstants.MAX_KICKS_PROPERTY, parentNode, {
+        tandem: tandem.createTandem( 'maxKicksControlNode' )
+      } ) ],
       spacing: PreferencesDialog.LABEL_CONTENT_SPACING,
       align: 'left',
       tandem: tandem
