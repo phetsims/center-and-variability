@@ -93,7 +93,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       tandemName: 'madAccordionCheckboxGroup',
       value: VariabilityMeasure.MAD
     } ], {
-      rightCenter: backgroundNode.rightCenter,
+      rightCenter: backgroundNode.rightCenter.plusXY( -10, 0 ),
       alignChildren: ToggleNode.LEFT
     } );
 
