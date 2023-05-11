@@ -12,7 +12,6 @@ import centerAndVariability from '../../centerAndVariability.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import optionize from '../../../../phet-core/js/optionize.js';
 import CAVObjectType from './CAVObjectType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
@@ -26,13 +25,7 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import TEmitter from '../../../../axon/js/TEmitter.js';
 import SoccerPlayer from './SoccerPlayer.js';
 
-type SelfOptions = {
-  isFirstObject?: boolean;
-};
-export type CAVObjectOptions =
-  SelfOptions
-  & PhetioObjectOptions
-  & PickRequired<PhetioObjectOptions, 'tandem'>;
+export type CAVObjectOptions = PhetioObjectOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
 // Global counter for debugging
 let count = 0;
@@ -52,7 +45,6 @@ export default class SoccerBall extends PhetioObject {
   public readonly isQ1ObjectProperty: BooleanProperty;
   public readonly isQ3ObjectProperty: BooleanProperty;
   public readonly isShowingAnimationHighlightProperty: BooleanProperty;
-  public readonly isFirstObject: boolean;
 
   // Where the object is animating to, or null if not yet animating
   public targetXProperty: Property<number | null>;
@@ -72,18 +64,12 @@ export default class SoccerBall extends PhetioObject {
     parameters: [ { valueType: SoccerBall } ]
   } );
 
-  public constructor( providedOptions: CAVObjectOptions ) {
-
-    const options = optionize<CAVObjectOptions, SelfOptions, PhetioObjectOptions>()( {
-      isFirstObject: false
-    }, providedOptions );
+  public constructor( public readonly isFirstSoccerBall: boolean, options: CAVObjectOptions ) {
 
     super( {
       ...options,
       phetioState: false
     } );
-
-    this.isFirstObject = options.isFirstObject;
 
     this.positionProperty = new Vector2Property( new Vector2( 0, CAVObjectType.SOCCER_BALL.radius ), {
       tandem: options.tandem.createTandem( 'positionProperty' ),

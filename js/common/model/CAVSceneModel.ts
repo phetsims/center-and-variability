@@ -116,8 +116,7 @@ export default abstract class CAVSceneModel extends PhetioObject implements TMod
       range: new Range( 0, this.maxKicksLimit )
     } );
     this.soccerBalls = _.range( 0, this.maxKicksLimit ).map( index => {
-      const soccerBall = new SoccerBall( {
-        isFirstObject: index === 0,
+      const soccerBall = new SoccerBall( index === 0, {
         tandem: options.tandem.createTandem( 'soccerBalls' ).createTandem( `soccerBall${index}` )
       } );
 

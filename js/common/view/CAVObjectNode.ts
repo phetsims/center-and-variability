@@ -30,7 +30,8 @@ export default abstract class CAVObjectNode extends Node {
 
   protected readonly medianHighlight: Circle;
 
-  public constructor( public readonly soccerBall: SoccerBall, isShowingPlayAreaMedianProperty: TReadOnlyProperty<boolean>,
+  public constructor( public readonly soccerBall: SoccerBall,
+                      isShowingPlayAreaMedianProperty: TReadOnlyProperty<boolean>,
                       modelViewTransform: ModelViewTransform2,
                       modelRadius: number,
                       providedOptions?: CAVObjectNodeOptions ) {
@@ -57,7 +58,7 @@ export default abstract class CAVObjectNode extends Node {
     // they don't look like part of the data set, but still look kickable.
     Multilink.multilink( [ soccerBall.valueProperty, soccerBall.animationModeProperty ],
       ( value, animationMode ) => {
-        this.opacity = value === null && animationMode === AnimationMode.NONE && !soccerBall.isFirstObject ? 0.4 : 1;
+        this.opacity = value === null && animationMode === AnimationMode.NONE && soccerBall.isFirstSoccerBall ? 1 : 0.4;
       } );
 
     // Show index when debugging with ?dev
