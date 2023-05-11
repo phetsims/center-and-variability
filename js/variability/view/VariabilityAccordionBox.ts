@@ -218,9 +218,8 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     this.plotToggleNode = plotToggleNode;
   }
 
-  // TODO https://github.com/phetsims/center-and-variability/issues/170 do the checkboxes in the accordion box need to
-  // align with the checkboxes in the play area?  If so, consider laying out "accordion box" items in the play area,
-  // and just pretending they are in the accordion box?
+  // TODO https://github.com/phetsims/center-and-variability/issues/170 Align the checkboxes in the accordion box with the
+  // checkboxes in the play area.
   public alignWithPlayAreaNumberLineNode( x: number ): void {
     this.plotToggleNode.nodes.forEach( plotNode => plotNode.alignWithPlayAreaNumberLineNode( x ) );
   }
