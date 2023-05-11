@@ -28,7 +28,8 @@ export default class InfoDialog extends Dialog {
       createNode: tandem => new MADInfoNode( model, sceneModel, { tandem: tandem } ),
       tandemName: 'madInfoNode'
     } ], {
-      tandem: options.tandem.createTandem( 'infoNode' )
+      tandem: options.tandem.createTandem( 'infoNode' ),
+      excludeInvisibleChildrenFromBounds: true
     } );
 
     super( content, {
