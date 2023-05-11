@@ -72,31 +72,27 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     backgroundNode.addChild( infoButton );
 
     const iconGroup = new AlignGroup();
-    const checkboxToggleNode = new ToggleNode( model.selectedVariabilityProperty, [
-      {
+    const checkboxToggleNode = new ToggleNode( model.selectedVariabilityProperty, [ {
 
-        // TODO: Why should these be "group"? see https://github.com/phetsims/center-and-variability/issues/170
-        createNode: tandem => new VerticalCheckboxGroup( [
-          AccordionBoxCheckboxFactory.getRangeCheckboxWithIconItem( iconGroup, model.isShowingRangeProperty )
-        ], { tandem: tandem.createTandem( 'rangeAccordionCheckboxGroup' ) } ),
-        tandemName: 'rangeAccordionCheckboxGroup',
-        value: VariabilityMeasure.RANGE
-      },
-      {
-        createNode: tandem => new VerticalCheckboxGroup( [
-          AccordionBoxCheckboxFactory.getIQRCheckboxWithIconItem( iconGroup, model.isShowingIQRProperty )
-        ], { tandem: tandem.createTandem( 'iqrAccordionCheckboxGroup' ) } ),
-        tandemName: 'iqrAccordionCheckboxGroup',
-        value: VariabilityMeasure.IQR
-      },
-      {
-        createNode: tandem => new VerticalCheckboxGroup( [
-          AccordionBoxCheckboxFactory.getMADCheckboxWithIconItem( iconGroup, model.isShowingMADProperty )
-        ], { tandem: tandem.createTandem( 'madAccordionCheckboxGroup' ) } ),
-        tandemName: 'madAccordionCheckboxGroup',
-        value: VariabilityMeasure.MAD
-      }
-    ], {
+      // TODO: Why should these be "group"? see https://github.com/phetsims/center-and-variability/issues/170
+      createNode: tandem => new VerticalCheckboxGroup( [
+        AccordionBoxCheckboxFactory.getRangeCheckboxWithIconItem( iconGroup, model.isShowingRangeProperty )
+      ], { tandem: tandem.createTandem( 'rangeAccordionCheckboxGroup' ) } ),
+      tandemName: 'rangeAccordionCheckboxGroup',
+      value: VariabilityMeasure.RANGE
+    }, {
+      createNode: tandem => new VerticalCheckboxGroup( [
+        AccordionBoxCheckboxFactory.getIQRCheckboxWithIconItem( iconGroup, model.isShowingIQRProperty )
+      ], { tandem: tandem.createTandem( 'iqrAccordionCheckboxGroup' ) } ),
+      tandemName: 'iqrAccordionCheckboxGroup',
+      value: VariabilityMeasure.IQR
+    }, {
+      createNode: tandem => new VerticalCheckboxGroup( [
+        AccordionBoxCheckboxFactory.getMADCheckboxWithIconItem( iconGroup, model.isShowingMADProperty )
+      ], { tandem: tandem.createTandem( 'madAccordionCheckboxGroup' ) } ),
+      tandemName: 'madAccordionCheckboxGroup',
+      value: VariabilityMeasure.MAD
+    } ], {
       rightCenter: backgroundNode.rightCenter,
       alignChildren: ToggleNode.LEFT
     } );
