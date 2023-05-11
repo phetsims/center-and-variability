@@ -27,9 +27,6 @@ import TEmitter from '../../../../axon/js/TEmitter.js';
 import SoccerPlayer from './SoccerPlayer.js';
 
 type SelfOptions = {
-  position?: Vector2;
-  velocity?: Vector2;
-  value?: number | null;
   isFirstObject?: boolean;
 };
 export type CAVObjectOptions =
@@ -76,9 +73,6 @@ export default class SoccerBall extends PhetioObject {
   public constructor( providedOptions: CAVObjectOptions ) {
 
     const options = optionize<CAVObjectOptions, SelfOptions, PhetioObjectOptions>()( {
-      position: Vector2.ZERO,
-      velocity: Vector2.ZERO,
-      value: null,
       isFirstObject: false
     }, providedOptions );
 
@@ -89,19 +83,19 @@ export default class SoccerBall extends PhetioObject {
 
     this.isFirstObject = options.isFirstObject;
 
-    this.positionProperty = new Vector2Property( options.position, {
+    this.positionProperty = new Vector2Property( new Vector2( 0, CAVObjectType.SOCCER_BALL.radius ), {
       tandem: options.tandem.createTandem( 'positionProperty' ),
       valueComparisonStrategy: 'equalsFunction',
       phetioReadOnly: true
     } );
-    this.velocityProperty = new Vector2Property( options.velocity, {
+    this.velocityProperty = new Vector2Property( new Vector2( 0, 0 ), {
       tandem: options.tandem.createTandem( 'velocityProperty' )
     } );
     this.animationModeProperty = new EnumerationProperty( AnimationMode.NONE, {
       tandem: options.tandem.createTandem( 'animationModeProperty' )
     } );
-    this.dragPositionProperty = new Vector2Property( options.position );
-    this.valueProperty = new Property<number | null>( options.value, {
+    this.dragPositionProperty = new Vector2Property( this.positionProperty.value.copy() );
+    this.valueProperty = new Property<number | null>( null, {
       tandem: options.tandem.createTandem( 'valueProperty' ),
       phetioValueType: NullableIO( NumberIO )
     } );

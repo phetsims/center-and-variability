@@ -116,13 +116,9 @@ export default abstract class CAVSceneModel extends PhetioObject implements TMod
       range: new Range( 0, this.maxKicksLimit )
     } );
     this.soccerBalls = _.range( 0, this.maxKicksLimit ).map( index => {
-
-      const position = new Vector2( 0, CAVObjectType.SOCCER_BALL.radius );
-
       const soccerBall = new SoccerBall( {
         isFirstObject: index === 0,
-        tandem: options.tandem.createTandem( 'soccerBalls' ).createTandem( `soccerBall${index}` ),
-        position: position
+        tandem: options.tandem.createTandem( 'soccerBalls' ).createTandem( `soccerBall${index}` )
       } );
 
       // When the soccer ball drag position changes, constrain it to the physical range and move it to the top, if necessary
