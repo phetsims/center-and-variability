@@ -136,5 +136,8 @@
   },
   "needAtLeastFiveKicks": {
     "value": "Need at least five kicks"
+  },
+  "maxKicksForScreensWithPlots": {
+    "value": "Max kicks (for screens with plots)"
   }
 }
