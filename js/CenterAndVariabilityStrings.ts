@@ -42,7 +42,7 @@ type StringsType = {
   'q3StringProperty': LinkableProperty<string>;
   'meanAbsoluteDeviationMADStringProperty': LinkableProperty<string>;
   'madStringProperty': LinkableProperty<string>;
-  'variabilityStringProperty': LinkableProperty<string>;
+  'intervalToolStringProperty': LinkableProperty<string>;
   'predictMeanStringProperty': LinkableProperty<string>;
   'predictMedianStringProperty': LinkableProperty<string>;
   'valueUnknownStringProperty': LinkableProperty<string>;

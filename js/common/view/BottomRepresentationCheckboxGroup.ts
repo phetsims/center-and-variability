@@ -44,16 +44,16 @@ export default class BottomRepresentationCheckboxGroup {
     } );
   }
 
-  public static getVariabilityCheckboxItem( alignGroup: AlignGroup, model: VariabilityModel ): VerticalCheckboxGroupItem {
+  public static getIntervalToolCheckboxItem( alignGroup: AlignGroup, model: VariabilityModel ): VerticalCheckboxGroupItem {
     return {
       createNode: ( tandem: Tandem ) => {
         return BottomRepresentationCheckboxGroup.createGridBox(
-          new Text( CenterAndVariabilityStrings.variabilityStringProperty, TEXT_OPTIONS ),
+          new Text( CenterAndVariabilityStrings.intervalToolStringProperty, TEXT_OPTIONS ),
           new IntervalToolIconNode(),
           alignGroup
         );
       },
-      property: model.isShowingPlayAreaVariabilityProperty,
+      property: model.isShowingIntervalToolProperty,
       tandemName: 'variabilityCheckbox'
     };
   }

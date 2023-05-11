@@ -28,6 +28,10 @@ import SoccerPlayerNode, { SoccerPlayerImageSet } from '../../common/view/Soccer
 import CAVSceneModel from '../../common/model/CAVSceneModel.js';
 import InfoDialog from './InfoDialog.js';
 import Multilink from '../../../../axon/js/Multilink.js';
+import PredictionSlider from '../../common/view/PredictionSlider.js';
+import Property from '../../../../axon/js/Property.js';
+import Range from '../../../../dot/js/Range.js';
+import IntervalToolPlayAreaNode from './IntervalToolPlayAreaNode.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
@@ -50,6 +54,28 @@ export default class VariabilityScreenView extends CAVScreenView {
 
     super( model, options );
 
+    this.contentLayer.addChild( new PredictionSlider( model.intervalTool1ValueProperty, this.modelViewTransform, CAVConstants.PHYSICAL_RANGE, {
+      predictionThumbNodeOptions: {
+        color: CAVColors.intervalToolIconShadedSphereMainColorProperty
+      },
+      valueProperty: model.intervalTool1ValueProperty,
+      enabledRangeProperty: new Property<Range>( CAVConstants.PHYSICAL_RANGE ),
+      roundToInterval: null, // continuous
+      visibleProperty: model.isShowingIntervalToolProperty,
+      tandem: options.tandem.createTandem( 'variabilityIntervalPredictionTool1ValueNode' )
+    } ) );
+
+    this.contentLayer.addChild( new PredictionSlider( model.intervalTool2ValueProperty, this.modelViewTransform, CAVConstants.PHYSICAL_RANGE, {
+      predictionThumbNodeOptions: {
+        color: CAVColors.intervalToolIconShadedSphereMainColorProperty
+      },
+      valueProperty: model.intervalTool2ValueProperty,
+      enabledRangeProperty: new Property<Range>( CAVConstants.PHYSICAL_RANGE ),
+      roundToInterval: null, // continuous
+      visibleProperty: model.isShowingIntervalToolProperty,
+      tandem: options.tandem.createTandem( 'variabilityIntervalPredictionTool2ValueNode' )
+    } ) );
+
     const variabilityAccordionBox = new VariabilityAccordionBox( model, this.layoutBounds, options.tandem.createTandem( 'accordionBox' ), this.questionBar.bottom + CAVConstants.SCREEN_VIEW_Y_MARGIN );
     this.setAccordionBox( variabilityAccordionBox );
     variabilityAccordionBox.alignWithPlayAreaNumberLineNode( this.playAreaNumberLineNode.globalBounds.x );
@@ -58,6 +84,13 @@ export default class VariabilityScreenView extends CAVScreenView {
       ( variabilityRadioButtonGroupWrapper, accordionBoxWrapper ) => {
         variabilityRadioButtonGroupWrapper.centerY = accordionBoxWrapper.centerY;
       } );
+
+    const intervalToolPlayAreaNode = new IntervalToolPlayAreaNode( model.intervalTool1ValueProperty, model.intervalTool2ValueProperty, this.modelViewTransform,
+      variabilityAccordionBox.boundsProperty );
+    model.isShowingIntervalToolProperty.link( isShowingPlayAreaVariability => {
+      intervalToolPlayAreaNode.visible = isShowingPlayAreaVariability;
+    } );
+    this.intervalToolLayer.addChild( intervalToolPlayAreaNode );
 
     const sceneRadioButtonGroup = new SceneRadioButtonGroup( model.variabilitySceneModels, model.selectedSceneModelProperty, {
       left: 10,
@@ -79,9 +112,9 @@ export default class VariabilityScreenView extends CAVScreenView {
       spacing: 15,
       children: [
         new VerticalCheckboxGroup( [
-          BottomRepresentationCheckboxGroup.getVariabilityCheckboxItem( iconGroup, model ),
           BottomRepresentationCheckboxGroup.getMedianCheckboxItem( iconGroup, model ),
-          BottomRepresentationCheckboxGroup.getMeanCheckboxItem( iconGroup, model )
+          BottomRepresentationCheckboxGroup.getMeanCheckboxItem( iconGroup, model ),
+          BottomRepresentationCheckboxGroup.getIntervalToolCheckboxItem( iconGroup, model )
         ], {
           tandem: this.tandem.createTandem( 'bottomCheckboxGroup' )
         } ),

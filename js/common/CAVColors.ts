@@ -15,7 +15,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { ProfileColorProperty } from '../../../scenery/js/imports.js';
+import { Color, ProfileColorProperty } from '../../../scenery/js/imports.js';
 import centerAndVariability from '../centerAndVariability.js';
 
 const CAVColors = {
@@ -59,7 +59,9 @@ const CAVColors = {
 
   intervalToolIconShadedSphereMainColorProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolIconShadedSphereMainColor', { default: '#e0d987' } ),
   intervalToolIconShadedSphereHighlightColorProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolIconShadedSphereHighlightColor', { default: '#e0d987' } ),
-  intervalToolIconShadedSphereShadowColorProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolIconShadedSphereShadowColor', { default: '#545034' } )
+  intervalToolIconShadedSphereShadowColorProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolIconShadedSphereShadowColor', { default: '#545034' } ),
+  intervalToolFillProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolFillProperty', { default: Color.toColor( '#fefccf' ).withAlpha( 0.6 ) } ),
+  intervalToolStrokeProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolStrokeProperty', { default: '#eae4c3' } )
 };
 
 centerAndVariability.register( 'CAVColors', CAVColors );

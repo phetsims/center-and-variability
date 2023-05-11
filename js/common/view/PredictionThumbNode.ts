@@ -1,6 +1,6 @@
 // Copyright 2023, University of Colorado Boulder
 /**
- * The thumb node for the PreditionSlider. Is made up of an Arrow and ShadedSphere.
+ * The thumb node for the PredictionSlider. Is made up of an Arrow and ShadedSphere.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
  *

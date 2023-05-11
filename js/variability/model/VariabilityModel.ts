@@ -30,7 +30,9 @@ export default class VariabilityModel extends CAVModel {
   public readonly isShowingIQRProperty: Property<boolean>;
   public readonly isShowingMADProperty: Property<boolean>;
   public readonly isInfoShowingProperty: Property<boolean>;
-  public readonly isShowingPlayAreaVariabilityProperty: BooleanProperty;
+  public readonly isShowingIntervalToolProperty: BooleanProperty;
+  public readonly intervalTool1ValueProperty: NumberProperty;
+  public readonly intervalTool2ValueProperty: NumberProperty;
 
   public readonly resetEmitter = new Emitter();
   public readonly variabilitySceneModels: VariabilitySceneModel[];
@@ -76,9 +78,17 @@ export default class VariabilityModel extends CAVModel {
       tandem: options.tandem.createTandem( 'isInfoShowingProperty' )
     } );
 
+    this.isShowingIntervalToolProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isShowingIntervalToolProperty' )
+    } );
 
-    this.isShowingPlayAreaVariabilityProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isShowingPlayAreaVariabilityProperty' )
+    this.intervalTool1ValueProperty = new NumberProperty( 2, {
+      range: CAVConstants.PHYSICAL_RANGE,
+      tandem: options.tandem.createTandem( 'intervalTool1ValueProperty' )
+    } );
+    this.intervalTool2ValueProperty = new NumberProperty( 3, {
+      range: CAVConstants.PHYSICAL_RANGE,
+      tandem: options.tandem.createTandem( 'intervalTool2ValueProperty' )
     } );
   }
 

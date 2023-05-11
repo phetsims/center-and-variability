@@ -86,8 +86,8 @@
   "mad": {
     "value": "MAD"
   },
-  "variability": {
-    "value": "Variability"
+  "intervalTool": {
+    "value": "Interval Tool"
   },
   "predictMean": {
     "value": "Predict Mean"

@@ -53,13 +53,15 @@ export default class CAVScreenView extends ScreenView {
   protected readonly modelViewTransform: ModelViewTransform2;
   protected readonly model: CAVModel;
 
+  protected readonly intervalToolLayer = new Node();
+
   // TODO: We haven't enforced the "exactly half a ball should be occluded if anything is occluded" design, see https://github.com/phetsims/center-and-variability/issues/175
-  protected readonly frontObjectLayer = new Node();
   protected readonly backObjectLayer = new Node();
+  protected readonly frontObjectLayer = new Node();
 
   protected readonly eraseButton: EraserButton;
 
-  // Subclasses use this to add to for correct z-ordering and correct tab navigation order
+  // Subclasses add to the contentLayer for correct z-ordering and correct tab navigation order
   protected readonly contentLayer = new Node();
 
   protected accordionBox: CAVAccordionBox | null = null;
@@ -87,6 +89,7 @@ export default class CAVScreenView extends ScreenView {
     this.addChild( this.contentLayer );
 
     this.contentLayer.addChild( new BackgroundNode( GROUND_POSITION_Y, this.visibleBoundsProperty ) );
+    this.contentLayer.addChild( this.intervalToolLayer );
 
     // Soccer balls go behind the accordion box after they land
     this.contentLayer.addChild( this.backObjectLayer );
