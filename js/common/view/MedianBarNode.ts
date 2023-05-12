@@ -29,8 +29,10 @@ export default class MedianBarNode extends Path {
   private readonly notchDirection: NotchDirection;
   private readonly barStyle: BarStyle;
   private readonly medianArrowNode: ArrowNode;
+
   public static readonly NOTCH_HEIGHT = 10;
   public static readonly HALF_SPLIT_WIDTH = 2;
+  public static readonly LINE_WIDTH = 2;
 
   public constructor( providedOptions: MedianBarNodeOptions ) {
 
@@ -91,8 +93,6 @@ export default class MedianBarNode extends Path {
     this.shape = null;
     this.medianArrowNode.visible = false;
   }
-
-  public static readonly LINE_WIDTH = 2;
 }
 
 centerAndVariability.register( 'MedianBarNode', MedianBarNode );
