@@ -24,7 +24,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
     const backgroundShape = CAVConstants.ACCORDION_BOX_CONTENTS_SHAPE_MEAN_AND_OR_MEDIAN;
     const backgroundNode = new Path( backgroundShape, {
       clipArea: backgroundShape,
-      fill: new Color( 255, 0, 0, 0.2 )
+      fill: null
     } );
 
     // There is only one scene in the mean and median screen

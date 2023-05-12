@@ -33,7 +33,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     const backgroundShape = CAVConstants.ACCORDION_BOX_CONTENTS_SHAPE_VARIABILITY;
     const backgroundNode = new Path( backgroundShape, {
       clipArea: backgroundShape,
-      fill: new Color( 255, 0, 0, 0.2 )
+      fill: null
     } );
 
     const currentProperty = new DerivedProperty( [ model.selectedVariabilityProperty ], selectedVariability =>
