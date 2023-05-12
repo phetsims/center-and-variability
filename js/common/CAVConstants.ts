@@ -68,7 +68,9 @@ const CAVConstants = {
   MAX_KICKS_PROPERTY: new NumberProperty( CAVQueryParameters.maxKicks, {
     validValues: [ 15, 20, 25, 30 ],
     tandem: Tandem.PREFERENCES.createTandem( 'maxKicksProperty' )
-  } )
+  } ),
+
+  SCENE_VIEW_TANDEM: 'sceneView'
 };
 
 centerAndVariability.register( 'CAVConstants', CAVConstants );

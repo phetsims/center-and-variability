@@ -120,9 +120,11 @@ export default class VariabilityScreenView extends CAVScreenView {
 
     model.variabilitySceneModels.forEach( ( sceneModel, index ) => {
 
-      // TODO: https://github.com/phetsims/center-and-variability/issues/164 Do we really want to create 12 of these?
+      // The infoDialog only exists in the VariabilityScreen, so having CAVScreenView be in charge of creating custom subclasses
+      // of CAVSceneView is overcomplicated and unnecessary. Instead, we create an equivalent tandem, so that it will appear
+      // under the appropriate sceneView in the studio tree.
       const infoDialog = new InfoDialog( model, sceneModel, {
-        tandem: options.tandem.createTandem( 'scene' + index ).createTandem( 'infoDialog' )
+        tandem: options.tandem.createTandem( CAVConstants.SCENE_VIEW_TANDEM + index ).createTandem( 'infoDialog' )
       } );
 
       Multilink.multilink( [ model.isInfoVisibleProperty, sceneModel.isVisibleProperty ],

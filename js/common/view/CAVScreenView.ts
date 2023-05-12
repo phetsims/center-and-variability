@@ -103,7 +103,7 @@ export default class CAVScreenView extends ScreenView {
       ( soccerPlayer, sceneModel ) => this.getSoccerPlayerImageSet( soccerPlayer, sceneModel ),
       modelViewTransform,
       this.visibleBoundsProperty, {
-        tandem: options.tandem.createTandem( 'sceneView' + index )
+        tandem: options.tandem.createTandem( CAVConstants.SCENE_VIEW_TANDEM + index )
       } ) );
 
     const createToggleNode = ( pickLayer: ( sceneView: SceneView ) => Node ) => new ToggleNode( model.selectedSceneModelProperty, this.sceneViews.map( sceneView => {
