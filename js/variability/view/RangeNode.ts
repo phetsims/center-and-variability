@@ -57,7 +57,7 @@ export default class RangeNode extends CAVPlotNode {
     } );
     const rectangleHeight = 70;
     const rangeRectangle = new Rectangle( 0, 50, 100, rectangleHeight, {
-      fill: '#c3fdb9',
+      fill: CAVColors.rangeFillProperty,
       stroke: 'lightGray'
     } );
     this.addChild( rangeBar );

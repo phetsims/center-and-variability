@@ -62,7 +62,9 @@ const CAVColors = {
   intervalToolIconShadedSphereHighlightColorProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolIconShadedSphereHighlightColor', { default: '#e0d987' } ),
   intervalToolIconShadedSphereShadowColorProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolIconShadedSphereShadowColor', { default: '#545034' } ),
   intervalToolFillProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolFillProperty', { default: Color.toColor( '#fefccf' ).withAlpha( 0.6 ) } ),
-  intervalToolStrokeProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolStrokeProperty', { default: '#eae4c3' } )
+  intervalToolStrokeProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolStrokeProperty', { default: '#eae4c3' } ),
+
+  rangeFillProperty: new ProfileColorProperty( centerAndVariability, 'rangeFillProperty', { default: '#c3fdb9' } )
 };
 
 centerAndVariability.register( 'CAVColors', CAVColors );

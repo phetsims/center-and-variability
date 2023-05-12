@@ -7,6 +7,7 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import Property from '../../../../axon/js/Property.js';
 import { Text } from '../../../../scenery/js/imports.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import RangeIconNode from './RangeIconNode.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityRadioButtonGroupOptions = SelfOptions & RectangularRadioButtonGroupOptions;
@@ -31,7 +32,7 @@ export default class VariabilityMeasureRadioButtonGroup extends RectangularRadio
     };
     super( property, [ {
       value: VariabilityMeasure.RANGE,
-      createNode: tandem => createLabel( tandem, 'RAN', '#ec5f3a' ),
+      createNode: tandem => new RangeIconNode(),
       tandemName: 'rangeRadioButton'
     }, {
       value: VariabilityMeasure.IQR,

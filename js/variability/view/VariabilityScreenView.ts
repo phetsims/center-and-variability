@@ -82,7 +82,7 @@ export default class VariabilityScreenView extends CAVScreenView {
 
     ManualConstraint.create( this, [ variabilityMeasureRadioButtonGroup, this.accordionBox! ],
       ( variabilityRadioButtonGroupWrapper, accordionBoxWrapper ) => {
-        variabilityRadioButtonGroupWrapper.centerY = accordionBoxWrapper.centerY;
+        variabilityRadioButtonGroupWrapper.top = accordionBoxWrapper.top + 8;
       } );
 
     const intervalToolPlayAreaNode = new IntervalToolPlayAreaNode( model.intervalTool1ValueProperty, model.intervalTool2ValueProperty, this.modelViewTransform,
