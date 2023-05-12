@@ -60,8 +60,8 @@ const CAVColors = {
   grayDataPointFill: new ProfileColorProperty( centerAndVariability, 'grayDataPointFill', { default: '#8f8f8f' } ),
 
   intervalToolIconRectangleFillColorProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolIconRectangleFill', { default: '#fef8ab' } ),
-  intervalToolIconShadedSphereMainColorProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolIconShadedSphereMainColor', { default: '#e0d987' } ),
-  intervalToolIconShadedSphereHighlightColorProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolIconShadedSphereHighlightColor', { default: '#e0d987' } ),
+  intervalToolIconShadedSphereMainColorProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolIconShadedSphereMainColor', { default: '#fdf581' } ),
+  intervalToolIconShadedSphereHighlightColorProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolIconShadedSphereHighlightColor', { default: '#fdfdf2' } ),
   intervalToolIconShadedSphereShadowColorProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolIconShadedSphereShadowColor', { default: '#545034' } ),
   intervalToolFillProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolFillProperty', { default: Color.toColor( '#fefccf' ).withAlpha( 0.6 ) } ),
   intervalToolStrokeProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolStrokeProperty', { default: '#eae4c3' } ),
