@@ -13,8 +13,9 @@ export default class IQRIconNode extends Node {
   public constructor() {
 
     // Main background rectangle
-    const rectangle = new Rectangle( 0, 0, 22, 22, {
-      fill: '#e8b3a2'
+    const rectangle = new Rectangle( 0, 0, 40, 40, {
+      fill: '#e8b3a2',
+      cornerRadius: 4
     } );
 
     const options = {
@@ -23,7 +24,7 @@ export default class IQRIconNode extends Node {
     };
 
     // Foreground rectangle with null fill, black stroke and lineWidth 0.5
-    const iqrRectangle = new Rectangle( 0, 0, 13, 6, {
+    const iqrRectangle = new Rectangle( 0, 0, 17, 8, {
       center: rectangle.center,
       ...options
     } );
@@ -32,8 +33,8 @@ export default class IQRIconNode extends Node {
     const verticalLine = new Line( iqrRectangle.centerX + 2, iqrRectangle.top, iqrRectangle.centerX + 2, iqrRectangle.bottom, options );
 
     // Short stub line on the left and right side
-    const stubLineLeft = new Line( iqrRectangle.left, iqrRectangle.centerY, iqrRectangle.left - 4, iqrRectangle.centerY, options );
-    const stubLineRight = new Line( iqrRectangle.right, iqrRectangle.centerY, iqrRectangle.right + 2, iqrRectangle.centerY, options );
+    const stubLineLeft = new Line( iqrRectangle.left, iqrRectangle.centerY, iqrRectangle.left - 5, iqrRectangle.centerY, options );
+    const stubLineRight = new Line( iqrRectangle.right, iqrRectangle.centerY, iqrRectangle.right + 3, iqrRectangle.centerY, options );
 
     super( {
       children: [

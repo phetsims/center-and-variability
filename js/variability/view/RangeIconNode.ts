@@ -18,6 +18,11 @@ import ToggleNode from '../../../../sun/js/ToggleNode.js';
 export default class RangeIconNode extends Node {
   public constructor() {
 
+    const outerRectangle = new Rectangle( 0, 0, 40, 40, {
+      fill: 'white',
+      cornerRadius: 4
+    } );
+
     // Main background rectangle
     const rectangle = new Rectangle( 0, 0, 22, 22, {
       fill: CAVColors.rangeFillProperty
@@ -52,7 +57,7 @@ export default class RangeIconNode extends Node {
       } ] );
     };
 
-    super( {
+    const contentNode = new Node( {
       children: [
 
         // Main background rectangle
@@ -87,6 +92,15 @@ export default class RangeIconNode extends Node {
           centerX: rectangle.centerX,
           bottom: rectangle.bottom - 1
         } )
+      ],
+      center: outerRectangle.center,
+      scale: 1.3
+    } );
+
+    super( {
+      children: [
+        outerRectangle,
+        contentNode
       ]
     } );
   }

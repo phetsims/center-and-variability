@@ -5,10 +5,9 @@ import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Property from '../../../../axon/js/Property.js';
-import { Text } from '../../../../scenery/js/imports.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import RangeIconNode from './RangeIconNode.js';
 import IQRIconNode from './IQRIconNode.js';
+import MADIconNode from './MADIconNode.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityRadioButtonGroupOptions = SelfOptions & RectangularRadioButtonGroupOptions;
@@ -18,15 +17,6 @@ export default class VariabilityMeasureRadioButtonGroup extends RectangularRadio
   public constructor( property: Property<VariabilityMeasure>, providedOptions: VariabilityRadioButtonGroupOptions ) {
     const options = optionize<VariabilityRadioButtonGroupOptions, SelfOptions, RectangularRadioButtonGroupOptions>()( {}, providedOptions );
 
-    const createLabel = ( tandem: Tandem, label: string, fill: string ) => {
-
-      const text = new Text( label, {
-        fontSize: 16,
-        fontWeight: 'bold',
-        fill: 'black'
-      } );
-      return text;
-    };
     super( property, [ {
       value: VariabilityMeasure.RANGE,
       createNode: tandem => new RangeIconNode(),
@@ -37,14 +27,15 @@ export default class VariabilityMeasureRadioButtonGroup extends RectangularRadio
       tandemName: 'iqrRadioButton'
     }, {
       value: VariabilityMeasure.MAD,
-      createNode: tandem => createLabel( tandem, 'm', '#fdf454' ),
+      createNode: tandem => new MADIconNode(),
       tandemName: 'madRadioButton'
     } ], {
       ...options,
+      spacing: 5,
       radioButtonOptions: {
         baseColor: 'white',
-        xMargin: 5,
-        yMargin: 5
+        xMargin: 0,
+        yMargin: 0
       }
     } );
   }
