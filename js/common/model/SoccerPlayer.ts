@@ -8,27 +8,40 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import Property from '../../../../axon/js/Property.js';
 import Pose from './Pose.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
+import Property from '../../../../axon/js/Property.js';
+import NullableIO from '../../../../tandem/js/types/NullableIO.js';
+import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 
 export default class SoccerPlayer {
-  public readonly poseProperty = new Property<Pose>( Pose.STANDING );
+  public readonly poseProperty;
 
   // Also used to determine the artwork for rendering the SoccerPlayerNode
   public readonly initialPlaceInLine: number;
 
-  public timestampWhenPoisedBegan: number | null = null;
+  public readonly timestampWhenPoisedBeganProperty: Property<number | null>;
   public readonly isActiveProperty: BooleanProperty;
 
-  public constructor( placeInLine: number ) {
-    this.isActiveProperty = new BooleanProperty( placeInLine === 0 );
+  public constructor( placeInLine: number, tandem: Tandem ) {
+    this.poseProperty = new EnumerationProperty( Pose.STANDING, {
+      tandem: tandem.createTandem( 'poseProperty' )
+    } );
+    this.isActiveProperty = new BooleanProperty( placeInLine === 0, {
+      tandem: tandem.createTandem( 'isActiveProperty' )
+    } );
+    this.timestampWhenPoisedBeganProperty = new Property<number | null>( null, {
+      tandem: tandem.createTandem( 'timestampWhenPoisedBeganProperty' ),
+      phetioValueType: NullableIO( NumberIO )
+    } );
     this.initialPlaceInLine = placeInLine;
   }
 
   public reset(): void {
     this.poseProperty.reset();
-    this.timestampWhenPoisedBegan = null;
+    this.timestampWhenPoisedBeganProperty.reset();
     this.isActiveProperty.reset();
   }
 }

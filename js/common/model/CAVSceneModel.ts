@@ -113,7 +113,8 @@ export default abstract class CAVSceneModel extends PhetioObject implements TMod
     this.maxKicksLimit = Math.max( ...maxKicksChoices );
 
     this.soccerBallCountProperty = new NumberProperty( 0, {
-      range: new Range( 0, this.maxKicksLimit )
+      range: new Range( 0, this.maxKicksLimit ),
+      tandem: options.tandem.createTandem( 'soccerBallCountProperty' )
     } );
     this.soccerBalls = _.range( 0, this.maxKicksLimit ).map( index => {
       const soccerBall = new SoccerBall( index === 0, {
@@ -221,7 +222,9 @@ export default abstract class CAVSceneModel extends PhetioObject implements TMod
       phetioValueType: NullableIO( NumberIO )
     } );
 
-    this.numberOfDataPointsProperty = new NumberProperty( 0 );
+    this.numberOfDataPointsProperty = new NumberProperty( 0, {
+      tandem: options.tandem.createTandem( 'numberOfDataPointsProperty' )
+    } );
 
     this.timeProperty = new NumberProperty( 0, {
       tandem: options.tandem.createTandem( 'timeProperty' )
@@ -236,7 +239,9 @@ export default abstract class CAVSceneModel extends PhetioObject implements TMod
       tandem: options.tandem.createTandem( 'timeWhenLastBallWasKickedProperty' )
     } );
 
-    this.soccerPlayers = _.range( 0, this.maxKicksLimit ).map( placeInLine => new SoccerPlayer( placeInLine ) );
+    this.soccerPlayers = _.range( 0, this.maxKicksLimit ).map( placeInLine => new SoccerPlayer( placeInLine,
+      options.tandem.createTandem( 'soccerPlayer' + placeInLine )
+    ) );
 
     // Create an initial ball to show on startup
     this.getNextBallFromPool();
@@ -413,14 +418,14 @@ export default abstract class CAVSceneModel extends PhetioObject implements TMod
 
         if ( frontPlayer.poseProperty.value === Pose.STANDING ) {
           frontPlayer.poseProperty.value = Pose.POISED_TO_KICK;
-          frontPlayer.timestampWhenPoisedBegan = this.timeProperty.value;
+          frontPlayer.timestampWhenPoisedBeganProperty.value = this.timeProperty.value;
         }
       }
 
       // How long has the front player been poised?
       if ( frontPlayer.poseProperty.value === Pose.POISED_TO_KICK ) {
-        assert && assert( typeof frontPlayer.timestampWhenPoisedBegan === 'number', 'timestampWhenPoisedBegan should be a number' );
-        const elapsedTime = this.timeProperty.value - frontPlayer.timestampWhenPoisedBegan!;
+        assert && assert( typeof frontPlayer.timestampWhenPoisedBeganProperty.value === 'number', 'timestampWhenPoisedBegan should be a number' );
+        const elapsedTime = this.timeProperty.value - frontPlayer.timestampWhenPoisedBeganProperty.value!;
         if ( elapsedTime > 0.075 ) {
 
           const soccerBall = this.soccerBalls.find( soccerBall =>
