@@ -54,7 +54,7 @@ export default class VariabilityScreenView extends CAVScreenView {
 
     super( model, options );
 
-    this.contentLayer.addChild( new PredictionSlider( model.intervalTool1ValueProperty, this.modelViewTransform, CAVConstants.PHYSICAL_RANGE, {
+    this.contentLayer.addChild( new PredictionSlider( model.intervalTool1ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE, {
       predictionThumbNodeOptions: {
         color: CAVColors.intervalToolIconShadedSphereMainColorProperty
       },
@@ -65,7 +65,7 @@ export default class VariabilityScreenView extends CAVScreenView {
       tandem: options.tandem.createTandem( 'variabilityIntervalPredictionTool1ValueNode' )
     } ) );
 
-    this.contentLayer.addChild( new PredictionSlider( model.intervalTool2ValueProperty, this.modelViewTransform, CAVConstants.PHYSICAL_RANGE, {
+    this.contentLayer.addChild( new PredictionSlider( model.intervalTool2ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE, {
       predictionThumbNodeOptions: {
         color: CAVColors.intervalToolIconShadedSphereMainColorProperty
       },
