@@ -92,7 +92,7 @@ export default class CardNode extends Node {
     this.soccerBall.dragStartedEmitter.addListener( () => this.moveToFront() );
   }
 
-  public animateTo( destination: Vector2, duration: number, callback = _.noop ): void {
+  public animateTo( destination: Vector2, duration: number ): void {
 
     if ( this.animation ) {
 
@@ -101,8 +101,6 @@ export default class CardNode extends Node {
       if ( destination.equals( this.animationTo! ) ) {
 
         // Already moving to the desired destination.
-        // TODO: should this callback be called from the finishEmitter of the existing animation? See https://github.com/phetsims/center-and-variability/issues/177
-        callback();
         return;
       }
       else {
@@ -113,7 +111,6 @@ export default class CardNode extends Node {
       if ( destination.equals( this.positionProperty.value ) ) {
 
         // Already at the desired destination.
-        callback();
         return;
       }
     }
@@ -129,7 +126,6 @@ export default class CardNode extends Node {
     this.animationTo = destination;
 
     this.animation.endedEmitter.addListener( () => {
-      callback();
       this.animation = null;
       this.animationTo = null;
     } );
