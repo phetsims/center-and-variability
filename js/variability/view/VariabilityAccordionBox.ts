@@ -220,7 +220,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         font: new PhetFont( 16 ),
         maxWidth: 300
       } ),
-      left: 100
+      left: 65
     } );
 
     this.plotToggleNode = plotToggleNode;
