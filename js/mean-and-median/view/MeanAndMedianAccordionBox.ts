@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
-import { AlignGroup, Color, Node, Path, Text } from '../../../../scenery/js/imports.js';
+import { AlignGroup, Node, Path, Text } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';

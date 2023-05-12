@@ -16,14 +16,14 @@ export default class IntervalToolIconNode extends Node {
   public constructor( providedOptions?: NodeOptions ) {
 
     // Sampled from the design in https://github.com/phetsims/center-and-variability/issues/182
-    const rectangleFill = '#fef8ab';
+    const rectangleFillProperty = CAVColors.intervalToolIconRectangleFillColorProperty;
 
     const mainRectangle = new Rectangle( 0, 0, 20, 15, {
-      fill: rectangleFill
+      fill: rectangleFillProperty
     } );
 
     const createHandle = ( options: NodeTransformOptions ) => new Rectangle( 0, 0, 2, mainRectangle.height + 8, {
-      fill: rectangleFill,
+      fill: rectangleFillProperty,
       ...options
     } );
 

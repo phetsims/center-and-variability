@@ -1,6 +1,6 @@
 // Copyright 2023, University of Colorado Boulder
 
-import { AlignGroup, Color, Path, Text, VBox, Node } from '../../../../scenery/js/imports.js';
+import { AlignGroup, Node, Path, Text, VBox } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
