@@ -93,43 +93,35 @@ export default class CAVModel {
     } );
 
     this.isDragIndicatorVisibleProperty = new BooleanProperty( false, { tandem: options.tandem.createTandem( 'isDragIndicatorVisibleProperty' ) } );
+
+    // Cannot take a range, since it is nullable
     this.dragIndicatorValueProperty = new Property<number | null>( null, {
       tandem: options.tandem.createTandem( 'dragIndicatorValueProperty' ),
-      phetioValueType: NullableIO( NumberIO )
+      phetioValueType: NullableIO( NumberIO ),
+      phetioReadOnly: true
     } );
 
-    Multilink.multilink( [ this.selectedSceneModelProperty,
-        this.soccerBallHasBeenDraggedProperty, selectedSceneSoccerBallCountProperty,
-        selectedSceneMaxKicksProperty
-      ],
-      ( selectedSceneModel, soccerBallHasBeenDragged, soccerBallCount, maxKicks ) => {
-
-        if ( soccerBallCount !== null ) {
-          this.updateDragIndicator( selectedSceneModel, soccerBallHasBeenDragged, soccerBallCount, maxKicks );
-        }
-      } );
+    const allValueProperties = sceneModels.flatMap( sceneModel => sceneModel.soccerBalls.map( soccerBall => soccerBall.valueProperty ) );
 
     // It is important to link to the values of all the soccer balls in the screen, so that the dragIndicator can be
     // updated after all the balls have landed, and not just after they have been kicked.
-    sceneModels.forEach( sceneModel => {
-      sceneModel.soccerBalls.forEach( soccerBall => soccerBall.valueProperty.link( value => {
-        if ( value !== null ) {
-          this.updateDragIndicator( this.selectedSceneModelProperty.value, this.soccerBallHasBeenDraggedProperty.value,
-            selectedSceneSoccerBallCountProperty.value, selectedSceneMaxKicksProperty.value );
-        }
-      } ) );
+    Multilink.multilinkAny( [ ...allValueProperties, this.selectedSceneModelProperty,
+      this.soccerBallHasBeenDraggedProperty, selectedSceneSoccerBallCountProperty,
+      selectedSceneMaxKicksProperty
+    ], () => {
+      this.updateDragIndicator( this.selectedSceneModelProperty.value, this.soccerBallHasBeenDraggedProperty.value,
+        selectedSceneSoccerBallCountProperty.value, selectedSceneMaxKicksProperty.value );
     } );
-
   }
 
   private updateDragIndicator( selectedSceneModel: CAVSceneModel, soccerBallHasBeenDragged: boolean, soccerBallCount: number, maxKicks: number ): void {
 
     //  if an object was moved, objects are not input enabled, or the max number of balls haven't been kicked out
     //  don't show the dragIndicatorArrowNode
-    const indicatorVisible = soccerBallCount === maxKicks &&
+    const indicatorVisible = !soccerBallHasBeenDragged &&
+                             soccerBallCount === maxKicks &&
                              this.objectNodesInputEnabledProperty.value &&
-                             _.every( selectedSceneModel?.getActiveSoccerBalls(), soccerBall => soccerBall.valueProperty.value !== null ) &&
-                             !soccerBallHasBeenDragged;
+                             _.every( selectedSceneModel?.getActiveSoccerBalls(), soccerBall => soccerBall.valueProperty.value !== null );
     this.isDragIndicatorVisibleProperty.value = indicatorVisible;
 
     if ( indicatorVisible ) {
