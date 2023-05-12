@@ -19,7 +19,7 @@ import SceneRadioButtonGroup from './SceneRadioButtonGroup.js';
 import VariabilityMeasureRadioButtonGroup from './VariabilityMeasureRadioButtonGroup.js';
 import CAVScreenView, { CAVScreenViewOptions } from '../../common/view/CAVScreenView.js';
 import VariabilityAccordionBox from './VariabilityAccordionBox.js';
-import BottomRepresentationCheckboxGroup from '../../common/view/BottomRepresentationCheckboxGroup.js';
+import PlayAreaCheckboxFactory from '../../common/view/PlayAreaCheckboxFactory.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 import SoccerPlayer from '../../common/model/SoccerPlayer.js';
@@ -109,9 +109,9 @@ export default class VariabilityScreenView extends CAVScreenView {
       spacing: 15,
       children: [
         new VerticalCheckboxGroup( [
-          BottomRepresentationCheckboxGroup.getMedianCheckboxItem( iconGroup, model ),
-          BottomRepresentationCheckboxGroup.getMeanCheckboxItem( iconGroup, model ),
-          BottomRepresentationCheckboxGroup.getIntervalToolCheckboxItem( iconGroup, model )
+          PlayAreaCheckboxFactory.getMedianCheckboxItem( iconGroup, model ),
+          PlayAreaCheckboxFactory.getMeanCheckboxItem( iconGroup, model ),
+          PlayAreaCheckboxFactory.getIntervalToolCheckboxItem( iconGroup, model )
         ], {
           tandem: this.tandem.createTandem( 'bottomCheckboxGroup' )
         } )

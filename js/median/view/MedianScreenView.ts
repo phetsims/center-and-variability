@@ -15,7 +15,7 @@ import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import CAVScreenView, { CAVScreenViewOptions } from '../../common/view/CAVScreenView.js';
 import MedianAccordionBox from './MedianAccordionBox.js';
-import BottomRepresentationCheckboxGroup from '../../common/view/BottomRepresentationCheckboxGroup.js';
+import PlayAreaCheckboxFactory from '../../common/view/PlayAreaCheckboxFactory.js';
 import { AlignGroup } from '../../../../scenery/js/imports.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
@@ -43,8 +43,8 @@ export default class MedianScreenView extends CAVScreenView {
     const iconGroup = new AlignGroup();
 
     this.setBottomControls( new VerticalCheckboxGroup( [
-      BottomRepresentationCheckboxGroup.getPredictMedianCheckboxItem( iconGroup, model ),
-      BottomRepresentationCheckboxGroup.getMedianCheckboxItem( iconGroup, model )
+      PlayAreaCheckboxFactory.getPredictMedianCheckboxItem( iconGroup, model ),
+      PlayAreaCheckboxFactory.getMedianCheckboxItem( iconGroup, model )
     ], {
       tandem: this.tandem.createTandem( 'bottomCheckboxGroup' )
     } ) );

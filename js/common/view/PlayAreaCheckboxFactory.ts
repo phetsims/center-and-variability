@@ -30,7 +30,7 @@ const TEXT_OPTIONS = {
   maxWidth: CAVConstants.CHECKBOX_TEXT_MAX_WIDTH
 };
 
-export default class BottomRepresentationCheckboxGroup {
+export default class PlayAreaCheckboxFactory {
 
   private static createGridBox( text: Node, icon: Node, iconGroup: AlignGroup ): GridBox {
     return new GridBox( {
@@ -47,7 +47,7 @@ export default class BottomRepresentationCheckboxGroup {
   public static getIntervalToolCheckboxItem( alignGroup: AlignGroup, model: VariabilityModel ): VerticalCheckboxGroupItem {
     return {
       createNode: ( tandem: Tandem ) => {
-        return BottomRepresentationCheckboxGroup.createGridBox(
+        return PlayAreaCheckboxFactory.createGridBox(
           new Text( CenterAndVariabilityStrings.intervalToolStringProperty, TEXT_OPTIONS ),
           new IntervalToolIconNode(),
           alignGroup
@@ -61,7 +61,7 @@ export default class BottomRepresentationCheckboxGroup {
   public static getMedianCheckboxItem( alignGroup: AlignGroup, model: CAVModel ): VerticalCheckboxGroupItem {
     return {
       createNode: ( tandem: Tandem ) => {
-        return BottomRepresentationCheckboxGroup.createGridBox(
+        return PlayAreaCheckboxFactory.createGridBox(
           new Text( CenterAndVariabilityStrings.medianStringProperty, TEXT_OPTIONS ),
           new ArrowNode( 0, 0, 0, 27, {
             fill: CAVColors.medianColorProperty,
@@ -79,7 +79,7 @@ export default class BottomRepresentationCheckboxGroup {
 
   public static getMeanCheckboxItem( alignGroup: AlignGroup, model: CAVModel ): VerticalCheckboxGroupItem {
     return {
-      createNode: ( tandem: Tandem ) => BottomRepresentationCheckboxGroup.createGridBox( new Text( CenterAndVariabilityStrings.meanStringProperty, TEXT_OPTIONS ),
+      createNode: ( tandem: Tandem ) => PlayAreaCheckboxFactory.createGridBox( new Text( CenterAndVariabilityStrings.meanStringProperty, TEXT_OPTIONS ),
         NumberLineNode.createMeanIndicatorNode( true, true ), alignGroup ),
       property: model.isPlayAreaMeanVisibleProperty,
       tandemName: 'meanCheckbox'
@@ -90,7 +90,7 @@ export default class BottomRepresentationCheckboxGroup {
                                        tandemName: string, alignGroup: AlignGroup ): VerticalCheckboxGroupItem {
     return {
       createNode: ( tandem: Tandem ) => {
-        return BottomRepresentationCheckboxGroup.createGridBox(
+        return PlayAreaCheckboxFactory.createGridBox(
           new Text( stringProperty, TEXT_OPTIONS ),
           new PredictionThumbNode( { color: color, maxHeight: 20, pickable: false } ),
           alignGroup );
@@ -101,7 +101,7 @@ export default class BottomRepresentationCheckboxGroup {
   }
 
   public static getPredictMedianCheckboxItem( alignGroup: AlignGroup, model: CAVModel ): VerticalCheckboxGroupItem {
-    return BottomRepresentationCheckboxGroup.createPredictionItem(
+    return PlayAreaCheckboxFactory.createPredictionItem(
       model.isMedianPredictionVisibleProperty,
       CenterAndVariabilityStrings.predictMedianStringProperty,
       CAVColors.medianColorProperty,
@@ -112,7 +112,7 @@ export default class BottomRepresentationCheckboxGroup {
   }
 
   public static getPredictMeanCheckboxItem( alignGroup: AlignGroup, model: MeanAndMedianModel ): VerticalCheckboxGroupItem {
-    return BottomRepresentationCheckboxGroup.createPredictionItem(
+    return PlayAreaCheckboxFactory.createPredictionItem(
       model.isMeanPredictionVisibleProperty,
       CenterAndVariabilityStrings.predictMeanStringProperty,
       CAVColors.meanColorProperty,
@@ -123,4 +123,4 @@ export default class BottomRepresentationCheckboxGroup {
   }
 }
 
-centerAndVariability.register( 'BottomRepresentationCheckboxGroup', BottomRepresentationCheckboxGroup );
+centerAndVariability.register( 'PlayAreaCheckboxFactory', PlayAreaCheckboxFactory );
