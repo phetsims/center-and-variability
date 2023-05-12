@@ -22,7 +22,8 @@ export default class SoccerBallNode extends CAVObjectNode {
                       modelViewTransform: ModelViewTransform2, objectNodesInputEnabledProperty: TProperty<boolean>,
                       options: CAVObjectNodeOptions ) {
 
-    const viewRadius = modelViewTransform.modelToViewDeltaX( CAVObjectType.SOCCER_BALL.radius );
+    // Use the y dimension, since it determines how the soccer balls stack. But maintain the same aspect ratio as the image
+    const viewRadius = Math.abs( modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) );
 
     super( soccerBall, isPlayAreaMedianVisibleProperty, modelViewTransform, CAVObjectType.SOCCER_BALL.radius, options );
 

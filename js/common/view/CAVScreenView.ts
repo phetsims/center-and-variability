@@ -203,9 +203,10 @@ export default class CAVScreenView extends ScreenView {
           const dragIndicatorArrowNodeMargin = 6;
 
           // calculate where the top object is
+          // TODO: This is duplicated in the median arrow calculation in the SceneView, see https://github.com/phetsims/center-and-variability/issues/197
           const topObjectPositionY = modelViewTransform.modelToViewY( 0 ) -
                                      ( selectedSceneModel.getStackAtLocation( dragIndicatorValue ).length ) *
-                                     Math.abs( modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) ) * 2 -
+                                     Math.abs( modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius * ( 1 - CAVConstants.SOCCER_BALL_OVERLAP ) ) ) * 2 -
                                      dragIndicatorArrowNodeMargin;
 
           dragIndicatorArrowNode.bottom = topObjectPositionY;

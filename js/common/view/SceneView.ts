@@ -24,6 +24,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import SoccerPlayer from '../model/SoccerPlayer.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import CAVAccordionBox from './CAVAccordionBox.js';
+import CAVConstants from '../CAVConstants.js';
 
 /**
  * Renders view elements for a CAVSceneModel. Note that to satisfy the correct z-ordering, elements
@@ -155,7 +156,7 @@ export default class SceneView {
 
         // if there is a ball at that location, go above the ball
         const ballsAtLocation = sceneModel.soccerBalls.filter( soccerBall => soccerBall.valueProperty.value === medianValue );
-        const modelHeight = ballsAtLocation.length * CAVObjectType.SOCCER_BALL.radius * 2; // assumes no spacing
+        const modelHeight = ballsAtLocation.length * CAVObjectType.SOCCER_BALL.radius * 2 * ( 1 - CAVConstants.SOCCER_BALL_OVERLAP );
 
         const viewHeight = modelViewTransform.modelToViewDeltaY( modelHeight );
 
