@@ -11,7 +11,6 @@ import centerAndVariability from '../../centerAndVariability.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import VariabilityModel from './VariabilityModel.js';
-import SoccerBall from '../../common/model/SoccerBall.js';
 import CAVConstants from '../../common/CAVConstants.js';
 
 export default class VariabilitySceneModel extends CAVSceneModel {
@@ -44,8 +43,8 @@ export default class VariabilitySceneModel extends CAVSceneModel {
         const lowerHalf = sortedObjects.slice( 0, splitIndex );
         const upperHalf = sortedObjects.slice( sortedObjects.length % 2 !== 0 ? splitIndex + 1 : splitIndex );
 
-        const q1Objects: SoccerBall[] = CAVSceneModel.getMedianObjectsFromSortedArray( lowerHalf );
-        const q3Objects: SoccerBall[] = CAVSceneModel.getMedianObjectsFromSortedArray( upperHalf );
+        const q1Objects = CAVSceneModel.getMedianObjectsFromSortedArray( lowerHalf );
+        const q3Objects = CAVSceneModel.getMedianObjectsFromSortedArray( upperHalf );
 
         // take the average to account for cases where there is more than one object contributing to the median
         this.q1ValueProperty.value = _.mean( q1Objects.map( obj => obj.valueProperty.value! ) );
