@@ -52,10 +52,10 @@ const CAVColors = {
   meanColorProperty: new ProfileColorProperty( centerAndVariability, 'meanColor', { default: '#8500bd' } ),
   iqrColorProperty: new ProfileColorProperty( centerAndVariability, 'iqrColor', { default: 'black' } ),
   madColorProperty: new ProfileColorProperty( centerAndVariability, 'madColor', { default: 'black' } ),
-  quartileColorProperty: new ProfileColorProperty( centerAndVariability, 'quartileColor', { default: '#99ffff' } ),
+  quartileColorProperty: new ProfileColorProperty( centerAndVariability, 'quartileColor', { default: new Color( '#99ffff' ).withAlpha( 0.55 ) } ),
   arrowStrokeProperty: new ProfileColorProperty( centerAndVariability, 'arrowStroke', { default: 'black' } ),
   boxWhiskerStrokeColorProperty: new ProfileColorProperty( centerAndVariability, 'boxWhiskerStrokeColor', { default: 'black' } ),
-  madRectangleColorProperty: new ProfileColorProperty( centerAndVariability, 'madRectangleColorProperty', { default: new Color( '#cba3e6' ).withAlpha( 0.5 ) } ),
+  madRectangleColorProperty: new ProfileColorProperty( centerAndVariability, 'madRectangleColorProperty', { default: new Color( '#cba3e6' ).withAlpha( 0.7 ) } ),
 
   grayDataPointFill: new ProfileColorProperty( centerAndVariability, 'grayDataPointFill', { default: '#8f8f8f' } ),
 
@@ -66,7 +66,7 @@ const CAVColors = {
   intervalToolFillProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolFillProperty', { default: Color.toColor( '#fefccf' ).withAlpha( 0.6 ) } ),
   intervalToolStrokeProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolStrokeProperty', { default: '#eae4c3' } ),
 
-  rangeFillProperty: new ProfileColorProperty( centerAndVariability, 'rangeFillProperty', { default: '#c3fdb9' } )
+  rangeFillProperty: new ProfileColorProperty( centerAndVariability, 'rangeFillProperty', { default: new Color( '#c3fdb9' ).withAlpha( 0.7 ) } )
 };
 
 centerAndVariability.register( 'CAVColors', CAVColors );
