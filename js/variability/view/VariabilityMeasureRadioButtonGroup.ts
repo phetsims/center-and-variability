@@ -8,6 +8,7 @@ import Property from '../../../../axon/js/Property.js';
 import { Text } from '../../../../scenery/js/imports.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import RangeIconNode from './RangeIconNode.js';
+import IQRIconNode from './IQRIconNode.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityRadioButtonGroupOptions = SelfOptions & RectangularRadioButtonGroupOptions;
@@ -15,11 +16,7 @@ type VariabilityRadioButtonGroupOptions = SelfOptions & RectangularRadioButtonGr
 export default class VariabilityMeasureRadioButtonGroup extends RectangularRadioButtonGroup<VariabilityMeasure> {
 
   public constructor( property: Property<VariabilityMeasure>, providedOptions: VariabilityRadioButtonGroupOptions ) {
-    const options = optionize<VariabilityRadioButtonGroupOptions, SelfOptions, RectangularRadioButtonGroupOptions>()( {
-      radioButtonOptions: {
-        baseColor: 'white'
-      }
-    }, providedOptions );
+    const options = optionize<VariabilityRadioButtonGroupOptions, SelfOptions, RectangularRadioButtonGroupOptions>()( {}, providedOptions );
 
     const createLabel = ( tandem: Tandem, label: string, fill: string ) => {
 
@@ -36,13 +33,20 @@ export default class VariabilityMeasureRadioButtonGroup extends RectangularRadio
       tandemName: 'rangeRadioButton'
     }, {
       value: VariabilityMeasure.IQR,
-      createNode: tandem => createLabel( tandem, 'IQR', '#5bc760' ),
+      createNode: tandem => new IQRIconNode(),
       tandemName: 'iqrRadioButton'
     }, {
       value: VariabilityMeasure.MAD,
-      createNode: tandem => createLabel( tandem, 'MAD', '#fdf454' ),
+      createNode: tandem => createLabel( tandem, 'm', '#fdf454' ),
       tandemName: 'madRadioButton'
-    } ], options );
+    } ], {
+      ...options,
+      radioButtonOptions: {
+        baseColor: 'white',
+        xMargin: 5,
+        yMargin: 5
+      }
+    } );
   }
 }
 
