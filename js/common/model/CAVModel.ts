@@ -136,16 +136,24 @@ export default class CAVModel {
       const selectedSceneModel = this.selectedSceneModelProperty.value;
       const reversedBalls = selectedSceneModel.getActiveSoccerBalls().reverse();
 
-      // TODO: The only way we can assume that there will always be a stack that is not the median stack https://github.com/phetsims/center-and-variability/issues/189
-      // TODO: Is if we can confirm that balls will never land at the same spot without dragging. https://github.com/phetsims/center-and-variability/issues/189
-      // TODO: Should we not show the dragIndicator in this case? https://github.com/phetsims/center-and-variability/issues/189
       // add the dragIndicatorArrowNode above the last object when it is added to the play area.
-      // However, we also want to make sure that the dragIndicator is not in the same position as the Median Indicator.
-      const value: number = reversedBalls
-        .find( soccerBall => soccerBall.valueProperty.value !== selectedSceneModel.medianValueProperty.value )!
-        .valueProperty.value!;
+      // However, we also want to make sure that the dragIndicator is not in the same position as the Median Indicator, if possible
+      const allEqualToMedian = reversedBalls.every( soccerBall => soccerBall.valueProperty.value === selectedSceneModel.medianValueProperty.value );
 
-      this.dragIndicatorValueProperty.value = value;
+      if ( allEqualToMedian ) {
+
+        // If all soccer balls are in the same stack, show the dragIndicator above that stack
+        this.dragIndicatorValueProperty.value = selectedSceneModel.medianValueProperty.value;
+      }
+      else {
+
+        // Otherwise, show it over a recently landed ball that is not in the median stack
+        const value = reversedBalls
+          .find( soccerBall => soccerBall.valueProperty.value !== selectedSceneModel.medianValueProperty.value )!
+          .valueProperty.value!;
+
+        this.dragIndicatorValueProperty.value = value;
+      }
     }
   }
 
