@@ -95,7 +95,6 @@ export default class CAVScreenView extends ScreenView {
     this.contentLayer.addChild( this.backObjectLayer );
     this.addChild( this.frontObjectLayer );
 
-    // TODO: Scene names, see https://github.com/phetsims/center-and-variability/issues/184
     this.sceneViews = model.sceneModels.map( ( sceneModel, index ) => new SceneView(
       model,
       sceneModel,

@@ -88,7 +88,6 @@ export default class CAVPlotNode extends Node {
 
     backgroundNode.addChild( this.dotLayer );
 
-    // TODO: Scene names, see https://github.com/phetsims/center-and-variability/issues/184
     model.sceneModels.forEach( ( scene, sceneIndex ) => {
 
       const dataPointLayer = new Node( {
