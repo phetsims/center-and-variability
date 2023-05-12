@@ -39,7 +39,7 @@ export default class MADNode extends CAVPlotNode {
     this.addChild( needAtLeastOneKickText );
 
     const madRectangle = new Rectangle( 0, 50, 100, 72, {
-      fill: '#e0c0f5',
+      fill: CAVColors.madRectangleColorProperty,
       stroke: 'lightGray'
     } );
 

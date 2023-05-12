@@ -55,6 +55,7 @@ const CAVColors = {
   quartileColorProperty: new ProfileColorProperty( centerAndVariability, 'quartileColor', { default: '#99ffff' } ),
   arrowStrokeProperty: new ProfileColorProperty( centerAndVariability, 'arrowStroke', { default: 'black' } ),
   boxWhiskerStrokeColorProperty: new ProfileColorProperty( centerAndVariability, 'boxWhiskerStrokeColor', { default: 'black' } ),
+  madRectangleColorProperty: new ProfileColorProperty( centerAndVariability, 'madRectangleColorProeprty', { default: '#e0c0f5' } ),
 
   grayDataPointFill: new ProfileColorProperty( centerAndVariability, 'grayDataPointFill', { default: '#8f8f8f' } ),
 
