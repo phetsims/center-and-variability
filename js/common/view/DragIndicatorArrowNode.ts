@@ -13,8 +13,9 @@ import CAVConstants from '../CAVConstants.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import { NodeOptions } from '../../../../scenery/js/imports.js';
 
-type DragIndicatorArrowNodeOptions = PickRequired<ArrowNodeOptions, 'tandem'> & Pick<ArrowNodeOptions, 'visible'>;
+type DragIndicatorArrowNodeOptions = PickRequired<ArrowNodeOptions, 'tandem'> & Pick<ArrowNodeOptions, 'visible'> & NodeOptions;
 
 export default class DragIndicatorArrowNode extends ArrowNode {
 

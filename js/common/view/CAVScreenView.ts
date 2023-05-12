@@ -188,7 +188,8 @@ export default class CAVScreenView extends ScreenView {
     } ) );
 
     const dragIndicatorArrowNode = new DragIndicatorArrowNode( {
-      tandem: options.tandem.createTandem( 'dragIndicatorArrowNode' )
+      tandem: options.tandem.createTandem( 'dragIndicatorArrowNode' ),
+      phetioVisiblePropertyInstrumented: false
     } );
 
     Multilink.multilink( [ model.isDragIndicatorVisibleProperty, model.dragIndicatorValueProperty ],
