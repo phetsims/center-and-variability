@@ -51,6 +51,7 @@ const CAVColors = {
   medianColorProperty: new ProfileColorProperty( centerAndVariability, 'medianColor', { default: '#f03000' } ),
   meanColorProperty: new ProfileColorProperty( centerAndVariability, 'meanColor', { default: '#8500bd' } ),
   iqrColorProperty: new ProfileColorProperty( centerAndVariability, 'iqrColor', { default: 'black' } ),
+  madColorProperty: new ProfileColorProperty( centerAndVariability, 'madColor', { default: 'black' } ),
   quartileColorProperty: new ProfileColorProperty( centerAndVariability, 'quartileColor', { default: '#99ffff' } ),
   arrowStrokeProperty: new ProfileColorProperty( centerAndVariability, 'arrowStroke', { default: 'black' } ),
   boxWhiskerStrokeColorProperty: new ProfileColorProperty( centerAndVariability, 'boxWhiskerStrokeColor', { default: 'black' } ),

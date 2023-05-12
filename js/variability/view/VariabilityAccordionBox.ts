@@ -21,6 +21,8 @@ import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import CAVSceneModel from '../../common/model/CAVSceneModel.js';
 import Utils from '../../../../dot/js/Utils.js';
+import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 
@@ -115,21 +117,17 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     backgroundNode.addChild( plotToggleNode );
     backgroundNode.addChild( checkboxToggleNode );
 
-    const rangeValueProperty = DerivedProperty.deriveAny( [ model.selectedSceneModelProperty, ...model.variabilitySceneModels.map( vsm => vsm.rangeValueProperty ) ], () => {
-      return model.selectedSceneModelProperty.value.rangeValueProperty.value;
-    } );
+    const deriveValueProperty = ( accessor: ( variabilitySceneModel: VariabilitySceneModel ) => TReadOnlyProperty<number | null> ) => {
+      return DerivedProperty.deriveAny( [ model.selectedSceneModelProperty, ...model.variabilitySceneModels.map( accessor ) ], () => {
+        return accessor( model.selectedSceneModelProperty.value as VariabilitySceneModel ).value;
+      } );
+    };
 
-    const medianValueProperty = DerivedProperty.deriveAny( [ model.selectedSceneModelProperty, ...model.variabilitySceneModels.map( vsm => vsm.medianValueProperty ) ], () => {
-      return model.selectedSceneModelProperty.value.medianValueProperty.value;
-    } );
-
-    const iqrValueProperty = DerivedProperty.deriveAny( [ model.selectedSceneModelProperty, ...model.variabilitySceneModels.map( vsm => vsm.iqrValueProperty ) ], () => {
-      return model.selectedSceneModelProperty.value.iqrValueProperty.value;
-    } );
-
-    const madValueProperty = DerivedProperty.deriveAny( [ model.selectedSceneModelProperty, ...model.variabilitySceneModels.map( vsm => vsm.madValueProperty ) ], () => {
-      return model.selectedSceneModelProperty.value.madValueProperty.value;
-    } );
+    const rangeValueProperty = deriveValueProperty( vsm => vsm.rangeValueProperty );
+    const medianValueProperty = deriveValueProperty( vsm => vsm.medianValueProperty );
+    const iqrValueProperty = deriveValueProperty( vsm => vsm.iqrValueProperty );
+    const madValueProperty = deriveValueProperty( vsm => vsm.madValueProperty );
+    const meanValueProperty = deriveValueProperty( vsm => vsm.meanValueProperty );
 
     // TODO: Why can't this infer the type parameter? See https://github.com/phetsims/center-and-variability/issues/170
     const readoutsToggleNode = new ToggleNode<VariabilityMeasure>( model.selectedVariabilityProperty, [ {
@@ -190,15 +188,25 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         const madReadoutValueProperty = new DerivedProperty( [ madValueProperty ], madValue => {
           return madValue ? `${Utils.toFixed( madValue, 2 )}` : '?';
         } );
+        const meanReadoutValueProperty = new DerivedProperty( [ meanValueProperty ], meanValue => {
+          return meanValue ? `${Utils.toFixed( meanValue, 2 )}` : '?';
+        } );
 
         // Nest in a new Node so that ToggleNode has independent control over the visibility
-        return new Node( {
-          children: [ new VariabilityReadoutText( madReadoutValueProperty,
-            CenterAndVariabilityStrings.madEqualsValuePatternStringProperty, {
-              fill: CAVColors.meanColorProperty,
-              visibleProperty: model.isMADVisibleProperty
-              // tandem: options.tandem.createTandem( 'rangeReadoutText' )
-            } ) ]
+        return new VBox( {
+          align: 'left',
+          children: [
+            new VariabilityReadoutText( meanReadoutValueProperty,
+              CenterAndVariabilityStrings.meanEqualsValuePatternStringProperty, {
+                fill: CAVColors.meanColorProperty
+                // tandem: options.tandem.createTandem( 'rangeReadoutText' )
+              } ),
+            new VariabilityReadoutText( madReadoutValueProperty,
+              CenterAndVariabilityStrings.madEqualsValuePatternStringProperty, {
+                fill: CAVColors.madColorProperty,
+                visibleProperty: model.isMADVisibleProperty
+                // tandem: options.tandem.createTandem( 'rangeReadoutText' )
+              } ) ]
         } );
       }
     } ], {
