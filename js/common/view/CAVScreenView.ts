@@ -68,6 +68,7 @@ export default class CAVScreenView extends ScreenView {
 
   protected readonly questionBar: QuestionBar;
   protected readonly playAreaNumberLineNode: NumberLineNode;
+  private readonly sceneViews: SceneView[];
 
   public constructor( model: CAVModel, providedOptions: CAVScreenViewOptions ) {
     const options = optionize<CAVScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
@@ -96,15 +97,16 @@ export default class CAVScreenView extends ScreenView {
     this.addChild( this.frontObjectLayer );
 
     // TODO: Scene names, see https://github.com/phetsims/center-and-variability/issues/184
-    const sceneViews = model.sceneModels.map( ( sceneModel, index ) => new SceneView(
+    this.sceneViews = model.sceneModels.map( ( sceneModel, index ) => new SceneView(
       model,
       sceneModel,
       ( soccerPlayer, sceneModel ) => this.getSoccerPlayerImageSet( soccerPlayer, sceneModel ),
-      modelViewTransform, () => this.accordionBox, {
+      modelViewTransform,
+      this.visibleBoundsProperty, {
         tandem: options.tandem.createTandem( 'sceneView' + index )
       } ) );
 
-    const createToggleNode = ( pickLayer: ( sceneView: SceneView ) => Node ) => new ToggleNode( model.selectedSceneModelProperty, sceneViews.map( sceneView => {
+    const createToggleNode = ( pickLayer: ( sceneView: SceneView ) => Node ) => new ToggleNode( model.selectedSceneModelProperty, this.sceneViews.map( sceneView => {
         return {
           value: sceneView.sceneModel,
           createNode: tandem => pickLayer( sceneView )
@@ -234,6 +236,7 @@ export default class CAVScreenView extends ScreenView {
     this.accordionBox = accordionBox;
     this.backObjectLayer.addChild( this.accordionBox );
     this.updateAccordionBoxPosition();
+    this.sceneViews.forEach( sceneView => sceneView.setAccordionBox( accordionBox ) );
   }
 
   protected setBottomControls( controlNode: Node ): void {

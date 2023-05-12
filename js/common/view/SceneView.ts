@@ -18,11 +18,12 @@ import CAVModel from '../model/CAVModel.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';
-import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import SoccerBall from '../model/SoccerBall.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import SoccerPlayer from '../model/SoccerPlayer.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import CAVAccordionBox from './CAVAccordionBox.js';
 
 /**
  * Renders view elements for a CAVSceneModel. Note that to satisfy the correct z-ordering, elements
@@ -34,12 +35,14 @@ export default class SceneView {
   public readonly backLayer: Node;
   public readonly frontLayer: Node;
 
+  private accordionBox: CAVAccordionBox | null = null;
+
   public constructor(
     model: CAVModel,
     public readonly sceneModel: CAVSceneModel,
     getSoccerPlayerImageSet: ( soccerPlayer: SoccerPlayer, sceneModel: CAVSceneModel ) => SoccerPlayerImageSet,
     modelViewTransform: ModelViewTransform2,
-    getAccordionBox: () => AccordionBox | null,
+    visibleBoundsProperty: TReadOnlyProperty<Bounds2>,
     options: { tandem: Tandem } ) {
 
     const soccerBallMap = new Map<SoccerBall, SoccerBallNode>();
@@ -159,13 +162,11 @@ export default class SceneView {
         playAreaMedianIndicatorNode.centerX = modelViewTransform.modelToViewX( medianValue );
         playAreaMedianIndicatorNode.bottom = modelViewTransform.modelToViewY( 0 ) + viewHeight;
 
-        const accordionBox = getAccordionBox();
-
         // The arrow shouldn't overlap the accordion box
-        if ( accordionBox ) {
-          const accordionBoxHeight = accordionBox.expandedProperty.value ? accordionBox.getExpandedBoxHeight() : accordionBox.getCollapsedBoxHeight();
-          if ( playAreaMedianIndicatorNode.top < accordionBox.top + accordionBoxHeight ) {
-            playAreaMedianIndicatorNode.top = accordionBox.top + accordionBoxHeight + 4;
+        if ( this.accordionBox ) {
+          const accordionBoxHeight = this.accordionBox.expandedProperty.value ? this.accordionBox.getExpandedBoxHeight() : this.accordionBox.getCollapsedBoxHeight();
+          if ( playAreaMedianIndicatorNode.top < this.accordionBox.top + accordionBoxHeight ) {
+            playAreaMedianIndicatorNode.top = this.accordionBox.top + accordionBoxHeight + 4;
           }
         }
       }
@@ -173,6 +174,7 @@ export default class SceneView {
     };
     sceneModel.medianValueProperty.link( this.updateMedianNode );
     sceneModel.objectChangedEmitter.addListener( this.updateMedianNode );
+    visibleBoundsProperty.link( this.updateMedianNode );
 
     const soccerPlayerNodes = sceneModel.soccerPlayers.map( soccerPlayer =>
       new SoccerPlayerNode(
@@ -185,6 +187,13 @@ export default class SceneView {
 
     this.backLayer = backLayer;
     this.frontLayer = frontLayer;
+  }
+
+  public setAccordionBox( accordionBox: CAVAccordionBox ): void {
+    assert && assert( this.accordionBox === null, 'SceneView should only have one accordion box set' );
+
+    this.accordionBox = accordionBox;
+    this.accordionBox.expandedProperty.link( this.updateMedianNode );
   }
 }
 
