@@ -19,7 +19,6 @@ import QuestionBar, { QuestionBarOptions } from '../../../../scenery-phet/js/Que
 import NumberLineNode from './NumberLineNode.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import BackgroundNode from './BackgroundNode.js';
-import merge from '../../../../phet-core/js/merge.js';
 import CAVAccordionBox from './CAVAccordionBox.js';
 import PredictionSlider from './PredictionSlider.js';
 import CAVColors from '../CAVColors.js';
@@ -170,9 +169,10 @@ export default class CAVScreenView extends ScreenView {
       } );
     this.contentLayer.addChild( this.playAreaNumberLineNode );
 
-    this.questionBar = new QuestionBar( this.layoutBounds, this.visibleBoundsProperty, merge( {
+    this.questionBar = new QuestionBar( this.layoutBounds, this.visibleBoundsProperty, {
+      ...options.questionBarOptions,
       tandem: options.tandem.createTandem( 'questionBar' )
-    }, options.questionBarOptions ) );
+    } );
     this.contentLayer.addChild( this.questionBar );
 
     this.contentLayer.addChild( new KickButtonGroup( model, {
