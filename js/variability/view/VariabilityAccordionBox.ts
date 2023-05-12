@@ -26,7 +26,6 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 
-  // private plotNode: Node;
   private plotToggleNode: ToggleNode<CAVSceneModel, VariabilityPlotNode>;
 
   public constructor( model: VariabilityModel, layoutBounds: Bounds2, tandem: Tandem, top: number ) {
