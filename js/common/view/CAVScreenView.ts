@@ -54,7 +54,6 @@ export default class CAVScreenView extends ScreenView {
 
   protected readonly intervalToolLayer = new Node();
 
-  // TODO: We haven't enforced the "exactly half a ball should be occluded if anything is occluded" design, see https://github.com/phetsims/center-and-variability/issues/175
   protected readonly backObjectLayer = new Node();
   protected readonly frontObjectLayer = new Node();
 
