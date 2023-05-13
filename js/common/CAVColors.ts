@@ -59,6 +59,9 @@ const CAVColors = {
 
   grayDataPointFill: new ProfileColorProperty( centerAndVariability, 'grayDataPointFill', { default: '#8f8f8f' } ),
 
+  // Darker gray than the ones in the plot area, to show up better in the radio button
+  rangeMarkerColorPrperty: new ProfileColorProperty( centerAndVariability, 'rangeMarkerColorProperty', { default: new Color( '#717171' ) } ),
+
   intervalToolIconRectangleFillColorProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolIconRectangleFill', { default: '#fef8ab' } ),
   intervalToolIconShadedSphereMainColorProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolIconShadedSphereMainColor', { default: '#fdf581' } ),
   intervalToolIconShadedSphereHighlightColorProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolIconShadedSphereHighlightColor', { default: '#fdfdf2' } ),
