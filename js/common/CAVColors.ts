@@ -50,9 +50,9 @@ const CAVColors = {
 
   medianColorProperty: new ProfileColorProperty( centerAndVariability, 'medianColor', { default: '#f03000' } ),
   meanColorProperty: new ProfileColorProperty( centerAndVariability, 'meanColor', { default: '#8500bd' } ),
-  iqrColorProperty: new ProfileColorProperty( centerAndVariability, 'iqrColor', { default: 'black' } ),
+  iqrLabelColorProperty: new ProfileColorProperty( centerAndVariability, 'iqrLabelColor', { default: 'black' } ),
   madColorProperty: new ProfileColorProperty( centerAndVariability, 'madColor', { default: 'black' } ),
-  quartileColorProperty: new ProfileColorProperty( centerAndVariability, 'quartileColor', { default: new Color( '#99ffff' ).withAlpha( 0.55 ) } ),
+  iqrColorProperty: new ProfileColorProperty( centerAndVariability, 'iqrColor', { default: new Color( '#99ffff' ).withAlpha( 0.55 ) } ),
   arrowStrokeProperty: new ProfileColorProperty( centerAndVariability, 'arrowStroke', { default: 'black' } ),
   boxWhiskerStrokeColorProperty: new ProfileColorProperty( centerAndVariability, 'boxWhiskerStrokeColor', { default: 'black' } ),
   madRectangleColorProperty: new ProfileColorProperty( centerAndVariability, 'madRectangleColorProperty', { default: new Color( '#cba3e6' ).withAlpha( 0.7 ) } ),

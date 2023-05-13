@@ -46,7 +46,7 @@ export default class IQRNode extends CAVPlotNode {
     } );
 
     const iqrRectangle = new Rectangle( 0, 0, 0, 0, {
-      fill: CAVColors.quartileColorProperty
+      fill: CAVColors.iqrColorProperty
     } );
 
     const boxWhiskerLabelArrow = ( fillColor: ProfileColorProperty ) => {
@@ -68,7 +68,7 @@ export default class IQRNode extends CAVPlotNode {
         centerY: 0
       } ) ];
       if ( isQuartile ) {
-        textNodeChildren.unshift( new Circle( 12, { fill: CAVColors.quartileColorProperty } ) );
+        textNodeChildren.unshift( new Circle( 12, { fill: CAVColors.iqrColorProperty } ) );
       }
       return new Node( { children: textNodeChildren, centerY: isQuartile ? -14 : -10 } );
     };
@@ -121,10 +121,10 @@ export default class IQRNode extends CAVPlotNode {
     const medianTextNode = boxWhiskerLabelText( CAVColors.medianColorProperty, CenterAndVariabilityStrings.medianStringProperty, false );
     const medianLabelNode = new Node( { children: [ medianArrowNode, medianTextNode ], y: -32 } );
 
-    const minLabelNode = boxWhiskerLabel( CAVColors.iqrColorProperty, CenterAndVariabilityStrings.minStringProperty, false );
-    const maxLabelNode = boxWhiskerLabel( CAVColors.iqrColorProperty, CenterAndVariabilityStrings.maxStringProperty, false );
-    const q1LabelNode = boxWhiskerLabel( CAVColors.iqrColorProperty, CenterAndVariabilityStrings.q1StringProperty, true );
-    const q3LabelNode = boxWhiskerLabel( CAVColors.iqrColorProperty, CenterAndVariabilityStrings.q3StringProperty, true );
+    const minLabelNode = boxWhiskerLabel( CAVColors.iqrLabelColorProperty, CenterAndVariabilityStrings.minStringProperty, false );
+    const maxLabelNode = boxWhiskerLabel( CAVColors.iqrLabelColorProperty, CenterAndVariabilityStrings.maxStringProperty, false );
+    const q1LabelNode = boxWhiskerLabel( CAVColors.iqrLabelColorProperty, CenterAndVariabilityStrings.q1StringProperty, true );
+    const q3LabelNode = boxWhiskerLabel( CAVColors.iqrLabelColorProperty, CenterAndVariabilityStrings.q3StringProperty, true );
 
     minLabelNode.y = maxLabelNode.y = -28;
     q1LabelNode.y = q3LabelNode.y = -33;

@@ -77,8 +77,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       value: VariabilityMeasure.RANGE
     }, {
 
-      // TODO: https://github.com/phetsims/center-and-variability/issues/170 rename color for this to match others
-      createNode: tandem => new VariabilityMeasureCheckbox( model.isIQRVisibleProperty, CenterAndVariabilityStrings.iqrStringProperty, iconGroup, CAVColors.quartileColorProperty, { tandem: tandem } ),
+      createNode: tandem => new VariabilityMeasureCheckbox( model.isIQRVisibleProperty, CenterAndVariabilityStrings.iqrStringProperty, iconGroup, CAVColors.iqrColorProperty, { tandem: tandem } ),
       tandemName: 'iqrAccordionCheckbox',
       value: VariabilityMeasure.IQR
     }, {
@@ -161,7 +160,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
           // tandem: options.tandem.createTandem( 'medianReadoutText' )
         } );
         const iqrReadoutText = new VariabilityReadoutText( iqrReadoutValueProperty, CenterAndVariabilityStrings.iqrEqualsValuePatternStringProperty, {
-          fill: CAVColors.iqrColorProperty,
+          fill: CAVColors.iqrLabelColorProperty,
           visibleProperty: model.isIQRVisibleProperty
           // tandem: options.tandem.createTandem( 'iqrReadoutText' )
         } );

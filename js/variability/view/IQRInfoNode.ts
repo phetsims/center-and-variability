@@ -40,7 +40,7 @@ export default class IQRInfoNode extends VBox {
       }
 
       if ( isQuartile ) {
-        const backgroundCircle = new Circle( 12, { fill: CAVColors.quartileColorProperty } );
+        const backgroundCircle = new Circle( 12, { fill: CAVColors.iqrColorProperty } );
         dataValueNode.addChild( backgroundCircle );
       }
 
