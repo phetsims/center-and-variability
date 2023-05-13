@@ -1,6 +1,6 @@
 // Copyright 2023, University of Colorado Boulder
 
-import { Line, ManualConstraint, Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { Circle, Line, ManualConstraint, Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
@@ -93,6 +93,14 @@ export default class MADNode extends CAVPlotNode {
           } );
 
           children.push( line );
+
+          // If the line is too short, show a dot to make it visible
+          if ( Math.abs( x2 - x1 ) < 1E-4 ) {
+            children.push( new Circle( 1, {
+              fill: 'black',
+              center: line.center
+            } ) );
+          }
 
           if ( options.parentContext === 'info' ) {
             const distanceToMean = Math.abs( dot.valueProperty.value! - sceneModel.meanValueProperty.value! );
