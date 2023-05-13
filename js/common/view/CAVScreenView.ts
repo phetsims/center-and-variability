@@ -119,12 +119,7 @@ export default class CAVScreenView extends ScreenView {
     this.resetAllButton = new ResetAllButton( {
       listener: () => {
         this.interruptSubtreeInput(); // cancel interactions that may be in progress
-
         model.reset();
-
-        // hide the dragIndicatorArrowNode and reset the flag for if it has been dragged already
-        // TODO: See also https://github.com/phetsims/center-and-variability/issues/129
-        // dragIndicatorArrowNode.visible = false;
       },
       right: this.layoutBounds.maxX - CAVConstants.SCREEN_VIEW_X_MARGIN,
       bottom: this.layoutBounds.maxY - CAVConstants.SCREEN_VIEW_Y_MARGIN,
