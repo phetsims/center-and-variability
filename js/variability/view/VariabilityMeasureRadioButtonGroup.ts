@@ -35,7 +35,10 @@ export default class VariabilityMeasureRadioButtonGroup extends RectangularRadio
       radioButtonOptions: {
         baseColor: 'white',
         xMargin: 0,
-        yMargin: 0
+        yMargin: 0,
+        buttonAppearanceStrategyOptions: {
+          selectedLineWidth: 3
+        }
       }
     } );
   }
