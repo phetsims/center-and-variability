@@ -149,6 +149,15 @@ export default class MADNode extends CAVPlotNode {
       leftReadout.visible = ( options.parentContext === 'info' || model.isMADVisibleProperty.value ) && mad !== null && sortedDots.length > 1;
       rightReadout.visible = ( options.parentContext === 'info' || model.isMADVisibleProperty.value ) && mad !== null && sortedDots.length > 1;
 
+      // If the readouts overlap, move them apart
+      if ( leftReadout.visible && rightReadout.visible ) {
+        const overlap = leftReadout.bounds.dilated( 3 ).intersection( rightReadout.bounds.dilated( 3 ) ).width;
+        if ( overlap > 0 ) {
+          leftReadout.translate( -overlap / 2, 0 );
+          rightReadout.translate( overlap / 2, 0 );
+        }
+      }
+
       needAtLeastOneKickText.visible = sceneModel.numberOfDataPointsProperty.value === 0 && ( options.parentContext === 'info' || model.isMADVisibleProperty.value );
     };
     sceneModel.objectChangedEmitter.addListener( update );
