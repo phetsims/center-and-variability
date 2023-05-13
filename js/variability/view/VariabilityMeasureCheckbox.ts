@@ -31,7 +31,6 @@ export default class VariabilityMeasureCheckbox extends Checkbox {
 
     const content = AccordionBoxCheckboxFactory.createGridBox(
       new Text( stringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
-      // TODO: Replace with range icon, see https://github.com/phetsims/center-and-variability/issues/156
       new Node( {
         children: [
           rectangle,
