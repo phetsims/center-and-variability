@@ -2,6 +2,7 @@
 
 import centerAndVariability from '../../centerAndVariability.js';
 import { Line, Node, Rectangle } from '../../../../scenery/js/imports.js';
+import CAVColors from '../../common/CAVColors.js';
 
 /**
  * Icon for the IQR radio button.
@@ -14,7 +15,7 @@ export default class IQRIconNode extends Node {
 
     // Main background rectangle
     const rectangle = new Rectangle( 0, 0, 40, 40, {
-      fill: '#e8b3a2',
+      fill: CAVColors.iqrColorProperty,
       cornerRadius: 4
     } );
 
