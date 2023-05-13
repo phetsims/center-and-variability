@@ -31,7 +31,7 @@ export default class CardNode extends Node {
 
   // Emit how far the card has been dragged for purposes of hiding the drag indicator arrow when the user
   // has dragged a sufficient amount
-  public readonly dragDistanceEmitter: TEmitter<[ number ]> = new Emitter<[ number ]>( {
+  public readonly dragDistanceEmitter: TEmitter<[ number ]> = new Emitter( {
     parameters: [ { valueType: 'number' } ]
   } );
 
@@ -73,19 +73,31 @@ export default class CardNode extends Node {
 
     this.soccerBall = cardModel.soccerBall;
 
+    // Track whether the card is being dragged, for purposes of hiding the drag indicator arrow when the user
+    // has dragged a sufficient amount
+    let dragging = false;
+
     this.positionProperty.link( position => {
       const range = getDragRange();
+      const before = this.translation.copy();
       this.translation = new Vector2( range.constrainValue( position.x ), 0 );
+
+      const delta = this.translation.minus( before );
+      if ( dragging ) {
+        this.dragDistanceEmitter.emit( Math.abs( delta.x ) );
+      }
     } );
 
     this.dragListener = new DragListener( {
       tandem: options.tandem.createTandem( 'dragListener' ),
       positionProperty: this.positionProperty,
       start: () => {
+        dragging = true;
         this.moveToFront();
       },
-      // TODO-UX: This emits for dragging the leftmost card to the left, see https://github.com/phetsims/center-and-variability/issues/111
-      drag: ( event, listener ) => this.dragDistanceEmitter.emit( Math.abs( listener.modelDelta.x ) )
+      end: () => {
+        dragging = false;
+      }
     } );
     this.addInputListener( this.dragListener );
 
