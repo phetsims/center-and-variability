@@ -25,8 +25,8 @@ export default class IQRIconNode extends Node {
     };
 
     // Foreground rectangle with null fill, black stroke and lineWidth 0.5
-    const iqrRectangle = new Rectangle( 0, 0, 17, 8, {
-      center: rectangle.center,
+    const iqrRectangle = new Rectangle( 0, 0, 18, 20, {
+      center: rectangle.center.plusXY( 2, 0 ),
       ...options
     } );
 
@@ -34,7 +34,7 @@ export default class IQRIconNode extends Node {
     const verticalLine = new Line( iqrRectangle.centerX + 2, iqrRectangle.top, iqrRectangle.centerX + 2, iqrRectangle.bottom, options );
 
     // Short stub line on the left and right side
-    const stubLineLeft = new Line( iqrRectangle.left, iqrRectangle.centerY, iqrRectangle.left - 5, iqrRectangle.centerY, options );
+    const stubLineLeft = new Line( iqrRectangle.left, iqrRectangle.centerY, iqrRectangle.left - 8, iqrRectangle.centerY, options );
     const stubLineRight = new Line( iqrRectangle.right, iqrRectangle.centerY, iqrRectangle.right + 3, iqrRectangle.centerY, options );
 
     super( {
