@@ -43,6 +43,11 @@ export default class MADNode extends CAVPlotNode {
       stroke: 'lightGray'
     } );
 
+    const meanLine = new Line( 0, 0, 0, madRectangle.height, {
+      stroke: CAVColors.meanColorProperty,
+      lineWidth: 1
+    } );
+
     const leftBar = new MedianBarNode( {
       notchDirection: 'down',
       barStyle: 'continuous',
@@ -62,6 +67,8 @@ export default class MADNode extends CAVPlotNode {
     const rightReadout = new Text( '', {
       font: new PhetFont( 13 )
     } );
+
+    this.addChild( meanLine );
 
     const lineContainer = new Node();
     this.addChild( madRectangle );
@@ -123,6 +130,12 @@ export default class MADNode extends CAVPlotNode {
 
       madRectangle.rectWidth = this.modelViewTransform.modelToViewDeltaX( mad === null ? 0 : mad * 2 );
       madRectangle.visible = ( options.parentContext === 'info' || model.isMADVisibleProperty.value ) && mad !== null;
+
+      meanLine.visible = sceneModel.meanValueProperty.value !== null;
+      if ( meanLine.visible ) {
+        meanLine.centerX = this.modelViewTransform.modelToViewX( sceneModel.meanValueProperty.value! );
+        meanLine.bottom = this.modelViewTransform.modelToViewY( 0 );
+      }
 
       if ( mad !== null ) {
         const viewCenterX = this.modelViewTransform.modelToViewX( sceneModel.meanValueProperty.value! );
