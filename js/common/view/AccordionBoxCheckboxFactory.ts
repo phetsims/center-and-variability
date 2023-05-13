@@ -25,7 +25,7 @@ const LINE_WIDTH = MedianBarNode.LINE_WIDTH;
 
 export default class AccordionBoxCheckboxFactory {
 
-  private static createGridBox( text: Node, icon: Node, iconGroup: AlignGroup ): GridBox {
+  public static createGridBox( text: Node, icon: Node, iconGroup: AlignGroup ): GridBox {
     return new GridBox( {
       spacing: 10,
       stretch: true,
@@ -94,87 +94,6 @@ export default class AccordionBoxCheckboxFactory {
       },
       property: isTopMeanVisibleProperty,
       tandemName: 'meanCheckbox'
-    };
-  }
-
-  public static getRangeCheckboxWithIconItem( iconGroup: AlignGroup, isRangeVisibleProperty: Property<boolean> ): VerticalCheckboxGroupItem {
-    return {
-      createNode: ( tandem: Tandem ) => {
-        return AccordionBoxCheckboxFactory.createGridBox(
-          new Text( CenterAndVariabilityStrings.rangeStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
-          // TODO: Replace with range icon, see https://github.com/phetsims/center-and-variability/issues/156
-          new Node( {
-            children: [
-
-              // Horizontal line above the triangle
-              new Line( -ICON_WIDTH / 2, -LINE_WIDTH / 2, ICON_WIDTH / 2, -LINE_WIDTH / 2, {
-                stroke: CAVColors.meanColorProperty,
-                lineWidth: LINE_WIDTH
-              } ),
-
-              // Triangle
-              NumberLineNode.createMeanIndicatorNode( false, true )
-            ]
-          } ),
-          iconGroup
-        );
-      },
-      property: isRangeVisibleProperty,
-      tandemName: 'rangeCheckbox'
-    };
-  }
-
-  public static getIQRCheckboxWithIconItem( iconGroup: AlignGroup, isIQRVisibleProperty: Property<boolean> ): VerticalCheckboxGroupItem {
-    return {
-      createNode: ( tandem: Tandem ) => {
-        return AccordionBoxCheckboxFactory.createGridBox(
-          new Text( CenterAndVariabilityStrings.iqrStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
-          // TODO: Replace with IQR icon, see https://github.com/phetsims/center-and-variability/issues/156
-          new Node( {
-            children: [
-
-              // Horizontal line above the triangle
-              new Line( -ICON_WIDTH / 2, -LINE_WIDTH / 2, ICON_WIDTH / 2, -LINE_WIDTH / 2, {
-                stroke: CAVColors.meanColorProperty,
-                lineWidth: LINE_WIDTH
-              } ),
-
-              // Triangle
-              NumberLineNode.createMeanIndicatorNode( false, true )
-            ]
-          } ),
-          iconGroup
-        );
-      },
-      property: isIQRVisibleProperty,
-      tandemName: 'iqrCheckbox'
-    };
-  }
-
-  public static getMADCheckboxWithIconItem( iconGroup: AlignGroup, isMADVisibleProperty: Property<boolean> ): VerticalCheckboxGroupItem {
-    return {
-      createNode: ( tandem: Tandem ) => {
-        return AccordionBoxCheckboxFactory.createGridBox(
-          new Text( CenterAndVariabilityStrings.madStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
-          // TODO: Replace with MAD icon, see https://github.com/phetsims/center-and-variability/issues/156
-          new Node( {
-            children: [
-
-              // Horizontal line above the triangle
-              new Line( -ICON_WIDTH / 2, -LINE_WIDTH / 2, ICON_WIDTH / 2, -LINE_WIDTH / 2, {
-                stroke: CAVColors.meanColorProperty,
-                lineWidth: LINE_WIDTH
-              } ),
-
-              // Triangle
-              NumberLineNode.createMeanIndicatorNode( false, true )
-            ]
-          } ),
-          iconGroup
-        );
-      },
-      property: isMADVisibleProperty,
-      tandemName: 'madCheckbox'
     };
   }
 }

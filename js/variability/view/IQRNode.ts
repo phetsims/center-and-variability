@@ -28,7 +28,6 @@ export default class IQRNode extends CAVPlotNode {
       ...options
     } );
 
-    // TODO: get rid of context === accordion, see https://github.com/phetsims/center-and-variability/issues/170
     const needAtLeastFiveKicksOffsetY = options.parentContext === 'info' ? 90 : 20;
     const needAtLeastFiveKicks = new Text( CenterAndVariabilityStrings.needAtLeastFiveKicksStringProperty, {
       fontSize: 18,

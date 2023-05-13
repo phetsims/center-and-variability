@@ -11,8 +11,6 @@ import InfoButton from '../../../../scenery-phet/js/buttons/InfoButton.js';
 import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
-import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
-import AccordionBoxCheckboxFactory from '../../common/view/AccordionBoxCheckboxFactory.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import VariabilityReadoutText from './VariabilityReadoutText.js';
@@ -23,6 +21,7 @@ import CAVSceneModel from '../../common/model/CAVSceneModel.js';
 import Utils from '../../../../dot/js/Utils.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import VariabilityMeasureCheckbox from './VariabilityMeasureCheckbox.js';
 
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 
@@ -66,33 +65,25 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       listener: () => {
         model.isInfoVisibleProperty.value = true;
       },
-
-      // TODO: How to position this properly? Can we use AlignBox? See https://github.com/phetsims/center-and-variability/issues/170
-      top: 0,
-      right: backgroundNode.right
+      top: 5,
+      right: backgroundNode.right - 5
     } );
     backgroundNode.addChild( infoButton );
 
     const iconGroup = new AlignGroup();
     const checkboxToggleNode = new ToggleNode( model.selectedVariabilityProperty, [ {
-
-      // TODO: Why should these be "group"? see https://github.com/phetsims/center-and-variability/issues/170
-      createNode: tandem => new VerticalCheckboxGroup( [
-        AccordionBoxCheckboxFactory.getRangeCheckboxWithIconItem( iconGroup, model.isRangeVisibleProperty )
-      ], { tandem: tandem.createTandem( 'rangeAccordionCheckboxGroup' ) } ),
-      tandemName: 'rangeAccordionCheckboxGroup',
+      createNode: tandem => new VariabilityMeasureCheckbox( model.isRangeVisibleProperty, CenterAndVariabilityStrings.rangeStringProperty, iconGroup, CAVColors.rangeFillProperty, { tandem: tandem } ),
+      tandemName: 'rangeAccordionCheckbox',
       value: VariabilityMeasure.RANGE
     }, {
-      createNode: tandem => new VerticalCheckboxGroup( [
-        AccordionBoxCheckboxFactory.getIQRCheckboxWithIconItem( iconGroup, model.isIQRVisibleProperty )
-      ], { tandem: tandem.createTandem( 'iqrAccordionCheckboxGroup' ) } ),
-      tandemName: 'iqrAccordionCheckboxGroup',
+
+      // TODO: https://github.com/phetsims/center-and-variability/issues/170 rename color for this to match others
+      createNode: tandem => new VariabilityMeasureCheckbox( model.isIQRVisibleProperty, CenterAndVariabilityStrings.iqrStringProperty, iconGroup, CAVColors.quartileColorProperty, { tandem: tandem } ),
+      tandemName: 'iqrAccordionCheckbox',
       value: VariabilityMeasure.IQR
     }, {
-      createNode: tandem => new VerticalCheckboxGroup( [
-        AccordionBoxCheckboxFactory.getMADCheckboxWithIconItem( iconGroup, model.isMADVisibleProperty )
-      ], { tandem: tandem.createTandem( 'madAccordionCheckboxGroup' ) } ),
-      tandemName: 'madAccordionCheckboxGroup',
+      createNode: tandem => new VariabilityMeasureCheckbox( model.isRangeVisibleProperty, CenterAndVariabilityStrings.madStringProperty, iconGroup, CAVColors.madRectangleColorProperty, { tandem: tandem } ),
+      tandemName: 'madAccordionCheckbox',
       value: VariabilityMeasure.MAD
     } ], {
       rightCenter: backgroundNode.rightCenter.plusXY( -10, 0 ),
