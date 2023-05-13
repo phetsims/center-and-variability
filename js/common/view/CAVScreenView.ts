@@ -36,6 +36,7 @@ import DragIndicatorArrowNode from './DragIndicatorArrowNode.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
+import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';
 
 type SelfOptions = {
   questionBarOptions: QuestionBarOptions;
@@ -68,6 +69,8 @@ export default class CAVScreenView extends ScreenView {
   protected readonly playAreaNumberLineNode: NumberLineNode;
   private readonly sceneViews: SceneView[];
 
+  private readonly updateMedianNode: () => void;
+
   public constructor( model: CAVModel, providedOptions: CAVScreenViewOptions ) {
     const options = optionize<CAVScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
 
@@ -98,8 +101,7 @@ export default class CAVScreenView extends ScreenView {
       model,
       sceneModel,
       ( soccerPlayer, sceneModel ) => this.getSoccerPlayerImageSet( soccerPlayer, sceneModel ),
-      modelViewTransform,
-      this.visibleBoundsProperty, {
+      modelViewTransform, {
         tandem: options.tandem.createTandem( CAVConstants.SCENE_VIEW_TANDEM + index )
       } ) );
 
@@ -208,6 +210,43 @@ export default class CAVScreenView extends ScreenView {
       } );
 
     this.backObjectLayer.addChild( dragIndicatorArrowNode );
+
+    const playAreaMedianIndicatorNode = new PlayAreaMedianIndicatorNode();
+    this.frontObjectLayer.addChild( playAreaMedianIndicatorNode );
+
+    this.updateMedianNode = () => {
+      const sceneModel = this.model.selectedSceneModelProperty.value;
+      const medianValue = sceneModel.medianValueProperty.value;
+      const visible = medianValue !== null && model.isPlayAreaMedianVisibleProperty.value;
+
+      if ( visible ) {
+
+        // if there is a ball at that location, go above the ball
+        const ballsAtLocation = sceneModel.soccerBalls.filter( soccerBall => soccerBall.valueProperty.value === medianValue );
+        const modelHeight = ballsAtLocation.length * CAVObjectType.SOCCER_BALL.radius * 2 * ( 1 - CAVConstants.SOCCER_BALL_OVERLAP );
+
+        const viewHeight = modelViewTransform.modelToViewDeltaY( modelHeight );
+
+        playAreaMedianIndicatorNode.centerX = modelViewTransform.modelToViewX( medianValue );
+        playAreaMedianIndicatorNode.bottom = modelViewTransform.modelToViewY( 0 ) + viewHeight;
+
+        // The arrow shouldn't overlap the accordion box
+        if ( this.accordionBox ) {
+          const accordionBoxHeight = this.accordionBox.expandedProperty.value ? this.accordionBox.getExpandedBoxHeight() : this.accordionBox.getCollapsedBoxHeight();
+          if ( playAreaMedianIndicatorNode.top < this.accordionBox.top + accordionBoxHeight ) {
+            playAreaMedianIndicatorNode.top = this.accordionBox.top + accordionBoxHeight + 4;
+          }
+        }
+      }
+      playAreaMedianIndicatorNode.visible = visible;
+    };
+    this.model.selectedSceneModelProperty.link( this.updateMedianNode );
+    this.model.sceneModels.forEach( sceneModel => {
+      sceneModel.medianValueProperty.link( this.updateMedianNode );
+      sceneModel.objectChangedEmitter.addListener( this.updateMedianNode );
+    } );
+    this.visibleBoundsProperty.link( this.updateMedianNode );
+    model.isPlayAreaMedianVisibleProperty.link( this.updateMedianNode );
   }
 
   private updateAccordionBoxPosition(): void {
@@ -233,6 +272,8 @@ export default class CAVScreenView extends ScreenView {
     this.backObjectLayer.addChild( this.accordionBox );
     this.updateAccordionBoxPosition();
     this.sceneViews.forEach( sceneView => sceneView.setAccordionBox( accordionBox ) );
+
+    this.accordionBox.expandedProperty.link( this.updateMedianNode );
   }
 
   protected setBottomControls( controlNode: Node ): void {

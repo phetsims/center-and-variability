@@ -10,21 +10,17 @@
 import { Node } from '../../../../scenery/js/imports.js';
 import SoccerBallNode from './SoccerBallNode.js';
 import { AnimationMode } from '../model/AnimationMode.js';
-import CAVObjectType from '../model/CAVObjectType.js';
 import CAVSceneModel from '../model/CAVSceneModel.js';
 import SoccerPlayerNode, { SoccerPlayerImageSet } from './SoccerPlayerNode.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CAVModel from '../model/CAVModel.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';
 import SoccerBall from '../model/SoccerBall.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import SoccerPlayer from '../model/SoccerPlayer.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import CAVAccordionBox from './CAVAccordionBox.js';
-import CAVConstants from '../CAVConstants.js';
 
 /**
  * Renders view elements for a CAVSceneModel. Note that to satisfy the correct z-ordering, elements
@@ -32,7 +28,6 @@ import CAVConstants from '../CAVConstants.js';
  */
 export default class SceneView {
 
-  private readonly updateMedianNode: () => void;
   public readonly backLayer: Node;
   public readonly frontLayer: Node;
 
@@ -43,7 +38,6 @@ export default class SceneView {
     public readonly sceneModel: CAVSceneModel,
     getSoccerPlayerImageSet: ( soccerPlayer: SoccerPlayer, sceneModel: CAVSceneModel ) => SoccerPlayerImageSet,
     modelViewTransform: ModelViewTransform2,
-    visibleBoundsProperty: TReadOnlyProperty<Bounds2>,
     options: { tandem: Tandem } ) {
 
     const soccerBallMap = new Map<SoccerBall, SoccerBallNode>();
@@ -145,38 +139,6 @@ export default class SceneView {
       }
     } );
 
-    const playAreaMedianIndicatorNode = new PlayAreaMedianIndicatorNode();
-    frontLayer.addChild( playAreaMedianIndicatorNode );
-
-    this.updateMedianNode = () => {
-      const medianValue = sceneModel.medianValueProperty.value;
-      const visible = medianValue !== null && model.isPlayAreaMedianVisibleProperty.value;
-
-      if ( visible ) {
-
-        // if there is a ball at that location, go above the ball
-        const ballsAtLocation = sceneModel.soccerBalls.filter( soccerBall => soccerBall.valueProperty.value === medianValue );
-        const modelHeight = ballsAtLocation.length * CAVObjectType.SOCCER_BALL.radius * 2 * ( 1 - CAVConstants.SOCCER_BALL_OVERLAP );
-
-        const viewHeight = modelViewTransform.modelToViewDeltaY( modelHeight );
-
-        playAreaMedianIndicatorNode.centerX = modelViewTransform.modelToViewX( medianValue );
-        playAreaMedianIndicatorNode.bottom = modelViewTransform.modelToViewY( 0 ) + viewHeight;
-
-        // The arrow shouldn't overlap the accordion box
-        if ( this.accordionBox ) {
-          const accordionBoxHeight = this.accordionBox.expandedProperty.value ? this.accordionBox.getExpandedBoxHeight() : this.accordionBox.getCollapsedBoxHeight();
-          if ( playAreaMedianIndicatorNode.top < this.accordionBox.top + accordionBoxHeight ) {
-            playAreaMedianIndicatorNode.top = this.accordionBox.top + accordionBoxHeight + 4;
-          }
-        }
-      }
-      playAreaMedianIndicatorNode.visible = visible;
-    };
-    sceneModel.medianValueProperty.link( this.updateMedianNode );
-    sceneModel.objectChangedEmitter.addListener( this.updateMedianNode );
-    visibleBoundsProperty.link( this.updateMedianNode );
-
     const soccerPlayerNodes = sceneModel.soccerPlayers.map( soccerPlayer =>
       new SoccerPlayerNode(
         soccerPlayer,
@@ -184,7 +146,6 @@ export default class SceneView {
         modelViewTransform ) );
 
     soccerPlayerNodes.forEach( soccerPlayerNode => frontLayer.addChild( soccerPlayerNode ) );
-    model.isPlayAreaMedianVisibleProperty.link( this.updateMedianNode );
 
     this.backLayer = backLayer;
     this.frontLayer = frontLayer;
@@ -194,7 +155,6 @@ export default class SceneView {
     assert && assert( this.accordionBox === null, 'SceneView should only have one accordion box set' );
 
     this.accordionBox = accordionBox;
-    this.accordionBox.expandedProperty.link( this.updateMedianNode );
   }
 }
 
