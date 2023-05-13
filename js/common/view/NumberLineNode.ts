@@ -28,6 +28,7 @@ import Multilink from '../../../../axon/js/Multilink.js';
 type SelfOptions = {
   color?: TPaint;
   includeXAxis: boolean;
+  includeRangeOnXAxis: boolean;
   includeMeanStroke: boolean;
 };
 export type NumberLineNodeOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
@@ -85,24 +86,27 @@ export default class NumberLineNode extends Node {
       } );
       this.addChild( xAxisNode );
 
-      // For the dot plot, when "mean" is selected, there is a purple overlay on the x-axis (if there is an x-axis)
-      const rangeNode = new Path( new Shape().moveTo( 0, 0 ).lineToRelative( 100, 0 ), {
-        stroke: CAVColors.meanColorProperty,
-        lineWidth: 3.2
-      } );
-      Multilink.multilink( [ rangeProperty, isMeanIndicatorVisibleProperty ],
-        ( range, isMeanIndicatorVisible ) => {
-          if ( range !== null ) {
+      if ( options.includeRangeOnXAxis ) {
 
-            // Do not show any area or text above the data point if the range is 0
-            rangeNode.shape = new Shape()
-              .moveTo( modelViewTransform.modelToViewX( range.min ), 0 )
-              .lineTo( modelViewTransform.modelToViewX( range.max ), 0 );
-          }
-          rangeNode.visible = isMeanIndicatorVisible && range !== null;
+        // For the dot plot on the Mean and Median screen, when "mean" is selected, there is a purple overlay on the x-axis (if there is an x-axis)
+        const rangeNode = new Path( new Shape().moveTo( 0, 0 ).lineToRelative( 100, 0 ), {
+          stroke: CAVColors.meanColorProperty,
+          lineWidth: 3.2
         } );
+        Multilink.multilink( [ rangeProperty, isMeanIndicatorVisibleProperty ],
+          ( range, isMeanIndicatorVisible ) => {
+            if ( range !== null ) {
 
-      this.addChild( rangeNode );
+              // Do not show any area or text above the data point if the range is 0
+              rangeNode.shape = new Shape()
+                .moveTo( modelViewTransform.modelToViewX( range.min ), 0 )
+                .lineTo( modelViewTransform.modelToViewX( range.max ), 0 );
+            }
+            rangeNode.visible = isMeanIndicatorVisible && range !== null;
+          } );
+
+        this.addChild( rangeNode );
+      }
     }
 
     const meanIndicatorNode = NumberLineNode.createMeanIndicatorNode( options.includeMeanStroke, false );

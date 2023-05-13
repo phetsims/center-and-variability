@@ -81,7 +81,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       tandemName: 'iqrAccordionCheckbox',
       value: VariabilityMeasure.IQR
     }, {
-      createNode: tandem => new VariabilityMeasureCheckbox( model.isRangeVisibleProperty, CenterAndVariabilityStrings.madStringProperty, iconGroup, CAVColors.madRectangleColorProperty, { tandem: tandem } ),
+      createNode: tandem => new VariabilityMeasureCheckbox( model.isMADVisibleProperty, CenterAndVariabilityStrings.madStringProperty, iconGroup, CAVColors.madRectangleColorProperty, { tandem: tandem } ),
       tandemName: 'madAccordionCheckbox',
       value: VariabilityMeasure.MAD
     } ], {

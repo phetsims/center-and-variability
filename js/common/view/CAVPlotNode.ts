@@ -63,8 +63,6 @@ export default class CAVPlotNode extends Node {
       sceneModel.meanValueProperty,
       modelViewTransform,
       model instanceof MeanAndMedianModel ? model.isTopMeanVisibleProperty :
-
-        // TODO: The design calls for a different "look" for the mean. But why? See https://github.com/phetsims/center-and-variability/issues/180
       model instanceof VariabilityModel ? DerivedProperty.valueEqualsConstant( model.selectedVariabilityProperty, VariabilityMeasure.MAD ) :
       new BooleanProperty( true ),
       sceneModel.dataRangeProperty, {
@@ -72,7 +70,8 @@ export default class CAVPlotNode extends Node {
         includeXAxis: true,
         includeMeanStroke: false,
         tandem: options.tandem.createTandem( 'numberLineNode' ),
-        y: numberLinePositionY
+        y: numberLinePositionY,
+        includeRangeOnXAxis: !( model instanceof VariabilityModel )
       } );
     backgroundNode.addChild( this.numberLineNode );
 

@@ -155,6 +155,7 @@ export default class CAVScreenView extends ScreenView {
         derive: 'dataRangeProperty'
       } ), {
         includeXAxis: false,
+        includeRangeOnXAxis: false,
         includeMeanStroke: true,
         tandem: options.tandem.createTandem( 'playAreaNumberLineNode' ),
         x: CAVConstants.NUMBER_LINE_MARGIN_X,
