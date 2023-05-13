@@ -30,7 +30,7 @@ export default class VariabilityPlotNode extends Node {
   public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, providedOptions: CAVPlotOptions ) {
     super( providedOptions );
 
-    // TODO: Why can't it infer reasonable types here? See https://github.com/phetsims/center-and-variability/issues/170
+    // TODO: Why can't it infer reasonable types here? See https://github.com/phetsims/center-and-variability/issues/201
     const toggleNode = new ToggleNode<VariabilityMeasure, CAVPlotNode>( model.selectedVariabilityProperty, [ {
       createNode: tandem => new RangeNode( model, sceneModel, {
         parentContext: 'accordion',

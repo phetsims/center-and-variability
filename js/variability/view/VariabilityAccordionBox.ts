@@ -118,7 +118,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     const madValueProperty = deriveValueProperty( vsm => vsm.madValueProperty );
     const meanValueProperty = deriveValueProperty( vsm => vsm.meanValueProperty );
 
-    // TODO: Why can't this infer the type parameter? See https://github.com/phetsims/center-and-variability/issues/170
+    // TODO: Why can't this infer the type parameter? See https://github.com/phetsims/center-and-variability/issues/201
     const readoutsToggleNode = new ToggleNode<VariabilityMeasure>( model.selectedVariabilityProperty, [ {
       value: VariabilityMeasure.RANGE,
       tandemName: 'rangeReadoutToggleNode',
