@@ -30,6 +30,8 @@ export class SameLocationKickDistanceStrategy implements TKickDistanceStrategy {
   }
 
   public getString(): string {
+
+    // TODO: Combine these strings with the statefulness keys? https://github.com/phetsims/center-and-variability/issues/117
     return 'SameLocationKickDistanceStrategy';
   }
 }
