@@ -61,6 +61,7 @@ type StringsType = {
   'needAtLeastOneKickStringProperty': LinkableProperty<string>;
   'needAtLeastFiveKicksStringProperty': LinkableProperty<string>;
   'maxKicksForScreensWithPlotsStringProperty': LinkableProperty<string>;
+  'valuesMayNotMatchDueToRoundingErrorsStringProperty': LinkableProperty<string>;
 };
 
 const CenterAndVariabilityStrings = getStringModule( 'CENTER_AND_VARIABILITY' ) as StringsType;
