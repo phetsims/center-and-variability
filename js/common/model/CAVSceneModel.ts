@@ -572,6 +572,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
    */
   public toStateObject(): { distributionType: string } {
     return {
+      // TODO: https://github.com/phetsims/center-and-variability/issues/117 random skew needs a way to indicate the current type of skew
       distributionType: this.kickDistanceStrategy instanceof RandomSkewStrategy ? 'randomSkew' :
                         this.kickDistanceStrategy instanceof DistributionStrategy ? `probabilityDistributionByDistance[${this.kickDistanceStrategy.distribution.join( ', ' )}]` :
                         this.kickDistanceStrategy instanceof ExactDistancesStrategy ? `exactDistanceByIndex[${this.kickDistanceStrategy.exactDistances.join( ', ' )}]` :
