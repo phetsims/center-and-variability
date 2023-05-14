@@ -14,7 +14,7 @@ import CAVModel from '../../common/model/CAVModel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import CAVConstants from '../../common/CAVConstants.js';
-import MeanAndOrMedianSceneModel from '../../common/model/MeanAndOrMedianSceneModel.js';
+import { RandomSkewStrategy } from '../../common/model/TKickDistanceStrategy.js';
 
 // constants
 const HIGHLIGHT_ANIMATION_TIME_STEP = 0.25; // in seconds
@@ -34,7 +34,7 @@ export default class MeanAndMedianModel extends CAVModel {
 
   public constructor( options: { tandem: Tandem } ) {
 
-    const sceneModel = new MeanAndOrMedianSceneModel( CAVConstants.MAX_KICKS_PROPERTY, CAVConstants.MAX_KICKS_VALUES, CAVSceneModel.chooseDistribution(), { tandem: options.tandem.createTandem( 'sceneModel' ) } );
+    const sceneModel = new CAVSceneModel( CAVConstants.MAX_KICKS_PROPERTY, CAVConstants.MAX_KICKS_VALUES, new RandomSkewStrategy(), { tandem: options.tandem.createTandem( 'sceneModel' ) } );
     super( CAVConstants.MAX_KICKS_PROPERTY, [ sceneModel ], {
       ...options,
       instrumentMeanPredictionProperty: true

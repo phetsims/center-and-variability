@@ -18,6 +18,7 @@ import VariabilitySceneModel from './VariabilitySceneModel.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import CAVConstants from '../../common/CAVConstants.js';
+import { DistributionStrategy } from '../../common/model/TKickDistanceStrategy.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityModelOptions = SelfOptions & CAVModelOptions;
@@ -39,13 +40,11 @@ export default class VariabilityModel extends CAVModel {
 
   public constructor( options: VariabilityModelOptions ) {
 
-    // TODO: See https://github.com/phetsims/center-and-variability/issues/117. PhET-iO wants to be able to set these values. Maybe in the preferences, we would also add a "custom"
-    //       option that would allow the user to specify the distribution parameters. Or for PhET-iO, and query parameters
     const sceneModels = [
-      new VariabilitySceneModel( CAVConstants.MAX_KICKS_PROPERTY, [ 0, 0, 0, 1, 3, 10, 18, 20, 18, 10, 3, 1, 0, 0, 0 ], { tandem: options.tandem.createTandem( 'sceneModel1' ) } ),
-      new VariabilitySceneModel( CAVConstants.MAX_KICKS_PROPERTY, [ 5, 5, 10, 10, 25, 30, 40, 50, 40, 30, 25, 10, 10, 5, 5 ], { tandem: options.tandem.createTandem( 'sceneModel2' ) } ),
-      new VariabilitySceneModel( CAVConstants.MAX_KICKS_PROPERTY, [ 6, 9, 11, 14, 11, 8, 6, 5, 5, 5, 5, 5, 5, 5, 5 ], { tandem: options.tandem.createTandem( 'sceneModel3' ) } ),
-      new VariabilitySceneModel( CAVConstants.MAX_KICKS_PROPERTY, [ 5, 5, 5, 5, 5, 5, 5, 5, 6, 8, 11, 14, 11, 9, 6 ], { tandem: options.tandem.createTandem( 'sceneModel4' ) } )
+      new VariabilitySceneModel( CAVConstants.MAX_KICKS_PROPERTY, new DistributionStrategy( [ 0, 0, 0, 1, 3, 10, 18, 20, 18, 10, 3, 1, 0, 0, 0 ] ), { tandem: options.tandem.createTandem( 'sceneModel1' ) } ),
+      new VariabilitySceneModel( CAVConstants.MAX_KICKS_PROPERTY, new DistributionStrategy( [ 5, 5, 10, 10, 25, 30, 40, 50, 40, 30, 25, 10, 10, 5, 5 ] ), { tandem: options.tandem.createTandem( 'sceneModel2' ) } ),
+      new VariabilitySceneModel( CAVConstants.MAX_KICKS_PROPERTY, new DistributionStrategy( [ 6, 9, 11, 14, 11, 8, 6, 5, 5, 5, 5, 5, 5, 5, 5 ] ), { tandem: options.tandem.createTandem( 'sceneModel3' ) } ),
+      new VariabilitySceneModel( CAVConstants.MAX_KICKS_PROPERTY, new DistributionStrategy( [ 5, 5, 5, 5, 5, 5, 5, 5, 6, 8, 11, 14, 11, 9, 6 ] ), { tandem: options.tandem.createTandem( 'sceneModel4' ) } )
     ];
     super( CAVConstants.MAX_KICKS_PROPERTY, sceneModels, options );
 

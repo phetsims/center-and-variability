@@ -14,7 +14,7 @@ import CAVSceneModel from '../../common/model/CAVSceneModel.js';
 import CAVModel from '../../common/model/CAVModel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import MeanAndOrMedianSceneModel from '../../common/model/MeanAndOrMedianSceneModel.js';
+import { RandomSkewStrategy } from '../../common/model/TKickDistanceStrategy.js';
 
 export default class MedianModel extends CAVModel {
 
@@ -29,7 +29,7 @@ export default class MedianModel extends CAVModel {
       tandem: options.tandem.createTandem( 'maxKicksProperty' )
     } );
 
-    const scene = new MeanAndOrMedianSceneModel( maxKicksProperty, [ 15 ], CAVSceneModel.chooseDistribution(), { tandem: options.tandem.createTandem( 'sceneModel' ) } );
+    const scene = new CAVSceneModel( maxKicksProperty, [ 15 ], new RandomSkewStrategy(), { tandem: options.tandem.createTandem( 'sceneModel' ) } );
     super( maxKicksProperty, [ scene ], {
       ...options,
       instrumentMeanPredictionProperty: false

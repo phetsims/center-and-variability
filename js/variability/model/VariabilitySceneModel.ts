@@ -12,21 +12,17 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import VariabilityModel from './VariabilityModel.js';
 import CAVConstants from '../../common/CAVConstants.js';
+import { TKickDistanceStrategy } from '../../common/model/TKickDistanceStrategy.js';
 
 export default class VariabilitySceneModel extends CAVSceneModel {
 
   private readonly initialized: boolean = false;
 
-  public constructor( maxKicksProperty: TReadOnlyProperty<number>, distribution: ReadonlyArray<number>, options: { tandem: Tandem } ) {
-    super( maxKicksProperty, CAVConstants.MAX_KICKS_VALUES, distribution, options );
+  public constructor( maxKicksProperty: TReadOnlyProperty<number>, kickDistanceStrategy: TKickDistanceStrategy, options: { tandem: Tandem } ) {
+    super( maxKicksProperty, CAVConstants.MAX_KICKS_VALUES, kickDistanceStrategy, options );
 
     this.updateDataMeasures();
     this.initialized = true;
-  }
-
-  public resetScene(): void {
-
-    // Nothing to do here, the distribution is set in the constructor (and not re-randomized like in the other screens)
   }
 
   protected override updateDataMeasures(): void {
