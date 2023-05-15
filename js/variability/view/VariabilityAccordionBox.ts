@@ -188,13 +188,13 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
             new VariabilityReadoutText( meanReadoutValueProperty,
               CenterAndVariabilityStrings.meanEqualsValuePatternStringProperty, {
                 fill: CAVColors.meanColorProperty,
-                tandem: tandem.createTandem( 'rangeReadoutText' )
+                tandem: tandem.createTandem( 'meanReadoutText' )
               } ),
             new VariabilityReadoutText( madReadoutValueProperty,
               CenterAndVariabilityStrings.madEqualsValuePatternStringProperty, {
                 fill: CAVColors.madColorProperty,
                 visibleProperty: model.isMADVisibleProperty,
-                tandem: tandem.createTandem( 'rangeReadoutText' )
+                tandem: tandem.createTandem( 'madReadoutText' )
               } ) ]
         } );
       }
