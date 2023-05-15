@@ -175,7 +175,7 @@ export default class MADNode extends CAVPlotNode {
     };
     sceneModel.objectChangedEmitter.addListener( update );
     model.isMADVisibleProperty.link( update );
-    model.selectedVariabilityProperty.link( update );
+    model.selectedVariabilityMeasureProperty.link( update );
     sceneModel.numberOfDataPointsProperty.link( update );
     sceneModel.meanValueProperty.link( update );
     sceneModel.madValueProperty.link( update );

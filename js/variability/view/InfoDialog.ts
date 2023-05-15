@@ -15,7 +15,7 @@ import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 export default class InfoDialog extends Dialog {
   public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, options: PickRequired<PhetioObject, 'tandem'> ) {
 
-    const content = new ToggleNode( model.selectedVariabilityProperty, [ {
+    const content = new ToggleNode( model.selectedVariabilityMeasureProperty, [ {
       value: VariabilityMeasure.RANGE,
       createNode: tandem => new RangeInfoNode( model, sceneModel, { tandem: tandem } ),
       tandemName: 'rangeInfoNode'

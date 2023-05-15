@@ -35,7 +35,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       fill: null
     } );
 
-    const currentProperty = new DerivedProperty( [ model.selectedVariabilityProperty ], selectedVariability =>
+    const currentProperty = new DerivedProperty( [ model.selectedVariabilityMeasureProperty ], selectedVariability =>
       selectedVariability === VariabilityMeasure.RANGE ? CenterAndVariabilityStrings.rangeStringProperty :
       selectedVariability === VariabilityMeasure.IQR ? CenterAndVariabilityStrings.interquartileRangeIQRStringProperty :
       CenterAndVariabilityStrings.meanAbsoluteDeviationMADStringProperty
@@ -71,7 +71,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     backgroundNode.addChild( infoButton );
 
     const iconGroup = new AlignGroup();
-    const checkboxToggleNode = new ToggleNode( model.selectedVariabilityProperty, [ {
+    const checkboxToggleNode = new ToggleNode( model.selectedVariabilityMeasureProperty, [ {
       createNode: tandem => new VariabilityMeasureCheckbox( model.isRangeVisibleProperty, CenterAndVariabilityStrings.rangeStringProperty, iconGroup, CAVColors.rangeFillProperty, { tandem: tandem } ),
       tandemName: 'rangeAccordionCheckbox',
       value: VariabilityMeasure.RANGE
@@ -119,7 +119,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     const meanValueProperty = deriveValueProperty( vsm => vsm.meanValueProperty );
 
     // TODO: Why can't this infer the type parameter? See https://github.com/phetsims/center-and-variability/issues/201
-    const readoutsToggleNode = new ToggleNode<VariabilityMeasure>( model.selectedVariabilityProperty, [ {
+    const readoutsToggleNode = new ToggleNode<VariabilityMeasure>( model.selectedVariabilityMeasureProperty, [ {
       value: VariabilityMeasure.RANGE,
       tandemName: 'rangeReadoutToggleNode',
       createNode: tandem => {

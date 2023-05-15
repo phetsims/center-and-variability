@@ -107,7 +107,7 @@ export default class RangeNode extends CAVPlotNode {
     };
     sceneModel.objectChangedEmitter.addListener( updateRangeNode );
     model.isRangeVisibleProperty.link( updateRangeNode );
-    model.selectedVariabilityProperty.link( updateRangeNode );
+    model.selectedVariabilityMeasureProperty.link( updateRangeNode );
     sceneModel.numberOfDataPointsProperty.link( updateRangeNode );
     rangeRectangle.moveToBack();
   }

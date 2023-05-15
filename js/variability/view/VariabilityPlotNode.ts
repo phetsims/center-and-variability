@@ -31,7 +31,7 @@ export default class VariabilityPlotNode extends Node {
     super( providedOptions );
 
     // TODO: Why can't it infer reasonable types here? See https://github.com/phetsims/center-and-variability/issues/201
-    const toggleNode = new ToggleNode<VariabilityMeasure, CAVPlotNode>( model.selectedVariabilityProperty, [ {
+    const toggleNode = new ToggleNode<VariabilityMeasure, CAVPlotNode>( model.selectedVariabilityMeasureProperty, [ {
       createNode: tandem => new RangeNode( model, sceneModel, {
         parentContext: 'accordion',
         tandem: tandem.createTandem( 'rangeNode' )
@@ -61,8 +61,10 @@ export default class VariabilityPlotNode extends Node {
     this.toggleNode = toggleNode;
 
     const intervalToolPlayAreaNode = new IntervalToolPlayAreaNode( model.intervalTool1ValueProperty,
-      model.intervalTool2ValueProperty, toggleNode.nodes[ 0 ].modelViewTransform, new Property( 50 ),
-      { visibleProperty: model.isIntervalToolVisibleProperty } );
+      model.intervalTool2ValueProperty, toggleNode.nodes[ 0 ].modelViewTransform, new Property( 50 ), {
+        visibleProperty: model.isIntervalToolVisibleProperty,
+        tandem: providedOptions.tandem.createTandem( 'intervalToolPlayAreaNode' )
+      } );
 
     toggleNode.nodes.forEach( node => node.insertChild( 0, intervalToolPlayAreaNode ) );
   }

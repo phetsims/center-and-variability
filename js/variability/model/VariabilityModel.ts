@@ -26,7 +26,7 @@ type VariabilityModelOptions = SelfOptions & CAVModelOptions;
 export default class VariabilityModel extends CAVModel {
   private readonly initialized: boolean = false;
 
-  public readonly selectedVariabilityProperty: Property<VariabilityMeasure>;
+  public readonly selectedVariabilityMeasureProperty: Property<VariabilityMeasure>;
   public readonly isRangeVisibleProperty: Property<boolean>;
   public readonly isIQRVisibleProperty: Property<boolean>;
   public readonly isMADVisibleProperty: Property<boolean>;
@@ -52,8 +52,8 @@ export default class VariabilityModel extends CAVModel {
 
     this.variabilitySceneModels = sceneModels;
 
-    this.selectedVariabilityProperty = new EnumerationProperty( VariabilityMeasure.RANGE, {
-      tandem: options.tandem.createTandem( 'selectedVariabilityProperty' )
+    this.selectedVariabilityMeasureProperty = new EnumerationProperty( VariabilityMeasure.RANGE, {
+      tandem: options.tandem.createTandem( 'selectedVariabilityMeasureProperty' )
     } );
 
     this.isRangeVisibleProperty = new BooleanProperty( false, {
@@ -89,7 +89,7 @@ export default class VariabilityModel extends CAVModel {
   public override reset(): void {
     super.reset();
 
-    this.selectedVariabilityProperty.reset();
+    this.selectedVariabilityMeasureProperty.reset();
     this.isRangeVisibleProperty.reset();
     this.isIQRVisibleProperty.reset();
     this.isMADVisibleProperty.reset();

@@ -210,7 +210,7 @@ export default class IQRNode extends CAVPlotNode {
 
     sceneModel.objectChangedEmitter.addListener( updateIQRNode );
     model.isIQRVisibleProperty.link( updateIQRNode );
-    model.selectedVariabilityProperty.link( updateIQRNode );
+    model.selectedVariabilityMeasureProperty.link( updateIQRNode );
     sceneModel.numberOfDataPointsProperty.link( updateIQRNode );
   }
 }

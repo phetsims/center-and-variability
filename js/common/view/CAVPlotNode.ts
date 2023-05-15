@@ -63,7 +63,7 @@ export default class CAVPlotNode extends Node {
       sceneModel.meanValueProperty,
       modelViewTransform,
       model instanceof MeanAndMedianModel ? model.isTopMeanVisibleProperty :
-      model instanceof VariabilityModel ? DerivedProperty.valueEqualsConstant( model.selectedVariabilityProperty, VariabilityMeasure.MAD ) :
+      model instanceof VariabilityModel ? DerivedProperty.valueEqualsConstant( model.selectedVariabilityMeasureProperty, VariabilityMeasure.MAD ) :
       new BooleanProperty( true ),
       sceneModel.dataRangeProperty, {
         color: 'black',

@@ -47,7 +47,7 @@ export default class VariabilityScreenView extends CAVScreenView {
       }
     }, providedOptions );
 
-    const variabilityMeasureRadioButtonGroup = new VariabilityMeasureRadioButtonGroup( model.selectedVariabilityProperty, {
+    const variabilityMeasureRadioButtonGroup = new VariabilityMeasureRadioButtonGroup( model.selectedVariabilityMeasureProperty, {
       left: 10,
       tandem: options.tandem.createTandem( 'variabilityMeasureRadioButtonGroup' )
     } );
@@ -87,7 +87,10 @@ export default class VariabilityScreenView extends CAVScreenView {
       } );
 
     const intervalToolPlayAreaNode = new IntervalToolPlayAreaNode( model.intervalTool1ValueProperty, model.intervalTool2ValueProperty, this.modelViewTransform,
-      new DerivedProperty( [ variabilityAccordionBox.boundsProperty ], bounds => bounds.top ), { visibleProperty: model.isIntervalToolVisibleProperty } );
+      new DerivedProperty( [ variabilityAccordionBox.boundsProperty ], bounds => bounds.top ), {
+        visibleProperty: model.isIntervalToolVisibleProperty,
+        tandem: options.tandem.createTandem( 'intervalToolPlayAreaNode' )
+      } );
     this.intervalToolLayer.addChild( intervalToolPlayAreaNode );
 
     const sceneRadioButtonGroup = new SceneRadioButtonGroup( model.variabilitySceneModels, model.selectedSceneModelProperty, {
