@@ -6,35 +6,20 @@ import CAVConstants from '../CAVConstants.js';
  * Strategies for how the kick distances are generated. State is represented in the CAVSceneModel for save/load and phet-io
  * customizability.
  *
- * TODO: Move some of that phet-io statefulness here? https://github.com/phetsims/center-and-variability/issues/117
- *
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
 export type TKickDistanceStrategy = {
   reset(): void;
   getNextKickDistance( kickNumber: number ): number;
-  getString(): string;
+  toStateObject(): string;
 };
 
-export class SameLocationKickDistanceStrategy implements TKickDistanceStrategy {
-  public reset(): void {
-    // no-op
-  }
-
-  public getNextKickDistance( kickNumber: number ): number {
-
-    // TODO: All console.logs should be behind a query parameter or deleted, see https://github.com/phetsims/center-and-variability/issues/117
-    console.log( this.getString() );
-    return 5;
-  }
-
-  public getString(): string {
-
-    // TODO: Combine these strings with the statefulness keys? https://github.com/phetsims/center-and-variability/issues/117
-    return 'SameLocationKickDistanceStrategy';
-  }
-}
+// These values are used in the state object, should should be changed with caution, because changes to the state API
+// would require migration rules.
+const RANDOM_SKEW_KEY = 'randomSkew';
+const PROBABILITY_DISTRIBUTION_KEY = 'probabilityDistributionByDistance';
+const EXACT_DISTANCE_KEY = 'exactDistanceByIndex';
 
 export class DistributionStrategy implements TKickDistanceStrategy {
 
@@ -42,7 +27,7 @@ export class DistributionStrategy implements TKickDistanceStrategy {
   }
 
   public getNextKickDistance( kickNumber: number ): number {
-    console.log( this.getString() );
+    phet.chipper.queryParameters.dev && console.log( this.toStateObject() );
     assert && assert( this.distribution.length === CAVConstants.PHYSICAL_RANGE.getLength() + 1, 'weight array should match the model range' );
     return dotRandom.sampleProbabilities( this.distribution ) + 1;
   }
@@ -52,37 +37,48 @@ export class DistributionStrategy implements TKickDistanceStrategy {
     // Nothing to do
   }
 
-  public getString(): string {
-    return 'distribution: ' + this.distribution.join( ', ' );
+  public toStateObject(): string {
+    return `${PROBABILITY_DISTRIBUTION_KEY}[${this.distribution.join( ', ' )}]`;
+  }
+
+  public static fromStateObject( stateObject: string ): DistributionStrategy {
+    const distribution = stateObject.substring( PROBABILITY_DISTRIBUTION_KEY.length + 1, stateObject.length - 1 ).split( ',' ).map( x => Number( x ) );
+    return new DistributionStrategy( distribution );
   }
 }
 
 export class RandomSkewStrategy extends DistributionStrategy {
 
-  public constructor() {
-    super( RandomSkewStrategy.chooseDistribution() );
+  public constructor( currentDistribution: ReadonlyArray<number> = RandomSkewStrategy.chooseDistribution() ) {
+    super( currentDistribution );
   }
 
   public override reset(): void {
     this.distribution = RandomSkewStrategy.chooseDistribution();
+    phet.chipper.queryParameters.dev && console.log( 'Reset RandomSkewStrategy: ' + this.toStateObject() + ', ' + this.distribution.join( ', ' ) );
   }
 
   private static chooseDistribution(): ReadonlyArray<number> {
     return dotRandom.nextBoolean() ? CAVConstants.LEFT_SKEWED_DATA : CAVConstants.RIGHT_SKEWED_DATA;
   }
 
-  public override getString(): string {
-    return 'RandomSkewStrategy';
+  public override toStateObject(): string {
+    const name = this.distribution === CAVConstants.LEFT_SKEWED_DATA ? 'currentlyLeftSkewed' : 'currentlyRightSkewed';
+    return `${RANDOM_SKEW_KEY}[${name}]`;
+  }
+
+  public static override fromStateObject( stateObject: string ): RandomSkewStrategy {
+    return new RandomSkewStrategy( stateObject === RANDOM_SKEW_KEY + '[currentlyLeftSkewed]' ? CAVConstants.LEFT_SKEWED_DATA :
+                                   CAVConstants.RIGHT_SKEWED_DATA );
   }
 }
-
 
 export class ExactDistancesStrategy implements TKickDistanceStrategy {
   public constructor( public readonly exactDistances: ReadonlyArray<number> ) {
   }
 
   public getNextKickDistance( kickNumber: number ): number {
-    console.log( this.getString() );
+    phet.chipper.queryParameters.dev && console.log( this.toStateObject() );
     return this.exactDistances[ kickNumber ];
   }
 
@@ -91,7 +87,28 @@ export class ExactDistancesStrategy implements TKickDistanceStrategy {
     // Nothing to do
   }
 
-  public getString(): string {
-    return 'exactDistances: ' + this.exactDistances.join( ', ' );
+  public toStateObject(): string {
+    return `${EXACT_DISTANCE_KEY}[${this.exactDistances.join( ', ' )}]`;
+  }
+
+  public static fromStateObject( stateObject: string ): ExactDistancesStrategy {
+    const exactDistances = stateObject.substring( EXACT_DISTANCE_KEY.length + 1, stateObject.length - 1 ).split( ',' ).map( x => Number( x ) );
+    return new ExactDistancesStrategy( exactDistances );
+  }
+}
+
+export function kickDistanceStrategyFromStateObject( stateObject: string ): TKickDistanceStrategy {
+  if ( stateObject.startsWith( RANDOM_SKEW_KEY ) ) {
+    return RandomSkewStrategy.fromStateObject( stateObject );
+  }
+  else if ( stateObject.startsWith( PROBABILITY_DISTRIBUTION_KEY ) ) {
+    return DistributionStrategy.fromStateObject( stateObject );
+  }
+  else if ( stateObject.startsWith( EXACT_DISTANCE_KEY ) ) {
+    return ExactDistancesStrategy.fromStateObject( stateObject );
+  }
+  else {
+    assert && assert( false, `Unknown distribution type ${stateObject}` );
+    throw new Error( `Unknown distribution type ${stateObject}` );
   }
 }
