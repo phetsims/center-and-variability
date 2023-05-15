@@ -60,7 +60,8 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
 
     this.contentLayer.addChild( new PredictionSlider( model.meanPredictionProperty, this.modelViewTransform, CAVConstants.PHYSICAL_RANGE, {
       predictionThumbNodeOptions: {
-        color: CAVColors.meanColorProperty
+        color: CAVColors.meanColorProperty,
+        style: 'arrow'
       },
       valueProperty: model.meanPredictionProperty,
       enabledRangeProperty: new Property<Range>( CAVConstants.PHYSICAL_RANGE ),

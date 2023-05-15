@@ -54,25 +54,26 @@ export default class VariabilityScreenView extends CAVScreenView {
 
     super( model, options );
 
-    this.contentLayer.addChild( new PredictionSlider( model.intervalTool1ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE, {
+    const predictionSliderOptions = {
       predictionThumbNodeOptions: {
-        color: CAVColors.intervalToolIconShadedSphereMainColorProperty
+        color: CAVColors.intervalToolIconShadedSphereMainColorProperty,
+        style: 'line' as const
       },
-      valueProperty: model.intervalTool1ValueProperty,
+
       enabledRangeProperty: new Property<Range>( CAVConstants.PHYSICAL_RANGE ),
       roundToInterval: null, // continuous
-      visibleProperty: model.isIntervalToolVisibleProperty,
+      visibleProperty: model.isIntervalToolVisibleProperty
+    };
+
+    this.contentLayer.addChild( new PredictionSlider( model.intervalTool1ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE, {
+      ...predictionSliderOptions,
+      valueProperty: model.intervalTool1ValueProperty,
       tandem: options.tandem.createTandem( 'variabilityIntervalPredictionTool1ValueNode' )
     } ) );
 
     this.contentLayer.addChild( new PredictionSlider( model.intervalTool2ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE, {
-      predictionThumbNodeOptions: {
-        color: CAVColors.intervalToolIconShadedSphereMainColorProperty
-      },
+      ...predictionSliderOptions,
       valueProperty: model.intervalTool2ValueProperty,
-      enabledRangeProperty: new Property<Range>( CAVConstants.PHYSICAL_RANGE ),
-      roundToInterval: null, // continuous
-      visibleProperty: model.isIntervalToolVisibleProperty,
       tandem: options.tandem.createTandem( 'variabilityIntervalPredictionTool2ValueNode' )
     } ) );
 

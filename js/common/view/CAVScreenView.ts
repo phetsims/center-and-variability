@@ -301,7 +301,8 @@ export default class CAVScreenView extends ScreenView {
   public static createMedianPredictionNode( model: CAVModel, modelViewTransform: ModelViewTransform2, tandem: Tandem ): PredictionSlider {
     return new PredictionSlider( model.medianPredictionProperty, modelViewTransform, CAVConstants.PHYSICAL_RANGE, {
       predictionThumbNodeOptions: {
-        color: CAVColors.medianColorProperty
+        color: CAVColors.medianColorProperty,
+        style: 'arrow'
       },
       valueProperty: model.medianPredictionProperty,
       enabledRangeProperty: new Property<Range>( CAVConstants.PHYSICAL_RANGE ),

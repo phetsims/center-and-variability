@@ -1,12 +1,13 @@
 // Copyright 2023, University of Colorado Boulder
+
 /**
  * The thumb node for the PredictionSlider. Is made up of an Arrow and ShadedSphere.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
- *
+ * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { Node, NodeOptions, TColor } from '../../../../scenery/js/imports.js';
+import { Line, Node, NodeOptions, TColor } from '../../../../scenery/js/imports.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import ShadedSphereNode from '../../../../scenery-phet/js/ShadedSphereNode.js';
 import CAVColors from '../CAVColors.js';
@@ -17,6 +18,7 @@ import optionize from '../../../../phet-core/js/optionize.js';
 
 type SelfOptions = {
   color: TColor;
+  style: 'line' | 'arrow';
 };
 
 export type PredictionThumbNodeOptions = SelfOptions & StrictOmit<NodeOptions, 'tandem'>;
@@ -31,17 +33,27 @@ export default class PredictionThumbNode extends Node {
       lineWidth: CAVConstants.ARROW_LINE_WIDTH
     } );
 
-    const arrowNode = new ArrowNode( 0, 0, 0, -50, {
-      headHeight: 10,
-      headWidth: 14,
-      tailWidth: 2,
-      fill: providedOptions.color,
-      stroke: CAVColors.arrowStrokeProperty,
-      lineWidth: CAVConstants.ARROW_LINE_WIDTH
-    } );
+    const indicatorNode =
+      providedOptions.style === 'arrow' ?
+
+        // Arrows for Median and Mean & Median screens.
+      new ArrowNode( 0, 0, 0, -50, {
+        headHeight: 10,
+        headWidth: 14,
+        tailWidth: 2,
+        fill: providedOptions.color,
+        stroke: CAVColors.arrowStrokeProperty,
+        lineWidth: CAVConstants.ARROW_LINE_WIDTH
+      } ) :
+
+        // Lines for the Interval Tool Node in the Variability screen
+      new Line( 0, 0, 0, -50, {
+        stroke: 'lightgray',
+        lineWidth: 1
+      } );
 
     const options = optionize<PredictionThumbNodeOptions, SelfOptions, NodeOptions>()( {
-      children: [ arrowNode, shadedSphereNode ]
+      children: [ indicatorNode, shadedSphereNode ]
     }, providedOptions );
 
     super( options );

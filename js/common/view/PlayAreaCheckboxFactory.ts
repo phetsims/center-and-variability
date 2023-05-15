@@ -92,7 +92,7 @@ export default class PlayAreaCheckboxFactory {
       createNode: ( tandem: Tandem ) => {
         return PlayAreaCheckboxFactory.createGridBox(
           new Text( stringProperty, TEXT_OPTIONS ),
-          new PredictionThumbNode( { color: color, maxHeight: 20, pickable: false } ),
+          new PredictionThumbNode( { color: color, maxHeight: 20, pickable: false, style: 'arrow' } ),
           alignGroup );
       },
       property: property,

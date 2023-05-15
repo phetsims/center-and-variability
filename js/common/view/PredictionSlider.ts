@@ -63,7 +63,11 @@ export default class PredictionSlider extends AccessibleSlider( Node, 0 ) {
     } );
 
     predictionProperty.link( prediction => {
-      this.centerTop = modelViewTransform.modelToViewXY( prediction, 0 ).plusXY( 0, 45 );
+
+      // The arrows appear completely under the labels of the number line node. The lines draw all the way up to the
+      // top of the grass where the interval rectangle begins.
+      const offsetY = options.predictionThumbNodeOptions.style === 'arrow' ? 45 : 0;
+      this.centerTop = modelViewTransform.modelToViewXY( prediction, 0 ).plusXY( 0, offsetY );
     } );
 
     this.addInputListener( new DragListener( {
