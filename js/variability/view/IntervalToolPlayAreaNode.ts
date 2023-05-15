@@ -47,8 +47,6 @@ export default class IntervalToolPlayAreaNode extends Node {
 
     const dragListener = new DragListener( {
       transform: modelViewTransform,
-      start: ( event, dragListener ) => {
-      },
       drag: ( event, dragListener ) => {
 
         const modelDeltaX = dragListener.modelDelta.x;
