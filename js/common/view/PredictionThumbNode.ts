@@ -48,7 +48,7 @@ export default class PredictionThumbNode extends Node {
 
         // Lines for the Interval Tool Node in the Variability screen
       new Line( 0, 0, 0, -50, {
-        stroke: 'lightgray',
+        stroke: CAVColors.playAreaIntervalToolHandleLineStrokeProperty,
         lineWidth: 1
       } );
 

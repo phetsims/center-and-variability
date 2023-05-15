@@ -55,21 +55,22 @@ const CAVColors = {
   iqrColorProperty: new ProfileColorProperty( centerAndVariability, 'iqrColor', { default: new Color( '#99ffff' ).withAlpha( 0.55 ) } ),
   arrowStrokeProperty: new ProfileColorProperty( centerAndVariability, 'arrowStroke', { default: 'black' } ),
   boxWhiskerStrokeColorProperty: new ProfileColorProperty( centerAndVariability, 'boxWhiskerStrokeColor', { default: 'black' } ),
-  madRectangleColorProperty: new ProfileColorProperty( centerAndVariability, 'madRectangleColorProperty', { default: new Color( '#cba3e6' ).withAlpha( 0.7 ) } ),
+  madRectangleColorProperty: new ProfileColorProperty( centerAndVariability, 'madRectangleColor', { default: new Color( '#cba3e6' ).withAlpha( 0.7 ) } ),
 
   grayDataPointFill: new ProfileColorProperty( centerAndVariability, 'grayDataPointFill', { default: '#8f8f8f' } ),
 
   // Darker gray than the ones in the plot area, to show up better in the radio button
-  rangeMarkerColorPrperty: new ProfileColorProperty( centerAndVariability, 'rangeMarkerColorProperty', { default: new Color( '#717171' ) } ),
+  rangeMarkerColorPrperty: new ProfileColorProperty( centerAndVariability, 'rangeMarkerColor', { default: new Color( '#717171' ) } ),
 
   intervalToolIconRectangleFillColorProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolIconRectangleFill', { default: '#fef8ab' } ),
   intervalToolIconShadedSphereMainColorProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolIconShadedSphereMainColor', { default: '#fdf581' } ),
   intervalToolIconShadedSphereHighlightColorProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolIconShadedSphereHighlightColor', { default: '#fdfdf2' } ),
   intervalToolIconShadedSphereShadowColorProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolIconShadedSphereShadowColor', { default: '#545034' } ),
-  intervalToolFillProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolFillProperty', { default: Color.toColor( '#fefccf' ).withAlpha( 0.6 ) } ),
-  intervalToolStrokeProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolStrokeProperty', { default: '#eae4c3' } ),
+  intervalToolFillProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolFill', { default: Color.toColor( '#fefccf' ).withAlpha( 0.6 ) } ),
+  intervalToolStrokeProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolStroke', { default: '#eae4c3' } ),
+  playAreaIntervalToolHandleLineStrokeProperty: new ProfileColorProperty( centerAndVariability, 'playAreaIntervalToolHandleLineStroke', { default: new Color( 241, 255, 204, 0.5 ) } ),
 
-  rangeFillProperty: new ProfileColorProperty( centerAndVariability, 'rangeFillProperty', { default: new Color( '#c3fdb9' ).withAlpha( 0.7 ) } )
+  rangeFillProperty: new ProfileColorProperty( centerAndVariability, 'rangeFill', { default: new Color( '#c3fdb9' ).withAlpha( 0.7 ) } )
 };
 
 centerAndVariability.register( 'CAVColors', CAVColors );
