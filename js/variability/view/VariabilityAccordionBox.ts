@@ -156,13 +156,13 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         } );
 
         const medianReadoutText = new VariabilityReadoutText( medianReadoutValueProperty, CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty, {
-          fill: CAVColors.medianColorProperty
-          // tandem: options.tandem.createTandem( 'medianReadoutText' )
+          fill: CAVColors.medianColorProperty,
+          tandem: tandem.createTandem( 'medianReadoutText' )
         } );
         const iqrReadoutText = new VariabilityReadoutText( iqrReadoutValueProperty, CenterAndVariabilityStrings.iqrEqualsValuePatternStringProperty, {
           fill: CAVColors.iqrLabelColorProperty,
-          visibleProperty: model.isIQRVisibleProperty
-          // tandem: options.tandem.createTandem( 'iqrReadoutText' )
+          visibleProperty: model.isIQRVisibleProperty,
+          tandem: tandem.createTandem( 'iqrReadoutText' )
         } );
 
         textReadoutGroup.addChild( medianReadoutText );
@@ -187,19 +187,20 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
           children: [
             new VariabilityReadoutText( meanReadoutValueProperty,
               CenterAndVariabilityStrings.meanEqualsValuePatternStringProperty, {
-                fill: CAVColors.meanColorProperty
-                // tandem: options.tandem.createTandem( 'rangeReadoutText' )
+                fill: CAVColors.meanColorProperty,
+                tandem: tandem.createTandem( 'rangeReadoutText' )
               } ),
             new VariabilityReadoutText( madReadoutValueProperty,
               CenterAndVariabilityStrings.madEqualsValuePatternStringProperty, {
                 fill: CAVColors.madColorProperty,
-                visibleProperty: model.isMADVisibleProperty
-                // tandem: options.tandem.createTandem( 'rangeReadoutText' )
+                visibleProperty: model.isMADVisibleProperty,
+                tandem: tandem.createTandem( 'rangeReadoutText' )
               } ) ]
         } );
       }
     } ], {
-      left: 5
+      left: 5,
+      tandem: tandem.createTandem( 'readoutsToggleNode' )
     } );
 
     backgroundNode.addChild( readoutsToggleNode );
