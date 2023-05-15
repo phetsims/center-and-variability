@@ -47,7 +47,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       return {
         value: model.sceneModels[ i ],
         createNode: ( tandem: Tandem ) => new VariabilityPlotNode( model, model.variabilitySceneModels[ i ], {
-          tandem: tandem.createTandem( 'plotNode' + i ),
+          tandem: tandem.createTandem( `plotNode${i + 1}` ),
           bottom: backgroundNode.height
         } )
       };

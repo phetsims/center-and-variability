@@ -38,7 +38,12 @@ export default class MedianScreenView extends CAVScreenView {
 
     super( model, options );
 
-    this.setAccordionBox( new MedianAccordionBox( model, this.layoutBounds, options.tandem.createTandem( 'accordionBox' ), this.questionBar.bottom + CAVConstants.SCREEN_VIEW_Y_MARGIN ) );
+    this.setAccordionBox( new MedianAccordionBox(
+      model,
+      this.layoutBounds,
+      options.tandem.createTandem( 'accordionBox' ),
+      this.questionBar.bottom + CAVConstants.SCREEN_VIEW_Y_MARGIN )
+    );
 
     const iconGroup = new AlignGroup();
 

@@ -38,7 +38,13 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
 
     super( model, options );
 
-    const meanAndMedianAccordionBox = new MeanAndMedianAccordionBox( model, this.layoutBounds, options.tandem.createTandem( 'accordionBox' ), this.questionBar.bottom + CAVConstants.SCREEN_VIEW_Y_MARGIN, this.playAreaNumberLineNode );
+    const meanAndMedianAccordionBox = new MeanAndMedianAccordionBox(
+      model,
+      this.layoutBounds,
+      options.tandem.createTandem( 'accordionBox' ),
+      this.questionBar.bottom + CAVConstants.SCREEN_VIEW_Y_MARGIN,
+      this.playAreaNumberLineNode
+    );
     this.setAccordionBox( meanAndMedianAccordionBox );
     meanAndMedianAccordionBox.alignWithPlayAreaNumberLineNode( this.playAreaNumberLineNode.globalBounds.x );
 

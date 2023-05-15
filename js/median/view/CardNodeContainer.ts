@@ -88,7 +88,7 @@ export default class CardNodeContainer extends Node {
 
     this.cardNodes = model.cards.map( ( cardModel, index ) => {
       const cardNode = new CardNode( cardModel, new Vector2( 0, 0 ), () => this.getDragRange(), {
-        tandem: options.tandem.createTandem( 'cardNodes' ).createTandem( 'cardNode' + index )
+        tandem: options.tandem.createTandem( 'cardNodes' ).createTandem( `cardNode${index + 1}` )
       } );
 
       this.cardLayer.addChild( cardNode );

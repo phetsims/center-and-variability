@@ -131,7 +131,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     } );
     this.soccerBalls = _.range( 0, this.maxKicksLimit ).map( index => {
       const soccerBall = new SoccerBall( index === 0, {
-        tandem: options.tandem.createTandem( 'soccerBalls' ).createTandem( `soccerBall${index}` )
+        tandem: options.tandem.createTandem( 'soccerBalls' ).createTandem( `soccerBall${index + 1}` )
       } );
 
       // When the soccer ball drag position changes, constrain it to the physical range and move it to the top, if necessary
@@ -253,7 +253,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     } );
 
     this.soccerPlayers = _.range( 0, this.maxKicksLimit ).map( placeInLine => new SoccerPlayer( placeInLine,
-      options.tandem.createTandem( 'soccerPlayer' + placeInLine )
+      options.tandem.createTandem( `soccerPlayer${placeInLine + 1}` )
     ) );
 
     // Create an initial ball to show on startup
