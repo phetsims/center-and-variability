@@ -14,7 +14,6 @@ export default class IntervalToolPlayAreaNode extends Node {
 
     const rectangleNode = new Rectangle( 0, 0, 0, 400, {
       fill: CAVColors.intervalToolFillProperty,
-      stroke: CAVColors.intervalToolStrokeProperty,
       cursor: 'pointer'
     } );
     const leftEdge = new Line( 0, 0, 0, 400, {
