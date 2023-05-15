@@ -28,6 +28,7 @@ export default class IQRNode extends CAVPlotNode {
       ...options
     } );
 
+    // TODO: This is currently overlapping the numberLine in the AccordionBox. https://github.com/phetsims/center-and-variability/issues/158
     const needAtLeastFiveKicksOffsetY = options.parentContext === 'info' ? 90 : 20;
     const needAtLeastFiveKicks = new Text( CenterAndVariabilityStrings.needAtLeastFiveKicksStringProperty, {
       fontSize: 18,
@@ -49,7 +50,7 @@ export default class IQRNode extends CAVPlotNode {
       fill: CAVColors.iqrColorProperty
     } );
 
-    const boxWhiskerLabelArrow = ( fillColor: ProfileColorProperty ) => {
+    const createWhiskerLabelArrow = ( fillColor: ProfileColorProperty ) => {
       return new ArrowNode( 0, 0, 0, 26, {
         fill: fillColor,
         stroke: null,
@@ -60,22 +61,21 @@ export default class IQRNode extends CAVPlotNode {
       } );
     };
 
-    const boxWhiskerLabelText = ( fillColor: ProfileColorProperty, labelTextProperty: TReadOnlyProperty<string>, isQuartile: boolean ) => {
-      const textNodeChildren: Node[] = [ new Text( labelTextProperty, {
+    const createBoxWhiskerLabelText = ( fillColor: ProfileColorProperty, labelTextProperty: TReadOnlyProperty<string>, isQuartile: boolean ) => {
+      const textNodeChildren = [ ...( isQuartile ? [ new Circle( 12, { fill: CAVColors.iqrColorProperty } ) ] : [] ),
+        new Text( labelTextProperty, {
         fontSize: 16,
         fill: fillColor,
         centerX: 0,
         centerY: 0
       } ) ];
-      if ( isQuartile ) {
-        textNodeChildren.unshift( new Circle( 12, { fill: CAVColors.iqrColorProperty } ) );
-      }
+
       return new Node( { children: textNodeChildren, centerY: isQuartile ? -14 : -10 } );
     };
 
     const boxWhiskerLabel = ( fillColor: ProfileColorProperty, labelTextProperty: TReadOnlyProperty<string>, isQuartile: boolean ) => {
-      const arrowNode = boxWhiskerLabelArrow( fillColor );
-      const textNode = boxWhiskerLabelText( fillColor, labelTextProperty, isQuartile );
+      const arrowNode = createWhiskerLabelArrow( fillColor );
+      const textNode = createBoxWhiskerLabelText( fillColor, labelTextProperty, isQuartile );
       return new Node( { children: [ textNode, arrowNode ] } );
     };
 
@@ -117,14 +117,18 @@ export default class IQRNode extends CAVPlotNode {
     const boxWhiskerNode = new Node();
     boxWhiskerNode.y = BOX_CENTER_Y;
 
-    const medianArrowNode = boxWhiskerLabelArrow( CAVColors.medianColorProperty );
-    const medianTextNode = boxWhiskerLabelText( CAVColors.medianColorProperty, CenterAndVariabilityStrings.medianStringProperty, false );
+    const medianArrowNode = createWhiskerLabelArrow( CAVColors.medianColorProperty );
+    const medianTextNode = createBoxWhiskerLabelText( CAVColors.medianColorProperty, CenterAndVariabilityStrings.medianStringProperty, false );
+
+    // TODO: Is this y an empirical number or calculated from something? https://github.com/phetsims/center-and-variability/issues/158
     const medianLabelNode = new Node( { children: [ medianArrowNode, medianTextNode ], y: -32 } );
 
     const minLabelNode = boxWhiskerLabel( CAVColors.iqrLabelColorProperty, CenterAndVariabilityStrings.minStringProperty, false );
     const maxLabelNode = boxWhiskerLabel( CAVColors.iqrLabelColorProperty, CenterAndVariabilityStrings.maxStringProperty, false );
     const q1LabelNode = boxWhiskerLabel( CAVColors.iqrLabelColorProperty, CenterAndVariabilityStrings.q1StringProperty, true );
     const q3LabelNode = boxWhiskerLabel( CAVColors.iqrLabelColorProperty, CenterAndVariabilityStrings.q3StringProperty, true );
+
+    // TODO: Same here... where did this y values come from? https://github.com/phetsims/center-and-variability/issues/158
 
     minLabelNode.y = maxLabelNode.y = -28;
     q1LabelNode.y = q3LabelNode.y = -33;
