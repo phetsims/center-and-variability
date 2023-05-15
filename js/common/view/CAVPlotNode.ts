@@ -90,7 +90,8 @@ export default class CAVPlotNode extends Node {
     model.sceneModels.forEach( ( scene, sceneIndex ) => {
 
       const dataPointLayer = new Node( {
-        visibleProperty: scene.isVisibleProperty
+        visibleProperty: scene.isVisibleProperty,
+        excludeInvisibleChildrenFromBounds: true
       } );
 
       // Create the data points for that scene
