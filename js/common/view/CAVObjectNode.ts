@@ -45,7 +45,7 @@ export default abstract class CAVObjectNode extends Node {
 
     // Visibilty controlled by subclass logic. Also this whole node is moved to front when the medianHighlight is shown
     // so it will appear in front (unless the user drags another object on top of it).
-    this.medianHighlight = new Circle( viewRadius + 1.75, {
+    this.medianHighlight = new Circle( viewRadius + 1, {
       fill: CAVColors.medianColorProperty
     } );
     this.addChild( this.medianHighlight );
