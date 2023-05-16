@@ -58,12 +58,14 @@ export default class SceneView {
       backLayer.addChild( soccerBallNode );
 
       // While flying, it should be in front in z-order, to be in front of the accordion box
-      soccerBall.animationModeProperty.lazyLink( ( animationMode, oldAnimationModel ) => {
+      soccerBall.animationModeProperty.lazyLink( ( animationMode, oldAnimationMode ) => {
+
+        //when the ball is kicked
         if ( animationMode === AnimationMode.FLYING ) {
           backLayer.removeChild( soccerBallNode );
           frontLayer.addChild( soccerBallNode );
         }
-        else {
+        else if ( oldAnimationMode === AnimationMode.FLYING ) {
           frontLayer.removeChild( soccerBallNode );
           backLayer.addChild( soccerBallNode );
         }
@@ -90,7 +92,6 @@ export default class SceneView {
       let bounds: Bounds2 | null = null;
 
       for ( let i = 0; i < stack.length; i++ ) {
-
         const soccerBallNode = soccerBallMap.get( stack[ i ] )!;
 
         if ( i === 0 ) {

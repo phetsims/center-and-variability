@@ -82,7 +82,7 @@ export default class SoccerBallNode extends CAVObjectNode {
     Multilink.multilink(
       [ soccerBall.animationModeProperty, soccerBall.valueProperty, selfInputEnabledProperty, objectNodesInputEnabledProperty ],
       ( mode, value, selfInputEnabled, objectsInputEnabled ) => {
-        const inputEnabled = value !== null && mode === AnimationMode.NONE && selfInputEnabled && objectsInputEnabled;
+        const inputEnabled = value !== null && ( mode === AnimationMode.NONE || mode === AnimationMode.STACKING ) && selfInputEnabled && objectsInputEnabled;
 
         // if input is disabled and the ball is in the play area, show the darker version
         const showDisabledSoccerBall = !inputEnabled && value !== null;

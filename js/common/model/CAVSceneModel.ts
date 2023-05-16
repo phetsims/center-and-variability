@@ -140,7 +140,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
       } );
 
       soccerBall.soccerBallLandedEmitter.addListener( soccerBall => {
-        this.animateSoccerBallStack( soccerBall, soccerBall.valueProperty.value! );
+        this.animateSoccerBallToTopOfStack( soccerBall, soccerBall.valueProperty.value! );
 
         // If the soccer player that kicked that ball was still in line when the ball lands, they can leave the line now.
         if ( soccerBall.soccerPlayer === this.getFrontSoccerPlayer() ) {
@@ -158,6 +158,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
           const oldStack = this.getStackAtLocation( oldValue );
           if ( oldStack.length > 0 ) {
             this.reorganizeStack( oldStack );
+            this.clearAnimationsInStack( oldStack );
           }
 
           const objectsAtTarget = this.soccerBalls.filter( otherSoccerBall => {
@@ -166,7 +167,9 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
 
           // Sort from bottom to top, so they can be re-stacked. The specified object will appear at the top.
           const sortedOthers = _.sortBy( objectsAtTarget, object => object.positionProperty.value.y );
-          this.reorganizeStack( [ ...sortedOthers, soccerBall ] );
+          const newStack = [ ...sortedOthers, soccerBall ];
+          this.reorganizeStack( newStack );
+          this.clearAnimationsInStack( newStack );
         }
       } );
 
@@ -298,6 +301,11 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     } );
   }
 
+  // Cancel out all animations in the soccer ball stack.
+  private clearAnimationsInStack( stack: SoccerBall[] ): void {
+    stack.forEach( soccerBall => soccerBall.clearAnimation() );
+  }
+
   protected updateDataMeasures(): void {
     const sortedObjects = this.getSortedLandedObjects();
     const medianObjects = CAVSceneModel.getMedianObjectsFromSortedArray( sortedObjects );
@@ -336,6 +344,8 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     return _.sortBy( activeSoccerBallsAtLocation, soccerBall => soccerBall.positionProperty.value.y );
   }
 
+
+  // TODO: Set the drag indicator arrow visible only after the last ball has finished animating - see https://github.com/phetsims/center-and-variability/issues/188
   /**
    * Set the position of the parameter object to be on top of the other objects at that target position.
    * Cease all animations in the stack and reorganize the stack.
@@ -345,13 +355,6 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     // collapse the rest of the stack. NOTE: This assumes the radii are the same.
     let position = CAVObjectType.SOCCER_BALL.radius;
     soccerBallStack.forEach( soccerBall => {
-
-      // If a ball was animating to the top of the stack, stop it. This prevents a floating ball if a lower ball
-      // is moved out from underneath
-      if ( soccerBall.animation ) {
-        soccerBall.animation.stop();
-        soccerBall.animation = null;
-      }
       soccerBall.positionProperty.value = new Vector2( soccerBall.valueProperty.value!, position );
       position += CAVObjectType.SOCCER_BALL.radius * 2 * ( 1 - CAVConstants.SOCCER_BALL_OVERLAP );
     } );
@@ -492,10 +495,12 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
   }
 
   /**
-   * When a ball lands on the ground, animate all other balls that were at this location above the landed ball.
+   * When a ball lands on the ground, animate the ball to the top of the stack.
    */
-  private animateSoccerBallStack( soccerBall: SoccerBall, value: number ): void {
-    const otherObjectsInStack = this.getActiveSoccerBalls().filter( x => x.valueProperty.value === value && x !== soccerBall );
+  private animateSoccerBallToTopOfStack( soccerBall: SoccerBall, value: number ): void {
+    const otherObjectsInStack = this.getActiveSoccerBalls().filter( x =>
+      x.valueProperty.value === value && x !== soccerBall
+    );
 
     const targetIndex = otherObjectsInStack.length;
 
@@ -503,32 +508,39 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     const targetPositionY = targetIndex * diameter * ( 1 - CAVConstants.SOCCER_BALL_OVERLAP ) + CAVObjectType.SOCCER_BALL.radius;
 
     const animationSlowdownFactor = CAVQueryParameters.slowAnimation ? 10 : 1;
-    const animationTime = animationSlowdownFactor * 0.06 * this.getStackAtLocation( value ).length;
+    const animationTime = animationSlowdownFactor * 0.06 * ( this.getStackAtLocation( value ).length - 1 );
 
-    if ( soccerBall.animation ) {
-      soccerBall.animation.stop();
+    soccerBall.clearAnimation();
+
+    if ( otherObjectsInStack.length === 0 ) {
+      soccerBall.animationModeProperty.value = AnimationMode.NONE;
+      this.stackChangedEmitter.emit( [ soccerBall ] );
     }
-    soccerBall.animation = new Animation( {
-      duration: animationTime,
-      targets: [ {
-        property: soccerBall.positionProperty,
-        to: new Vector2( Utils.roundSymmetric( soccerBall.positionProperty.value.x ), targetPositionY ),
-        easing: Easing.QUADRATIC_IN_OUT
-      } ]
-    } );
+    else {
+      soccerBall.animationModeProperty.value = AnimationMode.STACKING;
+      soccerBall.animation = new Animation( {
+        duration: animationTime,
+        targets: [ {
+          property: soccerBall.positionProperty,
+          to: new Vector2( Utils.roundSymmetric( soccerBall.positionProperty.value.x ), targetPositionY ),
+          easing: Easing.QUADRATIC_IN_OUT
+        } ]
+      } );
 
-    soccerBall.animation.endedEmitter.addListener( () => {
-      soccerBall.animation = null;
+      soccerBall.animation.endedEmitter.addListener( () => {
+        soccerBall.animation = null;
+        soccerBall.animationModeProperty.value = AnimationMode.NONE;
 
-      // During the state wrapper, sometimes the soccerBall.valueProperty.value was null, so it wasn't really supposed to be in the stack any longer
-      if ( soccerBall.valueProperty.value === value ) {
+        // During the state wrapper, sometimes the soccerBall.valueProperty.value was null, so it wasn't really supposed to be in the stack any longer
+        if ( soccerBall.valueProperty.value === value ) {
 
-        // Identify the soccer balls in the stack at the time the animation ended
-        const otherObjectsInStack = this.getActiveSoccerBalls().filter( x => x.valueProperty.value === value && x !== soccerBall );
-        this.reorganizeStack( [ ...otherObjectsInStack, soccerBall ] );
-      }
-    } );
-    soccerBall.animation.start();
+          // Identify the soccer balls in the stack at the time the animation ended
+          this.stackChangedEmitter.emit( this.getActiveSoccerBalls().filter( x =>
+            x.valueProperty.value === value && x.animation === null && x.animationModeProperty.value === AnimationMode.NONE ) );
+        }
+      } );
+      soccerBall.animation.start();
+    }
   }
 
   /**

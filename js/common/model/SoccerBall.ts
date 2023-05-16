@@ -109,6 +109,13 @@ export default class SoccerBall extends PhetioObject {
     } );
   }
 
+  // this doesn't change the animationModeProperty of the soccerBall - that is done by the ball animationEnded callback
+  public clearAnimation(): void {
+    if ( this.animation ) {
+      this.animation.stop();
+      this.animation = null;
+    }
+  }
   public step( dt: number ): void {
     if ( this.animationModeProperty.value === AnimationMode.FLYING ) {
 
@@ -135,8 +142,6 @@ export default class SoccerBall extends PhetioObject {
       this.positionProperty.value = new Vector2( x, y );
 
       if ( landed ) {
-        this.animationModeProperty.value = AnimationMode.NONE;
-
         this.soccerBallLandedEmitter.emit( this );
       }
     }
