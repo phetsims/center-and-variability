@@ -2,7 +2,7 @@
 
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import MedianBarNode from '../../common/view/MedianBarNode.js';
-import { Circle, Line, ManualConstraint, Node, ProfileColorProperty, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { Line, ManualConstraint, Node, ProfileColorProperty, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
@@ -39,9 +39,9 @@ export default class IQRNode extends CAVPlotNode {
     } );
     this.addChild( needAtLeastFiveKicksText );
 
-    const BOX_WHISKER_OFFSET_Y = options.parentContext === 'info' ? 5 : 3;
+    const BOX_WHISKER_OFFSET_Y = options.parentContext === 'info' ? 3.5 : 3;
     const BOX_HEIGHT = 25;
-    const END_CAP_HEIGHT = 15;
+    const END_CAP_HEIGHT = 20;
     const BOX_STROKE_WIDTH = 2;
 
     const boxWhiskerNode = new Node();
@@ -60,7 +60,9 @@ export default class IQRNode extends CAVPlotNode {
       fill: CAVColors.iqrColorProperty
     } );
 
-    const createBoxWhiskerLabelArrow = ( fillColor: ProfileColorProperty ) => {
+    const ARROW_LABEL_TEXT_OFFSET_DEFAULT = -11;
+
+    const boxWhiskerLabelArrow = ( fillColor: ProfileColorProperty ) => {
       return new ArrowNode( 0, 0, 0, 24, {
         fill: fillColor,
         stroke: null,
@@ -71,21 +73,25 @@ export default class IQRNode extends CAVPlotNode {
       } );
     };
 
-    const createBoxWhiskerLabelText = ( fillColor: ProfileColorProperty, labelTextProperty: TReadOnlyProperty<string>, isQuartile: boolean ) => {
-      const textNodeChildren = [ ...( isQuartile ? [ new Circle( 12, { fill: CAVColors.iqrColorProperty } ) ] : [] ),
+    const boxWhiskerLabelText = ( fillColor: ProfileColorProperty, labelTextProperty: TReadOnlyProperty<string>, isQuartile: boolean ) => {
+      const backgroundRectWidth = 28;
+      const backgroundRectHeight = 20;
+      const textNodeChildren = [ ...( isQuartile ?
+        [ new Rectangle( -0.5 * backgroundRectWidth, -0.5 * backgroundRectHeight, backgroundRectWidth, backgroundRectHeight,
+          { fill: CAVColors.iqrColorProperty, cornerRadius: 5 } ) ] : [] ),
         new Text( labelTextProperty, {
-        fontSize: 16,
-        fill: fillColor,
-        centerX: 0,
-        centerY: 0
-      } ) ];
+          fontSize: 16,
+          fill: fillColor,
+          centerX: 0,
+          centerY: 0
+        } )
+      ];
 
-      return new Node( { children: textNodeChildren, centerY: isQuartile ? -14 : -10 } );
+      return new Node( { children: textNodeChildren, centerY: ARROW_LABEL_TEXT_OFFSET_DEFAULT } );
     };
 
-    const boxWhiskerLabel = ( fillColor: ProfileColorProperty, labelTextProperty: TReadOnlyProperty<string>, isQuartile: boolean ) => {
-      const arrowNode = createBoxWhiskerLabelArrow( fillColor );
-      const textNode = createBoxWhiskerLabelText( fillColor, labelTextProperty, isQuartile );
+    const boxWhiskerLabel = ( fillColor: ProfileColorProperty, textNode: Node ) => {
+      const arrowNode = boxWhiskerLabelArrow( fillColor );
       return new Node( { children: [ textNode, arrowNode ] } );
     };
 
@@ -119,15 +125,20 @@ export default class IQRNode extends CAVPlotNode {
       lineWidth: BOX_STROKE_WIDTH
     } );
 
-    const medianArrowNode = createBoxWhiskerLabelArrow( CAVColors.medianColorProperty );
+    const medianArrowNode = boxWhiskerLabelArrow( CAVColors.medianColorProperty );
 
-    const minLabelNode = boxWhiskerLabel( CAVColors.iqrLabelColorProperty, CenterAndVariabilityStrings.minStringProperty, false );
-    const maxLabelNode = boxWhiskerLabel( CAVColors.iqrLabelColorProperty, CenterAndVariabilityStrings.maxStringProperty, false );
-    const q1LabelNode = boxWhiskerLabel( CAVColors.iqrLabelColorProperty, CenterAndVariabilityStrings.q1StringProperty, true );
-    const q3LabelNode = boxWhiskerLabel( CAVColors.iqrLabelColorProperty, CenterAndVariabilityStrings.q3StringProperty, true );
+    const minLabelTextNode = boxWhiskerLabelText( CAVColors.iqrLabelColorProperty, CenterAndVariabilityStrings.minStringProperty, false );
+    const maxLabelTextNode = boxWhiskerLabelText( CAVColors.iqrLabelColorProperty, CenterAndVariabilityStrings.maxStringProperty, false );
+    const q1LabelTextNode = boxWhiskerLabelText( CAVColors.iqrLabelColorProperty, CenterAndVariabilityStrings.q1StringProperty, true );
+    const q3LabelTextNode = boxWhiskerLabelText( CAVColors.iqrLabelColorProperty, CenterAndVariabilityStrings.q3StringProperty, true );
 
-    minLabelNode.y = maxLabelNode.y = -28;
-    medianArrowNode.y = q1LabelNode.y = q3LabelNode.y = -31;
+    const minLabelNode = boxWhiskerLabel( CAVColors.iqrLabelColorProperty, minLabelTextNode );
+    const maxLabelNode = boxWhiskerLabel( CAVColors.iqrLabelColorProperty, maxLabelTextNode );
+    const q1LabelNode = boxWhiskerLabel( CAVColors.iqrLabelColorProperty, q1LabelTextNode );
+    const q3LabelNode = boxWhiskerLabel( CAVColors.iqrLabelColorProperty, q3LabelTextNode );
+
+    medianArrowNode.y = -31;
+    q1LabelNode.y = q3LabelNode.y = minLabelNode.y = maxLabelNode.y = -35;
 
     boxWhiskerNode.addChild( boxWhiskerMedianLine );
     boxWhiskerNode.addChild( boxWhiskerBox );
@@ -148,9 +159,32 @@ export default class IQRNode extends CAVPlotNode {
 
     iqrRectangle.moveToBack();
 
-    const updateIQRNode = () => {
-      const floor = this.modelViewTransform.modelToViewY( 0 );
+    const resolveTextLabelOverlaps = () => {
+      const widthTolerance = 1;
+      const offsetY = -22;
+      const elementsToCheck = [ minLabelNode, q1LabelNode, q3LabelNode, maxLabelNode ];
+      const verticalOffsets = [
+        ARROW_LABEL_TEXT_OFFSET_DEFAULT,
+        ARROW_LABEL_TEXT_OFFSET_DEFAULT,
+        ARROW_LABEL_TEXT_OFFSET_DEFAULT,
+        ARROW_LABEL_TEXT_OFFSET_DEFAULT
+      ];
 
+      for ( let i = 0; i < elementsToCheck.length; i++ ) {
+        for ( let j = i + 1; j < elementsToCheck.length; j++ ) {
+          if ( Math.abs( elementsToCheck[ i ].x - elementsToCheck[ j ].x ) < widthTolerance ) {
+            verticalOffsets[ j ] += offsetY;
+          }
+        }
+      }
+
+      const elementsToResolve = [ minLabelTextNode, q1LabelTextNode, q3LabelTextNode, maxLabelTextNode ];
+      for ( let i = 0; i < elementsToResolve.length; i++ ) {
+        elementsToResolve[ i ].y = verticalOffsets[ i ];
+      }
+    };
+
+    const updateIQRNode = () => {
       const sortedDots = _.sortBy( sceneModel.getActiveSoccerBalls().filter( object => object.valueProperty.value !== null ),
         object => object.valueProperty.value );
       const leftmostDot = sortedDots[ 0 ];
@@ -193,13 +227,21 @@ export default class IQRNode extends CAVPlotNode {
 
       needAtLeastFiveKicksText.visible = !enoughDataForIQR && ( model.isIQRVisibleProperty.value || options.parentContext === 'info' );
 
+      if ( options.parentContext === 'info' ) {
+        resolveTextLabelOverlaps();
+      }
+
       if ( showHighlightRectangle ) {
-        iqrRectangle.rectHeight = floor - boxWhiskerNode.y + 0.5 * BOX_HEIGHT;
+        iqrRectangle.rectHeight = BOX_HEIGHT;
         iqrRectangle.rectWidth = boxRight - boxLeft;
         iqrRectangle.left = boxLeft;
-        iqrRectangle.bottom = floor;
+        iqrRectangle.bottom = boxWhiskerNode.y + 0.5 * BOX_HEIGHT;
 
-        iqrBar.setMedianBarShape( iqrRectangle.top - MedianBarNode.NOTCH_HEIGHT - 14, iqrRectangle.left, 0, iqrRectangle.right, false );
+        const iqrBarY = options.parentContext === 'info' ?
+                      Math.min( minLabelTextNode.y, q1LabelTextNode.y, q3LabelTextNode.y, maxLabelTextNode.y ) + 8
+                                                       : iqrRectangle.top - MedianBarNode.NOTCH_HEIGHT - 14;
+
+        iqrBar.setMedianBarShape( iqrBarY, iqrRectangle.left, 0, iqrRectangle.right, false );
         iqrBarLabel.string = sceneModel.iqrValueProperty.value!;
         iqrBarLabel.centerX = iqrRectangle.centerX;
         iqrBarLabel.bottom = iqrBar.top - 2;
