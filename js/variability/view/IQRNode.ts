@@ -29,13 +29,14 @@ export default class IQRNode extends CAVPlotNode {
       ...options
     } );
 
+    const FIVE_KICKS_TEXT_Y = options.parentContext === 'info' ? 5 : 3;
+
     const needAtLeastFiveKicksText = new Text( CenterAndVariabilityStrings.needAtLeastFiveKicksStringProperty, {
       fontSize: 18,
-      top: 100,
       maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH
     } );
     ManualConstraint.create( this, [ needAtLeastFiveKicksText ], textProxy => {
-      needAtLeastFiveKicksText.center = this.modelViewTransform.modelToViewXY( 8, 2 );
+      needAtLeastFiveKicksText.center = this.modelViewTransform.modelToViewXY( 8, FIVE_KICKS_TEXT_Y );
     } );
     this.addChild( needAtLeastFiveKicksText );
 
