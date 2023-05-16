@@ -193,19 +193,9 @@ export default class CAVScreenView extends ScreenView {
         dragIndicatorArrowNode.visible = dragIndicatorVisible;
 
         if ( dragIndicatorVisible && dragIndicatorValue ) {
-          const selectedSceneModel = model.selectedSceneModelProperty.value;
-
           dragIndicatorArrowNode.centerX = modelViewTransform.modelToViewX( dragIndicatorValue );
           const dragIndicatorArrowNodeMargin = 6;
-
-          // calculate where the top object is
-          // TODO: This is duplicated in the median arrow calculation in the SceneView, see https://github.com/phetsims/center-and-variability/issues/197
-          const topObjectPositionY = modelViewTransform.modelToViewY( 0 ) -
-                                     ( selectedSceneModel.getStackAtLocation( dragIndicatorValue ).length ) *
-                                     Math.abs( modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius * ( 1 - CAVConstants.SOCCER_BALL_OVERLAP ) ) ) * 2 -
-                                     dragIndicatorArrowNodeMargin;
-
-          dragIndicatorArrowNode.bottom = topObjectPositionY;
+          dragIndicatorArrowNode.bottom = this.getTopObjectPositionY( dragIndicatorValue ) - dragIndicatorArrowNodeMargin;
         }
       } );
 
@@ -220,15 +210,8 @@ export default class CAVScreenView extends ScreenView {
       const visible = medianValue !== null && model.isPlayAreaMedianVisibleProperty.value;
 
       if ( visible ) {
-
-        // if there is a ball at that location, go above the ball
-        const ballsAtLocation = sceneModel.soccerBalls.filter( soccerBall => soccerBall.valueProperty.value === medianValue );
-        const modelHeight = ballsAtLocation.length * CAVObjectType.SOCCER_BALL.radius * 2 * ( 1 - CAVConstants.SOCCER_BALL_OVERLAP );
-
-        const viewHeight = modelViewTransform.modelToViewDeltaY( modelHeight );
-
         playAreaMedianIndicatorNode.centerX = modelViewTransform.modelToViewX( medianValue );
-        playAreaMedianIndicatorNode.bottom = modelViewTransform.modelToViewY( 0 ) + viewHeight;
+        playAreaMedianIndicatorNode.bottom = this.getTopObjectPositionY( medianValue );
 
         // The arrow shouldn't overlap the accordion box
         if ( this.accordionBox ) {
@@ -247,6 +230,15 @@ export default class CAVScreenView extends ScreenView {
     } );
     this.visibleBoundsProperty.link( this.updateMedianNode );
     model.isPlayAreaMedianVisibleProperty.link( this.updateMedianNode );
+  }
+
+  // calculate where the top object is at a given value
+  private getTopObjectPositionY( value: number ): number {
+    const sceneModel = this.model.selectedSceneModelProperty.value;
+    const ballsAtLocation = sceneModel.soccerBalls.filter( soccerBall => soccerBall.valueProperty.value === value );
+    const modelHeight = ballsAtLocation.length * CAVObjectType.SOCCER_BALL.radius * 2 * ( 1 - CAVConstants.SOCCER_BALL_OVERLAP );
+    const viewHeight = this.modelViewTransform.modelToViewDeltaY( modelHeight );
+    return this.modelViewTransform.modelToViewY( 0 ) + viewHeight;
   }
 
   private updateAccordionBoxPosition(): void {
