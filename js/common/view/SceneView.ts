@@ -58,7 +58,7 @@ export default class SceneView {
       backLayer.addChild( soccerBallNode );
 
       // While flying, it should be in front in z-order, to be in front of the accordion box
-      soccerBall.animationModeProperty.lazyLink( ( animationMode, oldAnimationMode ) => {
+      soccerBall.soccerBallPhaseProperty.lazyLink( ( animationMode, oldAnimationMode ) => {
 
         //when the ball is kicked
         if ( animationMode === AnimationMode.FLYING ) {

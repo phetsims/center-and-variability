@@ -24,6 +24,9 @@ import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import TEmitter from '../../../../axon/js/TEmitter.js';
 import SoccerPlayer from './SoccerPlayer.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
 
 export type CAVObjectOptions = PhetioObjectOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
@@ -40,7 +43,7 @@ export default class SoccerBall extends PhetioObject {
   // Continuous position during animation. After landing, it's discrete.
   public readonly positionProperty: Vector2Property;
   public readonly velocityProperty: Vector2Property;
-  public readonly animationModeProperty: Property<AnimationMode>;
+  public readonly soccerBallPhaseProperty: Property<AnimationMode>;
   public readonly isMedianObjectProperty: BooleanProperty;
   public readonly isQ1ObjectProperty: BooleanProperty;
   public readonly isQ3ObjectProperty: BooleanProperty;
@@ -54,7 +57,7 @@ export default class SoccerBall extends PhetioObject {
 
   public readonly dragStartedEmitter: TEmitter = new Emitter();
   public animation: Animation | null = null;
-  public readonly isActiveProperty: BooleanProperty;
+  public readonly isActiveProperty: TReadOnlyProperty<boolean>;
   public soccerPlayer: SoccerPlayer | null = null;
 
   // Global index for debugging
@@ -79,8 +82,8 @@ export default class SoccerBall extends PhetioObject {
     this.velocityProperty = new Vector2Property( new Vector2( 0, 0 ), {
       tandem: options.tandem.createTandem( 'velocityProperty' )
     } );
-    this.animationModeProperty = new EnumerationProperty( AnimationMode.NONE, {
-      tandem: options.tandem.createTandem( 'animationModeProperty' )
+    this.soccerBallPhaseProperty = new EnumerationProperty( isFirstSoccerBall ? AnimationMode.READY : AnimationMode.INACTIVE, {
+      tandem: options.tandem.createTandem( 'soccerBallPhaseProperty' )
     } );
     this.dragPositionProperty = new Vector2Property( this.positionProperty.value.copy() );
     this.valueProperty = new Property<number | null>( null, {
@@ -99,25 +102,27 @@ export default class SoccerBall extends PhetioObject {
     this.isAnimationHighlightVisibleProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isAnimationHighlightVisibleProperty' )
     } );
-    this.isActiveProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isActiveProperty' )
-    } );
-
+    this.isActiveProperty = new DerivedProperty( [ this.soccerBallPhaseProperty ],
+      soccerBallPhase => soccerBallPhase !== AnimationMode.INACTIVE, {
+        tandem: options.tandem.createTandem( 'isActiveProperty' ),
+        phetioValueType: BooleanIO
+      } );
     this.targetXProperty = new Property<number | null>( null, {
       tandem: options.tandem.createTandem( 'targetXProperty' ),
       phetioValueType: NullableIO( NumberIO )
     } );
   }
 
-  // this doesn't change the animationModeProperty of the soccerBall - that is done by the ball animationEnded callback
+  // this doesn't change the soccerBallPhaseProperty of the soccerBall - that is done by the ball animationEnded callback
   public clearAnimation(): void {
     if ( this.animation ) {
       this.animation.stop();
       this.animation = null;
     }
   }
+
   public step( dt: number ): void {
-    if ( this.animationModeProperty.value === AnimationMode.FLYING ) {
+    if ( this.soccerBallPhaseProperty.value === AnimationMode.FLYING ) {
 
       assert && assert( this.targetXProperty.value !== null, 'targetXProperty.value should be non-null when animating' );
 
@@ -156,13 +161,12 @@ export default class SoccerBall extends PhetioObject {
   public reset(): void {
     this.positionProperty.reset();
     this.velocityProperty.reset();
-    this.animationModeProperty.reset();
+    this.soccerBallPhaseProperty.reset();
     this.valueProperty.reset();
     this.isMedianObjectProperty.reset();
     this.isQ1ObjectProperty.reset();
     this.isQ3ObjectProperty.reset();
     this.isAnimationHighlightVisibleProperty.reset();
-    this.isActiveProperty.reset();
     this.targetXProperty.value = null;
     this.soccerPlayer = null;
   }

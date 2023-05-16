@@ -31,7 +31,7 @@ export default class CardModel {
 
     Multilink.multilink( [
         soccerBall.isActiveProperty,
-        soccerBall.animationModeProperty,
+        soccerBall.soccerBallPhaseProperty,
         soccerBall.valueProperty ],
       ( isActive, animationMode, value ) => {
         this.isActiveProperty.value = isActive && animationMode !== AnimationMode.FLYING && value !== null;

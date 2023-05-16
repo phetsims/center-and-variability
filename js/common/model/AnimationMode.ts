@@ -12,9 +12,11 @@ import centerAndVariability from '../../centerAndVariability.js';
  */
 
 export class AnimationMode extends EnumerationValue {
+  public static readonly INACTIVE = new AnimationMode();
+  public static readonly READY = new AnimationMode();
   public static readonly FLYING = new AnimationMode();
   public static readonly STACKING = new AnimationMode();
-  public static readonly NONE = new AnimationMode();
+  public static readonly STACKED = new AnimationMode();
   private static readonly enumeration = new Enumeration( AnimationMode );
 }
 

@@ -56,9 +56,9 @@ export default abstract class CAVObjectNode extends Node {
 
     // The initial ready-to-kick ball is full opacity. The rest of the balls waiting to be kicked are lower opacity so
     // they don't look like part of the data set, but still look kickable.
-    Multilink.multilink( [ soccerBall.valueProperty, soccerBall.animationModeProperty ],
+    Multilink.multilink( [ soccerBall.valueProperty, soccerBall.soccerBallPhaseProperty ],
       ( value, animationMode ) => {
-        this.opacity = ( value === null && animationMode === AnimationMode.NONE && !soccerBall.isFirstSoccerBall ) ? 0.4 : 1;
+        this.opacity = ( value === null && animationMode === AnimationMode.READY && !soccerBall.isFirstSoccerBall ) ? 0.4 : 1;
       } );
 
     // Show index when debugging with ?dev

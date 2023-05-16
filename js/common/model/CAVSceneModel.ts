@@ -266,12 +266,12 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
       this.maxKicksProperty,
       this.numberOfScheduledSoccerBallsToKickProperty,
       ...this.soccerBalls.map( soccerBall => soccerBall.valueProperty ),
-      ...this.soccerBalls.map( soccerBall => soccerBall.animationModeProperty ) ], () => {
+      ...this.soccerBalls.map( soccerBall => soccerBall.soccerBallPhaseProperty ) ], () => {
 
       const kickedSoccerBalls = this.getActiveSoccerBalls().filter(
         soccerBall => soccerBall.valueProperty.value !== null ||
-                      soccerBall.animationModeProperty.value === AnimationMode.FLYING ||
-                      soccerBall.animationModeProperty.value === AnimationMode.STACKING
+                      soccerBall.soccerBallPhaseProperty.value === AnimationMode.FLYING ||
+                      soccerBall.soccerBallPhaseProperty.value === AnimationMode.STACKING
       );
       const value = this.maxKicksProperty.value - kickedSoccerBalls.length - this.numberOfScheduledSoccerBallsToKickProperty.value;
 
@@ -439,7 +439,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
           const soccerBall = this.soccerBalls.find( soccerBall =>
             soccerBall.valueProperty.value === null &&
             soccerBall.isActiveProperty.value &&
-            soccerBall.animationModeProperty.value === AnimationMode.NONE
+            soccerBall.soccerBallPhaseProperty.value === AnimationMode.READY
           );
 
           // In fuzzing, sometimes there are no soccer balls available
@@ -513,11 +513,11 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     soccerBall.clearAnimation();
 
     if ( otherObjectsInStack.length === 0 ) {
-      soccerBall.animationModeProperty.value = AnimationMode.NONE;
+      soccerBall.soccerBallPhaseProperty.value = AnimationMode.STACKED;
       this.stackChangedEmitter.emit( [ soccerBall ] );
     }
     else {
-      soccerBall.animationModeProperty.value = AnimationMode.STACKING;
+      soccerBall.soccerBallPhaseProperty.value = AnimationMode.STACKING;
       soccerBall.animation = new Animation( {
         duration: animationTime,
         targets: [ {
@@ -529,14 +529,14 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
 
       soccerBall.animation.endedEmitter.addListener( () => {
         soccerBall.animation = null;
-        soccerBall.animationModeProperty.value = AnimationMode.NONE;
+        soccerBall.soccerBallPhaseProperty.value = AnimationMode.STACKED;
 
         // During the state wrapper, sometimes the soccerBall.valueProperty.value was null, so it wasn't really supposed to be in the stack any longer
         if ( soccerBall.valueProperty.value === value ) {
 
           // Identify the soccer balls in the stack at the time the animation ended
           this.stackChangedEmitter.emit( this.getActiveSoccerBalls().filter( x =>
-            x.valueProperty.value === value && x.animation === null && x.animationModeProperty.value === AnimationMode.NONE ) );
+            x.valueProperty.value === value && x.soccerBallPhaseProperty.value === AnimationMode.STACKED ) );
         }
       } );
       soccerBall.animation.start();
@@ -569,7 +569,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
 
     soccerBall.targetXProperty.value = x1;
 
-    soccerBall.animationModeProperty.value = AnimationMode.FLYING;
+    soccerBall.soccerBallPhaseProperty.value = AnimationMode.FLYING;
     this.timeWhenLastBallWasKickedProperty.value = this.timeProperty.value;
 
     soccerBall.soccerPlayer = soccerPlayer;
@@ -578,7 +578,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
   private getNextBallFromPool(): SoccerBall | null {
     const nextBallFromPool = this.soccerBalls.find( ball => !ball.isActiveProperty.value ) || null;
     if ( nextBallFromPool && this.soccerBalls.indexOf( nextBallFromPool ) < this.maxKicksProperty.value ) {
-      nextBallFromPool.isActiveProperty.value = true;
+      nextBallFromPool.soccerBallPhaseProperty.value = AnimationMode.READY;
     }
     return nextBallFromPool;
   }

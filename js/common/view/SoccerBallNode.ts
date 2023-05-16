@@ -78,14 +78,15 @@ export default class SoccerBallNode extends CAVObjectNode {
 
     // Prevent dragging or interaction while the object does not have a value (when it is not in the play area yet),
     // when it is animating, if input for this individual node is disabled, or if input for all of the object nodes
-    // ahs been disabled
+    // has been disabled
     Multilink.multilink(
-      [ soccerBall.animationModeProperty, soccerBall.valueProperty, selfInputEnabledProperty, objectNodesInputEnabledProperty ],
+      [ soccerBall.soccerBallPhaseProperty, soccerBall.valueProperty, selfInputEnabledProperty, objectNodesInputEnabledProperty ],
       ( mode, value, selfInputEnabled, objectsInputEnabled ) => {
-        const inputEnabled = value !== null && ( mode === AnimationMode.NONE || mode === AnimationMode.STACKING ) && selfInputEnabled && objectsInputEnabled;
+        const inputEnabled = value !== null && mode === AnimationMode.STACKED && selfInputEnabled && objectsInputEnabled;
 
         // if input is disabled and the ball is in the play area, show the darker version
-        const showDisabledSoccerBall = !inputEnabled && value !== null;
+        const showEnabledSoccerBall = selfInputEnabled && objectsInputEnabled;
+        const showDisabledSoccerBall = !showEnabledSoccerBall;
         soccerBallDarkNode.visible = showDisabledSoccerBall;
         soccerBallNode.visible = !showDisabledSoccerBall;
 
