@@ -2,7 +2,7 @@
 
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import MedianBarNode from '../../common/view/MedianBarNode.js';
-import { Circle, Line, Node, ProfileColorProperty, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { Circle, Line, ManualConstraint, Node, ProfileColorProperty, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
@@ -12,6 +12,7 @@ import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import CAVColors from '../../common/CAVColors.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
+import CAVConstants from '../../common/CAVConstants.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
@@ -28,13 +29,23 @@ export default class IQRNode extends CAVPlotNode {
       ...options
     } );
 
-    // TODO: This is currently overlapping the numberLine in the AccordionBox. https://github.com/phetsims/center-and-variability/issues/158
-    const needAtLeastFiveKicksOffsetY = options.parentContext === 'info' ? 90 : 20;
-    const needAtLeastFiveKicks = new Text( CenterAndVariabilityStrings.needAtLeastFiveKicksStringProperty, {
+    const needAtLeastFiveKicksText = new Text( CenterAndVariabilityStrings.needAtLeastFiveKicksStringProperty, {
       fontSize: 18,
-      centerY: this.centerY - needAtLeastFiveKicksOffsetY
+      top: 100,
+      maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH
     } );
-    this.addChild( needAtLeastFiveKicks );
+    ManualConstraint.create( this, [ needAtLeastFiveKicksText ], textProxy => {
+      needAtLeastFiveKicksText.center = this.modelViewTransform.modelToViewXY( 8, 2 );
+    } );
+    this.addChild( needAtLeastFiveKicksText );
+
+    const BOX_WHISKER_OFFSET_Y = options.parentContext === 'info' ? 5 : 3;
+    const BOX_HEIGHT = 25;
+    const END_CAP_HEIGHT = 15;
+    const BOX_STROKE_WIDTH = 2;
+
+    const boxWhiskerNode = new Node();
+    boxWhiskerNode.y = this.modelViewTransform.modelToViewY( BOX_WHISKER_OFFSET_Y );
 
     const iqrBar = new MedianBarNode( {
       notchDirection: 'down',
@@ -43,20 +54,19 @@ export default class IQRNode extends CAVPlotNode {
       lineWidth: 1
     } );
     const iqrBarLabel = new Text( '', {
-      font: new PhetFont( 16 )
+      font: new PhetFont( 13 )
     } );
-
     const iqrRectangle = new Rectangle( 0, 0, 0, 0, {
       fill: CAVColors.iqrColorProperty
     } );
 
-    const createWhiskerLabelArrow = ( fillColor: ProfileColorProperty ) => {
-      return new ArrowNode( 0, 0, 0, 26, {
+    const createBoxWhiskerLabelArrow = ( fillColor: ProfileColorProperty ) => {
+      return new ArrowNode( 0, 0, 0, 24, {
         fill: fillColor,
         stroke: null,
-        lineWidth: 0.2,
         headHeight: 12,
         headWidth: 15,
+        tailWidth: 4,
         maxHeight: 18
       } );
     };
@@ -74,15 +84,10 @@ export default class IQRNode extends CAVPlotNode {
     };
 
     const boxWhiskerLabel = ( fillColor: ProfileColorProperty, labelTextProperty: TReadOnlyProperty<string>, isQuartile: boolean ) => {
-      const arrowNode = createWhiskerLabelArrow( fillColor );
+      const arrowNode = createBoxWhiskerLabelArrow( fillColor );
       const textNode = createBoxWhiskerLabelText( fillColor, labelTextProperty, isQuartile );
       return new Node( { children: [ textNode, arrowNode ] } );
     };
-
-    const BOX_CENTER_Y = options.parentContext === 'info' ? -20 : 78;
-    const BOX_HEIGHT = 25;
-    const END_CAP_HEIGHT = 15;
-    const BOX_STROKE_WIDTH = 2;
 
     const boxWhiskerMedianLine = new Line( 0, -BOX_HEIGHT / 2, 0, BOX_HEIGHT / 2, {
       stroke: CAVColors.boxWhiskerStrokeColorProperty,
@@ -114,24 +119,15 @@ export default class IQRNode extends CAVPlotNode {
       lineWidth: BOX_STROKE_WIDTH
     } );
 
-    const boxWhiskerNode = new Node();
-    boxWhiskerNode.y = BOX_CENTER_Y;
-
-    const medianArrowNode = createWhiskerLabelArrow( CAVColors.medianColorProperty );
-    const medianTextNode = createBoxWhiskerLabelText( CAVColors.medianColorProperty, CenterAndVariabilityStrings.medianStringProperty, false );
-
-    // TODO: Is this y an empirical number or calculated from something? https://github.com/phetsims/center-and-variability/issues/158
-    const medianLabelNode = new Node( { children: [ medianArrowNode, medianTextNode ], y: -32 } );
+    const medianArrowNode = createBoxWhiskerLabelArrow( CAVColors.medianColorProperty );
 
     const minLabelNode = boxWhiskerLabel( CAVColors.iqrLabelColorProperty, CenterAndVariabilityStrings.minStringProperty, false );
     const maxLabelNode = boxWhiskerLabel( CAVColors.iqrLabelColorProperty, CenterAndVariabilityStrings.maxStringProperty, false );
     const q1LabelNode = boxWhiskerLabel( CAVColors.iqrLabelColorProperty, CenterAndVariabilityStrings.q1StringProperty, true );
     const q3LabelNode = boxWhiskerLabel( CAVColors.iqrLabelColorProperty, CenterAndVariabilityStrings.q3StringProperty, true );
 
-    // TODO: Same here... where did this y values come from? https://github.com/phetsims/center-and-variability/issues/158
-
     minLabelNode.y = maxLabelNode.y = -28;
-    q1LabelNode.y = q3LabelNode.y = -33;
+    medianArrowNode.y = q1LabelNode.y = q3LabelNode.y = -31;
 
     boxWhiskerNode.addChild( boxWhiskerMedianLine );
     boxWhiskerNode.addChild( boxWhiskerBox );
@@ -143,12 +139,12 @@ export default class IQRNode extends CAVPlotNode {
     boxWhiskerNode.addChild( q3LabelNode );
     boxWhiskerNode.addChild( minLabelNode );
     boxWhiskerNode.addChild( maxLabelNode );
-    boxWhiskerNode.addChild( medianLabelNode );
+    boxWhiskerNode.addChild( medianArrowNode );
 
+    this.addChild( iqrBar );
+    this.addChild( iqrBarLabel );
     this.addChild( iqrRectangle );
     this.addChild( boxWhiskerNode );
-    this.addChild( iqrBarLabel );
-    this.addChild( iqrBar );
 
     iqrRectangle.moveToBack();
 
@@ -164,7 +160,7 @@ export default class IQRNode extends CAVPlotNode {
       const boxRight = this.modelViewTransform.modelToViewX( sceneModel.q3ValueProperty.value! );
 
       const medianPositionX = this.modelViewTransform.modelToViewX( sceneModel.medianValueProperty.value! );
-      medianLabelNode.x = boxWhiskerMedianLine.x1 = boxWhiskerMedianLine.x2 = medianPositionX;
+      medianArrowNode.x = boxWhiskerMedianLine.x1 = boxWhiskerMedianLine.x2 = medianPositionX;
 
       boxWhiskerBox.left = boxLeft - 0.5 * BOX_STROKE_WIDTH;
       boxWhiskerBox.rectWidth = boxRight - boxLeft;
@@ -193,19 +189,17 @@ export default class IQRNode extends CAVPlotNode {
       medianArrowNode.visible = enoughDataForMedian;
       boxWhiskerNode.visible = enoughDataForIQR;
       iqrRectangle.visible = iqrBar.visible = iqrBarLabel.visible = showHighlightRectangle;
-      medianTextNode.visible = minLabelNode.visible = maxLabelNode.visible = q1LabelNode.visible = q3LabelNode.visible = showBoxWhiskerLabels;
+      minLabelNode.visible = maxLabelNode.visible = q1LabelNode.visible = q3LabelNode.visible = showBoxWhiskerLabels;
 
-      needAtLeastFiveKicks.centerX = this.modelViewTransform.modelToViewX( 8 );
-      needAtLeastFiveKicks.visible = !enoughDataForIQR && ( model.isIQRVisibleProperty.value || options.parentContext === 'info' );
+      needAtLeastFiveKicksText.visible = !enoughDataForIQR && ( model.isIQRVisibleProperty.value || options.parentContext === 'info' );
 
       if ( showHighlightRectangle ) {
-        iqrRectangle.rectHeight = floor - BOX_CENTER_Y + 0.5 * BOX_HEIGHT;
+        iqrRectangle.rectHeight = floor - boxWhiskerNode.y + 0.5 * BOX_HEIGHT;
         iqrRectangle.rectWidth = boxRight - boxLeft;
         iqrRectangle.left = boxLeft;
         iqrRectangle.bottom = floor;
 
-        const IQR_BAR_OFFSET_Y = options.parentContext === 'info' ? 50 : 22;
-        iqrBar.setMedianBarShape( iqrRectangle.top - MedianBarNode.NOTCH_HEIGHT - IQR_BAR_OFFSET_Y, iqrRectangle.left, 0, iqrRectangle.right, false );
+        iqrBar.setMedianBarShape( iqrRectangle.top - MedianBarNode.NOTCH_HEIGHT - 14, iqrRectangle.left, 0, iqrRectangle.right, false );
         iqrBarLabel.string = sceneModel.iqrValueProperty.value!;
         iqrBarLabel.centerX = iqrRectangle.centerX;
         iqrBarLabel.bottom = iqrBar.top - 2;
