@@ -102,10 +102,7 @@ export default class IQRInfoNode extends VBox {
 
         new IQRNode( model, sceneModel, {
           parentContext: 'info',
-          tandem: options.tandem.createTandem( 'iqrNode' ),
-          layoutOptions: {
-            topMargin: 50
-          }
+          tandem: options.tandem.createTandem( 'iqrNode' )
         } )
       ]
     } );
