@@ -152,7 +152,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
           medianValue => medianValue === null ? '?' : `${medianValue}`
         );
         const iqrReadoutValueProperty = new DerivedProperty( [ iqrValueProperty ], iqrValue => {
-          return iqrValue ? `${iqrValue}` : '?';
+          return iqrValue === null ? '?' : `${iqrValue}`;
         } );
 
         const medianReadoutText = new VariabilityReadoutText( medianReadoutValueProperty, CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty, {
