@@ -39,7 +39,9 @@ export default class CAVPlotNode extends Node {
 
   public constructor( model: CAVModel, sceneModel: CAVSceneModel, providedOptions?: CAVPlotOptions ) {
 
-    const options = optionize<CAVPlotOptions, SelfOptions, NodeOptions>()( {}, providedOptions );
+    const options = optionize<CAVPlotOptions, SelfOptions, NodeOptions>()( {
+      excludeInvisibleChildrenFromBounds: true
+    }, providedOptions );
 
     super( options );
 

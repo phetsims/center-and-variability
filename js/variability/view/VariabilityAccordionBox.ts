@@ -29,10 +29,18 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
 
   public constructor( model: VariabilityModel, layoutBounds: Bounds2, tandem: Tandem, top: number ) {
 
+    // Specify a "footprint" within which we do all of the layout.
     const backgroundShape = CAVConstants.ACCORDION_BOX_CONTENTS_SHAPE_VARIABILITY;
-    const backgroundNode = new Path( backgroundShape, {
-      clipArea: backgroundShape,
-      fill: null
+
+    const backgroundNode = new Node( {
+      children: [
+
+        // A sub-node so it can be non-pickable (so that click events can still reach the accordion box title bar)
+        new Path( backgroundShape, {
+          clipArea: backgroundShape,
+          pickable: false
+        } )
+      ]
     } );
 
     const currentProperty = new DerivedProperty( [ model.selectedVariabilityMeasureProperty ], selectedVariability =>
@@ -48,13 +56,13 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         value: model.sceneModels[ i ],
         createNode: ( tandem: Tandem ) => new VariabilityPlotNode( model, model.variabilitySceneModels[ i ], {
           tandem: tandem.createTandem( `plotNode${i + 1}` ),
-          bottom: backgroundNode.height
+          bottom: backgroundShape.bounds.height
         } )
       };
     } );
 
     const plotToggleNode = new ToggleNode( model.selectedSceneModelProperty, contents, {
-      bottom: backgroundNode.height
+      bottom: backgroundShape.bounds.height
     } );
 
     const infoButton = new InfoButton( {
@@ -66,7 +74,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         model.isInfoVisibleProperty.value = true;
       },
       top: 5,
-      right: backgroundNode.right - 5
+      right: backgroundShape.bounds.right - 5
     } );
     backgroundNode.addChild( infoButton );
 
@@ -85,7 +93,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       tandemName: 'madAccordionCheckbox',
       value: VariabilityMeasure.MAD
     } ], {
-      rightCenter: backgroundNode.rightCenter.plusXY( -10, 0 ),
+      rightCenter: backgroundShape.bounds.rightCenter.plusXY( -10, 0 ),
       alignChildren: ToggleNode.LEFT
     } );
 
@@ -134,7 +142,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
               fill: CAVColors.meanColorProperty,
               visibleProperty: model.isRangeVisibleProperty,
               left: 0,
-              centerY: backgroundNode.height / 2,
+              centerY: backgroundShape.bounds.height / 2,
               tandem: tandem.createTandem( 'rangeReadoutText' )
             } ) ]
         } );

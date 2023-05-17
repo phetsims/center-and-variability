@@ -53,7 +53,8 @@ export default class VariabilityPlotNode extends Node {
       tandemName: 'madNode',
       value: VariabilityMeasure.MAD
     } ], {
-      tandem: providedOptions.tandem.createTandem( 'toggleNode' )
+      tandem: providedOptions.tandem.createTandem( 'toggleNode' ),
+      alignChildren: ToggleNode.NONE
     } );
     this.addChild( toggleNode );
     toggleNode.moveToBack();

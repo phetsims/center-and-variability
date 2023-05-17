@@ -60,10 +60,8 @@ const CAVConstants = {
   PHYSICAL_RANGE: new Range( 1, 15 ),
   VARIABILITY_DRAG_RANGE: new Range( 0, 16 ),
   MAX_KICKS_VALUES: [ 15, 20, 25, 30 ],
-
-  // TODO: I added to the height while the title bar doesn't allow overlap, see https://github.com/phetsims/center-and-variability/issues/170
-  ACCORDION_BOX_CONTENTS_SHAPE_MEAN_AND_OR_MEDIAN: Shape.rect( 0, 0, 1000, 140 + 20 ),
-  ACCORDION_BOX_CONTENTS_SHAPE_VARIABILITY: Shape.rect( 0, 0, 940, 140 + 20 ),
+  ACCORDION_BOX_CONTENTS_SHAPE_MEAN_AND_OR_MEDIAN: Shape.rect( 0, 0, 1000, 140 ),
+  ACCORDION_BOX_CONTENTS_SHAPE_VARIABILITY: Shape.rect( 0, 0, 940, 140 ),
 
   MAX_KICKS_PROPERTY: new NumberProperty( CAVQueryParameters.maxKicks, {
     validValues: [ 15, 20, 25, 30 ],
