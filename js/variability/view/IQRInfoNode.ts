@@ -54,6 +54,7 @@ export default class IQRInfoNode extends VBox {
     } );
 
     const dataValuesDisplay = new Node( {
+      excludeInvisibleChildrenFromBounds: true,
       children: [
         dataValuesMedianArrow,
         dataValuesQ1Rect,
@@ -71,13 +72,13 @@ export default class IQRInfoNode extends VBox {
         new Text( CenterAndVariabilityStrings.interquartileRangeIQRStringProperty, {
           fontSize: 25,
           maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
-          layoutOptions: { bottomMargin: 5 }
+          layoutOptions: { bottomMargin: CAVConstants.INFO_DIALOG_HEADING_BOTTOM_MARGIN }
         } ),
 
         new Text( CenterAndVariabilityStrings.iqrDescriptionStringProperty, {
           fontSize: 18,
           maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
-          layoutOptions: { bottomMargin: 6 }
+          layoutOptions: { bottomMargin: CAVConstants.INFO_DIALOG_SUBHEADING_BOTTOM_MARGIN }
         } ),
 
         dataValuesDisplay,

@@ -7,7 +7,7 @@ import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import CAVPlotNode, { CAVPlotOptions } from '../../common/view/CAVPlotNode.js';
+import CAVPlotNode, { CAVPlotOptions, MIN_KICKS_TEXT_OFFSET, MIN_KICKS_TEXT_TOP_MARGIN } from '../../common/view/CAVPlotNode.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import CAVColors from '../../common/CAVColors.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
@@ -29,16 +29,19 @@ export default class IQRNode extends CAVPlotNode {
       ...options
     } );
 
-    const FIVE_KICKS_TEXT_Y = options.parentContext === 'info' ? 5 : 3;
-
     const needAtLeastFiveKicksText = new Text( CenterAndVariabilityStrings.needAtLeastFiveKicksStringProperty, {
       fontSize: 18,
-      maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH
+      maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
+      layoutOptions: { topMargin: MIN_KICKS_TEXT_TOP_MARGIN }
     } );
     ManualConstraint.create( this, [ needAtLeastFiveKicksText ], textProxy => {
-      needAtLeastFiveKicksText.center = this.modelViewTransform.modelToViewXY( 8, FIVE_KICKS_TEXT_Y );
+      needAtLeastFiveKicksText.center = this.modelViewTransform.modelToViewXY( CAVConstants.PHYSICAL_RANGE.getCenter(),
+        MIN_KICKS_TEXT_OFFSET );
     } );
     this.addChild( needAtLeastFiveKicksText );
+
+    // This adds a top margin to the text, separating it from the info dialog subheading
+    needAtLeastFiveKicksText.localBounds = needAtLeastFiveKicksText.localBounds.dilatedY( MIN_KICKS_TEXT_TOP_MARGIN );
 
     const BOX_WHISKER_OFFSET_Y = options.parentContext === 'info' ? 3.5 : 3;
     const BOX_HEIGHT = 25;
@@ -239,8 +242,8 @@ export default class IQRNode extends CAVPlotNode {
         iqrRectangle.bottom = boxWhiskerNode.y + 0.5 * BOX_HEIGHT;
 
         const iqrBarY = options.parentContext === 'info' ?
-                      Math.min( minLabelTextNode.y, q1LabelTextNode.y, q3LabelTextNode.y, maxLabelTextNode.y ) + 8
-                                                       : iqrRectangle.top - MedianBarNode.NOTCH_HEIGHT - 14;
+                        Math.min( minLabelTextNode.y, q1LabelTextNode.y, q3LabelTextNode.y, maxLabelTextNode.y ) + 8
+                                                         : iqrRectangle.top - MedianBarNode.NOTCH_HEIGHT - 14;
 
         iqrBar.setMedianBarShape( iqrBarY, iqrRectangle.left, 0, iqrRectangle.right, false );
         iqrBarLabel.string = sceneModel.iqrValueProperty.value!;

@@ -30,6 +30,8 @@ type SelfOptions = {
   dataPointFill: TColor;
 };
 export type CAVPlotOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
+export const MIN_KICKS_TEXT_OFFSET = 2;
+export const MIN_KICKS_TEXT_TOP_MARGIN = 20;
 
 export default class CAVPlotNode extends Node {
 

@@ -23,9 +23,12 @@ export default class RangeInfoNode extends VBox {
         new Text( CenterAndVariabilityStrings.rangeStringProperty, {
           fontSize: 25,
           maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
-          layoutOptions: { bottomMargin: 10 }
+          layoutOptions: { bottomMargin: CAVConstants.INFO_DIALOG_HEADING_BOTTOM_MARGIN }
         } ),
-        new Text( CenterAndVariabilityStrings.rangeDescriptionStringProperty, { fontSize: 18, maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH } ),
+        new Text( CenterAndVariabilityStrings.rangeDescriptionStringProperty, {
+          fontSize: 18, maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
+          layoutOptions: { bottomMargin: CAVConstants.INFO_DIALOG_SUBHEADING_BOTTOM_MARGIN }
+        } ),
 
         // TODO: String key name, see https://github.com/phetsims/center-and-variability/issues/181
         new Text( new PatternStringProperty( CenterAndVariabilityStrings.rangeCalculationPatternStringProperty, {

@@ -7,7 +7,7 @@ import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import MedianBarNode from '../../common/view/MedianBarNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Utils from '../../../../dot/js/Utils.js';
-import CAVPlotNode, { CAVPlotOptions } from '../../common/view/CAVPlotNode.js';
+import CAVPlotNode, { CAVPlotOptions, MIN_KICKS_TEXT_OFFSET, MIN_KICKS_TEXT_TOP_MARGIN } from '../../common/view/CAVPlotNode.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import CAVColors from '../../common/CAVColors.js';
@@ -30,13 +30,16 @@ export default class MADNode extends CAVPlotNode {
 
     const needAtLeastOneKickText = new Text( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {
       fontSize: 18,
-      top: 100,
-      maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH
+      maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
+      layoutOptions: { topMargin: MIN_KICKS_TEXT_TOP_MARGIN }
     } );
     ManualConstraint.create( this, [ needAtLeastOneKickText ], textProxy => {
-      textProxy.center = this.modelViewTransform.modelToViewXY( 8, 2 );
+      textProxy.center = this.modelViewTransform.modelToViewXY( CAVConstants.PHYSICAL_RANGE.getCenter(), MIN_KICKS_TEXT_OFFSET );
     } );
     this.addChild( needAtLeastOneKickText );
+
+    // This adds a top margin to the text, separating it from the info dialog subheading
+    needAtLeastOneKickText.localBounds = needAtLeastOneKickText.localBounds.dilatedY( MIN_KICKS_TEXT_TOP_MARGIN );
 
     const madRectangle = new Rectangle( 0, 50, 100, 72, {
       fill: CAVColors.madRectangleColorProperty,
