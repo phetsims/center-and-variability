@@ -12,7 +12,8 @@ import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionB
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import { Node } from '../../../../scenery/js/imports.js';
+import { Node, Path } from '../../../../scenery/js/imports.js';
+import { Shape } from '../../../../kite/js/imports.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -48,6 +49,19 @@ export default class CAVAccordionBox extends AccordionBox {
     }, providedOptions );
 
     super( contentNode, options );
+  }
+
+  public static createBackgroundNode( shape: Shape ): Node {
+    return new Node( {
+      children: [
+
+        // A sub-node so it can be non-pickable (so that click events can still reach the accordion box title bar)
+        new Path( shape, {
+          clipArea: shape,
+          pickable: false
+        } )
+      ]
+    } );
   }
 }
 

@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
-import { AlignGroup, Node, Path, Text } from '../../../../scenery/js/imports.js';
+import { AlignGroup, Node, Text } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
@@ -22,10 +22,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
     const iconGroup = new AlignGroup();
 
     const backgroundShape = CAVConstants.ACCORDION_BOX_CONTENTS_SHAPE_MEAN_AND_OR_MEDIAN;
-    const backgroundNode = new Path( backgroundShape, {
-      clipArea: backgroundShape,
-      fill: null
-    } );
+    const backgroundNode = CAVAccordionBox.createBackgroundNode( backgroundShape );
 
     // There is only one scene in the mean and median screen
     const sceneModel = model.selectedSceneModelProperty.value;
@@ -33,7 +30,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
     const meanAndMedianPlotNode = new MeanAndMedianPlotNode( model, sceneModel, {
       tandem: tandem.createTandem( 'plotNode' )
     } ).mutate( {
-      bottom: backgroundNode.height
+      bottom: backgroundShape.bounds.height
     } );
 
     const checkboxGroup = new VerticalCheckboxGroup( [
@@ -41,8 +38,8 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
       AccordionBoxCheckboxFactory.getMeanCheckboxWithIconItem( iconGroup, model.isTopMeanVisibleProperty )
     ], {
       tandem: tandem.createTandem( 'accordionCheckboxGroup' ),
-      right: backgroundNode.width - MARGIN,
-      centerY: backgroundNode.height / 2
+      right: backgroundShape.bounds.width - MARGIN,
+      centerY: backgroundShape.bounds.height / 2
     } );
 
     backgroundNode.addChild( checkboxGroup );

@@ -338,7 +338,7 @@ export default class CardNodeContainer extends Node {
         if ( medianReadoutPanel.left < 0 ) {
           medianReadoutPanel.left = 0;
         }
-        medianReadoutPanel.top = leftmostCard.bottom + MARGIN_Y + 13;
+        medianReadoutPanel.top = leftmostCard.bottom + MARGIN_Y + 5;
         medianReadoutPanel.visible = model.isTopMedianVisibleProperty.value;
       }
       else {

@@ -1,6 +1,6 @@
 // Copyright 2023, University of Colorado Boulder
 
-import { AlignGroup, Node, Path, Text, VBox } from '../../../../scenery/js/imports.js';
+import { AlignGroup, Node, Text, VBox } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -29,19 +29,9 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
 
   public constructor( model: VariabilityModel, layoutBounds: Bounds2, tandem: Tandem, top: number ) {
 
-    // Specify a "footprint" within which we do all of the layout.
+    // Specify a "footprint" within which we do all the layout.
     const backgroundShape = CAVConstants.ACCORDION_BOX_CONTENTS_SHAPE_VARIABILITY;
-
-    const backgroundNode = new Node( {
-      children: [
-
-        // A sub-node so it can be non-pickable (so that click events can still reach the accordion box title bar)
-        new Path( backgroundShape, {
-          clipArea: backgroundShape,
-          pickable: false
-        } )
-      ]
-    } );
+    const backgroundNode = CAVAccordionBox.createBackgroundNode( backgroundShape );
 
     const currentProperty = new DerivedProperty( [ model.selectedVariabilityMeasureProperty ], selectedVariability =>
       selectedVariability === VariabilityMeasure.RANGE ? CenterAndVariabilityStrings.rangeStringProperty :
