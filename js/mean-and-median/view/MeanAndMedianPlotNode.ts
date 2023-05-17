@@ -19,11 +19,6 @@ import CAVObjectType from '../../common/model/CAVObjectType.js';
 
 export type CAVPlotOptions = NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
-// Prevent the median bar node from going off the top of the accordion box
-// TODO: Make sure this doesn't break when https://github.com/phetsims/center-and-variability/issues/170 is adjusted
-// Or make it more robust?
-const MARGIN_TO_TOP_OF_ACCORDION_BOX = 20;
-
 export default class MeanAndMedianPlotNode extends CAVPlotNode {
 
   private readonly medianBarNode = new MedianBarNode( {
@@ -56,11 +51,11 @@ export default class MeanAndMedianPlotNode extends CAVPlotNode {
         const highestDot = _.maxBy( sortedDots, object => object.positionProperty.value.y );
         const dotRadius = Math.abs( modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) );
 
-        // assumes all of the dots have the same radius. Also move up based on the notch height
-        const barY = Math.max(
-          modelViewTransform.modelToViewY( highestDot!.positionProperty.value.y ) - dotRadius - MARGIN_Y - MedianBarNode.NOTCH_HEIGHT,
-          MARGIN_TO_TOP_OF_ACCORDION_BOX
-        );
+        // No matter how high the stack of dots or x's is, we only want the median bar to go up to 5.
+        // Assumes all the dots have the same radius. Also move up based on the notch height.
+        // The model y-values are in meters, even for the data points. This helps us animate the line plot in sync with the play area.
+        const barY = modelViewTransform.modelToViewY( Math.min( highestDot!.positionProperty.value.y, 5 * 2 * CAVObjectType.SOCCER_BALL.radius ) )
+                     - dotRadius - MARGIN_Y - MedianBarNode.NOTCH_HEIGHT;
 
         const rightmostDot = sortedDots[ sortedDots.length - 1 ];
         assert && assert( leftmostSoccerBall.valueProperty.value !== null );
