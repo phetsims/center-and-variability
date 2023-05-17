@@ -15,15 +15,47 @@ import CAVObjectType from '../model/CAVObjectType.js';
 import ballDark_png from '../../../images/ballDark_png.js';
 import ball_png from '../../../images/ball_png.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import AccessibleSlider, { AccessibleSliderOptions } from '../../../../sun/js/accessibility/AccessibleSlider.js';
+import Property from '../../../../axon/js/Property.js';
+import CAVConstants from '../CAVConstants.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 
-export default class SoccerBallNode extends CAVObjectNode {
+type SelfOptions = EmptySelfOptions;
+type ParentOptions = CAVObjectNodeOptions & AccessibleSliderOptions;
+
+export default class SoccerBallNode extends AccessibleSlider( CAVObjectNode, 4 ) {
 
   public constructor( soccerBall: SoccerBall, isSceneVisibleProperty: TReadOnlyProperty<boolean>, isPlayAreaMedianVisibleProperty: TReadOnlyProperty<boolean>,
                       modelViewTransform: ModelViewTransform2, objectNodesInputEnabledProperty: TProperty<boolean>,
-                      options: CAVObjectNodeOptions ) {
+                      providedOptions: CAVObjectNodeOptions ) {
 
     // Use the y dimension, since it determines how the soccer balls stack. But maintain the same aspect ratio as the image
     const viewRadius = Math.abs( modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) );
+
+    const enabledProperty = new Property( true );
+
+    // TODO: https://github.com/phetsims/center-and-variability/issues/162 use a real dynamic property?
+    // TODO: https://github.com/phetsims/center-and-variability/issues/162 when moving to a tall stack, focus gets lost
+    // I thought it was a rounding error but the problem persisted even after I added roundToStepSize: true
+    const dynamicProperty = new Property( soccerBall.valueProperty.value === null ? 0 : soccerBall.valueProperty.value );
+    soccerBall.valueProperty.link( value => {
+      dynamicProperty.value = value === null ? 0 : value;
+    } );
+
+    dynamicProperty.lazyLink( value => {
+      soccerBall.valueProperty.value = value;
+    } );
+
+    const options = optionize<CAVObjectNodeOptions, SelfOptions, ParentOptions>()( {
+      cursor: 'pointer',
+      enabledRangeProperty: new Property( CAVConstants.PHYSICAL_RANGE ),
+      valueProperty: dynamicProperty,
+      keyboardStep: 1,
+      shiftKeyboardStep: 1,
+      pageKeyboardStep: 5,
+      roundToStepSize: true,
+      enabledProperty: enabledProperty
+    }, providedOptions );
 
     super( soccerBall, isPlayAreaMedianVisibleProperty, modelViewTransform, CAVObjectType.SOCCER_BALL.radius, options );
 
@@ -97,6 +129,8 @@ export default class SoccerBallNode extends CAVObjectNode {
 
     // Data point should be visible if the soccer ball is active AND if the scene is visible.
     Multilink.multilink( [ soccerBall.isActiveProperty, isSceneVisibleProperty ], ( isActive, isSceneVisible ) => {
+
+      // TODO: https://github.com/phetsims/center-and-variability/issues/162 do we still need isSceneVisible?
       this.visible = isActive && isSceneVisible;
     } );
 
@@ -116,6 +150,10 @@ export default class SoccerBallNode extends CAVObjectNode {
     this.addLinkedElement( soccerBall, {
       tandem: options.tandem.createTandem( 'soccerBall' )
     } );
+
+    // Not focusable until the ball has been kicked into the play area
+    // TODO https://github.com/phetsims/center-and-variability/issues/162 will this need to be triggered to take the correct value via phet-io stateful attributes?
+    this.focusable = false;
   }
 }
 

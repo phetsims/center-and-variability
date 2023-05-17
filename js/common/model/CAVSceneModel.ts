@@ -344,6 +344,22 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     return _.sortBy( activeSoccerBallsAtLocation, soccerBall => soccerBall.positionProperty.value.y );
   }
 
+  /**
+   * Returns all the stacks in the scene that have at least one object in them, sorted from low value to high value.
+   */
+  public getStacks(): SoccerBall[][] {
+    return _.range( CAVConstants.PHYSICAL_RANGE.min, CAVConstants.PHYSICAL_RANGE.max + 1 )
+      .filter( location => this.getStackAtLocation( location ).length > 0 )
+      .map( location => this.getStackAtLocation( location ) );
+  }
+
+  /**
+   * Returns the top soccer ball in each stack.
+   */
+  public getTopSoccerBalls(): SoccerBall[] {
+    const stacks = this.getStacks();
+    return stacks.map( stack => stack[ stack.length - 1 ] );
+  }
 
   // TODO: Set the drag indicator arrow visible only after the last ball has finished animating - see https://github.com/phetsims/center-and-variability/issues/188
   /**

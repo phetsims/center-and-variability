@@ -7,7 +7,6 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import { Circle, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
@@ -19,6 +18,7 @@ import CAVColors from '../CAVColors.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Multilink from '../../../../axon/js/Multilink.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 
 export type CAVObjectNodeOptions =
 
@@ -26,7 +26,7 @@ export type CAVObjectNodeOptions =
   & StrictOmit<NodeOptions, 'inputEnabledProperty'>
   & PickRequired<NodeOptions, 'tandem'>;
 
-export default abstract class CAVObjectNode extends Node {
+export default class CAVObjectNode extends Node {
 
   protected readonly medianHighlight: Circle;
 
