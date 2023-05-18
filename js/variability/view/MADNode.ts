@@ -42,8 +42,7 @@ export default class MADNode extends CAVPlotNode {
     needAtLeastOneKickText.localBounds = needAtLeastOneKickText.localBounds.dilatedY( MIN_KICKS_TEXT_TOP_MARGIN );
 
     const madRectangle = new Rectangle( 0, 50, 100, 72, {
-      fill: CAVColors.madRectangleColorProperty,
-      stroke: 'lightGray'
+      fill: CAVColors.madRectangleColorProperty
     } );
 
     const meanLine = new Line( 0, 0, 0, madRectangle.height, {
