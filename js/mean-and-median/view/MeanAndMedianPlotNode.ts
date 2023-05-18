@@ -9,15 +9,16 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import { NodeOptions } from '../../../../scenery/js/imports.js';
 import CAVSceneModel from '../../common/model/CAVSceneModel.js';
 import MedianBarNode from '../../common/view/MedianBarNode.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import CAVPlotNode from '../../common/view/CAVPlotNode.js';
+import CAVPlotNode, { CAVPlotOptions } from '../../common/view/CAVPlotNode.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
 import CAVObjectType from '../../common/model/CAVObjectType.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 
-type MeanAndMedianPlotNodeOptions = NodeOptions & PickRequired<NodeOptions, 'tandem'>;
+type SelfOptions = EmptySelfOptions;
+type MeanAndMedianPlotNodeOptions = SelfOptions & CAVPlotOptions & PickRequired<CAVPlotOptions, 'tandem'>;
 
 export default class MeanAndMedianPlotNode extends CAVPlotNode {
 
@@ -26,11 +27,8 @@ export default class MeanAndMedianPlotNode extends CAVPlotNode {
     barStyle: 'continuous'
   } );
 
-  public constructor( model: MeanAndMedianModel, sceneModel: CAVSceneModel, providedOptions: MeanAndMedianPlotNodeOptions ) {
-    super( model, sceneModel, {
-      dataPointFill: 'black',
-      ...providedOptions
-    } );
+  public constructor( model: MeanAndMedianModel, sceneModel: CAVSceneModel, options: MeanAndMedianPlotNodeOptions ) {
+    super( model, sceneModel, options );
 
     this.addChild( this.medianBarNode );
 
