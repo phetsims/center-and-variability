@@ -9,7 +9,6 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import SoccerBall from './SoccerBall.js';
 import CAVObjectType from './CAVObjectType.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -40,6 +39,9 @@ import IOType from '../../../../tandem/js/types/IOType.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
 import ObjectLiteralIO from '../../../../tandem/js/types/ObjectLiteralIO.js';
 import VoidIO from '../../../../tandem/js/types/VoidIO.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+
+type CAVSceneModelOptions = PickRequired<PhetioObject, 'tandem'>;
 
 // constants
 const TIME_BETWEEN_RAPID_KICKS = 0.5; // in seconds
@@ -103,7 +105,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     public readonly maxKicksProperty: TReadOnlyProperty<number>,
     maxKicksChoices: number[],
     public kickDistanceStrategy: TKickDistanceStrategy,
-    options: { tandem: Tandem }
+    options: CAVSceneModelOptions
   ) {
 
     // TODO: should we move styles like this into studio? See https://github.com/phetsims/center-and-variability/issues/117
