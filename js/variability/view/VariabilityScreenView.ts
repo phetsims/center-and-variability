@@ -79,7 +79,11 @@ export default class VariabilityScreenView extends CAVScreenView {
 
     const variabilityAccordionBox = new VariabilityAccordionBox( model, this.layoutBounds, options.tandem.createTandem( 'accordionBox' ), this.questionBar.bottom + CAVConstants.SCREEN_VIEW_Y_MARGIN );
     this.setAccordionBox( variabilityAccordionBox );
-    variabilityAccordionBox.alignWithPlayAreaNumberLineNode( this.playAreaNumberLineNode.globalBounds.x );
+
+    // TODO: https://github.com/phetsims/center-and-variability/issues/170 this seems like a misuse of ManualConstraint
+    ManualConstraint.create( this, [ this.playAreaNumberLineNode, variabilityAccordionBox ], ( playAreaNumberLineNode, variabilityAccordionBox2 ) => {
+      variabilityAccordionBox.alignWithPlayAreaNumberLineNode( this.playAreaNumberLineNode.globalBounds.x );
+    } );
 
     ManualConstraint.create( this, [ variabilityMeasureRadioButtonGroup, this.accordionBox! ],
       ( variabilityRadioButtonGroupWrapper, accordionBoxWrapper ) => {
