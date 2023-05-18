@@ -12,7 +12,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
 import CAVColors from '../../common/CAVColors.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import { AlignGroup, ManualConstraint } from '../../../../scenery/js/imports.js';
+import { AlignGroup } from '../../../../scenery/js/imports.js';
 import Range from '../../../../dot/js/Range.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import CAVScreenView, { CAVScreenViewOptions } from '../../common/view/CAVScreenView.js';
@@ -46,10 +46,7 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
       this.playAreaNumberLineNode
     );
     this.setAccordionBox( meanAndMedianAccordionBox );
-
-    ManualConstraint.create( this, [ meanAndMedianAccordionBox.medianPlotNode, this.playAreaNumberLineNode ], ( medianPlotNode, playAreaNumberLineNode ) => {
-      medianPlotNode.left = playAreaNumberLineNode.left;
-    } );
+    meanAndMedianAccordionBox.alignWithPlayAreaNumberLineNode( this.playAreaNumberLineNode.globalBounds.x );
 
     const iconGroup = new AlignGroup();
     this.setBottomControls( new VerticalCheckboxGroup( [

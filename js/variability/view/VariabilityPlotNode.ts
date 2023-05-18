@@ -25,7 +25,7 @@ import IntervalToolPlayAreaNode from './IntervalToolPlayAreaNode.js';
 export type CAVPlotOptions = NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
 export default class VariabilityPlotNode extends Node {
-  public readonly toggleNode: ToggleNode<VariabilityMeasure, CAVPlotNode>;
+  private toggleNode: ToggleNode<VariabilityMeasure, CAVPlotNode>;
 
   public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, providedOptions: CAVPlotOptions ) {
     super( providedOptions );
