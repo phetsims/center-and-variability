@@ -16,7 +16,7 @@ import CAVConstants from '../../common/CAVConstants.js';
 const MARGIN = 12.5;
 
 export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
-  private readonly medianPlotNode: MeanAndMedianPlotNode;
+  public readonly medianPlotNode: MeanAndMedianPlotNode;
 
   public constructor( model: MeanAndMedianModel, layoutBounds: Bounds2, tandem: Tandem, top: number, playAreaNumberLineNode: Node ) {
     const iconGroup = new AlignGroup();
@@ -57,10 +57,6 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
     );
 
     this.medianPlotNode = meanAndMedianPlotNode;
-  }
-
-  public alignWithPlayAreaNumberLineNode( x: number ): void {
-    this.medianPlotNode.alignWithPlayAreaNumberLineNode( x );
   }
 }
 

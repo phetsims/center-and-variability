@@ -25,7 +25,7 @@ import VariabilityMeasureCheckbox from './VariabilityMeasureCheckbox.js';
 
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 
-  private plotToggleNode: ToggleNode<CAVSceneModel, VariabilityPlotNode>;
+  public readonly plotToggleNode: ToggleNode<CAVSceneModel, VariabilityPlotNode>;
 
   public constructor( model: VariabilityModel, layoutBounds: Bounds2, tandem: Tandem, top: number ) {
 
