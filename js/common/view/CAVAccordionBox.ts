@@ -53,11 +53,11 @@ export default class CAVAccordionBox extends AccordionBox {
 
   public static createBackgroundNode( shape: Shape ): Node {
     return new Node( {
+      clipArea: shape,
       children: [
 
         // A sub-node so it can be non-pickable (so that click events can still reach the accordion box title bar)
         new Path( shape, {
-          clipArea: shape,
           pickable: false
         } )
       ]
