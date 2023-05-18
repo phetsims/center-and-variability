@@ -17,7 +17,7 @@ import CAVPlotNode from '../../common/view/CAVPlotNode.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
 import CAVObjectType from '../../common/model/CAVObjectType.js';
 
-export type CAVPlotOptions = NodeOptions & PickRequired<NodeOptions, 'tandem'>;
+type MeanAndMedianPlotNodeOptions = NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
 export default class MeanAndMedianPlotNode extends CAVPlotNode {
 
@@ -26,7 +26,7 @@ export default class MeanAndMedianPlotNode extends CAVPlotNode {
     barStyle: 'continuous'
   } );
 
-  public constructor( model: MeanAndMedianModel, sceneModel: CAVSceneModel, providedOptions: CAVPlotOptions ) {
+  public constructor( model: MeanAndMedianModel, sceneModel: CAVSceneModel, providedOptions: MeanAndMedianPlotNodeOptions ) {
     super( model, sceneModel, {
       dataPointFill: 'black',
       ...providedOptions
