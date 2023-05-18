@@ -94,7 +94,7 @@ export default class MADNode extends CAVPlotNode {
         const mean = _.mean( sortedDots.map( dot => dot.valueProperty.value ) );
 
         // Underneath the accordion box title
-        let y = 55;
+        let y = 60;
         sortedDots.forEach( dot => {
           const x1 = this.modelViewTransform.modelToViewX( dot.valueProperty.value! );
           const x2 = this.modelViewTransform.modelToViewX( mean );
@@ -106,7 +106,7 @@ export default class MADNode extends CAVPlotNode {
 
           // If the line is too short, show a dot to make it visible
           if ( Math.abs( x2 - x1 ) < 1E-4 ) {
-            children.push( new Circle( 1, {
+            children.push( new Circle( 1.5, {
               fill: 'black',
               center: line.center
             } ) );
