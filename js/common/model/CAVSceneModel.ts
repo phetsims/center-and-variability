@@ -31,7 +31,7 @@ import Easing from '../../../../twixt/js/Easing.js';
 import Pose from './Pose.js';
 import { AnimationMode } from './AnimationMode.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import PhetioObject from '../../../../tandem/js/PhetioObject.js';
+import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import CAVQueryParameters from '../CAVQueryParameters.js';
 import { kickDistanceStrategyFromStateObject, TKickDistanceStrategy } from './TKickDistanceStrategy.js';
@@ -40,8 +40,10 @@ import StringIO from '../../../../tandem/js/types/StringIO.js';
 import ObjectLiteralIO from '../../../../tandem/js/types/ObjectLiteralIO.js';
 import VoidIO from '../../../../tandem/js/types/VoidIO.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 
-type CAVSceneModelOptions = PickRequired<PhetioObject, 'tandem'>;
+type SelfOptions = EmptySelfOptions;
+type CAVSceneModelOptions = SelfOptions & PickRequired<PhetioObject, 'tandem'>;
 
 // constants
 const TIME_BETWEEN_RAPID_KICKS = 0.5; // in seconds
@@ -105,23 +107,24 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     public readonly maxKicksProperty: TReadOnlyProperty<number>,
     maxKicksChoices: number[],
     public kickDistanceStrategy: TKickDistanceStrategy,
-    options: CAVSceneModelOptions
+    providedOptions: CAVSceneModelOptions
   ) {
 
     // TODO: should we move styles like this into studio? See https://github.com/phetsims/center-and-variability/issues/117
     const pre = '<pre style="display: block; padding: 10px; border: 1px solid #ccc; border-radius: 3px; overflow: auto;">';
     const code = '<code style="background-color: #f9f9f9; font-family: \'Courier New\', Courier, monospace;">';
 
-    super( {
+    const options = optionize<CAVSceneModelOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioState: true,
       phetioType: CAVSceneModelIO,
       phetioDocumentation: 'The model for the CAV scene, which includes the soccer balls and the soccer players. The ' +
                            'values for the kicks can be specified using the state object. <br><ul>' +
                            `<li>Random Skew: randomly chooses a left or right skewed distribution each time the sim is reset. (Recall that a right-skewed data set means most of the values fall to the left.) ${pre}${code}{ "distributionType": "randomSkew[currentlyRightSkewed]" }</code></pre></li>` +
                            `<li>Probability Distribution by Distance: The distribution of probabilities of where the balls will land is represented as an un-normalized array of non-negative, floating-point numbers, one value for each location in the physical rang. e.g., ${pre}${code}{ "distributionType": "probabilityDistributionByDistance[0,0,1,3,5,7,3,3,1,1,0,0,0,0,1]" }</code></pre></li>` +
-                           `<li>Exact Location each ball will land (in order). Indicates the exact distance each ball will be kicked in order. Keep in mind the maximum number of kicks may be as high as 30, depending on the selection in the preferences dialog. e.g., ${pre}${code}{ "distributionType": "exactDistanceByIndex[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,2]" }</code></pre></li>`,
-      ...options
-    } );
+                           `<li>Exact Location each ball will land (in order). Indicates the exact distance each ball will be kicked in order. Keep in mind the maximum number of kicks may be as high as 30, depending on the selection in the preferences dialog. e.g., ${pre}${code}{ "distributionType": "exactDistanceByIndex[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,2]" }</code></pre></li>`
+    }, providedOptions );
+
+    super( options );
 
     const updateDataMeasures = () => this.updateDataMeasures();
 
