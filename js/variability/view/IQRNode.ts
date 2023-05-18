@@ -7,7 +7,7 @@ import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import CAVPlotNode, { CAVPlotOptions, MIN_KICKS_TEXT_OFFSET, MIN_KICKS_TEXT_TOP_MARGIN } from '../../common/view/CAVPlotNode.js';
+import CAVPlotNode, { CAVPlotNodeOptions, MIN_KICKS_TEXT_OFFSET, MIN_KICKS_TEXT_TOP_MARGIN } from '../../common/view/CAVPlotNode.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import CAVColors from '../../common/CAVColors.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
@@ -17,7 +17,7 @@ import CAVConstants from '../../common/CAVConstants.js';
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
 };
-type IQRNodeOptions = SelfOptions & StrictOmit<CAVPlotOptions, 'dataPointFill'>;
+type IQRNodeOptions = SelfOptions & StrictOmit<CAVPlotNodeOptions, 'dataPointFill'>;
 
 export default class IQRNode extends CAVPlotNode {
   public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, providedOptions: IQRNodeOptions ) {

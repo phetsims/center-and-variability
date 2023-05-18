@@ -12,7 +12,7 @@ import { ManualConstraint, Rectangle, Text } from '../../../../scenery/js/import
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import CAVPlotNode, { CAVPlotOptions, MIN_KICKS_TEXT_OFFSET, MIN_KICKS_TEXT_TOP_MARGIN } from '../../common/view/CAVPlotNode.js';
+import CAVPlotNode, { CAVPlotNodeOptions, MIN_KICKS_TEXT_OFFSET, MIN_KICKS_TEXT_TOP_MARGIN } from '../../common/view/CAVPlotNode.js';
 import CAVObjectType from '../../common/model/CAVObjectType.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import CAVConstants from '../../common/CAVConstants.js';
@@ -22,7 +22,7 @@ import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
 };
-type RangeNodeOptions = SelfOptions & StrictOmit<CAVPlotOptions, 'dataPointFill'>;
+type RangeNodeOptions = SelfOptions & StrictOmit<CAVPlotNodeOptions, 'dataPointFill'>;
 
 export default class RangeNode extends CAVPlotNode {
   public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, providedOptions: RangeNodeOptions ) {

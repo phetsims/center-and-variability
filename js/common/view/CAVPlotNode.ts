@@ -29,7 +29,8 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 type SelfOptions = {
   dataPointFill: TColor;
 };
-export type CAVPlotOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
+
+export type CAVPlotNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
 export const MIN_KICKS_TEXT_OFFSET = 2;
 export const MIN_KICKS_TEXT_TOP_MARGIN = 20;
 
@@ -39,9 +40,9 @@ export default class CAVPlotNode extends Node {
   public readonly modelViewTransform: ModelViewTransform2;
   private readonly numberLineNode: NumberLineNode;
 
-  public constructor( model: CAVModel, sceneModel: CAVSceneModel, providedOptions?: CAVPlotOptions ) {
+  public constructor( model: CAVModel, sceneModel: CAVSceneModel, providedOptions?: CAVPlotNodeOptions ) {
 
-    const options = optionize<CAVPlotOptions, SelfOptions, NodeOptions>()( {
+    const options = optionize<CAVPlotNodeOptions, SelfOptions, NodeOptions>()( {
       excludeInvisibleChildrenFromBounds: true
     }, providedOptions );
 

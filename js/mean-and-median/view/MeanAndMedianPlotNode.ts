@@ -12,13 +12,13 @@ import centerAndVariability from '../../centerAndVariability.js';
 import CAVSceneModel from '../../common/model/CAVSceneModel.js';
 import MedianBarNode from '../../common/view/MedianBarNode.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import CAVPlotNode, { CAVPlotOptions } from '../../common/view/CAVPlotNode.js';
+import CAVPlotNode, { CAVPlotNodeOptions } from '../../common/view/CAVPlotNode.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
 import CAVObjectType from '../../common/model/CAVObjectType.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 
 type SelfOptions = EmptySelfOptions;
-type MeanAndMedianPlotNodeOptions = SelfOptions & CAVPlotOptions & PickRequired<CAVPlotOptions, 'tandem'>;
+type MeanAndMedianPlotNodeOptions = SelfOptions & CAVPlotNodeOptions & PickRequired<CAVPlotNodeOptions, 'tandem'>;
 
 export default class MeanAndMedianPlotNode extends CAVPlotNode {
 
