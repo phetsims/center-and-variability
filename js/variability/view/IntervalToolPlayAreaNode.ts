@@ -8,10 +8,14 @@ import Multilink from '../../../../axon/js/Multilink.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+
+type SelfOptions = EmptySelfOptions;
+type InternalToolPlayAreaNodeOptions = NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
 export default class IntervalToolPlayAreaNode extends Node {
   public constructor( intervalToolValue1Property: NumberProperty, intervalToolValue2Property: NumberProperty, modelViewTransform: ModelViewTransform2,
-                      topAlignmentProperty: TReadOnlyProperty<number>, providedOptions: NodeOptions & PickRequired<NodeOptions, 'tandem'> ) {
+                      topAlignmentProperty: TReadOnlyProperty<number>, providedOptions: InternalToolPlayAreaNodeOptions ) {
 
     const rectangleNode = new Rectangle( 0, 0, 0, 400, {
       fill: CAVColors.intervalToolFillProperty,
@@ -23,13 +27,16 @@ export default class IntervalToolPlayAreaNode extends Node {
     const rightEdge = new Line( 0, 0, 0, 400, {
       stroke: CAVColors.intervalToolStrokeProperty
     } );
-    super( {
+
+    const options = optionize<InternalToolPlayAreaNodeOptions, SelfOptions, NodeOptions>()( {
       children: [
         rectangleNode,
         leftEdge,
         rightEdge
-      ], ...providedOptions
-    } );
+      ]
+    }, providedOptions );
+
+    super( options );
 
     Multilink.multilink( [ intervalToolValue1Property, intervalToolValue2Property, topAlignmentProperty ],
       ( value1, value2, topAlignment ) => {

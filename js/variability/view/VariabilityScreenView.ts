@@ -8,7 +8,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
@@ -27,7 +27,7 @@ import SoccerPlayerNode, { SoccerPlayerImageSet } from '../../common/view/Soccer
 import CAVSceneModel from '../../common/model/CAVSceneModel.js';
 import InfoDialog from './InfoDialog.js';
 import Multilink from '../../../../axon/js/Multilink.js';
-import PredictionSlider from '../../common/view/PredictionSlider.js';
+import PredictionSlider, { PredictionSliderOptions } from '../../common/view/PredictionSlider.js';
 import Property from '../../../../axon/js/Property.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Range from '../../../../dot/js/Range.js';
@@ -65,17 +65,15 @@ export default class VariabilityScreenView extends CAVScreenView {
       visibleProperty: model.isIntervalToolVisibleProperty
     };
 
-    this.contentLayer.addChild( new PredictionSlider( model.intervalTool1ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE, {
-      ...predictionSliderOptions,
+    this.contentLayer.addChild( new PredictionSlider( model.intervalTool1ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE, combineOptions<PredictionSliderOptions>( predictionSliderOptions, {
       valueProperty: model.intervalTool1ValueProperty,
       tandem: options.tandem.createTandem( 'variabilityIntervalPredictionTool1ValueNode' )
-    } ) );
+    } ) ) );
 
-    this.contentLayer.addChild( new PredictionSlider( model.intervalTool2ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE, {
-      ...predictionSliderOptions,
+    this.contentLayer.addChild( new PredictionSlider( model.intervalTool2ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE, combineOptions<PredictionSliderOptions>( predictionSliderOptions, {
       valueProperty: model.intervalTool2ValueProperty,
       tandem: options.tandem.createTandem( 'variabilityIntervalPredictionTool2ValueNode' )
-    } ) );
+    } ) ) );
 
     const variabilityAccordionBox = new VariabilityAccordionBox( model, this.layoutBounds, options.tandem.createTandem( 'accordionBox' ), this.questionBar.bottom + CAVConstants.SCREEN_VIEW_Y_MARGIN );
     this.setAccordionBox( variabilityAccordionBox );

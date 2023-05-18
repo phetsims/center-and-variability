@@ -10,27 +10,12 @@ import IQRIconNode from './IQRIconNode.js';
 import MADIconNode from './MADIconNode.js';
 
 type SelfOptions = EmptySelfOptions;
-type VariabilityRadioButtonGroupOptions = SelfOptions & RectangularRadioButtonGroupOptions;
+type VariabilityMeasureRadioButtonGroupOptions = SelfOptions & RectangularRadioButtonGroupOptions;
 
 export default class VariabilityMeasureRadioButtonGroup extends RectangularRadioButtonGroup<VariabilityMeasure> {
 
-  public constructor( property: Property<VariabilityMeasure>, providedOptions: VariabilityRadioButtonGroupOptions ) {
-    const options = optionize<VariabilityRadioButtonGroupOptions, SelfOptions, RectangularRadioButtonGroupOptions>()( {}, providedOptions );
-
-    super( property, [ {
-      value: VariabilityMeasure.RANGE,
-      createNode: tandem => new RangeIconNode(),
-      tandemName: 'rangeRadioButton'
-    }, {
-      value: VariabilityMeasure.IQR,
-      createNode: tandem => new IQRIconNode(),
-      tandemName: 'iqrRadioButton'
-    }, {
-      value: VariabilityMeasure.MAD,
-      createNode: tandem => new MADIconNode(),
-      tandemName: 'madRadioButton'
-    } ], {
-      ...options,
+  public constructor( property: Property<VariabilityMeasure>, providedOptions: VariabilityMeasureRadioButtonGroupOptions ) {
+    const options = optionize<VariabilityMeasureRadioButtonGroupOptions, SelfOptions, RectangularRadioButtonGroupOptions>()( {
       spacing: 5,
       radioButtonOptions: {
         baseColor: 'white',
@@ -40,7 +25,23 @@ export default class VariabilityMeasureRadioButtonGroup extends RectangularRadio
           selectedLineWidth: 3
         }
       }
-    } );
+    }, providedOptions );
+
+    super( property, [ {
+        value: VariabilityMeasure.RANGE,
+        createNode: tandem => new RangeIconNode(),
+        tandemName: 'rangeRadioButton'
+      }, {
+        value: VariabilityMeasure.IQR,
+        createNode: tandem => new IQRIconNode(),
+        tandemName: 'iqrRadioButton'
+      }, {
+        value: VariabilityMeasure.MAD,
+        createNode: tandem => new MADIconNode(),
+        tandemName: 'madRadioButton'
+      } ],
+      options
+    );
   }
 }
 

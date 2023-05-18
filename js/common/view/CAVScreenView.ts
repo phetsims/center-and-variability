@@ -8,7 +8,7 @@
  */
 
 import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
-import optionize from '../../../../phet-core/js/optionize.js';
+import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVConstants from '../CAVConstants.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
@@ -165,10 +165,9 @@ export default class CAVScreenView extends ScreenView {
       } );
     this.contentLayer.addChild( this.playAreaNumberLineNode );
 
-    this.questionBar = new QuestionBar( this.layoutBounds, this.visibleBoundsProperty, {
-      ...options.questionBarOptions,
+    this.questionBar = new QuestionBar( this.layoutBounds, this.visibleBoundsProperty, combineOptions<QuestionBarOptions>( {
       tandem: options.tandem.createTandem( 'questionBar' )
-    } );
+    }, options.questionBarOptions ) );
     this.contentLayer.addChild( this.questionBar );
 
     this.contentLayer.addChild( new KickButtonGroup( model, {

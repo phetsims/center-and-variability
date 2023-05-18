@@ -13,21 +13,22 @@ import CAVColors from '../../common/CAVColors.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import CAVConstants from '../../common/CAVConstants.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
 };
+type ParentOptions = CAVPlotNodeOptions;
 type IQRNodeOptions = SelfOptions & StrictOmit<CAVPlotNodeOptions, 'dataPointFill'>;
 
 export default class IQRNode extends CAVPlotNode {
   public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, providedOptions: IQRNodeOptions ) {
 
-    const options = providedOptions;
+    const options = optionize<IQRNodeOptions, SelfOptions, ParentOptions>()( {
+      dataPointFill: CAVColors.grayDataPointFill
+    }, providedOptions );
 
-    super( model, sceneModel, {
-      dataPointFill: CAVColors.grayDataPointFill,
-      ...options
-    } );
+    super( model, sceneModel, options );
 
     const needAtLeastFiveKicksText = new Text( CenterAndVariabilityStrings.needAtLeastFiveKicksStringProperty, {
       fontSize: 18,

@@ -27,8 +27,10 @@ import SoccerPlayer from './SoccerPlayer.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 
-export type CAVObjectOptions = PhetioObjectOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
+type SelfOptions = EmptySelfOptions;
+export type SoccerBallOptions = SelfOptions & PhetioObjectOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
 // Global counter for debugging
 let count = 0;
@@ -67,12 +69,12 @@ export default class SoccerBall extends PhetioObject {
     parameters: [ { valueType: SoccerBall } ]
   } );
 
-  public constructor( public readonly isFirstSoccerBall: boolean, options: CAVObjectOptions ) {
+  public constructor( public readonly isFirstSoccerBall: boolean, providedOptions: SoccerBallOptions ) {
 
-    super( {
-      ...options,
+    const options = optionize<SoccerBallOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioState: false
-    } );
+    }, providedOptions );
+    super( options );
 
     this.positionProperty = new Vector2Property( new Vector2( 0, CAVObjectType.SOCCER_BALL.radius ), {
       tandem: options.tandem.createTandem( 'positionProperty' ),

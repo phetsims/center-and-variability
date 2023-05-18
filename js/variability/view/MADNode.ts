@@ -12,21 +12,21 @@ import CAVConstants from '../../common/CAVConstants.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import CAVColors from '../../common/CAVColors.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
 };
-type RangeNodeOptions = SelfOptions & StrictOmit<CAVPlotNodeOptions, 'dataPointFill'>;
+type ParentOptions = CAVPlotNodeOptions;
+type MADNodeOptions = SelfOptions & StrictOmit<ParentOptions, 'dataPointFill'>;
 
 export default class MADNode extends CAVPlotNode {
-  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, providedOptions: RangeNodeOptions ) {
+  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, providedOptions: MADNodeOptions ) {
 
-    const options = providedOptions;
-
-    super( model, sceneModel, {
-      dataPointFill: CAVColors.grayDataPointFill,
-      ...options
-    } );
+    const options = optionize<MADNodeOptions, SelfOptions, ParentOptions>()( {
+      dataPointFill: CAVColors.grayDataPointFill
+    }, providedOptions );
+    super( model, sceneModel, options );
 
     const needAtLeastOneKickText = new Text( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {
       fontSize: 18,

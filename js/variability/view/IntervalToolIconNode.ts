@@ -6,11 +6,12 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { Node, NodeOptions, NodeTransformOptions, Rectangle } from '../../../../scenery/js/imports.js';
+import { Node, NodeOptions, NodeTransformOptions, Rectangle, RectangleOptions } from '../../../../scenery/js/imports.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
-import ShadedSphereNode from '../../../../scenery-phet/js/ShadedSphereNode.js';
+import ShadedSphereNode, { ShadedSphereNodeOptions } from '../../../../scenery-phet/js/ShadedSphereNode.js';
 import CAVColors from '../../common/CAVColors.js';
+import { combineOptions } from '../../../../phet-core/js/optionize.js';
 
 export default class IntervalToolIconNode extends Node {
   public constructor( providedOptions?: NodeOptions ) {
@@ -22,21 +23,19 @@ export default class IntervalToolIconNode extends Node {
       fill: rectangleFillProperty
     } );
 
-    const createHandle = ( options: NodeTransformOptions ) => new Rectangle( 0, 0, 2, mainRectangle.height + 8, {
-      fill: rectangleFillProperty,
-      ...options
-    } );
+    const createHandle = ( options: NodeTransformOptions ) => new Rectangle( 0, 0, 2, mainRectangle.height + 8, combineOptions<RectangleOptions>( {
+      fill: rectangleFillProperty
+    }, options ) );
 
     const leftHandle = createHandle( { leftTop: mainRectangle.leftTop } );
     const rightHandle = createHandle( { rightTop: mainRectangle.rightTop } );
 
-    const createSphereNode = ( options: NodeTransformOptions ) => new ShadedSphereNode( 10, {
+    const createSphereNode = ( options: NodeTransformOptions ) => new ShadedSphereNode( 10, combineOptions<ShadedSphereNodeOptions>( {
       mainColor: CAVColors.intervalToolIconShadedSphereMainColorProperty,
       highlightColor: CAVColors.intervalToolIconShadedSphereHighlightColorProperty,
       shadowColor: CAVColors.intervalToolIconShadedSphereShadowColorProperty,
-      highlightDiameterRatio: 0.35,
-      ...options
-    } );
+      highlightDiameterRatio: 0.35
+    }, options ) );
 
     const leftSphereNode = createSphereNode( { center: leftHandle.centerBottom } );
     const rightSphereNode = createSphereNode( { center: rightHandle.centerBottom } );

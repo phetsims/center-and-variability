@@ -10,11 +10,15 @@
 import centerAndVariability from '../../centerAndVariability.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import CAVSceneModel from '../../common/model/CAVSceneModel.js';
-import CAVModel from '../../common/model/CAVModel.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
+import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import { RandomSkewStrategy } from '../../common/model/TKickDistanceStrategy.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+
+type SelfOptions = EmptySelfOptions;
+type ParentOptions = CAVModelOptions;
+type MeanAndMedianModelOptions = SelfOptions & Pick<ParentOptions, 'tandem'>;
 
 // constants
 const HIGHLIGHT_ANIMATION_TIME_STEP = 0.25; // in seconds
@@ -32,13 +36,14 @@ export default class MeanAndMedianModel extends CAVModel {
   public readonly isMeanPredictionVisibleProperty: BooleanProperty;
   public readonly meanPredictionProperty: NumberProperty;
 
-  public constructor( options: { tandem: Tandem } ) {
+  public constructor( providedOptions: MeanAndMedianModelOptions ) {
+
+    const options = optionize<MeanAndMedianModelOptions, SelfOptions, ParentOptions>()( {
+      instrumentMeanPredictionProperty: true
+    }, providedOptions );
 
     const sceneModel = new CAVSceneModel( CAVConstants.MAX_KICKS_PROPERTY, CAVConstants.MAX_KICKS_VALUES, new RandomSkewStrategy(), { tandem: options.tandem.createTandem( 'sceneModel' ) } );
-    super( CAVConstants.MAX_KICKS_PROPERTY, [ sceneModel ], {
-      ...options,
-      instrumentMeanPredictionProperty: true
-    } );
+    super( CAVConstants.MAX_KICKS_PROPERTY, [ sceneModel ], options );
 
     this.isTopMeanVisibleProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isTopMeanVisibleProperty' )

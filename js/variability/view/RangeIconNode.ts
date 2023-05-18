@@ -1,13 +1,14 @@
 // Copyright 2023, University of Colorado Boulder
 
 import centerAndVariability from '../../centerAndVariability.js';
-import { Circle, Line, Node, Path, Rectangle } from '../../../../scenery/js/imports.js';
+import { Circle, Line, Node, Path, PathOptions, Rectangle } from '../../../../scenery/js/imports.js';
 import CAVColors from '../../common/CAVColors.js';
 import timesSolidShape from '../../../../sherpa/js/fontawesome-5/timesSolidShape.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import PlotType from '../../common/model/PlotType.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
+import { combineOptions } from '../../../../phet-core/js/optionize.js';
 
 /**
  * Icon for the range radio button. Dynamically changes between dot plot and line plot based on preferences.
@@ -48,12 +49,11 @@ export default class RangeIconNode extends Node {
         createNode: tandem => new Circle( viewRadius * 0.93, options )
       }, {
         value: PlotType.LINE_PLOT,
-        createNode: tandem => new Path( timesSolidShape, {
-          ...options,
+        createNode: tandem => new Path( timesSolidShape, combineOptions<PathOptions>( options, {
 
           // Allow spacing between the items
           maxWidth: viewRadius * 2 * 0.9
-        } )
+        } ) )
       } ] );
     };
 

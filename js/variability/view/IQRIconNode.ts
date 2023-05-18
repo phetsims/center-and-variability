@@ -1,7 +1,8 @@
 // Copyright 2023, University of Colorado Boulder
 
 import centerAndVariability from '../../centerAndVariability.js';
-import { Line, Node, Rectangle } from '../../../../scenery/js/imports.js';
+import { Line, Node, Rectangle, RectangleOptions } from '../../../../scenery/js/imports.js';
+import { combineOptions } from '../../../../phet-core/js/optionize.js';
 
 /**
  * Icon for the IQR radio button.
@@ -24,10 +25,9 @@ export default class IQRIconNode extends Node {
     };
 
     // Foreground rectangle with null fill, black stroke and lineWidth 0.5
-    const iqrRectangle = new Rectangle( 0, 0, 18, 20, {
-      center: rectangle.center.plusXY( 2, 0 ),
-      ...options
-    } );
+    const iqrRectangle = new Rectangle( 0, 0, 18, 20, combineOptions<RectangleOptions>( {
+      center: rectangle.center.plusXY( 2, 0 )
+    }, options ) );
 
     // Vertical line
     const verticalLine = new Line( iqrRectangle.centerX + 2, iqrRectangle.top, iqrRectangle.centerX + 2, iqrRectangle.bottom, options );
