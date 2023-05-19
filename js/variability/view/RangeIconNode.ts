@@ -46,10 +46,10 @@ export default class RangeIconNode extends Node {
         value: PlotType.DOT_PLOT,
 
         // Allow spacing
-        createNode: tandem => new Circle( viewRadius * 0.93, options )
+        createNode: () => new Circle( viewRadius * 0.93, options )
       }, {
         value: PlotType.LINE_PLOT,
-        createNode: tandem => new Path( timesSolidShape, combineOptions<PathOptions>( options, {
+        createNode: () => new Path( timesSolidShape, combineOptions<PathOptions>( options, {
 
           // Allow spacing between the items
           maxWidth: viewRadius * 2 * 0.9

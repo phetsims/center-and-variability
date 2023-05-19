@@ -25,7 +25,7 @@ import VariabilityMeasureCheckbox from './VariabilityMeasureCheckbox.js';
 
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 
-  private plotToggleNode: ToggleNode<CAVSceneModel, VariabilityPlotNode>;
+  private readonly plotToggleNode: ToggleNode<CAVSceneModel, VariabilityPlotNode>;
 
   public constructor( model: VariabilityModel, layoutBounds: Bounds2, tandem: Tandem, top: number ) {
 
@@ -116,8 +116,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     const madValueProperty = deriveValueProperty( vsm => vsm.madValueProperty );
     const meanValueProperty = deriveValueProperty( vsm => vsm.meanValueProperty );
 
-    // TODO: Why can't this infer the type parameter? See https://github.com/phetsims/center-and-variability/issues/201
-    const readoutsToggleNode = new ToggleNode<VariabilityMeasure>( model.selectedVariabilityMeasureProperty, [ {
+    const readoutsToggleNode = new ToggleNode( model.selectedVariabilityMeasureProperty, [ {
       value: VariabilityMeasure.RANGE,
       tandemName: 'rangeReadoutToggleNode',
       createNode: tandem => {
