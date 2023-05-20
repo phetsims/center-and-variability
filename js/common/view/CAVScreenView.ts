@@ -34,7 +34,6 @@ import SoccerPlayer from '../model/SoccerPlayer.js';
 import CAVSceneModel from '../model/CAVSceneModel.js';
 import DragIndicatorArrowNode from './DragIndicatorArrowNode.js';
 import CAVObjectType from '../model/CAVObjectType.js';
-import Multilink from '../../../../axon/js/Multilink.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';
 
@@ -70,6 +69,7 @@ export default class CAVScreenView extends ScreenView {
   private readonly sceneViews: SceneView[];
 
   private readonly updateMedianNode: () => void;
+  private readonly updateDragIndicatorNode: () => void;
 
   public constructor( model: CAVModel, providedOptions: CAVScreenViewOptions ) {
     const options = optionize<CAVScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
@@ -187,16 +187,36 @@ export default class CAVScreenView extends ScreenView {
       phetioVisiblePropertyInstrumented: false
     } );
 
-    Multilink.multilink( [ model.isDragIndicatorVisibleProperty, model.dragIndicatorValueProperty ],
-      ( dragIndicatorVisible, dragIndicatorValue ) => {
-        dragIndicatorArrowNode.visible = dragIndicatorVisible;
+    this.updateDragIndicatorNode = () => {
+      const dragIndicatorVisible = model.isDragIndicatorVisibleProperty.value;
+      const dragIndicatorValue = model.dragIndicatorValueProperty.value;
 
-        if ( dragIndicatorVisible && dragIndicatorValue ) {
-          dragIndicatorArrowNode.centerX = modelViewTransform.modelToViewX( dragIndicatorValue );
-          const dragIndicatorArrowNodeMargin = 6;
-          dragIndicatorArrowNode.bottom = this.getTopObjectPositionY( dragIndicatorValue ) - dragIndicatorArrowNodeMargin;
+      dragIndicatorArrowNode.visible = dragIndicatorVisible;
+
+      if ( dragIndicatorVisible && dragIndicatorValue ) {
+        dragIndicatorArrowNode.centerX = modelViewTransform.modelToViewX( dragIndicatorValue );
+        const dragIndicatorArrowNodeMargin = 6;
+        dragIndicatorArrowNode.bottom = this.getTopObjectPositionY( dragIndicatorValue ) - dragIndicatorArrowNodeMargin;
+
+        // The arrow shouldn't overlap the accordion box
+        // TODO: https://github.com/phetsims/center-and-variability/issues/198 why can't we use accordionbox.bottom?
+        if ( this.accordionBox ) {
+          const accordionBoxHeight = this.accordionBox.expandedProperty.value ? this.accordionBox.getExpandedBoxHeight() : this.accordionBox.getCollapsedBoxHeight();
+          if ( dragIndicatorArrowNode.top < this.accordionBox.top + accordionBoxHeight ) {
+            dragIndicatorArrowNode.top = this.accordionBox.top + accordionBoxHeight + 4;
+          }
         }
-      } );
+      }
+    };
+
+    model.isDragIndicatorVisibleProperty.link( this.updateDragIndicatorNode );
+    model.dragIndicatorValueProperty.link( this.updateDragIndicatorNode );
+    this.visibleBoundsProperty.link( this.updateDragIndicatorNode );
+    this.model.selectedSceneModelProperty.link( this.updateDragIndicatorNode );
+    this.model.sceneModels.forEach( sceneModel => {
+      sceneModel.medianValueProperty.link( this.updateDragIndicatorNode );
+      sceneModel.objectChangedEmitter.addListener( this.updateDragIndicatorNode );
+    } );
 
     this.backObjectLayer.addChild( dragIndicatorArrowNode );
 
@@ -213,6 +233,7 @@ export default class CAVScreenView extends ScreenView {
         playAreaMedianIndicatorNode.bottom = this.getTopObjectPositionY( medianValue );
 
         // The arrow shouldn't overlap the accordion box
+        // TODO: https://github.com/phetsims/center-and-variability/issues/198 why can't we use accordionbox.bottom?
         if ( this.accordionBox ) {
           const accordionBoxHeight = this.accordionBox.expandedProperty.value ? this.accordionBox.getExpandedBoxHeight() : this.accordionBox.getCollapsedBoxHeight();
           if ( playAreaMedianIndicatorNode.top < this.accordionBox.top + accordionBoxHeight ) {
@@ -264,7 +285,9 @@ export default class CAVScreenView extends ScreenView {
     this.updateAccordionBoxPosition();
     this.sceneViews.forEach( sceneView => sceneView.setAccordionBox( accordionBox ) );
 
+    // TODO: Why doesn't accordionBox.bounds work? https://github.com/phetsims/center-and-variability/issues/198
     this.accordionBox.expandedProperty.link( this.updateMedianNode );
+    this.accordionBox.expandedProperty.link( this.updateDragIndicatorNode );
   }
 
   protected setBottomControls( controlNode: Node ): void {
