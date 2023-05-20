@@ -135,6 +135,12 @@ export default class MADNode extends CAVPlotNode {
 
       meanLine.visible = sceneModel.meanValueProperty.value !== null;
       if ( meanLine.visible ) {
+
+        // In the info dialog, the mean line should extend to the top of the MAD rectangle
+        if ( options.parentContext === 'info' ) {
+          meanLine.setY2( madRectangle.height );
+        }
+
         meanLine.centerX = this.modelViewTransform.modelToViewX( sceneModel.meanValueProperty.value! );
         meanLine.bottom = this.modelViewTransform.modelToViewY( 0 );
       }
