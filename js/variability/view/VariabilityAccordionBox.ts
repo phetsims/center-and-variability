@@ -199,7 +199,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     } ], {
       alignChildren: ToggleNode.CENTER_Y,
       tandem: tandem.createTandem( 'readoutsToggleNode' ),
-      leftCenter: backgroundShape.bounds.leftCenter.plusXY( 5, 0 )
+      leftCenter: backgroundShape.bounds.leftCenter.plusXY( 5, -5 )
     } );
 
     backgroundNode.addChild( readoutsToggleNode );
