@@ -21,7 +21,7 @@ export default class MADInfoNode extends VBox {
     // TODO: The design calls for a depiction of the mean location.  This is not yet implemented. See https://github.com/phetsims/center-and-variability/issues/180
     const hasEnoughDataProperty = new DerivedProperty( [ sceneModel.numberOfDataPointsProperty ], numberOfDataPoints => numberOfDataPoints >= 1 );
 
-    const numeratorText = new Text( '', { fontSize: 16 } );
+    const numeratorText = new Text( '', { fontSize: 16, maxWidth: 550 } );
     const denominatorText = new Text( '', { fontSize: 16 } );
 
     const resultNumeratorText = new Text( '', { fontSize: 16 } );
