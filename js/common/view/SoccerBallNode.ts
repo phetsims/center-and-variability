@@ -19,6 +19,7 @@ import AccessibleSlider, { AccessibleSliderOptions } from '../../../../sun/js/ac
 import Property from '../../../../axon/js/Property.js';
 import CAVConstants from '../CAVConstants.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 type ParentOptions = CAVObjectNodeOptions & AccessibleSliderOptions;
@@ -34,16 +35,14 @@ export default class SoccerBallNode extends AccessibleSlider( CAVObjectNode, 4 )
 
     const enabledProperty = new Property( true );
 
-    // TODO: https://github.com/phetsims/center-and-variability/issues/162 use a real dynamic property?
     // TODO: https://github.com/phetsims/center-and-variability/issues/162 when moving to a tall stack, focus gets lost
     // I thought it was a rounding error but the problem persisted even after I added roundToStepSize: true
-    const dynamicProperty = new Property( soccerBall.valueProperty.value === null ? 0 : soccerBall.valueProperty.value );
-    soccerBall.valueProperty.link( value => {
-      dynamicProperty.value = value === null ? 0 : value;
-    } );
 
-    dynamicProperty.lazyLink( value => {
-      soccerBall.valueProperty.value = value;
+    // The drag listener requires a numeric value (does not support null), so map it through a DynamicProperty
+    const dynamicProperty = new DynamicProperty( new Property( soccerBall.valueProperty ), {
+      bidirectional: true,
+      map: function( value: number | null ) { return value === null ? 0 : value;},
+      inverseMap: function( value: number ) { return value === 0 ? null : value; }
     } );
 
     const options = optionize<CAVObjectNodeOptions, SelfOptions, ParentOptions>()( {
