@@ -1,8 +1,7 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * Shows the dot plot or line plot on the "Mean & Median" Screen, including the legends/readouts to the left.
- * The plot is non-interactive.
+ * Shows the dot plot or line plot on the "Mean & Median" Screen. The plot is non-interactive.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

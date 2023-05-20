@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
-import { AlignGroup, Node, Text } from '../../../../scenery/js/imports.js';
+import { AlignGroup, Node, Text, TPaint, VBox } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
@@ -12,6 +12,12 @@ import MeanAndMedianPlotNode from './MeanAndMedianPlotNode.js';
 import AccordionBoxCheckboxFactory from '../../common/view/AccordionBoxCheckboxFactory.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 import CAVConstants from '../../common/CAVConstants.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import LinkableProperty from '../../../../axon/js/LinkableProperty.js';
+import Utils from '../../../../dot/js/Utils.js';
+import CAVColors from '../../common/CAVColors.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 const MARGIN = 12.5;
 
@@ -45,6 +51,46 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
 
     backgroundNode.addChild( checkboxGroup );
     backgroundNode.addChild( meanAndMedianPlotNode );
+
+    const createReadoutText = ( valueProperty: TReadOnlyProperty<number | null>, visibleProperty: TReadOnlyProperty<boolean>,
+                                templateStringProperty: LinkableProperty<string>, fill: TPaint ) => {
+
+      const valueStringProperty = new DerivedProperty( [ valueProperty ], value => {
+        return value === null ? CenterAndVariabilityStrings.valueUnknownStringProperty.value : Utils.toFixed( value, 1 );
+      } );
+
+      return new Text( new PatternStringProperty( templateStringProperty, {
+        value: valueStringProperty
+      } ), {
+        fill: fill,
+        font: new PhetFont( 16 ),
+        maxWidth: 170,
+        visibleProperty: visibleProperty
+      } );
+    };
+
+    const readoutsNode = new VBox( {
+      align: 'left',
+      spacing: 8,
+      excludeInvisibleChildrenFromBounds: false,
+      children: [
+        createReadoutText(
+          sceneModel.medianValueProperty,
+          model.isTopMedianVisibleProperty,
+          CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty,
+          CAVColors.medianColorProperty
+        ),
+        createReadoutText(
+          sceneModel.meanValueProperty,
+          model.isTopMeanVisibleProperty,
+          CenterAndVariabilityStrings.meanEqualsValuePatternStringProperty,
+          CAVColors.meanColorProperty
+        )
+      ],
+      leftCenter: backgroundShape.bounds.leftCenter.plusXY( MARGIN, 0 )
+    } );
+
+    backgroundNode.addChild( readoutsNode );
 
     super( backgroundNode, {
         titleNode: new Text( CenterAndVariabilityStrings.distanceInMetersStringProperty, {
