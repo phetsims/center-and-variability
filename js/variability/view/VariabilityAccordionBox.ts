@@ -23,6 +23,8 @@ import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import VariabilityMeasureCheckbox from './VariabilityMeasureCheckbox.js';
 
+const MARGIN = 5;
+
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 
   private readonly plotToggleNode: ToggleNode<CAVSceneModel, VariabilityPlotNode>;
@@ -63,8 +65,8 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       listener: () => {
         model.isInfoVisibleProperty.value = true;
       },
-      top: 5,
-      right: backgroundShape.bounds.right - 5
+      top: MARGIN,
+      right: backgroundShape.bounds.right - MARGIN
     } );
     backgroundNode.addChild( infoButton );
 
@@ -74,7 +76,6 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       tandemName: 'rangeAccordionCheckbox',
       value: VariabilityMeasure.RANGE
     }, {
-
       createNode: tandem => new VariabilityMeasureCheckbox( model.isIQRVisibleProperty, CenterAndVariabilityStrings.iqrStringProperty, iconGroup, CAVColors.iqrColorProperty, { tandem: tandem } ),
       tandemName: 'iqrAccordionCheckbox',
       value: VariabilityMeasure.IQR
@@ -83,8 +84,8 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       tandemName: 'madAccordionCheckbox',
       value: VariabilityMeasure.MAD
     } ], {
-      rightCenter: backgroundShape.bounds.rightCenter.plusXY( -10, 0 ),
-      alignChildren: ToggleNode.LEFT
+      rightCenter: backgroundShape.bounds.rightCenter.plusXY( -MARGIN, 0 ),
+      alignChildren: ToggleNode.RIGHT
     } );
 
     // Since the title is visible while the accordion box is open, this background will not any area above the bottom of

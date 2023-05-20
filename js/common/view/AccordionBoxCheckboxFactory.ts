@@ -30,9 +30,10 @@ export default class AccordionBoxCheckboxFactory {
       spacing: 10,
       stretch: true,
       grow: 1,
-      rows: [ [ new Node( { children: [ text ], layoutOptions: { xAlign: 'left' } } ),
-        iconGroup.createBox( icon, { xAlign: 'center', layoutOptions: { xAlign: 'right' } } ) ]
-      ]
+      rows: [ [
+        iconGroup.createBox( text, { xAlign: 'left', layoutOptions: { xAlign: 'left' } } ),
+        iconGroup.createBox( icon, { xAlign: 'center', layoutOptions: { xAlign: 'right' } } )
+      ] ]
     } );
   }
 
