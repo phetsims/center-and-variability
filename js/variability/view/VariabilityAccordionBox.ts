@@ -141,11 +141,6 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       value: VariabilityMeasure.IQR,
       tandemName: 'iqrReadoutToggleNode',
       createNode: tandem => {
-        const textReadoutGroup = new VBox( {
-          align: 'left',
-          spacing: 10
-        } );
-
         const medianReadoutValueProperty = new DerivedProperty( [ medianValueProperty ],
           medianValue => medianValue === null ? '?' : `${medianValue}`
         );
@@ -163,10 +158,14 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
           tandem: tandem.createTandem( 'iqrReadoutText' )
         } );
 
-        textReadoutGroup.addChild( medianReadoutText );
-        textReadoutGroup.addChild( iqrReadoutText );
-
-        return textReadoutGroup;
+        return new VBox( {
+          align: 'left',
+          spacing: 10,
+          children: [
+            medianReadoutText,
+            iqrReadoutText
+          ]
+        } );
       }
     }, {
       value: VariabilityMeasure.MAD,
@@ -181,6 +180,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
 
         // Nest in a new Node so that ToggleNode has independent control over the visibility
         return new VBox( {
+          spacing: 10,
           align: 'left',
           children: [
             new VariabilityReadoutText( meanReadoutValueProperty,
@@ -197,8 +197,9 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         } );
       }
     } ], {
-      left: 5,
-      tandem: tandem.createTandem( 'readoutsToggleNode' )
+      alignChildren: ToggleNode.CENTER_Y,
+      tandem: tandem.createTandem( 'readoutsToggleNode' ),
+      leftCenter: backgroundShape.bounds.leftCenter.plusXY( 5, 0 )
     } );
 
     backgroundNode.addChild( readoutsToggleNode );
