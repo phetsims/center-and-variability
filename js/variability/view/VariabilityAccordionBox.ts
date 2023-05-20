@@ -172,10 +172,10 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       tandemName: 'madReadoutToggleNode',
       createNode: tandem => {
         const madReadoutValueProperty = new DerivedProperty( [ madValueProperty ], madValue => {
-          return madValue ? `${Utils.toFixed( madValue, 1 )}` : '?';
+          return madValue === null ? '?' : `${Utils.toFixed( madValue, 1 )}`;
         } );
         const meanReadoutValueProperty = new DerivedProperty( [ meanValueProperty ], meanValue => {
-          return meanValue ? `${Utils.toFixed( meanValue, 1 )}` : '?';
+          return meanValue === null ? '?' : `${Utils.toFixed( meanValue, 1 )}`;
         } );
 
         // Nest in a new Node so that ToggleNode has independent control over the visibility
