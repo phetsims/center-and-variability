@@ -50,7 +50,7 @@ export default class RangeNode extends CAVPlotNode {
     needAtLeastOneKickText.localBounds = needAtLeastOneKickText.localBounds.dilatedY( MIN_KICKS_TEXT_TOP_MARGIN );
 
     const rangeTextReadout = new Text( '', {
-      font: new PhetFont( 13 )
+      font: CAVConstants.VARIABILITY_MEASURE_NUMBER_READOUT_FONT
     } );
 
     const rangeBar = new MedianBarNode( {

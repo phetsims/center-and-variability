@@ -70,7 +70,10 @@ const CAVConstants = {
     tandem: Tandem.PREFERENCES.createTandem( 'maxKicksProperty' )
   } ),
 
-  SCENE_VIEW_TANDEM: 'sceneView'
+  SCENE_VIEW_TANDEM: 'sceneView',
+
+  // Shown above the numbers in the variability accordion box plots, like above the RangeNode bars
+  VARIABILITY_MEASURE_NUMBER_READOUT_FONT: new PhetFont( 13 )
 };
 
 centerAndVariability.register( 'CAVConstants', CAVConstants );

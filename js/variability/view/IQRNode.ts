@@ -59,7 +59,7 @@ export default class IQRNode extends CAVPlotNode {
       lineWidth: 1
     } );
     const iqrBarLabel = new Text( '', {
-      font: new PhetFont( 13 )
+      font: CAVConstants.VARIABILITY_MEASURE_NUMBER_READOUT_FONT
     } );
     const iqrRectangle = new Rectangle( 0, 0, 0, 0, {
       fill: CAVColors.iqrColorProperty

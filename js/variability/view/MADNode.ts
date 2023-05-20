@@ -64,10 +64,10 @@ export default class MADNode extends CAVPlotNode {
     } );
 
     const leftReadout = new Text( '', {
-      font: new PhetFont( 13 )
+      font: CAVConstants.VARIABILITY_MEASURE_NUMBER_READOUT_FONT
     } );
     const rightReadout = new Text( '', {
-      font: new PhetFont( 13 )
+      font: CAVConstants.VARIABILITY_MEASURE_NUMBER_READOUT_FONT
     } );
 
     this.addChild( meanLine );
