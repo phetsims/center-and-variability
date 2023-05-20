@@ -11,6 +11,7 @@ import MADInfoNode from './MADInfoNode.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
+import ScreenView from '../../../../joist/js/ScreenView.js';
 
 export default class InfoDialog extends Dialog {
   public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, options: PickRequired<PhetioObject, 'tandem'> ) {
@@ -35,7 +36,12 @@ export default class InfoDialog extends Dialog {
     super( content, {
 
       // TODO: It seems there are 2 ways to hide the dialog. Is there a better way? See https://github.com/phetsims/center-and-variability/issues/179
-      hideCallback: () => model.isInfoVisibleProperty.set( false )
+      hideCallback: () => model.isInfoVisibleProperty.set( false ),
+
+      // TODO: maxWidth options in Dialog are shrinking the number line, so it doesn't match with the play area size, see https://github.com/phetsims/center-and-variability/issues/207
+      // TODO: I tried other options but couldn't get them working.  This doesn't seem ideal. Can we do better? see https://github.com/phetsims/center-and-variability/issues/207
+      maxWidth: ScreenView.DEFAULT_LAYOUT_BOUNDS.width * 2,
+      maxHeight: ScreenView.DEFAULT_LAYOUT_BOUNDS.height * 2
     } );
   }
 }
