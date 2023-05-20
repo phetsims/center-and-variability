@@ -8,10 +8,10 @@
 
 import { Node, NodeOptions, NodeTransformOptions, Rectangle, RectangleOptions } from '../../../../scenery/js/imports.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import ShadedSphereNode, { ShadedSphereNodeOptions } from '../../../../scenery-phet/js/ShadedSphereNode.js';
 import CAVColors from '../../common/CAVColors.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
+import IconArrowNode from './IconArrowNode.js';
 
 export default class IntervalToolIconNode extends Node {
   public constructor( providedOptions?: NodeOptions ) {
@@ -40,16 +40,6 @@ export default class IntervalToolIconNode extends Node {
     const leftSphereNode = createSphereNode( { center: leftHandle.centerBottom } );
     const rightSphereNode = createSphereNode( { center: rightHandle.centerBottom } );
 
-    const arrowNode = new ArrowNode( 0, 0, mainRectangle.width, 0, {
-      fill: 'black',
-      stroke: null,
-      center: mainRectangle.center,
-      doubleHead: true,
-      tailWidth: 2,
-      headWidth: 7,
-      headHeight: 5
-    } );
-
     super( {
       children: [
 
@@ -58,7 +48,7 @@ export default class IntervalToolIconNode extends Node {
         rightHandle,
 
         mainRectangle,
-        arrowNode,
+        new IconArrowNode( mainRectangle ),
         leftSphereNode,
         rightSphereNode
       ]
