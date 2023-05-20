@@ -57,7 +57,7 @@ const CAVColors = {
   boxWhiskerStrokeColorProperty: new ProfileColorProperty( centerAndVariability, 'boxWhiskerStrokeColor', { default: 'black' } ),
   madRectangleColorProperty: new ProfileColorProperty( centerAndVariability, 'madRectangleColor', { default: new Color( '#cba3e6' ).withAlpha( 0.7 ) } ),
 
-  grayDataPointFill: new ProfileColorProperty( centerAndVariability, 'grayDataPointFill', { default: '#8f8f8f' } ),
+  grayDataPointFill: new ProfileColorProperty( centerAndVariability, 'grayDataPointFill', { default: '#b2b2b2' } ),
 
   // Darker gray than the ones in the plot area, to show up better in the radio button
   rangeMarkerColorPrperty: new ProfileColorProperty( centerAndVariability, 'rangeMarkerColor', { default: new Color( '#717171' ) } ),
