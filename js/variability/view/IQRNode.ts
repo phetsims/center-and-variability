@@ -1,6 +1,5 @@
 // Copyright 2023, University of Colorado Boulder
 
-import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import MedianBarNode from '../../common/view/MedianBarNode.js';
 import { Line, ManualConstraint, Node, ProfileColorProperty, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';

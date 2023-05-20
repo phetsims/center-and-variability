@@ -6,7 +6,6 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import MedianBarNode from '../../common/view/MedianBarNode.js';
 import { ManualConstraint, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import centerAndVariability from '../../centerAndVariability.js';
