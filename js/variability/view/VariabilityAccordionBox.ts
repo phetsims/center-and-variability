@@ -122,7 +122,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       tandemName: 'rangeReadoutToggleNode',
       createNode: tandem => {
         const rangeReadoutValueProperty = new DerivedProperty( [ rangeValueProperty ],
-          rangeValue => rangeValue === null ? '?' : `${rangeValue}`
+          rangeValue => rangeValue === null ? CenterAndVariabilityStrings.valueUnknownStringProperty.value : `${rangeValue}`
         );
 
         // Nest in a new Node so that ToggleNode has independent control over the visibility
@@ -142,10 +142,10 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       tandemName: 'iqrReadoutToggleNode',
       createNode: tandem => {
         const medianReadoutValueProperty = new DerivedProperty( [ medianValueProperty ],
-          medianValue => medianValue === null ? '?' : `${medianValue}`
+          medianValue => medianValue === null ? CenterAndVariabilityStrings.valueUnknownStringProperty.value : `${medianValue}`
         );
         const iqrReadoutValueProperty = new DerivedProperty( [ iqrValueProperty ], iqrValue => {
-          return iqrValue === null ? '?' : `${iqrValue}`;
+          return iqrValue === null ? CenterAndVariabilityStrings.valueUnknownStringProperty.value : `${iqrValue}`;
         } );
 
         const medianReadoutText = new VariabilityReadoutText( medianReadoutValueProperty, CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty, {
@@ -172,10 +172,10 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       tandemName: 'madReadoutToggleNode',
       createNode: tandem => {
         const madReadoutValueProperty = new DerivedProperty( [ madValueProperty ], madValue => {
-          return madValue === null ? '?' : `${Utils.toFixed( madValue, 1 )}`;
+          return madValue === null ? CenterAndVariabilityStrings.valueUnknownStringProperty.value : `${Utils.toFixed( madValue, 1 )}`;
         } );
         const meanReadoutValueProperty = new DerivedProperty( [ meanValueProperty ], meanValue => {
-          return meanValue === null ? '?' : `${Utils.toFixed( meanValue, 1 )}`;
+          return meanValue === null ? CenterAndVariabilityStrings.valueUnknownStringProperty.value : `${Utils.toFixed( meanValue, 1 )}`;
         } );
 
         // Nest in a new Node so that ToggleNode has independent control over the visibility
