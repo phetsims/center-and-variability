@@ -10,13 +10,13 @@ import CAVSceneModel from '../../common/model/CAVSceneModel.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import VariabilityModel from './VariabilityModel.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import { TKickDistanceStrategy } from '../../common/model/TKickDistanceStrategy.js';
 import Property from '../../../../axon/js/Property.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
+import Utils from '../../../../dot/js/Utils.js';
 
 export default class VariabilitySceneModel extends CAVSceneModel {
 
@@ -78,6 +78,17 @@ export default class VariabilitySceneModel extends CAVSceneModel {
     this.initialized = true;
   }
 
+  public getDeviationTenths(): number[] {
+    const values = this.getSortedLandedObjects().map( landedObject => landedObject.valueProperty.value! );
+    const deviations = values.map( value => Math.abs( value - this.meanValueProperty.value! ) );
+    const tenths = deviations.map( deviation => Utils.roundToInterval( deviation, 0.1 ) );
+    return tenths;
+  }
+
+  public getSumOfDeviationTenths(): number {
+    return Utils.roundToInterval( this.getDeviationTenths().reduce( ( a, b ) => a + b, 0 ), 0.1 );
+  }
+
   protected override updateDataMeasures(): void {
     super.updateDataMeasures();
 
@@ -114,8 +125,9 @@ export default class VariabilitySceneModel extends CAVSceneModel {
 
       // Support call from superclass constructor
       if ( this.madValueProperty ) {
-        this.madValueProperty.value = sortedObjects.length === 0 ? null :
-                                      VariabilityModel.meanAbsoluteDeviation( sortedObjects.map( object => object.valueProperty.value! ) );
+
+        // The calculation is rounded to tenths to match the values that are displayed on the scene
+        this.madValueProperty.value = sortedObjects.length === 0 ? null : Utils.roundToInterval( this.getSumOfDeviationTenths() / sortedObjects.length, 0.1 );
       }
     }
   }

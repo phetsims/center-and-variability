@@ -27,32 +27,17 @@ export default class MADInfoNode extends VBox {
     const resultDenominatorText = new Text( '', { fontSize: 16 } );
 
     const footnoteVisibleProperty = new BooleanProperty( false );
-    const footnoteAsterisk = new Text( '*', {
-      fontSize: 16,
-      visibleProperty: footnoteVisibleProperty
-    } );
 
     sceneModel.objectChangedEmitter.addListener( () => {
-      const values = sceneModel.getSortedLandedObjects().map( landedObject => landedObject.valueProperty.value! );
-      const mads = values.map( value => Math.abs( value - sceneModel.meanValueProperty.value! ) );
-      const madStrings = mads.map( mad => Utils.toFixed( mad, 1 ) );
-      numeratorText.string = madStrings.join( ' + ' );
-      denominatorText.string = values.length.toString();
 
-      const sum = _.reduce( mads, ( sum, mad ) => sum + mad, 0 );
-      resultNumeratorText.string = Utils.toFixed( sum, 1 );
-      resultDenominatorText.string = values.length.toString();
+      const deviations = sceneModel.getDeviationTenths();
+      const denominator = sceneModel.getSortedLandedObjects().length;
 
-      // Double check the result to see if the printed strings match. There may be an inconsistency because of when the values
-      // are rounded.  See https://github.com/phetsims/center-and-variability/issues/169
-      const leftHandTerms = madStrings.map( Number.parseFloat );
-      const leftHandSum = _.reduce( leftHandTerms, ( sum, term ) => sum + term, 0 );
-      const rightHandSum = Number.parseFloat( resultNumeratorText.string );
+      numeratorText.string = deviations.join( ' + ' );
+      denominatorText.string = denominator.toString();
 
-      footnoteVisibleProperty.value = Math.abs( leftHandSum - rightHandSum ) > 1E-6;
-      if ( phet.chipper.queryParameters.dev && footnoteVisibleProperty.value ) {
-        console.log( 'values do not match: LHS = ' + numeratorText.string + ' = ' + leftHandSum + ', but RHS = ' + rightHandSum + ' = ' + resultNumeratorText.string );
-      }
+      resultNumeratorText.string = sceneModel.getSumOfDeviationTenths();
+      resultDenominatorText.string = denominator.toString();
     } );
 
     const calculationFraction = new VBox( {
@@ -93,11 +78,7 @@ export default class MADInfoNode extends VBox {
                 resultFraction
               ],
               visibleProperty: hasEnoughDataProperty
-            } ),
-
-            // Show the footnote to the top right of the errant equation, if they don't match. I tried a ManualConstraint
-            // for this, but it went into an infinite loop.
-            footnoteAsterisk
+            } )
           ]
         } ),
 
