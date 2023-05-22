@@ -88,6 +88,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       alignChildren: ToggleNode.RIGHT
     } );
 
+    // REVIEW: This comment seems outdated... https://github.com/phetsims/center-and-variability/issues/170
     // Since the title is visible while the accordion box is open, this background will not any area above the bottom of
     // the expand/collapse button. To vertically-center things, make a new set of bounds that includes the missing space.
     // Values come from the height of the expand/collapse button plus the y margin above and below it. Also add the
