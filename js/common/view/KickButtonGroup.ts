@@ -45,13 +45,10 @@ export default class KickButtonGroup extends VBox {
         maxWidth: TEXT_MAX_WIDTH,
         font: CAVConstants.MAIN_FONT
       } );
-      return {
-        label: alignGroup.createBox( text ),
-        text: text
-      };
+      return alignGroup.createBox( text );
     };
 
-    const createKickButton = ( content: { label: Node; text: Text }, tandem: Tandem, numberToKick: number, multikick: boolean ) => {
+    const createKickButton = ( content: Node, tandem: Tandem, numberToKick: number, multikick: boolean ) => {
 
       const isButtonVisibleProperty = new BooleanProperty( true, {
         tandem: tandem.createTandem( 'visibleProperty' )
@@ -69,7 +66,7 @@ export default class KickButtonGroup extends VBox {
 
       return new RectangularPushButton( {
         visibleProperty: DerivedProperty.and( [ hasKickableSoccerBallsProperty, isButtonVisibleProperty ] ),
-        content: content.label,
+        content: content,
         baseColor: CAVColors.kickButtonFillColorProperty,
         xMargin: 12,
         yMargin: 12,
@@ -91,11 +88,15 @@ export default class KickButtonGroup extends VBox {
     const kick5ButtonTandem = options.tandem.createTandem( 'kickFiveButton' );
 
     // Create labels first so their sizes can be aligned
-    const kick1PatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.kickValuePatternStringProperty, { value: 1 } );
+    const kick1PatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.kickValuePatternStringProperty, { value: 1 }, {
+      tandem: kick1ButtonTandem.createTandem( 'kick1PatternStringProperty' )
+    } );
     const kick1Label = createLabel( kick1PatternStringProperty, kick1ButtonTandem.createTandem( 'labelText' ) );
 
     const multiKickProperty = new NumberProperty( 5 );
-    const kick5PatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.kickValuePatternStringProperty, { value: multiKickProperty } );
+    const kick5PatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.kickValuePatternStringProperty, { value: multiKickProperty }, {
+      tandem: kick5ButtonTandem.createTandem( 'kick5PatternStringProperty' )
+    } );
 
     const numberOfUnkickedBallsProperty = new DynamicProperty<number, unknown, CAVSceneModel>( model.selectedSceneModelProperty, {
       derive: 'numberOfUnkickedBallsProperty'
