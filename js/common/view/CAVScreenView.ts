@@ -45,6 +45,7 @@ export type CAVScreenViewOptions = SelfOptions & ScreenViewOptions;
 
 // constants
 const GROUND_POSITION_Y = 500;
+const INDICATOR_MARGIN = 4;
 
 export default class CAVScreenView extends ScreenView {
 
@@ -199,11 +200,9 @@ export default class CAVScreenView extends ScreenView {
         dragIndicatorArrowNode.bottom = this.getTopObjectPositionY( dragIndicatorValue ) - dragIndicatorArrowNodeMargin;
 
         // The arrow shouldn't overlap the accordion box
-        // TODO: https://github.com/phetsims/center-and-variability/issues/198 why can't we use accordionbox.bottom?
         if ( this.accordionBox ) {
-          const accordionBoxHeight = this.accordionBox.expandedProperty.value ? this.accordionBox.getExpandedBoxHeight() : this.accordionBox.getCollapsedBoxHeight();
-          if ( dragIndicatorArrowNode.top < this.accordionBox.top + accordionBoxHeight ) {
-            dragIndicatorArrowNode.top = this.accordionBox.top + accordionBoxHeight + 4;
+          if ( dragIndicatorArrowNode.top < this.accordionBox.bottom + INDICATOR_MARGIN ) {
+            dragIndicatorArrowNode.top = this.accordionBox.bottom + INDICATOR_MARGIN;
           }
         }
       }
@@ -233,11 +232,9 @@ export default class CAVScreenView extends ScreenView {
         playAreaMedianIndicatorNode.bottom = this.getTopObjectPositionY( medianValue );
 
         // The arrow shouldn't overlap the accordion box
-        // TODO: https://github.com/phetsims/center-and-variability/issues/198 why can't we use accordionbox.bottom?
         if ( this.accordionBox ) {
-          const accordionBoxHeight = this.accordionBox.expandedProperty.value ? this.accordionBox.getExpandedBoxHeight() : this.accordionBox.getCollapsedBoxHeight();
-          if ( playAreaMedianIndicatorNode.top < this.accordionBox.top + accordionBoxHeight ) {
-            playAreaMedianIndicatorNode.top = this.accordionBox.top + accordionBoxHeight + 4;
+          if ( playAreaMedianIndicatorNode.top < this.accordionBox.bottom + INDICATOR_MARGIN ) {
+            playAreaMedianIndicatorNode.top = this.accordionBox.bottom + INDICATOR_MARGIN;
           }
         }
       }
@@ -285,9 +282,8 @@ export default class CAVScreenView extends ScreenView {
     this.updateAccordionBoxPosition();
     this.sceneViews.forEach( sceneView => sceneView.setAccordionBox( accordionBox ) );
 
-    // TODO: Why doesn't accordionBox.bounds work? https://github.com/phetsims/center-and-variability/issues/198
-    this.accordionBox.expandedProperty.link( this.updateMedianNode );
-    this.accordionBox.expandedProperty.link( this.updateDragIndicatorNode );
+    this.accordionBox.boundsProperty.link( this.updateMedianNode );
+    this.accordionBox.boundsProperty.link( this.updateDragIndicatorNode );
   }
 
   protected setBottomControls( controlNode: Node ): void {

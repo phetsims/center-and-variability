@@ -44,6 +44,7 @@ export default class CAVAccordionBox extends AccordionBox {
       contentYSpacing: 0,
       contentAlign: 'left',
       allowContentToOverlapTitle: true,
+      useExpandedBoundsWhenCollapsed: false,
       expandCollapseButtonOptions: {
         sideLength: BUTTON_SIDE_LENGTH
       }
