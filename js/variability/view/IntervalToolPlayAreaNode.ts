@@ -9,6 +9,10 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import Property from '../../../../axon/js/Property.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
+import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 type InternalToolPlayAreaNodeOptions = NodeOptions & PickRequired<NodeOptions, 'tandem'>;
@@ -52,17 +56,67 @@ export default class IntervalToolPlayAreaNode extends Node {
         rightEdge.setLine( viewX2, rectBottom, viewX2, rectTop );
       } );
 
+    // TODO: https://github.com/phetsims/center-and-variability/issues/194 support or exclude multi-touch
+    const getDragBounds = () => {
+      const dist = intervalToolValue2Property.value - intervalToolValue1Property.value;
+
+      if ( dist > 0 ) {
+        return new Bounds2(
+          intervalToolValue1Property.range.min, 0,
+          intervalToolValue1Property.range.max - dist, 0
+        );
+      }
+      else {
+        return new Bounds2(
+          intervalToolValue1Property.range.min + Math.abs( dist ), 0,
+          intervalToolValue1Property.range.max, 0
+        );
+      }
+    };
+
+    // The drag listener operates in 2D but our model value is 1D, so we just have an extent-less y bounds.
+    const dragBoundsProperty = new Property( getDragBounds() );
+
+    const updateDragBounds = () => {
+      dragBoundsProperty.value = getDragBounds();
+    };
+
+    // The drag listener requires a Vector2 instead of a number, so we need to create a DynamicProperty to convert between the two
+    const intervalToolValue1PositionProperty = new DynamicProperty( new Property( intervalToolValue1Property ), {
+      bidirectional: true,
+      map: function( value: number ) { return new Vector2( value, 0 );},
+      inverseMap: function( value: Vector2 ) { return value.x; }
+    } );
+
+    // When the drag is powered by the DragListener, the distance between the two values is constant.
+    let distanceBetweenToolValues: number | null = null;
+
+    intervalToolValue1PositionProperty.link( ( value: Vector2 ) => {
+
+      // If the change was triggered by the drag listener, then we want to keep the distance between the two values constant.
+      if ( distanceBetweenToolValues !== null ) {
+
+        // The dragBounds makes sure neither of these exceeds the bounds.
+        intervalToolValue1Property.value = value.x;
+        intervalToolValue2Property.value = value.x + distanceBetweenToolValues;
+      }
+
+      updateDragBounds();
+    } );
+
+    intervalToolValue1Property.link( updateDragBounds );
+    intervalToolValue2Property.link( updateDragBounds );
+
     const dragListener = new DragListener( {
+      dragBoundsProperty: dragBoundsProperty,
+      useParentOffset: true,
+      positionProperty: intervalToolValue1PositionProperty,
       transform: modelViewTransform,
-      drag: ( event, dragListener ) => {
-
-        const modelDeltaX = dragListener.modelDelta.x;
-
-        if ( intervalToolValue1Property.range.contains( intervalToolValue1Property.value + modelDeltaX ) &&
-             intervalToolValue2Property.range.contains( intervalToolValue2Property.value + modelDeltaX ) ) {
-          intervalToolValue1Property.value = intervalToolValue1Property.range.constrainValue( intervalToolValue1Property.value + dragListener.modelDelta.x );
-          intervalToolValue2Property.value = intervalToolValue2Property.range.constrainValue( intervalToolValue2Property.value + dragListener.modelDelta.x );
-        }
+      start: ( event, dragListener ) => {
+        distanceBetweenToolValues = intervalToolValue2Property.value - intervalToolValue1Property.value;
+      },
+      end: ( event, dragListener ) => {
+        distanceBetweenToolValues = null;
       },
       tandem: providedOptions.tandem.createTandem( 'dragListener' )
     } );
