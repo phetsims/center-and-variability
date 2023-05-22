@@ -39,7 +39,8 @@ export default class CAVAccordionBox extends AccordionBox {
       buttonXMargin: CONTENT_MARGIN,
       buttonYMargin: CONTENT_MARGIN,
       contentXMargin: 0,
-      contentYMargin: 0,
+      // TODO: Why was this set to 0? https://github.com/phetsims/center-and-variability/issues/170
+      contentYMargin: 5,
       contentYSpacing: 0,
       contentAlign: 'left',
       allowContentToOverlapTitle: true,
