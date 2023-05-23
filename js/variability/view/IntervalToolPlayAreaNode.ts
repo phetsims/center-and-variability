@@ -15,7 +15,7 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 
 type SelfOptions = EmptySelfOptions;
-type InternalToolPlayAreaNodeOptions = NodeOptions & PickRequired<NodeOptions, 'tandem'>;
+type InternalToolPlayAreaNodeOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
 export default class IntervalToolPlayAreaNode extends Node {
   public constructor( intervalToolValue1Property: NumberProperty, intervalToolValue2Property: NumberProperty, modelViewTransform: ModelViewTransform2,

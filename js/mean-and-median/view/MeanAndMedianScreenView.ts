@@ -23,13 +23,14 @@ import PredictionSlider from '../../common/view/PredictionSlider.js';
 import Property from '../../../../axon/js/Property.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 
-type MeanAndMedianScreenViewOptions = StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
+type SelfOptions = EmptySelfOptions;
+type MeanAndMedianScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
 
 export default class MeanAndMedianScreenView extends CAVScreenView {
 
   public constructor( model: MeanAndMedianModel, providedOptions: MeanAndMedianScreenViewOptions ) {
 
-    const options = optionize<MeanAndMedianScreenViewOptions, EmptySelfOptions, CAVScreenViewOptions>()( {
+    const options = optionize<MeanAndMedianScreenViewOptions, SelfOptions, CAVScreenViewOptions>()( {
       questionBarOptions: {
         barFill: CAVColors.meanAndMedianQuestionBarFillColorProperty,
         questionString: CenterAndVariabilityStrings.meanAndMedianQuestionStringProperty

@@ -17,13 +17,12 @@ import optionize from '../../../../phet-core/js/optionize.js';
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
 };
-type ParentOptions = CAVPlotNodeOptions;
 type IQRNodeOptions = SelfOptions & StrictOmit<CAVPlotNodeOptions, 'dataPointFill'>;
 
 export default class IQRNode extends CAVPlotNode {
   public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, providedOptions: IQRNodeOptions ) {
 
-    const options = optionize<IQRNodeOptions, SelfOptions, ParentOptions>()( {
+    const options = optionize<IQRNodeOptions, SelfOptions, CAVPlotNodeOptions>()( {
       dataPointFill: CAVColors.grayDataPointFill
     }, providedOptions );
 

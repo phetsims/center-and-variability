@@ -18,13 +18,14 @@ import CenterAndVariabilityStrings from '../CenterAndVariabilityStrings.js';
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import medianScreenIcon_png from '../../images/medianScreenIcon_png.js';
 
-type MedianScreenOptions = CAVScreenOptions;
+type SelfOptions = EmptySelfOptions;
+type MedianScreenOptions = SelfOptions & CAVScreenOptions;
 
 export default class MedianScreen extends CAVScreen<MedianModel, MedianScreenView> {
 
   public constructor( providedOptions: MedianScreenOptions ) {
 
-    const options = optionize<MedianScreenOptions, EmptySelfOptions, CAVScreenOptions>()( {
+    const options = optionize<MedianScreenOptions, SelfOptions, CAVScreenOptions>()( {
       name: CenterAndVariabilityStrings.screen.medianStringProperty,
       homeScreenIcon: new ScreenIcon( new Image( medianScreenIcon_png ), {
         maxIconWidthProportion: 1,

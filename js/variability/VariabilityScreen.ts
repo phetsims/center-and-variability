@@ -18,13 +18,14 @@ import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import CenterAndVariabilityStrings from '../CenterAndVariabilityStrings.js';
 import variabilityScreenIcon_png from '../../images/variabilityScreenIcon_png.js';
 
-type VariabilityScreenOptions = CAVScreenOptions;
+type SelfOptions = EmptySelfOptions;
+type VariabilityScreenOptions = SelfOptions & CAVScreenOptions;
 
 export default class VariabilityScreen extends CAVScreen<VariabilityModel, VariabilityScreenView> {
 
   public constructor( providedOptions: VariabilityScreenOptions ) {
 
-    const options = optionize<VariabilityScreenOptions, EmptySelfOptions, CAVScreenOptions>()( {
+    const options = optionize<VariabilityScreenOptions, SelfOptions, CAVScreenOptions>()( {
       name: CenterAndVariabilityStrings.screen.variabilityStringProperty,
       homeScreenIcon: new ScreenIcon( new Image( variabilityScreenIcon_png ), {
         maxIconWidthProportion: 1,

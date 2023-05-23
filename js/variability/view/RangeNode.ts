@@ -22,13 +22,12 @@ import optionize from '../../../../phet-core/js/optionize.js';
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
 };
-type ParentOptions = CAVPlotNodeOptions;
-type RangeNodeOptions = SelfOptions & StrictOmit<ParentOptions, 'dataPointFill'>;
+type RangeNodeOptions = SelfOptions & StrictOmit<CAVPlotNodeOptions, 'dataPointFill'>;
 
 export default class RangeNode extends CAVPlotNode {
   public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, providedOptions: RangeNodeOptions ) {
 
-    const options = optionize<RangeNodeOptions, SelfOptions, ParentOptions>()( {
+    const options = optionize<RangeNodeOptions, SelfOptions, CAVPlotNodeOptions>()( {
       dataPointFill: CAVColors.grayDataPointFill
     }, providedOptions );
 

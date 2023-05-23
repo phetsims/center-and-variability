@@ -17,8 +17,7 @@ import { RandomSkewStrategy } from '../../common/model/TKickDistanceStrategy.js'
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 
 type SelfOptions = EmptySelfOptions;
-type ParentOptions = CAVModelOptions;
-type MeanAndMedianModelOptions = SelfOptions & Pick<ParentOptions, 'tandem'>;
+type MeanAndMedianModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
 
 // constants
 const HIGHLIGHT_ANIMATION_TIME_STEP = 0.25; // in seconds
@@ -38,7 +37,7 @@ export default class MeanAndMedianModel extends CAVModel {
 
   public constructor( providedOptions: MeanAndMedianModelOptions ) {
 
-    const options = optionize<MeanAndMedianModelOptions, SelfOptions, ParentOptions>()( {
+    const options = optionize<MeanAndMedianModelOptions, SelfOptions, CAVModelOptions >()( {
       instrumentMeanPredictionProperty: true
     }, providedOptions );
 
