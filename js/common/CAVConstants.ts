@@ -36,7 +36,7 @@ const CAVConstants = {
   NUMBER_OF_OBJECTS: 15, // number of objects in the play area on each screen
   CHECKBOX_TEXT_MAX_WIDTH: 107,
 
-  SOCCER_BALL_OVERLAP: 0.045,
+  SOCCER_BALL_OVERLAP: 0.0,
 
   // the top checkboxes are left aligned with the play area checkboxes, so their max width is smaller to accommodate
   // for the accordion box margin
