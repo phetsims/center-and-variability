@@ -43,7 +43,9 @@ export default class SimulationPreferencesContentNode extends VBox {
       tandem: tandem.createTandem( 'plotTypeRadioButtonGroup' )
     } );
 
-    const outliersCheckbox = new Checkbox( CAVConstants.SHOW_OUTLIERS_PROPERTY, new Text( CenterAndVariabilityStrings.showOutliersBoxplotOnlyStringProperty, TEXT_OPTIONS ) );
+    const outliersCheckbox = new Checkbox( CAVConstants.SHOW_OUTLIERS_PROPERTY, new Text( CenterAndVariabilityStrings.showOutliersBoxplotOnlyStringProperty, TEXT_OPTIONS ), {
+      tandem: tandem.createTandem( 'outliersCheckbox' )
+    } );
 
     // VBox is used to make it easy to add additional controls
     super( {
