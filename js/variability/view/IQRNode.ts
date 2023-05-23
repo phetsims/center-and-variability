@@ -284,13 +284,14 @@ export default class IQRNode extends CAVPlotNode {
         iqrBarLabel.bottom = iqrBar.top - 2;
       }
 
+      let outlierDisplayChildren: Text[] = [];
       if ( enoughDataForIQR && CAVConstants.SHOW_OUTLIERS_PROPERTY.value ) {
-        const outlierDisplayChildren = outlierValues.map( value => new Text( '*', {
+        outlierDisplayChildren = outlierValues.map( value => new Text( '*', {
           centerX: this.modelViewTransform.modelToViewX( value ),
           fontSize: 30
         } ) );
-        outlierDisplay.setChildren( outlierDisplayChildren );
       }
+      outlierDisplay.setChildren( outlierDisplayChildren );
     };
 
     sceneModel.objectChangedEmitter.addListener( updateIQRNode );
