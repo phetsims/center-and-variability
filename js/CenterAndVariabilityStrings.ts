@@ -61,6 +61,7 @@ type StringsType = {
   'needAtLeastOneKickStringProperty': LinkableProperty<string>;
   'needAtLeastFiveKicksStringProperty': LinkableProperty<string>;
   'maxKicksForScreensWithPlotsStringProperty': LinkableProperty<string>;
+  'showOutliersBoxplotOnlyStringProperty': LinkableProperty<string>;
   'valuesMayNotMatchDueToRoundingErrorsStringProperty': LinkableProperty<string>;
 };
 

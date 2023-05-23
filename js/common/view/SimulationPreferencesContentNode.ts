@@ -12,6 +12,7 @@ import { Text, VBox, Node } from '../../../../scenery/js/imports.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import PlotType from '../model/PlotType.js';
+import Checkbox from '../../../../sun/js/Checkbox.js';
 import CAVConstants from '../CAVConstants.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PreferencesDialog from '../../../../joist/js/preferences/PreferencesDialog.js';
@@ -42,9 +43,11 @@ export default class SimulationPreferencesContentNode extends VBox {
       tandem: tandem.createTandem( 'plotTypeRadioButtonGroup' )
     } );
 
+    const outliersCheckbox = new Checkbox( CAVConstants.SHOW_OUTLIERS_PROPERTY, new Text( CenterAndVariabilityStrings.showOutliersBoxplotOnlyStringProperty, TEXT_OPTIONS ) );
+
     // VBox is used to make it easy to add additional controls
     super( {
-      children: [ title, radioButtonGroup, new MaxKicksControlNode( CAVConstants.MAX_KICKS_PROPERTY, parentNode, {
+      children: [ title, radioButtonGroup, outliersCheckbox, new MaxKicksControlNode( CAVConstants.MAX_KICKS_PROPERTY, parentNode, {
         tandem: tandem.createTandem( 'maxKicksControlNode' )
       } ) ],
       spacing: PreferencesDialog.LABEL_CONTENT_SPACING,

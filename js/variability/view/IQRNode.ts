@@ -143,6 +143,8 @@ export default class IQRNode extends CAVPlotNode {
     medianArrowNode.y = -31;
     q1LabelNode.y = q3LabelNode.y = minLabelNode.y = maxLabelNode.y = -35;
 
+    const outlierDisplay = new Node( { y: 17 } );
+
     boxWhiskerNode.addChild( boxWhiskerMedianLine );
     boxWhiskerNode.addChild( boxWhiskerBox );
     boxWhiskerNode.addChild( boxWhiskerLineLeft );
@@ -154,6 +156,7 @@ export default class IQRNode extends CAVPlotNode {
     boxWhiskerNode.addChild( minLabelNode );
     boxWhiskerNode.addChild( maxLabelNode );
     boxWhiskerNode.addChild( medianArrowNode );
+    boxWhiskerNode.addChild( outlierDisplay );
 
     this.addChild( iqrBar );
     this.addChild( iqrBarLabel );
@@ -187,11 +190,41 @@ export default class IQRNode extends CAVPlotNode {
       }
     };
 
+    const isOutlier = ( value: number ) => {
+      const deltaForOutlier = 1.5 * sceneModel.iqrValueProperty.value!;
+      return sceneModel.q1ValueProperty.value! - value > deltaForOutlier || value - sceneModel.q3ValueProperty.value! > deltaForOutlier;
+    };
+
     const updateIQRNode = () => {
       const sortedDots = _.sortBy( sceneModel.getActiveSoccerBalls().filter( object => object.valueProperty.value !== null ),
         object => object.valueProperty.value );
-      const leftmostDot = sortedDots[ 0 ];
-      const rightmostDot = sortedDots[ sortedDots.length - 1 ];
+
+      const outlierValues: number[] = [];
+      sortedDots.map( object => object.valueProperty.value ).forEach( value => {
+        if ( value !== null && !outlierValues.includes( value ) && isOutlier( value ) ) {
+          outlierValues.push( value );
+        }
+      } );
+
+      let leftmostDot = CAVConstants.SHOW_OUTLIERS_PROPERTY.value ? null : sortedDots[ 0 ];
+      let rightmostDot = CAVConstants.SHOW_OUTLIERS_PROPERTY.value ? null : sortedDots[ sortedDots.length - 1 ];
+
+      // do not include outliers in the box plot drawing if this property is checked
+      if ( CAVConstants.SHOW_OUTLIERS_PROPERTY.value ) {
+        for ( let i = 0; i < sortedDots.length; i++ ) {
+          if ( leftmostDot === null && !outlierValues.includes( sortedDots[ i ].valueProperty.value! ) ) {
+            leftmostDot = sortedDots[ i ];
+            break;
+          }
+        }
+
+        for ( let i = sortedDots.length - 1; i >= 0; i-- ) {
+          if ( rightmostDot === null && !outlierValues.includes( sortedDots[ i ].valueProperty.value! ) ) {
+            rightmostDot = sortedDots[ i ];
+            break;
+          }
+        }
+      }
 
       const boxLeft = this.modelViewTransform.modelToViewX( sceneModel.q1ValueProperty.value! );
       const boxRight = this.modelViewTransform.modelToViewX( sceneModel.q3ValueProperty.value! );
@@ -250,12 +283,21 @@ export default class IQRNode extends CAVPlotNode {
         iqrBarLabel.centerX = iqrRectangle.centerX;
         iqrBarLabel.bottom = iqrBar.top - 2;
       }
+
+      if ( enoughDataForIQR && CAVConstants.SHOW_OUTLIERS_PROPERTY.value ) {
+        const outlierDisplayChildren = outlierValues.map( value => new Text( '*', {
+          centerX: this.modelViewTransform.modelToViewX( value ),
+          fontSize: 30
+        } ) );
+        outlierDisplay.setChildren( outlierDisplayChildren );
+      }
     };
 
     sceneModel.objectChangedEmitter.addListener( updateIQRNode );
     model.isIQRVisibleProperty.link( updateIQRNode );
     model.selectedVariabilityMeasureProperty.link( updateIQRNode );
     sceneModel.numberOfDataPointsProperty.link( updateIQRNode );
+    CAVConstants.SHOW_OUTLIERS_PROPERTY.link( updateIQRNode );
   }
 }
 

@@ -17,6 +17,7 @@ import ScreenView from '../../../joist/js/ScreenView.js';
 import Range from '../../../dot/js/Range.js';
 import { Shape } from '../../../kite/js/imports.js';
 import NumberProperty from '../../../axon/js/NumberProperty.js';
+import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 
 // Right skewed means most of the data is on the left, see https://github.com/phetsims/center-and-variability/issues/112
 const RIGHT_SKEWED_DATA = [
@@ -69,6 +70,10 @@ const CAVConstants = {
     validValues: [ 15, 20, 25, 30 ],
     tandem: Tandem.PREFERENCES.createTandem( 'maxKicksProperty' )
   } ),
+
+  SHOW_OUTLIERS_PROPERTY: new BooleanProperty( false, {
+      tandem: Tandem.PREFERENCES.createTandem( 'showOutliersProperty' )
+    } ),
 
   SCENE_VIEW_TANDEM: 'sceneView',
 
