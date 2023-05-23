@@ -49,11 +49,11 @@ export default class RangeIconNode extends Node {
         createNode: () => new Circle( viewRadius * 0.93, options )
       }, {
         value: PlotType.LINE_PLOT,
-        createNode: () => new Path( timesSolidShape, combineOptions<PathOptions>( options, {
+        createNode: () => new Path( timesSolidShape, combineOptions<PathOptions>( {
 
           // Allow spacing between the items
           maxWidth: viewRadius * 2 * 0.9
-        } ) )
+        }, options ) )
       } ] );
     };
 

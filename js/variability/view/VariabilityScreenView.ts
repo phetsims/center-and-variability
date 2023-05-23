@@ -65,15 +65,15 @@ export default class VariabilityScreenView extends CAVScreenView {
       visibleProperty: model.isIntervalToolVisibleProperty
     };
 
-    this.contentLayer.addChild( new PredictionSlider( model.intervalTool1ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE, combineOptions<PredictionSliderOptions>( predictionSliderOptions, {
+    this.contentLayer.addChild( new PredictionSlider( model.intervalTool1ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE, combineOptions<PredictionSliderOptions>( {
       valueProperty: model.intervalTool1ValueProperty,
       tandem: options.tandem.createTandem( 'variabilityIntervalPredictionTool1ValueNode' )
-    } ) ) );
+    }, predictionSliderOptions ) ) );
 
-    this.contentLayer.addChild( new PredictionSlider( model.intervalTool2ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE, combineOptions<PredictionSliderOptions>( predictionSliderOptions, {
+    this.contentLayer.addChild( new PredictionSlider( model.intervalTool2ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE, combineOptions<PredictionSliderOptions>( {
       valueProperty: model.intervalTool2ValueProperty,
       tandem: options.tandem.createTandem( 'variabilityIntervalPredictionTool2ValueNode' )
-    } ) ) );
+    }, predictionSliderOptions ) ) );
 
     const variabilityAccordionBox = new VariabilityAccordionBox( model, this.layoutBounds, options.tandem.createTandem( 'accordionBox' ), this.questionBar.bottom + CAVConstants.SCREEN_VIEW_Y_MARGIN );
     this.setAccordionBox( variabilityAccordionBox );

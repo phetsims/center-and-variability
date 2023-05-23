@@ -36,9 +36,10 @@ import DragIndicatorArrowNode from './DragIndicatorArrowNode.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 
 type SelfOptions = {
-  questionBarOptions: QuestionBarOptions;
+  questionBarOptions: StrictOmit<QuestionBarOptions, 'tandem'>;
 };
 
 export type CAVScreenViewOptions = SelfOptions & ScreenViewOptions;
