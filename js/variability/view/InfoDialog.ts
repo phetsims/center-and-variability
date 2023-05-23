@@ -9,12 +9,12 @@ import RangeInfoNode from './RangeInfoNode.js';
 import IQRInfoNode from './IQRInfoNode.js';
 import MADInfoNode from './MADInfoNode.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import PhetioObject from '../../../../tandem/js/PhetioObject.js';
+import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
 
 export default class InfoDialog extends Dialog {
-  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, options: PickRequired<PhetioObject, 'tandem'> ) {
+  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
 
     const content = new ToggleNode( model.selectedVariabilityMeasureProperty, [ {
       value: VariabilityMeasure.RANGE,

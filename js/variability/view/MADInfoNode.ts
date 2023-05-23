@@ -6,7 +6,7 @@ import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import PhetioObject from '../../../../tandem/js/PhetioObject.js';
+import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import Utils from '../../../../dot/js/Utils.js';
 import CAVConstants from '../../common/CAVConstants.js';
@@ -16,7 +16,7 @@ import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 
 export default class MADInfoNode extends VBox {
-  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, options: PickRequired<PhetioObject, 'tandem'> ) {
+  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
 
     const hasEnoughDataProperty = new DerivedProperty( [ sceneModel.numberOfDataPointsProperty ], numberOfDataPoints => numberOfDataPoints >= 1 );
 

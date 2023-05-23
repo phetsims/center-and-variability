@@ -1,13 +1,13 @@
 // Copyright 2023, University of Colorado Boulder
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import { Node, Text, VBox, HBox, Rectangle } from '../../../../scenery/js/imports.js';
+import { HBox, Node, Rectangle, Text, VBox } from '../../../../scenery/js/imports.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import PhetioObject from '../../../../tandem/js/PhetioObject.js';
+import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import IQRNode from './IQRNode.js';
@@ -17,7 +17,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import CAVColors from '../../common/CAVColors.js';
 
 export default class IQRInfoNode extends VBox {
-  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, options: PickRequired<PhetioObject, 'tandem'> ) {
+  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
 
     const hasAtLeastOneDataPointProperty = new DerivedProperty( [ sceneModel.numberOfDataPointsProperty ], numberOfDataPoints => numberOfDataPoints >= 1 );
     const hasEnoughDataForIQRProperty = new DerivedProperty( [ sceneModel.numberOfDataPointsProperty ], numberOfDataPoints => numberOfDataPoints >= 5 );
