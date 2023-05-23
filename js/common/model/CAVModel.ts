@@ -112,7 +112,6 @@ export default class CAVModel {
 
     this.medianPredictionProperty.link( median => {
       const convertedMedian = ( median - 1 ) * 2;
-      console.log( convertedMedian );
       MARIMBA.setPlaybackRate( CHROMATIC_RATIOS[ convertedMedian ] );
       MARIMBA.play();
     } );
