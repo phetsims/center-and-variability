@@ -10,7 +10,7 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import IconArrowNode from './IconArrowNode.js';
 
 export default class VariabilityMeasureCheckbox extends Checkbox {
-  public constructor( property: LinkableProperty<boolean>, stringProperty: TReadOnlyProperty<string>, iconGroup: AlignGroup, color: TColor, options: CheckboxOptions ) {
+  public constructor( property: LinkableProperty<boolean>, stringProperty: TReadOnlyProperty<string>, iconGroup: AlignGroup, textGroup: AlignGroup, color: TColor, options: CheckboxOptions ) {
 
     const rectangle = new Rectangle( 0, 0, 25, 25, {
       fill: color,
@@ -25,7 +25,7 @@ export default class VariabilityMeasureCheckbox extends Checkbox {
           new IconArrowNode( rectangle )
         ]
       } ),
-      iconGroup
+      iconGroup, textGroup
     );
 
     super( property, content, options );

@@ -1,6 +1,6 @@
 // Copyright 2023, University of Colorado Boulder
 
-import { AlignGroup, Node, Text, VBox } from '../../../../scenery/js/imports.js';
+import { AlignBox, AlignGroup, Node, Text, VBox } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -70,23 +70,26 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     } );
     backgroundNode.addChild( infoButton );
 
+    const textGroup = new AlignGroup();
     const iconGroup = new AlignGroup();
-    const checkboxToggleNode = new ToggleNode( model.selectedVariabilityMeasureProperty, [ {
-      createNode: tandem => new VariabilityMeasureCheckbox( model.isRangeVisibleProperty, CenterAndVariabilityStrings.rangeStringProperty, iconGroup, CAVColors.rangeFillProperty, { tandem: tandem } ),
+    const checkboxToggleNode = new AlignBox( new ToggleNode( model.selectedVariabilityMeasureProperty, [ {
+      createNode: tandem => new VariabilityMeasureCheckbox( model.isRangeVisibleProperty,
+          CenterAndVariabilityStrings.rangeStringProperty, iconGroup, textGroup, CAVColors.rangeFillProperty, { tandem: tandem } ),
       tandemName: 'rangeAccordionCheckbox',
       value: VariabilityMeasure.RANGE
     }, {
-      createNode: tandem => new VariabilityMeasureCheckbox( model.isIQRVisibleProperty, CenterAndVariabilityStrings.iqrStringProperty, iconGroup, CAVColors.iqrColorProperty, { tandem: tandem } ),
+      createNode: tandem => new VariabilityMeasureCheckbox( model.isIQRVisibleProperty,
+          CenterAndVariabilityStrings.iqrStringProperty, iconGroup, textGroup, CAVColors.iqrColorProperty, { tandem: tandem } ),
       tandemName: 'iqrAccordionCheckbox',
       value: VariabilityMeasure.IQR
     }, {
-      createNode: tandem => new VariabilityMeasureCheckbox( model.isMADVisibleProperty, CenterAndVariabilityStrings.madStringProperty, iconGroup, CAVColors.madRectangleColorProperty, { tandem: tandem } ),
+      createNode: tandem => new VariabilityMeasureCheckbox( model.isMADVisibleProperty,
+          CenterAndVariabilityStrings.madStringProperty, iconGroup, textGroup, CAVColors.madRectangleColorProperty, { tandem: tandem } ),
       tandemName: 'madAccordionCheckbox',
       value: VariabilityMeasure.MAD
     } ], {
-      rightCenter: backgroundShape.bounds.rightCenter.plusXY( -MARGIN, 0 ),
       alignChildren: ToggleNode.RIGHT
-    } );
+    } ), { alignBounds: backgroundShape.bounds, xAlign: 'right', yAlign: 'center', xMargin: 10 } );
 
     // REVIEW: This comment seems outdated... https://github.com/phetsims/center-and-variability/issues/170
     // Since the title is visible while the accordion box is open, this background will not any area above the bottom of

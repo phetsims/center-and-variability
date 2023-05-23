@@ -25,14 +25,14 @@ const LINE_WIDTH = MedianBarNode.LINE_WIDTH;
 
 export default class AccordionBoxCheckboxFactory {
 
-  public static createGridBox( text: Node, icon: Node, iconGroup: AlignGroup ): GridBox {
+  public static createGridBox( text: Node, icon: Node, iconGroup: AlignGroup, textGroup: AlignGroup ): GridBox {
     return new GridBox( {
       spacing: 10,
       stretch: true,
       grow: 1,
       rows: [ [
-        iconGroup.createBox( text, { xAlign: 'left', layoutOptions: { xAlign: 'left' } } ),
-        iconGroup.createBox( icon, { xAlign: 'center', layoutOptions: { xAlign: 'right' } } )
+        textGroup.createBox( text, { xAlign: 'left' } ),
+        iconGroup.createBox( icon, { xAlign: 'right' } )
       ] ]
     } );
   }
@@ -45,7 +45,7 @@ export default class AccordionBoxCheckboxFactory {
     };
   }
 
-  public static getMedianCheckboxWithIconItem( iconGroup: AlignGroup, isTopMedianVisibleProperty: Property<boolean> ): VerticalCheckboxGroupItem {
+  public static getMedianCheckboxWithIconItem( iconGroup: AlignGroup, textGroup: AlignGroup, isTopMedianVisibleProperty: Property<boolean> ): VerticalCheckboxGroupItem {
     return {
       createNode: ( tandem: Tandem ) => {
         return AccordionBoxCheckboxFactory.createGridBox(
@@ -56,7 +56,7 @@ export default class AccordionBoxCheckboxFactory {
             arrowScale: 0.75
           } )
             .setMedianBarShape( 0, 0, ICON_WIDTH / 2 - LINE_WIDTH / 2, ICON_WIDTH - LINE_WIDTH, true ),
-          iconGroup
+          iconGroup, textGroup
         );
       },
       property: isTopMedianVisibleProperty,
@@ -72,7 +72,7 @@ export default class AccordionBoxCheckboxFactory {
     };
   }
 
-  public static getMeanCheckboxWithIconItem( iconGroup: AlignGroup, isTopMeanVisibleProperty: Property<boolean> ): VerticalCheckboxGroupItem {
+  public static getMeanCheckboxWithIconItem( iconGroup: AlignGroup, textGroup: AlignGroup, isTopMeanVisibleProperty: Property<boolean> ): VerticalCheckboxGroupItem {
     return {
       createNode: ( tandem: Tandem ) => {
         return AccordionBoxCheckboxFactory.createGridBox(
@@ -90,7 +90,7 @@ export default class AccordionBoxCheckboxFactory {
               NumberLineNode.createMeanIndicatorNode( false, true )
             ]
           } ),
-          iconGroup
+          iconGroup, textGroup
         );
       },
       property: isTopMeanVisibleProperty,
