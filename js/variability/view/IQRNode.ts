@@ -235,10 +235,11 @@ export default class IQRNode extends CAVPlotNode {
       }
 
       if ( showHighlightRectangle ) {
-        iqrRectangle.rectHeight = BOX_HEIGHT;
+        const floor = this.modelViewTransform.modelToViewY( 0 );
+        iqrRectangle.rectHeight = options.parentContext === 'info' ? BOX_HEIGHT : floor - boxWhiskerNode.y + 0.5 * BOX_HEIGHT;
         iqrRectangle.rectWidth = boxRight - boxLeft;
         iqrRectangle.left = boxLeft;
-        iqrRectangle.bottom = boxWhiskerNode.y + 0.5 * BOX_HEIGHT;
+        iqrRectangle.bottom = options.parentContext === 'info' ? boxWhiskerNode.y + 0.5 * BOX_HEIGHT : floor;
 
         const iqrBarY = options.parentContext === 'info' ?
                         Math.min( minLabelTextNode.y, q1LabelTextNode.y, q3LabelTextNode.y, maxLabelTextNode.y ) + 8
