@@ -20,9 +20,19 @@ import Property from '../../../../axon/js/Property.js';
 import CAVConstants from '../CAVConstants.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
+import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
+import soundManager from '../../../../tambo/js/soundManager.js';
+import brightMarimba_mp3 from '../../../../tambo/sounds/brightMarimba_mp3.js';
 
 type SelfOptions = EmptySelfOptions;
 type ParentOptions = CAVObjectNodeOptions & AccessibleSliderOptions;
+
+// TODO: Duplicated in SoccerBall, see https://github.com/phetsims/center-and-variability/issues/217
+// TODO: Create one per ball? One per location? Or multiple? See https://github.com/phetsims/center-and-variability/issues/217
+const marimba = new SoundClip( brightMarimba_mp3, {
+  initialOutputLevel: 0.1
+} );
+soundManager.addSoundGenerator( marimba );
 
 export default class SoccerBallNode extends AccessibleSlider( CAVObjectNode, 4 ) {
 
@@ -73,18 +83,39 @@ export default class SoccerBallNode extends AccessibleSlider( CAVObjectNode, 4 )
       center: Vector2.ZERO
     } );
 
+    // Play sound only when dragging
+    let isDragging = false;
+
     // only setup input-related things if dragging is enabled
     const dragListener = new DragListener( {
       tandem: options.tandem.createTandem( 'dragListener' ),
       positionProperty: soccerBall.dragPositionProperty,
       transform: modelViewTransform,
       start: () => {
+        isDragging = true;
 
         // if the user presses an object that's animating, allow it to keep animating up in the stack
         soccerBall.dragStartedEmitter.emit();
       },
       drag: () => {
         soccerBall.animation && soccerBall.animation.stop();
+      },
+
+      end: () => {
+        isDragging = false;
+      }
+    } );
+
+    // When the user drags a soccer ball, play audio corresponding to its new position.
+    soccerBall.positionProperty.link( position => {
+      if ( isDragging ) {
+
+        // TODO: Duplicated with SoccerBall: https://github.com/phetsims/center-and-variability/issues/217
+        const octave = [ 1, 9 / 8, 81 / 64, 4 / 3, 3 / 2, 27 / 16, 243 / 128 ];
+        const ratios = [ 0.5 * 243 / 128, ...octave, ...octave.map( x => 2 * x ), ...octave.map( x => 4 * x ) ];
+        const x = soccerBall.positionProperty.value.x;
+        marimba.setPlaybackRate( ratios[ x ] );
+        marimba.play();
       }
     } );
 

@@ -79,7 +79,16 @@ export default class KickButtonGroup extends VBox {
 
         // This needs to be longer than CAVSceneModel.TIME_BETWEEN_RAPID_KICKS plus the poise time, see
         // https://github.com/phetsims/center-and-variability/issues/102
-        fireOnHoldInterval: 650
+        fireOnHoldInterval: 650,
+
+        // TODO: undefined didn't work so well, see https://github.com/phetsims/center-and-variability/issues/217
+        soundPlayer: {
+          play() {
+            // no-op
+          }, stop() {
+            // no-op
+          }
+        }
       } );
     };
 

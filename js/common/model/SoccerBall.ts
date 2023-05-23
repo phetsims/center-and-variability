@@ -28,12 +28,21 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
+import brightMarimba_mp3 from '../../../../tambo/sounds/brightMarimba_mp3.js';
+import soundManager from '../../../../tambo/js/soundManager.js';
 
 type SelfOptions = EmptySelfOptions;
 export type SoccerBallOptions = SelfOptions & PhetioObjectOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
 // Global counter for debugging
 let count = 0;
+
+// TODO: https://github.com/phetsims/center-and-variability/issues/217 duplicated in SoccerBallNode
+const marimba = new SoundClip( brightMarimba_mp3, {
+  initialOutputLevel: 0.1
+} );
+soundManager.addSoundGenerator( marimba );
 
 export default class SoccerBall extends PhetioObject {
 
@@ -150,6 +159,12 @@ export default class SoccerBall extends PhetioObject {
 
       if ( landed ) {
         this.soccerBallLandedEmitter.emit( this );
+
+        // TODO: Duplicated in SoccerBallNode, see https://github.com/phetsims/center-and-variability/issues/217
+        const octave = [ 1, 9 / 8, 81 / 64, 4 / 3, 3 / 2, 27 / 16, 243 / 128 ];
+        const ratios = [ 0.5 * 243 / 128, ...octave, ...octave.map( x => 2 * x ), ...octave.map( x => 4 * x ) ];
+        marimba.setPlaybackRate( ratios[ x ] );
+        marimba.play();
       }
     }
   }

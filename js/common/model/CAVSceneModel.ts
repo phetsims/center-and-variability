@@ -41,12 +41,18 @@ import ObjectLiteralIO from '../../../../tandem/js/types/ObjectLiteralIO.js';
 import VoidIO from '../../../../tandem/js/types/VoidIO.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
+import soundManager from '../../../../tambo/js/soundManager.js';
+import basicKick_mp3 from '../../../sounds/basicKick_mp3.js';
 
 type SelfOptions = EmptySelfOptions;
 type CAVSceneModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
 // constants
 const TIME_BETWEEN_RAPID_KICKS = 0.5; // in seconds
+
+const ballKickSound = new SoundClip( basicKick_mp3, { initialOutputLevel: 0.2 } );
+soundManager.addSoundGenerator( ballKickSound );
 
 export default class CAVSceneModel extends PhetioObject implements TModel {
   public readonly soccerBalls: SoccerBall[];
@@ -545,6 +551,8 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     this.timeWhenLastBallWasKickedProperty.value = this.timeProperty.value;
 
     soccerBall.soccerPlayer = soccerPlayer;
+
+    ballKickSound.play();
   }
 
   private getNextBallFromPool(): SoccerBall | null {
