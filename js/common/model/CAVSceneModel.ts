@@ -551,7 +551,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     this.timeWhenLastBallWasKickedProperty.value = this.timeProperty.value;
 
     soccerBall.soccerPlayer = soccerPlayer;
-
+    // TODO: There is a one animation frame (about 16 ms) delay for this sound to play, see: https://github.com/phetsims/center-and-variability/issues/217
     ballKickSound.play();
   }
 
