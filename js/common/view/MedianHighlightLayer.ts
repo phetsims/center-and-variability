@@ -8,6 +8,7 @@ import CAVSceneModel from '../model/CAVSceneModel.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import CAVConstants from '../CAVConstants.js';
+import CAVColors from '../CAVColors.js';
 
 type SelfOptions = EmptySelfOptions;
 type MedianHighlightLayerOptions = SelfOptions & NodeOptions;
@@ -30,7 +31,7 @@ export default class MedianHighlightLayer extends Node {
         const LINE_WIDTH = 1.5;
         return new Circle( viewRadius - LINE_WIDTH / 2, {
           center: modelViewTransform.modelToViewPosition( soccerBall.positionProperty.value ),
-          stroke: 'red',
+          stroke: CAVColors.medianColorProperty,
           lineWidth: LINE_WIDTH
         } );
       } );
