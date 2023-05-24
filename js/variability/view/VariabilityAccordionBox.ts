@@ -1,6 +1,6 @@
 // Copyright 2023, University of Colorado Boulder
 
-import { AlignBox, AlignGroup, Node, Text, VBox } from '../../../../scenery/js/imports.js';
+import { AlignBox, AlignGroup, Text, VBox } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -74,17 +74,17 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     const iconGroup = new AlignGroup();
     const checkboxToggleNode = new AlignBox( new ToggleNode( model.selectedVariabilityMeasureProperty, [ {
       createNode: tandem => new VariabilityMeasureCheckbox( model.isRangeVisibleProperty,
-          CenterAndVariabilityStrings.rangeStringProperty, iconGroup, textGroup, CAVColors.rangeFillProperty, { tandem: tandem } ),
+        CenterAndVariabilityStrings.rangeStringProperty, iconGroup, textGroup, CAVColors.rangeFillProperty, { tandem: tandem } ),
       tandemName: 'rangeAccordionCheckbox',
       value: VariabilityMeasure.RANGE
     }, {
       createNode: tandem => new VariabilityMeasureCheckbox( model.isIQRVisibleProperty,
-          CenterAndVariabilityStrings.iqrStringProperty, iconGroup, textGroup, CAVColors.iqrColorProperty, { tandem: tandem } ),
+        CenterAndVariabilityStrings.iqrStringProperty, iconGroup, textGroup, CAVColors.iqrColorProperty, { tandem: tandem } ),
       tandemName: 'iqrAccordionCheckbox',
       value: VariabilityMeasure.IQR
     }, {
       createNode: tandem => new VariabilityMeasureCheckbox( model.isMADVisibleProperty,
-          CenterAndVariabilityStrings.madStringProperty, iconGroup, textGroup, CAVColors.madRectangleColorProperty, { tandem: tandem } ),
+        CenterAndVariabilityStrings.madStringProperty, iconGroup, textGroup, CAVColors.madRectangleColorProperty, { tandem: tandem } ),
       tandemName: 'madAccordionCheckbox',
       value: VariabilityMeasure.MAD
     } ], {
@@ -121,7 +121,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     const madValueProperty = deriveValueProperty( vsm => vsm.madValueProperty );
     const meanValueProperty = deriveValueProperty( vsm => vsm.meanValueProperty );
 
-    const readoutsToggleNode = new ToggleNode( model.selectedVariabilityMeasureProperty, [ {
+    const readoutsToggleNode = new AlignBox( new ToggleNode( model.selectedVariabilityMeasureProperty, [ {
       value: VariabilityMeasure.RANGE,
       tandemName: 'rangeReadoutToggleNode',
       createNode: tandem => {
@@ -129,16 +129,17 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
           rangeValue => rangeValue === null ? CenterAndVariabilityStrings.valueUnknownStringProperty.value : `${rangeValue}`
         );
 
+        const rangeReadoutText = new VariabilityReadoutText( rangeReadoutValueProperty, CenterAndVariabilityStrings.rangeEqualsValuePatternStringProperty, {
+          fill: CAVColors.meanColorProperty,
+          visibleProperty: model.isRangeVisibleProperty,
+          tandem: tandem.createTandem( 'rangeReadoutText' )
+        } );
+
         // Nest in a new Node so that ToggleNode has independent control over the visibility
-        return new Node( {
-          children: [ new VariabilityReadoutText( rangeReadoutValueProperty,
-            CenterAndVariabilityStrings.rangeEqualsValuePatternStringProperty, {
-              fill: CAVColors.meanColorProperty,
-              visibleProperty: model.isRangeVisibleProperty,
-              left: 0,
-              centerY: backgroundShape.bounds.height / 2,
-              tandem: tandem.createTandem( 'rangeReadoutText' )
-            } ) ]
+        return new VBox( {
+          align: 'left',
+          spacing: 10,
+          children: [ rangeReadoutText ]
         } );
       }
     }, {
@@ -162,6 +163,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
           tandem: tandem.createTandem( 'iqrReadoutText' )
         } );
 
+        // Nest in a new Node so that ToggleNode has independent control over the visibility
         return new VBox( {
           align: 'left',
           spacing: 10,
@@ -182,29 +184,30 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
           return meanValue === null ? CenterAndVariabilityStrings.valueUnknownStringProperty.value : `${Utils.toFixed( meanValue, 1 )}`;
         } );
 
+        const meanReadoutText = new VariabilityReadoutText( meanReadoutValueProperty, CenterAndVariabilityStrings.meanEqualsValuePatternStringProperty, {
+          fill: CAVColors.meanColorProperty,
+          tandem: tandem.createTandem( 'meanReadoutText' )
+        } );
+        const madReadoutText = new VariabilityReadoutText( madReadoutValueProperty, CenterAndVariabilityStrings.madEqualsValuePatternStringProperty, {
+          fill: CAVColors.madColorProperty,
+          visibleProperty: model.isMADVisibleProperty,
+          tandem: tandem.createTandem( 'madReadoutText' )
+        } );
+
         // Nest in a new Node so that ToggleNode has independent control over the visibility
         return new VBox( {
           spacing: 10,
           align: 'left',
           children: [
-            new VariabilityReadoutText( meanReadoutValueProperty,
-              CenterAndVariabilityStrings.meanEqualsValuePatternStringProperty, {
-                fill: CAVColors.meanColorProperty,
-                tandem: tandem.createTandem( 'meanReadoutText' )
-              } ),
-            new VariabilityReadoutText( madReadoutValueProperty,
-              CenterAndVariabilityStrings.madEqualsValuePatternStringProperty, {
-                fill: CAVColors.madColorProperty,
-                visibleProperty: model.isMADVisibleProperty,
-                tandem: tandem.createTandem( 'madReadoutText' )
-              } ) ]
+            meanReadoutText,
+            madReadoutText
+          ]
         } );
       }
     } ], {
-      alignChildren: ToggleNode.CENTER_Y,
-      tandem: tandem.createTandem( 'readoutsToggleNode' ),
-      leftCenter: backgroundShape.bounds.leftCenter.plusXY( 5, -5 )
-    } );
+      alignChildren: ToggleNode.NONE,
+      tandem: tandem.createTandem( 'readoutsToggleNode' )
+    } ), { alignBounds: backgroundShape.bounds, xAlign: 'left', yAlign: 'center' } );
 
     backgroundNode.addChild( readoutsToggleNode );
 
