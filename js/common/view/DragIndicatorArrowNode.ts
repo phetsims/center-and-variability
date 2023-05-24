@@ -15,13 +15,14 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { NodeOptions } from '../../../../scenery/js/imports.js';
 
+type SelfOptions = EmptySelfOptions;
 type DragIndicatorArrowNodeOptions = PickRequired<ArrowNodeOptions, 'tandem'> & Pick<ArrowNodeOptions, 'visible'> & NodeOptions;
 
 export default class DragIndicatorArrowNode extends ArrowNode {
 
   public constructor( options: DragIndicatorArrowNodeOptions ) {
 
-    super( 0, 0, 35, 0, optionize<DragIndicatorArrowNodeOptions, EmptySelfOptions, ArrowNodeOptions>()( {
+    super( 0, 0, 35, 0, optionize<DragIndicatorArrowNodeOptions, SelfOptions, ArrowNodeOptions>()( {
       headHeight: 8,
       headWidth: 12,
       tailWidth: 5,

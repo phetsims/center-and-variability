@@ -20,6 +20,8 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 
+type SelfOptions = EmptySelfOptions;
+
 export type CAVObjectNodeOptions =
 
 // Take all options from NodeOptions, but do not allow passing through inputEnabledProperty since it requires special handling in multilink
@@ -36,7 +38,7 @@ export default class CAVObjectNode extends Node {
                       modelRadius: number,
                       providedOptions?: CAVObjectNodeOptions ) {
 
-    const options = optionize<CAVObjectNodeOptions, EmptySelfOptions, NodeOptions>()( {
+    const options = optionize<CAVObjectNodeOptions, SelfOptions, NodeOptions>()( {
       cursor: 'pointer'
     }, providedOptions );
     super( options );
