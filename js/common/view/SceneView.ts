@@ -21,6 +21,7 @@ import { Shape } from '../../../../kite/js/imports.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import SoccerPlayer from '../model/SoccerPlayer.js';
 import CAVAccordionBox from './CAVAccordionBox.js';
+import MedianHighlightLayer from './MedianHighlightLayer.js';
 
 /**
  * Renders view elements for a CAVSceneModel. Note that to satisfy the correct z-ordering, elements
@@ -46,7 +47,7 @@ export default class SceneView {
 
     // Keep soccer balls in one layer so we can control the focus order
     const frontLayerSoccerBallLayer = new Node();
-    const frontLayerMedianHighlightLayer = new Node( { visibleProperty: model.isPlayAreaMedianVisibleProperty } );
+    const frontLayerMedianHighlightLayer = new MedianHighlightLayer( model, sceneModel, modelViewTransform, { visibleProperty: model.isPlayAreaMedianVisibleProperty } );
     const frontLayer = new Node( {
       children: [ frontLayerMedianHighlightLayer, frontLayerSoccerBallLayer ]
     } );
