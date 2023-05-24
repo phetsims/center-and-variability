@@ -33,6 +33,10 @@ const soundClips = sounds.map( sound => new SoundClip( sound, {
 window.numberToneIndex = 0;
 console.log( 'window.numberToneIndex = 0; // choose 0..' + ( soundClips.length - 1 ) + ' to play a different number tone' );
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error - for designers to change value at runtime
+window.playbackSpeed = window.playbackSpeed || 1;
+console.log( 'window.playbackSpeed = 1; // choose playback speed for number tone' );
 soundClips.forEach( soundClip => {
   soundManager.addSoundGenerator( soundClip );
 } );
@@ -84,7 +88,9 @@ export default class NumberTone {
 // @ts-expect-error - for designers to change value at runtime
     const soundClip = soundClips[ window.numberToneIndex % soundClips.length ];
 
-    soundClip.setPlaybackRate( playbackSpeed );
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error - for designers to change value at runtime
+    soundClip.setPlaybackRate( playbackSpeed * window.playbackSpeed );
     soundClip.play();
   }
 }
