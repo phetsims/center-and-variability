@@ -9,7 +9,6 @@
 
 import { Image } from '../../../scenery/js/imports.js';
 import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
-import CAVColors from '../common/CAVColors.js';
 import centerAndVariability from '../centerAndVariability.js';
 import MeanAndMedianModel from './model/MeanAndMedianModel.js';
 import CAVScreen, { CAVScreenOptions } from '../common/CAVScreen.js';
@@ -17,9 +16,10 @@ import MeanAndMedianScreenView from './view/MeanAndMedianScreenView.js';
 import CenterAndVariabilityStrings from '../CenterAndVariabilityStrings.js';
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import meanAndMedianScreenIcon_png from '../../images/meanAndMedianScreenIcon_png.js';
+import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
 
 type SelfOptions = EmptySelfOptions;
-type MeanAndMedianScreenOptions = SelfOptions & CAVScreenOptions;
+type MeanAndMedianScreenOptions = SelfOptions & StrictOmit<CAVScreenOptions, 'name' | 'homeScreenIcon'>;
 
 export default class MeanAndMedianScreen extends CAVScreen<MeanAndMedianModel, MeanAndMedianScreenView> {
 
@@ -30,8 +30,7 @@ export default class MeanAndMedianScreen extends CAVScreen<MeanAndMedianModel, M
       homeScreenIcon: new ScreenIcon( new Image( meanAndMedianScreenIcon_png ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1
-      } ),
-      backgroundColorProperty: CAVColors.screenBackgroundColorProperty
+      } )
     }, providedOptions );
 
     super(

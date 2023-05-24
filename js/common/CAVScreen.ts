@@ -17,7 +17,7 @@ import SliderControlsAndBasicActionsKeyboardHelpContent from '../../../scenery-p
 import CAVModel from './model/CAVModel.js';
 
 type SelfOptions = EmptySelfOptions;
-export type CAVScreenOptions = SelfOptions & ScreenOptions & PickRequired<ScreenOptions, 'tandem'>;
+export type CAVScreenOptions = SelfOptions & PickRequired<ScreenOptions, 'tandem' | 'name' | 'homeScreenIcon'>;
 
 export default class CAVScreen<M extends CAVModel, V extends CAVScreenView> extends Screen<M, V> {
 
