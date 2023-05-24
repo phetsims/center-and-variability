@@ -21,6 +21,8 @@ import CardModel from '../model/CardModel.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import TEmitter from '../../../../axon/js/TEmitter.js';
+import NumberTone from '../../common/model/NumberTone.js';
+import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 
 type SelfOptions = EmptySelfOptions;
 export type CardNodeOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
@@ -94,9 +96,11 @@ export default class CardNode extends Node {
       start: () => {
         dragging = true;
         this.moveToFront();
+        CAVQueryParameters.cardTones && NumberTone.play( this.soccerBall.valueProperty.value! );
       },
       end: () => {
         dragging = false;
+        CAVQueryParameters.cardTones && NumberTone.play( this.soccerBall.valueProperty.value! );
       }
     } );
     this.addInputListener( this.dragListener );

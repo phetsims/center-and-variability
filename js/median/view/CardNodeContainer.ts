@@ -36,6 +36,8 @@ import DragIndicatorArrowNode from '../../common/view/DragIndicatorArrowNode.js'
 import TEmitter from '../../../../axon/js/TEmitter.js';
 import MedianModel from '../../median/model/MedianModel.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
+import NumberTone from '../../common/model/NumberTone.js';
+import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 
 // constants
 const CARD_SPACING = 10;
@@ -388,6 +390,7 @@ export default class CardNodeContainer extends Node {
 
           // Just animated the displaced occupant
           this.animateToHomeCell( currentOccupant );
+          CAVQueryParameters.cardTones && NumberTone.play( currentOccupant.soccerBall.valueProperty.value! );
 
           // See if the user unsorted the data.  If so, uncheck the "Sort Data" checkbox
           if ( this.model.isSortingDataProperty.value && !this.isDataSorted() ) {

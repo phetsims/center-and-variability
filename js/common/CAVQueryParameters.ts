@@ -28,6 +28,9 @@ const CAVQueryParameters = QueryStringMachine.getAll( {
   },
   sameSpot: {
     type: 'flag'
+  },
+  cardTones: {
+    type: 'flag'
   }
 } );
 
