@@ -195,6 +195,12 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
         }
       } );
 
+      soccerBall.dragStartedEmitter.addListener( () => {
+        const stack = this.getStackAtLocation( soccerBall.valueProperty.value! );
+        this.reorganizeStack( stack );
+        this.clearAnimationsInStack( stack );
+      } );
+
       // Signal to listeners that a value changed
       soccerBall.valueProperty.link( () => this.objectChangedEmitter.emit( soccerBall ) );
       soccerBall.positionProperty.link( () => this.objectChangedEmitter.emit( soccerBall ) );
