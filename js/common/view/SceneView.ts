@@ -47,7 +47,7 @@ export default class SceneView {
 
     // Keep soccer balls in one layer so we can control the focus order
     const frontLayerSoccerBallLayer = new Node();
-    const frontLayerMedianHighlightLayer = new MedianHighlightLayer( model, sceneModel, modelViewTransform, { visibleProperty: model.isPlayAreaMedianVisibleProperty } );
+    const frontLayerMedianHighlightLayer = new MedianHighlightLayer( model, sceneModel, modelViewTransform, model.isPlayAreaMedianVisibleProperty, { visibleProperty: model.isPlayAreaMedianVisibleProperty } );
     const frontLayer = new Node( {
       children: [ frontLayerMedianHighlightLayer, frontLayerSoccerBallLayer ]
     } );
