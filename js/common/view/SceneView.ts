@@ -46,15 +46,15 @@ export default class SceneView {
 
     // Keep soccer balls in one layer so we can control the focus order
     const frontLayerSoccerBallLayer = new Node();
+    const frontLayerMedianHighlightLayer = new Node( { visibleProperty: model.isPlayAreaMedianVisibleProperty } );
     const frontLayer = new Node( {
-      children: [ frontLayerSoccerBallLayer ]
+      children: [ frontLayerMedianHighlightLayer, frontLayerSoccerBallLayer ]
     } );
 
     sceneModel.soccerBalls.map( ( soccerBall, index ) => {
       const soccerBallNode = new SoccerBallNode(
         soccerBall,
         sceneModel.isVisibleProperty,
-        model.isPlayAreaMedianVisibleProperty,
         modelViewTransform,
         model.objectNodesInputEnabledProperty, {
           tandem: options.tandem.createTandem( 'soccerBallNodes' ).createTandem( `soccerBallNode${index + 1}` )
@@ -125,23 +125,6 @@ export default class SceneView {
       for ( let i = 0; i < stack.length; i++ ) {
 
         const soccerBallNode = soccerBallMap.get( stack[ i ] )!;
-        const selfZIndex = soccerBallNode.parent!.indexOfChild( soccerBallNode );
-
-        let isMisordered = false;
-
-        const lowerNeighborIndex = i - 1;
-        if ( lowerNeighborIndex >= 0 ) {
-          const lowerSoccerBall = soccerBallMap.get( stack[ lowerNeighborIndex ] )!;
-          const otherZIndex = lowerSoccerBall.parent!.indexOfChild( lowerSoccerBall );
-
-          if ( selfZIndex < otherZIndex ) {
-            isMisordered = true;
-          }
-        }
-
-        if ( isMisordered ) {
-          soccerBallNode.moveToFront();
-        }
 
         // Only the top ball in each stack is focusable for keyboard navigation
         soccerBallNode.focusable = i === stack.length - 1;

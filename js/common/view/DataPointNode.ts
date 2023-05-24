@@ -3,7 +3,6 @@
 import CAVObjectNode, { CAVObjectNodeOptions } from './CAVObjectNode.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import SoccerBall from '../model/SoccerBall.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import { Circle, Node, Path, TColor } from '../../../../scenery/js/imports.js';
@@ -12,16 +11,25 @@ import timesSolidShape from '../../../../sherpa/js/fontawesome-5/timesSolidShape
 import CAVConstants from '../CAVConstants.js';
 import PlotType from '../model/PlotType.js';
 import Multilink from '../../../../axon/js/Multilink.js';
+import CAVColors from '../CAVColors.js';
 
 export default class DataPointNode extends CAVObjectNode {
 
-  public constructor( soccerBall: SoccerBall, isPlayAreaMedianVisibleProperty: TReadOnlyProperty<boolean>,
+  protected readonly medianHighlight: Circle;
+
+  public constructor( soccerBall: SoccerBall,
                       modelViewTransform: ModelViewTransform2,
                       options: CAVObjectNodeOptions & { fill: TColor } ) {
 
-    super( soccerBall, isPlayAreaMedianVisibleProperty, modelViewTransform, CAVObjectType.DATA_POINT.radius, options );
+    super( soccerBall, modelViewTransform, CAVObjectType.DATA_POINT.radius, options );
 
     const viewRadius = modelViewTransform.modelToViewDeltaX( CAVObjectType.DATA_POINT.radius );
+
+    this.medianHighlight = new Circle( viewRadius + 1, {
+      visibleProperty: soccerBall.isAnimationHighlightVisibleProperty,
+      fill: CAVColors.medianColorProperty
+    } );
+    this.addChild( this.medianHighlight );
 
     const circle = new Circle( viewRadius, {
       fill: options.fill,
@@ -54,19 +62,6 @@ export default class DataPointNode extends CAVObjectNode {
     Multilink.multilink( [ soccerBall.isActiveProperty, soccerBall.valueProperty ], ( isActive, value ) => {
       this.visible = isActive && value !== null;
     } );
-
-    // show or hide the median highlight
-    Multilink.multilink(
-      [ soccerBall.isMedianObjectProperty, isPlayAreaMedianVisibleProperty, soccerBall.isAnimationHighlightVisibleProperty ],
-      ( isMedianObject, isPlayAreaMedianVisible, isAnimationHighlightVisible ) => {
-        this.medianHighlight.visible = isAnimationHighlightVisible;
-
-        // Median highlights should be in front in z-ordering. Rather than accomplishing this via a different layer,
-        // move this to the front when it is visible.
-        if ( this.medianHighlight.visible ) {
-          this.moveToFront();
-        }
-      } );
   }
 }
 

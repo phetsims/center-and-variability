@@ -9,12 +9,10 @@
 
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import { Circle, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
+import { Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
 import SoccerBall from '../model/SoccerBall.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import { AnimationMode } from '../model/AnimationMode.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import CAVColors from '../CAVColors.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Multilink from '../../../../axon/js/Multilink.js';
@@ -29,11 +27,7 @@ export type CAVObjectNodeOptions =
   & PickRequired<NodeOptions, 'tandem'>;
 
 export default class CAVObjectNode extends Node {
-
-  protected readonly medianHighlight: Circle;
-
   public constructor( public readonly soccerBall: SoccerBall,
-                      isPlayAreaMedianVisibleProperty: TReadOnlyProperty<boolean>,
                       modelViewTransform: ModelViewTransform2,
                       modelRadius: number,
                       providedOptions?: CAVObjectNodeOptions ) {
@@ -42,15 +36,6 @@ export default class CAVObjectNode extends Node {
       cursor: 'pointer'
     }, providedOptions );
     super( options );
-
-    const viewRadius = modelViewTransform.modelToViewDeltaX( modelRadius );
-
-    // Visibilty controlled by subclass logic. Also this whole node is moved to front when the medianHighlight is shown
-    // so it will appear in front (unless the user drags another object on top of it).
-    this.medianHighlight = new Circle( viewRadius + 1, {
-      fill: CAVColors.medianColorProperty
-    } );
-    this.addChild( this.medianHighlight );
 
     soccerBall.positionProperty.link( position => {
       this.translation = modelViewTransform.modelToViewPosition( position );

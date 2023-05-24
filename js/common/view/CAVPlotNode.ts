@@ -101,7 +101,7 @@ export default class CAVPlotNode extends Node {
       // Create the data points for that scene
       scene.soccerBalls.forEach( ( soccerBall, index ) => {
 
-        const dotNode = new DataPointNode( soccerBall, ( model instanceof MeanAndMedianModel ) ? model.isTopMedianVisibleProperty : new BooleanProperty( false ), modelViewTransform, {
+        const dotNode = new DataPointNode( soccerBall, modelViewTransform, {
           tandem: options.tandem.createTandem( `scene${sceneIndex + 1}` ).createTandem( 'dataPointNodes' ).createTandem( 'dataPointNode' + index ),
           fill: options.dataPointFill
         } );

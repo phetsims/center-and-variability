@@ -25,9 +25,9 @@ import NumberTone from '../model/NumberTone.js';
 type SelfOptions = EmptySelfOptions;
 type ParentOptions = CAVObjectNodeOptions & AccessibleSliderOptions;
 
-export default class SoccerBallNode extends AccessibleSlider( CAVObjectNode, 4 ) {
+export default class SoccerBallNode extends AccessibleSlider( CAVObjectNode, 3 ) {
 
-  public constructor( soccerBall: SoccerBall, isSceneVisibleProperty: TReadOnlyProperty<boolean>, isPlayAreaMedianVisibleProperty: TReadOnlyProperty<boolean>,
+  public constructor( soccerBall: SoccerBall, isSceneVisibleProperty: TReadOnlyProperty<boolean>,
                       modelViewTransform: ModelViewTransform2, objectNodesInputEnabledProperty: TProperty<boolean>,
                       providedOptions: CAVObjectNodeOptions ) {
 
@@ -57,7 +57,7 @@ export default class SoccerBallNode extends AccessibleSlider( CAVObjectNode, 4 )
       enabledProperty: enabledProperty
     }, providedOptions );
 
-    super( soccerBall, isPlayAreaMedianVisibleProperty, modelViewTransform, CAVObjectType.SOCCER_BALL.radius, options );
+    super( soccerBall, modelViewTransform, CAVObjectType.SOCCER_BALL.radius, options );
 
     // The dark soccer ball is used for when a ball has input disabled.
     const soccerBallNode = new Image( ball_png );
@@ -87,6 +87,7 @@ export default class SoccerBallNode extends AccessibleSlider( CAVObjectNode, 4 )
 
         // if the user presses an object that's animating, allow it to keep animating up in the stack
         soccerBall.dragStartedEmitter.emit();
+        this.moveToFront();
       },
       drag: () => {
         soccerBall.animation && soccerBall.animation.stop();
@@ -150,18 +151,9 @@ export default class SoccerBallNode extends AccessibleSlider( CAVObjectNode, 4 )
       this.visible = isActive && isSceneVisible;
     } );
 
-    // show or hide the median highlight
-    Multilink.multilink(
-      [ soccerBall.isMedianObjectProperty, isPlayAreaMedianVisibleProperty, soccerBall.isAnimationHighlightVisibleProperty ],
-      ( isMedianObject, isPlayAreaMedianVisible, isAnimationHighlightVisible ) => {
-        this.medianHighlight.visible = isPlayAreaMedianVisible && isMedianObject;
-
-        // Median highlights should be in front in z-ordering. Rather than accomplishing this via a different layer,
-        // move this to the front when it is visible.
-        if ( this.medianHighlight.visible ) {
-          this.moveToFront();
-        }
-      } );
+    soccerBall.soccerBallLandedEmitter.addListener( () => {
+      this.moveToFront();
+    } );
 
     this.addLinkedElement( soccerBall, {
       tandem: options.tandem.createTandem( 'soccerBall' )
