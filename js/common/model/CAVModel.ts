@@ -20,60 +20,13 @@ import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
-import brightMarimba_mp3 from '../../../../tambo/sounds/brightMarimba_mp3.js';
-import soundManager from '../../../../tambo/js/soundManager.js';
+import NumberTone from './NumberTone.js';
 
 type SelfOptions = {
   tandem: Tandem;
   instrumentMeanPredictionProperty: boolean;
 };
 export type CAVModelOptions = SelfOptions;
-
-const MARIMBA = new SoundClip( brightMarimba_mp3, { initialOutputLevel: 0.1 } );
-soundManager.addSoundGenerator( MARIMBA );
-
-// const octave = [ 1, 9 / 8, 81 / 64, 4 / 3, 3 / 2, 27 / 16, 243 / 128 ];
-// const ratios = [ 0.5 * 243 / 128, ...octave, ...octave.map( x => 2 * x ), ...octave.map( x => 4 * x ) ];
-const CHROMATIC_RATIOS = [
-  1,
-  Math.pow( 2, 1 / 12 ),
-  Math.pow( 2, 2 / 12 ),
-  Math.pow( 2, 3 / 12 ),
-  Math.pow( 2, 4 / 12 ),
-  Math.pow( 2, 5 / 12 ),
-  Math.pow( 2, 6 / 12 ),
-  Math.pow( 2, 7 / 12 ),
-  Math.pow( 2, 8 / 12 ),
-  Math.pow( 2, 9 / 12 ),
-  Math.pow( 2, 10 / 12 ),
-  Math.pow( 2, 11 / 12 ),
-  Math.pow( 2, 12 / 12 ),  // Octave
-  Math.pow( 2, 13 / 12 ),
-  Math.pow( 2, 14 / 12 ),
-  Math.pow( 2, 15 / 12 ),
-  Math.pow( 2, 16 / 12 ),
-  Math.pow( 2, 17 / 12 ),
-  Math.pow( 2, 18 / 12 ),
-  Math.pow( 2, 19 / 12 ),
-  Math.pow( 2, 20 / 12 ),
-  Math.pow( 2, 21 / 12 ),
-  Math.pow( 2, 22 / 12 ),
-  Math.pow( 2, 23 / 12 ),
-  Math.pow( 2, 24 / 12 ),  // Double octave
-  Math.pow( 2, 25 / 12 ),
-  Math.pow( 2, 26 / 12 ),
-  Math.pow( 2, 27 / 12 ),
-  Math.pow( 2, 28 / 12 ),
-  Math.pow( 2, 29 / 12 ),
-  Math.pow( 2, 30 / 12 ),
-  Math.pow( 2, 31 / 12 ),
-  Math.pow( 2, 32 / 12 ),
-  Math.pow( 2, 33 / 12 ),
-  Math.pow( 2, 34 / 12 ),
-  Math.pow( 2, 35 / 12 ),
-  Math.pow( 2, 36 / 12 )
-];
 
 export default class CAVModel {
 
@@ -111,9 +64,7 @@ export default class CAVModel {
 
 
     this.medianPredictionProperty.link( median => {
-      const convertedMedian = ( median - 1 ) * 2;
-      MARIMBA.setPlaybackRate( CHROMATIC_RATIOS[ convertedMedian ] );
-      MARIMBA.play();
+      NumberTone.play( median );
     } );
 
     this.selectedSceneModelProperty = new Property( sceneModels[ 0 ], {
