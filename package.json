@@ -34,7 +34,8 @@
       "CENTER_AND_VARIABILITY/screen.median",
       "CENTER_AND_VARIABILITY/screen.meanAndMedian",
       "CENTER_AND_VARIABILITY/screen.variability"
-    ]
+    ],
+    "published": true
   },
   "eslintConfig": {
     "extends": "../chipper/eslint/sim_eslintrc.js",
