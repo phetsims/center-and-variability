@@ -511,7 +511,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     const diameter = CAVObjectType.SOCCER_BALL.radius * 2;
     const targetPositionY = targetIndex * diameter * ( 1 - CAVConstants.SOCCER_BALL_OVERLAP ) + CAVObjectType.SOCCER_BALL.radius;
 
-    const animationSlowdownFactor = CAVQueryParameters.slowAnimation ? 10 : 1;
+    const animationSlowdownFactor = CAVQueryParameters.slowAnimation ? 20 : 1;
     const animationTime = animationSlowdownFactor * 0.06 * ( this.getStackAtLocation( value ).length - 1 );
 
     soccerBall.clearAnimation();
