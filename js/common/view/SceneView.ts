@@ -136,6 +136,16 @@ export default class SceneView {
       }
     } );
 
+    sceneModel.resetEmitter.addListener( () => {
+      const topSoccerBallNodes = sceneModel.getTopSoccerBalls().map( soccerBall => soccerBallMap.get( soccerBall )! );
+      topSoccerBallNodes.forEach( topSoccerBallNode => {
+        topSoccerBallNode.focusable = false;
+        topSoccerBallNode.pickable = false;
+        topSoccerBallNode.mouseArea = Shape.rectangle( 0, 0, 0, 0 );
+        topSoccerBallNode.touchArea = Shape.rectangle( 0, 0, 0, 0 );
+      } );
+    } );
+
     const soccerPlayerNodes = sceneModel.soccerPlayers.map( soccerPlayer =>
       new SoccerPlayerNode(
         soccerPlayer,
