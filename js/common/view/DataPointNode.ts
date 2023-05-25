@@ -12,16 +12,40 @@ import CAVConstants from '../CAVConstants.js';
 import PlotType from '../model/PlotType.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import CAVColors from '../CAVColors.js';
+import Property from '../../../../axon/js/Property.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+
+type DataPointNodeOptions = CAVObjectNodeOptions & { fill: TColor };
 
 export default class DataPointNode extends CAVObjectNode {
 
   protected readonly medianHighlight: Circle;
 
   public constructor( soccerBall: SoccerBall,
-                      modelViewTransform: ModelViewTransform2,
-                      options: CAVObjectNodeOptions & { fill: TColor } ) {
+                      modelViewTransform: ModelViewTransform2, scaleProperty: Property<number>,
+                      providedOptions: DataPointNodeOptions ) {
 
-    super( soccerBall, modelViewTransform, CAVObjectType.DATA_POINT.radius, options );
+    const translationProperty = new Property( new Vector2( 1, 0 ), {
+      reentrant: true
+    } );
+    const translationStrategy = ( position: Vector2 ) => {
+      const scale = scaleProperty.value;
+      const scaledPosition = new Vector2( position.x, position.y * scale );
+      translationProperty.value = modelViewTransform.modelToViewPosition( scaledPosition );
+    };
+
+    super( soccerBall, modelViewTransform, CAVObjectType.DATA_POINT.radius, optionize<DataPointNodeOptions, EmptySelfOptions, CAVObjectNodeOptions>()( {
+      translationStrategy: translationStrategy
+    }, providedOptions ) );
+
+    scaleProperty.link( scale => {
+      this.setScaleMagnitude( scale );
+      translationStrategy( this.soccerBall.positionProperty.value );
+    } );
+
+    translationProperty.link( translation => {
+      this.translation = translation;
+    } );
 
     const viewRadius = modelViewTransform.modelToViewDeltaX( CAVObjectType.DATA_POINT.radius );
 
@@ -32,13 +56,13 @@ export default class DataPointNode extends CAVObjectNode {
     this.addChild( this.medianHighlight );
 
     const circle = new Circle( viewRadius, {
-      fill: options.fill,
+      fill: providedOptions.fill,
       center: Vector2.ZERO
     } );
     const cross = new Path( timesSolidShape, {
 
       // Leave some spacing between the stacked 'x' marks
-      fill: options.fill,
+      fill: providedOptions.fill,
       maxWidth: viewRadius * 2 * 0.8,
       center: Vector2.ZERO
     } );

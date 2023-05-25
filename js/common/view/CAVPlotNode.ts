@@ -15,7 +15,7 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import NumberLineNode from './NumberLineNode.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import CAVConstants from '../CAVConstants.js';
+import CAVConstants, { MAX_KICKS_CONFIG } from '../CAVConstants.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import DataPointNode from './DataPointNode.js';
 import CAVModel from '../model/CAVModel.js';
@@ -24,6 +24,7 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import VariabilityModel from '../../variability/model/VariabilityModel.js';
 import VariabilityMeasure from '../../variability/model/VariabilityMeasure.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 
 type SelfOptions = {
   dataPointFill: TColor;
@@ -98,13 +99,21 @@ export default class CAVPlotNode extends Node {
         excludeInvisibleChildrenFromBounds: true
       } );
 
+      const scaleProperty = new NumberProperty( 1, {} );
+      CAVConstants.MAX_KICKS_PROPERTY.link( maxKicks => {
+
+        // There are only 4 valid values for maxKicks property and those are set by the MAX_KICKS_CONFIG.
+        scaleProperty.value = MAX_KICKS_CONFIG.find( config => config.kicks === maxKicks )!.scale;
+      } );
+
       // Create the data points for that scene
       scene.soccerBalls.forEach( ( soccerBall, index ) => {
 
-        const dotNode = new DataPointNode( soccerBall, modelViewTransform, {
-          tandem: options.tandem.createTandem( `scene${sceneIndex + 1}` ).createTandem( 'dataPointNodes' ).createTandem( 'dataPointNode' + index ),
-          fill: options.dataPointFill
-        } );
+        const dotNode = new DataPointNode( soccerBall,
+          modelViewTransform, scaleProperty, {
+            tandem: options.tandem.createTandem( `scene${sceneIndex + 1}` ).createTandem( 'dataPointNodes' ).createTandem( 'dataPointNode' + index ),
+            fill: options.dataPointFill
+          } );
 
         dataPointLayer.addChild( dotNode );
       } );

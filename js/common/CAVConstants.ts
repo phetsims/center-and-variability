@@ -28,6 +28,15 @@ const RIGHT_SKEWED_DATA = [
 
 const NUMBER_LINE_MARGIN_X = 207;
 
+// scales are empirically determined so that data points cut off when outside of
+// clip-area (so that we show half of an "x" instead of ending on a complete "x").
+export const MAX_KICKS_CONFIG = [
+  { kicks: 15, scale: 0.98 },
+  { kicks: 20, scale: 0.98 },
+  { kicks: 25, scale: 0.83 },
+  { kicks: 30, scale: 0.72 }
+];
+
 const MAIN_FONT = new PhetFont( 16 );
 const CAVConstants = {
   SCREEN_VIEW_X_MARGIN: 15,
@@ -63,11 +72,12 @@ const CAVConstants = {
   PHYSICAL_RANGE: new Range( 1, 15 ),
   VARIABILITY_DRAG_RANGE: new Range( 0, 16 ),
   MAX_KICKS_VALUES: [ 15, 20, 25, 30 ],
+
   ACCORDION_BOX_CONTENTS_SHAPE_MEAN_AND_OR_MEDIAN: Shape.rect( 0, 0, 1000, 160 ),
   ACCORDION_BOX_CONTENTS_SHAPE_VARIABILITY: Shape.rect( 0, 0, 940, 160 ),
 
   MAX_KICKS_PROPERTY: new NumberProperty( CAVQueryParameters.maxKicks, {
-    validValues: [ 15, 20, 25, 30 ],
+    validValues: MAX_KICKS_CONFIG.map( config => config.kicks ),
     tandem: Tandem.PREFERENCES.createTandem( 'maxKicksProperty' )
   } ),
 

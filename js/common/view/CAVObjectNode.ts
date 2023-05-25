@@ -15,13 +15,16 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import { AnimationMode } from '../model/AnimationMode.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Multilink from '../../../../axon/js/Multilink.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 
-type SelfOptions = EmptySelfOptions;
+type SelfOptions = {
+  translationStrategy?: ( position: Vector2 ) => void;
+};
 
 export type CAVObjectNodeOptions =
-
+  SelfOptions
 // Take all options from NodeOptions, but do not allow passing through inputEnabledProperty since it requires special handling in multilink
   & StrictOmit<NodeOptions, 'inputEnabledProperty'>
   & PickRequired<NodeOptions, 'tandem'>;
@@ -33,12 +36,15 @@ export default class CAVObjectNode extends Node {
                       providedOptions?: CAVObjectNodeOptions ) {
 
     const options = optionize<CAVObjectNodeOptions, SelfOptions, NodeOptions>()( {
-      cursor: 'pointer'
+      cursor: 'pointer',
+      translationStrategy: ( position: Vector2 ) => {
+        this.translation = modelViewTransform.modelToViewPosition( position );
+      }
     }, providedOptions );
     super( options );
 
     soccerBall.positionProperty.link( position => {
-      this.translation = modelViewTransform.modelToViewPosition( position );
+      options.translationStrategy( position );
     } );
 
     // The initial ready-to-kick ball is full opacity. The rest of the balls waiting to be kicked are lower opacity so
