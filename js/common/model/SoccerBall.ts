@@ -163,6 +163,7 @@ export default class SoccerBall extends PhetioObject {
    * would take listeners through an incorrect transient state.
    */
   public reset(): void {
+    this.clearAnimation();
     this.positionProperty.reset();
     this.velocityProperty.reset();
     this.soccerBallPhaseProperty.reset();
