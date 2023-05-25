@@ -62,6 +62,8 @@ export default class DataPointNode extends CAVObjectNode {
     Multilink.multilink( [ soccerBall.isActiveProperty, soccerBall.valueProperty ], ( isActive, value ) => {
       this.visible = isActive && value !== null;
     } );
+
+    super.addDebugText( soccerBall );
   }
 }
 

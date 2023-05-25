@@ -13,9 +13,9 @@ import { Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
 import SoccerBall from '../model/SoccerBall.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import { AnimationMode } from '../model/AnimationMode.js';
-import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Multilink from '../../../../axon/js/Multilink.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -47,7 +47,9 @@ export default class CAVObjectNode extends Node {
       ( value, animationMode ) => {
         this.opacity = ( value === null && animationMode === AnimationMode.READY && !soccerBall.isFirstSoccerBall ) ? 0.4 : 1;
       } );
+  }
 
+  public addDebugText( soccerBall: SoccerBall ) : void {
     // Show index when debugging with ?dev
     if ( phet.chipper.queryParameters.dev ) {
       this.addChild( new Text( soccerBall.index + '', {

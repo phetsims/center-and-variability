@@ -162,6 +162,8 @@ export default class SoccerBallNode extends AccessibleSlider( CAVObjectNode, 3 )
     // Not focusable until the ball has been kicked into the play area
     // TODO https://github.com/phetsims/center-and-variability/issues/162 will this need to be triggered to take the correct value via phet-io stateful attributes?
     this.focusable = false;
+
+    super.addDebugText( soccerBall );
   }
 }
 
