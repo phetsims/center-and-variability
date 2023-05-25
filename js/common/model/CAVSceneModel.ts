@@ -390,9 +390,9 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
 
     this.kickDistanceStrategy.reset();
 
-    this.clearData();
-
     this.resetEmitter.emit();
+
+    this.clearData();
   }
 
   public getSortedLandedObjects(): SoccerBall[] {
