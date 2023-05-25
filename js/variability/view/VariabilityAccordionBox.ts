@@ -89,7 +89,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       value: VariabilityMeasure.MAD
     } ], {
       alignChildren: ToggleNode.RIGHT
-    } ), { alignBounds: backgroundShape.bounds, xAlign: 'right', yAlign: 'center', xMargin: 10 } );
+    } ), { alignBounds: backgroundShape.bounds, xAlign: 'right', yAlign: 'center', xMargin: MARGIN } );
 
     // REVIEW: This comment seems outdated... https://github.com/phetsims/center-and-variability/issues/170
     // Since the title is visible while the accordion box is open, this background will not any area above the bottom of
@@ -207,7 +207,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     } ], {
       alignChildren: ToggleNode.NONE,
       tandem: tandem.createTandem( 'readoutsToggleNode' )
-    } ), { alignBounds: backgroundShape.bounds, xAlign: 'left', yAlign: 'center' } );
+    } ), { alignBounds: backgroundShape.bounds, xAlign: 'left', yAlign: 'center', xMargin: MARGIN } );
 
     backgroundNode.addChild( readoutsToggleNode );
 
