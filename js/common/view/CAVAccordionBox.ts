@@ -54,6 +54,8 @@ export default class CAVAccordionBox extends AccordionBox {
 
   public static createBackgroundNode( shape: Shape ): Node {
     return new Node( {
+
+      // add clip area so dot stacks that are taller than the accordion box are clipped appropriately
       clipArea: shape,
       children: [
 

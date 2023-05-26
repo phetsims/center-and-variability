@@ -33,6 +33,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     const backgroundShape = CAVConstants.ACCORDION_BOX_CONTENTS_SHAPE_VARIABILITY;
     const backgroundNode = CAVAccordionBox.createBackgroundNode( backgroundShape );
 
+    // Determine which title string we are showing based off the selectedVariabilityMeasure
     const currentProperty = new DerivedProperty( [ model.selectedVariabilityMeasureProperty ], selectedVariability =>
       selectedVariability === VariabilityMeasure.RANGE ? CenterAndVariabilityStrings.rangeStringProperty :
       selectedVariability === VariabilityMeasure.IQR ? CenterAndVariabilityStrings.interquartileRangeIQRStringProperty :
@@ -68,8 +69,10 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     } );
     backgroundNode.addChild( infoButton );
 
+    // Ensure a consistent width among both the icons and the text across the different accordionBox views.
     const textGroup = new AlignGroup();
     const iconGroup = new AlignGroup();
+
     const checkboxToggleNode = new AlignBox( new ToggleNode( model.selectedVariabilityMeasureProperty, [ {
       createNode: tandem => new VariabilityMeasureCheckbox( model.isRangeVisibleProperty,
         CenterAndVariabilityStrings.rangeStringProperty, iconGroup, textGroup, CAVColors.rangeFillProperty, { tandem: tandem } ),
@@ -89,21 +92,6 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       alignChildren: ToggleNode.RIGHT
     } ), { alignBounds: backgroundShape.bounds, xAlign: 'right', yAlign: 'center' } );
 
-    // REVIEW: This comment seems outdated... https://github.com/phetsims/center-and-variability/issues/170
-    // Since the title is visible while the accordion box is open, this background will not any area above the bottom of
-    // the expand/collapse button. To vertically-center things, make a new set of bounds that includes the missing space.
-    // Values come from the height of the expand/collapse button plus the y margin above and below it. Also add the
-    // horizontal content margin that is not part of backgroundNode so these bounds are the full area of the accordion box.
-    // const fullBackgroundBounds =
-    //   backgroundNode.localBounds.withOffsets( CONTENT_MARGIN, CONTENT_MARGIN * 2 + BUTTON_SIDE_LENGTH, CONTENT_MARGIN, 0 );
-
-    // add clip area so dot stacks that are taller than the accordion box are clipped appropriately
-    // backgroundNode.clipArea = Shape.bounds( fullBackgroundBounds );
-
-    // plotToggleNode.bottom = backgroundNode.height;
-
-    // Will later be centered by a ManualConstraint to align with the one in the play area
-    // plotToggleNode.left = backgroundNode.left;
     backgroundNode.addChild( plotToggleNode );
     backgroundNode.addChild( checkboxToggleNode );
 
