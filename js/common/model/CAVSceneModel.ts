@@ -44,35 +44,15 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import basicKick_mp3 from '../../../sounds/basicKick_mp3.js';
-import kick1_mp3 from '../../../sounds/kick1_mp3.js';
-import kick2_mp3 from '../../../sounds/kick2_mp3.js';
-import kick3_mp3 from '../../../sounds/kick3_mp3.js';
-import kick4_mp3 from '../../../sounds/kick4_mp3.js';
-import kick5_mp3 from '../../../sounds/kick5_mp3.js';
 
-const kickClips = [
-  new SoundClip( basicKick_mp3, { initialOutputLevel: 0.2 } ),
-  new SoundClip( kick1_mp3, { initialOutputLevel: 0.2 } ),
-  new SoundClip( kick2_mp3, { initialOutputLevel: 0.2 } ),
-  new SoundClip( kick3_mp3, { initialOutputLevel: 0.2 } ),
-  new SoundClip( kick4_mp3, { initialOutputLevel: 0.2 } ),
-  new SoundClip( kick5_mp3, { initialOutputLevel: 0.2 } )
-];
+const kickSound = new SoundClip( basicKick_mp3, { initialOutputLevel: 0.2 } );
+soundManager.addSoundGenerator( kickSound );
 
 type SelfOptions = EmptySelfOptions;
 type CAVSceneModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
 // constants
 const TIME_BETWEEN_RAPID_KICKS = 0.5; // in seconds
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error - for designers to change value at runtime
-window.kickSoundIndex = 0;
-console.log( 'window.kickSoundIndex = 0; // choose 0..' + ( kickClips.length - 1 ) + ' to play a different kick sound' );
-
-kickClips.forEach( kickClip => {
-  soundManager.addSoundGenerator( kickClip );
-} );
 
 export default class CAVSceneModel extends PhetioObject implements TModel {
   public readonly soccerBalls: SoccerBall[];
@@ -588,11 +568,9 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     this.timeWhenLastBallWasKickedProperty.value = this.timeProperty.value;
 
     soccerBall.soccerPlayer = soccerPlayer;
-    // TODO: There is a one animation frame (about 16 ms) delay for this sound to play, see: https://github.com/phetsims/center-and-variability/issues/217
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error - for designers to change value at runtime
-    kickClips[ window.kickSoundIndex % kickClips.length ].play();
+    // TODO: There is a one animation frame (about 16 ms) delay for this sound to play, see: https://github.com/phetsims/center-and-variability/issues/217
+    kickSound.play();
   }
 
   private getNextBallFromPool(): SoccerBall | null {

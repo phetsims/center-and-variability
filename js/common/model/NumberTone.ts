@@ -1,45 +1,16 @@
 // Copyright 2023, University of Colorado Boulder
 
-import brightMarimba_mp3 from '../../../../tambo/sounds/brightMarimba_mp3.js';
-import numberTone1_mp3 from '../../../sounds/numberTone1_mp3.js';
 import numberTone2_mp3 from '../../../sounds/numberTone2_mp3.js';
-import numberTone3_mp3 from '../../../sounds/numberTone3_mp3.js';
-import numberTone4_mp3 from '../../../sounds/numberTone4_mp3.js';
-import numberTone5_mp3 from '../../../sounds/numberTone5_mp3.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import centerAndVariability from '../../centerAndVariability.js';
 
 // TODO: Create one per ball? One per location? Or multiple? See https://github.com/phetsims/center-and-variability/issues/217
-// const marimba = new SoundClip( brightMarimba_mp3, {
-//   initialOutputLevel: 0.1
-// } );
 
-const sounds = [
-  brightMarimba_mp3,
-  numberTone1_mp3,
-  numberTone2_mp3,
-  numberTone3_mp3,
-  numberTone4_mp3,
-  numberTone5_mp3
-];
-
-const soundClips = sounds.map( sound => new SoundClip( sound, {
+const soundClip = new SoundClip( numberTone2_mp3, {
   initialOutputLevel: 0.1
-} ) );
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error - for designers to change value at runtime
-window.numberToneIndex = 2;
-console.log( 'window.numberToneIndex = 0; // choose 0..' + ( soundClips.length - 1 ) + ' to play a different number tone' );
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error - for designers to change value at runtime
-window.playbackSpeed = window.playbackSpeed || 1;
-console.log( 'window.playbackSpeed = 1; // choose playback speed for number tone' );
-soundClips.forEach( soundClip => {
-  soundManager.addSoundGenerator( soundClip );
 } );
+soundManager.addSoundGenerator( soundClip );
 
 const toPlaybackSpeed = ( value: number ): number => {
   return value === 1 ? Math.pow( 2, 0 / 12 ) : // C
@@ -84,13 +55,7 @@ export default class NumberTone {
   public static play( value: number ): void {
     const playbackSpeed = toPlaybackSpeed( value );
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error - for designers to change value at runtime
-    const soundClip = soundClips[ window.numberToneIndex % soundClips.length ];
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error - for designers to change value at runtime
-    soundClip.setPlaybackRate( playbackSpeed * window.playbackSpeed );
+    soundClip.setPlaybackRate( playbackSpeed );
     soundClip.play();
   }
 }
