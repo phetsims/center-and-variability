@@ -18,8 +18,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import CAVColors from '../../common/CAVColors.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-
-const MARGIN = 12.5;
+import AccordionBoxTitleText from '../../common/view/AccordionBoxTitleText.js';
 
 export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
   private readonly medianPlotNode: MeanAndMedianPlotNode;
@@ -28,6 +27,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
     const iconGroup = new AlignGroup();
     const textGroup = new AlignGroup();
 
+    // Specify a "footprint" within which we do all the layout.
     const backgroundShape = CAVConstants.ACCORDION_BOX_CONTENTS_SHAPE_MEAN_AND_OR_MEDIAN;
     const backgroundNode = CAVAccordionBox.createBackgroundNode( backgroundShape );
 
@@ -46,7 +46,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
       AccordionBoxCheckboxFactory.getMeanCheckboxWithIconItem( iconGroup, textGroup, model.isTopMeanVisibleProperty )
     ], {
       tandem: tandem.createTandem( 'accordionCheckboxGroup' ),
-      right: backgroundShape.bounds.width - MARGIN,
+      right: backgroundShape.bounds.width - CAVConstants.ACCORDION_BOX_HORIZONTAL_MARGIN,
       centerY: backgroundShape.bounds.height / 2
     } );
 
@@ -88,16 +88,13 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
           CAVColors.meanColorProperty
         )
       ],
-      leftCenter: backgroundShape.bounds.leftCenter.plusXY( MARGIN, 0 )
+      leftCenter: backgroundShape.bounds.leftCenter.plusXY( CAVConstants.ACCORDION_BOX_HORIZONTAL_MARGIN, 0 )
     } );
 
     backgroundNode.addChild( readoutsNode );
 
     super( backgroundNode, {
-        titleNode: new Text( CenterAndVariabilityStrings.distanceInMetersStringProperty, {
-          font: new PhetFont( 16 ),
-          maxWidth: 300
-        } ),
+        titleNode: new AccordionBoxTitleText( CenterAndVariabilityStrings.distanceInMetersStringProperty ),
         tandem: tandem,
         top: top,
         centerX: layoutBounds.centerX

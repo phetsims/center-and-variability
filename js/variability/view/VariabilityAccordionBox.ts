@@ -1,6 +1,6 @@
 // Copyright 2023, University of Colorado Boulder
 
-import { AlignBox, AlignGroup, Text, VBox } from '../../../../scenery/js/imports.js';
+import { AlignBox, AlignGroup, VBox } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -12,7 +12,6 @@ import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import VariabilityReadoutText from './VariabilityReadoutText.js';
 import CAVColors from '../../common/CAVColors.js';
 import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
@@ -23,6 +22,7 @@ import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import VariabilityMeasureCheckbox from './VariabilityMeasureCheckbox.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
+import AccordionBoxTitleText from '../../common/view/AccordionBoxTitleText.js';
 
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 
@@ -204,10 +204,9 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
 
     super( backgroundNode, {
       tandem: tandem,
-      titleNode: new Text( accordionBoxTitleProperty, {
-        font: new PhetFont( 16 ),
-        maxWidth: 300
-      } ),
+      titleNode: new AccordionBoxTitleText( accordionBoxTitleProperty ),
+
+      // Leave space for the radio buttons at the left
       left: 65
     } );
 

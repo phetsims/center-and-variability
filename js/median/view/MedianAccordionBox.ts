@@ -2,9 +2,7 @@
 
 import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
 import CardNodeContainer from './CardNodeContainer.js';
-import { Text } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import MedianModel from '../model/MedianModel.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -13,11 +11,13 @@ import AccordionBoxCheckboxFactory from '../../common/view/AccordionBoxCheckboxF
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 import CardNode from './CardNode.js';
 import CAVConstants from '../../common/CAVConstants.js';
+import AccordionBoxTitleText from '../../common/view/AccordionBoxTitleText.js';
 
 export default class MedianAccordionBox extends CAVAccordionBox {
 
   public constructor( model: MedianModel, layoutBounds: Bounds2, tandem: Tandem, top: number ) {
 
+    // Specify a "footprint" within which we do all the layout.
     const backgroundShape = CAVConstants.ACCORDION_BOX_CONTENTS_SHAPE_MEAN_AND_OR_MEDIAN;
     const backgroundNode = CAVAccordionBox.createBackgroundNode( backgroundShape );
 
@@ -26,7 +26,7 @@ export default class MedianAccordionBox extends CAVAccordionBox {
       AccordionBoxCheckboxFactory.getMedianCheckboxWithoutIconItem( model.isTopMedianVisibleProperty )
     ], {
       tandem: tandem.createTandem( 'accordionCheckboxGroup' ),
-      right: backgroundShape.bounds.width - 12.5,
+      right: backgroundShape.bounds.width - CAVConstants.ACCORDION_BOX_HORIZONTAL_MARGIN,
       centerY: backgroundShape.bounds.height / 2
     } );
 
@@ -34,7 +34,7 @@ export default class MedianAccordionBox extends CAVAccordionBox {
 
       // Expose this intermediate layer to make it so that clients can hide the number cards with one call
       tandem: tandem.createTandem( 'cardNodeContainer' ),
-      x: 12.5,
+      x: CAVConstants.ACCORDION_BOX_HORIZONTAL_MARGIN,
       y: backgroundShape.bounds.height / 2 - CardNode.CARD_DIMENSION / 2 + 5
     } );
 
@@ -45,10 +45,7 @@ export default class MedianAccordionBox extends CAVAccordionBox {
       tandem: tandem,
       top: top,
       centerX: layoutBounds.centerX,
-      titleNode: new Text( CenterAndVariabilityStrings.distanceInMetersStringProperty, {
-        font: new PhetFont( 16 ),
-        maxWidth: 300
-      } )
+      titleNode: new AccordionBoxTitleText( CenterAndVariabilityStrings.distanceInMetersStringProperty )
     } );
   }
 }
