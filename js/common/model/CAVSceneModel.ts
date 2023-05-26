@@ -120,6 +120,10 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     parameters: [ { isValidValue: element => Array.isArray( element ) } ]
   } );
 
+  // During a reset, do not update data measures for every soccer ball.
+  // This is to avoid performance issues when the data is cleared.
+  private avoidDataMeasures = false;
+
   public constructor(
     public readonly maxKicksProperty: TReadOnlyProperty<number>,
     maxKicksChoices: number[],
@@ -295,6 +299,11 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
   }
 
   protected updateDataMeasures(): void {
+
+    if ( this.avoidDataMeasures ) {
+      return;
+    }
+
     const sortedObjects = this.getSortedLandedObjects();
     const medianObjects = CAVSceneModel.getMedianObjectsFromSortedArray( sortedObjects );
 
@@ -370,6 +379,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
    * Clears out the data
    */
   public clearData(): void {
+    this.avoidDataMeasures = true;
     this.numberOfScheduledSoccerBallsToKickProperty.reset();
     this.timeProperty.reset();
     this.timeWhenLastBallWasKickedProperty.reset();
@@ -380,6 +390,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
 
     this.activeKickerIndexProperty.reset();
 
+    this.avoidDataMeasures = false;
     this.updateDataMeasures();
   }
 

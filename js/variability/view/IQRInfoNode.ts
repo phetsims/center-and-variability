@@ -116,6 +116,13 @@ export default class IQRInfoNode extends VBox {
     };
 
     const updateDataValuesDisplay = () => {
+
+      // We only need to update the data display if the info box is showing.
+      // This is for performance improvements on reset.
+      if ( !model.isInfoVisibleProperty.value ) {
+        return;
+      }
+
       const sortedObjects = sceneModel.getSortedLandedObjects();
       const sortedData = sortedObjects.map( object => object.valueProperty.value );
 
@@ -166,7 +173,10 @@ export default class IQRInfoNode extends VBox {
     };
 
     sceneModel.objectChangedEmitter.addListener( updateDataValuesDisplay );
-    sceneModel.numberOfDataPointsProperty.link( updateDataValuesDisplay );
+    sceneModel.numberOfDataPointsProperty.lazyLink( updateDataValuesDisplay );
+    model.isInfoVisibleProperty.lazyLink( updateDataValuesDisplay );
+
+    updateDataValuesDisplay();
   }
 }
 
