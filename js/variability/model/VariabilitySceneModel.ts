@@ -33,7 +33,6 @@ export default class VariabilitySceneModel extends CAVSceneModel {
   public constructor( maxKicksProperty: TReadOnlyProperty<number>, kickDistanceStrategy: TKickDistanceStrategy, options: { tandem: Tandem } ) {
     super( maxKicksProperty, CAVConstants.MAX_KICKS_VALUES, kickDistanceStrategy, options );
 
-
     this.maxValueProperty = new DerivedProperty( [ this.dataRangeProperty ], dataRange => {
       return dataRange === null ? null : dataRange.max;
     }, {

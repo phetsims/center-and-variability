@@ -11,7 +11,7 @@ import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import CAVColors from '../../common/CAVColors.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
-import CAVConstants from '../../common/CAVConstants.js';
+import CAVConstants, { SHOW_OUTLIERS_PROPERTY } from '../../common/CAVConstants.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 
 type SelfOptions = {
@@ -206,11 +206,11 @@ export default class IQRNode extends CAVPlotNode {
         }
       } );
 
-      let leftmostDot = CAVConstants.SHOW_OUTLIERS_PROPERTY.value ? null : sortedDots[ 0 ];
-      let rightmostDot = CAVConstants.SHOW_OUTLIERS_PROPERTY.value ? null : sortedDots[ sortedDots.length - 1 ];
+      let leftmostDot = SHOW_OUTLIERS_PROPERTY.value ? null : sortedDots[ 0 ];
+      let rightmostDot = SHOW_OUTLIERS_PROPERTY.value ? null : sortedDots[ sortedDots.length - 1 ];
 
       // do not include outliers in the box plot drawing if this property is checked
-      if ( CAVConstants.SHOW_OUTLIERS_PROPERTY.value ) {
+      if ( SHOW_OUTLIERS_PROPERTY.value ) {
         for ( let i = 0; i < sortedDots.length; i++ ) {
           if ( leftmostDot === null && !outlierValues.includes( sortedDots[ i ].valueProperty.value! ) ) {
             leftmostDot = sortedDots[ i ];
@@ -285,7 +285,7 @@ export default class IQRNode extends CAVPlotNode {
       }
 
       let outlierDisplayChildren: Text[] = [];
-      if ( enoughDataForIQR && CAVConstants.SHOW_OUTLIERS_PROPERTY.value ) {
+      if ( enoughDataForIQR && SHOW_OUTLIERS_PROPERTY.value ) {
         outlierDisplayChildren = outlierValues.map( value => new Text( '*', {
           centerX: this.modelViewTransform.modelToViewX( value ),
           fontSize: 30
@@ -298,7 +298,7 @@ export default class IQRNode extends CAVPlotNode {
     model.isIQRVisibleProperty.link( updateIQRNode );
     model.selectedVariabilityMeasureProperty.link( updateIQRNode );
     sceneModel.numberOfDataPointsProperty.link( updateIQRNode );
-    CAVConstants.SHOW_OUTLIERS_PROPERTY.link( updateIQRNode );
+    SHOW_OUTLIERS_PROPERTY.link( updateIQRNode );
   }
 }
 

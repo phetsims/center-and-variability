@@ -78,14 +78,6 @@ const CAVConstants = {
   ACCORDION_BOX_CONTENTS_SHAPE_VARIABILITY: Shape.rect( 0, 0, 930, 160 ),
   ACCORDION_BOX_HORIZONTAL_MARGIN: 12.5,
 
-  MAX_KICKS_PROPERTY: new NumberProperty( CAVQueryParameters.maxKicks, {
-    validValues: MAX_KICKS_CONFIG.map( config => config.kicks ),
-    tandem: Tandem.PREFERENCES.createTandem( 'maxKicksProperty' )
-  } ),
-
-  SHOW_OUTLIERS_PROPERTY: new BooleanProperty( false, {
-    tandem: Tandem.PREFERENCES.createTandem( 'showOutliersProperty' )
-  } ),
 
   SCENE_VIEW_TANDEM: 'sceneView',
 
@@ -93,8 +85,19 @@ const CAVConstants = {
   VARIABILITY_MEASURE_NUMBER_READOUT_FONT: new PhetFont( 13 )
 };
 
+// Global Properties
+
+export const MAX_KICKS_PROPERTY = new NumberProperty( CAVQueryParameters.maxKicks, {
+  validValues: MAX_KICKS_CONFIG.map( config => config.kicks ),
+  tandem: Tandem.PREFERENCES.createTandem( 'maxKicksProperty' )
+} );
+
+export const SHOW_OUTLIERS_PROPERTY = new BooleanProperty( false, {
+  tandem: Tandem.PREFERENCES.createTandem( 'showOutliersProperty' )
+} );
+
 // The scaling for the data points depends on the max kicks selected, and applies across the entire sim
-export const DATA_POINT_SCALE_PROPERTY = new DerivedProperty( [ CAVConstants.MAX_KICKS_PROPERTY ], maxKicks => {
+export const DATA_POINT_SCALE_PROPERTY = new DerivedProperty( [ MAX_KICKS_PROPERTY ], maxKicks => {
 
   // There are only 4 valid values for maxKicks property and those are set by the MAX_KICKS_CONFIG.
   return MAX_KICKS_CONFIG.find( config => config.kicks === maxKicks )!.scale;

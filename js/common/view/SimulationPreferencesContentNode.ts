@@ -13,7 +13,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import PlotType from '../model/PlotType.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
-import CAVConstants from '../CAVConstants.js';
+import CAVConstants, { MAX_KICKS_PROPERTY, SHOW_OUTLIERS_PROPERTY } from '../CAVConstants.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PreferencesDialog from '../../../../joist/js/preferences/PreferencesDialog.js';
 import MaxKicksControlNode from './MaxKicksControlNode.js';
@@ -43,13 +43,13 @@ export default class SimulationPreferencesContentNode extends VBox {
       tandem: tandem.createTandem( 'plotTypeRadioButtonGroup' )
     } );
 
-    const outliersCheckbox = new Checkbox( CAVConstants.SHOW_OUTLIERS_PROPERTY, new Text( CenterAndVariabilityStrings.showOutliersBoxplotOnlyStringProperty, TEXT_OPTIONS ), {
+    const outliersCheckbox = new Checkbox( SHOW_OUTLIERS_PROPERTY, new Text( CenterAndVariabilityStrings.showOutliersBoxplotOnlyStringProperty, TEXT_OPTIONS ), {
       tandem: tandem.createTandem( 'outliersCheckbox' )
     } );
 
     // VBox is used to make it easy to add additional controls
     super( {
-      children: [ title, radioButtonGroup, outliersCheckbox, new MaxKicksControlNode( CAVConstants.MAX_KICKS_PROPERTY, parentNode, {
+      children: [ title, radioButtonGroup, outliersCheckbox, new MaxKicksControlNode( MAX_KICKS_PROPERTY, parentNode, {
         tandem: tandem.createTandem( 'maxKicksControlNode' )
       } ) ],
       spacing: PreferencesDialog.LABEL_CONTENT_SPACING,
