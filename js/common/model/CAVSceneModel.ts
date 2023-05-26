@@ -72,9 +72,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
   public readonly isVisibleProperty: Property<boolean> = new BooleanProperty( true );
 
   // Signify whenever any object's value or position changes
-  public readonly objectChangedEmitter: TEmitter<[ SoccerBall ]> = new Emitter<[ SoccerBall ]>( {
-    parameters: [ { valueType: SoccerBall } ]
-  } );
+  public readonly objectChangedEmitter = new Emitter();
 
   public readonly timeProperty: NumberProperty;
 
@@ -102,7 +100,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
 
   // During a reset, do not update data measures for every soccer ball.
   // This is to avoid performance issues when the data is cleared.
-  private avoidDataMeasures = false;
+  private isClearingData = false;
 
   public constructor(
     public readonly maxKicksProperty: TReadOnlyProperty<number>,
@@ -126,6 +124,12 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     }, providedOptions );
 
     super( options );
+
+    this.objectChangedEmitter.addListener( () => {
+
+
+      console.log( 'oce' );
+    } );
 
     const updateDataMeasures = () => this.updateDataMeasures();
 
@@ -185,9 +189,14 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
         this.clearAnimationsInStack( stack );
       } );
 
-      // Signal to listeners that a value changed
-      soccerBall.valueProperty.link( () => this.objectChangedEmitter.emit( soccerBall ) );
-      soccerBall.positionProperty.link( () => this.objectChangedEmitter.emit( soccerBall ) );
+      // Signal to listeners that a value changed, but batch notifications during reset
+      const guardedEmit = () => {
+        if ( !this.isClearingData ) {
+          this.objectChangedEmitter.emit();
+        }
+      };
+      soccerBall.valueProperty.link( guardedEmit );
+      soccerBall.positionProperty.link( guardedEmit );
 
       return soccerBall;
     } );
@@ -268,9 +277,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
       soccerBall.positionProperty.link( updateDataMeasures );
     } );
 
-    maxKicksProperty.link( maxKicks => {
-      this.clearData();
-    } );
+    maxKicksProperty.link( maxKicks => this.clearData() );
   }
 
   // Cancel out all animations in the soccer ball stack.
@@ -280,7 +287,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
 
   protected updateDataMeasures(): void {
 
-    if ( this.avoidDataMeasures ) {
+    if ( this.isClearingData ) {
       return;
     }
 
@@ -359,7 +366,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
    * Clears out the data
    */
   public clearData(): void {
-    this.avoidDataMeasures = true;
+    this.isClearingData = true;
     this.numberOfScheduledSoccerBallsToKickProperty.reset();
     this.timeProperty.reset();
     this.timeWhenLastBallWasKickedProperty.reset();
@@ -370,8 +377,11 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
 
     this.activeKickerIndexProperty.reset();
 
-    this.avoidDataMeasures = false;
+    this.isClearingData = false;
     this.updateDataMeasures();
+
+    // This emitter was suppressed during isClearingData, so we must synchronize listeners now
+    this.objectChangedEmitter.emit();
   }
 
   /**
