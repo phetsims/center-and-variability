@@ -18,6 +18,7 @@ import Range from '../../../dot/js/Range.js';
 import { Shape } from '../../../kite/js/imports.js';
 import NumberProperty from '../../../axon/js/NumberProperty.js';
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
+import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 
 // Right skewed means most of the data is on the left, see https://github.com/phetsims/center-and-variability/issues/112
 const RIGHT_SKEWED_DATA = [
@@ -83,14 +84,23 @@ const CAVConstants = {
   } ),
 
   SHOW_OUTLIERS_PROPERTY: new BooleanProperty( false, {
-      tandem: Tandem.PREFERENCES.createTandem( 'showOutliersProperty' )
-    } ),
+    tandem: Tandem.PREFERENCES.createTandem( 'showOutliersProperty' )
+  } ),
 
   SCENE_VIEW_TANDEM: 'sceneView',
 
   // Shown above the numbers in the variability accordion box plots, like above the RangeNode bars
   VARIABILITY_MEASURE_NUMBER_READOUT_FONT: new PhetFont( 13 )
 };
+
+// The scaling for the data points depends on the max kicks selected, and applies across the entire sim
+export const DATA_POINT_SCALE_PROPERTY = new DerivedProperty( [ CAVConstants.MAX_KICKS_PROPERTY ], maxKicks => {
+
+  // There are only 4 valid values for maxKicks property and those are set by the MAX_KICKS_CONFIG.
+  return MAX_KICKS_CONFIG.find( config => config.kicks === maxKicks )!.scale;
+}, {
+  validValues: MAX_KICKS_CONFIG.map( config => config.scale )
+} );
 
 centerAndVariability.register( 'CAVConstants', CAVConstants );
 export default CAVConstants;

@@ -8,7 +8,7 @@ import CAVObjectType from '../model/CAVObjectType.js';
 import { Circle, Node, Path, TColor } from '../../../../scenery/js/imports.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import timesSolidShape from '../../../../sherpa/js/fontawesome-5/timesSolidShape.js';
-import CAVConstants from '../CAVConstants.js';
+import CAVConstants, { DATA_POINT_SCALE_PROPERTY } from '../CAVConstants.js';
 import PlotType from '../model/PlotType.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import CAVColors from '../CAVColors.js';
@@ -22,14 +22,15 @@ export default class DataPointNode extends CAVObjectNode {
   protected readonly medianHighlight: Circle;
 
   public constructor( soccerBall: SoccerBall,
-                      modelViewTransform: ModelViewTransform2, scaleProperty: Property<number>,
+                      modelViewTransform: ModelViewTransform2,
                       providedOptions: DataPointNodeOptions ) {
+
 
     const translationProperty = new Property( new Vector2( 1, 0 ), {
       reentrant: true
     } );
     const translationStrategy = ( position: Vector2 ) => {
-      const scale = scaleProperty.value;
+      const scale = DATA_POINT_SCALE_PROPERTY.value;
       const scaledPosition = new Vector2( position.x, position.y * scale );
       translationProperty.value = modelViewTransform.modelToViewPosition( scaledPosition );
     };
@@ -38,7 +39,7 @@ export default class DataPointNode extends CAVObjectNode {
       translationStrategy: translationStrategy
     }, providedOptions ) );
 
-    scaleProperty.link( scale => {
+    DATA_POINT_SCALE_PROPERTY.link( scale => {
       this.setScaleMagnitude( scale );
       translationStrategy( this.soccerBall.positionProperty.value );
     } );
