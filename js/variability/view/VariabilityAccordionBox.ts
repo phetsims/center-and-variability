@@ -22,6 +22,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import VariabilityMeasureCheckbox from './VariabilityMeasureCheckbox.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 
@@ -95,27 +96,29 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     backgroundNode.addChild( plotToggleNode );
     backgroundNode.addChild( checkboxToggleNode );
 
-    const deriveValueProperty = ( accessor: ( variabilitySceneModel: VariabilitySceneModel ) => TReadOnlyProperty<number | null> ) => {
-      return DerivedProperty.deriveAny( [ model.selectedSceneModelProperty, ...model.variabilitySceneModels.map( accessor ) ], () => {
-        return accessor( model.selectedSceneModelProperty.value as VariabilitySceneModel ).value;
+    const deriveValueProperty = ( accessor: ( variabilitySceneModel: VariabilitySceneModel ) => TReadOnlyProperty<number | null>, roundToDecimal = 0 ) => {
+      return DerivedProperty.deriveAny( [ model.selectedSceneModelProperty, ...model.variabilitySceneModels.map( accessor ), CenterAndVariabilityStrings.valueUnknownStringProperty ], () => {
+        const result = accessor( model.selectedSceneModelProperty.value as VariabilitySceneModel ).value;
+        const resultRounded = result !== null && roundToDecimal > 0 ? Utils.toFixed( result, roundToDecimal ) : result;
+        return resultRounded === null ? CenterAndVariabilityStrings.valueUnknownStringProperty.value : resultRounded;
       } );
     };
 
     const rangeValueProperty = deriveValueProperty( vsm => vsm.rangeValueProperty );
     const medianValueProperty = deriveValueProperty( vsm => vsm.medianValueProperty );
     const iqrValueProperty = deriveValueProperty( vsm => vsm.iqrValueProperty );
-    const madValueProperty = deriveValueProperty( vsm => vsm.madValueProperty );
-    const meanValueProperty = deriveValueProperty( vsm => vsm.meanValueProperty );
+    const madValueProperty = deriveValueProperty( vsm => vsm.madValueProperty, 1 );
+    const meanValueProperty = deriveValueProperty( vsm => vsm.meanValueProperty, 1 );
 
     const readoutsToggleNode = new AlignBox( new ToggleNode( model.selectedVariabilityMeasureProperty, [ {
       value: VariabilityMeasure.RANGE,
       tandemName: 'rangeReadoutToggleNode',
       createNode: tandem => {
-        const rangeReadoutValueProperty = new DerivedProperty( [ rangeValueProperty ],
-          rangeValue => rangeValue === null ? CenterAndVariabilityStrings.valueUnknownStringProperty.value : `${rangeValue}`
+        const rangeReadoutPatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.rangeEqualsValuePatternStringProperty,
+          { value: rangeValueProperty }
         );
 
-        const rangeReadoutText = new VariabilityReadoutText( rangeReadoutValueProperty, CenterAndVariabilityStrings.rangeEqualsValuePatternStringProperty, {
+        const rangeReadoutText = new VariabilityReadoutText( rangeReadoutPatternStringProperty, {
           fill: CAVColors.meanColorProperty,
           visibleProperty: model.isRangeVisibleProperty,
           tandem: tandem.createTandem( 'rangeReadoutText' )
@@ -132,18 +135,19 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       value: VariabilityMeasure.IQR,
       tandemName: 'iqrReadoutToggleNode',
       createNode: tandem => {
-        const medianReadoutValueProperty = new DerivedProperty( [ medianValueProperty ],
-          medianValue => medianValue === null ? CenterAndVariabilityStrings.valueUnknownStringProperty.value : `${medianValue}`
-        );
-        const iqrReadoutValueProperty = new DerivedProperty( [ iqrValueProperty ], iqrValue => {
-          return iqrValue === null ? CenterAndVariabilityStrings.valueUnknownStringProperty.value : `${iqrValue}`;
-        } );
 
-        const medianReadoutText = new VariabilityReadoutText( medianReadoutValueProperty, CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty, {
+        const medianReadoutPatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty,
+          { value: medianValueProperty }
+        );
+        const medianReadoutText = new VariabilityReadoutText( medianReadoutPatternStringProperty, {
           fill: CAVColors.medianColorProperty,
           tandem: tandem.createTandem( 'medianReadoutText' )
         } );
-        const iqrReadoutText = new VariabilityReadoutText( iqrReadoutValueProperty, CenterAndVariabilityStrings.iqrEqualsValuePatternStringProperty, {
+
+        const iqrReadoutPatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.iqrEqualsValuePatternStringProperty,
+          { value: iqrValueProperty }
+        );
+        const iqrReadoutText = new VariabilityReadoutText( iqrReadoutPatternStringProperty, {
           fill: CAVColors.iqrLabelColorProperty,
           visibleProperty: model.isIQRVisibleProperty,
           tandem: tandem.createTandem( 'iqrReadoutText' )
@@ -163,18 +167,19 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       value: VariabilityMeasure.MAD,
       tandemName: 'madReadoutToggleNode',
       createNode: tandem => {
-        const madReadoutValueProperty = new DerivedProperty( [ madValueProperty ], madValue => {
-          return madValue === null ? CenterAndVariabilityStrings.valueUnknownStringProperty.value : `${Utils.toFixed( madValue, 1 )}`;
-        } );
-        const meanReadoutValueProperty = new DerivedProperty( [ meanValueProperty ], meanValue => {
-          return meanValue === null ? CenterAndVariabilityStrings.valueUnknownStringProperty.value : `${Utils.toFixed( meanValue, 1 )}`;
-        } );
 
-        const meanReadoutText = new VariabilityReadoutText( meanReadoutValueProperty, CenterAndVariabilityStrings.meanEqualsValuePatternStringProperty, {
+        const meanReadoutPatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.meanEqualsValuePatternStringProperty,
+          { value: meanValueProperty }
+        );
+        const madReadoutPatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.madEqualsValuePatternStringProperty,
+          { value: madValueProperty }
+        );
+
+        const meanReadoutText = new VariabilityReadoutText( meanReadoutPatternStringProperty, {
           fill: CAVColors.meanColorProperty,
           tandem: tandem.createTandem( 'meanReadoutText' )
         } );
-        const madReadoutText = new VariabilityReadoutText( madReadoutValueProperty, CenterAndVariabilityStrings.madEqualsValuePatternStringProperty, {
+        const madReadoutText = new VariabilityReadoutText( madReadoutPatternStringProperty, {
           fill: CAVColors.madColorProperty,
           visibleProperty: model.isMADVisibleProperty,
           tandem: tandem.createTandem( 'madReadoutText' )

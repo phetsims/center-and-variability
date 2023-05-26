@@ -10,23 +10,21 @@
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import { Text, TextOptions } from '../../../../scenery/js/imports.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import LinkableProperty from '../../../../axon/js/LinkableProperty.js';
-import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 export type ValueReadoutTextOptions = SelfOptions & TextOptions;
 
 export default class VariabilityReadoutText extends Text {
 
-  public constructor( valueProperty: TReadOnlyProperty<string>, textProperty: LinkableProperty<string>, providedOptions: ValueReadoutTextOptions ) {
+  public constructor( stringProperty: TReadOnlyProperty<string>, providedOptions: ValueReadoutTextOptions ) {
     const options = optionize<ValueReadoutTextOptions, SelfOptions, TextOptions>()( {
       font: new PhetFont( 16 ),
       maxWidth: 100
     }, providedOptions );
 
-    super( new PatternStringProperty( textProperty, { value: valueProperty } ), options );
+    super( stringProperty, options );
   }
 }
 

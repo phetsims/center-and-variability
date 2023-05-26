@@ -56,13 +56,13 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
     const createReadoutText = ( valueProperty: TReadOnlyProperty<number | null>, visibleProperty: TReadOnlyProperty<boolean>,
                                 templateStringProperty: LinkableProperty<string>, fill: TPaint ) => {
 
-      const valueStringProperty = new DerivedProperty( [ valueProperty ], value => {
-        return value === null ? CenterAndVariabilityStrings.valueUnknownStringProperty.value : Utils.toFixed( value, 1 );
-      } );
+      const readoutProperty = new DerivedProperty( [ valueProperty, CenterAndVariabilityStrings.valueUnknownStringProperty ],
+        ( value, valueUnknownString ) => {
+          return value === null ? valueUnknownString : Utils.toFixed( value, 1 );
+        } );
+      const readoutPatternStringProperty = new PatternStringProperty( templateStringProperty, { value: readoutProperty } );
 
-      return new Text( new PatternStringProperty( templateStringProperty, {
-        value: valueStringProperty
-      } ), {
+      return new Text( readoutPatternStringProperty, {
         fill: fill,
         font: new PhetFont( 16 ),
         maxWidth: 170,
