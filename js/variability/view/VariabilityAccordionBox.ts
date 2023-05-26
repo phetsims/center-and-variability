@@ -23,8 +23,6 @@ import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import VariabilityMeasureCheckbox from './VariabilityMeasureCheckbox.js';
 
-const MARGIN = 5;
-
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 
   private readonly plotToggleNode: ToggleNode<CAVSceneModel, VariabilityPlotNode>;
@@ -65,8 +63,8 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       listener: () => {
         model.isInfoVisibleProperty.value = true;
       },
-      top: MARGIN,
-      right: backgroundShape.bounds.right - MARGIN
+      top: backgroundShape.bounds.top,
+      right: backgroundShape.bounds.right
     } );
     backgroundNode.addChild( infoButton );
 
@@ -89,7 +87,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       value: VariabilityMeasure.MAD
     } ], {
       alignChildren: ToggleNode.RIGHT
-    } ), { alignBounds: backgroundShape.bounds, xAlign: 'right', yAlign: 'center', xMargin: MARGIN } );
+    } ), { alignBounds: backgroundShape.bounds, xAlign: 'right', yAlign: 'center' } );
 
     // REVIEW: This comment seems outdated... https://github.com/phetsims/center-and-variability/issues/170
     // Since the title is visible while the accordion box is open, this background will not any area above the bottom of
@@ -207,7 +205,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     } ], {
       alignChildren: ToggleNode.NONE,
       tandem: tandem.createTandem( 'readoutsToggleNode' )
-    } ), { alignBounds: backgroundShape.bounds, xAlign: 'left', yAlign: 'center', xMargin: MARGIN } );
+    } ), { alignBounds: backgroundShape.bounds, xAlign: 'left', yAlign: 'center' } );
 
     backgroundNode.addChild( readoutsToggleNode );
 

@@ -73,8 +73,8 @@ const CAVConstants = {
   VARIABILITY_DRAG_RANGE: new Range( 0, 16 ),
   MAX_KICKS_VALUES: [ 15, 20, 25, 30 ],
 
-  ACCORDION_BOX_CONTENTS_SHAPE_MEAN_AND_OR_MEDIAN: Shape.rect( 0, 0, 1000, 160 ),
-  ACCORDION_BOX_CONTENTS_SHAPE_VARIABILITY: Shape.rect( 0, 0, 940, 160 ),
+  ACCORDION_BOX_CONTENTS_SHAPE_MEAN_AND_OR_MEDIAN: Shape.rect( 0, 0, 987, 160 ),
+  ACCORDION_BOX_CONTENTS_SHAPE_VARIABILITY: Shape.rect( 0, 0, 930, 160 ),
 
   MAX_KICKS_PROPERTY: new NumberProperty( CAVQueryParameters.maxKicks, {
     validValues: MAX_KICKS_CONFIG.map( config => config.kicks ),
