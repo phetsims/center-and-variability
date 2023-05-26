@@ -30,7 +30,7 @@ const soundClips = sounds.map( sound => new SoundClip( sound, {
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error - for designers to change value at runtime
-window.numberToneIndex = 0;
+window.numberToneIndex = 2;
 console.log( 'window.numberToneIndex = 0; // choose 0..' + ( soundClips.length - 1 ) + ' to play a different number tone' );
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
