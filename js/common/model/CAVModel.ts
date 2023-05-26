@@ -103,8 +103,7 @@ export default class CAVModel {
     // Cannot take a range, since it is nullable
     this.dragIndicatorValueProperty = new Property<number | null>( null, {
       tandem: options.tandem.createTandem( 'dragIndicatorValueProperty' ),
-      phetioValueType: NullableIO( NumberIO ),
-      phetioReadOnly: true
+      phetioValueType: NullableIO( NumberIO )
     } );
 
     const allValueProperties = sceneModels.flatMap( sceneModel => sceneModel.soccerBalls.map( soccerBall => soccerBall.valueProperty ) );
