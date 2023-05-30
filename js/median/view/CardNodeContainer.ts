@@ -427,8 +427,8 @@ export default class CardNodeContainer extends Node {
 
           const randomSound = cardMovementSoundClips[ dotRandom.nextInt( cardMovementSoundClips.length ) ];
 
-          // Moving to the right, go up in pitch.
-          randomSound.setPlaybackRate( dragCell < originalCell ? 1 : Math.pow( 2, 3 / 12 ) );
+          // Moving to the right, go up in pitch by 4 semitones
+          randomSound.setPlaybackRate( dragCell < originalCell ? 1 : Math.pow( 2, 4 / 12 ) );
           randomSound.play();
         }
       }
