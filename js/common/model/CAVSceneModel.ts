@@ -481,7 +481,12 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
         nextIndex = 0;
       }
       this.activeKickerIndexProperty.value = nextIndex;
-      this.getNextBallFromPool();
+
+      const nextBallFromPool = this.soccerBalls.find( ball => !ball.isActiveProperty.value ) || null;
+      if ( nextBallFromPool && this.soccerBalls.indexOf( nextBallFromPool ) < this.maxKicksProperty.value ) {
+        nextBallFromPool.soccerBallPhaseProperty.value = AnimationMode.READY;
+      }
+
     }
   }
 
@@ -571,14 +576,6 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
 
     // TODO: There is a one animation frame (about 16 ms) delay for this sound to play, see: https://github.com/phetsims/center-and-variability/issues/217
     kickSound.play();
-  }
-
-  private getNextBallFromPool(): SoccerBall | null {
-    const nextBallFromPool = this.soccerBalls.find( ball => !ball.isActiveProperty.value ) || null;
-    if ( nextBallFromPool && this.soccerBalls.indexOf( nextBallFromPool ) < this.maxKicksProperty.value ) {
-      nextBallFromPool.soccerBallPhaseProperty.value = AnimationMode.READY;
-    }
-    return nextBallFromPool;
   }
 
   /**
