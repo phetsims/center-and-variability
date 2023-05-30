@@ -23,7 +23,7 @@ type MedianHighlightLayerOptions = SelfOptions & NodeOptions;
 export default class MedianHighlightLayer extends Node {
   public constructor( model: CAVModel, sceneModel: CAVSceneModel, modelViewTransform: ModelViewTransform2, isPlayAreaMedianVisibleProperty: TReadOnlyProperty<boolean>, providedOptions: MedianHighlightLayerOptions ) {
 
-    const LINE_WIDTH = 1.5;
+    const LINE_WIDTH = 2;
     const viewRadius = modelViewTransform.modelToViewDeltaX( CAVObjectType.SOCCER_BALL.radius * ( 1 - CAVConstants.SOCCER_BALL_OVERLAP ) );
     const createCircle = () => {
       return new Circle( viewRadius - LINE_WIDTH / 2, {
