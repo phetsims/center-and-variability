@@ -23,7 +23,7 @@ export type CAVAccordionBoxOptions =
   & PickRequired<AccordionBoxOptions, 'tandem'>;
 
 // constants
-const CONTENT_MARGIN = 10;
+export const CONTENT_MARGIN = 10;
 const BUTTON_SIDE_LENGTH = 20;
 
 export default class CAVAccordionBox extends AccordionBox {
@@ -39,7 +39,10 @@ export default class CAVAccordionBox extends AccordionBox {
       buttonXMargin: CONTENT_MARGIN,
       buttonYMargin: CONTENT_MARGIN,
       contentXMargin: CONTENT_MARGIN,
-      contentYMargin: CONTENT_MARGIN,
+
+      // We want the content to go all the way to the top of the accordionBox.
+      // The bottom margin is set in ACCORDION_BOX_CONTENTS_SHAPE
+      contentYMargin: 0,
       contentYSpacing: 0,
       contentAlign: 'left',
       allowContentToOverlapTitle: true,

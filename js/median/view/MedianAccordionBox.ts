@@ -27,7 +27,7 @@ export default class MedianAccordionBox extends CAVAccordionBox {
     ], {
       tandem: tandem.createTandem( 'accordionCheckboxGroup' ),
       right: backgroundShape.bounds.width - CAVConstants.ACCORDION_BOX_HORIZONTAL_MARGIN,
-      centerY: backgroundShape.bounds.height / 2
+      centerY: backgroundShape.bounds.centerY
     } );
 
     const cardNodeContainer = new CardNodeContainer( model, {
@@ -35,7 +35,7 @@ export default class MedianAccordionBox extends CAVAccordionBox {
       // Expose this intermediate layer to make it so that clients can hide the number cards with one call
       tandem: tandem.createTandem( 'cardNodeContainer' ),
       x: CAVConstants.ACCORDION_BOX_HORIZONTAL_MARGIN,
-      y: backgroundShape.bounds.height / 2 - CardNode.CARD_DIMENSION / 2 + 5
+      y: backgroundShape.bounds.centerY - CardNode.CARD_DIMENSION / 2 + 5
     } );
 
     backgroundNode.addChild( cardNodeContainer );

@@ -14,7 +14,7 @@ import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import VariabilityReadoutText from './VariabilityReadoutText.js';
 import CAVColors from '../../common/CAVColors.js';
-import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
+import CAVAccordionBox, { CONTENT_MARGIN } from '../../common/view/CAVAccordionBox.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import CAVSceneModel from '../../common/model/CAVSceneModel.js';
 import Utils from '../../../../dot/js/Utils.js';
@@ -65,7 +65,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       listener: () => {
         model.isInfoVisibleProperty.value = true;
       },
-      top: backgroundShape.bounds.top,
+      top: backgroundShape.bounds.top + CONTENT_MARGIN,
       right: backgroundShape.bounds.right
     } );
     backgroundNode.addChild( infoButton );

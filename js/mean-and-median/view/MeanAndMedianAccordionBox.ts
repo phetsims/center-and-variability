@@ -47,7 +47,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
     ], {
       tandem: tandem.createTandem( 'accordionCheckboxGroup' ),
       right: backgroundShape.bounds.width - CAVConstants.ACCORDION_BOX_HORIZONTAL_MARGIN,
-      centerY: backgroundShape.bounds.height / 2
+      centerY: backgroundShape.bounds.centerY
     } );
 
     backgroundNode.addChild( checkboxGroup );
