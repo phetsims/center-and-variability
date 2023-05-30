@@ -43,13 +43,20 @@ export default class SceneView {
 
     const soccerBallMap = new Map<SoccerBall, SoccerBallNode>();
 
-    const backLayer = new Node();
+    const medianHighlightLayer = new MedianHighlightLayer( model, sceneModel, modelViewTransform, model.isPlayAreaMedianVisibleProperty,
+      {
+        visibleProperty: model.isPlayAreaMedianVisibleProperty
+      } );
+
+    const backLayerSoccerBallLayer = new Node();
+    const backLayer = new Node( {
+      children: [ backLayerSoccerBallLayer, medianHighlightLayer ]
+    } );
 
     // Keep soccer balls in one layer so we can control the focus order
     const frontLayerSoccerBallLayer = new Node();
-    const frontLayerMedianHighlightLayer = new MedianHighlightLayer( model, sceneModel, modelViewTransform, model.isPlayAreaMedianVisibleProperty, { visibleProperty: model.isPlayAreaMedianVisibleProperty } );
     const frontLayer = new Node( {
-      children: [ frontLayerMedianHighlightLayer, frontLayerSoccerBallLayer ]
+      children: [ frontLayerSoccerBallLayer ]
     } );
 
     sceneModel.soccerBalls.map( ( soccerBall, index ) => {
@@ -62,19 +69,19 @@ export default class SceneView {
           pickable: false
         } );
 
-      backLayer.addChild( soccerBallNode );
+      backLayerSoccerBallLayer.addChild( soccerBallNode );
 
       // While flying, it should be in front in z-order, to be in front of the accordion box
       soccerBall.soccerBallPhaseProperty.lazyLink( ( animationMode, oldAnimationMode ) => {
 
         //when the ball is kicked
         if ( animationMode === AnimationMode.FLYING ) {
-          backLayer.removeChild( soccerBallNode );
+          backLayerSoccerBallLayer.removeChild( soccerBallNode );
           frontLayerSoccerBallLayer.addChild( soccerBallNode );
         }
         else if ( oldAnimationMode === AnimationMode.FLYING ) {
           frontLayerSoccerBallLayer.removeChild( soccerBallNode );
-          backLayer.addChild( soccerBallNode );
+          backLayerSoccerBallLayer.addChild( soccerBallNode );
         }
       } );
 

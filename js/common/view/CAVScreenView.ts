@@ -279,7 +279,7 @@ export default class CAVScreenView extends ScreenView {
    */
   protected setAccordionBox( accordionBox: CAVAccordionBox ): void {
     this.accordionBox = accordionBox;
-    this.frontObjectLayer.addChild( this.accordionBox );
+    this.backObjectLayer.addChild( this.accordionBox );
     this.updateAccordionBoxPosition();
     this.sceneViews.forEach( sceneView => sceneView.setAccordionBox( accordionBox ) );
 
