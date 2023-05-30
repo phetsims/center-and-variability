@@ -38,6 +38,29 @@ import MedianModel from '../../median/model/MedianModel.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import NumberTone from '../../common/model/NumberTone.js';
 import CAVQueryParameters from '../../common/CAVQueryParameters.js';
+import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
+
+import cvCardMovementSound1_mp3 from '../../../sounds/cv-card-movement-sounds-001_mp3.js'; // eslint-disable-line default-import-match-filename
+import cvCardMovementSound2_mp3 from '../../../sounds/cv-card-movement-sounds-002_mp3.js'; // eslint-disable-line default-import-match-filename
+import cvCardMovementSound3_mp3 from '../../../sounds/cv-card-movement-sounds-003_mp3.js';// eslint-disable-line default-import-match-filename
+import cvCardMovementSound4_mp3 from '../../../sounds/cv-card-movement-sounds-004_mp3.js';// eslint-disable-line default-import-match-filename
+import cvCardMovementSound5_mp3 from '../../../sounds/cv-card-movement-sounds-005_mp3.js';// eslint-disable-line default-import-match-filename
+import cvCardMovementSound6_mp3 from '../../../sounds/cv-card-movement-sounds-006_mp3.js';// eslint-disable-line default-import-match-filename
+import cvCardMovementSound7_mp3 from '../../../sounds/cv-card-movement-sounds-007_mp3.js';// eslint-disable-line default-import-match-filename
+import soundManager from '../../../../tambo/js/soundManager.js';
+
+const cardMovementSounds = [
+  cvCardMovementSound1_mp3,
+  cvCardMovementSound2_mp3,
+  cvCardMovementSound3_mp3,
+  cvCardMovementSound4_mp3,
+  cvCardMovementSound5_mp3,
+  cvCardMovementSound6_mp3,
+  cvCardMovementSound7_mp3
+];
+
+const cardMovementSoundClips = cardMovementSounds.map( sound => new SoundClip( sound ) );
+cardMovementSoundClips.forEach( soundClip => soundManager.addSoundGenerator( soundClip ) );
 
 // constants
 const CARD_SPACING = 10;
@@ -401,6 +424,12 @@ export default class CardNodeContainer extends Node {
           this.isReadyForCelebration = this.isDataSorted() && !this.wasSortedBefore;
 
           this.cardNodeCellsChangedEmitter.emit();
+
+          const randomSound = cardMovementSoundClips[ dotRandom.nextInt( cardMovementSoundClips.length ) ];
+
+          // Moving to the right, go up in pitch.
+          randomSound.setPlaybackRate( dragCell < originalCell ? 1 : Math.pow( 2, 3 / 12 ) );
+          randomSound.play();
         }
       }
     };
