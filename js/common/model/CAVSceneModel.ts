@@ -481,7 +481,6 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
         nextIndex = 0;
       }
       this.activeKickerIndexProperty.value = nextIndex;
-
       const nextBallFromPool = this.soccerBalls.find( ball => !ball.isActiveProperty.value ) || null;
       if ( nextBallFromPool && this.soccerBalls.indexOf( nextBallFromPool ) < this.maxKicksProperty.value ) {
         nextBallFromPool.soccerBallPhaseProperty.value = AnimationMode.READY;

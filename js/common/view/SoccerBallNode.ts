@@ -21,6 +21,7 @@ import CAVConstants from '../CAVConstants.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import NumberTone from '../model/NumberTone.js';
+import { Shape } from '../../../../kite/js/imports.js';
 
 type SelfOptions = EmptySelfOptions;
 type ParentOptions = CAVObjectNodeOptions & AccessibleSliderOptions;
@@ -153,6 +154,13 @@ export default class SoccerBallNode extends AccessibleSlider( CAVObjectNode, 3 )
 
     soccerBall.soccerBallLandedEmitter.addListener( () => {
       this.moveToFront();
+    } );
+
+    soccerBall.resetEmitter.addListener( () => {
+      this.focusable = false;
+      this.pickable = false;
+      this.mouseArea = Shape.rectangle( 0, 0, 0, 0 );
+      this.touchArea = Shape.rectangle( 0, 0, 0, 0 );
     } );
 
     this.addLinkedElement( soccerBall, {

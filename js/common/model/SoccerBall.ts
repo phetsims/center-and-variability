@@ -59,6 +59,8 @@ export default class SoccerBall extends PhetioObject {
   public valueProperty: Property<number | null>;
 
   public readonly dragStartedEmitter: TEmitter = new Emitter();
+  public readonly resetEmitter: TEmitter = new Emitter();
+
   public animation: Animation | null = null;
   public readonly isActiveProperty: TReadOnlyProperty<boolean>;
   public soccerPlayer: SoccerPlayer | null = null;
@@ -174,6 +176,8 @@ export default class SoccerBall extends PhetioObject {
     this.isAnimationHighlightVisibleProperty.reset();
     this.targetXProperty.value = null;
     this.soccerPlayer = null;
+
+    this.resetEmitter.emit();
   }
 }
 
