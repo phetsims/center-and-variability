@@ -54,10 +54,7 @@ export default class SceneView {
     } );
 
     // Keep soccer balls in one layer so we can control the focus order
-    const frontLayerSoccerBallLayer = new Node();
-    const frontLayer = new Node( {
-      children: [ frontLayerSoccerBallLayer ]
-    } );
+    const frontLayer = new Node( );
 
     sceneModel.soccerBalls.map( ( soccerBall, index ) => {
       const soccerBallNode = new SoccerBallNode(
@@ -77,10 +74,10 @@ export default class SceneView {
         //when the ball is kicked
         if ( animationMode === AnimationMode.FLYING ) {
           backLayerSoccerBallLayer.removeChild( soccerBallNode );
-          frontLayerSoccerBallLayer.addChild( soccerBallNode );
+          frontLayer.addChild( soccerBallNode );
         }
         else if ( oldAnimationMode === AnimationMode.FLYING ) {
-          frontLayerSoccerBallLayer.removeChild( soccerBallNode );
+          frontLayer.removeChild( soccerBallNode );
           backLayerSoccerBallLayer.addChild( soccerBallNode );
         }
       } );
@@ -139,7 +136,7 @@ export default class SceneView {
         soccerBallNode.focusable = i === stack.length - 1;
 
         // Focus order goes left to right
-        frontLayerSoccerBallLayer.setPDOMOrder( sceneModel.getTopSoccerBalls().map( soccerBall => soccerBallMap.get( soccerBall )! ) );
+        frontLayer.setPDOMOrder( sceneModel.getTopSoccerBalls().map( soccerBall => soccerBallMap.get( soccerBall )! ) );
       }
     } );
 
