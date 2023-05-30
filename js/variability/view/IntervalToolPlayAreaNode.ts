@@ -56,7 +56,7 @@ export default class IntervalToolPlayAreaNode extends Node {
         rightEdge.setLine( viewX2, rectBottom, viewX2, rectTop );
       } );
 
-    // TODO: https://github.com/phetsims/center-and-variability/issues/194 support or exclude multi-touch
+    // TODO: https://github.com/phetsims/center-and-variability/issues/225 support or exclude multi-touch
     const getDragBounds = () => {
       const dist = intervalToolValue2Property.value - intervalToolValue1Property.value;
 
