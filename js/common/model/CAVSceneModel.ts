@@ -234,9 +234,6 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
       options.tandem.createTandem( `soccerPlayer${placeInLine + 1}` )
     ) );
 
-    // Create an initial ball to show on startup
-    this.getNextBallFromPool();
-
     this.numberOfUnkickedBallsProperty = DerivedProperty.deriveAny( [
       this.maxKicksProperty,
       this.numberOfScheduledSoccerBallsToKickProperty,
@@ -367,7 +364,6 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
 
     this.soccerPlayers.forEach( soccerPlayer => soccerPlayer.reset() );
     this.soccerBalls.forEach( soccerBall => soccerBall.reset() );
-    this.getNextBallFromPool();
 
     this.activeKickerIndexProperty.reset();
 
@@ -385,9 +381,9 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
 
     this.kickDistanceStrategy.reset();
 
-    this.resetEmitter.emit();
-
     this.clearData();
+
+    this.resetEmitter.emit();
   }
 
   public getSortedLandedObjects(): SoccerBall[] {
