@@ -125,12 +125,6 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
 
     super( options );
 
-    this.objectChangedEmitter.addListener( () => {
-
-
-      console.log( 'oce' );
-    } );
-
     const updateDataMeasures = () => this.updateDataMeasures();
 
     this.maxKicksLimit = Math.max( ...maxKicksChoices );
