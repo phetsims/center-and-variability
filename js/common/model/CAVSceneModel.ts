@@ -44,6 +44,7 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import basicKick_mp3 from '../../../sounds/basicKick_mp3.js';
+import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 
 const kickSound = new SoundClip( basicKick_mp3, { initialOutputLevel: 0.2 } );
 soundManager.addSoundGenerator( kickSound );
@@ -158,7 +159,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
       // If oldValue is null, it means that the ball is going from FLYING to STACKING,
       // in which case we want it to animate to the top of the stack.
       soccerBall.valueProperty.lazyLink( ( value, oldValue ) => {
-        if ( value !== null && !phet.joist.sim.isSettingPhetioStateProperty.value && oldValue !== null ) {
+        if ( value !== null && !isSettingPhetioStateProperty.value && oldValue !== null ) {
           const oldStack = this.getStackAtLocation( oldValue );
           if ( oldStack.length > 0 ) {
             this.reorganizeStack( oldStack );

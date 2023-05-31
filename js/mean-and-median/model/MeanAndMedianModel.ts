@@ -15,6 +15,7 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import CAVConstants, { MAX_KICKS_PROPERTY } from '../../common/CAVConstants.js';
 import { RandomSkewStrategy } from '../../common/model/TKickDistanceStrategy.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeanAndMedianModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
@@ -55,7 +56,7 @@ export default class MeanAndMedianModel extends CAVModel {
     this.isTopMedianVisibleProperty.lazyLink( isTopMedianVisible => {
       if ( isTopMedianVisible ) {
 
-        if ( !phet.joist.sim.isSettingPhetioStateProperty.value ) {
+        if ( !isSettingPhetioStateProperty.value ) {
           this.highlightAnimationIndex = 0;
           this.lastHighlightAnimationStepTime = sceneModel.timeProperty.value;
         }

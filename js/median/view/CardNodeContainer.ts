@@ -44,13 +44,13 @@ import FilteredSoundClip from '../../common/view/FilteredSoundClip.js';
 
 import cvCardMovementSound1_mp3 from '../../../sounds/cv-card-movement-sounds-001_mp3.js'; // eslint-disable-line default-import-match-filename
 import cvCardMovementSound2_mp3 from '../../../sounds/cv-card-movement-sounds-002_mp3.js'; // eslint-disable-line default-import-match-filename
-import cvCardMovementSound3_mp3 from '../../../sounds/cv-card-movement-sounds-003_mp3.js';// eslint-disable-line default-import-match-filename
-import cvCardMovementSound4_mp3 from '../../../sounds/cv-card-movement-sounds-004_mp3.js';// eslint-disable-line default-import-match-filename
-import cvCardMovementSound5_mp3 from '../../../sounds/cv-card-movement-sounds-005_mp3.js';// eslint-disable-line default-import-match-filename
-import cvCardMovementSound6_mp3 from '../../../sounds/cv-card-movement-sounds-006_mp3.js';// eslint-disable-line default-import-match-filename
-import cvCardMovementSound7_mp3 from '../../../sounds/cv-card-movement-sounds-007_mp3.js';// eslint-disable-line default-import-match-filename
-
-import cvSuccessOptions007Shorter_mp3 from '../../../sounds/cv-success-options-007-shorter_mp3.js';// eslint-disable-line default-import-match-filename
+import cvCardMovementSound3_mp3 from '../../../sounds/cv-card-movement-sounds-003_mp3.js'; // eslint-disable-line default-import-match-filename
+import cvCardMovementSound4_mp3 from '../../../sounds/cv-card-movement-sounds-004_mp3.js'; // eslint-disable-line default-import-match-filename
+import cvCardMovementSound5_mp3 from '../../../sounds/cv-card-movement-sounds-005_mp3.js'; // eslint-disable-line default-import-match-filename
+import cvCardMovementSound6_mp3 from '../../../sounds/cv-card-movement-sounds-006_mp3.js'; // eslint-disable-line default-import-match-filename
+import cvCardMovementSound7_mp3 from '../../../sounds/cv-card-movement-sounds-007_mp3.js'; // eslint-disable-line default-import-match-filename
+import cvSuccessOptions007Shorter_mp3 from '../../../sounds/cv-success-options-007-shorter_mp3.js'; // eslint-disable-line default-import-match-filename
+import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 
 const cvSuccessOptions007ShorterSoundClip = new SoundClip( cvSuccessOptions007Shorter_mp3, {
   initialOutputLevel: 0.2
@@ -138,7 +138,7 @@ export default class CardNodeContainer extends Node {
           this.wasSortedBefore = this.isDataSorted();
         }
 
-        if ( !isPressed && !phet.joist.sim.isSettingPhetioStateProperty.value ) {
+        if ( !isPressed && !isSettingPhetioStateProperty.value ) {
 
           // Animate the dropped card home
           this.animateToHomeCell( cardNode, 0.2 );
@@ -227,7 +227,7 @@ export default class CardNodeContainer extends Node {
       };
 
       cardModel.isActiveProperty.link( isActive => {
-        if ( isActive && !phet.joist.sim.isSettingPhetioStateProperty.value ) {
+        if ( isActive && !isSettingPhetioStateProperty.value ) {
 
           let targetIndex = this.cardNodeCells.length;
           if ( this.model.isSortingDataProperty.value ) {
