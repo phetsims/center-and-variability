@@ -39,6 +39,8 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import NumberTone from '../../common/model/NumberTone.js';
 import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
+import soundManager from '../../../../tambo/js/soundManager.js';
+import FilteredSoundClip from '../../common/view/FilteredSoundClip.js';
 
 import cvCardMovementSound1_mp3 from '../../../sounds/cv-card-movement-sounds-001_mp3.js'; // eslint-disable-line default-import-match-filename
 import cvCardMovementSound2_mp3 from '../../../sounds/cv-card-movement-sounds-002_mp3.js'; // eslint-disable-line default-import-match-filename
@@ -47,8 +49,13 @@ import cvCardMovementSound4_mp3 from '../../../sounds/cv-card-movement-sounds-00
 import cvCardMovementSound5_mp3 from '../../../sounds/cv-card-movement-sounds-005_mp3.js';// eslint-disable-line default-import-match-filename
 import cvCardMovementSound6_mp3 from '../../../sounds/cv-card-movement-sounds-006_mp3.js';// eslint-disable-line default-import-match-filename
 import cvCardMovementSound7_mp3 from '../../../sounds/cv-card-movement-sounds-007_mp3.js';// eslint-disable-line default-import-match-filename
-import soundManager from '../../../../tambo/js/soundManager.js';
-import FilteredSoundClip from '../../common/view/FilteredSoundClip.js';
+
+import cvSuccessOptions007Shorter_mp3 from '../../../sounds/cv-success-options-007-shorter_mp3.js';// eslint-disable-line default-import-match-filename
+
+const cvSuccessOptions007ShorterSoundClip = new SoundClip( cvSuccessOptions007Shorter_mp3, {
+  initialOutputLevel: 0.2
+} );
+soundManager.addSoundGenerator( cvSuccessOptions007ShorterSoundClip );
 
 const cardMovementSounds = [
   cvCardMovementSound1_mp3,
@@ -181,6 +188,8 @@ export default class CardNodeContainer extends Node {
                 this.dataSortedNodeAnimation = null;
               } );
               this.dataSortedNodeAnimation.start();
+
+              cvSuccessOptions007ShorterSoundClip.play();
 
               const cardBeingDragged = this.cardNodeCells.filter( cardNode => cardNode.dragListener.isPressed ).length;
               const cardsAnimating = this.cardNodeCells.filter( cardNode => cardNode.animation ).length;
