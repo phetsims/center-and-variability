@@ -48,6 +48,7 @@ import cvCardMovementSound5_mp3 from '../../../sounds/cv-card-movement-sounds-00
 import cvCardMovementSound6_mp3 from '../../../sounds/cv-card-movement-sounds-006_mp3.js';// eslint-disable-line default-import-match-filename
 import cvCardMovementSound7_mp3 from '../../../sounds/cv-card-movement-sounds-007_mp3.js';// eslint-disable-line default-import-match-filename
 import soundManager from '../../../../tambo/js/soundManager.js';
+import FilteredSoundClip from '../../common/view/FilteredSoundClip.js';
 
 const cardMovementSounds = [
   cvCardMovementSound1_mp3,
@@ -59,8 +60,8 @@ const cardMovementSounds = [
   cvCardMovementSound7_mp3
 ];
 
-const cardMovementSoundClips = cardMovementSounds.map( sound => new SoundClip( sound, {
-  initialOutputLevel: 0.1
+const cardMovementSoundClips = cardMovementSounds.map( sound => new FilteredSoundClip( new SoundClip( sound ), {
+  initialOutputLevel: 0.4
 } ) );
 cardMovementSoundClips.forEach( soundClip => soundManager.addSoundGenerator( soundClip ) );
 
