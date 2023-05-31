@@ -59,7 +59,9 @@ const cardMovementSounds = [
   cvCardMovementSound7_mp3
 ];
 
-const cardMovementSoundClips = cardMovementSounds.map( sound => new SoundClip( sound ) );
+const cardMovementSoundClips = cardMovementSounds.map( sound => new SoundClip( sound, {
+  initialOutputLevel: 0.1
+} ) );
 cardMovementSoundClips.forEach( soundClip => soundManager.addSoundGenerator( soundClip ) );
 
 // constants
