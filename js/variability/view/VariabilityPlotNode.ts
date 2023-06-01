@@ -70,10 +70,6 @@ export default class VariabilityPlotNode extends Node {
 
     toggleNode.nodes.forEach( node => node.insertChild( 0, intervalToolPlayAreaNode ) );
   }
-
-  public alignWithPlayAreaNumberLineNode( x: number ): void {
-    this.toggleNode.nodes.forEach( plotNode => plotNode.alignWithPlayAreaNumberLineNode( x ) );
-  }
 }
 
 centerAndVariability.register( 'VariabilityPlotNode', VariabilityPlotNode );

@@ -213,10 +213,6 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
 
     this.plotToggleNode = plotToggleNode;
   }
-
-  public alignWithPlayAreaNumberLineNode( x: number ): void {
-    this.plotToggleNode.nodes.forEach( plotNode => plotNode.alignWithPlayAreaNumberLineNode( x ) );
-  }
 }
 
 centerAndVariability.register( 'VariabilityAccordionBox', VariabilityAccordionBox );

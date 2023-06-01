@@ -104,10 +104,6 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
 
     this.medianPlotNode = meanAndMedianPlotNode;
   }
-
-  public alignWithPlayAreaNumberLineNode( x: number ): void {
-    this.medianPlotNode.alignWithPlayAreaNumberLineNode( x );
-  }
 }
 
 centerAndVariability.register( 'MeanAndMedianAccordionBox', MeanAndMedianAccordionBox );

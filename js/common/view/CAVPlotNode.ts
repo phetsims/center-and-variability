@@ -134,18 +134,6 @@ export default class CAVPlotNode extends Node {
   public reset(): void {
     // No implementation because this node is powered by the model. Reset needed for uniformity with CardNodeContainer.
   }
-
-  // Assumes this node has been added to the scene graph, so we can use the scene graph to determine the coordinate transforms
-  public alignWithPlayAreaNumberLineNode( x: number ): void {
-
-    const numberLineGlobalBounds = this.numberLineNode.globalBounds;
-    const globalOffset = x - numberLineGlobalBounds.x;
-
-    // This wouldn't be correct if there were a scale transform, but there isn't.
-    // Also, if either number line had children that went out of bounds, it would throw off
-    // this calculation
-    this.translate( globalOffset, 0 );
-  }
 }
 
 centerAndVariability.register( 'CAVPlotNode', CAVPlotNode );

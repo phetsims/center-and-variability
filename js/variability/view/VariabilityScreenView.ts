@@ -84,8 +84,6 @@ export default class VariabilityScreenView extends CAVScreenView {
     );
     this.setAccordionBox( variabilityAccordionBox );
 
-    variabilityAccordionBox.alignWithPlayAreaNumberLineNode( this.playAreaNumberLineNode.globalBounds.x );
-
     ManualConstraint.create( this, [ variabilityMeasureRadioButtonGroup, this.accordionBox! ],
       ( variabilityRadioButtonGroupWrapper, accordionBoxWrapper ) => {
         variabilityRadioButtonGroupWrapper.top = accordionBoxWrapper.top + 8;
