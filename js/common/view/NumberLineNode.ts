@@ -115,7 +115,10 @@ export default class NumberLineNode extends Node {
     Multilink.multilink( [ meanValueProperty, isMeanIndicatorVisibleProperty ],
       ( meanValue, isMeanIndicatorVisible ) => {
         if ( meanValue !== null ) {
-          meanIndicatorNode.centerTop = new Vector2( modelViewTransform.modelToViewX( meanValue ), 0 ).plusXY( -CAVConstants.NUMBER_LINE_MARGIN_X, 0 );
+
+          // Account for the overall offset of the number line node itself (leftmost tick mark)
+          const x = modelViewTransform.modelToViewX( meanValue ) - modelViewTransform.modelToViewX( CAVConstants.PHYSICAL_RANGE.min );
+          meanIndicatorNode.centerTop = new Vector2( x, 0 );
         }
         meanIndicatorNode.visible = isMeanIndicatorVisible && meanValue !== null;
       } );
