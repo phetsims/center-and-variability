@@ -14,9 +14,10 @@ import MADNode from './MADNode.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import NumberLineNode from '../../common/view/NumberLineNode.js';
 
 export default class MADInfoNode extends VBox {
-  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
+  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
 
     const hasEnoughDataProperty = new DerivedProperty( [ sceneModel.numberOfDataPointsProperty ], numberOfDataPoints => numberOfDataPoints >= 1 );
 
@@ -96,7 +97,7 @@ export default class MADInfoNode extends VBox {
           ]
         } ),
 
-        new MADNode( model, sceneModel, {
+        new MADNode( model, sceneModel, playAreaNumberLineNode, {
           parentContext: 'info',
           tandem: options.tandem.createTandem( 'madNode' )
         } )

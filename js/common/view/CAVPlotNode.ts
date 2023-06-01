@@ -8,7 +8,7 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import { ManualConstraint, Node, NodeOptions, TColor, Text } from '../../../../scenery/js/imports.js';
+import { ManualConstraint, MatrixBetweenProperty, Node, NodeOptions, TColor, Text } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import CAVSceneModel from '../model/CAVSceneModel.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
@@ -39,7 +39,7 @@ export default class CAVPlotNode extends Node {
   public readonly modelViewTransform: ModelViewTransform2;
   private readonly numberLineNode: NumberLineNode;
 
-  public constructor( model: CAVModel, sceneModel: CAVSceneModel, providedOptions?: CAVPlotNodeOptions ) {
+  public constructor( model: CAVModel, sceneModel: CAVSceneModel, playAreaNumberLineNode: NumberLineNode, providedOptions?: CAVPlotNodeOptions ) {
 
     const options = optionize<CAVPlotNodeOptions, SelfOptions, NodeOptions>()( {
       excludeInvisibleChildrenFromBounds: true
@@ -111,6 +111,23 @@ export default class CAVPlotNode extends Node {
       } );
 
       this.dotLayer.addChild( dataPointLayer );
+    } );
+
+    // Align with the play are number line node, based on the tick mark locations
+    const matrixBetweenProperty = new MatrixBetweenProperty( playAreaNumberLineNode.tickMarkSet, this.numberLineNode.tickMarkSet );
+
+    matrixBetweenProperty.link( matrix => {
+
+      if ( matrix ) {
+
+        const deltaX = matrix.getTranslation().x;
+        if ( deltaX !== 0 ) {
+
+          // Convert to the this.parent coordinate frame
+          const localDeltaX = this.numberLineNode.tickMarkSet.getUniqueTrailTo( this ).getTransform().transformDeltaX( deltaX );
+          this.x += localDeltaX;
+        }
+      }
     } );
   }
 

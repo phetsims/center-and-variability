@@ -13,6 +13,7 @@ import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import CAVColors from '../../common/CAVColors.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import NumberLineNode from '../../common/view/NumberLineNode.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
@@ -20,12 +21,12 @@ type SelfOptions = {
 type MADNodeOptions = SelfOptions & StrictOmit<CAVPlotNodeOptions, 'dataPointFill'>;
 
 export default class MADNode extends CAVPlotNode {
-  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, providedOptions: MADNodeOptions ) {
+  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, providedOptions: MADNodeOptions ) {
 
     const options = optionize<MADNodeOptions, SelfOptions, CAVPlotNodeOptions>()( {
       dataPointFill: CAVColors.grayDataPointFill
     }, providedOptions );
-    super( model, sceneModel, options );
+    super( model, sceneModel, playAreaNumberLineNode, options );
 
     const needAtLeastOneKickText = new Text( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {
       fontSize: 18,

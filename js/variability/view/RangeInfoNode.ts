@@ -11,9 +11,10 @@ import centerAndVariability from '../../centerAndVariability.js';
 import RangeNode from './RangeNode.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
+import NumberLineNode from '../../common/view/NumberLineNode.js';
 
 export default class RangeInfoNode extends VBox {
-  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
+  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
 
     const hasEnoughDataProperty = new DerivedProperty( [ sceneModel.numberOfDataPointsProperty ], numberOfDataPoints => numberOfDataPoints >= 1 );
     super( {
@@ -39,7 +40,7 @@ export default class RangeInfoNode extends VBox {
           range: sceneModel.rangeValueProperty
         } ), { fontSize: 18, visibleProperty: hasEnoughDataProperty, maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH } ),
 
-        new RangeNode( model, sceneModel, {
+        new RangeNode( model, sceneModel, playAreaNumberLineNode, {
           parentContext: 'info',
           tandem: options.tandem.createTandem( 'rangeNode' )
         } )

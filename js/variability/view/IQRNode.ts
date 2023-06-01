@@ -13,6 +13,7 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import CAVConstants, { SHOW_OUTLIERS_PROPERTY } from '../../common/CAVConstants.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import NumberLineNode from '../../common/view/NumberLineNode.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
@@ -20,13 +21,13 @@ type SelfOptions = {
 type IQRNodeOptions = SelfOptions & StrictOmit<CAVPlotNodeOptions, 'dataPointFill'>;
 
 export default class IQRNode extends CAVPlotNode {
-  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, providedOptions: IQRNodeOptions ) {
+  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, providedOptions: IQRNodeOptions ) {
 
     const options = optionize<IQRNodeOptions, SelfOptions, CAVPlotNodeOptions>()( {
       dataPointFill: CAVColors.grayDataPointFill
     }, providedOptions );
 
-    super( model, sceneModel, options );
+    super( model, sceneModel, playAreaNumberLineNode, options );
 
     const needAtLeastFiveKicksText = new Text( CenterAndVariabilityStrings.needAtLeastFiveKicksStringProperty, {
       fontSize: 18,

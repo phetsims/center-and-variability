@@ -12,21 +12,22 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
+import NumberLineNode from '../../common/view/NumberLineNode.js';
 
 export default class InfoDialog extends Dialog {
-  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
+  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
 
     const content = new ToggleNode( model.selectedVariabilityMeasureProperty, [ {
       value: VariabilityMeasure.RANGE,
-      createNode: tandem => new RangeInfoNode( model, sceneModel, { tandem: tandem } ),
+      createNode: tandem => new RangeInfoNode( model, sceneModel, playAreaNumberLineNode, { tandem: tandem } ),
       tandemName: 'rangeInfoNode'
     }, {
       value: VariabilityMeasure.IQR,
-      createNode: tandem => new IQRInfoNode( model, sceneModel, { tandem: tandem } ),
+      createNode: tandem => new IQRInfoNode( model, sceneModel, playAreaNumberLineNode, { tandem: tandem } ),
       tandemName: 'iqrInfoNode'
     }, {
       value: VariabilityMeasure.MAD,
-      createNode: tandem => new MADInfoNode( model, sceneModel, { tandem: tandem } ),
+      createNode: tandem => new MADInfoNode( model, sceneModel, playAreaNumberLineNode, { tandem: tandem } ),
       tandemName: 'madInfoNode'
     } ], {
       tandem: options.tandem.createTandem( 'infoNode' ),

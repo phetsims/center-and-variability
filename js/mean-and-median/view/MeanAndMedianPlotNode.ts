@@ -16,6 +16,7 @@ import CAVPlotNode, { CAVPlotNodeOptions } from '../../common/view/CAVPlotNode.j
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
 import CAVObjectType from '../../common/model/CAVObjectType.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import NumberLineNode from '../../common/view/NumberLineNode.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeanAndMedianPlotNodeOptions = SelfOptions & CAVPlotNodeOptions & PickRequired<CAVPlotNodeOptions, 'tandem'>;
@@ -27,8 +28,8 @@ export default class MeanAndMedianPlotNode extends CAVPlotNode {
     barStyle: 'continuous'
   } );
 
-  public constructor( model: MeanAndMedianModel, sceneModel: CAVSceneModel, options: MeanAndMedianPlotNodeOptions ) {
-    super( model, sceneModel, options );
+  public constructor( model: MeanAndMedianModel, sceneModel: CAVSceneModel, playAreaNumberLineNode: NumberLineNode, options: MeanAndMedianPlotNodeOptions ) {
+    super( model, sceneModel, playAreaNumberLineNode, options );
 
     this.addChild( this.medianBarNode );
 

@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
-import { AlignGroup, Node, Text, TPaint, VBox } from '../../../../scenery/js/imports.js';
+import { AlignGroup, Text, TPaint, VBox } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
@@ -19,11 +19,12 @@ import CAVColors from '../../common/CAVColors.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import AccordionBoxTitleText from '../../common/view/AccordionBoxTitleText.js';
+import NumberLineNode from '../../common/view/NumberLineNode.js';
 
 export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
   private readonly medianPlotNode: MeanAndMedianPlotNode;
 
-  public constructor( model: MeanAndMedianModel, layoutBounds: Bounds2, tandem: Tandem, top: number, playAreaNumberLineNode: Node ) {
+  public constructor( model: MeanAndMedianModel, layoutBounds: Bounds2, tandem: Tandem, top: number, playAreaNumberLineNode: NumberLineNode ) {
     const iconGroup = new AlignGroup();
     const textGroup = new AlignGroup();
 
@@ -34,7 +35,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
     // There is only one scene in the mean and median screen
     const sceneModel = model.selectedSceneModelProperty.value;
 
-    const meanAndMedianPlotNode = new MeanAndMedianPlotNode( model, sceneModel, {
+    const meanAndMedianPlotNode = new MeanAndMedianPlotNode( model, sceneModel, playAreaNumberLineNode, {
       dataPointFill: 'black',
       tandem: tandem.createTandem( 'plotNode' )
     } ).mutate( {

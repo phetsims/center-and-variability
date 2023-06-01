@@ -75,7 +75,13 @@ export default class VariabilityScreenView extends CAVScreenView {
       tandem: options.tandem.createTandem( 'variabilityIntervalPredictionTool2ValueNode' )
     }, predictionSliderOptions ) ) );
 
-    const variabilityAccordionBox = new VariabilityAccordionBox( model, this.layoutBounds, options.tandem.createTandem( 'accordionBox' ), this.questionBar.bottom + CAVConstants.SCREEN_VIEW_Y_MARGIN );
+    const variabilityAccordionBox = new VariabilityAccordionBox(
+      model,
+      this.layoutBounds,
+      options.tandem.createTandem( 'accordionBox' ),
+      this.questionBar.bottom + CAVConstants.SCREEN_VIEW_Y_MARGIN,
+      this.playAreaNumberLineNode
+    );
     this.setAccordionBox( variabilityAccordionBox );
 
     variabilityAccordionBox.alignWithPlayAreaNumberLineNode( this.playAreaNumberLineNode.globalBounds.x );
@@ -126,7 +132,7 @@ export default class VariabilityScreenView extends CAVScreenView {
       // The infoDialog only exists in the VariabilityScreen, so having CAVScreenView be in charge of creating custom subclasses
       // of CAVSceneView is overcomplicated and unnecessary. Instead, we create an equivalent tandem, so that it will appear
       // under the appropriate sceneView in the studio tree.
-      const infoDialog = new InfoDialog( model, sceneModel, {
+      const infoDialog = new InfoDialog( model, sceneModel, this.playAreaNumberLineNode, {
         tandem: options.tandem.createTandem( `${CAVConstants.SCENE_VIEW_TANDEM}${index + 1}` ).createTandem( 'infoDialog' )
       } );
 

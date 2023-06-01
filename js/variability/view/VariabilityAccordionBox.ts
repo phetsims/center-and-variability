@@ -23,12 +23,13 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import VariabilityMeasureCheckbox from './VariabilityMeasureCheckbox.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import AccordionBoxTitleText from '../../common/view/AccordionBoxTitleText.js';
+import NumberLineNode from '../../common/view/NumberLineNode.js';
 
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 
   private readonly plotToggleNode: ToggleNode<CAVSceneModel, VariabilityPlotNode>;
 
-  public constructor( model: VariabilityModel, layoutBounds: Bounds2, tandem: Tandem, top: number ) {
+  public constructor( model: VariabilityModel, layoutBounds: Bounds2, tandem: Tandem, top: number, playAreaNumberLineNode: NumberLineNode ) {
 
     // Specify a "footprint" within which we do all the layout.
     const backgroundShape = CAVConstants.ACCORDION_BOX_CONTENTS_SHAPE_VARIABILITY;
@@ -46,7 +47,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     const contents = _.range( 4 ).map( i => {
       return {
         value: model.sceneModels[ i ],
-        createNode: ( tandem: Tandem ) => new VariabilityPlotNode( model, model.variabilitySceneModels[ i ], {
+        createNode: ( tandem: Tandem ) => new VariabilityPlotNode( model, model.variabilitySceneModels[ i ], playAreaNumberLineNode, {
           tandem: tandem.createTandem( `plotNode${i + 1}` ),
           bottom: backgroundShape.bounds.height
         } )
