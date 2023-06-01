@@ -1,4 +1,4 @@
-// Copyright 2022, University of Colorado Boulder
+// Copyright 2023, University of Colorado Boulder
 
 /**
  * FilteredSoundClip is used to produce sounds for the slider that controls photon intensity.  It is
