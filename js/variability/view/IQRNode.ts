@@ -276,8 +276,8 @@ export default class IQRNode extends CAVPlotNode {
         iqrRectangle.bottom = options.parentContext === 'info' ? boxWhiskerNode.y + 0.5 * BOX_HEIGHT : floor;
 
         const iqrBarY = options.parentContext === 'info' ?
-                        Math.min( minLabelTextNode.y, q1LabelTextNode.y, q3LabelTextNode.y, maxLabelTextNode.y ) + 8
-                                                         : iqrRectangle.top - MedianBarNode.NOTCH_HEIGHT - 14;
+                        Math.min( minLabelTextNode.y, q1LabelTextNode.y, q3LabelTextNode.y, maxLabelTextNode.y ) + 12
+                                                         : iqrRectangle.top - MedianBarNode.NOTCH_HEIGHT - 16;
 
         iqrBar.setMedianBarShape( iqrBarY, iqrRectangle.left, 0, iqrRectangle.right, false );
         iqrBarLabel.string = sceneModel.iqrValueProperty.value!;
