@@ -58,10 +58,8 @@ export default class MedianHighlightLayer extends Node {
       }
     };
 
-    // TODO: Only listen to the position once the ball lands in the play area, see https://github.com/phetsims/center-and-variability/issues/188
     sceneModel.soccerBalls.forEach( soccerBall => {
       soccerBall.isMedianObjectProperty.link( update );
-      soccerBall.positionProperty.link( update );
     } );
 
     isPlayAreaMedianVisibleProperty.link( update );
