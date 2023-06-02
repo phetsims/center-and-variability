@@ -60,6 +60,7 @@ export default class MedianHighlightLayer extends Node {
 
     sceneModel.soccerBalls.forEach( soccerBall => {
       soccerBall.isMedianObjectProperty.link( update );
+      soccerBall.valueProperty.link( update );
     } );
 
     isPlayAreaMedianVisibleProperty.link( update );
