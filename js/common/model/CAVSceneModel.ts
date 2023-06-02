@@ -101,7 +101,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
 
   // During a reset, do not update data measures for every soccer ball.
   // This is to avoid performance issues when the data is cleared.
-  private isClearingData = false;
+  public isClearingData = false;
 
   public constructor(
     public readonly maxKicksProperty: TReadOnlyProperty<number>,

@@ -216,6 +216,12 @@ export default class IQRNode extends CAVPlotNode {
     };
 
     const updateIQRNode = () => {
+
+      // Avoid inconsistent intermediate states during a clear, but note that this will be called immediately
+      // after clearing, see https://github.com/phetsims/center-and-variability/issues/240
+      if ( sceneModel.isClearingData ) {
+        return;
+      }
       const sortedValues = sceneModel.getSortedStackedObjects().map( object => object.valueProperty.value! );
 
       const outlierValues = SHOW_OUTLIERS_PROPERTY.value ? _.uniq( sortedValues.filter( isOutlier ) ) : [];
