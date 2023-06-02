@@ -136,14 +136,18 @@ export default class IQRNode extends CAVPlotNode {
     const maxLabelTextNode = boxWhiskerLabelText( CAVColors.iqrLabelColorProperty, CenterAndVariabilityStrings.maxStringProperty, false );
     const q1LabelTextNode = boxWhiskerLabelText( CAVColors.iqrLabelColorProperty, CenterAndVariabilityStrings.q1StringProperty, true );
     const q3LabelTextNode = boxWhiskerLabelText( CAVColors.iqrLabelColorProperty, CenterAndVariabilityStrings.q3StringProperty, true );
+    const medianLabelTextNode = boxWhiskerLabelText( CAVColors.medianColorProperty, CenterAndVariabilityStrings.medianStringProperty, false );
 
     const minLabelNode = boxWhiskerLabel( CAVColors.iqrLabelColorProperty, minLabelTextNode );
     const maxLabelNode = boxWhiskerLabel( CAVColors.iqrLabelColorProperty, maxLabelTextNode );
     const q1LabelNode = boxWhiskerLabel( CAVColors.iqrLabelColorProperty, q1LabelTextNode );
     const q3LabelNode = boxWhiskerLabel( CAVColors.iqrLabelColorProperty, q3LabelTextNode );
+    const medianLabelTextNodeContainer = new Node( { children: [ medianLabelTextNode ] } );
 
+    medianLabelTextNodeContainer.visible = false;
     medianArrowNode.y = -31;
     q1LabelNode.y = q3LabelNode.y = minLabelNode.y = maxLabelNode.y = -35;
+    medianLabelTextNode.y = -35;
 
     const outlierDisplay = new Node( { y: 17 } );
 
@@ -157,6 +161,7 @@ export default class IQRNode extends CAVPlotNode {
     boxWhiskerNode.addChild( q3LabelNode );
     boxWhiskerNode.addChild( minLabelNode );
     boxWhiskerNode.addChild( maxLabelNode );
+    boxWhiskerNode.addChild( medianLabelTextNodeContainer );
     boxWhiskerNode.addChild( medianArrowNode );
     boxWhiskerNode.addChild( outlierDisplay );
 
@@ -178,6 +183,17 @@ export default class IQRNode extends CAVPlotNode {
         ARROW_LABEL_TEXT_OFFSET_DEFAULT
       ];
 
+      const quartileLabelsStacked = Math.abs( q1LabelNode.x - q3LabelNode.x ) < widthTolerance;
+      medianLabelTextNodeContainer.visible = quartileLabelsStacked;
+
+      if ( quartileLabelsStacked ) {
+        elementsToCheck.splice( 2, 0, medianLabelTextNodeContainer );
+        verticalOffsets.push( ARROW_LABEL_TEXT_OFFSET_DEFAULT );
+
+        medianLabelTextNodeContainer.x = q1LabelNode.x;
+        medianLabelTextNodeContainer.y = q1LabelNode.y;
+      }
+
       for ( let i = 0; i < elementsToCheck.length; i++ ) {
         for ( let j = i + 1; j < elementsToCheck.length; j++ ) {
           if ( Math.abs( elementsToCheck[ i ].x - elementsToCheck[ j ].x ) < widthTolerance ) {
@@ -187,6 +203,9 @@ export default class IQRNode extends CAVPlotNode {
       }
 
       const elementsToResolve = [ minLabelTextNode, q1LabelTextNode, q3LabelTextNode, maxLabelTextNode ];
+      if ( quartileLabelsStacked ) {
+        elementsToResolve.splice( 2, 0, medianLabelTextNodeContainer );
+      }
       for ( let i = 0; i < elementsToResolve.length; i++ ) {
         elementsToResolve[ i ].y = verticalOffsets[ i ];
       }
