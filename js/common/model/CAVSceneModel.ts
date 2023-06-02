@@ -266,7 +266,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
 
     this.soccerBalls.forEach( soccerBall => {
       soccerBall.valueProperty.link( updateDataMeasures );
-      soccerBall.positionProperty.link( updateDataMeasures );
+      soccerBall.soccerBallPhaseProperty.link( updateDataMeasures );
     } );
 
     maxKicksProperty.link( maxKicks => this.clearData() );
@@ -278,7 +278,6 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
   }
 
   protected updateDataMeasures(): void {
-
     if ( this.isClearingData ) {
       return;
     }
@@ -388,7 +387,8 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
   }
 
   public getSortedLandedObjects(): SoccerBall[] {
-    return _.sortBy( this.getActiveSoccerBalls().filter( soccerBall => soccerBall.valueProperty.value !== null ),
+    return _.sortBy( this.getActiveSoccerBalls().filter( soccerBall =>
+        soccerBall.valueProperty.value !== null && soccerBall.soccerBallPhaseProperty.value === AnimationMode.STACKED ),
 
       // The numerical value takes precedence for sorting
       soccerBall => soccerBall.valueProperty.value,
