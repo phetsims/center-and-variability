@@ -56,7 +56,7 @@ export default class DataPointNode extends CAVObjectNode {
     } );
     this.addChild( this.medianHighlight );
 
-    const circle = new Circle( viewRadius, {
+    const circle = new Circle( 0.9 * viewRadius, {
       fill: providedOptions.fill,
       center: Vector2.ZERO
     } );
