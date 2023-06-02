@@ -199,7 +199,9 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     this.soccerBalls.forEach( soccerBall => {
       soccerBall.soccerBallPhaseProperty.link( soccerBallPhase => {
         if ( soccerBallPhase === AnimationMode.STACKED ) {
-          this.soccerBallCountProperty.value = this.getActiveSoccerBalls().length;
+          this.soccerBallCountProperty.value =
+            this.getActiveSoccerBalls().filter( soccerBall =>
+              soccerBall.soccerBallPhaseProperty.value === AnimationMode.STACKED ).length;
         }
       } );
     } );
