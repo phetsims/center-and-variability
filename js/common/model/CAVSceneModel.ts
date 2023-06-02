@@ -197,8 +197,10 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     } );
 
     this.soccerBalls.forEach( soccerBall => {
-      soccerBall.isActiveProperty.link( isActive => {
-        this.soccerBallCountProperty.value = this.getActiveSoccerBalls().length;
+      soccerBall.soccerBallPhaseProperty.link( soccerBallPhase => {
+        if ( soccerBallPhase === AnimationMode.STACKED ) {
+          this.soccerBallCountProperty.value = this.getActiveSoccerBalls().length;
+        }
       } );
     } );
 
@@ -530,6 +532,8 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
       soccerBall.animation.endedEmitter.addListener( () => {
         soccerBall.animation = null;
         soccerBall.soccerBallPhaseProperty.value = AnimationMode.STACKED;
+
+        this.objectChangedEmitter.emit();
 
         // During the state wrapper, sometimes the soccerBall.valueProperty.value was null, so it wasn't really supposed to be in the stack any longer
         if ( soccerBall.valueProperty.value === value ) {
