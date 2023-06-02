@@ -89,7 +89,7 @@ export default class IQRInfoNode extends VBox {
           q3: sceneModel.q3ValueProperty
         }, {
           // TODO: support number|null with `maps`, https://github.com/phetsims/center-and-variability/issues/237
-          maps: { q1: ( value: number | null ) => value === null ? 0 : value, q3: ( value: number | null ) => value === null ? 0 : value },
+          maps: { q1: value => value === null ? 0 : value, q3: value => value === null ? 0 : value },
           tandem: options.tandem.createTandem( 'iqrCalculation1StringProperty' )
         } ), {
           fontSize: 18,

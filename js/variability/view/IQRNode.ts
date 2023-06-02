@@ -14,7 +14,6 @@ import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import CAVConstants, { SHOW_OUTLIERS_PROPERTY } from '../../common/CAVConstants.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import NumberLineNode from '../../common/view/NumberLineNode.js';
-import Multilink from '../../../../axon/js/Multilink.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
