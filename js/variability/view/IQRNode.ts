@@ -78,13 +78,13 @@ export default class IQRNode extends CAVPlotNode {
     };
 
     const boxWhiskerLabelText = ( fillColor: ProfileColorProperty, labelTextProperty: TReadOnlyProperty<string>, isQuartile: boolean ) => {
-      const backgroundRectWidth = 28;
-      const backgroundRectHeight = 20;
+      const backgroundRectWidth = 25;
+      const backgroundRectHeight = 19;
       const textNodeChildren = [ ...( isQuartile ?
         [ new Rectangle( -0.5 * backgroundRectWidth, -0.5 * backgroundRectHeight, backgroundRectWidth, backgroundRectHeight,
           { fill: CAVColors.iqrColorProperty, cornerRadius: 5 } ) ] : [] ),
         new Text( labelTextProperty, {
-          fontSize: 16,
+          fontSize: 14,
           fill: fillColor,
           centerX: 0,
           centerY: 0
@@ -168,7 +168,7 @@ export default class IQRNode extends CAVPlotNode {
 
     const resolveTextLabelOverlaps = () => {
       const widthTolerance = 1;
-      const offsetY = -22;
+      const offsetY = -20;
       const elementsToCheck = [ minLabelNode, q1LabelNode, q3LabelNode, maxLabelNode ];
       const verticalOffsets = [
         ARROW_LABEL_TEXT_OFFSET_DEFAULT,
