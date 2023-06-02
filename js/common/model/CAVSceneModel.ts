@@ -518,6 +518,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     if ( otherObjectsInStack.length === 0 ) {
       soccerBall.soccerBallPhaseProperty.value = AnimationMode.STACKED;
       this.stackChangedEmitter.emit( [ soccerBall ] );
+      this.objectChangedEmitter.emit();
     }
     else {
       soccerBall.soccerBallPhaseProperty.value = AnimationMode.STACKING;
