@@ -43,7 +43,7 @@ export default class IQRNode extends CAVPlotNode {
     // This adds a top margin to the text, separating it from the info dialog subheading
     needAtLeastFiveKicksText.localBounds = needAtLeastFiveKicksText.localBounds.dilatedY( MIN_KICKS_TEXT_TOP_MARGIN );
 
-    const BOX_WHISKER_OFFSET_Y = options.parentContext === 'info' ? 3.5 : 3;
+    const BOX_WHISKER_OFFSET_Y = options.parentContext === 'info' ? 3.4 : 2.4;
     const BOX_HEIGHT = 25;
     const END_CAP_HEIGHT = 20;
     const BOX_STROKE_WIDTH = 2;
