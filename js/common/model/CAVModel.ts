@@ -97,8 +97,8 @@ export default class CAVModel {
 
     // These DynamicProperties allow us to track all the necessary scenes Properties for dragIndicator update, and not
     // just the first selectedScene
-    const selectedSceneSoccerBallCountProperty = new DynamicProperty<number, number, CAVSceneModel>( this.selectedSceneModelProperty, {
-      derive: 'soccerBallCountProperty'
+    const selectedSceneStackedSoccerBallCountProperty = new DynamicProperty<number, number, CAVSceneModel>( this.selectedSceneModelProperty, {
+      derive: 'stackedSoccerBallCountProperty'
     } );
     const selectedSceneMaxKicksProperty = new DynamicProperty<number, number, CAVSceneModel>( this.selectedSceneModelProperty, {
       derive: 'maxKicksProperty'
@@ -117,11 +117,11 @@ export default class CAVModel {
     // It is important to link to the values of all the soccer balls in the screen, so that the dragIndicator can be
     // updated after all the balls have landed, and not just after they have been kicked.
     Multilink.multilinkAny( [ ...allValueProperties, this.selectedSceneModelProperty,
-      this.soccerBallHasBeenDraggedProperty, selectedSceneSoccerBallCountProperty,
+      this.soccerBallHasBeenDraggedProperty, selectedSceneStackedSoccerBallCountProperty,
       selectedSceneMaxKicksProperty
     ], () => {
       this.updateDragIndicator( this.selectedSceneModelProperty.value, this.soccerBallHasBeenDraggedProperty.value,
-        selectedSceneSoccerBallCountProperty.value, selectedSceneMaxKicksProperty.value );
+        selectedSceneStackedSoccerBallCountProperty.value, selectedSceneMaxKicksProperty.value );
     } );
   }
 

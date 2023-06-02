@@ -124,7 +124,7 @@ export default class IQRInfoNode extends VBox {
         return;
       }
 
-      const sortedObjects = sceneModel.getSortedLandedObjects();
+      const sortedObjects = sceneModel.getSortedStackedObjects();
       const sortedData = sortedObjects.map( object => object.valueProperty.value );
 
       const dataValuesChildren: Node[] = [];

@@ -78,7 +78,7 @@ export default class VariabilitySceneModel extends CAVSceneModel {
   }
 
   public getDeviationTenths(): number[] {
-    const values = this.getSortedLandedObjects().map( landedObject => landedObject.valueProperty.value! );
+    const values = this.getSortedStackedObjects().map( landedObject => landedObject.valueProperty.value! );
     const deviations = values.map( value => Math.abs( value - this.meanValueProperty.value! ) );
     const tenths = deviations.map( deviation => Utils.roundToInterval( deviation, 0.1 ) );
     return tenths;
@@ -92,7 +92,7 @@ export default class VariabilitySceneModel extends CAVSceneModel {
     super.updateDataMeasures();
 
     if ( this.initialized ) {
-      const sortedObjects = this.getSortedLandedObjects();
+      const sortedObjects = this.getSortedStackedObjects();
 
       // if there is enough data to calculate quartiles
       if ( sortedObjects.length >= 5 ) {

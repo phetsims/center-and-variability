@@ -32,7 +32,7 @@ export default class MADInfoNode extends VBox {
     sceneModel.objectChangedEmitter.addListener( () => {
 
       const deviations = sceneModel.getDeviationTenths();
-      const denominator = sceneModel.getSortedLandedObjects().length;
+      const denominator = sceneModel.getSortedStackedObjects().length;
 
       numeratorText.string = deviations.join( ' + ' );
       denominatorText.string = denominator.toString();

@@ -105,7 +105,7 @@ export default class MeanAndMedianModel extends CAVModel {
 
   private updateAnimation(): void {
 
-    const sortedObjects = this.selectedSceneModelProperty.value.getSortedLandedObjects();
+    const sortedObjects = this.selectedSceneModelProperty.value.getSortedStackedObjects();
 
     for ( let i = 0; i < sortedObjects.length / 2; i++ ) {
       const isHighlighted = i === this.highlightAnimationIndex;

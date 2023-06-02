@@ -58,8 +58,8 @@ const TIME_BETWEEN_RAPID_KICKS = 0.5; // in seconds
 export default class CAVSceneModel extends PhetioObject implements TModel {
   public readonly soccerBalls: SoccerBall[];
 
-  // The number of active soccer balls (includes soccer balls created but not yet kicked)
-  public readonly soccerBallCountProperty: NumberProperty;
+  // The number of stacked soccer balls
+  public readonly stackedSoccerBallCountProperty: NumberProperty;
 
   // The max kickable (highest value in the combo box, if there is one)
   private readonly maxKicksLimit: number;
@@ -130,9 +130,9 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
 
     this.maxKicksLimit = Math.max( ...maxKicksChoices );
 
-    this.soccerBallCountProperty = new NumberProperty( 0, {
+    this.stackedSoccerBallCountProperty = new NumberProperty( 0, {
       range: new Range( 0, this.maxKicksLimit ),
-      tandem: options.tandem.createTandem( 'soccerBallCountProperty' )
+      tandem: options.tandem.createTandem( 'stackedSoccerBallCountProperty' )
     } );
     this.soccerBalls = _.range( 0, this.maxKicksLimit ).map( index => {
       const soccerBall = new SoccerBall( index === 0, {
@@ -199,7 +199,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     this.soccerBalls.forEach( soccerBall => {
       soccerBall.soccerBallPhaseProperty.link( soccerBallPhase => {
         if ( soccerBallPhase === AnimationMode.STACKED ) {
-          this.soccerBallCountProperty.value =
+          this.stackedSoccerBallCountProperty.value =
             this.getActiveSoccerBalls().filter( soccerBall =>
               soccerBall.soccerBallPhaseProperty.value === AnimationMode.STACKED ).length;
         }
@@ -242,13 +242,12 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     this.numberOfUnkickedBallsProperty = DerivedProperty.deriveAny( [
       this.maxKicksProperty,
       this.numberOfScheduledSoccerBallsToKickProperty,
-      ...this.soccerBalls.map( soccerBall => soccerBall.valueProperty ),
       ...this.soccerBalls.map( soccerBall => soccerBall.soccerBallPhaseProperty ) ], () => {
 
       const kickedSoccerBalls = this.getActiveSoccerBalls().filter(
-        soccerBall => soccerBall.valueProperty.value !== null ||
-                      soccerBall.soccerBallPhaseProperty.value === AnimationMode.FLYING ||
-                      soccerBall.soccerBallPhaseProperty.value === AnimationMode.STACKING
+        soccerBall => soccerBall.soccerBallPhaseProperty.value === AnimationMode.FLYING ||
+                      soccerBall.soccerBallPhaseProperty.value === AnimationMode.STACKING ||
+                      soccerBall.soccerBallPhaseProperty.value === AnimationMode.STACKED
       );
       const value = this.maxKicksProperty.value - kickedSoccerBalls.length - this.numberOfScheduledSoccerBallsToKickProperty.value;
 
@@ -286,7 +285,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
       return;
     }
 
-    const sortedObjects = this.getSortedLandedObjects();
+    const sortedObjects = this.getSortedStackedObjects();
     const medianObjects = CAVSceneModel.getMedianObjectsFromSortedArray( sortedObjects );
 
     this.soccerBalls.forEach( object => {
@@ -389,9 +388,9 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     this.resetEmitter.emit();
   }
 
-  public getSortedLandedObjects(): SoccerBall[] {
+  public getSortedStackedObjects(): SoccerBall[] {
     return _.sortBy( this.getActiveSoccerBalls().filter( soccerBall =>
-        soccerBall.valueProperty.value !== null && soccerBall.soccerBallPhaseProperty.value === AnimationMode.STACKED ),
+        soccerBall.soccerBallPhaseProperty.value === AnimationMode.STACKED ),
 
       // The numerical value takes precedence for sorting
       soccerBall => soccerBall.valueProperty.value,
