@@ -338,7 +338,10 @@ export default class CardNodeContainer extends Node {
     this.cardNodeCellsChangedEmitter.addListener( updateDragIndicator );
     this.hasDraggedCardProperty.link( updateDragIndicator );
 
-    const medianTextNode = new Text( new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty, { value: model.selectedSceneModelProperty.value.medianValueProperty } ), {
+    const medianTextNode = new Text( new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty, { value: model.selectedSceneModelProperty.value.medianValueProperty }, {
+      tandem: options.tandem.createTandem( 'medianStringProperty' ),
+      maps: { value: ( value: number | null ) => value === null ? 0 : value }
+    } ), {
       font: CAVConstants.MAIN_FONT,
       maxWidth: 300
     } );

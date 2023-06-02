@@ -116,7 +116,9 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       tandemName: 'rangeReadoutToggleNode',
       createNode: tandem => {
         const rangeReadoutPatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.rangeEqualsValuePatternStringProperty,
-          { value: rangeValueProperty }
+          { value: rangeValueProperty }, {
+            tandem: tandem.createTandem( 'rangeEqualsValueStringProperty' )
+          }
         );
 
         const rangeReadoutText = new VariabilityReadoutText( rangeReadoutPatternStringProperty, {
@@ -138,7 +140,9 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       createNode: tandem => {
 
         const medianReadoutPatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty,
-          { value: medianValueProperty }
+          { value: medianValueProperty }, {
+            tandem: tandem.createTandem( 'medianEqualsValueStringProperty' )
+          }
         );
         const medianReadoutText = new VariabilityReadoutText( medianReadoutPatternStringProperty, {
           fill: CAVColors.medianColorProperty,
@@ -146,7 +150,9 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         } );
 
         const iqrReadoutPatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.iqrEqualsValuePatternStringProperty,
-          { value: iqrValueProperty }
+          { value: iqrValueProperty }, {
+            tandem: tandem.createTandem( 'iqrEqualsValueStringProperty' )
+          }
         );
         const iqrReadoutText = new VariabilityReadoutText( iqrReadoutPatternStringProperty, {
           fill: CAVColors.iqrLabelColorProperty,
@@ -170,10 +176,14 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       createNode: tandem => {
 
         const meanReadoutPatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.meanEqualsValuePatternStringProperty,
-          { value: meanValueProperty }
+          { value: meanValueProperty }, {
+            tandem: tandem.createTandem( 'meanEqualsValueStringProperty' )
+          }
         );
         const madReadoutPatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.madEqualsValuePatternStringProperty,
-          { value: madValueProperty }
+          { value: madValueProperty }, {
+            tandem: tandem.createTandem( 'madEqualsValueStringProperty' )
+          }
         );
 
         const meanReadoutText = new VariabilityReadoutText( meanReadoutPatternStringProperty, {

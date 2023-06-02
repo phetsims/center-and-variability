@@ -35,9 +35,17 @@ export default class RangeInfoNode extends VBox {
         new Text( new PatternStringProperty( CenterAndVariabilityStrings.rangeCalculationPatternStringProperty, {
           max: sceneModel.maxValueProperty,
           min: sceneModel.minValueProperty
+        }, {
+          // TODO: support number|null with `maps`, https://github.com/phetsims/center-and-variability/issues/237
+          maps: { max: ( value: number | null ) => value === null ? 0 : value, min: ( value: number | null ) => value === null ? 0 : value },
+          tandem: options.tandem.createTandem( 'rangeCalculationStringProperty' )
         } ), { fontSize: 18, visibleProperty: hasEnoughDataProperty, maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH } ),
         new Text( new PatternStringProperty( CenterAndVariabilityStrings.rangeCalculationResultPatternStringProperty, {
           range: sceneModel.rangeValueProperty
+        }, {
+          // TODO: support number|null with `maps`, https://github.com/phetsims/center-and-variability/issues/237
+          maps: { range: ( value: number | null ) => value === null ? 0 : value },
+          tandem: options.tandem.createTandem( 'rangeCalculationResultStringProperty' )
         } ), { fontSize: 18, visibleProperty: hasEnoughDataProperty, maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH } ),
 
         new RangeNode( model, sceneModel, playAreaNumberLineNode, {
