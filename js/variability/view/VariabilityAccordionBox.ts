@@ -206,6 +206,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     super( backgroundNode, {
       tandem: tandem,
       titleNode: new AccordionBoxTitleText( accordionBoxTitleProperty ),
+      expandedProperty: model.isAccordionBoxExpandedProperty,
 
       // Leave space for the radio buttons at the left
       left: 65

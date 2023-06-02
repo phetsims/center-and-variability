@@ -7,20 +7,18 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { Node, Path } from '../../../../scenery/js/imports.js';
 import { Shape } from '../../../../kite/js/imports.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 type SelfOptions = EmptySelfOptions;
 
 export type CAVAccordionBoxOptions =
   SelfOptions
-  & StrictOmit<AccordionBoxOptions, 'expandedProperty'>
-  & PickRequired<AccordionBoxOptions, 'tandem'>;
+  & WithRequired<AccordionBoxOptions, 'tandem' | 'expandedProperty'>;
 
 // constants
 export const CONTENT_MARGIN = 10;

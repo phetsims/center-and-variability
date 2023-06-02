@@ -98,7 +98,8 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
         titleNode: new AccordionBoxTitleText( CenterAndVariabilityStrings.distanceInMetersStringProperty ),
         tandem: tandem,
         top: top,
-        centerX: layoutBounds.centerX
+        centerX: layoutBounds.centerX,
+        expandedProperty: model.isAccordionBoxExpandedProperty
       }
     );
 

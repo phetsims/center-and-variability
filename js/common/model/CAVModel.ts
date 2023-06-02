@@ -42,7 +42,13 @@ export default class CAVModel {
   public readonly selectedSceneModelProperty: Property<CAVSceneModel>;
   public readonly soccerBallHasBeenDraggedProperty: Property<boolean>;
 
+  public readonly isAccordionBoxExpandedProperty: Property<boolean>;
+
   public constructor( public readonly maxKicksProperty: Property<number>, public readonly sceneModels: CAVSceneModel[], options: CAVModelOptions ) {
+
+    this.isAccordionBoxExpandedProperty = new BooleanProperty( true, {
+      tandem: options.tandem.createTandem( 'isAccordionBoxExpandedProperty' )
+    } );
 
     this.isPlayAreaMeanVisibleProperty = new BooleanProperty( false, {
       tandem: options.instrumentMeanPredictionProperty ? options.tandem.createTandem( 'isPlayAreaMeanVisibleProperty' ) : Tandem.OPT_OUT
@@ -173,6 +179,8 @@ export default class CAVModel {
     this.soccerBallHasBeenDraggedProperty.reset();
 
     this.maxKicksProperty.reset();
+
+    this.isAccordionBoxExpandedProperty.reset();
   }
 }
 
