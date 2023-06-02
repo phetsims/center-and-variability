@@ -14,6 +14,7 @@ import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import CAVConstants, { SHOW_OUTLIERS_PROPERTY } from '../../common/CAVConstants.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import NumberLineNode from '../../common/view/NumberLineNode.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
@@ -295,10 +296,19 @@ export default class IQRNode extends CAVPlotNode {
       outlierDisplay.setChildren( outlierDisplayChildren );
     };
 
-    sceneModel.objectChangedEmitter.addListener( updateIQRNode );
+    sceneModel.maxValueProperty.link( updateIQRNode );
+    sceneModel.minValueProperty.link( updateIQRNode );
+
+    Multilink.multilink( [ sceneModel.q1ValueProperty, sceneModel.q3ValueProperty ], ( q1Value, q3Value ) => {
+      if ( ( q1Value !== null && q3Value !== null ) || ( q1Value === null && q3Value === null ) ) {
+        updateIQRNode();
+      }
+    } );
+
+    sceneModel.medianValueProperty.link( updateIQRNode );
+    sceneModel.numberOfDataPointsProperty.link( updateIQRNode );
     model.isIQRVisibleProperty.link( updateIQRNode );
     model.selectedVariabilityMeasureProperty.link( updateIQRNode );
-    sceneModel.numberOfDataPointsProperty.link( updateIQRNode );
     SHOW_OUTLIERS_PROPERTY.link( updateIQRNode );
   }
 }
