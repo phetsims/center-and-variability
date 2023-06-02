@@ -114,14 +114,14 @@ export default class MADNode extends CAVPlotNode {
           if ( options.parentContext === 'info' ) {
             const distanceToMean = Math.abs( dot.valueProperty.value! - sceneModel.meanValueProperty.value! );
             const text = new Text( Utils.toFixed( distanceToMean, 1 ), {
-              font: new PhetFont( 13 ),
+              font: new PhetFont( 10 ),
               centerBottom: line.centerTop
             } );
             children.push( text );
           }
 
           // Enough spacing so they don't overlap the bottom row of data points
-          y += options.parentContext === 'info' ? 15 : 4.2;
+          y += options.parentContext === 'info' ? 11 : 4.2;
         } );
       }
 
