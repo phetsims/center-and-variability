@@ -340,7 +340,6 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     return stacks.map( stack => stack[ stack.length - 1 ] );
   }
 
-  // TODO: Set the drag indicator arrow visible only after the last ball has finished animating - see https://github.com/phetsims/center-and-variability/issues/188
   /**
    * Set the position of the parameter object to be on top of the other objects at that target position.
    * Cease all animations in the stack and reorganize the stack.
