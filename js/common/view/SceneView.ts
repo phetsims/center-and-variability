@@ -9,7 +9,7 @@
 
 import { Node } from '../../../../scenery/js/imports.js';
 import SoccerBallNode from './SoccerBallNode.js';
-import { AnimationMode } from '../model/AnimationMode.js';
+import { SoccerBallPhase } from '../model/SoccerBallPhase.js';
 import CAVSceneModel from '../model/CAVSceneModel.js';
 import SoccerPlayerNode, { SoccerPlayerImageSet } from './SoccerPlayerNode.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -54,12 +54,11 @@ export default class SceneView {
     } );
 
     // Keep soccer balls in one layer so we can control the focus order
-    const frontLayer = new Node( );
+    const frontLayer = new Node();
 
     sceneModel.soccerBalls.map( ( soccerBall, index ) => {
       const soccerBallNode = new SoccerBallNode(
         soccerBall,
-        sceneModel.isVisibleProperty,
         modelViewTransform,
         model.objectNodesInputEnabledProperty, {
           tandem: options.tandem.createTandem( 'soccerBallNodes' ).createTandem( `soccerBallNode${index + 1}` ),
@@ -69,14 +68,14 @@ export default class SceneView {
       backLayerSoccerBallLayer.addChild( soccerBallNode );
 
       // While flying, it should be in front in z-order, to be in front of the accordion box
-      soccerBall.soccerBallPhaseProperty.lazyLink( ( animationMode, oldAnimationMode ) => {
+      soccerBall.soccerBallPhaseProperty.lazyLink( ( soccerBallPhase, oldSoccerBallPhase ) => {
 
         //when the ball is kicked
-        if ( animationMode === AnimationMode.FLYING ) {
+        if ( soccerBallPhase === SoccerBallPhase.FLYING ) {
           backLayerSoccerBallLayer.removeChild( soccerBallNode );
           frontLayer.addChild( soccerBallNode );
         }
-        else if ( oldAnimationMode === AnimationMode.FLYING ) {
+        else if ( oldSoccerBallPhase === SoccerBallPhase.FLYING ) {
           frontLayer.removeChild( soccerBallNode );
           backLayerSoccerBallLayer.addChild( soccerBallNode );
         }

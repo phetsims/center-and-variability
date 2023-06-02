@@ -11,9 +11,10 @@ import centerAndVariability from '../../centerAndVariability.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import Multilink from '../../../../axon/js/Multilink.js';
-import { AnimationMode } from '../../common/model/AnimationMode.js';
+import { SoccerBallPhase } from '../../common/model/SoccerBallPhase.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
 
 type SelfOptions = EmptySelfOptions;
 type CardModelOptions = SelfOptions & PhetioObjectOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
@@ -21,21 +22,15 @@ type CardModelOptions = SelfOptions & PhetioObjectOptions & PickRequired<PhetioO
 export default class CardModel {
 
   public readonly soccerBall: SoccerBall;
-  public readonly isActiveProperty: BooleanProperty;
+  public readonly isActiveProperty: TReadOnlyProperty<boolean>;
 
   public constructor( soccerBall: SoccerBall, options: CardModelOptions ) {
     this.soccerBall = soccerBall;
-    this.isActiveProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isActiveProperty' )
+    this.isActiveProperty = new DerivedProperty( [ soccerBall.soccerBallPhaseProperty ], phase =>
+      phase === SoccerBallPhase.STACKED || phase === SoccerBallPhase.STACKING, {
+      tandem: options.tandem.createTandem( 'isActiveProperty' ),
+      phetioValueType: BooleanIO
     } );
-
-    Multilink.multilink( [
-        soccerBall.isActiveProperty,
-        soccerBall.soccerBallPhaseProperty,
-        soccerBall.valueProperty ],
-      ( isActive, animationMode, value ) => {
-        this.isActiveProperty.value = isActive && animationMode !== AnimationMode.FLYING && value !== null;
-      } );
   }
 }
 

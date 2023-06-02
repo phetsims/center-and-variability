@@ -3,14 +3,13 @@
 import CAVObjectNode, { CAVObjectNodeOptions } from './CAVObjectNode.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import SoccerBall from '../model/SoccerBall.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import { DragListener, Image, Node } from '../../../../scenery/js/imports.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
-import { AnimationMode } from '../model/AnimationMode.js';
+import { SoccerBallPhase } from '../model/SoccerBallPhase.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import ballDark_png from '../../../images/ballDark_png.js';
 import ball_png from '../../../images/ball_png.js';
@@ -22,14 +21,16 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import NumberTone from '../model/NumberTone.js';
 import { Shape } from '../../../../kite/js/imports.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 type ParentOptions = CAVObjectNodeOptions & AccessibleSliderOptions;
 
 export default class SoccerBallNode extends AccessibleSlider( CAVObjectNode, 3 ) {
 
-  public constructor( soccerBall: SoccerBall, isSceneVisibleProperty: TReadOnlyProperty<boolean>,
-                      modelViewTransform: ModelViewTransform2, objectNodesInputEnabledProperty: TProperty<boolean>,
+  public constructor( soccerBall: SoccerBall,
+                      modelViewTransform: ModelViewTransform2,
+                      objectNodesInputEnabledProperty: TProperty<boolean>,
                       providedOptions: CAVObjectNodeOptions ) {
 
     // Use the y dimension, since it determines how the soccer balls stack. But maintain the same aspect ratio as the image
@@ -55,7 +56,11 @@ export default class SoccerBallNode extends AccessibleSlider( CAVObjectNode, 3 )
       shiftKeyboardStep: 1,
       pageKeyboardStep: 5,
       roundToStepSize: true,
-      enabledProperty: enabledProperty
+      enabledProperty: enabledProperty,
+
+      // Data point should be visible if the soccer ball landed
+      visibleProperty: new DerivedProperty( [ soccerBall.soccerBallPhaseProperty ], phase =>
+        phase !== SoccerBallPhase.INACTIVE )
     }, providedOptions );
 
     super( soccerBall, modelViewTransform, CAVObjectType.SOCCER_BALL.radius, options );
@@ -132,7 +137,7 @@ export default class SoccerBallNode extends AccessibleSlider( CAVObjectNode, 3 )
     Multilink.multilink(
       [ soccerBall.soccerBallPhaseProperty, soccerBall.valueProperty, selfInputEnabledProperty, objectNodesInputEnabledProperty ],
       ( mode, value, selfInputEnabled, objectsInputEnabled ) => {
-        const inputEnabled = value !== null && mode === AnimationMode.STACKED && selfInputEnabled && objectsInputEnabled;
+        const inputEnabled = value !== null && mode === SoccerBallPhase.STACKED && selfInputEnabled && objectsInputEnabled;
 
         // if input is disabled and the ball is in the play area, show the darker version
         const showEnabledSoccerBall = selfInputEnabled && objectsInputEnabled;
@@ -146,11 +151,11 @@ export default class SoccerBallNode extends AccessibleSlider( CAVObjectNode, 3 )
     this.addChild( soccerBallNodes );
 
     // Data point should be visible if the soccer ball is active AND if the scene is visible.
-    Multilink.multilink( [ soccerBall.isActiveProperty, isSceneVisibleProperty ], ( isActive, isSceneVisible ) => {
-
-      // TODO: https://github.com/phetsims/center-and-variability/issues/162 do we still need isSceneVisible?
-      this.visible = isActive && isSceneVisible;
-    } );
+    // Multilink.multilink( [ soccerBall.isActiveProperty, isSceneVisibleProperty ], ( isActive, isSceneVisible ) => {
+    //
+    //   // TODO: https://github.com/phetsims/center-and-variability/issues/162 do we still need isSceneVisible?
+    //   this.visible = isActive && isSceneVisible;
+    // } );
 
     soccerBall.soccerBallLandedEmitter.addListener( () => {
       this.moveToFront();

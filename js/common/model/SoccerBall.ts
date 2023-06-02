@@ -19,14 +19,11 @@ import CAVConstants from '../CAVConstants.js';
 import Property from '../../../../axon/js/Property.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import Emitter from '../../../../axon/js/Emitter.js';
-import { AnimationMode } from './AnimationMode.js';
+import { SoccerBallPhase } from './SoccerBallPhase.js';
 import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import TEmitter from '../../../../axon/js/TEmitter.js';
 import SoccerPlayer from './SoccerPlayer.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import NumberTone from './NumberTone.js';
 
@@ -46,7 +43,7 @@ export default class SoccerBall extends PhetioObject {
   // Continuous position during animation. After landing, it's discrete.
   public readonly positionProperty: Vector2Property;
   public readonly velocityProperty: Vector2Property;
-  public readonly soccerBallPhaseProperty: Property<AnimationMode>;
+  public readonly soccerBallPhaseProperty: Property<SoccerBallPhase>;
   public readonly isMedianObjectProperty: BooleanProperty;
   public readonly isQ1ObjectProperty: BooleanProperty;
   public readonly isQ3ObjectProperty: BooleanProperty;
@@ -62,7 +59,6 @@ export default class SoccerBall extends PhetioObject {
   public readonly resetEmitter: TEmitter = new Emitter();
 
   public animation: Animation | null = null;
-  public readonly isActiveProperty: TReadOnlyProperty<boolean>;
   public soccerPlayer: SoccerPlayer | null = null;
 
   // Global index for debugging
@@ -87,7 +83,7 @@ export default class SoccerBall extends PhetioObject {
     this.velocityProperty = new Vector2Property( new Vector2( 0, 0 ), {
       tandem: options.tandem.createTandem( 'velocityProperty' )
     } );
-    this.soccerBallPhaseProperty = new EnumerationProperty( isFirstSoccerBall ? AnimationMode.READY : AnimationMode.INACTIVE, {
+    this.soccerBallPhaseProperty = new EnumerationProperty( isFirstSoccerBall ? SoccerBallPhase.READY : SoccerBallPhase.INACTIVE, {
       tandem: options.tandem.createTandem( 'soccerBallPhaseProperty' )
     } );
     this.dragPositionProperty = new Vector2Property( this.positionProperty.value.copy() );
@@ -107,11 +103,6 @@ export default class SoccerBall extends PhetioObject {
     this.isAnimationHighlightVisibleProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isAnimationHighlightVisibleProperty' )
     } );
-    this.isActiveProperty = new DerivedProperty( [ this.soccerBallPhaseProperty ],
-      soccerBallPhase => soccerBallPhase !== AnimationMode.INACTIVE, {
-        tandem: options.tandem.createTandem( 'isActiveProperty' ),
-        phetioValueType: BooleanIO
-      } );
     this.targetXProperty = new Property<number | null>( null, {
       tandem: options.tandem.createTandem( 'targetXProperty' ),
       phetioValueType: NullableIO( NumberIO )
@@ -127,7 +118,7 @@ export default class SoccerBall extends PhetioObject {
   }
 
   public step( dt: number ): void {
-    if ( this.soccerBallPhaseProperty.value === AnimationMode.FLYING ) {
+    if ( this.soccerBallPhaseProperty.value === SoccerBallPhase.FLYING ) {
 
       assert && assert( this.targetXProperty.value !== null, 'targetXProperty.value should be non-null when animating' );
 

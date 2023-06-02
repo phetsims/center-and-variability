@@ -12,7 +12,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import { Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
 import SoccerBall from '../model/SoccerBall.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import { AnimationMode } from '../model/AnimationMode.js';
+import { SoccerBallPhase } from '../model/SoccerBallPhase.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -50,8 +50,8 @@ export default class CAVObjectNode extends Node {
     // The initial ready-to-kick ball is full opacity. The rest of the balls waiting to be kicked are lower opacity so
     // they don't look like part of the data set, but still look kickable.
     Multilink.multilink( [ soccerBall.valueProperty, soccerBall.soccerBallPhaseProperty ],
-      ( value, animationMode ) => {
-        this.opacity = ( value === null && animationMode === AnimationMode.READY && !soccerBall.isFirstSoccerBall ) ? 0.4 : 1;
+      ( value, soccerBallPhase ) => {
+        this.opacity = ( value === null && soccerBallPhase === SoccerBallPhase.READY && !soccerBall.isFirstSoccerBall ) ? 0.4 : 1;
       } );
   }
 

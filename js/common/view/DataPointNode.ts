@@ -10,10 +10,11 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import timesSolidShape from '../../../../sherpa/js/fontawesome-5/timesSolidShape.js';
 import CAVConstants, { DATA_POINT_SCALE_PROPERTY } from '../CAVConstants.js';
 import PlotType from '../model/PlotType.js';
-import Multilink from '../../../../axon/js/Multilink.js';
 import CAVColors from '../CAVColors.js';
 import Property from '../../../../axon/js/Property.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import { SoccerBallPhase } from '../model/SoccerBallPhase.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 type DataPointNodeOptions = CAVObjectNodeOptions & { fill: TColor };
 
@@ -35,9 +36,15 @@ export default class DataPointNode extends CAVObjectNode {
       translationProperty.value = modelViewTransform.modelToViewPosition( scaledPosition );
     };
 
-    super( soccerBall, modelViewTransform, CAVObjectType.DATA_POINT.radius, optionize<DataPointNodeOptions, EmptySelfOptions, CAVObjectNodeOptions>()( {
-      translationStrategy: translationStrategy
-    }, providedOptions ) );
+    const options = optionize<DataPointNodeOptions, EmptySelfOptions, CAVObjectNodeOptions>()( {
+      translationStrategy: translationStrategy,
+
+      // Data point should be visible if the soccer ball landed
+      visibleProperty: new DerivedProperty( [ soccerBall.soccerBallPhaseProperty ], phase =>
+        phase === SoccerBallPhase.STACKED || phase === SoccerBallPhase.STACKING )
+    }, providedOptions );
+
+    super( soccerBall, modelViewTransform, CAVObjectType.DATA_POINT.radius, options );
 
     DATA_POINT_SCALE_PROPERTY.link( scale => {
       this.setScaleMagnitude( scale );
@@ -82,11 +89,6 @@ export default class DataPointNode extends CAVObjectNode {
     } );
 
     this.addChild( node );
-
-    // Data point should be visible if the soccer ball is active AND if the soccer ball took a non-null value.
-    Multilink.multilink( [ soccerBall.isActiveProperty, soccerBall.valueProperty ], ( isActive, value ) => {
-      this.visible = isActive && value !== null;
-    } );
 
     super.addDebugText( soccerBall );
   }

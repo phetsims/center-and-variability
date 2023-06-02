@@ -37,7 +37,7 @@ import CAVObjectType from '../model/CAVObjectType.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import { AnimationMode } from '../model/AnimationMode.js';
+import { SoccerBallPhase } from '../model/SoccerBallPhase.js';
 
 type SelfOptions = {
   questionBarOptions: StrictOmit<QuestionBarOptions, 'tandem'>;
@@ -255,7 +255,7 @@ export default class CAVScreenView extends ScreenView {
   private getTopObjectPositionY( value: number ): number {
     const sceneModel = this.model.selectedSceneModelProperty.value;
     const ballsAtLocation = sceneModel.soccerBalls.filter( soccerBall =>
-      soccerBall.valueProperty.value === value && soccerBall.soccerBallPhaseProperty.value === AnimationMode.STACKED );
+      soccerBall.valueProperty.value === value && soccerBall.soccerBallPhaseProperty.value === SoccerBallPhase.STACKED );
     const modelHeight = ballsAtLocation.length * CAVObjectType.SOCCER_BALL.radius * 2 * ( 1 - CAVConstants.SOCCER_BALL_OVERLAP );
     const viewHeight = this.modelViewTransform.modelToViewDeltaY( modelHeight );
     return this.modelViewTransform.modelToViewY( 0 ) + viewHeight;
