@@ -17,6 +17,7 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import Utils from '../../../../dot/js/Utils.js';
+import Emitter from '../../../../axon/js/Emitter.js';
 
 export default class VariabilitySceneModel extends CAVSceneModel {
 
@@ -29,6 +30,7 @@ export default class VariabilitySceneModel extends CAVSceneModel {
   public readonly madValueProperty: Property<number | null>;
 
   private readonly initialized: boolean = false;
+  public readonly variabilityDataMeasuresUpdatedEmitter: Emitter = new Emitter();
 
   public constructor( maxKicksProperty: TReadOnlyProperty<number>, kickDistanceStrategy: TKickDistanceStrategy, options: { tandem: Tandem } ) {
     super( maxKicksProperty, CAVConstants.MAX_KICKS_VALUES, kickDistanceStrategy, options );
@@ -128,6 +130,8 @@ export default class VariabilitySceneModel extends CAVSceneModel {
         // The calculation is rounded to tenths to match the values that are displayed on the scene
         this.madValueProperty.value = sortedObjects.length === 0 ? null : Utils.roundToInterval( this.getSumOfDeviationTenths() / sortedObjects.length, 0.1 );
       }
+
+      this.variabilityDataMeasuresUpdatedEmitter.emit();
     }
   }
 

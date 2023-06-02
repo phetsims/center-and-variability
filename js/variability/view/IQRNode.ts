@@ -236,6 +236,12 @@ export default class IQRNode extends CAVPlotNode {
       boxWhiskerBox.rectWidth = boxRight - boxLeft;
 
       if ( min && max ) {
+
+        if ( !SHOW_OUTLIERS_PROPERTY.value ) {
+          assert && assert( min === sceneModel.minValueProperty.value, 'min should be the same as the scene model' );
+          assert && assert( max === sceneModel.maxValueProperty.value, 'max should be the same as the scene model' );
+        }
+
         const minPositionX = this.modelViewTransform.modelToViewX( min );
         const maxPositionX = this.modelViewTransform.modelToViewX( max );
 
@@ -292,20 +298,13 @@ export default class IQRNode extends CAVPlotNode {
       outlierDisplay.setChildren( outlierDisplayChildren );
     };
 
-    sceneModel.maxValueProperty.link( updateIQRNode );
-    sceneModel.minValueProperty.link( updateIQRNode );
-
-    Multilink.multilink( [ sceneModel.q1ValueProperty, sceneModel.q3ValueProperty ], ( q1Value, q3Value ) => {
-      if ( ( q1Value !== null && q3Value !== null ) || ( q1Value === null && q3Value === null ) ) {
-        updateIQRNode();
-      }
-    } );
-
-    sceneModel.medianValueProperty.link( updateIQRNode );
-    sceneModel.numberOfDataPointsProperty.link( updateIQRNode );
     model.isIQRVisibleProperty.link( updateIQRNode );
     model.selectedVariabilityMeasureProperty.link( updateIQRNode );
     SHOW_OUTLIERS_PROPERTY.link( updateIQRNode );
+
+    // It's important to avoid inconsistent intermediate states during the updateDataMeasures calculation, so we
+    // only update once it's complete
+    sceneModel.variabilityDataMeasuresUpdatedEmitter.addListener( updateIQRNode );
   }
 }
 
