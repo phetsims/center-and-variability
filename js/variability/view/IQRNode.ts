@@ -198,35 +198,15 @@ export default class IQRNode extends CAVPlotNode {
     };
 
     const updateIQRNode = () => {
-      const sortedDots = _.sortBy( sceneModel.getActiveSoccerBalls().filter( object => object.valueProperty.value !== null ),
-        object => object.valueProperty.value );
+      const sortedValues = _.sortBy( sceneModel.getActiveSoccerBalls().filter( object => object.valueProperty.value !== null ),
+        object => object.valueProperty.value ).map( object => object.valueProperty.value! );
 
-      const outlierValues: number[] = [];
-      sortedDots.map( object => object.valueProperty.value ).forEach( value => {
-        if ( value !== null && !outlierValues.includes( value ) && isOutlier( value ) ) {
-          outlierValues.push( value );
-        }
-      } );
+      const outlierValues = _.uniq( sortedValues.filter( isOutlier ) );
+      const dataPointsWithoutOutliers = sortedValues.filter( value => !outlierValues.includes( value ) );
 
-      let leftmostDot = SHOW_OUTLIERS_PROPERTY.value ? null : sortedDots[ 0 ];
-      let rightmostDot = SHOW_OUTLIERS_PROPERTY.value ? null : sortedDots[ sortedDots.length - 1 ];
-
-      // do not include outliers in the box plot drawing if this property is checked
-      if ( SHOW_OUTLIERS_PROPERTY.value ) {
-        for ( let i = 0; i < sortedDots.length; i++ ) {
-          if ( leftmostDot === null && !outlierValues.includes( sortedDots[ i ].valueProperty.value! ) ) {
-            leftmostDot = sortedDots[ i ];
-            break;
-          }
-        }
-
-        for ( let i = sortedDots.length - 1; i >= 0; i-- ) {
-          if ( rightmostDot === null && !outlierValues.includes( sortedDots[ i ].valueProperty.value! ) ) {
-            rightmostDot = sortedDots[ i ];
-            break;
-          }
-        }
-      }
+      // Note these min and max do not account for outliers, since it is for drawing the box and whisker
+      const min = dataPointsWithoutOutliers[ 0 ];
+      const max = dataPointsWithoutOutliers[ dataPointsWithoutOutliers.length - 1 ];
 
       const boxLeft = this.modelViewTransform.modelToViewX( sceneModel.q1ValueProperty.value! );
       const boxRight = this.modelViewTransform.modelToViewX( sceneModel.q3ValueProperty.value! );
@@ -237,9 +217,7 @@ export default class IQRNode extends CAVPlotNode {
       boxWhiskerBox.left = boxLeft - 0.5 * BOX_STROKE_WIDTH;
       boxWhiskerBox.rectWidth = boxRight - boxLeft;
 
-      if ( leftmostDot && rightmostDot ) {
-        const min = leftmostDot.valueProperty.value!;
-        const max = rightmostDot.valueProperty.value!;
+      if ( min && max ) {
         const minPositionX = this.modelViewTransform.modelToViewX( min );
         const maxPositionX = this.modelViewTransform.modelToViewX( max );
 
