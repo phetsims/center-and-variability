@@ -217,10 +217,9 @@ export default class IQRNode extends CAVPlotNode {
     };
 
     const updateIQRNode = () => {
-      const sortedValues = _.sortBy( sceneModel.getActiveSoccerBalls().filter( object => object.valueProperty.value !== null ),
-        object => object.valueProperty.value ).map( object => object.valueProperty.value! );
+      const sortedValues = sceneModel.getSortedStackedObjects().map( object => object.valueProperty.value! );
 
-      const outlierValues = _.uniq( sortedValues.filter( isOutlier ) );
+      const outlierValues = SHOW_OUTLIERS_PROPERTY.value ? _.uniq( sortedValues.filter( isOutlier ) ) : [];
       const dataPointsWithoutOutliers = sortedValues.filter( value => !outlierValues.includes( value ) );
 
       // Note these min and max do not account for outliers, since it is for drawing the box and whisker
