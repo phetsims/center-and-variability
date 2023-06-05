@@ -243,6 +243,9 @@ export default class IQRNode extends CAVPlotNode {
       if ( min && max ) {
 
         if ( !SHOW_OUTLIERS_PROPERTY.value ) {
+
+          // We took extra measures to make sure this update is not called with a transient intermediate value.
+          // These assertions double check that work.
           assert && assert( min === sceneModel.minValueProperty.value, 'min should be the same as the scene model' );
           assert && assert( max === sceneModel.maxValueProperty.value, 'max should be the same as the scene model' );
         }
