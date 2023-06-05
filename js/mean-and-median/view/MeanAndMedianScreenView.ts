@@ -58,7 +58,7 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
       tandem: this.tandem.createTandem( 'bottomCheckboxGroup' )
     } ) );
 
-    this.contentLayer.addChild( new PredictionSlider( model.meanPredictionProperty, this.modelViewTransform, CAVConstants.PHYSICAL_RANGE, {
+    this.backScreenViewLayer.addChild( new PredictionSlider( model.meanPredictionProperty, this.modelViewTransform, CAVConstants.PHYSICAL_RANGE, {
       predictionThumbNodeOptions: {
         color: CAVColors.meanColorProperty,
         style: 'arrow'
@@ -69,7 +69,7 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
       visibleProperty: model.isMeanPredictionVisibleProperty,
       tandem: options.tandem.createTandem( 'meanPredictionNode' )
     } ) );
-    this.contentLayer.addChild( CAVScreenView.createMedianPredictionNode(
+    this.backScreenViewLayer.addChild( CAVScreenView.createMedianPredictionNode(
       model,
       this.modelViewTransform,
       options.tandem.createTandem( 'medianPredictionNode' )

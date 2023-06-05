@@ -54,7 +54,7 @@ export default class MedianScreenView extends CAVScreenView {
       tandem: this.tandem.createTandem( 'bottomCheckboxGroup' )
     } ) );
 
-    this.contentLayer.addChild( CAVScreenView.createMedianPredictionNode(
+    this.backScreenViewLayer.addChild( CAVScreenView.createMedianPredictionNode(
       model,
       this.modelViewTransform,
       options.tandem.createTandem( 'medianPredictionNode' )

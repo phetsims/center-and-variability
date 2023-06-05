@@ -25,12 +25,12 @@ import MedianHighlightLayer from './MedianHighlightLayer.js';
 
 /**
  * Renders view elements for a CAVSceneModel. Note that to satisfy the correct z-ordering, elements
- * populate the backObjectLayer and frontObjectLayer in the parent.
+ * populate the accordionBoxLayer and frontScreenViewLayer in the parent.
  */
 export default class SceneView {
 
-  public readonly backLayer: Node;
-  public readonly frontLayer: Node;
+  public readonly backSceneViewLayer: Node;
+  public readonly frontSceneViewLayer: Node;
 
   private accordionBox: CAVAccordionBox | null = null;
 
@@ -147,8 +147,8 @@ export default class SceneView {
 
     soccerPlayerNodes.forEach( soccerPlayerNode => frontLayer.addChild( soccerPlayerNode ) );
 
-    this.backLayer = backLayer;
-    this.frontLayer = frontLayer;
+    this.backSceneViewLayer = backLayer;
+    this.frontSceneViewLayer = frontLayer;
   }
 
   public setAccordionBox( accordionBox: CAVAccordionBox ): void {
