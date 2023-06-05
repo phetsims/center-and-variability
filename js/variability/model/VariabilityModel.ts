@@ -80,7 +80,7 @@ export default class VariabilityModel extends CAVModel {
       range: CAVConstants.VARIABILITY_DRAG_RANGE,
       tandem: options.tandem.createTandem( 'intervalTool1ValueProperty' )
     } );
-    this.intervalTool2ValueProperty = new NumberProperty( 3, {
+    this.intervalTool2ValueProperty = new NumberProperty( 3.4, {
       range: CAVConstants.VARIABILITY_DRAG_RANGE,
       tandem: options.tandem.createTandem( 'intervalTool2ValueProperty' )
     } );

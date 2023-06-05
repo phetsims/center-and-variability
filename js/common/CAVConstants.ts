@@ -35,7 +35,7 @@ export const MAX_KICKS_CONFIG = [
   { kicks: 15, scale: 0.98 },
   { kicks: 20, scale: 0.98 },
   { kicks: 25, scale: 0.91 },
-  { kicks: 30, scale: 0.83 }
+  { kicks: 30, scale: 0.84 }
 ];
 
 const MAIN_FONT = new PhetFont( 16 );
