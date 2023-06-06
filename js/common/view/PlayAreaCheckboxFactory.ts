@@ -23,6 +23,8 @@ import VariabilityModel from '../../variability/model/VariabilityModel.js';
 import CAVModel from '../model/CAVModel.js';
 import MeanAndMedianModel from '../../mean-and-median/model/MeanAndMedianModel.js';
 import IntervalToolIconNode from '../../variability/view/IntervalToolIconNode.js';
+import NumberTone from '../model/NumberTone.js';
+import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-players/checkboxCheckedSoundPlayer.js';
 
 // constants
 const TEXT_OPTIONS = {
@@ -73,7 +75,24 @@ export default class PlayAreaCheckboxFactory {
           } ), alignGroup );
       },
       property: model.isPlayAreaMedianVisibleProperty,
-      tandemName: 'medianCheckbox'
+      tandemName: 'medianCheckbox',
+
+      options: {
+        checkedSoundPlayer: {
+          play: () => {
+            const median = model.selectedSceneModelProperty.value.medianValueProperty.value;
+            if ( median !== null ) {
+              NumberTone.playMedian( median );
+            }
+            else {
+              checkboxCheckedSoundPlayer.play();
+            }
+          },
+          stop: () => {
+            // nothing to do since those are short-term clips
+          }
+        }
+      }
     };
   }
 
