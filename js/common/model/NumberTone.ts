@@ -4,13 +4,30 @@ import numberTone2_mp3 from '../../../sounds/numberTone2_mp3.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import centerAndVariability from '../../centerAndVariability.js';
+import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 
 // TODO: Create one per ball? One per location? Or multiple? See https://github.com/phetsims/center-and-variability/issues/217
 
+const INITIAL_OUTPUT_LEVEL = 0.1;
 const soundClip = new SoundClip( numberTone2_mp3, {
-  initialOutputLevel: 0.1
+  initialOutputLevel: INITIAL_OUTPUT_LEVEL
 } );
 soundManager.addSoundGenerator( soundClip );
+
+const medianFilter = new BiquadFilterNode( phetAudioContext, {
+  type: 'bandpass',
+  Q: 0.5
+} );
+
+const medianSoundClip = new SoundClip( numberTone2_mp3, {
+
+  // For unknown reasons, the initial output level must be set on the originating sound clip, to
+  // volume match it
+  initialOutputLevel: INITIAL_OUTPUT_LEVEL,
+  additionalAudioNodes: [ medianFilter ]
+} );
+
+soundManager.addSoundGenerator( medianSoundClip );
 
 const toPlaybackSpeed = ( value: number ): number => {
   return value === 1 ? Math.pow( 2, 0 / 12 ) : // C
@@ -51,12 +68,25 @@ const toPlaybackSpeed = ( value: number ): number => {
          -1;
 };
 
+
 export default class NumberTone {
   public static play( value: number ): void {
     const playbackSpeed = toPlaybackSpeed( value );
 
     soundClip.setPlaybackRate( playbackSpeed );
     soundClip.play();
+  }
+
+  public static playMedian( value: number ): void {
+    const playbackSpeed = toPlaybackSpeed( value );
+
+    const E3 = 164.81; // Hz
+    const frequency = E3 * playbackSpeed;
+
+    medianFilter.frequency.setTargetAtTime( frequency, phetAudioContext.currentTime, 0 );
+
+    medianSoundClip.setPlaybackRate( playbackSpeed );
+    medianSoundClip.play();
   }
 }
 

@@ -40,7 +40,6 @@ import NumberTone from '../../common/model/NumberTone.js';
 import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
-import FilteredSoundClip from '../../common/view/FilteredSoundClip.js';
 
 import cvCardMovementSound1_mp3 from '../../../sounds/cv-card-movement-sounds-001_mp3.js'; // eslint-disable-line default-import-match-filename
 import cvCardMovementSound2_mp3 from '../../../sounds/cv-card-movement-sounds-002_mp3.js'; // eslint-disable-line default-import-match-filename
@@ -68,14 +67,13 @@ const cardMovementSounds = [
   cvCardMovementSound7_mp3
 ];
 
-const cardMovementSoundClips = cardMovementSounds.map( sound => new FilteredSoundClip( new SoundClip( sound ), {
+const cardMovementSoundClips = cardMovementSounds.map( sound => new SoundClip( sound, {
   initialOutputLevel: 0.4,
-  filterEnabled: true,
-  filter: new BiquadFilterNode( phetAudioContext, {
+  additionalAudioNodes: [ new BiquadFilterNode( phetAudioContext, {
     frequency: 750,
     Q: 0.5,
     type: 'lowpass'
-  } )
+  } ) ]
 } ) );
 cardMovementSoundClips.forEach( soundClip => soundManager.addSoundGenerator( soundClip ) );
 

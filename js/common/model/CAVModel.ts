@@ -68,9 +68,8 @@ export default class CAVModel {
       tandem: options.tandem.createTandem( 'medianPredictionProperty' )
     } );
 
-
     this.medianPredictionProperty.link( median => {
-      NumberTone.play( median );
+      NumberTone.playMedian( median );
     } );
 
     this.selectedSceneModelProperty = new Property( sceneModels[ 0 ], {
