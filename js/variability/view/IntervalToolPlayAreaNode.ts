@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import centerAndVariability from '../../centerAndVariability.js';
-import { Rectangle, Node, Line, NodeOptions, DragListener } from '../../../../scenery/js/imports.js';
+import { DragListener, Line, Node, NodeOptions, Rectangle } from '../../../../scenery/js/imports.js';
 import CAVColors from '../../common/CAVColors.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
@@ -95,10 +95,12 @@ export default class IntervalToolPlayAreaNode extends Node {
 
       // If the change was triggered by the drag listener, then we want to keep the distance between the two values constant.
       if ( distanceBetweenToolValues !== null ) {
+        const value2 = value.x + distanceBetweenToolValues;
+        assert && assert( value2 > -0.001 && value2 < 16.001, `The intervalToolValue2Property is outside of it's range: ${value2}` );
 
         // The dragBounds makes sure neither of these exceeds the bounds.
-        intervalToolValue1Property.value = value.x;
-        intervalToolValue2Property.value = value.x + distanceBetweenToolValues;
+        intervalToolValue1Property.value = intervalToolValue1Property.range.constrainValue( value.x );
+        intervalToolValue2Property.value = intervalToolValue2Property.range.constrainValue( value2 );
       }
 
       updateDragBounds();
