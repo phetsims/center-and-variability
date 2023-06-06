@@ -51,6 +51,7 @@ import cvCardMovementSound6_mp3 from '../../../sounds/cv-card-movement-sounds-00
 import cvCardMovementSound7_mp3 from '../../../sounds/cv-card-movement-sounds-007_mp3.js'; // eslint-disable-line default-import-match-filename
 import cvSuccessOptions007Shorter_mp3 from '../../../sounds/cv-success-options-007-shorter_mp3.js'; // eslint-disable-line default-import-match-filename
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
+import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 
 const cvSuccessOptions007ShorterSoundClip = new SoundClip( cvSuccessOptions007Shorter_mp3, {
   initialOutputLevel: 0.2
@@ -68,7 +69,13 @@ const cardMovementSounds = [
 ];
 
 const cardMovementSoundClips = cardMovementSounds.map( sound => new FilteredSoundClip( new SoundClip( sound ), {
-  initialOutputLevel: 0.4
+  initialOutputLevel: 0.4,
+  filterEnabled: true,
+  filter: new BiquadFilterNode( phetAudioContext, {
+    frequency: 750,
+    Q: 0.5,
+    type: 'lowpass'
+  } )
 } ) );
 cardMovementSoundClips.forEach( soundClip => soundManager.addSoundGenerator( soundClip ) );
 

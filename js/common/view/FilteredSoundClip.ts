@@ -8,38 +8,38 @@
  */
 
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import TSoundPlayer from '../../../../tambo/js/TSoundPlayer.js';
 import SoundGenerator, { SoundGeneratorOptions } from '../../../../tambo/js/sound-generators/SoundGenerator.js';
 import centerAndVariability from '../../centerAndVariability.js';
 
 // types for options
-type SelfOptions = EmptySelfOptions;
+type SelfOptions = {
+  filter: {
+    connect: ( gainNode: GainNode ) => void;
+  } & ( AudioParam | AudioNode );
+  filterEnabled?: boolean;
+};
+
 type FilteredSoundClipOptions = SelfOptions & SoundGeneratorOptions;
 
 export default class FilteredSoundClip extends SoundGenerator implements TSoundPlayer {
   private soundClip: SoundClip;
 
-  public constructor( soundClip: SoundClip, providedOptions?: FilteredSoundClipOptions ) {
+  public constructor( soundClip: SoundClip, providedOptions: FilteredSoundClipOptions ) {
 
-    const options = optionize<FilteredSoundClipOptions, SelfOptions, SoundGeneratorOptions>()( {}, providedOptions );
+    const options = optionize<FilteredSoundClipOptions, SelfOptions, SoundGeneratorOptions>()( {
+      filterEnabled: true
+    }, providedOptions );
 
     super( options );
 
-    // Create a low-pass filter that will change as the solar intensity changes.
-    const lowPassFilter = new BiquadFilterNode( phetAudioContext );
-    lowPassFilter.type = 'lowpass';
-    lowPassFilter.frequency.value = 750;
-    lowPassFilter.Q.value = 0.5;
-
-    // Connect the filter to the audio output path.
-    lowPassFilter.connect( this.masterGainNode );
+    const filter = options.filter;
+    filter.connect( this.masterGainNode );
 
     // Hook up the sound clips to the filter.
-    const useFiltering = true;
-    if ( useFiltering ) {
-      soundClip.connect( lowPassFilter );
+    if ( options.filterEnabled ) {
+      soundClip.connect( filter );
     }
     else {
       soundClip.connect( this.masterGainNode );
