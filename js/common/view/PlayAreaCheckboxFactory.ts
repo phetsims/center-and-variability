@@ -25,6 +25,7 @@ import MeanAndMedianModel from '../../mean-and-median/model/MeanAndMedianModel.j
 import IntervalToolIconNode from '../../variability/view/IntervalToolIconNode.js';
 import NumberTone from '../model/NumberTone.js';
 import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-players/checkboxCheckedSoundPlayer.js';
+import TSoundPlayer from '../../../../tambo/js/TSoundPlayer.js';
 
 // constants
 const TEXT_OPTIONS = {
@@ -60,7 +61,25 @@ export default class PlayAreaCheckboxFactory {
     };
   }
 
+  public static getMedianCheckedSoundPlayer( model: CAVModel ): TSoundPlayer {
+    return {
+      play: () => {
+        const median = model.selectedSceneModelProperty.value.medianValueProperty.value;
+        if ( median !== null ) {
+          NumberTone.playMedian( median );
+        }
+        else {
+          checkboxCheckedSoundPlayer.play();
+        }
+      },
+      stop: () => {
+        // nothing to do since those are short-term clips
+      }
+    };
+  }
+
   public static getMedianCheckboxItem( alignGroup: AlignGroup, model: CAVModel ): VerticalCheckboxGroupItem {
+
     return {
       createNode: ( tandem: Tandem ) => {
         return PlayAreaCheckboxFactory.createGridBox(
@@ -78,20 +97,7 @@ export default class PlayAreaCheckboxFactory {
       tandemName: 'medianCheckbox',
 
       options: {
-        checkedSoundPlayer: {
-          play: () => {
-            const median = model.selectedSceneModelProperty.value.medianValueProperty.value;
-            if ( median !== null ) {
-              NumberTone.playMedian( median );
-            }
-            else {
-              checkboxCheckedSoundPlayer.play();
-            }
-          },
-          stop: () => {
-            // nothing to do since those are short-term clips
-          }
-        }
+        checkedSoundPlayer: PlayAreaCheckboxFactory.getMedianCheckedSoundPlayer( model )
       }
     };
   }

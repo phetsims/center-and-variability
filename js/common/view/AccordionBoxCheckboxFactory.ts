@@ -17,6 +17,8 @@ import MedianBarNode from './MedianBarNode.js';
 import CAVColors from '../CAVColors.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import Property from '../../../../axon/js/Property.js';
+import PlayAreaCheckboxFactory from './PlayAreaCheckboxFactory.js';
+import CAVModel from '../model/CAVModel.js';
 
 // constants
 const ICON_WIDTH = 24;
@@ -45,7 +47,7 @@ export default class AccordionBoxCheckboxFactory {
     };
   }
 
-  public static getMedianCheckboxWithIconItem( iconGroup: AlignGroup, textGroup: AlignGroup, isTopMedianVisibleProperty: Property<boolean> ): VerticalCheckboxGroupItem {
+  public static getMedianCheckboxWithIconItem( iconGroup: AlignGroup, textGroup: AlignGroup, isTopMedianVisibleProperty: Property<boolean>, model: CAVModel ): VerticalCheckboxGroupItem {
     return {
       createNode: ( tandem: Tandem ) => {
         return AccordionBoxCheckboxFactory.createGridBox(
@@ -60,15 +62,22 @@ export default class AccordionBoxCheckboxFactory {
         );
       },
       property: isTopMedianVisibleProperty,
-      tandemName: 'medianCheckbox'
+      tandemName: 'medianCheckbox',
+
+      options: {
+        checkedSoundPlayer: PlayAreaCheckboxFactory.getMedianCheckedSoundPlayer( model )
+      }
     };
   }
 
-  public static getMedianCheckboxWithoutIconItem( isTopMedianVisibleProperty: Property<boolean> ): VerticalCheckboxGroupItem {
+  public static getMedianCheckboxWithoutIconItem( isTopMedianVisibleProperty: Property<boolean>, model: CAVModel ): VerticalCheckboxGroupItem {
     return {
       createNode: ( tandem: Tandem ) => new Text( CenterAndVariabilityStrings.medianStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
       property: isTopMedianVisibleProperty,
-      tandemName: 'medianCheckbox'
+      tandemName: 'medianCheckbox',
+      options: {
+        checkedSoundPlayer: PlayAreaCheckboxFactory.getMedianCheckedSoundPlayer( model )
+      }
     };
   }
 
