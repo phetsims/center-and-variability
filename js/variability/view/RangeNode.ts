@@ -69,8 +69,7 @@ export default class RangeNode extends CAVPlotNode {
 
     const updateRangeNode = () => {
 
-      const sortedDots = _.sortBy( sceneModel.getActiveSoccerBalls().filter( soccerBall => soccerBall.valueProperty.value !== null ),
-        object => object.valueProperty.value );
+      const sortedDots = sceneModel.getSortedLandedObjects();
 
       const leftmostDot = sortedDots[ 0 ] as SoccerBall | undefined;
       const rightmostDot = sortedDots[ sortedDots.length - 1 ] as SoccerBall | undefined;

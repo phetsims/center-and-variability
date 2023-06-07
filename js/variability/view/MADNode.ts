@@ -86,8 +86,7 @@ export default class MADNode extends CAVPlotNode {
 
       const children: Node[] = [];
 
-      const sortedDots = _.sortBy( sceneModel.getActiveSoccerBalls().filter( soccerBall => soccerBall.valueProperty.value !== null ),
-        object => object.valueProperty.value );
+      const sortedDots = sceneModel.getSortedLandedObjects();
 
       if ( sortedDots.length > 0 ) {
         const mean = _.mean( sortedDots.map( dot => dot.valueProperty.value ) );

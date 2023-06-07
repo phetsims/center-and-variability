@@ -37,8 +37,7 @@ export default class MeanAndMedianPlotNode extends CAVPlotNode {
 
     const updateMedianBarNode = () => {
 
-      const sortedDots = _.sortBy( sceneModel.getActiveSoccerBalls().filter( soccerBall => soccerBall.valueProperty.value !== null ),
-        object => object.valueProperty.value );
+      const sortedDots = sceneModel.getSortedLandedObjects();
       const leftmostSoccerBall = sortedDots[ 0 ];
 
       const medianValue = sceneModel.medianValueProperty.value;

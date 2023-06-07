@@ -400,6 +400,11 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     this.resetEmitter.emit();
   }
 
+  public getSortedLandedObjects(): SoccerBall[] {
+    return _.sortBy( this.getActiveSoccerBalls().filter( soccerBall => soccerBall.valueProperty.value !== null ),
+      object => object.valueProperty.value );
+  }
+
   public getSortedStackedObjects(): SoccerBall[] {
     return _.sortBy( this.getActiveSoccerBalls().filter( soccerBall =>
         soccerBall.soccerBallPhaseProperty.value === SoccerBallPhase.STACKED ),
