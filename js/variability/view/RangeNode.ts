@@ -107,10 +107,14 @@ export default class RangeNode extends CAVPlotNode {
       needAtLeastOneKickText.visible = sceneModel.numberOfDataPointsProperty.value === 0 && ( options.parentContext === 'info' ||
                                                                                               ( options.parentContext === 'accordion' && model.isRangeVisibleProperty.value ) );
     };
-    sceneModel.objectChangedEmitter.addListener( updateRangeNode );
+
     model.isRangeVisibleProperty.link( updateRangeNode );
     model.selectedVariabilityMeasureProperty.link( updateRangeNode );
-    sceneModel.numberOfDataPointsProperty.link( updateRangeNode );
+
+    // It's important to avoid inconsistent intermediate states during the updateDataMeasures calculation, so we
+    // only update once it's complete
+    sceneModel.variabilityDataMeasuresUpdatedEmitter.addListener( updateRangeNode );
+
     rangeRectangle.moveToBack();
   }
 }
