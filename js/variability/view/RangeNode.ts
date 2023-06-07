@@ -19,6 +19,7 @@ import CAVColors from '../../common/CAVColors.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import NumberLineNode from '../../common/view/NumberLineNode.js';
+import SoccerBall from '../../common/model/SoccerBall.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
@@ -70,12 +71,13 @@ export default class RangeNode extends CAVPlotNode {
 
       const sortedDots = _.sortBy( sceneModel.getActiveSoccerBalls().filter( soccerBall => soccerBall.valueProperty.value !== null ),
         object => object.valueProperty.value );
-      const leftmostDot = sortedDots[ 0 ];
-      const rightmostDot = sortedDots[ sortedDots.length - 1 ];
+
+      const leftmostDot = sortedDots[ 0 ] as SoccerBall | undefined;
+      const rightmostDot = sortedDots[ sortedDots.length - 1 ] as SoccerBall | undefined;
 
       // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card
-      const hasNonZeroRange = leftmostDot &&
-                              rightmostDot &&
+      const hasNonZeroRange = !!leftmostDot &&
+                              !!rightmostDot &&
                               leftmostDot.valueProperty.value !== rightmostDot.valueProperty.value;
       if ( hasNonZeroRange ) {
         const left = this.modelViewTransform.modelToViewX( leftmostDot.valueProperty.value! );
