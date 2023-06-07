@@ -55,14 +55,14 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
     backgroundNode.addChild( meanAndMedianPlotNode );
 
     const createReadoutText = ( valueProperty: TReadOnlyProperty<number | null>, visibleProperty: TReadOnlyProperty<boolean>,
-                                templateStringProperty: LinkableProperty<string>, fill: TPaint ) => {
+                                templateStringProperty: LinkableProperty<string>, fill: TPaint, readoutTandem: Tandem ) => {
 
       const readoutProperty = new DerivedProperty( [ valueProperty, CenterAndVariabilityStrings.valueUnknownStringProperty ],
         ( value, valueUnknownString ) => {
           return value === null ? valueUnknownString : Utils.toFixed( value, 1 );
         } );
       const readoutPatternStringProperty = new PatternStringProperty( templateStringProperty, { value: readoutProperty }, {
-        tandem: Tandem.OPT_OUT
+        tandem: readoutTandem
       } );
 
       return new Text( readoutPatternStringProperty, {
@@ -82,13 +82,15 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
           sceneModel.medianValueProperty,
           model.isTopMedianVisibleProperty,
           CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty,
-          CAVColors.medianColorProperty
+          CAVColors.medianColorProperty,
+          tandem.createTandem( 'medianReadoutStringProperty' )
         ),
         createReadoutText(
           sceneModel.meanValueProperty,
           model.isTopMeanVisibleProperty,
           CenterAndVariabilityStrings.meanEqualsValuePatternStringProperty,
-          CAVColors.meanColorProperty
+          CAVColors.meanColorProperty,
+          tandem.createTandem( 'meanReadoutStringProperty' )
         )
       ],
       leftCenter: backgroundShape.bounds.leftCenter.plusXY( CAVConstants.ACCORDION_BOX_HORIZONTAL_MARGIN, 0 )
