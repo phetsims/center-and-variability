@@ -77,10 +77,15 @@ export default class MADNode extends CAVPlotNode {
     madRectangle.moveToBack();
     this.addChild( lineContainer );
 
-    this.addChild( leftBar );
-    this.addChild( rightBar );
-    this.addChild( leftReadout );
-    this.addChild( rightReadout );
+    // this contains the top brackets and MAD labels so that their visibility can be controlled together
+    const madAnnotationContainer = new Node();
+
+    madAnnotationContainer.addChild( leftBar );
+    madAnnotationContainer.addChild( rightBar );
+    madAnnotationContainer.addChild( leftReadout );
+    madAnnotationContainer.addChild( rightReadout );
+
+    this.addChild( madAnnotationContainer );
 
     const update = () => {
 
@@ -164,10 +169,7 @@ export default class MADNode extends CAVPlotNode {
         leftReadout.centerBottom = leftBar.centerTop;
         rightReadout.centerBottom = rightBar.centerTop;
       }
-      leftBar.visible = ( options.parentContext === 'info' || model.isMADVisibleProperty.value ) && mad !== null && sortedDots.length > 1;
-      rightBar.visible = ( options.parentContext === 'info' || model.isMADVisibleProperty.value ) && mad !== null && sortedDots.length > 1;
-      leftReadout.visible = ( options.parentContext === 'info' || model.isMADVisibleProperty.value ) && mad !== null && sortedDots.length > 1;
-      rightReadout.visible = ( options.parentContext === 'info' || model.isMADVisibleProperty.value ) && mad !== null && sortedDots.length > 1;
+      madAnnotationContainer.visible = ( options.parentContext === 'info' || model.isMADVisibleProperty.value ) && mad !== null && sortedDots.length > 1;
 
       // If the readouts overlap, move them apart
       if ( leftReadout.visible && rightReadout.visible ) {
