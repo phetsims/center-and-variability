@@ -41,13 +41,21 @@ import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 
-import cvCardMovementSound1_mp3 from '../../../sounds/cv-card-movement-sounds-001_mp3.js'; // eslint-disable-line default-import-match-filename
-import cvCardMovementSound2_mp3 from '../../../sounds/cv-card-movement-sounds-002_mp3.js'; // eslint-disable-line default-import-match-filename
-import cvCardMovementSound3_mp3 from '../../../sounds/cv-card-movement-sounds-003_mp3.js'; // eslint-disable-line default-import-match-filename
-import cvCardMovementSound4_mp3 from '../../../sounds/cv-card-movement-sounds-004_mp3.js'; // eslint-disable-line default-import-match-filename
-import cvCardMovementSound5_mp3 from '../../../sounds/cv-card-movement-sounds-005_mp3.js'; // eslint-disable-line default-import-match-filename
-import cvCardMovementSound6_mp3 from '../../../sounds/cv-card-movement-sounds-006_mp3.js'; // eslint-disable-line default-import-match-filename
-import cvCardMovementSound7_mp3 from '../../../sounds/cv-card-movement-sounds-007_mp3.js'; // eslint-disable-line default-import-match-filename
+// import cvCardMovementSound1_mp3 from '../../../sounds/cv-card-movement-sounds-001_mp3.js'; // eslint-disable-line default-import-match-filename
+// import cvCardMovementSound2_mp3 from '../../../sounds/cv-card-movement-sounds-002_mp3.js'; // eslint-disable-line default-import-match-filename
+// import cvCardMovementSound3_mp3 from '../../../sounds/cv-card-movement-sounds-003_mp3.js'; // eslint-disable-line default-import-match-filename
+// import cvCardMovementSound4_mp3 from '../../../sounds/cv-card-movement-sounds-004_mp3.js'; // eslint-disable-line default-import-match-filename
+// import cvCardMovementSound5_mp3 from '../../../sounds/cv-card-movement-sounds-005_mp3.js'; // eslint-disable-line default-import-match-filename
+// import cvCardMovementSound6_mp3 from '../../../sounds/cv-card-movement-sounds-006_mp3.js'; // eslint-disable-line default-import-match-filename
+// import cvCardMovementSound7_mp3 from '../../../sounds/cv-card-movement-sounds-007_mp3.js'; // eslint-disable-line default-import-match-filename
+
+import cvCardMovementSoundsV2001_mp3 from '../../../sounds/cvCardMovementSoundsV2001_mp3.js';
+import cvCardMovementSoundsV2002_mp3 from '../../../sounds/cvCardMovementSoundsV2002_mp3.js';
+import cvCardMovementSoundsV2003_mp3 from '../../../sounds/cvCardMovementSoundsV2003_mp3.js';
+import cvCardMovementSoundsV2004_mp3 from '../../../sounds/cvCardMovementSoundsV2004_mp3.js';
+import cvCardMovementSoundsV2005_mp3 from '../../../sounds/cvCardMovementSoundsV2005_mp3.js';
+import cvCardMovementSoundsV2006_mp3 from '../../../sounds/cvCardMovementSoundsV2006_mp3.js';
+
 import cvSuccessOptions007Shorter_mp3 from '../../../sounds/cv-success-options-007-shorter_mp3.js'; // eslint-disable-line default-import-match-filename
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
@@ -58,13 +66,12 @@ const cvSuccessOptions007ShorterSoundClip = new SoundClip( cvSuccessOptions007Sh
 soundManager.addSoundGenerator( cvSuccessOptions007ShorterSoundClip );
 
 const cardMovementSounds = [
-  cvCardMovementSound1_mp3,
-  cvCardMovementSound2_mp3,
-  cvCardMovementSound3_mp3,
-  cvCardMovementSound4_mp3,
-  cvCardMovementSound5_mp3,
-  cvCardMovementSound6_mp3,
-  cvCardMovementSound7_mp3
+  cvCardMovementSoundsV2001_mp3,
+  cvCardMovementSoundsV2002_mp3,
+  cvCardMovementSoundsV2003_mp3,
+  cvCardMovementSoundsV2004_mp3,
+  cvCardMovementSoundsV2005_mp3,
+  cvCardMovementSoundsV2006_mp3
 ];
 
 const cardMovementSoundClips = cardMovementSounds.map( sound => new SoundClip( sound, {

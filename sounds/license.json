@@ -7,14 +7,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
   },
-  "cv-card-movement-sounds-001.mp3": {
-    "text": [
-      "Copyright 2023 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris"
-  },
+  "cv-card-movement-sounds-001.mp3": { "text": [ "Copyright 2023 University of Colorado Boulder" ], "projectURL": "https://phet.colorado.edu", "license": "contact phethelp@colorado.edu", "notes": "created by Ashton Morris"},
   "cv-card-movement-sounds-002.mp3": {
     "text": [
       "Copyright 2023 University of Colorado Boulder"
@@ -71,6 +64,12 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
   },
+  "cvCardMovementSoundsV2001.mp3": { "text": [ "Copyright 2023 University of Colorado Boulder" ], "projectURL": "https://phet.colorado.edu", "license": "contact phethelp@colorado.edu", "notes": "created by Ashton Morris"},
+  "cvCardMovementSoundsV2002.mp3": { "text": [ "Copyright 2023 University of Colorado Boulder" ], "projectURL": "https://phet.colorado.edu", "license": "contact phethelp@colorado.edu", "notes": "created by Ashton Morris"},
+  "cvCardMovementSoundsV2003.mp3": { "text": [ "Copyright 2023 University of Colorado Boulder" ], "projectURL": "https://phet.colorado.edu", "license": "contact phethelp@colorado.edu", "notes": "created by Ashton Morris"},
+  "cvCardMovementSoundsV2004.mp3": { "text": [ "Copyright 2023 University of Colorado Boulder" ], "projectURL": "https://phet.colorado.edu", "license": "contact phethelp@colorado.edu", "notes": "created by Ashton Morris"},
+  "cvCardMovementSoundsV2005.mp3": { "text": [ "Copyright 2023 University of Colorado Boulder" ], "projectURL": "https://phet.colorado.edu", "license": "contact phethelp@colorado.edu", "notes": "created by Ashton Morris"},
+  "cvCardMovementSoundsV2006.mp3": { "text": [ "Copyright 2023 University of Colorado Boulder" ], "projectURL": "https://phet.colorado.edu", "license": "contact phethelp@colorado.edu", "notes": "created by Ashton Morris"},
   "kick1.mp3": {
     "text": [
       "Copyright 2023 University of Colorado Boulder"
