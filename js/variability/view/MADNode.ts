@@ -181,12 +181,14 @@ export default class MADNode extends CAVPlotNode {
 
       needAtLeastOneKickText.visible = sceneModel.numberOfDataPointsProperty.value === 0 && ( options.parentContext === 'info' || model.isMADVisibleProperty.value );
     };
-    sceneModel.objectChangedEmitter.addListener( update );
+
     model.isMADVisibleProperty.link( update );
     model.selectedVariabilityMeasureProperty.link( update );
-    sceneModel.numberOfDataPointsProperty.link( update );
-    sceneModel.meanValueProperty.link( update );
-    sceneModel.madValueProperty.link( update );
+
+    // It's important to avoid inconsistent intermediate states during the updateDataMeasures calculation, so we
+    // only update once it's complete
+    sceneModel.variabilityDataMeasuresUpdatedEmitter.addListener( update );
+
   }
 }
 

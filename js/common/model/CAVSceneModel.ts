@@ -268,8 +268,20 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     } );
 
     this.soccerBalls.forEach( soccerBall => {
-      soccerBall.valueProperty.link( updateDataMeasures );
-      soccerBall.soccerBallPhaseProperty.link( updateDataMeasures );
+      soccerBall.valueProperty.link( ( newValue, oldValue ) => {
+
+        // update data measures if the ball is being dragged/moved to a new position after landing/stacking
+        if ( oldValue !== null && newValue !== null ) {
+          updateDataMeasures();
+        }
+      } );
+      soccerBall.soccerBallPhaseProperty.link( ( newPhase, oldPhase ) => {
+
+        // update data measures when the ball finished its stacking animation
+        if ( newPhase === SoccerBallPhase.STACKED ) {
+          updateDataMeasures();
+        }
+      } );
     } );
 
     maxKicksProperty.link( maxKicks => this.clearData() );
