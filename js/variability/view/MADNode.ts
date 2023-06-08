@@ -121,6 +121,17 @@ export default class MADNode extends CAVPlotNode {
               font: new PhetFont( 10 ),
               centerBottom: line.centerTop
             } );
+
+            // If the text overlaps the mean line, move it further away so it doesn't overlap
+            const MARGIN = 2;
+
+            if ( x1 < x2 ) {
+              text.right = Math.min( text.right, line.right - MARGIN );
+            }
+            else if ( x1 >= x2 ) {
+              text.left = Math.max( text.left, line.left + MARGIN );
+            }
+
             children.push( text );
           }
 
