@@ -99,6 +99,26 @@ export default class CAVScreenView extends ScreenView {
     this.backScreenViewLayer.addChild( new BackgroundNode( GROUND_POSITION_Y, this.visibleBoundsProperty ) );
     this.backScreenViewLayer.addChild( this.intervalToolLayer );
 
+    this.playAreaNumberLineNode = new NumberLineNode(
+      new DynamicProperty( model.selectedSceneModelProperty, {
+        derive: 'meanValueProperty'
+      } ),
+      modelViewTransform,
+      model.isPlayAreaMeanVisibleProperty,
+      new DynamicProperty( model.selectedSceneModelProperty, {
+        derive: 'dataRangeProperty'
+      } ), {
+        includeXAxis: false,
+        includeRangeOnXAxis: false,
+        includeMeanStroke: true,
+        tandem: options.tandem.createTandem( 'playAreaNumberLineNode' ),
+        x: CAVConstants.NUMBER_LINE_MARGIN_X,
+        y: GROUND_POSITION_Y
+      } );
+
+    // add the playAreaNumberLineNode before the accordionBoxLayer so that the median highlight appears in front of the ticks
+    this.backScreenViewLayer.addChild( this.playAreaNumberLineNode );
+
     // Soccer balls go behind the accordion box after they land
     this.backScreenViewLayer.addChild( this.accordionBoxLayer );
     this.addChild( this.frontScreenViewLayer );
@@ -167,24 +187,6 @@ export default class CAVScreenView extends ScreenView {
     } );
     this.backScreenViewLayer.addChild( this.eraseButton );
     this.backScreenViewLayer.addChild( this.resetAllButton );
-
-    this.playAreaNumberLineNode = new NumberLineNode(
-      new DynamicProperty( model.selectedSceneModelProperty, {
-        derive: 'meanValueProperty'
-      } ),
-      modelViewTransform,
-      model.isPlayAreaMeanVisibleProperty,
-      new DynamicProperty( model.selectedSceneModelProperty, {
-        derive: 'dataRangeProperty'
-      } ), {
-        includeXAxis: false,
-        includeRangeOnXAxis: false,
-        includeMeanStroke: true,
-        tandem: options.tandem.createTandem( 'playAreaNumberLineNode' ),
-        x: CAVConstants.NUMBER_LINE_MARGIN_X,
-        y: GROUND_POSITION_Y
-      } );
-    this.backScreenViewLayer.addChild( this.playAreaNumberLineNode );
 
     this.questionBar = new QuestionBar( this.layoutBounds, this.visibleBoundsProperty, combineOptions<QuestionBarOptions>( {
       tandem: options.tandem.createTandem( 'questionBar' )
