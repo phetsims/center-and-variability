@@ -174,7 +174,11 @@ export default class SoccerPlayerNode extends Node {
   public readonly soccerPlayer: SoccerPlayer;
 
   public constructor( soccerPlayer: SoccerPlayer, playerImageSet: SoccerPlayerImageSet, modelViewTransform: ModelViewTransform2, providedOptions?: SoccerPlayerNodeOptions ) {
-    super();
+    super( {
+
+      // Avoid a flickering on firefox where the image temporarily disappears (even in built mode)
+      renderer: 'webgl'
+    } );
 
     this.soccerPlayer = soccerPlayer;
 
