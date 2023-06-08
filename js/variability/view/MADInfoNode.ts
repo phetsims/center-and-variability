@@ -84,10 +84,10 @@ export default class MADInfoNode extends VBox {
         } ),
 
         new Text( new PatternStringProperty( CenterAndVariabilityStrings.madCalculationResultPatternStringProperty, {
-          mad: new DerivedProperty( [ sceneModel.madValueProperty ], madValue => madValue === null ? null : Utils.toFixed( madValue, 1 ) )
+
+          // See CAVConstants.STRING_VALUE_NULL_MAP
+          mad: new DerivedProperty( [ sceneModel.madValueProperty ], madValue => madValue === null ? 'null' : Utils.toFixed( madValue, 1 ) )
         }, {
-          // TODO: support string|null with `maps`, https://github.com/phetsims/center-and-variability/issues/237
-          maps: { mad: ( value: string | null ) => value === null ? 0 : value },
           tandem: options.tandem.createTandem( 'madCalculationStringProperty' )
         } ), {
           fontSize: 18, visibleProperty: hasEnoughDataProperty, maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH, layoutOptions: { bottomMargin: 10 }

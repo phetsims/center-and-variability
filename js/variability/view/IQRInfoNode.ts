@@ -88,8 +88,10 @@ export default class IQRInfoNode extends VBox {
           q1: sceneModel.q1ValueProperty,
           q3: sceneModel.q3ValueProperty
         }, {
-          // TODO: support number|null with `maps`, https://github.com/phetsims/center-and-variability/issues/237
-          maps: { q1: value => value === null ? 0 : value, q3: value => value === null ? 0 : value },
+          maps: {
+            q1: CAVConstants.STRING_VALUE_NULL_MAP,
+            q3: CAVConstants.STRING_VALUE_NULL_MAP
+          },
           tandem: options.tandem.createTandem( 'iqrCalculation1StringProperty' )
         } ), {
           fontSize: 18,
@@ -101,8 +103,9 @@ export default class IQRInfoNode extends VBox {
         new Text( new PatternStringProperty( CenterAndVariabilityStrings.iqrCalculationPattern2StringProperty, {
           iqr: sceneModel.iqrValueProperty
         }, {
-          // TODO: support number|null with `maps`, https://github.com/phetsims/center-and-variability/issues/237
-          maps: { iqr: ( value: number | null ) => value === null ? 0 : value },
+          maps: {
+            iqr: CAVConstants.STRING_VALUE_NULL_MAP
+          },
           tandem: options.tandem.createTandem( 'iqrCalculation2StringProperty' )
         } ), {
           fontSize: 18,

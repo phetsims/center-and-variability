@@ -352,7 +352,9 @@ export default class CardNodeContainer extends Node {
 
     const medianTextNode = new Text( new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty, { value: model.selectedSceneModelProperty.value.medianValueProperty }, {
       tandem: options.tandem.createTandem( 'medianStringProperty' ),
-      maps: { value: ( value: number | null ) => value === null ? 0 : value }
+      maps: {
+        value: CAVConstants.STRING_VALUE_NULL_MAP
+      }
     } ), {
       font: CAVConstants.MAIN_FONT,
       maxWidth: 300
