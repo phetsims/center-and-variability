@@ -22,7 +22,8 @@ type StringsType = {
   'meanAndMedianQuestionStringProperty': LinkableProperty<string>;
   'variabilityQuestionStringProperty': LinkableProperty<string>;
   'kickValuePatternStringProperty': LinkableProperty<string>;
-  'distanceInMetersStringProperty': LinkableProperty<string>;
+  'distanceInMetersAccordionBoxTitleStringProperty': LinkableProperty<string>;
+  'distanceInMetersChartLabelStringProperty': LinkableProperty<string>;
   'sortDataStringProperty': LinkableProperty<string>;
   'meanEqualsValuePatternStringProperty': LinkableProperty<string>;
   'medianEqualsValuePatternStringProperty': LinkableProperty<string>;

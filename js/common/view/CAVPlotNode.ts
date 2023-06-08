@@ -79,9 +79,10 @@ export default class CAVPlotNode extends Node {
       } );
     backgroundNode.addChild( this.numberLineNode );
 
-    const distanceInMetersText = new Text( CenterAndVariabilityStrings.distanceInMetersStringProperty, {
+    const distanceInMetersText = new Text( CenterAndVariabilityStrings.distanceInMetersChartLabelStringProperty, {
       top: this.numberLineNode.bottom + 2,
-      maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH
+      maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
+      fontSize: 14
     } );
     backgroundNode.addChild( distanceInMetersText );
 

@@ -45,7 +45,7 @@ export default class MedianAccordionBox extends CAVAccordionBox {
       tandem: tandem,
       top: top,
       centerX: layoutBounds.centerX,
-      titleNode: new AccordionBoxTitleText( CenterAndVariabilityStrings.distanceInMetersStringProperty ),
+      titleNode: new AccordionBoxTitleText( CenterAndVariabilityStrings.distanceInMetersAccordionBoxTitleStringProperty ),
       expandedProperty: model.isAccordionBoxExpandedProperty
     } );
   }

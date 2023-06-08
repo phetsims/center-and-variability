@@ -26,7 +26,10 @@
   "kickValuePattern": {
     "value": "Kick {{value}}"
   },
-  "distanceInMeters": {
+  "distanceInMetersAccordionBoxTitle": {
+    "value": "Distance (in meters)"
+  },
+  "distanceInMetersChartLabel": {
     "value": "Distance (in meters)"
   },
   "sortData": {
