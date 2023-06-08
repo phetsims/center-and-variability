@@ -40,8 +40,6 @@ import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import { SoccerBallPhase } from '../model/SoccerBallPhase.js';
 import cvEraserOptions001_mp3 from '../../../sounds/cvEraserOptions001_mp3.js';
 import SoundClipPlayer from '../../../../tambo/js/sound-generators/SoundClipPlayer.js';
-import pushButtonSoundPlayer from '../../../../tambo/js/shared-sound-players/pushButtonSoundPlayer.js';
-import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
 
 type SelfOptions = {
   questionBarOptions: StrictOmit<QuestionBarOptions, 'tandem'>;
@@ -154,26 +152,12 @@ export default class CAVScreenView extends ScreenView {
       tandem: options.tandem.createTandem( 'resetAllButton' )
     } );
 
-    const eraserSoundPlayer = new SoundClipPlayer( cvEraserOptions001_mp3, {
-      soundClipOptions: { initialOutputLevel: 0.3 }
-    } );
-
     this.eraseButton = new EraserButton( {
       tandem: options.tandem.createTandem( 'eraseButton' ),
       listener: () => {
 
         // Interrupt dragging of existing objects
         this.interruptSubtreeInput();
-
-        const sceneModel = this.model.selectedSceneModelProperty.value;
-        const hasDataToErase = sceneModel.numberOfDataPointsProperty.value > 0;
-
-        if ( hasDataToErase ) {
-          eraserSoundPlayer.play();
-        }
-        else {
-          pushButtonSoundPlayer.play();
-        }
 
         model.selectedSceneModelProperty.value.clearData();
 
@@ -183,7 +167,9 @@ export default class CAVScreenView extends ScreenView {
       iconWidth: 26,
       right: this.resetAllButton.left - CAVConstants.SCREEN_VIEW_X_MARGIN,
       centerY: this.resetAllButton.centerY,
-      soundPlayer: nullSoundPlayer
+      soundPlayer: new SoundClipPlayer( cvEraserOptions001_mp3, {
+        soundClipOptions: { initialOutputLevel: 0.3 }
+      } )
     } );
     this.backScreenViewLayer.addChild( this.eraseButton );
     this.backScreenViewLayer.addChild( this.resetAllButton );
