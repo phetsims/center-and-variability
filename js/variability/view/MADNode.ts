@@ -91,15 +91,15 @@ export default class MADNode extends CAVPlotNode {
 
       const children: Node[] = [];
 
-      const sortedDots = sceneModel.getSortedLandedObjects();
+      const soccerBalls = sceneModel.getSortedLandedObjects();
 
-      if ( sortedDots.length > 0 ) {
-        const mean = _.mean( sortedDots.map( dot => dot.valueProperty.value ) );
+      if ( soccerBalls.length > 0 ) {
+        const mean = _.mean( soccerBalls.map( dot => dot.valueProperty.value ) );
 
         // Underneath the accordion box title
         let y = 60;
-        sortedDots.forEach( dot => {
-          const x1 = this.modelViewTransform.modelToViewX( dot.valueProperty.value! );
+        soccerBalls.forEach( soccerBall => {
+          const x1 = this.modelViewTransform.modelToViewX( soccerBall.valueProperty.value! );
           const x2 = this.modelViewTransform.modelToViewX( mean );
           const line = new Line( x1, y, x2, y, {
             stroke: 'black'
@@ -116,7 +116,7 @@ export default class MADNode extends CAVPlotNode {
           }
 
           if ( options.parentContext === 'info' ) {
-            const distanceToMean = Math.abs( dot.valueProperty.value! - sceneModel.meanValueProperty.value! );
+            const distanceToMean = Math.abs( soccerBall.valueProperty.value! - sceneModel.meanValueProperty.value! );
             const text = new Text( Utils.toFixed( distanceToMean, 1 ), {
               font: new PhetFont( 10 ),
               centerBottom: line.centerTop
@@ -141,7 +141,7 @@ export default class MADNode extends CAVPlotNode {
       }
 
       lineContainer.children = children;
-      lineContainer.visible = sortedDots.length > 0;
+      lineContainer.visible = soccerBalls.length > 0;
 
       const mad = sceneModel.madValueProperty.value;
 
@@ -180,7 +180,7 @@ export default class MADNode extends CAVPlotNode {
         leftReadout.centerBottom = leftBar.centerTop;
         rightReadout.centerBottom = rightBar.centerTop;
       }
-      madAnnotationContainer.visible = ( options.parentContext === 'info' || model.isMADVisibleProperty.value ) && mad !== null && sortedDots.length > 1;
+      madAnnotationContainer.visible = ( options.parentContext === 'info' || model.isMADVisibleProperty.value ) && mad !== null && soccerBalls.length > 1;
 
       // If the readouts overlap, move them apart
       if ( leftReadout.visible && rightReadout.visible ) {
