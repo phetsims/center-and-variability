@@ -23,7 +23,7 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import VariabilityMeasureCheckbox from './VariabilityMeasureCheckbox.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import AccordionBoxTitleText from '../../common/view/AccordionBoxTitleText.js';
-import NumberLineNode from '../../common/view/NumberLineNode.js';
+import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 

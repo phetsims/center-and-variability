@@ -9,19 +9,19 @@
 
 import { Node } from '../../../../scenery/js/imports.js';
 import SoccerBallNode from './SoccerBallNode.js';
-import { SoccerBallPhase } from '../../soccer-common/model/SoccerBallPhase.js';
-import CAVSceneModel from '../../soccer-common/model/CAVSceneModel.js';
+import { SoccerBallPhase } from '../model/SoccerBallPhase.js';
+import CAVSceneModel from '../model/CAVSceneModel.js';
 import SoccerPlayerNode, { SoccerPlayerImageSet } from './SoccerPlayerNode.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import CAVModel from '../model/CAVModel.js';
+import CAVModel from '../../common/model/CAVModel.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import SoccerBall from '../../soccer-common/model/SoccerBall.js';
+import SoccerBall from '../model/SoccerBall.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import SoccerPlayer from '../../soccer-common/model/SoccerPlayer.js';
-import CAVAccordionBox from './CAVAccordionBox.js';
-import MedianHighlightLayer from './MedianHighlightLayer.js';
+import SoccerPlayer from '../model/SoccerPlayer.js';
+import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
+import MedianHighlightLayer from '../../common/view/MedianHighlightLayer.js';
 
 /**
  * Renders view elements for a CAVSceneModel. Note that to satisfy the correct z-ordering, elements

@@ -14,7 +14,7 @@ import MADNode from './MADNode.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import NumberLineNode from '../../common/view/NumberLineNode.js';
+import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 
 export default class MADInfoNode extends VBox {
   public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {

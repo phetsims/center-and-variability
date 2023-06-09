@@ -1,19 +1,19 @@
 // Copyright 2023, University of Colorado Boulder
 
-import CAVObjectNode, { CAVObjectNodeOptions } from './CAVObjectNode.js';
+import CAVObjectNode, { CAVObjectNodeOptions } from '../../common/view/CAVObjectNode.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import SoccerBall from '../../soccer-common/model/SoccerBall.js';
+import SoccerBall from '../model/SoccerBall.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import CAVObjectType from '../../soccer-common/model/CAVObjectType.js';
+import CAVObjectType from '../model/CAVObjectType.js';
 import { Circle, Node, Path, TColor } from '../../../../scenery/js/imports.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import timesSolidShape from '../../../../sherpa/js/fontawesome-5/timesSolidShape.js';
-import CAVConstants, { DATA_POINT_SCALE_PROPERTY } from '../CAVConstants.js';
-import PlotType from '../model/PlotType.js';
-import CAVColors from '../CAVColors.js';
+import CAVConstants, { DATA_POINT_SCALE_PROPERTY } from '../../common/CAVConstants.js';
+import PlotType from '../../common/model/PlotType.js';
+import CAVColors from '../../common/CAVColors.js';
 import Property from '../../../../axon/js/Property.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { SoccerBallPhase } from '../../soccer-common/model/SoccerBallPhase.js';
+import { SoccerBallPhase } from '../model/SoccerBallPhase.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 type DataPointNodeOptions = CAVObjectNodeOptions & { fill: TColor };

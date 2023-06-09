@@ -23,7 +23,7 @@ import PlayAreaCheckboxFactory from '../../common/view/PlayAreaCheckboxFactory.j
 import CAVConstants from '../../common/CAVConstants.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 import SoccerPlayer from '../../soccer-common/model/SoccerPlayer.js';
-import SoccerPlayerNode, { SoccerPlayerImageSet } from '../../common/view/SoccerPlayerNode.js';
+import SoccerPlayerNode, { SoccerPlayerImageSet } from '../../soccer-common/view/SoccerPlayerNode.js';
 import CAVSceneModel from '../../soccer-common/model/CAVSceneModel.js';
 import InfoDialog from './InfoDialog.js';
 import Multilink from '../../../../axon/js/Multilink.js';

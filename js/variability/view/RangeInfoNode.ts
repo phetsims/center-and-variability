@@ -11,7 +11,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import RangeNode from './RangeNode.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
-import NumberLineNode from '../../common/view/NumberLineNode.js';
+import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 
 export default class RangeInfoNode extends VBox {
   public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {

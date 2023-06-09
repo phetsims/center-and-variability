@@ -16,7 +16,7 @@ import { AlignGroup, GridBox, Node, TColor, Text } from '../../../../scenery/js/
 import CAVConstants from '../CAVConstants.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVColors from '../CAVColors.js';
-import NumberLineNode from './NumberLineNode.js';
+import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 import PredictionThumbNode from './PredictionThumbNode.js';
 import LinkableProperty from '../../../../axon/js/LinkableProperty.js';
 import VariabilityModel from '../../variability/model/VariabilityModel.js';

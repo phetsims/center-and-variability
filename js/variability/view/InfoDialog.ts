@@ -11,7 +11,7 @@ import MADInfoNode from './MADInfoNode.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
-import NumberLineNode from '../../common/view/NumberLineNode.js';
+import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 
 export default class InfoDialog extends Dialog {
   public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {

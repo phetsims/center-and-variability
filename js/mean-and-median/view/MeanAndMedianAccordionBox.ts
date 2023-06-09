@@ -19,7 +19,7 @@ import CAVColors from '../../common/CAVColors.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import AccordionBoxTitleText from '../../common/view/AccordionBoxTitleText.js';
-import NumberLineNode from '../../common/view/NumberLineNode.js';
+import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 
 export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
   private readonly medianPlotNode: MeanAndMedianPlotNode;

@@ -18,10 +18,10 @@ import TickLabelSet from '../../../../bamboo/js/TickLabelSet.js';
 import Utils from '../../../../dot/js/Utils.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import CAVColors from '../CAVColors.js';
+import CAVColors from '../../common/CAVColors.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import CAVConstants from '../CAVConstants.js';
+import CAVConstants from '../../common/CAVConstants.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 

@@ -12,7 +12,7 @@ import { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGr
 import { AlignGroup, GridBox, Line, Node, Text } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVConstants from '../CAVConstants.js';
-import NumberLineNode from './NumberLineNode.js';
+import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 import MedianBarNode from './MedianBarNode.js';
 import CAVColors from '../CAVColors.js';
 import Tandem from '../../../../tandem/js/Tandem.js';

@@ -12,10 +12,10 @@ import centerAndVariability from '../../centerAndVariability.js';
 import CAVSceneModel from '../../soccer-common/model/CAVSceneModel.js';
 import MedianBarNode from '../../common/view/MedianBarNode.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import CAVPlotNode, { CAVPlotNodeOptions } from '../../common/view/CAVPlotNode.js';
+import CAVPlotNode, { CAVPlotNodeOptions } from '../../soccer-common/view/CAVPlotNode.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import NumberLineNode from '../../common/view/NumberLineNode.js';
+import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 import { SoccerBallPhase } from '../../soccer-common/model/SoccerBallPhase.js';
 
 type SelfOptions = EmptySelfOptions;

@@ -8,8 +8,8 @@
  */
 
 import ArrowNode, { ArrowNodeOptions } from '../../../../scenery-phet/js/ArrowNode.js';
-import CAVColors from '../CAVColors.js';
-import CAVConstants from '../CAVConstants.js';
+import CAVColors from '../../common/CAVColors.js';
+import CAVConstants from '../../common/CAVConstants.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
