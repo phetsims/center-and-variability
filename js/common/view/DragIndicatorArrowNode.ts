@@ -8,9 +8,9 @@
  */
 
 import ArrowNode, { ArrowNodeOptions } from '../../../../scenery-phet/js/ArrowNode.js';
-import CAVColors from '../../common/CAVColors.js';
-import CAVConstants from '../../common/CAVConstants.js';
-import soccerCommon from '../soccerCommon.js';
+import CAVColors from '../CAVColors.js';
+import CAVConstants from '../CAVConstants.js';
+import soccerCommon from '../../soccer-common/soccerCommon.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { NodeOptions } from '../../../../scenery/js/imports.js';

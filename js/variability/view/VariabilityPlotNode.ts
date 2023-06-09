@@ -19,7 +19,7 @@ import MADNode from './MADNode.js';
 import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
-import CAVPlotNode from '../../soccer-common/view/CAVPlotNode.js';
+import CAVPlotNode from '../../common/view/CAVPlotNode.js';
 import IntervalToolPlayAreaNode from './IntervalToolPlayAreaNode.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 

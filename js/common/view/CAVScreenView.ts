@@ -32,7 +32,7 @@ import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import SoccerPlayerNode, { SoccerPlayerImageSet } from '../../soccer-common/view/SoccerPlayerNode.js';
 import SoccerPlayer from '../../soccer-common/model/SoccerPlayer.js';
 import CAVSceneModel from '../../soccer-common/model/CAVSceneModel.js';
-import DragIndicatorArrowNode from '../../soccer-common/view/DragIndicatorArrowNode.js';
+import DragIndicatorArrowNode from './DragIndicatorArrowNode.js';
 import CAVObjectType from '../../soccer-common/model/CAVObjectType.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';

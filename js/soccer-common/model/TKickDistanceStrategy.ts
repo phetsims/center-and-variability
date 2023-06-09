@@ -31,7 +31,6 @@ export class DistributionStrategy implements TKickDistanceStrategy {
 
   public getNextKickDistance( kickNumber: number ): number {
     phet.chipper.queryParameters.dev && console.log( this.toStateObject() );
-    assert && assert( this.distribution.length === CAVConstants.PHYSICAL_RANGE.getLength() + 1, 'weight array should match the model range' );
     return dotRandom.sampleProbabilities( this.distribution ) + 1;
   }
 

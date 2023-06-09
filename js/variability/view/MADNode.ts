@@ -7,7 +7,7 @@ import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import MedianBarNode from '../../common/view/MedianBarNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Utils from '../../../../dot/js/Utils.js';
-import CAVPlotNode, { CAVPlotNodeOptions, MIN_KICKS_TEXT_OFFSET, MIN_KICKS_TEXT_TOP_MARGIN } from '../../soccer-common/view/CAVPlotNode.js';
+import CAVPlotNode, { CAVPlotNodeOptions, MIN_KICKS_TEXT_OFFSET, MIN_KICKS_TEXT_TOP_MARGIN } from '../../common/view/CAVPlotNode.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import CAVColors from '../../common/CAVColors.js';
