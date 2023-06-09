@@ -40,7 +40,7 @@ import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import { SoccerBallPhase } from '../../soccer-common/model/SoccerBallPhase.js';
 import cvEraserOptions001_mp3 from '../../../sounds/cvEraserOptions001_mp3.js';
 import SoundClipPlayer from '../../../../tambo/js/sound-generators/SoundClipPlayer.js';
-import SoccerConstants from '../../soccer-common/SoccerConstants.js';
+import SoccerCommonConstants from '../../soccer-common/SoccerCommonConstants.js';
 
 type SelfOptions = {
   questionBarOptions: StrictOmit<QuestionBarOptions, 'tandem'>;
@@ -263,7 +263,7 @@ export default class CAVScreenView extends ScreenView {
     const sceneModel = this.model.selectedSceneModelProperty.value;
     const ballsAtLocation = sceneModel.soccerBalls.filter( soccerBall =>
       soccerBall.valueProperty.value === value && soccerBall.soccerBallPhaseProperty.value === SoccerBallPhase.STACKED );
-    const modelHeight = ballsAtLocation.length * CAVObjectType.SOCCER_BALL.radius * 2 * ( 1 - SoccerConstants.SOCCER_BALL_OVERLAP );
+    const modelHeight = ballsAtLocation.length * CAVObjectType.SOCCER_BALL.radius * 2 * ( 1 - SoccerCommonConstants.SOCCER_BALL_OVERLAP );
     const viewHeight = this.modelViewTransform.modelToViewDeltaY( modelHeight );
     return this.modelViewTransform.modelToViewY( 0 ) + viewHeight;
   }

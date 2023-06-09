@@ -57,7 +57,7 @@ import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import basicKick_mp3 from '../../../sounds/basicKick_mp3.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
-import SoccerConstants from '../SoccerConstants.js';
+import SoccerCommonConstants from '../SoccerCommonConstants.js';
 
 const kickSound = new SoundClip( basicKick_mp3, { initialOutputLevel: 0.2 } );
 soundManager.addSoundGenerator( kickSound );
@@ -389,7 +389,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     let position = CAVObjectType.SOCCER_BALL.radius;
     soccerBallStack.forEach( soccerBall => {
       soccerBall.positionProperty.value = new Vector2( soccerBall.valueProperty.value!, position );
-      position += CAVObjectType.SOCCER_BALL.radius * 2 * ( 1 - SoccerConstants.SOCCER_BALL_OVERLAP );
+      position += CAVObjectType.SOCCER_BALL.radius * 2 * ( 1 - SoccerCommonConstants.SOCCER_BALL_OVERLAP );
     } );
 
     this.stackChangedEmitter.emit( soccerBallStack );
@@ -552,7 +552,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     const targetIndex = otherObjectsInStack.length;
 
     const diameter = CAVObjectType.SOCCER_BALL.radius * 2;
-    const targetPositionY = targetIndex * diameter * ( 1 - SoccerConstants.SOCCER_BALL_OVERLAP ) + CAVObjectType.SOCCER_BALL.radius;
+    const targetPositionY = targetIndex * diameter * ( 1 - SoccerCommonConstants.SOCCER_BALL_OVERLAP ) + CAVObjectType.SOCCER_BALL.radius;
 
     const animationSlowdownFactor = CAVQueryParameters.slowAnimation ? 20 : 1;
     const animationTime = animationSlowdownFactor * 0.06 * ( this.getStackAtLocation( value ).length - 1 );
@@ -613,7 +613,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     // Equation 4.26
     const degreesToRadians = ( degrees: number ) => degrees * Math.PI * 2 / 360;
     const angle = dotRandom.nextDoubleBetween( degreesToRadians( 25 ), degreesToRadians( 70 ) );
-    const v0 = Math.sqrt( Math.abs( x1 * Math.abs( SoccerConstants.GRAVITY ) / Math.sin( 2 * angle ) ) );
+    const v0 = Math.sqrt( Math.abs( x1 * Math.abs( SoccerCommonConstants.GRAVITY ) / Math.sin( 2 * angle ) ) );
 
     soccerBall.velocityProperty.value = Vector2.createPolar( v0, angle );
 

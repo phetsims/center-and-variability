@@ -31,7 +31,7 @@ import TEmitter from '../../../../axon/js/TEmitter.js';
 import SoccerPlayer from './SoccerPlayer.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import NumberTone from './NumberTone.js';
-import SoccerConstants from '../SoccerConstants.js';
+import SoccerCommonConstants from '../SoccerCommonConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 export type SoccerBallOptions = SelfOptions & PhetioObjectOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
@@ -129,7 +129,7 @@ export default class SoccerBall extends PhetioObject {
       assert && assert( this.targetXProperty.value !== null, 'targetXProperty.value should be non-null when animating' );
 
       const xCoordinates = rk4( this.positionProperty.value.x, this.velocityProperty.value.x, 0, dt );
-      const yCoordinates = rk4( this.positionProperty.value.y, this.velocityProperty.value.y, SoccerConstants.GRAVITY, dt );
+      const yCoordinates = rk4( this.positionProperty.value.y, this.velocityProperty.value.y, SoccerCommonConstants.GRAVITY, dt );
 
       let x = xCoordinates[ 0 ];
       let y = yCoordinates[ 0 ];

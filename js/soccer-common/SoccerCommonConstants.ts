@@ -8,10 +8,10 @@
 
 import soccerCommon from './soccerCommon.js';
 
-const SoccerConstants = {
+const SoccerCommonConstants = {
   SOCCER_BALL_OVERLAP: 0.01,
   GRAVITY: -9.8 // in meters/second^2
 };
 
-soccerCommon.register( 'SoccerConstants', SoccerConstants );
-export default SoccerConstants;
+soccerCommon.register( 'SoccerCommonConstants', SoccerCommonConstants );
+export default SoccerCommonConstants;
