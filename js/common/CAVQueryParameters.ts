@@ -23,12 +23,6 @@ const CAVQueryParameters = QueryStringMachine.getAll( {
     defaultValue: 'linePlot',
     public: true
   },
-  slowAnimation: {
-    type: 'flag'
-  },
-  sameSpot: {
-    type: 'flag'
-  },
   cardTones: {
     type: 'flag'
   },

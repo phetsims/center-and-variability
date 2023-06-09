@@ -44,7 +44,6 @@ import { SoccerBallPhase } from './SoccerBallPhase.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import Multilink from '../../../../axon/js/Multilink.js';
-import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 import { kickDistanceStrategyFromStateObject, TKickDistanceStrategy } from './TKickDistanceStrategy.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
@@ -57,6 +56,7 @@ import soundManager from '../../../../tambo/js/soundManager.js';
 import basicKick_mp3 from '../../../sounds/basicKick_mp3.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 import SoccerCommonConstants from '../SoccerCommonConstants.js';
+import SoccerCommonQueryParameters from '../SoccerCommonQueryParameters.js';
 
 const kickSound = new SoundClip( basicKick_mp3, { initialOutputLevel: 0.2 } );
 soundManager.addSoundGenerator( kickSound );
@@ -554,7 +554,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     const diameter = CAVObjectType.SOCCER_BALL.radius * 2;
     const targetPositionY = targetIndex * diameter * ( 1 - SoccerCommonConstants.SOCCER_BALL_OVERLAP ) + CAVObjectType.SOCCER_BALL.radius;
 
-    const animationSlowdownFactor = CAVQueryParameters.slowAnimation ? 20 : 1;
+    const animationSlowdownFactor = SoccerCommonQueryParameters.slowAnimation ? 20 : 1;
     const animationTime = animationSlowdownFactor * 0.06 * ( this.getStackAtLocation( value ).length - 1 );
 
     soccerBall.clearAnimation();
@@ -606,7 +606,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
   private kickBall( soccerPlayer: SoccerPlayer, soccerBall: SoccerBall ): void {
     soccerPlayer.poseProperty.value = Pose.KICKING;
 
-    const x1 = CAVQueryParameters.sameSpot ? 7 :
+    const x1 = SoccerCommonQueryParameters.sameSpot ? 7 :
                this.kickDistanceStrategy.getNextKickDistance( this.soccerBalls.indexOf( soccerBall ) );
 
     // Range equation is R=v0^2 sin(2 theta0) / g, see https://openstax.org/books/university-physics-volume-1/pages/4-3-projectile-motion
