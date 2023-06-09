@@ -32,11 +32,19 @@ import Property from '../../../../axon/js/Property.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import IntervalToolPlayAreaNode from './IntervalToolPlayAreaNode.js';
+import ContinuousPropertySoundGenerator from '../../../../tambo/js/sound-generators/ContinuousPropertySoundGenerator.js';
+import soundManager from '../../../../tambo/js/soundManager.js';
+
+// TODO: https://github.com/phetsims/center-and-variability/issues/236 should this be in common code? It was copied from GFL
+import saturatedSineLoopTrimmed_wav from '../../../sounds/saturatedSineLoopTrimmed_wav.js';
+import Utils from '../../../../dot/js/Utils.js';
+import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
 
 export default class VariabilityScreenView extends CAVScreenView {
+  private readonly continuousPropertySoundGenerator: ContinuousPropertySoundGenerator;
 
   public constructor( model: VariabilityModel, providedOptions: VariabilityScreenViewOptions ) {
 
@@ -96,6 +104,26 @@ export default class VariabilityScreenView extends CAVScreenView {
       } );
     this.intervalToolLayer.addChild( intervalToolPlayAreaNode );
 
+    const intervalDistanceProperty = new DerivedProperty( [ model.intervalToolDeltaStableProperty ], interval => {
+      return Utils.roundToInterval( Utils.linear( 0, 16, 2, 1, interval ), CAVQueryParameters.intervalToolSoundInterval );
+    } );
+    this.continuousPropertySoundGenerator = new ContinuousPropertySoundGenerator(
+      intervalDistanceProperty,
+      saturatedSineLoopTrimmed_wav,
+      new Range( 1, 2 ), {
+        initialOutputLevel: 0.2,
+        playbackRateCenterOffset: -0.3,
+
+        resetInProgressProperty: model.variabilityModelResetInProgressProperty,
+        trimSilence: false, // a very precise sound file is used, so make sure it doesn't get changed
+        fadeStartDelay: 0.5,
+        fadeTime: 0.5,
+        delayBeforeStop: 0.5,
+        playbackRateSpanOctaves: 1
+      }
+    );
+    soundManager.addSoundGenerator( this.continuousPropertySoundGenerator );
+
     const sceneRadioButtonGroup = new SceneRadioButtonGroup( model.variabilitySceneModels, model.selectedSceneModelProperty, {
       left: 10,
       tandem: options.tandem.createTandem( 'sceneRadioButtonGroup' )
@@ -149,6 +177,11 @@ export default class VariabilityScreenView extends CAVScreenView {
   public override getSoccerPlayerImageSet( soccerPlayer: SoccerPlayer, sceneModel: CAVSceneModel ): SoccerPlayerImageSet {
     const index = this.model.sceneModels.indexOf( sceneModel );
     return SoccerPlayerNode.VARIABILITY_GROUP[ index ];
+  }
+
+  public override step( dt: number ): void {
+    super.step( dt );
+    this.continuousPropertySoundGenerator.step( dt );
   }
 }
 

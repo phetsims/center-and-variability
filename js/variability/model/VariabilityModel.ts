@@ -35,6 +35,12 @@ export default class VariabilityModel extends CAVModel {
   public readonly intervalTool1ValueProperty: NumberProperty;
   public readonly intervalTool2ValueProperty: NumberProperty;
 
+  // The absolute value of the distance between the interval tool handles in meters. To work around inconsistent
+  // intermediate values in the axon library, update this value once at the end of each step.
+  // Used in sonification.
+  public readonly intervalToolDeltaStableProperty: NumberProperty;
+
+  public readonly variabilityModelResetInProgressProperty = new BooleanProperty( false );
   public readonly resetEmitter = new Emitter();
   public readonly variabilitySceneModels: VariabilitySceneModel[];
 
@@ -84,9 +90,18 @@ export default class VariabilityModel extends CAVModel {
       range: CAVConstants.VARIABILITY_DRAG_RANGE,
       tandem: options.tandem.createTandem( 'intervalTool2ValueProperty' )
     } );
+
+    this.intervalToolDeltaStableProperty = new NumberProperty( Math.abs( this.intervalTool2ValueProperty.value - this.intervalTool1ValueProperty.value ), {} );
+  }
+
+  public override step( dt: number ): void {
+    super.step( dt );
+
+    this.intervalToolDeltaStableProperty.value = Math.abs( this.intervalTool2ValueProperty.value - this.intervalTool1ValueProperty.value );
   }
 
   public override reset(): void {
+    this.variabilityModelResetInProgressProperty.value = true;
     super.reset();
 
     this.selectedVariabilityMeasureProperty.reset();
@@ -98,8 +113,11 @@ export default class VariabilityModel extends CAVModel {
     this.isIntervalToolVisibleProperty.reset();
     this.intervalTool1ValueProperty.reset();
     this.intervalTool2ValueProperty.reset();
+    this.intervalToolDeltaStableProperty.reset();
 
     this.resetEmitter.emit();
+
+    this.variabilityModelResetInProgressProperty.value = false;
   }
 
   public static meanAbsoluteDeviation( data: number[] ): number {

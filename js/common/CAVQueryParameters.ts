@@ -31,6 +31,10 @@ const CAVQueryParameters = QueryStringMachine.getAll( {
   },
   cardTones: {
     type: 'flag'
+  },
+  intervalToolSoundInterval: {
+    type: 'number',
+    defaultValue: 1E-4
   }
 } );
 
