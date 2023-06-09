@@ -23,6 +23,8 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import TEmitter from '../../../../axon/js/TEmitter.js';
 import NumberTone from '../../common/model/NumberTone.js';
 import CAVQueryParameters from '../../common/CAVQueryParameters.js';
+import dotRandom from '../../../../dot/js/dotRandom.js';
+import { cardMovementSoundClips } from './CardNodeContainer.js';
 
 type SelfOptions = EmptySelfOptions;
 export type CardNodeOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
@@ -108,7 +110,7 @@ export default class CardNode extends Node {
     this.soccerBall.dragStartedEmitter.addListener( () => this.moveToFront() );
   }
 
-  public animateTo( destination: Vector2, duration: number ): void {
+  public animateTo( destination: Vector2, duration: number, audio: boolean ): void {
 
     if ( this.animation ) {
 
@@ -145,6 +147,14 @@ export default class CardNode extends Node {
       this.animation = null;
       this.animationTo = null;
     } );
+
+    if ( audio ) {
+      const randomSound = cardMovementSoundClips[ dotRandom.nextInt( cardMovementSoundClips.length ) ];
+
+      // Moving to the right, go up in pitch by 4 semitones
+      randomSound.setPlaybackRate( destination.x < this.positionProperty.value.x ? 1 : Math.pow( 2, 4 / 12 ) );
+      randomSound.play();
+    }
 
     this.animation.start();
   }

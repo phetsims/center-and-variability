@@ -48,7 +48,6 @@ import soundManager from '../../../../tambo/js/soundManager.js';
 // import cvCardMovementSound5_mp3 from '../../../sounds/cv-card-movement-sounds-005_mp3.js'; // eslint-disable-line default-import-match-filename
 // import cvCardMovementSound6_mp3 from '../../../sounds/cv-card-movement-sounds-006_mp3.js'; // eslint-disable-line default-import-match-filename
 // import cvCardMovementSound7_mp3 from '../../../sounds/cv-card-movement-sounds-007_mp3.js'; // eslint-disable-line default-import-match-filename
-
 import cvCardMovementSoundsV2001_mp3 from '../../../sounds/cvCardMovementSoundsV2001_mp3.js';
 import cvCardMovementSoundsV2002_mp3 from '../../../sounds/cvCardMovementSoundsV2002_mp3.js';
 import cvCardMovementSoundsV2003_mp3 from '../../../sounds/cvCardMovementSoundsV2003_mp3.js';
@@ -58,7 +57,6 @@ import cvCardMovementSoundsV2006_mp3 from '../../../sounds/cvCardMovementSoundsV
 
 import cvSuccessOptions007Shorter_mp3 from '../../../sounds/cv-success-options-007-shorter_mp3.js'; // eslint-disable-line default-import-match-filename
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
-import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 
 const cvSuccessOptions007ShorterSoundClip = new SoundClip( cvSuccessOptions007Shorter_mp3, {
   initialOutputLevel: 0.2
@@ -74,13 +72,9 @@ const cardMovementSounds = [
   cvCardMovementSoundsV2006_mp3
 ];
 
-const cardMovementSoundClips = cardMovementSounds.map( sound => new SoundClip( sound, {
-  initialOutputLevel: 0.4,
-  additionalAudioNodes: [ new BiquadFilterNode( phetAudioContext, {
-    frequency: 750,
-    Q: 0.5,
-    type: 'lowpass'
-  } ) ]
+export const cardMovementSoundClips = cardMovementSounds.map( sound => new SoundClip( sound, {
+  initialOutputLevel: 0.2,
+  additionalAudioNodes: []
 } ) );
 cardMovementSoundClips.forEach( soundClip => soundManager.addSoundGenerator( soundClip ) );
 
@@ -153,7 +147,7 @@ export default class CardNodeContainer extends Node {
         if ( !isPressed && !isSettingPhetioStateProperty.value ) {
 
           // Animate the dropped card home
-          this.animateToHomeCell( cardNode, 0.2 );
+          this.animateToHomeCell( cardNode, 0.2, true );
 
           if ( this.isReadyForCelebration ) {
             const inProgressAnimations = this.cardNodeCells.filter( cardNode => cardNode.animation )
@@ -255,7 +249,7 @@ export default class CardNodeContainer extends Node {
 
           // Animate all displaced cards
           for ( let i = targetIndex; i < this.cardNodeCells.length; i++ ) {
-            this.animateToHomeCell( this.cardNodeCells[ i ] );
+            this.animateToHomeCell( this.cardNodeCells[ i ], 0.3, true );
           }
 
           this.cardNodeCellsChangedEmitter.emit();
@@ -440,8 +434,8 @@ export default class CardNodeContainer extends Node {
           this.cardNodeCells[ closestCell ] = cardNode;
           this.cardNodeCells[ originalCell ] = currentOccupant;
 
-          // Just animated the displaced occupant
-          this.animateToHomeCell( currentOccupant );
+          // Just animated the displaced occupant, do not play sound for it since it overlaps with the dragged sound
+          this.animateToHomeCell( currentOccupant, 0.3, false );
           CAVQueryParameters.cardTones && NumberTone.play( currentOccupant.soccerBall.valueProperty.value! );
 
           // See if the user unsorted the data.  If so, uncheck the "Sort Data" checkbox
@@ -622,8 +616,8 @@ export default class CardNodeContainer extends Node {
     return new Vector2( getCardPositionX( homeIndex ), 0 );
   }
 
-  public animateToHomeCell( cardNode: CardNode, duration = 0.3 ): void {
-    cardNode.animateTo( this.getHomePosition( cardNode ), duration );
+  public animateToHomeCell( cardNode: CardNode, duration: number, audio: boolean ): void {
+    cardNode.animateTo( this.getHomePosition( cardNode ), duration, audio );
   }
 
   public setAtHomeCell( cardNode: CardNode ): void {
@@ -653,7 +647,7 @@ export default class CardNodeContainer extends Node {
     const sorted = _.sortBy( this.cardNodeCells, cardNode => cardNode.soccerBall.valueProperty.value );
     this.cardNodeCells.length = 0;
     this.cardNodeCells.push( ...sorted );
-    this.cardNodeCells.forEach( cardNode => this.animateToHomeCell( cardNode, 0.5 ) );
+    this.cardNodeCells.forEach( cardNode => this.animateToHomeCell( cardNode, 0.5, true ) );
     this.cardNodeCellsChangedEmitter.emit();
   }
 
