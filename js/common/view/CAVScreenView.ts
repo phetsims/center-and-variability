@@ -30,14 +30,14 @@ import SceneView from './SceneView.js';
 import KickButtonGroup from './KickButtonGroup.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import SoccerPlayerNode, { SoccerPlayerImageSet } from './SoccerPlayerNode.js';
-import SoccerPlayer from '../model/SoccerPlayer.js';
-import CAVSceneModel from '../model/CAVSceneModel.js';
+import SoccerPlayer from '../../soccer-common/model/SoccerPlayer.js';
+import CAVSceneModel from '../../soccer-common/model/CAVSceneModel.js';
 import DragIndicatorArrowNode from './DragIndicatorArrowNode.js';
-import CAVObjectType from '../model/CAVObjectType.js';
+import CAVObjectType from '../../soccer-common/model/CAVObjectType.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import { SoccerBallPhase } from '../model/SoccerBallPhase.js';
+import { SoccerBallPhase } from '../../soccer-common/model/SoccerBallPhase.js';
 import cvEraserOptions001_mp3 from '../../../sounds/cvEraserOptions001_mp3.js';
 import SoundClipPlayer from '../../../../tambo/js/sound-generators/SoundClipPlayer.js';
 

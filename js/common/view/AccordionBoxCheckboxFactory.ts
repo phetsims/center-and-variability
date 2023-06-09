@@ -22,7 +22,7 @@ import CAVModel from '../model/CAVModel.js';
 import CardNodeContainer from '../../median/view/CardNodeContainer.js';
 import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-players/checkboxCheckedSoundPlayer.js';
 import boundaryReachedSoundPlayer from '../../../../tambo/js/shared-sound-players/boundaryReachedSoundPlayer.js';
-import CAVSceneModel from '../model/CAVSceneModel.js';
+import CAVSceneModel from '../../soccer-common/model/CAVSceneModel.js';
 
 // constants
 const ICON_WIDTH = 24;

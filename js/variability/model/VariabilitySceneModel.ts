@@ -6,12 +6,12 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import CAVSceneModel from '../../common/model/CAVSceneModel.js';
+import CAVSceneModel from '../../soccer-common/model/CAVSceneModel.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CAVConstants from '../../common/CAVConstants.js';
-import { TKickDistanceStrategy } from '../../common/model/TKickDistanceStrategy.js';
+import { TKickDistanceStrategy } from '../../soccer-common/model/TKickDistanceStrategy.js';
 import Property from '../../../../axon/js/Property.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';

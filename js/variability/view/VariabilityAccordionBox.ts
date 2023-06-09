@@ -16,7 +16,7 @@ import VariabilityReadoutText from './VariabilityReadoutText.js';
 import CAVColors from '../../common/CAVColors.js';
 import CAVAccordionBox, { CONTENT_MARGIN } from '../../common/view/CAVAccordionBox.js';
 import CAVConstants from '../../common/CAVConstants.js';
-import CAVSceneModel from '../../common/model/CAVSceneModel.js';
+import CAVSceneModel from '../../soccer-common/model/CAVSceneModel.js';
 import Utils from '../../../../dot/js/Utils.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';

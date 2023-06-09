@@ -1,6 +1,6 @@
 // Copyright 2023, University of Colorado Boulder
 import dotRandom from '../../../../dot/js/dotRandom.js';
-import CAVConstants from '../CAVConstants.js';
+import CAVConstants from '../../common/CAVConstants.js';
 
 /**
  * Strategies for how the kick distances are generated. State is represented in the CAVSceneModel for save/load and phet-io

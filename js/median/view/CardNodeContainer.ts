@@ -10,7 +10,7 @@
 import centerAndVariability from '../../centerAndVariability.js';
 import { LinearGradient, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import SoccerBall from '../../common/model/SoccerBall.js';
+import SoccerBall from '../../soccer-common/model/SoccerBall.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import CardNode from './CardNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -36,7 +36,7 @@ import DragIndicatorArrowNode from '../../common/view/DragIndicatorArrowNode.js'
 import TEmitter from '../../../../axon/js/TEmitter.js';
 import MedianModel from '../../median/model/MedianModel.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
-import NumberTone from '../../common/model/NumberTone.js';
+import NumberTone from '../../soccer-common/model/NumberTone.js';
 import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';

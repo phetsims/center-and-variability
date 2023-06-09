@@ -18,7 +18,7 @@ import VariabilitySceneModel from './VariabilitySceneModel.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import CAVConstants, { MAX_KICKS_PROPERTY } from '../../common/CAVConstants.js';
-import { DistributionStrategy } from '../../common/model/TKickDistanceStrategy.js';
+import { DistributionStrategy } from '../../soccer-common/model/TKickDistanceStrategy.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityModelOptions = SelfOptions & CAVModelOptions;

@@ -13,7 +13,7 @@ import Property from '../../../../axon/js/Property.js';
 import { Node, Path, Text } from '../../../../scenery/js/imports.js';
 import tshirtSolidShape from '../../../../sherpa/js/fontawesome-5/tshirtSolidShape.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import CAVSceneModel from '../../common/model/CAVSceneModel.js';
+import CAVSceneModel from '../../soccer-common/model/CAVSceneModel.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 
 type SelfOptions = EmptySelfOptions;

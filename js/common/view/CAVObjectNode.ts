@@ -10,9 +10,9 @@
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import { Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
-import SoccerBall from '../model/SoccerBall.js';
+import SoccerBall from '../../soccer-common/model/SoccerBall.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import { SoccerBallPhase } from '../model/SoccerBallPhase.js';
+import { SoccerBallPhase } from '../../soccer-common/model/SoccerBallPhase.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import Vector2 from '../../../../dot/js/Vector2.js';

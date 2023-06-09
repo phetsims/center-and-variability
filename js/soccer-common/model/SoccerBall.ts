@@ -21,7 +21,7 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import CAVObjectType from './CAVObjectType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import CAVConstants from '../CAVConstants.js';
+import CAVConstants from '../../common/CAVConstants.js';
 import Property from '../../../../axon/js/Property.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import Emitter from '../../../../axon/js/Emitter.js';

@@ -23,7 +23,7 @@ import VariabilityModel from '../../variability/model/VariabilityModel.js';
 import CAVModel from '../model/CAVModel.js';
 import MeanAndMedianModel from '../../mean-and-median/model/MeanAndMedianModel.js';
 import IntervalToolIconNode from '../../variability/view/IntervalToolIconNode.js';
-import NumberTone from '../model/NumberTone.js';
+import NumberTone from '../../soccer-common/model/NumberTone.js';
 import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-players/checkboxCheckedSoundPlayer.js';
 import TSoundPlayer from '../../../../tambo/js/TSoundPlayer.js';
 

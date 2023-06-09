@@ -72,11 +72,11 @@ import variabilityPlayer04Standing_png from '../../../images/variabilityPlayer04
 import variabilityPlayer04PoisedToKick_png from '../../../images/variabilityPlayer04PoisedToKick_png.js';
 import variabilityPlayer04Kicking_png from '../../../images/variabilityPlayer04Kicking_png.js';
 
-import SoccerPlayer from '../model/SoccerPlayer.js';
+import SoccerPlayer from '../../soccer-common/model/SoccerPlayer.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import Pose from '../model/Pose.js';
+import Pose from '../../soccer-common/model/Pose.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 
 type SelfOptions = EmptySelfOptions;

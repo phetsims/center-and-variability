@@ -10,7 +10,7 @@
 import centerAndVariability from '../../centerAndVariability.js';
 import { ManualConstraint, MatrixBetweenProperty, Node, NodeOptions, TColor, Text } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import CAVSceneModel from '../model/CAVSceneModel.js';
+import CAVSceneModel from '../../soccer-common/model/CAVSceneModel.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import NumberLineNode from './NumberLineNode.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';

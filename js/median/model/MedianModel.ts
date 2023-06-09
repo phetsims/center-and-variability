@@ -10,10 +10,10 @@
 import centerAndVariability from '../../centerAndVariability.js';
 import CardModel from '../../median/model/CardModel.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import CAVSceneModel from '../../common/model/CAVSceneModel.js';
+import CAVSceneModel from '../../soccer-common/model/CAVSceneModel.js';
 import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import { RandomSkewStrategy } from '../../common/model/TKickDistanceStrategy.js';
+import { RandomSkewStrategy } from '../../soccer-common/model/TKickDistanceStrategy.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 
 type SelfOptions = EmptySelfOptions;

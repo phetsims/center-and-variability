@@ -2,15 +2,15 @@
 
 import CAVObjectNode, { CAVObjectNodeOptions } from './CAVObjectNode.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import SoccerBall from '../model/SoccerBall.js';
+import SoccerBall from '../../soccer-common/model/SoccerBall.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import { DragListener, Image, Node } from '../../../../scenery/js/imports.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
-import { SoccerBallPhase } from '../model/SoccerBallPhase.js';
-import CAVObjectType from '../model/CAVObjectType.js';
+import { SoccerBallPhase } from '../../soccer-common/model/SoccerBallPhase.js';
+import CAVObjectType from '../../soccer-common/model/CAVObjectType.js';
 import ballDark_png from '../../../images/ballDark_png.js';
 import ball_png from '../../../images/ball_png.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -19,7 +19,7 @@ import Property from '../../../../axon/js/Property.js';
 import CAVConstants from '../CAVConstants.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import NumberTone from '../model/NumberTone.js';
+import NumberTone from '../../soccer-common/model/NumberTone.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 

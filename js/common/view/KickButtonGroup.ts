@@ -22,7 +22,7 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import CAVModel from '../model/CAVModel.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import CAVSceneModel from '../model/CAVSceneModel.js';
+import CAVSceneModel from '../../soccer-common/model/CAVSceneModel.js';
 import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
 
 type SelfOptions = EmptySelfOptions;
