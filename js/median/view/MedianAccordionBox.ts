@@ -21,21 +21,21 @@ export default class MedianAccordionBox extends CAVAccordionBox {
     const backgroundShape = CAVConstants.ACCORDION_BOX_CONTENTS_SHAPE_MEAN_AND_OR_MEDIAN;
     const backgroundNode = CAVAccordionBox.createBackgroundNode( backgroundShape );
 
-    const checkboxGroup = new VerticalCheckboxGroup( [
-      AccordionBoxCheckboxFactory.getSortDataCheckboxItem( model.isSortingDataProperty ),
-      AccordionBoxCheckboxFactory.getMedianCheckboxWithoutIconItem( model.isTopMedianVisibleProperty, model )
-    ], {
-      tandem: tandem.createTandem( 'accordionCheckboxGroup' ),
-      right: backgroundShape.bounds.width - CAVConstants.ACCORDION_BOX_HORIZONTAL_MARGIN,
-      centerY: backgroundShape.bounds.centerY
-    } );
-
     const cardNodeContainer = new CardNodeContainer( model, {
 
       // Expose this intermediate layer to make it so that clients can hide the number cards with one call
       tandem: tandem.createTandem( 'cardNodeContainer' ),
       x: CAVConstants.ACCORDION_BOX_HORIZONTAL_MARGIN,
       y: backgroundShape.bounds.centerY - CardNode.CARD_DIMENSION / 2 + 5
+    } );
+
+    const checkboxGroup = new VerticalCheckboxGroup( [
+      AccordionBoxCheckboxFactory.getSortDataCheckboxItem( model.isSortingDataProperty, model.sceneModels[ 0 ], cardNodeContainer ),
+      AccordionBoxCheckboxFactory.getMedianCheckboxWithoutIconItem( model.isTopMedianVisibleProperty, model )
+    ], {
+      tandem: tandem.createTandem( 'accordionCheckboxGroup' ),
+      right: backgroundShape.bounds.width - CAVConstants.ACCORDION_BOX_HORIZONTAL_MARGIN,
+      centerY: backgroundShape.bounds.centerY
     } );
 
     backgroundNode.addChild( cardNodeContainer );

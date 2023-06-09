@@ -19,6 +19,10 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import Property from '../../../../axon/js/Property.js';
 import PlayAreaCheckboxFactory from './PlayAreaCheckboxFactory.js';
 import CAVModel from '../model/CAVModel.js';
+import CardNodeContainer from '../../median/view/CardNodeContainer.js';
+import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-players/checkboxCheckedSoundPlayer.js';
+import boundaryReachedSoundPlayer from '../../../../tambo/js/shared-sound-players/boundaryReachedSoundPlayer.js';
+import CAVSceneModel from '../model/CAVSceneModel.js';
 
 // constants
 const ICON_WIDTH = 24;
@@ -39,11 +43,31 @@ export default class AccordionBoxCheckboxFactory {
     } );
   }
 
-  public static getSortDataCheckboxItem( isSortingDataProperty: Property<boolean> ): VerticalCheckboxGroupItem {
+  public static getSortDataCheckboxItem( isSortingDataProperty: Property<boolean>, sceneModel: CAVSceneModel, cardNodeContainer: CardNodeContainer ): VerticalCheckboxGroupItem {
     return {
       createNode: ( tandem: Tandem ) => new Text( CenterAndVariabilityStrings.sortDataStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
       property: isSortingDataProperty,
-      tandemName: 'sortDataCheckbox'
+      tandemName: 'sortDataCheckbox',
+      options: {
+        checkedSoundPlayer: {
+          play: () => {
+            if ( sceneModel.getSortedStackedObjects().length === 0 ) {
+              checkboxCheckedSoundPlayer.play();
+            }
+            else if ( !cardNodeContainer.isAnyCardMoving() ) {
+
+              // Unfortunately, the sound plays after the checkbox takes effect.  So we cannot use 'isDataSorted' here.
+              boundaryReachedSoundPlayer.play();
+            }
+            else {
+              // sound will be played by the card movement
+            }
+          },
+          stop: () => {
+            // nothing to do
+          }
+        }
+      }
     };
   }
 

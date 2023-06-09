@@ -600,7 +600,7 @@ export default class CardNodeContainer extends Node {
    * Check if all of the data is in order, by using the cells associated with the card node.  Note that means
    * it is using the cell the card may be animating to.
    */
-  private isDataSorted(): boolean {
+  public isDataSorted(): boolean {
     let lastValue = null;
     for ( let i = 0; i < this.cardNodeCells.length; i++ ) {
       const value = this.cardNodeCells[ i ].soccerBall.valueProperty.value!;
@@ -611,6 +611,10 @@ export default class CardNodeContainer extends Node {
       lastValue = value;
     }
     return true;
+  }
+
+  public isAnyCardMoving(): boolean {
+    return _.some( this.cardNodeCells, cardNode => cardNode.positionProperty.value.x !== this.getHomePosition( cardNode ).x );
   }
 
   private getHomePosition( cardNode: CardNode ): Vector2 {
