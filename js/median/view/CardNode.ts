@@ -25,9 +25,24 @@ import NumberTone from '../../common/model/NumberTone.js';
 import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import { cardMovementSoundClips } from './CardNodeContainer.js';
+import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
+import soundManager from '../../../../tambo/js/soundManager.js';
+import cvCardMovementSound1_mp3 from '../../../sounds/cv-card-movement-sounds-001_mp3.js'; // eslint-disable-line default-import-match-filename
+import cvCardMovementSound2_mp3 from '../../../sounds/cv-card-movement-sounds-002_mp3.js'; // eslint-disable-line default-import-match-filename
 
 type SelfOptions = EmptySelfOptions;
 export type CardNodeOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
+
+const cardPickUpSoundClip = new SoundClip( cvCardMovementSound1_mp3, {
+  initialPlaybackRate: 1.3,
+  initialOutputLevel: 0.3
+} );
+soundManager.addSoundGenerator( cardPickUpSoundClip );
+
+const cardDropSoundClip = new SoundClip( cvCardMovementSound2_mp3, {
+  initialOutputLevel: 0.3
+} );
+soundManager.addSoundGenerator( cardDropSoundClip );
 
 export default class CardNode extends Node {
   public readonly positionProperty: Vector2Property;
@@ -99,10 +114,12 @@ export default class CardNode extends Node {
         dragging = true;
         this.moveToFront();
         CAVQueryParameters.cardTones && NumberTone.play( this.soccerBall.valueProperty.value! );
+        cardPickUpSoundClip.play();
       },
       end: () => {
         dragging = false;
         CAVQueryParameters.cardTones && NumberTone.play( this.soccerBall.valueProperty.value! );
+        cardDropSoundClip.play();
       }
     } );
     this.addInputListener( this.dragListener );
