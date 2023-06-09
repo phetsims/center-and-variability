@@ -33,7 +33,7 @@ export default class VariabilitySceneModel extends CAVSceneModel {
   public readonly variabilityDataMeasuresUpdatedEmitter: Emitter = new Emitter();
 
   public constructor( maxKicksProperty: TReadOnlyProperty<number>, kickDistanceStrategy: TKickDistanceStrategy, options: { tandem: Tandem } ) {
-    super( maxKicksProperty, CAVConstants.MAX_KICKS_VALUES, kickDistanceStrategy, options );
+    super( maxKicksProperty, CAVConstants.MAX_KICKS_VALUES, kickDistanceStrategy, CAVConstants.PHYSICAL_RANGE, options );
 
     this.maxValueProperty = new DerivedProperty( [ this.dataRangeProperty ], dataRange => {
       return dataRange === null ? null : dataRange.max;

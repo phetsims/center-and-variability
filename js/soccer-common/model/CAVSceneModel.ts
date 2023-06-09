@@ -37,7 +37,6 @@ import TEmitter from '../../../../axon/js/TEmitter.js';
 import TModel from '../../../../joist/js/TModel.js';
 import SoccerPlayer from './SoccerPlayer.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
-import CAVConstants from '../../common/CAVConstants.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import Pose from './Pose.js';
@@ -125,6 +124,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     public readonly maxKicksProperty: TReadOnlyProperty<number>,
     maxKicksChoices: number[],
     public kickDistanceStrategy: TKickDistanceStrategy,
+    public readonly physicalRange: Range,
     providedOptions: CAVSceneModelOptions
   ) {
 
@@ -138,7 +138,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
       phetioDocumentation: 'The model for the CAV scene, which includes the soccer balls and the soccer players. The ' +
                            'values for the kicks can be specified using the state object. <br><ul>' +
                            `<li>Random Skew: randomly chooses a left or right skewed distribution each time the sim is reset. (Recall that a right-skewed data set means most of the values fall to the left.) ${pre}${code}{ "distributionType": "randomSkew[currentlyRightSkewed]" }</code></pre></li>` +
-                           `<li>Probability Distribution by Distance: The distribution of probabilities of where the balls will land is represented as an un-normalized array of non-negative, floating-point numbers, one value for each location in the physical rang. e.g., ${pre}${code}{ "distributionType": "probabilityDistributionByDistance[0,0,1,3,5,7,3,3,1,1,0,0,0,0,1]" }</code></pre></li>` +
+                           `<li>Probability Distribution by Distance: The distribution of probabilities of where the balls will land is represented as an un-normalized array of non-negative, floating-point numbers, one value for each location in the physical range e.g., ${pre}${code}{ "distributionType": "probabilityDistributionByDistance[0,0,1,3,5,7,3,3,1,1,0,0,0,0,1]" }</code></pre></li>` +
                            `<li>Exact Location each ball will land (in order). Indicates the exact distance each ball will be kicked in order. Keep in mind the maximum number of kicks may be as high as 30, depending on the selection in the preferences dialog. e.g., ${pre}${code}{ "distributionType": "exactDistanceByIndex[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,2]" }</code></pre></li>`
     }, providedOptions );
 
@@ -159,7 +159,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
 
       // When the soccer ball drag position changes, constrain it to the physical range and move it to the top, if necessary
       soccerBall.dragPositionProperty.lazyLink( ( dragPosition: Vector2 ) => {
-        soccerBall.valueProperty.value = Utils.roundSymmetric( CAVConstants.PHYSICAL_RANGE.constrainValue( dragPosition.x ) );
+        soccerBall.valueProperty.value = Utils.roundSymmetric( this.physicalRange.constrainValue( dragPosition.x ) );
       } );
 
       soccerBall.soccerBallLandedEmitter.addListener( soccerBall => {
@@ -366,7 +366,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
    * Returns all the stacks in the scene that have at least one object in them, sorted from low value to high value.
    */
   public getStacks( filter?: ( soccerBall: SoccerBall ) => boolean ): SoccerBall[][] {
-    return _.range( CAVConstants.PHYSICAL_RANGE.min, CAVConstants.PHYSICAL_RANGE.max + 1 )
+    return _.range( this.physicalRange.min, this.physicalRange.max + 1 )
       .filter( location => this.getStackAtLocation( location, filter ).length > 0 )
       .map( location => this.getStackAtLocation( location, filter ) );
   }

@@ -38,11 +38,17 @@ export default class MeanAndMedianModel extends CAVModel {
 
   public constructor( providedOptions: MeanAndMedianModelOptions ) {
 
-    const options = optionize<MeanAndMedianModelOptions, SelfOptions, CAVModelOptions >()( {
+    const options = optionize<MeanAndMedianModelOptions, SelfOptions, CAVModelOptions>()( {
       instrumentMeanPredictionProperty: true
     }, providedOptions );
 
-    const sceneModel = new CAVSceneModel( MAX_KICKS_PROPERTY, CAVConstants.MAX_KICKS_VALUES, new RandomSkewStrategy(), { tandem: options.tandem.createTandem( 'sceneModel' ) } );
+    const sceneModel = new CAVSceneModel(
+      MAX_KICKS_PROPERTY,
+      CAVConstants.MAX_KICKS_VALUES,
+      new RandomSkewStrategy(),
+      CAVConstants.PHYSICAL_RANGE, {
+        tandem: options.tandem.createTandem( 'sceneModel' )
+      } );
     super( MAX_KICKS_PROPERTY, [ sceneModel ], options );
 
     this.isTopMeanVisibleProperty = new BooleanProperty( false, {
