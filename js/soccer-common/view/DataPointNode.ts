@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import CAVObjectNode, { CAVObjectNodeOptions } from '../../common/view/CAVObjectNode.js';
-import centerAndVariability from '../../centerAndVariability.js';
+import soccerCommon from '../soccerCommon.js';
 import SoccerBall from '../model/SoccerBall.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import CAVObjectType from '../model/CAVObjectType.js';
@@ -94,4 +94,4 @@ export default class DataPointNode extends CAVObjectNode {
   }
 }
 
-centerAndVariability.register( 'DataPointNode', DataPointNode );
+soccerCommon.register( 'DataPointNode', DataPointNode );

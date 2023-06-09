@@ -3,7 +3,7 @@
 import numberTone2_mp3 from '../../../sounds/numberTone2_mp3.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
-import centerAndVariability from '../../centerAndVariability.js';
+import soccerCommon from '../soccerCommon.js';
 import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 
 // TODO: Create one per ball? One per location? Or multiple? See https://github.com/phetsims/center-and-variability/issues/217
@@ -90,4 +90,4 @@ export default class NumberTone {
   }
 }
 
-centerAndVariability.register( 'NumberTone', NumberTone );
+soccerCommon.register( 'NumberTone', NumberTone );

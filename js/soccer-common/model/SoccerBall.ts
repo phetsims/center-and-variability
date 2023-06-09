@@ -14,14 +14,13 @@
 
 
 import Animation from '../../../../twixt/js/Animation.js';
-import centerAndVariability from '../../centerAndVariability.js';
+import soccerCommon from '../soccerCommon.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import CAVObjectType from './CAVObjectType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import CAVConstants from '../../common/CAVConstants.js';
 import Property from '../../../../axon/js/Property.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import Emitter from '../../../../axon/js/Emitter.js';
@@ -32,6 +31,7 @@ import TEmitter from '../../../../axon/js/TEmitter.js';
 import SoccerPlayer from './SoccerPlayer.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import NumberTone from './NumberTone.js';
+import SoccerConstants from '../SoccerConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 export type SoccerBallOptions = SelfOptions & PhetioObjectOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
@@ -129,7 +129,7 @@ export default class SoccerBall extends PhetioObject {
       assert && assert( this.targetXProperty.value !== null, 'targetXProperty.value should be non-null when animating' );
 
       const xCoordinates = rk4( this.positionProperty.value.x, this.velocityProperty.value.x, 0, dt );
-      const yCoordinates = rk4( this.positionProperty.value.y, this.velocityProperty.value.y, CAVConstants.GRAVITY, dt );
+      const yCoordinates = rk4( this.positionProperty.value.y, this.velocityProperty.value.y, SoccerConstants.GRAVITY, dt );
 
       let x = xCoordinates[ 0 ];
       let y = yCoordinates[ 0 ];
@@ -194,4 +194,4 @@ const rk4 = ( x: number, v: number, a: number, dt: number ) => {
   return [ xResult, vResult ];
 };
 
-centerAndVariability.register( 'SoccerBall', SoccerBall );
+soccerCommon.register( 'SoccerBall', SoccerBall );

@@ -10,7 +10,7 @@
 import ArrowNode, { ArrowNodeOptions } from '../../../../scenery-phet/js/ArrowNode.js';
 import CAVColors from '../../common/CAVColors.js';
 import CAVConstants from '../../common/CAVConstants.js';
-import centerAndVariability from '../../centerAndVariability.js';
+import soccerCommon from '../soccerCommon.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { NodeOptions } from '../../../../scenery/js/imports.js';
@@ -34,4 +34,4 @@ export default class DragIndicatorArrowNode extends ArrowNode {
   }
 }
 
-centerAndVariability.register( 'DragIndicatorArrowNode', DragIndicatorArrowNode );
+soccerCommon.register( 'DragIndicatorArrowNode', DragIndicatorArrowNode );

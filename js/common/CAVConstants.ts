@@ -42,12 +42,9 @@ const MAIN_FONT = new PhetFont( 16 );
 const CAVConstants = {
   SCREEN_VIEW_X_MARGIN: 15,
   SCREEN_VIEW_Y_MARGIN: 15,
-  GRAVITY: -9.8, // in meters/second^2
   MAIN_FONT: MAIN_FONT,
   NUMBER_OF_OBJECTS: 15, // number of objects in the play area on each screen
   CHECKBOX_TEXT_MAX_WIDTH: 107,
-
-  SOCCER_BALL_OVERLAP: 0.01,
 
   // the top checkboxes are left aligned with the play area checkboxes, so their max width is smaller to accommodate
   // for the accordion box margin

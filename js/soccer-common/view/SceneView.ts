@@ -14,7 +14,7 @@ import CAVSceneModel from '../model/CAVSceneModel.js';
 import SoccerPlayerNode, { SoccerPlayerImageSet } from './SoccerPlayerNode.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CAVModel from '../../common/model/CAVModel.js';
-import centerAndVariability from '../../centerAndVariability.js';
+import soccerCommon from '../soccerCommon.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import SoccerBall from '../model/SoccerBall.js';
 import { Shape } from '../../../../kite/js/imports.js';
@@ -158,4 +158,4 @@ export default class SceneView {
   }
 }
 
-centerAndVariability.register( 'SceneView', SceneView );
+soccerCommon.register( 'SceneView', SceneView );

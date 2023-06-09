@@ -7,7 +7,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import centerAndVariability from '../../centerAndVariability.js';
+import soccerCommon from '../soccerCommon.js';
 import { Node, NodeOptions, Path, Text, TPaint } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
@@ -146,4 +146,4 @@ export default class NumberLineNode extends Node {
   }
 }
 
-centerAndVariability.register( 'NumberLineNode', NumberLineNode );
+soccerCommon.register( 'NumberLineNode', NumberLineNode );

@@ -7,7 +7,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import centerAndVariability from '../../centerAndVariability.js';
+import soccerCommon from '../soccerCommon.js';
 import { ManualConstraint, MatrixBetweenProperty, Node, NodeOptions, TColor, Text } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import CAVSceneModel from '../model/CAVSceneModel.js';
@@ -137,4 +137,4 @@ export default class CAVPlotNode extends Node {
   }
 }
 
-centerAndVariability.register( 'CAVPlotNode', CAVPlotNode );
+soccerCommon.register( 'CAVPlotNode', CAVPlotNode );

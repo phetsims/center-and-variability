@@ -11,7 +11,7 @@
 
 import Enumeration from '../../../../phet-core/js/Enumeration.js';
 import EnumerationValue from '../../../../phet-core/js/EnumerationValue.js';
-import centerAndVariability from '../../centerAndVariability.js';
+import soccerCommon from '../soccerCommon.js';
 
 export default class Pose extends EnumerationValue {
   public static readonly STANDING = new Pose();
@@ -21,4 +21,4 @@ export default class Pose extends EnumerationValue {
   private static readonly enumeration = new Enumeration( Pose );
 }
 
-centerAndVariability.register( 'Pose', Pose );
+soccerCommon.register( 'Pose', Pose );

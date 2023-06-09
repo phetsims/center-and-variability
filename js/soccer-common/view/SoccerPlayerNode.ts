@@ -7,7 +7,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import centerAndVariability from '../../centerAndVariability.js';
+import soccerCommon from '../soccerCommon.js';
 import { Image, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
 
 import player01Standing_png from '../../../images/player01Standing_png.js';
@@ -225,4 +225,4 @@ export default class SoccerPlayerNode extends Node {
   public static readonly VARIABILITY_GROUP = variabilityPlayerGroups;
 }
 
-centerAndVariability.register( 'SoccerPlayerNode', SoccerPlayerNode );
+soccerCommon.register( 'SoccerPlayerNode', SoccerPlayerNode );

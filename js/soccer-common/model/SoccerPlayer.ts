@@ -8,7 +8,7 @@
  */
 // TODO: This needs to move to the common repo, see: https://github.com/phetsims/center-and-variability/issues/222
 
-import centerAndVariability from '../../centerAndVariability.js';
+import soccerCommon from '../soccerCommon.js';
 import Pose from './Pose.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
@@ -47,4 +47,4 @@ export default class SoccerPlayer {
   }
 }
 
-centerAndVariability.register( 'SoccerPlayer', SoccerPlayer );
+soccerCommon.register( 'SoccerPlayer', SoccerPlayer );

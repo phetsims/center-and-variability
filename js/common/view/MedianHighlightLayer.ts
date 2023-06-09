@@ -7,9 +7,9 @@ import CAVModel from '../model/CAVModel.js';
 import CAVSceneModel from '../../soccer-common/model/CAVSceneModel.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import CAVObjectType from '../../soccer-common/model/CAVObjectType.js';
-import CAVConstants from '../CAVConstants.js';
 import CAVColors from '../CAVColors.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import SoccerConstants from '../../soccer-common/SoccerConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 type MedianHighlightLayerOptions = SelfOptions & NodeOptions;
@@ -24,7 +24,7 @@ export default class MedianHighlightLayer extends Node {
   public constructor( model: CAVModel, sceneModel: CAVSceneModel, modelViewTransform: ModelViewTransform2, isPlayAreaMedianVisibleProperty: TReadOnlyProperty<boolean>, providedOptions: MedianHighlightLayerOptions ) {
 
     const LINE_WIDTH = 2;
-    const viewRadius = modelViewTransform.modelToViewDeltaX( CAVObjectType.SOCCER_BALL.radius * ( 1 - CAVConstants.SOCCER_BALL_OVERLAP ) );
+    const viewRadius = modelViewTransform.modelToViewDeltaX( CAVObjectType.SOCCER_BALL.radius * ( 1 - SoccerConstants.SOCCER_BALL_OVERLAP ) );
     const createCircle = () => {
       return new Circle( viewRadius - LINE_WIDTH / 2, {
         stroke: CAVColors.medianColorProperty,
