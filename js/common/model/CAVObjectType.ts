@@ -6,6 +6,8 @@
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */
+// TODO: This needs to move to the common repo, see: https://github.com/phetsims/center-and-variability/issues/222
+// radius number passed in will need to be factored out to a constant in the CAVConstants file.
 
 import Enumeration from '../../../../phet-core/js/Enumeration.js';
 import EnumerationValue from '../../../../phet-core/js/EnumerationValue.js';

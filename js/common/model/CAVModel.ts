@@ -7,6 +7,12 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+
+// TODO: I think we'll want base class SoccerContextModel that CAV Model can extend from, see: https://github.com/phetsims/center-and-variability/issues/222
+// If not, then we will at least want a DragIndicatorModel that can be generalized.
+// The properties that we want: isDragIndicatorVisibleProperty, dragIndicatorValueProperty, objectNodesInputEnabledProperty
+// soccerBallHasBeenDraggedProperty.
+// The methods that we want: updateDragIndicator, reset
 import centerAndVariability from '../../centerAndVariability.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';

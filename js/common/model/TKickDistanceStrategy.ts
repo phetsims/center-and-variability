@@ -9,13 +9,16 @@ import CAVConstants from '../CAVConstants.js';
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+// TODO: This may need to move to the common repo, see: https://github.com/phetsims/center-and-variability/issues/222
+// It doesn't seem necessary to bring over all the distributions strategies, but maybe that would be easiest?
+
 export type TKickDistanceStrategy = {
   reset(): void;
   getNextKickDistance( kickNumber: number ): number;
   toStateObject(): string;
 };
 
-// These values are used in the state object, should should be changed with caution, because changes to the state API
+// These values are used in the state object, should be changed with caution, because changes to the state API
 // would require migration rules.
 const RANDOM_SKEW_KEY = 'randomSkew';
 const PROBABILITY_DISTRIBUTION_KEY = 'probabilityDistributionByDistance';

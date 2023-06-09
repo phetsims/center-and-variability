@@ -8,6 +8,18 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+// TODO: We need the base class SoccerContextSceneModel that CAVSceneModel can extend from, see: https://github.com/phetsims/center-and-variability/issues/222
+// The properties that we want in that base class are:
+// soccerBalls, stackedSoccerBallCountProperty, maxKicksLimit, meanValueProperty, objectChangedEmitter
+// resetEmitter, numberOfDataPointsProperty, numberOfScheduledSoccerBallsToKickProperty,
+// numberOfUnkickedBallsProperty, hasKickableSoccerBallsProperty, timeWhenLastBallWasKickedProperty,
+// stackChangedEmitter, isClearingData
+// The methods that we want in that base class:
+// clearAnimationInStack, updateDataMeasures (only for mean), getStackAtLocation, getStacks
+// getTopSoccerBalls, reorganizeStack, clearData, reset, getSortedLandedObjects,
+// step, advanceLine (only for setting up the next ball), getActiveSoccelBalls,
+// animateSoccerBallToTopOfStack, scheduleKicks, kickBall, toStateObject
+
 import centerAndVariability from '../../centerAndVariability.js';
 import SoccerBall from './SoccerBall.js';
 import CAVObjectType from './CAVObjectType.js';

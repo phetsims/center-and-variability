@@ -7,6 +7,12 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+// TODO: This needs to move to the common repo, see: https://github.com/phetsims/center-and-variability/issues/222
+// Can the isQ1ObjectProperty be stripped out? If so we'll want everything except for:
+// isMedianObjectProperty, isQ1ObjectProperty, isQ3ObjectProperty... we also probably don't need
+// isAnimationHighlightVisibleProperty
+
+
 import Animation from '../../../../twixt/js/Animation.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
