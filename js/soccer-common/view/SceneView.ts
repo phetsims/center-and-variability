@@ -48,12 +48,13 @@ export default class SceneView {
         visibleProperty: model.isPlayAreaMedianVisibleProperty
       } );
 
+    // Keep soccer balls in one layer so we can control the focus order
     const backLayerSoccerBallLayer = new Node();
     const backLayer = new Node( {
       children: [ backLayerSoccerBallLayer, medianHighlightLayer ]
     } );
 
-    // Keep soccer balls in one layer so we can control the focus order
+    // A front layer for balls in the air so that they are in front of other UI components
     const frontLayer = new Node();
 
     sceneModel.soccerBalls.map( ( soccerBall, index ) => {
@@ -135,7 +136,7 @@ export default class SceneView {
         soccerBallNode.focusable = i === stack.length - 1;
 
         // Focus order goes left to right
-        frontLayer.setPDOMOrder( sceneModel.getTopSoccerBalls().map( soccerBall => soccerBallMap.get( soccerBall )! ) );
+        backLayerSoccerBallLayer.setPDOMOrder( sceneModel.getTopSoccerBalls().map( soccerBall => soccerBallMap.get( soccerBall )! ) );
       }
     } );
 
