@@ -98,6 +98,11 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
   private readonly numberOfScheduledSoccerBallsToKickProperty: NumberProperty;
   public readonly numberOfUnkickedBallsProperty: TReadOnlyProperty<number>;
   public readonly hasKickableSoccerBallsProperty: TReadOnlyProperty<boolean>;
+
+  // Takes the same values as hasKickableSoccerBallsProperty, but updated synchronously during step() so it never
+  // goes through incorrect intermediate values. See https://github.com/phetsims/center-and-variability/issues/77
+  public readonly hasKickableSoccerBallsStableProperty: BooleanProperty;
+
   private readonly timeWhenLastBallWasKickedProperty: NumberProperty;
 
   // Starting at 0, iterate through the index of the kickers. This updates the SoccerPlayer.isActiveProperty to show the current kicker
@@ -268,6 +273,8 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
 
     this.hasKickableSoccerBallsProperty = new DerivedProperty( [ this.numberOfUnkickedBallsProperty ],
       numberOfUnkickedBalls => numberOfUnkickedBalls > 0 );
+
+    this.hasKickableSoccerBallsStableProperty = new BooleanProperty( this.hasKickableSoccerBallsProperty.value );
 
     this.activeKickerIndexProperty = new NumberProperty( 0, {
       tandem: options.tandem.createTandem( 'activeKickerIndexProperty' )
@@ -476,6 +483,8 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
         }
       }
     }
+
+    this.hasKickableSoccerBallsStableProperty.value = this.hasKickableSoccerBallsProperty.value;
   }
 
   // Returns a list of the median objects within a sorted array, based on the objects' 'value' property
