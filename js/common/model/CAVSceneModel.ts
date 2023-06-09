@@ -346,20 +346,28 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
   }
 
   /**
-   * Returns all objects at the target location
+   * Returns all objects at the target location, matching the filter if provided. Note that some logic such as
+   * determining where a ball will animate to within a stack depends on the number of balls in the stack (whether STACKING or STACKED)
+   * but other logic such as where to draw the median arrow depends on the number of balls in the stack (whether STACKED only).
    */
-  public getStackAtLocation( location: number ): SoccerBall[] {
-    const activeSoccerBallsAtLocation = this.getActiveSoccerBalls().filter( soccerBall => soccerBall.valueProperty.value === location );
+  public getStackAtLocation( location: number, filter?: ( soccerBall: SoccerBall ) => boolean ): SoccerBall[] {
+    const activeSoccerBallsAtLocation = this.getActiveSoccerBalls().filter( soccerBall => {
+      return soccerBall.valueProperty.value === location && ( filter ? filter( soccerBall ) : true );
+    } );
     return _.sortBy( activeSoccerBallsAtLocation, soccerBall => soccerBall.positionProperty.value.y );
+  }
+
+  public getTallestStack( filter?: ( soccerBall: SoccerBall ) => boolean ): SoccerBall[] {
+    return _.maxBy( this.getStacks( filter ), stack => stack.length )!;
   }
 
   /**
    * Returns all the stacks in the scene that have at least one object in them, sorted from low value to high value.
    */
-  public getStacks(): SoccerBall[][] {
+  public getStacks( filter?: ( soccerBall: SoccerBall ) => boolean ): SoccerBall[][] {
     return _.range( CAVConstants.PHYSICAL_RANGE.min, CAVConstants.PHYSICAL_RANGE.max + 1 )
-      .filter( location => this.getStackAtLocation( location ).length > 0 )
-      .map( location => this.getStackAtLocation( location ) );
+      .filter( location => this.getStackAtLocation( location, filter ).length > 0 )
+      .map( location => this.getStackAtLocation( location, filter ) );
   }
 
   /**

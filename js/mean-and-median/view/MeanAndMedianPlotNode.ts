@@ -14,9 +14,9 @@ import MedianBarNode from '../../common/view/MedianBarNode.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import CAVPlotNode, { CAVPlotNodeOptions } from '../../common/view/CAVPlotNode.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
-import CAVObjectType from '../../common/model/CAVObjectType.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import NumberLineNode from '../../common/view/NumberLineNode.js';
+import { SoccerBallPhase } from '../../common/model/SoccerBallPhase.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeanAndMedianPlotNodeOptions = SelfOptions & CAVPlotNodeOptions & PickRequired<CAVPlotNodeOptions, 'tandem'>;
@@ -37,8 +37,11 @@ export default class MeanAndMedianPlotNode extends CAVPlotNode {
 
     const updateMedianBarNode = () => {
 
-      const sortedDots = sceneModel.getSortedLandedObjects();
-      const leftmostSoccerBall = sortedDots[ 0 ];
+      const soccerBalls = sceneModel.getSortedLandedObjects();
+
+      // For the purposes of showing the median bar, do not consider the vertical position of STACKING soccer balls.
+      const tallestStack = sceneModel.getTallestStack( soccerBall => soccerBall.soccerBallPhaseProperty.value === SoccerBallPhase.STACKED );
+      const leftmostSoccerBall = soccerBalls[ 0 ];
 
       const medianValue = sceneModel.medianValueProperty.value;
 
@@ -46,30 +49,31 @@ export default class MeanAndMedianPlotNode extends CAVPlotNode {
 
       // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card
       if ( model.isTopMedianVisibleProperty.value && leftmostSoccerBall && medianValue !== null ) {
-        const highestDot = _.maxBy( sortedDots, object => object.positionProperty.value.y );
-        const dotRadius = Math.abs( modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) );
 
         // No matter how high the stack of dots or x's is, we only want the median bar to go up to 5.
         // Assumes all the dots have the same radius. Also move up based on the notch height.
-        // The model y-values are in meters, even for the data points. This helps us animate the line plot in sync with the play area.
-        const barY = modelViewTransform.modelToViewY( Math.min( highestDot!.positionProperty.value.y, 5 * 2 * CAVObjectType.SOCCER_BALL.radius ) )
-                     - dotRadius - MARGIN_Y - MedianBarNode.NOTCH_HEIGHT;
 
-        const rightmostDot = sortedDots[ sortedDots.length - 1 ];
-        assert && assert( leftmostSoccerBall.valueProperty.value !== null );
+        const rightmostSoccerBall = soccerBalls[ soccerBalls.length - 1 ];
         const left = modelViewTransform.modelToViewX( leftmostSoccerBall.valueProperty.value! );
-        assert && assert( rightmostDot.valueProperty.value !== null );
-        const right = modelViewTransform.modelToViewX( rightmostDot.valueProperty.value! );
+        const right = modelViewTransform.modelToViewX( rightmostSoccerBall.valueProperty.value! );
+
+        assert && assert( leftmostSoccerBall.valueProperty.value !== null );
+        assert && assert( rightmostSoccerBall.valueProperty.value !== null );
         assert && assert( medianValue !== null );
+
         const medianPositionX = modelViewTransform.modelToViewX( medianValue );
 
-        this.medianBarNode.setMedianBarShape( barY, left, medianPositionX, right, model.isMedianAnimationCompleteProperty.value );
+        this.medianBarNode.setMedianBarShape( 0, left, medianPositionX, right, model.isMedianAnimationCompleteProperty.value );
+
+        const topDotToIndicate = tallestStack[ Math.min( tallestStack.length - 1, 4 ) ];
+        this.medianBarNode.bottom = modelViewTransform.modelToViewY( topDotToIndicate.positionProperty.value.y ) - MARGIN_Y;
       }
       else {
         this.medianBarNode.clear();
       }
     };
     sceneModel.objectChangedEmitter.addListener( updateMedianBarNode );
+    sceneModel.medianValueProperty.link( updateMedianBarNode );
     model.isTopMedianVisibleProperty.link( updateMedianBarNode );
     if ( model instanceof MeanAndMedianModel ) {
       model.isMedianAnimationCompleteProperty.link( updateMedianBarNode );
