@@ -36,7 +36,9 @@ export default class InfoDialog extends Dialog {
 
     super( content, {
 
-      // TODO: It seems there are 2 ways to hide the dialog. Is there a better way? See https://github.com/phetsims/center-and-variability/issues/179
+      // When the user manually dismisses the Dialog, we need to reflect it back in the model property.
+      // The Dialog API does not function with a visibleProperty on its own. We know that this is circular,
+      // but is necessary for the implementation of Dialog.
       hideCallback: () => model.isInfoVisibleProperty.set( false )
     } );
   }
