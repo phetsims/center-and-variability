@@ -23,6 +23,7 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import CAVModel from '../model/CAVModel.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import CAVSceneModel from '../model/CAVSceneModel.js';
+import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
 
 type SelfOptions = EmptySelfOptions;
 export type KickButtonGroupOptions = SelfOptions & VBoxOptions & PickRequired<VBoxOptions, 'tandem'>;
@@ -75,14 +76,7 @@ export default class KickButtonGroup extends VBox {
         // https://github.com/phetsims/center-and-variability/issues/102
         fireOnHoldInterval: 650,
 
-        // TODO: undefined didn't work so well, see https://github.com/phetsims/center-and-variability/issues/217
-        soundPlayer: {
-          play() {
-            // no-op
-          }, stop() {
-            // no-op
-          }
-        }
+        soundPlayer: nullSoundPlayer
       } );
     };
 
