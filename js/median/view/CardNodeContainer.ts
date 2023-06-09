@@ -643,11 +643,31 @@ export default class CardNodeContainer extends Node {
 
   private sortData(): void {
 
+    // Only allow one sound in each direction.  Playing too many swamps the audio channel and you don't hear e.g. if a soccer ball lands
+    let readyToPlayRightSound = true;
+    let readyToPlayLeftSound = true;
+
     // If the card is visible, the value property should be non-null
     const sorted = _.sortBy( this.cardNodeCells, cardNode => cardNode.soccerBall.valueProperty.value );
     this.cardNodeCells.length = 0;
     this.cardNodeCells.push( ...sorted );
-    this.cardNodeCells.forEach( cardNode => this.animateToHomeCell( cardNode, 0.5, true ) );
+    this.cardNodeCells.forEach( cardNode => {
+
+      const direction = cardNode.positionProperty.value.x < this.getHomePosition( cardNode ).x ? 'left' :
+                        cardNode.positionProperty.value.x > this.getHomePosition( cardNode ).x ? 'right' :
+                        'none';
+
+      this.animateToHomeCell( cardNode, 0.5, ( direction === 'left' && readyToPlayLeftSound ) ||
+                                             ( direction === 'right' && readyToPlayRightSound ) );
+
+      if ( direction === 'left' ) {
+        readyToPlayLeftSound = false;
+      }
+      else if ( direction === 'right' ) {
+        readyToPlayRightSound = false;
+      }
+
+    } );
     this.cardNodeCellsChangedEmitter.emit();
   }
 
