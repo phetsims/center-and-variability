@@ -125,5 +125,13 @@
     "projectURL": "https://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
+  },
+  "saturatedSineLoopTrimmed.wav": {
+    "text": [
+      "Copyright 2002-2019 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris (PhET Interactive Simulations), edited by John Blanco"
   }
 }
