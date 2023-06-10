@@ -20,7 +20,6 @@ import SoccerBall from '../model/SoccerBall.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import SoccerPlayer from '../model/SoccerPlayer.js';
-import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
 import MedianHighlightLayer from '../../common/view/MedianHighlightLayer.js';
 
 /**
@@ -31,8 +30,6 @@ export default class SceneView {
 
   public readonly backSceneViewLayer: Node;
   public readonly frontSceneViewLayer: Node;
-
-  private accordionBox: CAVAccordionBox | null = null;
 
   public constructor(
     model: CAVModel,
@@ -150,12 +147,6 @@ export default class SceneView {
 
     this.backSceneViewLayer = backLayer;
     this.frontSceneViewLayer = frontLayer;
-  }
-
-  public setAccordionBox( accordionBox: CAVAccordionBox ): void {
-    assert && assert( this.accordionBox === null, 'SceneView should only have one accordion box set' );
-
-    this.accordionBox = accordionBox;
   }
 }
 

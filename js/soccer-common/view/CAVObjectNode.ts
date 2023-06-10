@@ -8,16 +8,16 @@
  */
 
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import { Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
-import SoccerBall from '../../soccer-common/model/SoccerBall.js';
+import SoccerBall from '../model/SoccerBall.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import { SoccerBallPhase } from '../../soccer-common/model/SoccerBallPhase.js';
+import { SoccerBallPhase } from '../model/SoccerBallPhase.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import soccerCommon from '../soccerCommon.js';
 
 type SelfOptions = {
   translationStrategy?: ( position: Vector2 ) => void;
@@ -67,4 +67,4 @@ export default class CAVObjectNode extends Node {
   }
 }
 
-centerAndVariability.register( 'CAVObjectNode', CAVObjectNode );
+soccerCommon.register( 'CAVObjectNode', CAVObjectNode );

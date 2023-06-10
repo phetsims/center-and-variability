@@ -1,6 +1,6 @@
 // Copyright 2023, University of Colorado Boulder
 
-import CAVObjectNode, { CAVObjectNodeOptions } from '../../common/view/CAVObjectNode.js';
+import CAVObjectNode, { CAVObjectNodeOptions } from './CAVObjectNode.js';
 import soccerCommon from '../soccerCommon.js';
 import SoccerBall from '../model/SoccerBall.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';

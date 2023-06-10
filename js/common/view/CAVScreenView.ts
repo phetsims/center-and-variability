@@ -290,7 +290,6 @@ export default class CAVScreenView extends ScreenView {
     this.accordionBox = accordionBox;
     this.accordionBoxLayer.addChild( this.accordionBox );
     this.updateAccordionBoxPosition();
-    this.sceneViews.forEach( sceneView => sceneView.setAccordionBox( accordionBox ) );
 
     this.accordionBox.boundsProperty.link( this.updateMedianNode );
     this.accordionBox.boundsProperty.link( this.updateDragIndicatorNode );
