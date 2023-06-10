@@ -16,22 +16,25 @@ import ball_png from '../../../images/ball_png.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import AccessibleSlider, { AccessibleSliderOptions } from '../../../../sun/js/accessibility/AccessibleSlider.js';
 import Property from '../../../../axon/js/Property.js';
-import CAVConstants from '../../common/CAVConstants.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import NumberTone from '../model/NumberTone.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 
 type SelfOptions = EmptySelfOptions;
 type ParentOptions = CAVObjectNodeOptions & AccessibleSliderOptions;
+
+type SoccerBallNodeOptions = SelfOptions & StrictOmit<ParentOptions, 'valueProperty'> & PickRequired<AccessibleSliderOptions, 'enabledRangeProperty'>;
 
 export default class SoccerBallNode extends AccessibleSlider( CAVObjectNode, 3 ) {
 
   public constructor( soccerBall: SoccerBall,
                       modelViewTransform: ModelViewTransform2,
                       objectNodesInputEnabledProperty: TProperty<boolean>,
-                      providedOptions: CAVObjectNodeOptions ) {
+                      providedOptions: SoccerBallNodeOptions ) {
 
     // Use the y dimension, since it determines how the soccer balls stack. But maintain the same aspect ratio as the image
     const viewRadius = Math.abs( modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) );
@@ -48,9 +51,8 @@ export default class SoccerBallNode extends AccessibleSlider( CAVObjectNode, 3 )
       inverseMap: function( value: number ) { return value === 0 ? null : value; }
     } );
 
-    const options = optionize<CAVObjectNodeOptions, SelfOptions, ParentOptions>()( {
+    const options = optionize<SoccerBallNodeOptions, SelfOptions, ParentOptions>()( {
       cursor: 'pointer',
-      enabledRangeProperty: new Property( CAVConstants.PHYSICAL_RANGE ),
       valueProperty: dynamicProperty,
       keyboardStep: 1,
       shiftKeyboardStep: 1,

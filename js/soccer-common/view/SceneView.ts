@@ -21,6 +21,8 @@ import { Shape } from '../../../../kite/js/imports.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import SoccerPlayer from '../model/SoccerPlayer.js';
 import MedianHighlightLayer from '../../common/view/MedianHighlightLayer.js';
+import CAVConstants from '../../common/CAVConstants.js';
+import Property from '../../../../axon/js/Property.js';
 
 /**
  * Renders view elements for a CAVSceneModel. Note that to satisfy the correct z-ordering, elements
@@ -59,7 +61,8 @@ export default class SceneView {
         modelViewTransform,
         model.objectNodesInputEnabledProperty, {
           tandem: options.tandem.createTandem( 'soccerBallNodes' ).createTandem( `soccerBallNode${index + 1}` ),
-          pickable: false
+          pickable: false,
+          enabledRangeProperty: new Property( CAVConstants.PHYSICAL_RANGE )
         } );
 
       backLayerSoccerBallLayer.addChild( soccerBallNode );
