@@ -106,7 +106,9 @@ export default class CAVScreenView extends ScreenView {
       model.isPlayAreaMeanVisibleProperty,
       new DynamicProperty( model.selectedSceneModelProperty, {
         derive: 'dataRangeProperty'
-      } ), {
+      } ),
+      CAVConstants.CHART_VIEW_WIDTH,
+      CAVConstants.PHYSICAL_RANGE, {
         includeXAxis: false,
         includeRangeOnXAxis: false,
         includeMeanStroke: true,

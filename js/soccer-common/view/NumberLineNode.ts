@@ -21,7 +21,6 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import CAVColors from '../../common/CAVColors.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import CAVConstants from '../../common/CAVConstants.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 
@@ -43,6 +42,8 @@ export default class NumberLineNode extends Node {
     modelViewTransform: ModelViewTransform2,
     isMeanIndicatorVisibleProperty: TReadOnlyProperty<boolean>,
     rangeProperty: TReadOnlyProperty<Range | null>,
+    chartViewWidth: number,
+    physicalRange: Range,
     providedOptions?: NumberLineNodeOptions
   ) {
 
@@ -56,8 +57,8 @@ export default class NumberLineNode extends Node {
     const tickMarkExtent = options.includeXAxis ? 7 : 10;
 
     const chartTransform = new ChartTransform( {
-      viewWidth: CAVConstants.CHART_VIEW_WIDTH,
-      modelXRange: CAVConstants.PHYSICAL_RANGE,
+      viewWidth: chartViewWidth,
+      modelXRange: physicalRange,
       viewHeight: tickMarkExtent / 2,
       modelYRange: new Range( 0, 1 )
     } );
@@ -117,7 +118,7 @@ export default class NumberLineNode extends Node {
         if ( meanValue !== null ) {
 
           // Account for the overall offset of the number line node itself (leftmost tick mark)
-          const x = modelViewTransform.modelToViewX( meanValue ) - modelViewTransform.modelToViewX( CAVConstants.PHYSICAL_RANGE.min );
+          const x = modelViewTransform.modelToViewX( meanValue ) - modelViewTransform.modelToViewX( physicalRange.min );
           meanIndicatorNode.centerTop = new Vector2( x, 0 );
         }
         meanIndicatorNode.visible = isMeanIndicatorVisible && meanValue !== null;
@@ -141,7 +142,7 @@ export default class NumberLineNode extends Node {
     return new Path( TRIANGLE_SHAPE, {
       fill: CAVColors.meanColorProperty,
       stroke: includeStroke ? CAVColors.arrowStrokeProperty : null,
-      lineWidth: CAVConstants.ARROW_LINE_WIDTH
+      lineWidth: 0.5
     } );
   }
 }
