@@ -40,10 +40,9 @@ export default class SceneView {
 
     const soccerBallMap = new Map<SoccerBall, SoccerBallNode>();
 
-    const medianHighlightLayer = new MedianHighlightLayer( model, sceneModel, modelViewTransform, model.isPlayAreaMedianVisibleProperty,
-      {
-        visibleProperty: model.isPlayAreaMedianVisibleProperty
-      } );
+    const medianHighlightLayer = new MedianHighlightLayer( model, sceneModel, modelViewTransform, model.isPlayAreaMedianVisibleProperty, {
+      visibleProperty: model.isPlayAreaMedianVisibleProperty
+    } );
 
     // Keep soccer balls in one layer so we can control the focus order
     const backLayerSoccerBallLayer = new Node();
