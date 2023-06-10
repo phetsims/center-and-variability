@@ -43,7 +43,7 @@ export default class SceneView {
 
     const soccerBallMap = new Map<SoccerBall, SoccerBallNode>();
 
-    const medianHighlightLayer = new MedianHighlightLayer( model, sceneModel, modelViewTransform, model.isPlayAreaMedianVisibleProperty, {
+    const medianHighlightLayer = new MedianHighlightLayer( sceneModel, modelViewTransform, model.isPlayAreaMedianVisibleProperty, {
       visibleProperty: model.isPlayAreaMedianVisibleProperty
     } );
 
