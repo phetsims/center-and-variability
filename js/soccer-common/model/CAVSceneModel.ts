@@ -44,7 +44,7 @@ import { SoccerBallPhase } from './SoccerBallPhase.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import Multilink from '../../../../axon/js/Multilink.js';
-import { kickDistanceStrategyFromStateObject, TKickDistanceStrategy } from './TKickDistanceStrategy.js';
+import { TKickDistanceStrategy } from './TKickDistanceStrategy.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
 import ObjectLiteralIO from '../../../../tandem/js/types/ObjectLiteralIO.js';
@@ -57,6 +57,7 @@ import basicKick_mp3 from '../../../sounds/basicKick_mp3.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 import SoccerCommonConstants from '../SoccerCommonConstants.js';
 import SoccerCommonQueryParameters from '../SoccerCommonQueryParameters.js';
+import { kickDistanceStrategyFromStateObject } from '../../common/model/RandomSkewStrategy.js';
 
 const kickSound = new SoundClip( basicKick_mp3, { initialOutputLevel: 0.2 } );
 soundManager.addSoundGenerator( kickSound );

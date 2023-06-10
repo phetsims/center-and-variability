@@ -13,9 +13,9 @@ import CAVSceneModel from '../../soccer-common/model/CAVSceneModel.js';
 import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import CAVConstants, { MAX_KICKS_PROPERTY } from '../../common/CAVConstants.js';
-import { RandomSkewStrategy } from '../../soccer-common/model/TKickDistanceStrategy.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
+import { RandomSkewStrategy } from '../../common/model/RandomSkewStrategy.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeanAndMedianModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
