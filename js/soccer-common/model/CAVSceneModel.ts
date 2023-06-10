@@ -57,7 +57,6 @@ import basicKick_mp3 from '../../../sounds/basicKick_mp3.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 import SoccerCommonConstants from '../SoccerCommonConstants.js';
 import SoccerCommonQueryParameters from '../SoccerCommonQueryParameters.js';
-import { kickDistanceStrategyFromStateObject } from '../../common/model/RandomSkewStrategy.js';
 
 const kickSound = new SoundClip( basicKick_mp3, { initialOutputLevel: 0.2 } );
 soundManager.addSoundGenerator( kickSound );
@@ -126,6 +125,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     maxKicksChoices: number[],
     public kickDistanceStrategy: TKickDistanceStrategy,
     public readonly physicalRange: Range,
+    public readonly kickDistanceStrategyFromStateObject: ( string: string ) => TKickDistanceStrategy,
     providedOptions: CAVSceneModelOptions
   ) {
 
@@ -639,7 +639,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
   }
 
   public applyState( stateObject: CAVSceneModelState ): void {
-    this.kickDistanceStrategy = kickDistanceStrategyFromStateObject( stateObject.distributionType );
+    this.kickDistanceStrategy = this.kickDistanceStrategyFromStateObject( stateObject.distributionType );
   }
 }
 

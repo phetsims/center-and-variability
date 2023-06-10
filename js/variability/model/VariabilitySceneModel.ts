@@ -18,6 +18,7 @@ import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Emitter from '../../../../axon/js/Emitter.js';
+import { kickDistanceStrategyFromStateObject } from '../../common/model/RandomSkewStrategy.js';
 
 export default class VariabilitySceneModel extends CAVSceneModel {
 
@@ -33,7 +34,7 @@ export default class VariabilitySceneModel extends CAVSceneModel {
   public readonly variabilityDataMeasuresUpdatedEmitter: Emitter = new Emitter();
 
   public constructor( maxKicksProperty: TReadOnlyProperty<number>, kickDistanceStrategy: TKickDistanceStrategy, options: { tandem: Tandem } ) {
-    super( maxKicksProperty, CAVConstants.MAX_KICKS_VALUES, kickDistanceStrategy, CAVConstants.PHYSICAL_RANGE, options );
+    super( maxKicksProperty, CAVConstants.MAX_KICKS_VALUES, kickDistanceStrategy, CAVConstants.PHYSICAL_RANGE, kickDistanceStrategyFromStateObject, options );
 
     this.maxValueProperty = new DerivedProperty( [ this.dataRangeProperty ], dataRange => {
       return dataRange === null ? null : dataRange.max;

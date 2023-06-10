@@ -15,7 +15,7 @@ import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import CAVConstants from '../../common/CAVConstants.js';
-import { RandomSkewStrategy } from '../../common/model/RandomSkewStrategy.js';
+import { kickDistanceStrategyFromStateObject, RandomSkewStrategy } from '../../common/model/RandomSkewStrategy.js';
 
 type SelfOptions = EmptySelfOptions;
 type MedianModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
@@ -41,7 +41,8 @@ export default class MedianModel extends CAVModel {
       maxKicksProperty,
       [ 15 ],
       new RandomSkewStrategy(),
-      CAVConstants.PHYSICAL_RANGE, {
+      CAVConstants.PHYSICAL_RANGE,
+      kickDistanceStrategyFromStateObject, {
         tandem: options.tandem.createTandem( 'sceneModel' )
       } );
 
