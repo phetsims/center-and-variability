@@ -1,4 +1,4 @@
-// Copyright 2022-2023, University of Colorado Boulder
+// Copyright 2023, University of Colorado Boulder
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import CAVConstants from '../CAVConstants.js';
 import { DistributionStrategy, ExactDistancesStrategy, TKickDistanceStrategy } from '../../soccer-common/model/TKickDistanceStrategy.js';
