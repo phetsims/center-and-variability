@@ -135,22 +135,29 @@ export default class CAVScreenView extends ScreenView {
       } ) );
 
     /**
-     * TODO: this needs more documentation... I am also confused as to what sceneView we're using here... one seems to be passed in via
-     * createToggleNode, and another seems to be identifying each element as we iterate of the sceneViews array. Seems potentially buggy...
-     * See: https://github.com/phetsims/center-and-variability/issues/247 We would like to chat with @samreid.
+     * Each sceneView has a backSceneViewLayer and a frontSceneViewLayer that will be visible dependent on
+     * the selected sceneModel. The backSceneViewLayer should live in the accordionBoxLayer, and will be rendered
+     * behind the accordionBox.
      */
-    const createToggleNode = ( pickLayer: ( sceneView: SoccerSceneView ) => Node ) => new ToggleNode( model.selectedSceneModelProperty, this.sceneViews.map( sceneView => {
+    this.accordionBoxLayer.addChild( new ToggleNode( model.selectedSceneModelProperty, this.sceneViews.map( sceneView => {
         return {
           value: sceneView.sceneModel,
-          createNode: tandem => pickLayer( sceneView )
+          createNode: () => sceneView.backSceneViewLayer
         };
       }
     ), {
       alignChildren: ToggleNode.NONE
-    } );
+    } ) );
 
-    this.accordionBoxLayer.addChild( createToggleNode( sceneView => sceneView.backSceneViewLayer ) );
-    this.frontScreenViewLayer.addChild( createToggleNode( sceneView => sceneView.frontSceneViewLayer ) );
+    this.frontScreenViewLayer.addChild( new ToggleNode( model.selectedSceneModelProperty, this.sceneViews.map( sceneView => {
+        return {
+          value: sceneView.sceneModel,
+          createNode: () => sceneView.frontSceneViewLayer
+        };
+      }
+    ), {
+      alignChildren: ToggleNode.NONE
+    } ) );
 
     this.resetAllButton = new ResetAllButton( {
       listener: () => {
