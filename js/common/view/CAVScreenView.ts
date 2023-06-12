@@ -202,8 +202,8 @@ export default class CAVScreenView extends ScreenView {
     } );
 
     this.updateDragIndicatorNode = () => {
-      const dragIndicatorVisible = model.isDragIndicatorVisibleProperty.value;
-      const dragIndicatorValue = model.dragIndicatorValueProperty.value;
+      const dragIndicatorVisible = model.dragIndicatorModel.isDragIndicatorVisibleProperty.value;
+      const dragIndicatorValue = model.dragIndicatorModel.dragIndicatorValueProperty.value;
 
       dragIndicatorArrowNode.visible = dragIndicatorVisible;
 
@@ -221,8 +221,8 @@ export default class CAVScreenView extends ScreenView {
       }
     };
 
-    model.isDragIndicatorVisibleProperty.link( this.updateDragIndicatorNode );
-    model.dragIndicatorValueProperty.link( this.updateDragIndicatorNode );
+    model.dragIndicatorModel.isDragIndicatorVisibleProperty.link( this.updateDragIndicatorNode );
+    model.dragIndicatorModel.dragIndicatorValueProperty.link( this.updateDragIndicatorNode );
     this.visibleBoundsProperty.link( this.updateDragIndicatorNode );
     this.model.selectedSceneModelProperty.link( this.updateDragIndicatorNode );
     this.model.sceneModels.forEach( sceneModel => {

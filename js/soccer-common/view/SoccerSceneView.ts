@@ -20,14 +20,9 @@ import SoccerBall from '../model/SoccerBall.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import SoccerPlayer from '../model/SoccerPlayer.js';
-
-// TODO: SceneView needs to be abstracted out, see: https://github.com/phetsims/center-and-variability/issues/222
-// Common does not need medianHighlightLayer, and I think by factoring out the DragIndicatorModel in CAVModel,
-// we will no longer need to bring in CAVModel either
-import CAVModel from '../../common/model/CAVModel.js';
-
 import Property from '../../../../axon/js/Property.js';
 import Range from '../../../../dot/js/Range.js';
+import DragIndicatorModel from '../model/DragIndicatorModel.js';
 
 /**
  * Renders view elements for a CAVSceneModel. Note that to satisfy the correct z-ordering, elements
@@ -39,7 +34,7 @@ export default class SoccerSceneView {
   public readonly frontSceneViewLayer: Node;
 
   public constructor(
-    model: CAVModel,
+    dragIndicatorModel: DragIndicatorModel,
     public readonly sceneModel: CAVSceneModel,
     getSoccerPlayerImageSet: ( soccerPlayer: SoccerPlayer, sceneModel: CAVSceneModel ) => SoccerPlayerImageSet,
     modelViewTransform: ModelViewTransform2,
@@ -61,7 +56,7 @@ export default class SoccerSceneView {
       const soccerBallNode = new SoccerBallNode(
         soccerBall,
         modelViewTransform,
-        model.objectNodesInputEnabledProperty, {
+        dragIndicatorModel.objectNodesInputEnabledProperty, {
           tandem: options.tandem.createTandem( 'soccerBallNodes' ).createTandem( `soccerBallNode${index + 1}` ),
           pickable: false,
           enabledRangeProperty: new Property( physicalRange )
@@ -89,7 +84,7 @@ export default class SoccerSceneView {
         // It's simpler to have the listener here because in the model or drag listener, there is rounding/snapping
         // And we only want to hide the indicator of the user dragged the ball a full tick mark
         if ( value !== null && oldValue !== null ) {
-          model.soccerBallHasBeenDraggedProperty.value = true;
+          dragIndicatorModel.soccerBallHasBeenDraggedProperty.value = true;
         }
       } );
 
