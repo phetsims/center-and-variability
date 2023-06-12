@@ -19,7 +19,6 @@ import PreferencesDialog from '../../../../joist/js/preferences/PreferencesDialo
 import MaxKicksControlNode from './MaxKicksControlNode.js';
 
 export default class SimulationPreferencesContentNode extends VBox {
-  private readonly disposeSimulationPreferencesContentNode: () => void;
 
   public constructor( tandem: Tandem, parentNode: Node ) {
 
@@ -56,13 +55,6 @@ export default class SimulationPreferencesContentNode extends VBox {
       align: 'left',
       tandem: tandem
     } );
-
-    this.disposeSimulationPreferencesContentNode = () => radioButtonGroup.dispose();
-  }
-
-  public override dispose(): void {
-    this.disposeSimulationPreferencesContentNode();
-    super.dispose();
   }
 }
 
