@@ -60,10 +60,11 @@ export default class CAVScreenView extends ScreenView {
   protected readonly model: CAVModel;
 
   // Subclasses add to the backScreenViewLayer for correct z-ordering and correct tab navigation order
-  protected readonly backScreenViewLayer = new Node();
-  protected readonly frontScreenViewLayer = new Node();
+  // Soccer balls go behind the accordion box after they land
+  protected readonly backScreenViewLayer;
+  private readonly middleScreenViewLayer = new Node();
+  private readonly frontScreenViewLayer;
 
-  protected readonly accordionBoxLayer = new Node();
   protected readonly intervalToolLayer = new Node();
 
   protected readonly eraseButton: EraserButton;
@@ -94,11 +95,6 @@ export default class CAVScreenView extends ScreenView {
     this.modelViewTransform = modelViewTransform;
     this.model = model;
 
-    this.addChild( this.backScreenViewLayer );
-
-    this.backScreenViewLayer.addChild( new BackgroundNode( GROUND_POSITION_Y, this.visibleBoundsProperty ) );
-    this.backScreenViewLayer.addChild( this.intervalToolLayer );
-
     this.playAreaNumberLineNode = new NumberLineNode(
       new DynamicProperty( model.selectedSceneModelProperty, {
         derive: 'meanValueProperty'
@@ -118,13 +114,6 @@ export default class CAVScreenView extends ScreenView {
         y: GROUND_POSITION_Y
       } );
 
-    // add the playAreaNumberLineNode before the accordionBoxLayer so that the median highlight appears in front of the ticks
-    this.backScreenViewLayer.addChild( this.playAreaNumberLineNode );
-
-    // Soccer balls go behind the accordion box after they land
-    this.backScreenViewLayer.addChild( this.accordionBoxLayer );
-    this.addChild( this.frontScreenViewLayer );
-
     this.sceneViews = model.sceneModels.map( ( sceneModel, index ) => new CAVSceneView(
       model,
       sceneModel,
@@ -134,12 +123,7 @@ export default class CAVScreenView extends ScreenView {
         tandem: options.tandem.createTandem( `${CAVConstants.SCENE_VIEW_TANDEM}${index + 1}` )
       } ) );
 
-    /**
-     * Each sceneView has a backSceneViewLayer and a frontSceneViewLayer that will be visible dependent on
-     * the selected sceneModel. The backSceneViewLayer should live in the accordionBoxLayer, and will be rendered
-     * behind the accordionBox.
-     */
-    this.accordionBoxLayer.addChild( new ToggleNode( model.selectedSceneModelProperty, this.sceneViews.map( sceneView => {
+    const backLayerToggleNode = new ToggleNode( model.selectedSceneModelProperty, this.sceneViews.map( sceneView => {
         return {
           value: sceneView.sceneModel,
           createNode: () => sceneView.backSceneViewLayer
@@ -147,17 +131,24 @@ export default class CAVScreenView extends ScreenView {
       }
     ), {
       alignChildren: ToggleNode.NONE
-    } ) );
+    } );
 
-    this.frontScreenViewLayer.addChild( new ToggleNode( model.selectedSceneModelProperty, this.sceneViews.map( sceneView => {
-        return {
-          value: sceneView.sceneModel,
-          createNode: () => sceneView.frontSceneViewLayer
-        };
-      }
-    ), {
-      alignChildren: ToggleNode.NONE
-    } ) );
+    const dragIndicatorArrowNode = new DragIndicatorArrowNode( {
+      tandem: options.tandem.createTandem( 'dragIndicatorArrowNode' ),
+      phetioVisiblePropertyInstrumented: false
+    } );
+
+    this.backScreenViewLayer = new Node( {
+      children: [
+        new BackgroundNode( GROUND_POSITION_Y, this.visibleBoundsProperty ),
+
+        // median highlight appears in front of the ticks, so these need to be in the background.
+        this.playAreaNumberLineNode,
+
+        this.intervalToolLayer,
+        backLayerToggleNode
+      ]
+    } );
 
     this.resetAllButton = new ResetAllButton( {
       listener: () => {
@@ -188,15 +179,12 @@ export default class CAVScreenView extends ScreenView {
         soundClipOptions: { initialOutputLevel: 0.3 }
       } )
     } );
-    this.backScreenViewLayer.addChild( this.eraseButton );
-    this.backScreenViewLayer.addChild( this.resetAllButton );
 
     this.questionBar = new QuestionBar( this.layoutBounds, this.visibleBoundsProperty, combineOptions<QuestionBarOptions>( {
       tandem: options.tandem.createTandem( 'questionBar' )
     }, options.questionBarOptions ) );
-    this.backScreenViewLayer.addChild( this.questionBar );
 
-    this.backScreenViewLayer.addChild( new KickButtonGroup( model, {
+    const kickButtonGroup = new KickButtonGroup( model, {
 
       // Center under where the soccer player nodes will be. Since the SoccerPlayerNode are positioned in the
       // SceneView, we can't use those node bounds to position the kick buttons, so this is a manually tuned magic number.
@@ -206,11 +194,6 @@ export default class CAVScreenView extends ScreenView {
       // the soccer player foot falls beneath the ground, and the shading of the buttons.
       centerY: ( GROUND_POSITION_Y + this.layoutBounds.maxY ) / 2 + 2,
       tandem: options.tandem.createTandem( 'kickButtonGroup' )
-    } ) );
-
-    const dragIndicatorArrowNode = new DragIndicatorArrowNode( {
-      tandem: options.tandem.createTandem( 'dragIndicatorArrowNode' ),
-      phetioVisiblePropertyInstrumented: false
     } );
 
     this.updateDragIndicatorNode = () => {
@@ -242,10 +225,28 @@ export default class CAVScreenView extends ScreenView {
       sceneModel.objectChangedEmitter.addListener( this.updateDragIndicatorNode );
     } );
 
-    this.accordionBoxLayer.addChild( dragIndicatorArrowNode );
-
     const playAreaMedianIndicatorNode = new PlayAreaMedianIndicatorNode();
-    this.frontScreenViewLayer.addChild( playAreaMedianIndicatorNode );
+
+    const frontLayerToggleNode = new ToggleNode( model.selectedSceneModelProperty, this.sceneViews.map( sceneView => {
+        return {
+          value: sceneView.sceneModel,
+          createNode: () => sceneView.frontSceneViewLayer
+        };
+      }
+    ), {
+      alignChildren: ToggleNode.NONE
+    } );
+
+    this.frontScreenViewLayer = new Node( {
+      children: [
+        frontLayerToggleNode,
+        this.eraseButton,
+        this.resetAllButton,
+        this.questionBar,
+        kickButtonGroup,
+        playAreaMedianIndicatorNode
+      ]
+    } );
 
     this.updateMedianNode = () => {
       const sceneModel = this.model.selectedSceneModelProperty.value;
@@ -272,6 +273,12 @@ export default class CAVScreenView extends ScreenView {
     } );
     this.visibleBoundsProperty.link( this.updateMedianNode );
     model.isPlayAreaMedianVisibleProperty.link( this.updateMedianNode );
+
+    this.middleScreenViewLayer.addChild( dragIndicatorArrowNode );
+
+    this.addChild( this.backScreenViewLayer );
+    this.addChild( this.middleScreenViewLayer );
+    this.addChild( this.frontScreenViewLayer );
   }
 
   // calculate where the top object is at a given value
@@ -304,7 +311,7 @@ export default class CAVScreenView extends ScreenView {
    */
   protected setAccordionBox( accordionBox: CAVAccordionBox ): void {
     this.accordionBox = accordionBox;
-    this.accordionBoxLayer.addChild( this.accordionBox );
+    this.middleScreenViewLayer.addChild( this.accordionBox );
     this.updateAccordionBoxPosition();
 
     this.accordionBox.boundsProperty.link( this.updateMedianNode );

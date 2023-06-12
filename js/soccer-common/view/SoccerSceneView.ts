@@ -26,7 +26,7 @@ import DragIndicatorModel from '../model/DragIndicatorModel.js';
 
 /**
  * Renders view elements for a CAVSceneModel. Note that to satisfy the correct z-ordering, elements
- * populate the accordionBoxLayer and frontScreenViewLayer in the parent.
+ * populate the middleScreenViewLayer and frontScreenViewLayer in the parent.
  */
 export default class SoccerSceneView {
 
