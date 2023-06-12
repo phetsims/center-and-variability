@@ -307,7 +307,8 @@ export default class CAVScreenView extends ScreenView {
   }
 
   /**
-   * Called by subtype constructors to finish initialization.
+   * Called by subtype constructors to finish initialization. This will appear in the middle layer in z-ordering,
+   * so that kicked soccer balls go in front, and landed soccer balls go behind.
    */
   protected setAccordionBox( accordionBox: CAVAccordionBox ): void {
     this.accordionBox = accordionBox;
