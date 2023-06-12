@@ -26,7 +26,7 @@ import Property from '../../../../axon/js/Property.js';
 import Range from '../../../../dot/js/Range.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CAVModel from '../model/CAVModel.js';
-import SceneView from '../../soccer-common/view/SceneView.js';
+import SoccerSceneView from '../../soccer-common/view/SoccerSceneView.js';
 import KickButtonGroup from './KickButtonGroup.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import SoccerPlayerNode, { SoccerPlayerImageSet } from '../../soccer-common/view/SoccerPlayerNode.js';
@@ -41,6 +41,7 @@ import { SoccerBallPhase } from '../../soccer-common/model/SoccerBallPhase.js';
 import cvEraserOptions001_mp3 from '../../../sounds/cvEraserOptions001_mp3.js';
 import SoundClipPlayer from '../../../../tambo/js/sound-generators/SoundClipPlayer.js';
 import SoccerCommonConstants from '../../soccer-common/SoccerCommonConstants.js';
+import CAVSceneView from './CAVSceneView.js';
 
 type SelfOptions = {
   questionBarOptions: StrictOmit<QuestionBarOptions, 'tandem'>;
@@ -71,7 +72,7 @@ export default class CAVScreenView extends ScreenView {
 
   protected readonly questionBar: QuestionBar;
   protected readonly playAreaNumberLineNode: NumberLineNode;
-  private readonly sceneViews: SceneView[];
+  private readonly sceneViews: SoccerSceneView[];
 
   private readonly updateMedianNode: () => void;
   private readonly updateDragIndicatorNode: () => void;
@@ -124,7 +125,7 @@ export default class CAVScreenView extends ScreenView {
     this.backScreenViewLayer.addChild( this.accordionBoxLayer );
     this.addChild( this.frontScreenViewLayer );
 
-    this.sceneViews = model.sceneModels.map( ( sceneModel, index ) => new SceneView(
+    this.sceneViews = model.sceneModels.map( ( sceneModel, index ) => new CAVSceneView(
       model,
       sceneModel,
       ( soccerPlayer, sceneModel ) => this.getSoccerPlayerImageSet( soccerPlayer, sceneModel ),
@@ -133,7 +134,7 @@ export default class CAVScreenView extends ScreenView {
         tandem: options.tandem.createTandem( `${CAVConstants.SCENE_VIEW_TANDEM}${index + 1}` )
       } ) );
 
-    const createToggleNode = ( pickLayer: ( sceneView: SceneView ) => Node ) => new ToggleNode( model.selectedSceneModelProperty, this.sceneViews.map( sceneView => {
+    const createToggleNode = ( pickLayer: ( sceneView: SoccerSceneView ) => Node ) => new ToggleNode( model.selectedSceneModelProperty, this.sceneViews.map( sceneView => {
         return {
           value: sceneView.sceneModel,
           createNode: tandem => pickLayer( sceneView )

@@ -7,20 +7,25 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+
 import { Node } from '../../../../scenery/js/imports.js';
 import SoccerBallNode from './SoccerBallNode.js';
 import { SoccerBallPhase } from '../model/SoccerBallPhase.js';
 import CAVSceneModel from '../model/CAVSceneModel.js';
 import SoccerPlayerNode, { SoccerPlayerImageSet } from './SoccerPlayerNode.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import CAVModel from '../../common/model/CAVModel.js';
 import soccerCommon from '../soccerCommon.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import SoccerBall from '../model/SoccerBall.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import SoccerPlayer from '../model/SoccerPlayer.js';
-import MedianHighlightLayer from '../../common/view/MedianHighlightLayer.js';
+
+// TODO: SceneView needs to be abstracted out, see: https://github.com/phetsims/center-and-variability/issues/222
+// Common does not need medianHighlightLayer, and I think by factoring out the DragIndicatorModel in CAVModel,
+// we will no longer need to bring in CAVModel either
+import CAVModel from '../../common/model/CAVModel.js';
+
 import Property from '../../../../axon/js/Property.js';
 import Range from '../../../../dot/js/Range.js';
 
@@ -28,7 +33,7 @@ import Range from '../../../../dot/js/Range.js';
  * Renders view elements for a CAVSceneModel. Note that to satisfy the correct z-ordering, elements
  * populate the accordionBoxLayer and frontScreenViewLayer in the parent.
  */
-export default class SceneView {
+export default class SoccerSceneView {
 
   public readonly backSceneViewLayer: Node;
   public readonly frontSceneViewLayer: Node;
@@ -43,14 +48,10 @@ export default class SceneView {
 
     const soccerBallMap = new Map<SoccerBall, SoccerBallNode>();
 
-    const medianHighlightLayer = new MedianHighlightLayer( sceneModel, modelViewTransform, model.isPlayAreaMedianVisibleProperty, {
-      visibleProperty: model.isPlayAreaMedianVisibleProperty
-    } );
-
     // Keep soccer balls in one layer so we can control the focus order
     const backLayerSoccerBallLayer = new Node();
     const backLayer = new Node( {
-      children: [ backLayerSoccerBallLayer, medianHighlightLayer ]
+      children: [ backLayerSoccerBallLayer ]
     } );
 
     // A front layer for balls in the air so that they are in front of other UI components
@@ -153,4 +154,4 @@ export default class SceneView {
   }
 }
 
-soccerCommon.register( 'SceneView', SceneView );
+soccerCommon.register( 'SoccerSceneView', SoccerSceneView ); '';
