@@ -8,12 +8,12 @@
  */
 
 import ArrowNode, { ArrowNodeOptions } from '../../../../scenery-phet/js/ArrowNode.js';
-import CAVConstants from '../../common/CAVConstants.js';
 import soccerCommon from '../soccerCommon.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { NodeOptions } from '../../../../scenery/js/imports.js';
 import SoccerCommonColors from '../SoccerCommonColors.js';
+import SoccerCommonConstants from '../SoccerCommonConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 type DragIndicatorArrowNodeOptions = PickRequired<ArrowNodeOptions, 'tandem'> & Pick<ArrowNodeOptions, 'visible'> & NodeOptions;
@@ -29,7 +29,7 @@ export default class DragIndicatorArrowNode extends ArrowNode {
       doubleHead: true,
       fill: SoccerCommonColors.dragIndicatorColorProperty,
       stroke: SoccerCommonColors.arrowStrokeProperty,
-      lineWidth: CAVConstants.ARROW_LINE_WIDTH
+      lineWidth: SoccerCommonConstants.ARROW_LINE_WIDTH
     }, options ) );
   }
 }

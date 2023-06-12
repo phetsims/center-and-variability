@@ -51,7 +51,6 @@ const CAVConstants = {
   PLOT_TYPE_PROPERTY: new EnumerationProperty( CAVQueryParameters.plotType === 'dotPlot' ? PlotType.DOT_PLOT : PlotType.LINE_PLOT, {
     tandem: Tandem.PREFERENCES.createTandem( 'plotTypeProperty' )
   } ),
-  ARROW_LINE_WIDTH: 0.5,
   RIGHT_SKEWED_DATA: RIGHT_SKEWED_DATA,
   LEFT_SKEWED_DATA: RIGHT_SKEWED_DATA.slice().reverse(),
 

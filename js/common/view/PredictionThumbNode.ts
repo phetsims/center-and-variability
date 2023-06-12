@@ -11,11 +11,11 @@ import { Line, Node, NodeOptions, TColor } from '../../../../scenery/js/imports.
 import centerAndVariability from '../../centerAndVariability.js';
 import ShadedSphereNode from '../../../../scenery-phet/js/ShadedSphereNode.js';
 import CAVColors from '../CAVColors.js';
-import CAVConstants from '../CAVConstants.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import SoccerCommonColors from '../../soccer-common/SoccerCommonColors.js';
+import SoccerCommonConstants from '../../soccer-common/SoccerCommonConstants.js';
 
 type SelfOptions = {
   color: TColor;
@@ -31,7 +31,7 @@ export default class PredictionThumbNode extends Node {
     const shadedSphereNode = new ShadedSphereNode( 16, {
       mainColor: providedOptions.color,
       stroke: SoccerCommonColors.arrowStrokeProperty,
-      lineWidth: CAVConstants.ARROW_LINE_WIDTH
+      lineWidth: SoccerCommonConstants.ARROW_LINE_WIDTH
     } );
 
     const indicatorNode =
@@ -44,7 +44,7 @@ export default class PredictionThumbNode extends Node {
         tailWidth: 2,
         fill: providedOptions.color,
         stroke: SoccerCommonColors.arrowStrokeProperty,
-        lineWidth: CAVConstants.ARROW_LINE_WIDTH
+        lineWidth: SoccerCommonConstants.ARROW_LINE_WIDTH
       } ) :
 
         // Lines for the Interval Tool Node in the Variability screen
