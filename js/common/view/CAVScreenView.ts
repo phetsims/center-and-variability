@@ -134,6 +134,11 @@ export default class CAVScreenView extends ScreenView {
         tandem: options.tandem.createTandem( `${CAVConstants.SCENE_VIEW_TANDEM}${index + 1}` )
       } ) );
 
+    /**
+     * TODO: this needs more documentation... I am also confused as to what sceneView we're using here... one seems to be passed in via
+     * createToggleNode, and another seems to be identifying each element as we iterate of the sceneViews array. Seems potentially buggy...
+     * See: https://github.com/phetsims/center-and-variability/issues/247 We would like to chat with @samreid.
+     */
     const createToggleNode = ( pickLayer: ( sceneView: SoccerSceneView ) => Node ) => new ToggleNode( model.selectedSceneModelProperty, this.sceneViews.map( sceneView => {
         return {
           value: sceneView.sceneModel,
