@@ -12,7 +12,6 @@ import { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGr
 import { AlignGroup, GridBox, Line, Node, Text } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVConstants from '../CAVConstants.js';
-import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 import MedianBarNode from './MedianBarNode.js';
 import CAVColors from '../CAVColors.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -23,6 +22,7 @@ import CardNodeContainer from '../../median/view/CardNodeContainer.js';
 import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-players/checkboxCheckedSoundPlayer.js';
 import boundaryReachedSoundPlayer from '../../../../tambo/js/shared-sound-players/boundaryReachedSoundPlayer.js';
 import CAVSceneModel from '../../soccer-common/model/CAVSceneModel.js';
+import MeanIndicatorNode from './MeanIndicatorNode.js';
 
 // constants
 const ICON_WIDTH = 24;
@@ -120,7 +120,7 @@ export default class AccordionBoxCheckboxFactory {
               } ),
 
               // Triangle
-              NumberLineNode.createMeanIndicatorNode( false, true )
+              new MeanIndicatorNode( false, true )
             ]
           } ),
           iconGroup, textGroup

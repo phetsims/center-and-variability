@@ -16,7 +16,6 @@ import { AlignGroup, GridBox, Node, TColor, Text } from '../../../../scenery/js/
 import CAVConstants from '../CAVConstants.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVColors from '../CAVColors.js';
-import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 import PredictionThumbNode from './PredictionThumbNode.js';
 import LinkableProperty from '../../../../axon/js/LinkableProperty.js';
 import VariabilityModel from '../../variability/model/VariabilityModel.js';
@@ -26,6 +25,8 @@ import IntervalToolIconNode from '../../variability/view/IntervalToolIconNode.js
 import NumberTone from '../../soccer-common/model/NumberTone.js';
 import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-players/checkboxCheckedSoundPlayer.js';
 import TSoundPlayer from '../../../../tambo/js/TSoundPlayer.js';
+import MeanIndicatorNode from './MeanIndicatorNode.js';
+import SoccerCommonColors from '../../soccer-common/SoccerCommonColors.js';
 
 // constants
 const TEXT_OPTIONS = {
@@ -86,7 +87,7 @@ export default class PlayAreaCheckboxFactory {
           new Text( CenterAndVariabilityStrings.medianStringProperty, TEXT_OPTIONS ),
           new ArrowNode( 0, 0, 0, 27, {
             fill: CAVColors.medianColorProperty,
-            stroke: CAVColors.arrowStrokeProperty,
+            stroke: SoccerCommonColors.arrowStrokeProperty,
             lineWidth: CAVConstants.ARROW_LINE_WIDTH,
             headHeight: 12,
             headWidth: 18,
@@ -105,7 +106,7 @@ export default class PlayAreaCheckboxFactory {
   public static getMeanCheckboxItem( alignGroup: AlignGroup, model: CAVModel ): VerticalCheckboxGroupItem {
     return {
       createNode: ( tandem: Tandem ) => PlayAreaCheckboxFactory.createGridBox( new Text( CenterAndVariabilityStrings.meanStringProperty, TEXT_OPTIONS ),
-        NumberLineNode.createMeanIndicatorNode( true, true ), alignGroup ),
+        new MeanIndicatorNode( true, true ), alignGroup ),
       property: model.isPlayAreaMeanVisibleProperty,
       tandemName: 'meanCheckbox'
     };

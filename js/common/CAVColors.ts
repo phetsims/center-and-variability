@@ -36,9 +36,6 @@ const CAVColors = {
   kickButtonFillColorProperty: new ProfileColorProperty( centerAndVariability, 'kickButtonFillColor', {
     default: '#dae6f7'
   } ),
-  dragIndicatorColorProperty: new ProfileColorProperty( centerAndVariability, 'dragIndicatorColor', {
-    default: '#6bc6ff'
-  } ),
 
   // sky gradient, sampled from a screenshot
   skyGradientTopColorProperty: new ProfileColorProperty( centerAndVariability, 'skyGradientTop', { default: '#365b9b' } ),
@@ -53,14 +50,13 @@ const CAVColors = {
   iqrLabelColorProperty: new ProfileColorProperty( centerAndVariability, 'iqrLabelColor', { default: 'black' } ),
   madColorProperty: new ProfileColorProperty( centerAndVariability, 'madColor', { default: 'black' } ),
   iqrColorProperty: new ProfileColorProperty( centerAndVariability, 'iqrColor', { default: new Color( '#99ffff' ).withAlpha( 0.55 ) } ),
-  arrowStrokeProperty: new ProfileColorProperty( centerAndVariability, 'arrowStroke', { default: 'black' } ),
   boxWhiskerStrokeColorProperty: new ProfileColorProperty( centerAndVariability, 'boxWhiskerStrokeColor', { default: 'black' } ),
   madRectangleColorProperty: new ProfileColorProperty( centerAndVariability, 'madRectangleColor', { default: new Color( '#cba3e6' ).withAlpha( 0.7 ) } ),
 
   grayDataPointFill: new ProfileColorProperty( centerAndVariability, 'grayDataPointFill', { default: '#b2b2b2' } ),
 
   // Darker gray than the ones in the plot area, to show up better in the radio button
-  rangeMarkerColorPrperty: new ProfileColorProperty( centerAndVariability, 'rangeMarkerColor', { default: new Color( '#717171' ) } ),
+  rangeMarkerColorProperty: new ProfileColorProperty( centerAndVariability, 'rangeMarkerColor', { default: new Color( '#717171' ) } ),
 
   intervalToolIconRectangleFillColorProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolIconRectangleFill', { default: '#fef8ab' } ),
   intervalToolIconShadedSphereMainColorProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolIconShadedSphereMainColor', { default: '#fdf581' } ),

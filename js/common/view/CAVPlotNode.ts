@@ -24,6 +24,7 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import VariabilityModel from '../../variability/model/VariabilityModel.js';
 import VariabilityMeasure from '../../variability/model/VariabilityMeasure.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import CAVNumberLineNode from './CAVNumberLineNode.js';
 
 type SelfOptions = {
   dataPointFill: TColor;
@@ -63,7 +64,7 @@ export default class CAVPlotNode extends Node {
     );
     this.modelViewTransform = modelViewTransform;
 
-    this.numberLineNode = new NumberLineNode(
+    this.numberLineNode = new CAVNumberLineNode(
       sceneModel.meanValueProperty,
       modelViewTransform,
       model instanceof MeanAndMedianModel ? model.isTopMeanVisibleProperty :

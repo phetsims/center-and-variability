@@ -15,6 +15,7 @@ import CAVConstants from '../CAVConstants.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import SoccerCommonColors from '../../soccer-common/SoccerCommonColors.js';
 
 type SelfOptions = {
   color: TColor;
@@ -29,7 +30,7 @@ export default class PredictionThumbNode extends Node {
 
     const shadedSphereNode = new ShadedSphereNode( 16, {
       mainColor: providedOptions.color,
-      stroke: CAVColors.arrowStrokeProperty,
+      stroke: SoccerCommonColors.arrowStrokeProperty,
       lineWidth: CAVConstants.ARROW_LINE_WIDTH
     } );
 
@@ -42,7 +43,7 @@ export default class PredictionThumbNode extends Node {
         headWidth: 14,
         tailWidth: 2,
         fill: providedOptions.color,
-        stroke: CAVColors.arrowStrokeProperty,
+        stroke: SoccerCommonColors.arrowStrokeProperty,
         lineWidth: CAVConstants.ARROW_LINE_WIDTH
       } ) :
 

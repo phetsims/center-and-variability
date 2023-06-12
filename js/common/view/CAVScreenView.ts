@@ -32,7 +32,7 @@ import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import SoccerPlayerNode, { SoccerPlayerImageSet } from '../../soccer-common/view/SoccerPlayerNode.js';
 import SoccerPlayer from '../../soccer-common/model/SoccerPlayer.js';
 import CAVSceneModel from '../../soccer-common/model/CAVSceneModel.js';
-import DragIndicatorArrowNode from './DragIndicatorArrowNode.js';
+import DragIndicatorArrowNode from '../../soccer-common/view/DragIndicatorArrowNode.js';
 import CAVObjectType from '../../soccer-common/model/CAVObjectType.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';
@@ -42,6 +42,7 @@ import cvEraserOptions001_mp3 from '../../../sounds/cvEraserOptions001_mp3.js';
 import SoundClipPlayer from '../../../../tambo/js/sound-generators/SoundClipPlayer.js';
 import SoccerCommonConstants from '../../soccer-common/SoccerCommonConstants.js';
 import CAVSceneView from './CAVSceneView.js';
+import CAVNumberLineNode from './CAVNumberLineNode.js';
 
 type SelfOptions = {
   questionBarOptions: StrictOmit<QuestionBarOptions, 'tandem'>;
@@ -95,7 +96,7 @@ export default class CAVScreenView extends ScreenView {
     this.modelViewTransform = modelViewTransform;
     this.model = model;
 
-    this.playAreaNumberLineNode = new NumberLineNode(
+    this.playAreaNumberLineNode = new CAVNumberLineNode(
       new DynamicProperty( model.selectedSceneModelProperty, {
         derive: 'meanValueProperty'
       } ),

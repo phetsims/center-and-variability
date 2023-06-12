@@ -37,7 +37,7 @@ export default class RangeIconNode extends Node {
       const viewRadius = viewDiameter / 2;
 
       const options = {
-        fill: CAVColors.rangeMarkerColorPrperty,
+        fill: CAVColors.rangeMarkerColorProperty,
         centerX: i * viewRadius * 2,
         centerY: 22 - j * viewRadius * 2
       };
@@ -71,7 +71,7 @@ export default class RangeIconNode extends Node {
         // Horizontal arrow at the top
         new ArrowNode( 0, 0, 22, 0, {
           doubleHead: true,
-          fill: CAVColors.rangeMarkerColorPrperty,
+          fill: CAVColors.rangeMarkerColorProperty,
           stroke: null,
           headWidth: 5,
           headHeight: 5,

@@ -32,7 +32,7 @@ import AsyncCounter from '../../common/model/AsyncCounter.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Matrix3 from '../../../../dot/js/Matrix3.js';
-import DragIndicatorArrowNode from '../../common/view/DragIndicatorArrowNode.js';
+import DragIndicatorArrowNode from '../../soccer-common/view/DragIndicatorArrowNode.js';
 import TEmitter from '../../../../axon/js/TEmitter.js';
 import MedianModel from '../../median/model/MedianModel.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
