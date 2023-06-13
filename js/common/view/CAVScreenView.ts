@@ -29,7 +29,7 @@ import CAVModel from '../model/CAVModel.js';
 import SoccerSceneView from '../../soccer-common/view/SoccerSceneView.js';
 import KickButtonGroup from './KickButtonGroup.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import SoccerPlayerNode, { SoccerPlayerImageSet } from '../../soccer-common/view/SoccerPlayerNode.js';
+import { SoccerPlayerImageSet } from '../../soccer-common/view/SoccerPlayerNode.js';
 import SoccerPlayer from '../../soccer-common/model/SoccerPlayer.js';
 import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
 import DragIndicatorArrowNode from '../../soccer-common/view/DragIndicatorArrowNode.js';
@@ -43,6 +43,7 @@ import SoundClipPlayer from '../../../../tambo/js/sound-generators/SoundClipPlay
 import SoccerCommonConstants from '../../soccer-common/SoccerCommonConstants.js';
 import CAVSceneView from './CAVSceneView.js';
 import CAVNumberLineNode from './CAVNumberLineNode.js';
+import SoccerPlayerGroupUnnumbered from '../../soccer-common/view/SoccerPlayerGroupUnnumbered.js';
 
 type SelfOptions = {
   questionBarOptions: StrictOmit<QuestionBarOptions, 'tandem'>;
@@ -53,6 +54,9 @@ export type CAVScreenViewOptions = SelfOptions & ScreenViewOptions;
 // constants
 const GROUND_POSITION_Y = 500;
 const INDICATOR_MARGIN = 4;
+
+// There are 15 items in the SoccerPlayerGroupUnnumbered, so we need 2x copies to cover 30 max kicks
+const MULTI_GROUP = [ ...SoccerPlayerGroupUnnumbered, ...SoccerPlayerGroupUnnumbered ];
 
 export default class CAVScreenView extends ScreenView {
 
@@ -336,7 +340,7 @@ export default class CAVScreenView extends ScreenView {
   }
 
   public getSoccerPlayerImageSet( soccerPlayer: SoccerPlayer, sceneModel: SoccerSceneModel ): SoccerPlayerImageSet {
-    return SoccerPlayerNode.MULTI_GROUP[ soccerPlayer.initialPlaceInLine ];
+    return MULTI_GROUP[ soccerPlayer.initialPlaceInLine ];
   }
 
   /**
