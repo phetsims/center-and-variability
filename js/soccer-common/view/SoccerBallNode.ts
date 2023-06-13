@@ -1,5 +1,13 @@
 // Copyright 2023, University of Colorado Boulder
 
+/**
+ * Renders a soccer ball that can be dragged horizontally. Uses AccessibleSlider so that the soccer ball functions
+ * similarly to a slider in alternativeInput.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ *
+ */
+
 import SoccerObjectNode, { CAVObjectNodeOptions } from './SoccerObjectNode.js';
 import soccerCommon from '../soccerCommon.js';
 import SoccerBall from '../model/SoccerBall.js';
