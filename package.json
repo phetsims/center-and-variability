@@ -55,7 +55,8 @@
               "ts-nocheck": true
             }
           ],
-          "no-object-spread-on-non-literals": "error"
+          "no-object-spread-on-non-literals": "error",
+          "soccer-common-cannot-reference-center-and-variability": "error"
         }
       }
     ]

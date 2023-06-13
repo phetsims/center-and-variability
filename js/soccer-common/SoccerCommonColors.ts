@@ -16,15 +16,14 @@
  */
 
 import { ProfileColorProperty } from '../../../scenery/js/imports.js';
-import centerAndVariability from '../centerAndVariability.js';
 import soccerCommon from './soccerCommon.js';
 
 const SoccerCommonColors = {
 
-  dragIndicatorColorProperty: new ProfileColorProperty( centerAndVariability, 'dragIndicatorColor', {
+  dragIndicatorColorProperty: new ProfileColorProperty( soccerCommon, 'dragIndicatorColor', {
     default: '#6bc6ff'
   } ),
-  arrowStrokeProperty: new ProfileColorProperty( centerAndVariability, 'arrowStroke', { default: 'black' } )
+  arrowStrokeProperty: new ProfileColorProperty( soccerCommon, 'arrowStroke', { default: 'black' } )
 };
 
 soccerCommon.register( 'SoccerCommonColors', SoccerCommonColors );
