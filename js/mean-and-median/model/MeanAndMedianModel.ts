@@ -55,9 +55,6 @@ export default class MeanAndMedianModel extends CAVModel {
     this.isTopMeanVisibleProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isTopMeanVisibleProperty' )
     } );
-    this.isTopMeanVisibleProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isTopMeanVisibleProperty' )
-    } );
     this.isTopMedianVisibleProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isTopMedianVisibleProperty' )
     } );

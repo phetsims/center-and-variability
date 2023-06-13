@@ -155,11 +155,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
       const soccerBall = createSoccerBall( index === 0, {
         tandem: options.tandem.createTandem( 'soccerBalls' ).createTandemIndex1( 'soccerBall', index )
       } );
-
-      // const soccerBall = new SoccerBall( index === 0, {
-      //   tandem: options.tandem.createTandem( 'soccerBalls' ).createTandemIndex1( 'soccerBall', index )
-      // } );
-
+      
       // When the soccer ball drag position changes, constrain it to the physical range and move it to the top, if necessary
       soccerBall.dragPositionProperty.lazyLink( ( dragPosition: Vector2 ) => {
         soccerBall.valueProperty.value = Utils.roundSymmetric( this.physicalRange.constrainValue( dragPosition.x ) );

@@ -10,15 +10,9 @@
 
 import DragIndicatorModel from '../../soccer-common/model/DragIndicatorModel.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import CAVSoccerSceneModel from './CAVSoccerSceneModel.js';
 
-
 export default class CAVDragIndicatorModel extends DragIndicatorModel {
-
-  public constructor( options: { tandem: Tandem } ) {
-   super( options );
-  }
 
   public override updateDragIndicator( sceneModel: CAVSoccerSceneModel, soccerBallHasBeenDragged: boolean, soccerBallCount: number, maxKicks: number ): void {
     super.updateDragIndicator( sceneModel, soccerBallHasBeenDragged, soccerBallCount, maxKicks );
@@ -28,16 +22,13 @@ export default class CAVDragIndicatorModel extends DragIndicatorModel {
 
       // add the dragIndicatorArrowNode above the last object when it is added to the play area.
       // However, we also want to make sure that the dragIndicator is not in the same position as the Median Indicator, if possible
+      // Note the drag indicator only shows up after 15 soccer balls have landed, and it would be impossibly likely for
+      // all 15 to be the same value unless using the ?sameSpot query parameter, which is not a public query parameter.
       const allEqualToMedian = reversedBalls.every( soccerBall => soccerBall.valueProperty.value === sceneModel.medianValueProperty.value );
 
-      if ( allEqualToMedian ) {
+      if ( !allEqualToMedian ) {
 
-        // If all soccer balls are in the same stack, show the dragIndicator above that stack
-        this.dragIndicatorValueProperty.value = sceneModel.medianValueProperty.value;
-      }
-      else {
-
-        // Otherwise, show it over a recently landed ball that is not in the median stack
+        // Show it over a recently landed ball that is not in the median stack
         this.dragIndicatorValueProperty.value = reversedBalls
           .find( soccerBall => soccerBall.valueProperty.value !== sceneModel.medianValueProperty.value )!
           .valueProperty.value!;

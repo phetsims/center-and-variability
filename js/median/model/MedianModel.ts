@@ -37,7 +37,7 @@ export default class MedianModel extends CAVModel {
       tandem: options.tandem.createTandem( 'maxKicksProperty' )
     } );
 
-    const scene = new CAVSoccerSceneModel(
+    const sceneModel = new CAVSoccerSceneModel(
       maxKicksProperty,
       [ 15 ],
       new RandomSkewStrategy(),
@@ -46,7 +46,7 @@ export default class MedianModel extends CAVModel {
         tandem: options.tandem.createTandem( 'sceneModel' )
       } );
 
-    super( maxKicksProperty, [ scene ], options );
+    super( maxKicksProperty, [ sceneModel ], options );
 
     this.cards = this.sceneModels[ 0 ].soccerBalls.map( ( soccerBall, index ) => new CardModel( soccerBall, {
       tandem: options.tandem.createTandem( 'cards' ).createTandemIndex1( 'card', index )
