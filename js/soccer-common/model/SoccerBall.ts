@@ -19,21 +19,20 @@ import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import { SoccerBallPhase } from './SoccerBallPhase.js';
 import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import TEmitter from '../../../../axon/js/TEmitter.js';
 import SoccerPlayer from './SoccerPlayer.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import NumberTone from './NumberTone.js';
 import SoccerCommonConstants from '../SoccerCommonConstants.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 type SelfOptions = EmptySelfOptions;
-export type SoccerBallOptions = SelfOptions & PhetioObjectOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
+export type SoccerBallOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'>;
 
 // Global counter for debugging
 let count = 0;
@@ -49,10 +48,6 @@ export default class SoccerBall extends PhetioObject {
   public readonly positionProperty: Vector2Property;
   public readonly velocityProperty: Vector2Property;
   public readonly soccerBallPhaseProperty: Property<SoccerBallPhase>;
-  public readonly isMedianObjectProperty: BooleanProperty;
-  public readonly isQ1ObjectProperty: BooleanProperty;
-  public readonly isQ3ObjectProperty: BooleanProperty;
-  public readonly isAnimationHighlightVisibleProperty: BooleanProperty;
 
   // Where the object is animating to, or null if not yet animating
   public targetXProperty: Property<number | null>;
@@ -96,18 +91,7 @@ export default class SoccerBall extends PhetioObject {
       tandem: options.tandem.createTandem( 'valueProperty' ),
       phetioValueType: NullableIO( NumberIO )
     } );
-    this.isMedianObjectProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isMedianObjectProperty' )
-    } );
-    this.isQ1ObjectProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isQ1ObjectProperty' )
-    } );
-    this.isQ3ObjectProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isQ3ObjectProperty' )
-    } );
-    this.isAnimationHighlightVisibleProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isAnimationHighlightVisibleProperty' )
-    } );
+
     this.targetXProperty = new Property<number | null>( null, {
       tandem: options.tandem.createTandem( 'targetXProperty' ),
       phetioValueType: NullableIO( NumberIO )
@@ -166,15 +150,18 @@ export default class SoccerBall extends PhetioObject {
     this.velocityProperty.reset();
     this.soccerBallPhaseProperty.reset();
     this.valueProperty.reset();
-    this.isMedianObjectProperty.reset();
-    this.isQ1ObjectProperty.reset();
-    this.isQ3ObjectProperty.reset();
-    this.isAnimationHighlightVisibleProperty.reset();
+
     this.targetXProperty.value = null;
     this.soccerPlayer = null;
 
     this.resetEmitter.emit();
   }
+
+  // TODO: https://github.com/phetsims/center-and-variability/issues/222 check if the order matters, etc.
+  // public resetTemplateMethod(): void {
+  //
+  //   // Override if there are subclass things to reset
+  // }
 }
 
 /**

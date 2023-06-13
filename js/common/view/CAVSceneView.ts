@@ -18,12 +18,13 @@ import SoccerPlayer from '../../soccer-common/model/SoccerPlayer.js';
 import { SoccerPlayerImageSet } from '../../soccer-common/view/SoccerPlayerNode.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import Range from '../../../../dot/js/Range.js';
+import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 
 
 export default class CAVSceneView extends SoccerSceneView {
 
   public constructor( model: CAVModel,
-                      sceneModel: SoccerSceneModel,
+                      sceneModel: CAVSoccerSceneModel,
                       getSoccerPlayerImageSet: ( soccerPlayer: SoccerPlayer, sceneModel: SoccerSceneModel ) => SoccerPlayerImageSet,
                       modelViewTransform: ModelViewTransform2,
                       physicalRange: Range,

@@ -9,13 +9,13 @@
 
 import centerAndVariability from '../../centerAndVariability.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
 import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import CAVConstants, { MAX_KICKS_PROPERTY } from '../../common/CAVConstants.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 import { kickDistanceStrategyFromStateObject, RandomSkewStrategy } from '../../common/model/RandomSkewStrategy.js';
+import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeanAndMedianModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
@@ -42,7 +42,7 @@ export default class MeanAndMedianModel extends CAVModel {
       instrumentMeanPredictionProperty: true
     }, providedOptions );
 
-    const sceneModel = new SoccerSceneModel(
+    const sceneModel = new CAVSoccerSceneModel(
       MAX_KICKS_PROPERTY,
       CAVConstants.MAX_KICKS_VALUES,
       new RandomSkewStrategy(),
@@ -52,6 +52,9 @@ export default class MeanAndMedianModel extends CAVModel {
       } );
     super( MAX_KICKS_PROPERTY, [ sceneModel ], options );
 
+    this.isTopMeanVisibleProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isTopMeanVisibleProperty' )
+    } );
     this.isTopMeanVisibleProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isTopMeanVisibleProperty' )
     } );

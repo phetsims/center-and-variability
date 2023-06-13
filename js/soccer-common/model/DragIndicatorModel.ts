@@ -48,33 +48,16 @@ export default class DragIndicatorModel {
 
     //  if an object was moved, objects are not input enabled, or the max number of balls haven't been kicked out
     //  don't show the dragIndicatorArrowNode
-    const indicatorVisible = !soccerBallHasBeenDragged &&
-                             soccerBallCount === maxKicks &&
-                             this.objectNodesInputEnabledProperty.value &&
-                             _.every( sceneModel?.getActiveSoccerBalls(), soccerBall => soccerBall.valueProperty.value !== null );
-    this.isDragIndicatorVisibleProperty.value = indicatorVisible;
+    this.isDragIndicatorVisibleProperty.value = !soccerBallHasBeenDragged &&
+                                                soccerBallCount === maxKicks &&
+                                                this.objectNodesInputEnabledProperty.value &&
+                                                _.every( sceneModel?.getActiveSoccerBalls(), soccerBall => soccerBall.valueProperty.value !== null );
 
-    if ( indicatorVisible ) {
+    if ( this.isDragIndicatorVisibleProperty.value ) {
       const reversedBalls = sceneModel.getActiveSoccerBalls().reverse();
 
-      // add the dragIndicatorArrowNode above the last object when it is added to the play area.
-      // However, we also want to make sure that the dragIndicator is not in the same position as the Median Indicator, if possible
-      const allEqualToMedian = reversedBalls.every( soccerBall => soccerBall.valueProperty.value === sceneModel.medianValueProperty.value );
-
-      if ( allEqualToMedian ) {
-
-        // If all soccer balls are in the same stack, show the dragIndicator above that stack
-        this.dragIndicatorValueProperty.value = sceneModel.medianValueProperty.value;
-      }
-      else {
-
-        // Otherwise, show it over a recently landed ball that is not in the median stack
-        const value = reversedBalls
-          .find( soccerBall => soccerBall.valueProperty.value !== sceneModel.medianValueProperty.value )!
-          .valueProperty.value!;
-
-        this.dragIndicatorValueProperty.value = value;
-      }
+      // Show the drag indicator over the most recently landed ball
+      this.dragIndicatorValueProperty.value = reversedBalls[ 0 ].valueProperty.value;
     }
   }
 

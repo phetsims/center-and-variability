@@ -13,15 +13,15 @@ import Property from '../../../../axon/js/Property.js';
 import { Node, Path, Text } from '../../../../scenery/js/imports.js';
 import tshirtSolidShape from '../../../../sherpa/js/fontawesome-5/tshirtSolidShape.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
+import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type SceneRadioButtonGroupOptions = SelfOptions & RectangularRadioButtonGroupOptions;
 
-export default class SceneRadioButtonGroup extends RectangularRadioButtonGroup<SoccerSceneModel> {
+export default class SceneRadioButtonGroup extends RectangularRadioButtonGroup<CAVSoccerSceneModel> {
 
-  public constructor( sceneModels: VariabilitySceneModel[], property: Property<SoccerSceneModel>, providedOptions: SceneRadioButtonGroupOptions ) {
+  public constructor( sceneModels: VariabilitySceneModel[], property: Property<CAVSoccerSceneModel>, providedOptions: SceneRadioButtonGroupOptions ) {
     const options = optionize<SceneRadioButtonGroupOptions, SelfOptions, RectangularRadioButtonGroupOptions>()( {
       radioButtonOptions: {
         baseColor: 'white'

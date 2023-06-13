@@ -10,12 +10,12 @@
 import centerAndVariability from '../../centerAndVariability.js';
 import CardModel from '../../median/model/CardModel.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
 import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import { kickDistanceStrategyFromStateObject, RandomSkewStrategy } from '../../common/model/RandomSkewStrategy.js';
+import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type MedianModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
@@ -37,7 +37,7 @@ export default class MedianModel extends CAVModel {
       tandem: options.tandem.createTandem( 'maxKicksProperty' )
     } );
 
-    const scene = new SoccerSceneModel(
+    const scene = new CAVSoccerSceneModel(
       maxKicksProperty,
       [ 15 ],
       new RandomSkewStrategy(),

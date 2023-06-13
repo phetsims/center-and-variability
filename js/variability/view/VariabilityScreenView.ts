@@ -24,7 +24,6 @@ import CAVConstants from '../../common/CAVConstants.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 import SoccerPlayer from '../../soccer-common/model/SoccerPlayer.js';
 import SoccerPlayerNode, { SoccerPlayerImageSet } from '../../soccer-common/view/SoccerPlayerNode.js';
-import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
 import InfoDialog from './InfoDialog.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import PredictionSlider, { PredictionSliderOptions } from '../../common/view/PredictionSlider.js';
@@ -40,6 +39,7 @@ import saturatedSineLoopTrimmed_wav from '../../../sounds/saturatedSineLoopTrimm
 import Utils from '../../../../dot/js/Utils.js';
 import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
+import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
@@ -185,7 +185,7 @@ export default class VariabilityScreenView extends CAVScreenView {
     } );
   }
 
-  public override getSoccerPlayerImageSet( soccerPlayer: SoccerPlayer, sceneModel: SoccerSceneModel ): SoccerPlayerImageSet {
+  public override getSoccerPlayerImageSet( soccerPlayer: SoccerPlayer, sceneModel: CAVSoccerSceneModel ): SoccerPlayerImageSet {
     const index = this.model.sceneModels.indexOf( sceneModel );
     return SoccerPlayerNode.VARIABILITY_GROUP[ index ];
   }

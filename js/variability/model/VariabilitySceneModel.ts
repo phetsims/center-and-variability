@@ -19,8 +19,9 @@ import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import { kickDistanceStrategyFromStateObject } from '../../common/model/RandomSkewStrategy.js';
+import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 
-export default class VariabilitySceneModel extends SoccerSceneModel {
+export default class VariabilitySceneModel extends CAVSoccerSceneModel {
 
   public readonly maxValueProperty: TReadOnlyProperty<number | null>;
   public readonly minValueProperty: TReadOnlyProperty<number | null>;

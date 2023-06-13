@@ -10,7 +10,6 @@
 import soccerCommon from '../../soccer-common/soccerCommon.js';
 import { ManualConstraint, MatrixBetweenProperty, Node, NodeOptions, TColor, Text } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
@@ -25,6 +24,7 @@ import VariabilityModel from '../../variability/model/VariabilityModel.js';
 import VariabilityMeasure from '../../variability/model/VariabilityMeasure.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import CAVNumberLineNode from './CAVNumberLineNode.js';
+import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 
 type SelfOptions = {
   dataPointFill: TColor;
@@ -40,7 +40,7 @@ export default class CAVPlotNode extends Node {
   public readonly modelViewTransform: ModelViewTransform2;
   private readonly numberLineNode: NumberLineNode;
 
-  public constructor( model: CAVModel, sceneModel: SoccerSceneModel, playAreaNumberLineNode: NumberLineNode, providedOptions?: CAVPlotNodeOptions ) {
+  public constructor( model: CAVModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, providedOptions?: CAVPlotNodeOptions ) {
 
     const options = optionize<CAVPlotNodeOptions, SelfOptions, NodeOptions>()( {
       excludeInvisibleChildrenFromBounds: true

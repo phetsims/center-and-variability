@@ -19,13 +19,13 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CAVConstants from '../CAVConstants.js';
 import Property from '../../../../axon/js/Property.js';
-import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import NumberTone from '../../soccer-common/model/NumberTone.js';
-import DragIndicatorModel from '../../soccer-common/model/DragIndicatorModel.js';
+import CAVSoccerSceneModel from './CAVSoccerSceneModel.js';
+import CAVDragIndicatorModel from './CAVDragIndicatorModel.js';
 
 type SelfOptions = {
   tandem: Tandem;
@@ -35,18 +35,18 @@ export type CAVModelOptions = SelfOptions;
 
 export default class CAVModel {
 
-  public readonly dragIndicatorModel: DragIndicatorModel;
+  public readonly dragIndicatorModel: CAVDragIndicatorModel;
 
   public readonly isPlayAreaMedianVisibleProperty: BooleanProperty; // Screens 1-3
   public readonly isPlayAreaMeanVisibleProperty: BooleanProperty;  // Screens 2-3
   public readonly isMedianPredictionVisibleProperty: BooleanProperty; // Screens 1-2
   public readonly medianPredictionProperty: NumberProperty; // Screens 1-2
 
-  public readonly selectedSceneModelProperty: Property<SoccerSceneModel>;
+  public readonly selectedSceneModelProperty: Property<CAVSoccerSceneModel>;
 
   public readonly isAccordionBoxExpandedProperty: Property<boolean>;
 
-  public constructor( public readonly maxKicksProperty: Property<number>, public readonly sceneModels: SoccerSceneModel[], options: CAVModelOptions ) {
+  public constructor( public readonly maxKicksProperty: Property<number>, public readonly sceneModels: CAVSoccerSceneModel[], options: CAVModelOptions ) {
 
     this.isAccordionBoxExpandedProperty = new BooleanProperty( true, {
       tandem: options.tandem.createTandem( 'isAccordionBoxExpandedProperty' )
@@ -89,17 +89,17 @@ export default class CAVModel {
 
     // These DynamicProperties allow us to track all the necessary scenes Properties for dragIndicator update, and not
     // just the first selectedScene
-    const selectedSceneStackedSoccerBallCountProperty = new DynamicProperty<number, number, SoccerSceneModel>( this.selectedSceneModelProperty, {
+    const selectedSceneStackedSoccerBallCountProperty = new DynamicProperty<number, number, CAVSoccerSceneModel>( this.selectedSceneModelProperty, {
       derive: 'stackedSoccerBallCountProperty'
     } );
-    const selectedSceneMaxKicksProperty = new DynamicProperty<number, number, SoccerSceneModel>( this.selectedSceneModelProperty, {
+    const selectedSceneMaxKicksProperty = new DynamicProperty<number, number, CAVSoccerSceneModel>( this.selectedSceneModelProperty, {
       derive: 'maxKicksProperty'
     } );
 
 
     const allValueProperties = sceneModels.flatMap( sceneModel => sceneModel.soccerBalls.map( soccerBall => soccerBall.valueProperty ) );
 
-    this.dragIndicatorModel = new DragIndicatorModel( { tandem: options.tandem.createTandem( 'dragIndicatorModel' ) } );
+    this.dragIndicatorModel = new CAVDragIndicatorModel( { tandem: options.tandem.createTandem( 'dragIndicatorModel' ) } );
 
     // It is important to link to the values of all the soccer balls in the screen, so that the dragIndicator can be
     // updated after all the balls have landed, and not just after they have been kicked.
@@ -110,6 +110,9 @@ export default class CAVModel {
       this.dragIndicatorModel.updateDragIndicator( this.selectedSceneModelProperty.value, this.dragIndicatorModel.soccerBallHasBeenDraggedProperty.value,
         selectedSceneStackedSoccerBallCountProperty.value, selectedSceneMaxKicksProperty.value );
     } );
+
+    this.isPlayAreaMedianVisibleProperty.link( value => { console.log( 'I exist ' + value ); } );
+
   }
 
 

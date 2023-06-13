@@ -9,7 +9,6 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
 import MedianBarNode from '../../common/view/MedianBarNode.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import CAVPlotNode, { CAVPlotNodeOptions } from '../../common/view/CAVPlotNode.js';
@@ -17,6 +16,7 @@ import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 import { SoccerBallPhase } from '../../soccer-common/model/SoccerBallPhase.js';
+import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeanAndMedianPlotNodeOptions = SelfOptions & CAVPlotNodeOptions & PickRequired<CAVPlotNodeOptions, 'tandem'>;
@@ -28,7 +28,7 @@ export default class MeanAndMedianPlotNode extends CAVPlotNode {
     barStyle: 'continuous'
   } );
 
-  public constructor( model: MeanAndMedianModel, sceneModel: SoccerSceneModel, playAreaNumberLineNode: NumberLineNode, options: MeanAndMedianPlotNodeOptions ) {
+  public constructor( model: MeanAndMedianModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, options: MeanAndMedianPlotNodeOptions ) {
     super( model, sceneModel, playAreaNumberLineNode, options );
 
     this.addChild( this.medianBarNode );

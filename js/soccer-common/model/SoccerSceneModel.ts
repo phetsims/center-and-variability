@@ -56,18 +56,19 @@ import basicKick_mp3 from '../../../sounds/basicKick_mp3.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 import SoccerCommonConstants from '../SoccerCommonConstants.js';
 import SoccerCommonQueryParameters from '../SoccerCommonQueryParameters.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 const kickSound = new SoundClip( basicKick_mp3, { initialOutputLevel: 0.2 } );
 soundManager.addSoundGenerator( kickSound );
 
 type SelfOptions = EmptySelfOptions;
-type CAVSceneModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
+export type SoccerSceneModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
 // constants
 const TIME_BETWEEN_RAPID_KICKS = 0.5; // in seconds
 
-export default class SoccerSceneModel extends PhetioObject implements TModel {
-  public readonly soccerBalls: SoccerBall[];
+export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends PhetioObject implements TModel {
+  public readonly soccerBalls: T[];
 
   // The number of stacked soccer balls
   public readonly stackedSoccerBallCountProperty: NumberProperty;
@@ -75,11 +76,7 @@ export default class SoccerSceneModel extends PhetioObject implements TModel {
   // The max kickable (highest value in the combo box, if there is one)
   private readonly maxKicksLimit: number;
 
-  public readonly medianValueProperty: Property<number | null>;
   public readonly meanValueProperty: Property<number | null>;
-
-  // Indicates the max and min values in the data set, or null if there are no values in the data set
-  public readonly dataRangeProperty: Property<Range | null>;
 
   public readonly isVisibleProperty: Property<boolean> = new BooleanProperty( true );
 
@@ -125,14 +122,15 @@ export default class SoccerSceneModel extends PhetioObject implements TModel {
     public kickDistanceStrategy: TKickDistanceStrategy,
     public readonly physicalRange: Range,
     public readonly kickDistanceStrategyFromStateObject: ( string: string ) => TKickDistanceStrategy,
-    providedOptions: CAVSceneModelOptions
+    createSoccerBall: ( isFirstSoccerBall: boolean, options: { tandem: Tandem } ) => T,
+    providedOptions: SoccerSceneModelOptions
   ) {
 
     // TODO: should we move styles like this into studio? See https://github.com/phetsims/center-and-variability/issues/117
     const pre = '<pre style="display: block; padding: 10px; border: 1px solid #ccc; border-radius: 3px; overflow: auto;">';
     const code = '<code style="background-color: #f9f9f9; font-family: \'Courier New\', Courier, monospace;">';
 
-    const options = optionize<CAVSceneModelOptions, SelfOptions, PhetioObjectOptions>()( {
+    const options = optionize<SoccerSceneModelOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioState: true,
       phetioType: CAVSceneModelIO,
       phetioDocumentation: 'The model for the CAV scene, which includes the soccer balls and the soccer players. The ' +
@@ -153,9 +151,14 @@ export default class SoccerSceneModel extends PhetioObject implements TModel {
       tandem: options.tandem.createTandem( 'stackedSoccerBallCountProperty' )
     } );
     this.soccerBalls = _.range( 0, this.maxKicksLimit ).map( index => {
-      const soccerBall = new SoccerBall( index === 0, {
+
+      const soccerBall = createSoccerBall( index === 0, {
         tandem: options.tandem.createTandem( 'soccerBalls' ).createTandemIndex1( 'soccerBall', index )
       } );
+
+      // const soccerBall = new SoccerBall( index === 0, {
+      //   tandem: options.tandem.createTandem( 'soccerBalls' ).createTandemIndex1( 'soccerBall', index )
+      // } );
 
       // When the soccer ball drag position changes, constrain it to the physical range and move it to the top, if necessary
       soccerBall.dragPositionProperty.lazyLink( ( dragPosition: Vector2 ) => {
@@ -224,17 +227,12 @@ export default class SoccerSceneModel extends PhetioObject implements TModel {
       } );
     } );
 
-    this.medianValueProperty = new Property<number | null>( null, {
-      tandem: options.tandem.createTandem( 'medianValueProperty' ),
-      phetioValueType: NullableIO( NumberIO ),
-      phetioReadOnly: true
-    } );
+
     this.meanValueProperty = new Property<number | null>( null, {
       tandem: options.tandem.createTandem( 'meanValueProperty' ),
       phetioValueType: NullableIO( NumberIO ),
       phetioReadOnly: true
     } );
-    this.dataRangeProperty = new Property<Range | null>( null );
 
     this.numberOfDataPointsProperty = new NumberProperty( 0, {
       tandem: options.tandem.createTandem( 'numberOfDataPointsProperty' )
@@ -304,7 +302,7 @@ export default class SoccerSceneModel extends PhetioObject implements TModel {
       } );
     } );
 
-    maxKicksProperty.link( maxKicks => this.clearData() );
+    maxKicksProperty.lazyLink( maxKicks => this.clearData() );
   }
 
   // Cancel out all animations in the soccer ball stack.
@@ -318,29 +316,11 @@ export default class SoccerSceneModel extends PhetioObject implements TModel {
     }
 
     const sortedObjects = this.getSortedStackedObjects();
-    const medianObjects = SoccerSceneModel.getMedianObjectsFromSortedArray( sortedObjects );
-
-    this.soccerBalls.forEach( object => {
-      object.isMedianObjectProperty.value = medianObjects.includes( object );
-    } );
-
     if ( sortedObjects.length > 0 ) {
-
-      // take the average to account for cases where there is more than one object contributing to the median
-      this.medianValueProperty.value = _.mean( medianObjects.map( soccerBall => soccerBall.valueProperty.value ) );
-
       this.meanValueProperty.value = _.mean( sortedObjects.map( soccerBall => soccerBall.valueProperty.value ) );
-
-      const min = sortedObjects[ 0 ].valueProperty.value!;
-      const max = sortedObjects[ sortedObjects.length - 1 ].valueProperty.value!;
-      this.dataRangeProperty.value = new Range( min, max );
-
-      assert && assert( !isNaN( this.medianValueProperty.value ) );
     }
     else {
-      this.medianValueProperty.value = null;
       this.meanValueProperty.value = null;
-      this.dataRangeProperty.value = null;
     }
 
     this.numberOfDataPointsProperty.value = sortedObjects.length;
@@ -433,7 +413,7 @@ export default class SoccerSceneModel extends PhetioObject implements TModel {
       object => object.valueProperty.value );
   }
 
-  public getSortedStackedObjects(): SoccerBall[] {
+  public getSortedStackedObjects(): T[] {
     return _.sortBy( this.getActiveSoccerBalls().filter( soccerBall =>
         soccerBall.soccerBallPhaseProperty.value === SoccerBallPhase.STACKED ),
 
@@ -497,7 +477,7 @@ export default class SoccerSceneModel extends PhetioObject implements TModel {
   }
 
   // Returns a list of the median objects within a sorted array, based on the objects' 'value' property
-  protected static getMedianObjectsFromSortedArray( sortedObjects: SoccerBall[] ): SoccerBall[] {
+  protected static getMedianObjectsFromSortedArray<T extends SoccerBall>( sortedObjects: T[] ): T[] {
 
     // Odd number of values, take the central value
     if ( sortedObjects.length % 2 === 1 ) {
@@ -537,7 +517,7 @@ export default class SoccerSceneModel extends PhetioObject implements TModel {
     }
   }
 
-  public getActiveSoccerBalls(): SoccerBall[] {
+  public getActiveSoccerBalls(): T[] {
     return this.soccerBalls.filter( soccerBall => soccerBall.soccerBallPhaseProperty.value !== SoccerBallPhase.INACTIVE );
   }
 
@@ -603,7 +583,7 @@ export default class SoccerSceneModel extends PhetioObject implements TModel {
   /**
    * Select a target location for the nextBallToKick, set its velocity and mark it for animation.
    */
-  private kickBall( soccerPlayer: SoccerPlayer, soccerBall: SoccerBall ): void {
+  private kickBall( soccerPlayer: SoccerPlayer, soccerBall: T ): void {
     soccerPlayer.poseProperty.value = Pose.KICKING;
 
     const x1 = SoccerCommonQueryParameters.sameSpot ? 7 :

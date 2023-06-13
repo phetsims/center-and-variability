@@ -2,7 +2,6 @@
 
 import CAVObjectNode, { CAVObjectNodeOptions } from '../../soccer-common/view/CAVObjectNode.js';
 import soccerCommon from '../../soccer-common/soccerCommon.js';
-import SoccerBall from '../../soccer-common/model/SoccerBall.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import { Circle, Node, Path, TColor } from '../../../../scenery/js/imports.js';
@@ -15,6 +14,7 @@ import Property from '../../../../axon/js/Property.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { SoccerBallPhase } from '../../soccer-common/model/SoccerBallPhase.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import CAVSoccerBall from '../model/CAVSoccerBall.js';
 
 type DataPointNodeOptions = CAVObjectNodeOptions & { fill: TColor };
 
@@ -22,7 +22,7 @@ export default class DataPointNode extends CAVObjectNode {
 
   protected readonly medianHighlight: Circle;
 
-  public constructor( soccerBall: SoccerBall,
+  public constructor( soccerBall: CAVSoccerBall,
                       modelViewTransform: ModelViewTransform2,
                       providedOptions: DataPointNodeOptions ) {
 
