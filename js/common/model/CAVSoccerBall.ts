@@ -48,12 +48,14 @@ export default class CAVSoccerBall extends SoccerBall {
   }
 
   public override reset(): void {
-    super.reset();
 
+    // Reset our own state first so that when super reset() is called, it is ok to trigger the resetEmitter
     this.isMedianObjectProperty.reset();
     this.isQ1ObjectProperty.reset();
     this.isQ3ObjectProperty.reset();
     this.isAnimationHighlightVisibleProperty.reset();
+
+    super.reset();
   }
 }
 

@@ -156,12 +156,6 @@ export default class SoccerBall extends PhetioObject {
 
     this.resetEmitter.emit();
   }
-
-  // TODO: https://github.com/phetsims/center-and-variability/issues/222 check if the order matters, etc.
-  // public resetTemplateMethod(): void {
-  //
-  //   // Override if there are subclass things to reset
-  // }
 }
 
 /**

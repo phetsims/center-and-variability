@@ -110,9 +110,6 @@ export default class CAVModel {
       this.dragIndicatorModel.updateDragIndicator( this.selectedSceneModelProperty.value, this.dragIndicatorModel.soccerBallHasBeenDraggedProperty.value,
         selectedSceneStackedSoccerBallCountProperty.value, selectedSceneMaxKicksProperty.value );
     } );
-
-    this.isPlayAreaMedianVisibleProperty.link( value => { console.log( 'I exist ' + value ); } );
-
   }
 
 
