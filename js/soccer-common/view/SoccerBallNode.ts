@@ -41,9 +41,6 @@ export default class SoccerBallNode extends AccessibleSlider( CAVObjectNode, 3 )
 
     const enabledProperty = new Property( true );
 
-    // TODO: https://github.com/phetsims/center-and-variability/issues/162 when moving to a tall stack, focus gets lost
-    // I thought it was a rounding error but the problem persisted even after I added roundToStepSize: true
-
     // The drag listener requires a numeric value (does not support null), so map it through a DynamicProperty
     const dynamicProperty = new DynamicProperty( new Property( soccerBall.valueProperty ), {
       bidirectional: true,
@@ -152,13 +149,6 @@ export default class SoccerBallNode extends AccessibleSlider( CAVObjectNode, 3 )
 
     this.addChild( soccerBallNodes );
 
-    // Data point should be visible if the soccer ball is active AND if the scene is visible.
-    // Multilink.multilink( [ soccerBall.isActiveProperty, isSceneVisibleProperty ], ( isActive, isSceneVisible ) => {
-    //
-    //   // TODO: https://github.com/phetsims/center-and-variability/issues/162 do we still need isSceneVisible?
-    //   this.visible = isActive && isSceneVisible;
-    // } );
-
     soccerBall.soccerBallLandedEmitter.addListener( () => {
       this.moveToFront();
     } );
@@ -175,7 +165,6 @@ export default class SoccerBallNode extends AccessibleSlider( CAVObjectNode, 3 )
     } );
 
     // Not focusable until the ball has been kicked into the play area
-    // TODO https://github.com/phetsims/center-and-variability/issues/162 will this need to be triggered to take the correct value via phet-io stateful attributes?
     this.focusable = false;
 
     super.addDebugText( soccerBall );
