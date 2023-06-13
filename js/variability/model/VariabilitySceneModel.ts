@@ -69,7 +69,12 @@ export default class VariabilitySceneModel extends CAVSoccerSceneModel {
       phetioReadOnly: true
     } );
     this.iqrValueProperty = new DerivedProperty( [ this.q1ValueProperty, this.q3ValueProperty ], ( q1, q3 ) => {
-      return q3! - q1!;
+      if ( q1 === null || q3 === null ) {
+        return null;
+      }
+      else {
+        return q3 - q1;
+      }
     } );
 
     this.madValueProperty = new Property<number | null>( null, {
