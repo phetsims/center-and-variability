@@ -99,7 +99,7 @@ export default class CAVModel {
 
     const allValueProperties = sceneModels.flatMap( sceneModel => sceneModel.soccerBalls.map( soccerBall => soccerBall.valueProperty ) );
 
-    this.dragIndicatorModel = new DragIndicatorModel( { tandem: options.tandem.createTandem( 'DragIndicatorModel' ) } );
+    this.dragIndicatorModel = new DragIndicatorModel( { tandem: options.tandem.createTandem( 'dragIndicatorModel' ) } );
 
     // It is important to link to the values of all the soccer balls in the screen, so that the dragIndicator can be
     // updated after all the balls have landed, and not just after they have been kicked.
