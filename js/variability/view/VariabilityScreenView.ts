@@ -39,6 +39,7 @@ import soundManager from '../../../../tambo/js/soundManager.js';
 import saturatedSineLoopTrimmed_wav from '../../../sounds/saturatedSineLoopTrimmed_wav.js';
 import Utils from '../../../../dot/js/Utils.js';
 import CAVQueryParameters from '../../common/CAVQueryParameters.js';
+import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
@@ -107,19 +108,29 @@ export default class VariabilityScreenView extends CAVScreenView {
     const intervalDistanceProperty = new DerivedProperty( [ model.intervalToolDeltaStableProperty ], interval => {
       return Utils.roundToInterval( Utils.linear( 0, 16, 2, 1, interval ), CAVQueryParameters.intervalToolSoundInterval );
     } );
+
+    const biquadFilterNode = new BiquadFilterNode( phetAudioContext, {
+      type: 'lowshelf',
+      frequency: 800,
+      Q: 1.5
+    } );
+
     this.continuousPropertySoundGenerator = new ContinuousPropertySoundGenerator(
       intervalDistanceProperty,
       saturatedSineLoopTrimmed_wav,
       new Range( 1, 2 ), {
-        initialOutputLevel: 0.2,
-        playbackRateCenterOffset: -0.3,
+        initialOutputLevel: 0.3,
+        playbackRateCenterOffset: 0,
 
         resetInProgressProperty: model.variabilityModelResetInProgressProperty,
         trimSilence: false, // a very precise sound file is used, so make sure it doesn't get changed
         fadeStartDelay: 0.5,
-        fadeTime: 0.5,
+        fadeTime: 1,
         delayBeforeStop: 0.5,
-        playbackRateSpanOctaves: 1
+        playbackRateSpanOctaves: 1.5,
+        additionalAudioNodes: [
+          biquadFilterNode
+        ]
       }
     );
     soundManager.addSoundGenerator( this.continuousPropertySoundGenerator );
