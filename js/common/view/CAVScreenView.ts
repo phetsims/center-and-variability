@@ -33,7 +33,7 @@ import SoccerPlayerNode, { SoccerPlayerImageSet } from '../../soccer-common/view
 import SoccerPlayer from '../../soccer-common/model/SoccerPlayer.js';
 import CAVSceneModel from '../../soccer-common/model/CAVSceneModel.js';
 import DragIndicatorArrowNode from '../../soccer-common/view/DragIndicatorArrowNode.js';
-import CAVObjectType from '../../soccer-common/model/CAVObjectType.js';
+import CAVObjectType from '../model/CAVObjectType.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';

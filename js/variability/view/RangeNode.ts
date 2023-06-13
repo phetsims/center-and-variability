@@ -12,7 +12,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVPlotNode, { CAVPlotNodeOptions, MIN_KICKS_TEXT_OFFSET, MIN_KICKS_TEXT_TOP_MARGIN } from '../../common/view/CAVPlotNode.js';
-import CAVObjectType from '../../soccer-common/model/CAVObjectType.js';
+import CAVObjectType from '../../common/model/CAVObjectType.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import CAVColors from '../../common/CAVColors.js';

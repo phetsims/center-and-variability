@@ -4,7 +4,7 @@ import CAVObjectNode, { CAVObjectNodeOptions } from '../../soccer-common/view/CA
 import soccerCommon from '../../soccer-common/soccerCommon.js';
 import SoccerBall from '../../soccer-common/model/SoccerBall.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import CAVObjectType from '../../soccer-common/model/CAVObjectType.js';
+import CAVObjectType from '../model/CAVObjectType.js';
 import { Circle, Node, Path, TColor } from '../../../../scenery/js/imports.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import timesSolidShape from '../../../../sherpa/js/fontawesome-5/timesSolidShape.js';

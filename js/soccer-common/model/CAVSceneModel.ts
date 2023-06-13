@@ -22,7 +22,6 @@
 
 import soccerCommon from '../soccerCommon.js';
 import SoccerBall from './SoccerBall.js';
-import CAVObjectType from './CAVObjectType.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Range from '../../../../dot/js/Range.js';
 import Property from '../../../../axon/js/Property.js';
@@ -387,10 +386,10 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
   protected reorganizeStack( soccerBallStack: SoccerBall[] ): void {
 
     // collapse the rest of the stack. NOTE: This assumes the radii are the same.
-    let position = CAVObjectType.SOCCER_BALL.radius;
+    let position = SoccerCommonConstants.SOCCER_BALL_RADIUS;
     soccerBallStack.forEach( soccerBall => {
       soccerBall.positionProperty.value = new Vector2( soccerBall.valueProperty.value!, position );
-      position += CAVObjectType.SOCCER_BALL.radius * 2 * ( 1 - SoccerCommonConstants.SOCCER_BALL_OVERLAP );
+      position += SoccerCommonConstants.SOCCER_BALL_RADIUS * 2 * ( 1 - SoccerCommonConstants.SOCCER_BALL_OVERLAP );
     } );
 
     this.stackChangedEmitter.emit( soccerBallStack );
@@ -552,8 +551,8 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
 
     const targetIndex = otherObjectsInStack.length;
 
-    const diameter = CAVObjectType.SOCCER_BALL.radius * 2;
-    const targetPositionY = targetIndex * diameter * ( 1 - SoccerCommonConstants.SOCCER_BALL_OVERLAP ) + CAVObjectType.SOCCER_BALL.radius;
+    const diameter = SoccerCommonConstants.SOCCER_BALL_RADIUS * 2;
+    const targetPositionY = targetIndex * diameter * ( 1 - SoccerCommonConstants.SOCCER_BALL_OVERLAP ) + SoccerCommonConstants.SOCCER_BALL_RADIUS;
 
     const animationSlowdownFactor = SoccerCommonQueryParameters.slowAnimation ? 20 : 1;
     const animationTime = animationSlowdownFactor * 0.06 * ( this.getStackAtLocation( value ).length - 1 );

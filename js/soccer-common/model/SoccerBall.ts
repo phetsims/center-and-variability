@@ -18,7 +18,6 @@ import soccerCommon from '../soccerCommon.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import CAVObjectType from './CAVObjectType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Property from '../../../../axon/js/Property.js';
@@ -81,7 +80,7 @@ export default class SoccerBall extends PhetioObject {
     }, providedOptions );
     super( options );
 
-    this.positionProperty = new Vector2Property( new Vector2( 0, CAVObjectType.SOCCER_BALL.radius ), {
+    this.positionProperty = new Vector2Property( new Vector2( 0, SoccerCommonConstants.SOCCER_BALL_RADIUS ), {
       tandem: options.tandem.createTandem( 'positionProperty' ),
       valueComparisonStrategy: 'equalsFunction',
       phetioReadOnly: true
@@ -139,9 +138,9 @@ export default class SoccerBall extends PhetioObject {
 
       let landed = false;
 
-      if ( y <= CAVObjectType.SOCCER_BALL.radius ) {
+      if ( y <= SoccerCommonConstants.SOCCER_BALL_RADIUS ) {
         x = this.targetXProperty.value!;
-        y = CAVObjectType.SOCCER_BALL.radius;
+        y = SoccerCommonConstants.SOCCER_BALL_RADIUS;
         landed = true;
         this.valueProperty.value = this.targetXProperty.value!;
       }

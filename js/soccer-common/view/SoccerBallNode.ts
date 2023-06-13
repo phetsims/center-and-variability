@@ -10,7 +10,6 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import { SoccerBallPhase } from '../model/SoccerBallPhase.js';
-import CAVObjectType from '../model/CAVObjectType.js';
 import ballDark_png from '../../../images/ballDark_png.js';
 import ball_png from '../../../images/ball_png.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -23,6 +22,7 @@ import { Shape } from '../../../../kite/js/imports.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import SoccerCommonConstants from '../SoccerCommonConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 type ParentOptions = CAVObjectNodeOptions & AccessibleSliderOptions;
@@ -37,7 +37,7 @@ export default class SoccerBallNode extends AccessibleSlider( CAVObjectNode, 3 )
                       providedOptions: SoccerBallNodeOptions ) {
 
     // Use the y dimension, since it determines how the soccer balls stack. But maintain the same aspect ratio as the image
-    const viewRadius = Math.abs( modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) );
+    const viewRadius = Math.abs( modelViewTransform.modelToViewDeltaY( SoccerCommonConstants.SOCCER_BALL_RADIUS ) );
 
     const enabledProperty = new Property( true );
 
@@ -62,7 +62,7 @@ export default class SoccerBallNode extends AccessibleSlider( CAVObjectNode, 3 )
         phase !== SoccerBallPhase.INACTIVE )
     }, providedOptions );
 
-    super( soccerBall, modelViewTransform, CAVObjectType.SOCCER_BALL.radius, options );
+    super( soccerBall, modelViewTransform, SoccerCommonConstants.SOCCER_BALL_RADIUS, options );
 
     // The dark soccer ball is used for when a ball has input disabled.
     const soccerBallNode = new Image( ball_png );

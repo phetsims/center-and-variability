@@ -6,17 +6,16 @@
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */
-// TODO: This needs to move to the common repo, see: https://github.com/phetsims/center-and-variability/issues/222
-// radius number passed in will need to be factored out to a constant in the CAVConstants file.
 
 import Enumeration from '../../../../phet-core/js/Enumeration.js';
 import EnumerationValue from '../../../../phet-core/js/EnumerationValue.js';
-import soccerCommon from '../soccerCommon.js';
+import soccerCommon from '../../soccer-common/soccerCommon.js';
+import SoccerCommonConstants from '../../soccer-common/SoccerCommonConstants.js';
 
 export default class CAVObjectType extends EnumerationValue {
   public readonly radius: number;
 
-  public static readonly SOCCER_BALL = new CAVObjectType( 0.3 ); // In the play area
+  public static readonly SOCCER_BALL = new CAVObjectType( SoccerCommonConstants.SOCCER_BALL_RADIUS ); // In the play area
   public static readonly DATA_POINT = new CAVObjectType( 0.127 ); // In the charts
 
   public static readonly enumeration = new Enumeration( CAVObjectType );
