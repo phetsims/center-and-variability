@@ -150,4 +150,3 @@ export default class SoccerSceneView {
 }
 
 soccerCommon.register( 'SoccerSceneView', SoccerSceneView );
-'';

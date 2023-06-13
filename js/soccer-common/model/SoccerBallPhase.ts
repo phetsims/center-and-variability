@@ -11,8 +11,6 @@ import soccerCommon from '../soccerCommon.js';
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-// TODO: This needs to move to the common repo, see: https://github.com/phetsims/center-and-variability/issues/222
-
 export class SoccerBallPhase extends EnumerationValue {
   public static readonly INACTIVE = new SoccerBallPhase();
   public static readonly READY = new SoccerBallPhase();

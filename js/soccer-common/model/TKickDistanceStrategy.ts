@@ -8,9 +8,6 @@ import dotRandom from '../../../../dot/js/dotRandom.js';
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-// TODO: This may need to move to the common repo, see: https://github.com/phetsims/center-and-variability/issues/222
-// It doesn't seem necessary to bring over all the distributions strategies, but maybe that would be easiest?
-
 export type TKickDistanceStrategy = {
   reset(): void;
   getNextKickDistance( kickNumber: number ): number;
