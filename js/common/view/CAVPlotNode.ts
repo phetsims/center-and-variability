@@ -107,7 +107,7 @@ export default class CAVPlotNode extends Node {
 
         const dotNode = new DataPointNode( soccerBall,
           modelViewTransform, {
-            tandem: options.tandem.createTandem( `scene${sceneIndex + 1}` ).createTandem( 'dataPointNodes' ).createTandem( 'dataPointNode' + index ),
+            tandem: options.tandem.createTandem( `scene${sceneIndex + 1}` ).createTandem( 'dataPointNodes' ).createTandem( `dataPointNode${index + 1}` ),
             fill: options.dataPointFill
           } );
 
