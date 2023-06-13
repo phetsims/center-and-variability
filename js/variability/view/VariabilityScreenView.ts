@@ -159,7 +159,7 @@ export default class VariabilityScreenView extends CAVScreenView {
       // of CAVSceneView is overcomplicated and unnecessary. Instead, we create an equivalent tandem, so that it will appear
       // under the appropriate sceneView in the studio tree.
       const infoDialog = new InfoDialog( model, sceneModel, this.playAreaNumberLineNode, {
-        tandem: options.tandem.createTandem( `${CAVConstants.SCENE_VIEW_TANDEM}${index + 1}` ).createTandem( 'infoDialog' )
+        tandem: options.tandem.createTandemIndex1( CAVConstants.SCENE_VIEW_TANDEM, index ).createTandem( 'infoDialog' )
       } );
 
       Multilink.multilink( [ model.isInfoVisibleProperty, sceneModel.isVisibleProperty ],

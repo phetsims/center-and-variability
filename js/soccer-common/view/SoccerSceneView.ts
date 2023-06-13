@@ -57,7 +57,7 @@ export default class SoccerSceneView {
         soccerBall,
         modelViewTransform,
         dragIndicatorModel.objectNodesInputEnabledProperty, {
-          tandem: options.tandem.createTandem( 'soccerBallNodes' ).createTandem( `soccerBallNode${index + 1}` ),
+          tandem: options.tandem.createTandem( 'soccerBallNodes' ).createTandemIndex1( 'soccerBallNode', index ),
           pickable: false,
           enabledRangeProperty: new Property( physicalRange )
         } );
@@ -149,4 +149,5 @@ export default class SoccerSceneView {
   }
 }
 
-soccerCommon.register( 'SoccerSceneView', SoccerSceneView ); '';
+soccerCommon.register( 'SoccerSceneView', SoccerSceneView );
+'';
