@@ -24,7 +24,7 @@ import CAVConstants from '../../common/CAVConstants.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 import SoccerPlayer from '../../soccer-common/model/SoccerPlayer.js';
 import SoccerPlayerNode, { SoccerPlayerImageSet } from '../../soccer-common/view/SoccerPlayerNode.js';
-import CAVSceneModel from '../../soccer-common/model/CAVSceneModel.js';
+import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
 import InfoDialog from './InfoDialog.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import PredictionSlider, { PredictionSliderOptions } from '../../common/view/PredictionSlider.js';
@@ -185,7 +185,7 @@ export default class VariabilityScreenView extends CAVScreenView {
     } );
   }
 
-  public override getSoccerPlayerImageSet( soccerPlayer: SoccerPlayer, sceneModel: CAVSceneModel ): SoccerPlayerImageSet {
+  public override getSoccerPlayerImageSet( soccerPlayer: SoccerPlayer, sceneModel: SoccerSceneModel ): SoccerPlayerImageSet {
     const index = this.model.sceneModels.indexOf( sceneModel );
     return SoccerPlayerNode.VARIABILITY_GROUP[ index ];
   }

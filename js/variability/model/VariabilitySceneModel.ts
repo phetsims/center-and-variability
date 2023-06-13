@@ -6,7 +6,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import CAVSceneModel from '../../soccer-common/model/CAVSceneModel.js';
+import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -20,7 +20,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import { kickDistanceStrategyFromStateObject } from '../../common/model/RandomSkewStrategy.js';
 
-export default class VariabilitySceneModel extends CAVSceneModel {
+export default class VariabilitySceneModel extends SoccerSceneModel {
 
   public readonly maxValueProperty: TReadOnlyProperty<number | null>;
   public readonly minValueProperty: TReadOnlyProperty<number | null>;
@@ -105,8 +105,8 @@ export default class VariabilitySceneModel extends CAVSceneModel {
         const lowerHalf = sortedObjects.slice( 0, splitIndex );
         const upperHalf = sortedObjects.slice( sortedObjects.length % 2 !== 0 ? splitIndex + 1 : splitIndex );
 
-        const q1Objects = CAVSceneModel.getMedianObjectsFromSortedArray( lowerHalf );
-        const q3Objects = CAVSceneModel.getMedianObjectsFromSortedArray( upperHalf );
+        const q1Objects = SoccerSceneModel.getMedianObjectsFromSortedArray( lowerHalf );
+        const q3Objects = SoccerSceneModel.getMedianObjectsFromSortedArray( upperHalf );
 
         // take the average to account for cases where there is more than one object contributing to the median
         this.q1ValueProperty.value = _.mean( q1Objects.map( obj => obj.valueProperty.value! ) );

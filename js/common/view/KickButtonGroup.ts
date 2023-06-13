@@ -22,7 +22,7 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import CAVModel from '../model/CAVModel.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import CAVSceneModel from '../../soccer-common/model/CAVSceneModel.js';
+import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
 import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -55,7 +55,7 @@ export default class KickButtonGroup extends VBox {
         tandem: tandem.createTandem( 'visibleProperty' )
       } );
 
-      const hasKickableSoccerBallsProperty = new DynamicProperty<boolean, unknown, CAVSceneModel>( model.selectedSceneModelProperty, {
+      const hasKickableSoccerBallsProperty = new DynamicProperty<boolean, unknown, SoccerSceneModel>( model.selectedSceneModelProperty, {
         derive: 'hasKickableSoccerBallsStableProperty'
       } );
 
@@ -95,7 +95,7 @@ export default class KickButtonGroup extends VBox {
       tandem: kick5ButtonTandem.createTandem( 'kick5PatternStringProperty' )
     } );
 
-    const numberOfUnkickedBallsProperty = new DynamicProperty<number, unknown, CAVSceneModel>( model.selectedSceneModelProperty, {
+    const numberOfUnkickedBallsProperty = new DynamicProperty<number, unknown, SoccerSceneModel>( model.selectedSceneModelProperty, {
       derive: 'numberOfUnkickedBallsProperty'
     } );
     numberOfUnkickedBallsProperty.link( numberOfRemainingKickableObjects => {

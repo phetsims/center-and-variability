@@ -12,7 +12,7 @@ import SoccerSceneView from '../../soccer-common/view/SoccerSceneView.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import MedianHighlightLayer from './MedianHighlightLayer.js';
 import CAVModel from '../model/CAVModel.js';
-import CAVSceneModel from '../../soccer-common/model/CAVSceneModel.js';
+import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import SoccerPlayer from '../../soccer-common/model/SoccerPlayer.js';
 import { SoccerPlayerImageSet } from '../../soccer-common/view/SoccerPlayerNode.js';
@@ -23,8 +23,8 @@ import Range from '../../../../dot/js/Range.js';
 export default class CAVSceneView extends SoccerSceneView {
 
   public constructor( model: CAVModel,
-                      sceneModel: CAVSceneModel,
-                      getSoccerPlayerImageSet: ( soccerPlayer: SoccerPlayer, sceneModel: CAVSceneModel ) => SoccerPlayerImageSet,
+                      sceneModel: SoccerSceneModel,
+                      getSoccerPlayerImageSet: ( soccerPlayer: SoccerPlayer, sceneModel: SoccerSceneModel ) => SoccerPlayerImageSet,
                       modelViewTransform: ModelViewTransform2,
                       physicalRange: Range,
                       options: { tandem: Tandem } ) {

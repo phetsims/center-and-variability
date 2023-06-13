@@ -16,7 +16,7 @@ import VariabilityReadoutText from './VariabilityReadoutText.js';
 import CAVColors from '../../common/CAVColors.js';
 import CAVAccordionBox, { CONTENT_MARGIN } from '../../common/view/CAVAccordionBox.js';
 import CAVConstants from '../../common/CAVConstants.js';
-import CAVSceneModel from '../../soccer-common/model/CAVSceneModel.js';
+import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
 import Utils from '../../../../dot/js/Utils.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
@@ -27,7 +27,7 @@ import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 
-  private readonly plotToggleNode: ToggleNode<CAVSceneModel, VariabilityPlotNode>;
+  private readonly plotToggleNode: ToggleNode<SoccerSceneModel, VariabilityPlotNode>;
 
   public constructor( model: VariabilityModel, layoutBounds: Bounds2, tandem: Tandem, top: number, playAreaNumberLineNode: NumberLineNode ) {
 

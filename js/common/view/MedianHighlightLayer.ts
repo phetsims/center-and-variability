@@ -3,7 +3,7 @@
 import { Circle, Node, NodeOptions } from '../../../../scenery/js/imports.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import CAVSceneModel from '../../soccer-common/model/CAVSceneModel.js';
+import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import CAVColors from '../CAVColors.js';
@@ -20,7 +20,7 @@ type MedianHighlightLayerOptions = SelfOptions & NodeOptions;
  * @author Matt Blackman (PhET Interactive Simulations)
  */
 export default class MedianHighlightLayer extends Node {
-  public constructor( sceneModel: CAVSceneModel, modelViewTransform: ModelViewTransform2, isPlayAreaMedianVisibleProperty: TReadOnlyProperty<boolean>, providedOptions: MedianHighlightLayerOptions ) {
+  public constructor( sceneModel: SoccerSceneModel, modelViewTransform: ModelViewTransform2, isPlayAreaMedianVisibleProperty: TReadOnlyProperty<boolean>, providedOptions: MedianHighlightLayerOptions ) {
 
     const LINE_WIDTH = 2;
     const viewRadius = modelViewTransform.modelToViewDeltaX( CAVObjectType.SOCCER_BALL.radius * ( 1 - SoccerCommonConstants.SOCCER_BALL_OVERLAP ) );

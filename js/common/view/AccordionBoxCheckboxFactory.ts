@@ -21,7 +21,7 @@ import CAVModel from '../model/CAVModel.js';
 import CardNodeContainer from '../../median/view/CardNodeContainer.js';
 import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-players/checkboxCheckedSoundPlayer.js';
 import boundaryReachedSoundPlayer from '../../../../tambo/js/shared-sound-players/boundaryReachedSoundPlayer.js';
-import CAVSceneModel from '../../soccer-common/model/CAVSceneModel.js';
+import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
 import MeanIndicatorNode from './MeanIndicatorNode.js';
 
 // constants
@@ -43,7 +43,7 @@ export default class AccordionBoxCheckboxFactory {
     } );
   }
 
-  public static getSortDataCheckboxItem( isSortingDataProperty: Property<boolean>, sceneModel: CAVSceneModel, cardNodeContainer: CardNodeContainer ): VerticalCheckboxGroupItem {
+  public static getSortDataCheckboxItem( isSortingDataProperty: Property<boolean>, sceneModel: SoccerSceneModel, cardNodeContainer: CardNodeContainer ): VerticalCheckboxGroupItem {
     return {
       createNode: ( tandem: Tandem ) => new Text( CenterAndVariabilityStrings.sortDataStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
       property: isSortingDataProperty,

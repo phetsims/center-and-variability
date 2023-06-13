@@ -9,7 +9,7 @@
 
 import centerAndVariability from '../../centerAndVariability.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import CAVSceneModel from '../../soccer-common/model/CAVSceneModel.js';
+import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
 import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import CAVConstants, { MAX_KICKS_PROPERTY } from '../../common/CAVConstants.js';
@@ -42,7 +42,7 @@ export default class MeanAndMedianModel extends CAVModel {
       instrumentMeanPredictionProperty: true
     }, providedOptions );
 
-    const sceneModel = new CAVSceneModel(
+    const sceneModel = new SoccerSceneModel(
       MAX_KICKS_PROPERTY,
       CAVConstants.MAX_KICKS_VALUES,
       new RandomSkewStrategy(),

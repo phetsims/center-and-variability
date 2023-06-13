@@ -66,7 +66,7 @@ type CAVSceneModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tan
 // constants
 const TIME_BETWEEN_RAPID_KICKS = 0.5; // in seconds
 
-export default class CAVSceneModel extends PhetioObject implements TModel {
+export default class SoccerSceneModel extends PhetioObject implements TModel {
   public readonly soccerBalls: SoccerBall[];
 
   // The number of stacked soccer balls
@@ -318,7 +318,7 @@ export default class CAVSceneModel extends PhetioObject implements TModel {
     }
 
     const sortedObjects = this.getSortedStackedObjects();
-    const medianObjects = CAVSceneModel.getMedianObjectsFromSortedArray( sortedObjects );
+    const medianObjects = SoccerSceneModel.getMedianObjectsFromSortedArray( sortedObjects );
 
     this.soccerBalls.forEach( object => {
       object.isMedianObjectProperty.value = medianObjects.includes( object );
@@ -647,21 +647,21 @@ type CAVSceneModelState = { distributionType: string };
 // TODO: This adds a new IOType stub into PhetioElementView. Is that how we want to continue doing this? See https://github.com/phetsims/center-and-variability/issues/117 But maybe the long term solution for that problem is https://github.com/phetsims/studio/issues/292
 // TODO: Review overlap between getValue/getValue and setState/getState.  Make sure both work correctly and in concert. See https://github.com/phetsims/center-and-variability/issues/117
 const CAVSceneModelIO = new IOType( 'CAVSceneModelIO', {
-  valueType: CAVSceneModel,
+  valueType: SoccerSceneModel,
   stateSchema: {
     distributionType: StringIO
   },
-  toStateObject: ( cavSceneModel: CAVSceneModel ) => {
+  toStateObject: ( cavSceneModel: SoccerSceneModel ) => {
     return cavSceneModel.toStateObject();
   },
-  applyState: ( cavSceneModel: CAVSceneModel, stateObject: CAVSceneModelState ) => {
+  applyState: ( cavSceneModel: SoccerSceneModel, stateObject: CAVSceneModelState ) => {
     cavSceneModel.applyState( stateObject );
   },
   methods: {
     getValue: {
       returnType: ObjectLiteralIO,
       parameterTypes: [],
-      implementation: function( this: CAVSceneModel ) {
+      implementation: function( this: SoccerSceneModel ) {
         return this.toStateObject();
       },
       documentation: 'Gets the current value of the CAVSceneModel'
@@ -669,7 +669,7 @@ const CAVSceneModelIO = new IOType( 'CAVSceneModelIO', {
     getValidationError: {
       returnType: NullableIO( StringIO ),
       parameterTypes: [ ObjectLiteralIO ],
-      implementation: function( this: CAVSceneModel, value: CAVSceneModelState ) {
+      implementation: function( this: SoccerSceneModel, value: CAVSceneModelState ) {
 
         // TODO: check validation, see https://github.com/phetsims/center-and-variability/issues/117
         return null;
@@ -681,11 +681,11 @@ const CAVSceneModelIO = new IOType( 'CAVSceneModelIO', {
       returnType: VoidIO,
       parameterTypes: [ ObjectLiteralIO ],
       documentation: 'Sets the value for the scene model, including the kick distance strategy.',
-      implementation: function( this: CAVSceneModel, state: CAVSceneModelState ) {
+      implementation: function( this: SoccerSceneModel, state: CAVSceneModelState ) {
         this.applyState( state );
       }
     }
   }
 } );
 
-soccerCommon.register( 'CAVSceneModel', CAVSceneModel );
+soccerCommon.register( 'SoccerSceneModel', SoccerSceneModel );

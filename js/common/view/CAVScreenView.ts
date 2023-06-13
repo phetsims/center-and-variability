@@ -31,7 +31,7 @@ import KickButtonGroup from './KickButtonGroup.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import SoccerPlayerNode, { SoccerPlayerImageSet } from '../../soccer-common/view/SoccerPlayerNode.js';
 import SoccerPlayer from '../../soccer-common/model/SoccerPlayer.js';
-import CAVSceneModel from '../../soccer-common/model/CAVSceneModel.js';
+import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
 import DragIndicatorArrowNode from '../../soccer-common/view/DragIndicatorArrowNode.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
@@ -335,7 +335,7 @@ export default class CAVScreenView extends ScreenView {
     } ) );
   }
 
-  public getSoccerPlayerImageSet( soccerPlayer: SoccerPlayer, sceneModel: CAVSceneModel ): SoccerPlayerImageSet {
+  public getSoccerPlayerImageSet( soccerPlayer: SoccerPlayer, sceneModel: SoccerSceneModel ): SoccerPlayerImageSet {
     return SoccerPlayerNode.MULTI_GROUP[ soccerPlayer.initialPlaceInLine ];
   }
 

@@ -11,7 +11,7 @@
 import { Node } from '../../../../scenery/js/imports.js';
 import SoccerBallNode from './SoccerBallNode.js';
 import { SoccerBallPhase } from '../model/SoccerBallPhase.js';
-import CAVSceneModel from '../model/CAVSceneModel.js';
+import SoccerSceneModel from '../model/SoccerSceneModel.js';
 import SoccerPlayerNode, { SoccerPlayerImageSet } from './SoccerPlayerNode.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import soccerCommon from '../soccerCommon.js';
@@ -35,8 +35,8 @@ export default class SoccerSceneView {
 
   public constructor(
     dragIndicatorModel: DragIndicatorModel,
-    public readonly sceneModel: CAVSceneModel,
-    getSoccerPlayerImageSet: ( soccerPlayer: SoccerPlayer, sceneModel: CAVSceneModel ) => SoccerPlayerImageSet,
+    public readonly sceneModel: SoccerSceneModel,
+    getSoccerPlayerImageSet: ( soccerPlayer: SoccerPlayer, sceneModel: SoccerSceneModel ) => SoccerPlayerImageSet,
     modelViewTransform: ModelViewTransform2,
     physicalRange: Range,
     options: { tandem: Tandem } ) {

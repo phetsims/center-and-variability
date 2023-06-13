@@ -19,7 +19,7 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CAVConstants from '../CAVConstants.js';
 import Property from '../../../../axon/js/Property.js';
-import CAVSceneModel from '../../soccer-common/model/CAVSceneModel.js';
+import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
@@ -42,11 +42,11 @@ export default class CAVModel {
   public readonly isMedianPredictionVisibleProperty: BooleanProperty; // Screens 1-2
   public readonly medianPredictionProperty: NumberProperty; // Screens 1-2
 
-  public readonly selectedSceneModelProperty: Property<CAVSceneModel>;
+  public readonly selectedSceneModelProperty: Property<SoccerSceneModel>;
 
   public readonly isAccordionBoxExpandedProperty: Property<boolean>;
 
-  public constructor( public readonly maxKicksProperty: Property<number>, public readonly sceneModels: CAVSceneModel[], options: CAVModelOptions ) {
+  public constructor( public readonly maxKicksProperty: Property<number>, public readonly sceneModels: SoccerSceneModel[], options: CAVModelOptions ) {
 
     this.isAccordionBoxExpandedProperty = new BooleanProperty( true, {
       tandem: options.tandem.createTandem( 'isAccordionBoxExpandedProperty' )
@@ -89,10 +89,10 @@ export default class CAVModel {
 
     // These DynamicProperties allow us to track all the necessary scenes Properties for dragIndicator update, and not
     // just the first selectedScene
-    const selectedSceneStackedSoccerBallCountProperty = new DynamicProperty<number, number, CAVSceneModel>( this.selectedSceneModelProperty, {
+    const selectedSceneStackedSoccerBallCountProperty = new DynamicProperty<number, number, SoccerSceneModel>( this.selectedSceneModelProperty, {
       derive: 'stackedSoccerBallCountProperty'
     } );
-    const selectedSceneMaxKicksProperty = new DynamicProperty<number, number, CAVSceneModel>( this.selectedSceneModelProperty, {
+    const selectedSceneMaxKicksProperty = new DynamicProperty<number, number, SoccerSceneModel>( this.selectedSceneModelProperty, {
       derive: 'maxKicksProperty'
     } );
 
