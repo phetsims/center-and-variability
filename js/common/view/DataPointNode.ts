@@ -1,6 +1,6 @@
 // Copyright 2023, University of Colorado Boulder
 
-import CAVObjectNode, { CAVObjectNodeOptions } from '../../soccer-common/view/CAVObjectNode.js';
+import SoccerObjectNode, { CAVObjectNodeOptions } from '../../soccer-common/view/SoccerObjectNode.js';
 import soccerCommon from '../../soccer-common/soccerCommon.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import CAVObjectType from '../model/CAVObjectType.js';
@@ -18,7 +18,7 @@ import CAVSoccerBall from '../model/CAVSoccerBall.js';
 
 type DataPointNodeOptions = CAVObjectNodeOptions & { fill: TColor };
 
-export default class DataPointNode extends CAVObjectNode {
+export default class DataPointNode extends SoccerObjectNode {
 
   protected readonly medianHighlight: Circle;
 

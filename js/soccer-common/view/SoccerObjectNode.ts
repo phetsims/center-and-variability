@@ -29,7 +29,7 @@ export type CAVObjectNodeOptions =
   & StrictOmit<NodeOptions, 'inputEnabledProperty'>
   & PickRequired<NodeOptions, 'tandem'>;
 
-export default class CAVObjectNode extends Node {
+export default class SoccerObjectNode extends Node {
   public constructor( public readonly soccerBall: SoccerBall,
                       modelViewTransform: ModelViewTransform2,
                       modelRadius: number,
@@ -67,4 +67,4 @@ export default class CAVObjectNode extends Node {
   }
 }
 
-soccerCommon.register( 'CAVObjectNode', CAVObjectNode );
+soccerCommon.register( 'SoccerObjectNode', SoccerObjectNode );

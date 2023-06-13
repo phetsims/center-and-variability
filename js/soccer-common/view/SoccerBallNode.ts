@@ -1,6 +1,6 @@
 // Copyright 2023, University of Colorado Boulder
 
-import CAVObjectNode, { CAVObjectNodeOptions } from './CAVObjectNode.js';
+import SoccerObjectNode, { CAVObjectNodeOptions } from './SoccerObjectNode.js';
 import soccerCommon from '../soccerCommon.js';
 import SoccerBall from '../model/SoccerBall.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
@@ -29,7 +29,7 @@ type ParentOptions = CAVObjectNodeOptions & AccessibleSliderOptions;
 
 type SoccerBallNodeOptions = SelfOptions & StrictOmit<ParentOptions, 'valueProperty'> & PickRequired<AccessibleSliderOptions, 'enabledRangeProperty'>;
 
-export default class SoccerBallNode extends AccessibleSlider( CAVObjectNode, 3 ) {
+export default class SoccerBallNode extends AccessibleSlider( SoccerObjectNode, 3 ) {
 
   public constructor( soccerBall: SoccerBall,
                       modelViewTransform: ModelViewTransform2,
