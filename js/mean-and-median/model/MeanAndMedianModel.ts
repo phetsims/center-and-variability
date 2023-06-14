@@ -91,13 +91,16 @@ export default class MeanAndMedianModel extends CAVModel {
 
     sceneModel.objectValueBecameNonNullEmitter.addListener( () => this.updateAnimation() );
 
+    // This function determines whether a value has crossed an integer or half-integer boundary, or lands exactly on an
+    // integer or half-integer. It's used to trigger sound effects when a value moves past these boundaries or hits them
+    // exactly. This is important for applications where the input method is discrete, such as keyboard input.
     const crossedCheckpoint = ( value1: number, value2: number ): boolean => {
 
-      // Check if both values are on opposite sides of an integer
-      const integerCheck = Math.floor( value1 ) !== Math.floor( value2 ) && Math.ceil( value1 ) !== Math.ceil( value2 );
+      // Check if both values are on opposite sides of an integer or land exactly on an integer
+      const integerCheck = Math.floor( value1 ) !== Math.floor( value2 ) || value1 === Math.floor( value1 ) || value2 === Math.floor( value2 );
 
-      // Check if both values are on opposite sides of a half integer
-      const halfIntegerCheck = Math.floor( value1 * 2 ) !== Math.floor( value2 * 2 ) && Math.ceil( value1 * 2 ) !== Math.ceil( value2 * 2 );
+      // Check if both values are on opposite sides of a half integer or land exactly on a half integer
+      const halfIntegerCheck = Math.floor( value1 * 2 ) !== Math.floor( value2 * 2 ) || value1 * 2 === Math.floor( value1 * 2 ) || value2 * 2 === Math.floor( value2 * 2 );
 
       return integerCheck || halfIntegerCheck;
     };
