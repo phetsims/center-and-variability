@@ -5,8 +5,11 @@ import soundManager from '../../../../tambo/js/soundManager.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soccerCommon from '../soccerCommon.js';
 import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
+import Utils from '../../../../dot/js/Utils.js';
 
 // TODO: Create one per ball? One per location? Or multiple? See https://github.com/phetsims/center-and-variability/issues/217
+
+const E3 = 164.81; // Hz
 
 const INITIAL_OUTPUT_LEVEL = 0.1;
 const soundClip = new SoundClip( numberTone2_mp3, {
@@ -19,6 +22,11 @@ const medianFilter = new BiquadFilterNode( phetAudioContext, {
   Q: 0.5
 } );
 
+const meanFilter = new BiquadFilterNode( phetAudioContext, {
+  type: 'bandpass',
+  Q: 2
+} );
+
 const medianSoundClip = new SoundClip( numberTone2_mp3, {
 
   // For unknown reasons, the initial output level must be set on the originating sound clip, to
@@ -27,47 +35,74 @@ const medianSoundClip = new SoundClip( numberTone2_mp3, {
   additionalAudioNodes: [ medianFilter ]
 } );
 
-soundManager.addSoundGenerator( medianSoundClip );
+const meanSoundClip = new SoundClip( numberTone2_mp3, {
 
-const toPlaybackSpeed = ( value: number ): number => {
-  return value === 1 ? Math.pow( 2, 0 / 12 ) : // C
-         value === 1.5 ? Math.pow( 2, 1 / 12 ) : // C#
-         value === 2 ? Math.pow( 2, 2 / 12 ) : // D
-         value === 2.5 ? Math.pow( 2, 3 / 12 ) : // D#
-         value === 3 ? Math.pow( 2, 4 / 12 ) : // E
-         value === 3.5 ? Math.pow( 2, 4.5 / 12 ) : // FAKE
-         value === 4 ? Math.pow( 2, 5 / 12 ) : // F
-         value === 4.5 ? Math.pow( 2, 6 / 12 ) : // F#
-         value === 5 ? Math.pow( 2, 7 / 12 ) : // G
-         value === 5.5 ? Math.pow( 2, 8 / 12 ) : // G#
-         value === 6 ? Math.pow( 2, 9 / 12 ) : // A
-         value === 6.5 ? Math.pow( 2, 10 / 12 ) : // A#
-         value === 7 ? Math.pow( 2, 11 / 12 ) : // B
-         value === 7.5 ? Math.pow( 2, 11.5 / 12 ) : // FAKE
-         value === 8 ? Math.pow( 2, 12 / 12 ) : // C
-         value === 8.5 ? Math.pow( 2, 13 / 12 ) : // C#
-         value === 9 ? Math.pow( 2, 14 / 12 ) : // D
-         value === 9.5 ? Math.pow( 2, 15 / 12 ) : // D#
-         value === 10 ? Math.pow( 2, 16 / 12 ) : // E
-         value === 10.5 ? Math.pow( 2, 16.5 / 12 ) : // FAKE
-         value === 11 ? Math.pow( 2, 17 / 12 ) : // F
-         value === 11.5 ? Math.pow( 2, 18 / 12 ) : // F#
-         value === 12 ? Math.pow( 2, 19 / 12 ) : // G
-         value === 12.5 ? Math.pow( 2, 20 / 12 ) : // G#
-         value === 13 ? Math.pow( 2, 21 / 12 ) : // A
-         value === 13.5 ? Math.pow( 2, 22 / 12 ) : // A#
-         value === 14 ? Math.pow( 2, 23 / 12 ) : // B
-         value === 14.5 ? Math.pow( 2, 23.5 / 12 ) : // B
-         value === 15 ? Math.pow( 2, 24 / 12 ) : // C
-         value === 15.5 ? Math.pow( 2, 25 / 12 ) : // C#
-         value === 16 ? Math.pow( 2, 26 / 12 ) : // D
-         value === 16.5 ? Math.pow( 2, 27 / 12 ) : // D#
-         value === 17 ? Math.pow( 2, 28 / 12 ) : // E
-         value === 17.5 ? Math.pow( 2, 28.5 / 12 ) : // E
-         value === 18 ? Math.pow( 2, 29 / 12 ) : // F
+  // For unknown reasons, the initial output level must be set on the originating sound clip, to
+  // volume match it
+  initialOutputLevel: INITIAL_OUTPUT_LEVEL,
+  additionalAudioNodes: [ meanFilter ]
+} );
+
+soundManager.addSoundGenerator( medianSoundClip );
+soundManager.addSoundGenerator( meanSoundClip );
+
+const toStepDiscrete = ( value: number ): number => {
+  assert && assert( value >= 1 && value <= 18, `value ${value} is out of range` );
+  return value === 1 ? 0 : // C
+         value === 1.5 ? 1 : // C#
+         value === 2 ? 2 : // D
+         value === 2.5 ? 3 : // D#
+         value === 3 ? 4 : // E
+         value === 3.5 ? 4.5 : // FAKE
+         value === 4 ? 5 : // F
+         value === 4.5 ? 6 : // F#
+         value === 5 ? 7 : // G
+         value === 5.5 ? 8 : // G#
+         value === 6 ? 9 : // A
+         value === 6.5 ? 10 : // A#
+         value === 7 ? 11 : // B
+         value === 7.5 ? 11.5 : // FAKE
+         value === 8 ? 12 : // C
+         value === 8.5 ? 13 : // C#
+         value === 9 ? 14 : // D
+         value === 9.5 ? 15 : // D#
+         value === 10 ? 16 : // E
+         value === 10.5 ? 16.5 : // FAKE
+         value === 11 ? 17 : // F
+         value === 11.5 ? 18 : // F#
+         value === 12 ? 19 : // G
+         value === 12.5 ? 20 : // G#
+         value === 13 ? 21 : // A
+         value === 13.5 ? 22 : // A#
+         value === 14 ? 23 : // B
+         value === 14.5 ? 23.5 : // B
+         value === 15 ? 24 : // C
+         value === 15.5 ? 25 : // C#
+         value === 16 ? 26 : // D
+         value === 16.5 ? 27 : // D#
+         value === 17 ? 28 : // E
+         value === 17.5 ? 28.5 : // E
+         value === 18 ? 29 : // F
          -1;
 };
 
+const toStep = ( value: number ): number => {
+  const nearestStep = Utils.roundToInterval( value, 0.5 );
+  if ( nearestStep === value ) {
+    return toStepDiscrete( value );
+  }
+  else if ( nearestStep > value ) {
+    return Utils.linear( nearestStep, nearestStep - 0.5, toStepDiscrete( nearestStep ), toStepDiscrete( nearestStep - 0.5 ), value );
+  }
+  else {
+    return Utils.linear( nearestStep, nearestStep + 0.5, toStepDiscrete( nearestStep ), toStepDiscrete( nearestStep + 0.5 ), value );
+  }
+};
+
+const toPlaybackSpeed = ( value: number ): number => {
+  const step = toStep( value );
+  return Math.pow( 2, step / 12 );
+};
 
 export default class NumberTone {
   public static play( value: number ): void {
@@ -80,13 +115,21 @@ export default class NumberTone {
   public static playMedian( value: number ): void {
     const playbackSpeed = toPlaybackSpeed( value );
 
-    const E3 = 164.81; // Hz
     const frequency = E3 * playbackSpeed;
-
     medianFilter.frequency.setTargetAtTime( frequency, phetAudioContext.currentTime, 0 );
 
     medianSoundClip.setPlaybackRate( playbackSpeed );
     medianSoundClip.play();
+  }
+
+  public static playMean( value: number ): void {
+    const playbackSpeed = toPlaybackSpeed( value );
+
+    const frequency = E3 * playbackSpeed;
+    meanFilter.frequency.setTargetAtTime( frequency, phetAudioContext.currentTime, 0 );
+
+    meanSoundClip.setPlaybackRate( playbackSpeed );
+    meanSoundClip.play();
   }
 }
 

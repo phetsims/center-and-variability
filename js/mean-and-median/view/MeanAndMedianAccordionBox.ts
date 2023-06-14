@@ -44,7 +44,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
 
     const checkboxGroup = new VerticalCheckboxGroup( [
       AccordionBoxCheckboxFactory.getMedianCheckboxWithIconItem( iconGroup, textGroup, model.isTopMedianVisibleProperty, model ),
-      AccordionBoxCheckboxFactory.getMeanCheckboxWithIconItem( iconGroup, textGroup, model.isTopMeanVisibleProperty )
+      AccordionBoxCheckboxFactory.getMeanCheckboxWithIconItem( iconGroup, textGroup, model.isTopMeanVisibleProperty, model )
     ], {
       tandem: tandem.createTandem( 'accordionCheckboxGroup' ),
       right: backgroundShape.bounds.width - CAVConstants.ACCORDION_BOX_HORIZONTAL_MARGIN,

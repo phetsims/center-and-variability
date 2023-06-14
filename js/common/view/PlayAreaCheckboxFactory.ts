@@ -80,6 +80,23 @@ export default class PlayAreaCheckboxFactory {
     };
   }
 
+  public static getMeanCheckedSoundPlayer( model: CAVModel ): TSoundPlayer {
+    return {
+      play: () => {
+        const mean = model.selectedSceneModelProperty.value.meanValueProperty.value;
+        if ( mean !== null ) {
+          NumberTone.playMean( mean );
+        }
+        else {
+          checkboxCheckedSoundPlayer.play();
+        }
+      },
+      stop: () => {
+        // nothing to do since those are short-term clips
+      }
+    };
+  }
+
   public static getMedianCheckboxItem( alignGroup: AlignGroup, model: CAVModel ): VerticalCheckboxGroupItem {
 
     return {
@@ -109,7 +126,10 @@ export default class PlayAreaCheckboxFactory {
       createNode: ( tandem: Tandem ) => PlayAreaCheckboxFactory.createGridBox( new Text( CenterAndVariabilityStrings.meanStringProperty, TEXT_OPTIONS ),
         new MeanIndicatorNode( true, true ), alignGroup ),
       property: model.isPlayAreaMeanVisibleProperty,
-      tandemName: 'meanCheckbox'
+      tandemName: 'meanCheckbox',
+      options: {
+        checkedSoundPlayer: PlayAreaCheckboxFactory.getMeanCheckedSoundPlayer( model )
+      }
     };
   }
 

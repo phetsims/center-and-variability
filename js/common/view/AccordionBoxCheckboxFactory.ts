@@ -105,7 +105,7 @@ export default class AccordionBoxCheckboxFactory {
     };
   }
 
-  public static getMeanCheckboxWithIconItem( iconGroup: AlignGroup, textGroup: AlignGroup, isTopMeanVisibleProperty: Property<boolean> ): VerticalCheckboxGroupItem {
+  public static getMeanCheckboxWithIconItem( iconGroup: AlignGroup, textGroup: AlignGroup, isTopMeanVisibleProperty: Property<boolean>, model: CAVModel ): VerticalCheckboxGroupItem {
     return {
       createNode: ( tandem: Tandem ) => {
         return AccordionBoxCheckboxFactory.createGridBox(
@@ -127,7 +127,10 @@ export default class AccordionBoxCheckboxFactory {
         );
       },
       property: isTopMeanVisibleProperty,
-      tandemName: 'meanCheckbox'
+      tandemName: 'meanCheckbox',
+      options: {
+        checkedSoundPlayer: PlayAreaCheckboxFactory.getMeanCheckedSoundPlayer( model )
+      }
     };
   }
 }
