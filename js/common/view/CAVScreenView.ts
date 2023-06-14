@@ -221,6 +221,10 @@ export default class CAVScreenView extends ScreenView {
       }
     };
 
+    dragIndicatorArrowNode.addLinkedElement( model.dragIndicatorModel.dragIndicatorValueProperty, {
+      tandem: options.tandem.createTandem( 'dragIndicatorValueProperty' )
+    } );
+
     model.dragIndicatorModel.isDragIndicatorVisibleProperty.link( this.updateDragIndicatorNode );
     model.dragIndicatorModel.dragIndicatorValueProperty.link( this.updateDragIndicatorNode );
     this.visibleBoundsProperty.link( this.updateDragIndicatorNode );
