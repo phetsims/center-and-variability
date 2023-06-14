@@ -142,7 +142,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
     this.soccerBalls = _.range( 0, this.maxKicksLimit ).map( index => {
 
       const soccerBall = createSoccerBall( index === 0, {
-        tandem: options.tandem.createTandem( 'soccerBalls' ).createTandemIndex1( 'soccerBall', index )
+        tandem: options.tandem.createTandem( 'soccerBalls' ).createTandem1Indexed( 'soccerBall', index )
       } );
       
       // When the soccer ball drag position changes, constrain it to the physical range and move it to the top, if necessary
@@ -237,7 +237,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
     } );
 
     this.soccerPlayers = _.range( 0, this.maxKicksLimit ).map( placeInLine => new SoccerPlayer( placeInLine,
-      options.tandem.createTandemIndex1( 'soccerPlayer', placeInLine )
+      options.tandem.createTandem1Indexed( 'soccerPlayer', placeInLine )
     ) );
 
     this.numberOfUnkickedBallsProperty = DerivedProperty.deriveAny( [

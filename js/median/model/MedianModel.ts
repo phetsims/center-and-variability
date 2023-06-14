@@ -49,7 +49,7 @@ export default class MedianModel extends CAVModel {
     super( maxKicksProperty, [ sceneModel ], options );
 
     this.cards = this.sceneModels[ 0 ].soccerBalls.map( ( soccerBall, index ) => new CardModel( soccerBall, {
-      tandem: options.tandem.createTandem( 'cards' ).createTandemIndex1( 'card', index )
+      tandem: options.tandem.createTandem( 'cards' ).createTandem1Indexed( 'card', index )
     } ) );
 
     this.isSortingDataProperty = new BooleanProperty( false, {
