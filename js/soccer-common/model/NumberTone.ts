@@ -17,11 +17,13 @@ const soundClip = new SoundClip( numberTone2_mp3, {
 } );
 soundManager.addSoundGenerator( soundClip );
 
+// Filter to make the median sound different from the main sound
 const medianFilter = new BiquadFilterNode( phetAudioContext, {
   type: 'bandpass',
   Q: 0.5
 } );
 
+// Filter to make the mean sound different from the main sound and from the median sound
 const meanFilter = new BiquadFilterNode( phetAudioContext, {
   type: 'bandpass',
   Q: 2
@@ -46,6 +48,14 @@ const meanSoundClip = new SoundClip( numberTone2_mp3, {
 soundManager.addSoundGenerator( medianSoundClip );
 soundManager.addSoundGenerator( meanSoundClip );
 
+/**
+ * Identify the corresponding step above a base frequency for a note. This will be used to map to a playback speed
+ * to play at the appropriate pitch. Note we have to add an extra note between E and F to keep the rest of the
+ * scale corresponding to the desired pitches.
+ *
+ * Also note, this is the discrete version and for the continuous mean values, there is a linear interpolation of the
+ * steps.
+ */
 const toStepDiscrete = ( value: number ): number => {
   assert && assert( value >= 1 && value <= 18, `value ${value} is out of range` );
   return value === 1 ? 0 : // C
@@ -86,6 +96,9 @@ const toStepDiscrete = ( value: number ): number => {
          -1;
 };
 
+/**
+ * Continuous version of toStepDiscrete, which interpolates between the discrete steps.
+ */
 const toStep = ( value: number ): number => {
   const nearestStep = Utils.roundToInterval( value, 0.5 );
   if ( nearestStep === value ) {
@@ -99,11 +112,14 @@ const toStep = ( value: number ): number => {
   }
 };
 
-const toPlaybackSpeed = ( value: number ): number => {
-  const step = toStep( value );
-  return Math.pow( 2, step / 12 );
-};
+/**
+ * Given a numberic value, return the playback speed that will play the corresponding note.
+ */
+const toPlaybackSpeed = ( value: number ): number => Math.pow( 2, toStep( value ) / 12 );
 
+/**
+ * Class with static methods for playing the corresponding notes.
+ */
 export default class NumberTone {
   public static play( value: number ): void {
     const playbackSpeed = toPlaybackSpeed( value );
