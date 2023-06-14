@@ -16,6 +16,8 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 import { kickDistanceStrategyFromStateObject, RandomSkewStrategy } from '../../common/model/RandomSkewStrategy.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
+import NumberTone from '../../soccer-common/model/NumberTone.js';
+import Utils from '../../../../dot/js/Utils.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeanAndMedianModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
@@ -88,6 +90,23 @@ export default class MeanAndMedianModel extends CAVModel {
     } );
 
     sceneModel.objectValueBecameNonNullEmitter.addListener( () => this.updateAnimation() );
+
+    const crossedCheckpoint = ( value1: number, value2: number ): boolean => {
+
+      // Check if both values are on opposite sides of an integer
+      const integerCheck = Math.floor( value1 ) !== Math.floor( value2 ) && Math.ceil( value1 ) !== Math.ceil( value2 );
+
+      // Check if both values are on opposite sides of a half integer
+      const halfIntegerCheck = Math.floor( value1 * 2 ) !== Math.floor( value2 * 2 ) && Math.ceil( value1 * 2 ) !== Math.ceil( value2 * 2 );
+
+      return integerCheck || halfIntegerCheck;
+    };
+
+    this.meanPredictionProperty.lazyLink( ( meanPrediction, oldMeanPrediction ) => {
+      if ( crossedCheckpoint( meanPrediction, oldMeanPrediction ) ) {
+        NumberTone.playMean( Utils.roundToInterval( meanPrediction, 0.5 ) );
+      }
+    } );
   }
 
   public override reset(): void {
