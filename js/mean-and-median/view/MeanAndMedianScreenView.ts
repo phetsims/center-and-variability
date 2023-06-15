@@ -21,6 +21,7 @@ import PlayAreaCheckboxFactory from '../../common/view/PlayAreaCheckboxFactory.j
 import CAVConstants from '../../common/CAVConstants.js';
 import PredictionSlider from '../../common/view/PredictionSlider.js';
 import Property from '../../../../axon/js/Property.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -58,7 +59,8 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
       tandem: this.tandem.createTandem( 'bottomCheckboxGroup' )
     } ) );
 
-    this.backScreenViewLayer.addChild( new PredictionSlider( model.meanPredictionProperty, this.modelViewTransform, CAVConstants.PHYSICAL_RANGE, {
+    this.backScreenViewLayer.addChild( new PredictionSlider( model.meanPredictionProperty, this.modelViewTransform,
+      CAVConstants.PHYSICAL_RANGE, new BooleanProperty( false ), {
       predictionThumbNodeOptions: {
         color: CAVColors.meanColorProperty,
         style: 'arrow'

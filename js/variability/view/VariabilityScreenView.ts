@@ -28,6 +28,7 @@ import InfoDialog from './InfoDialog.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import PredictionSlider, { PredictionSliderOptions } from '../../common/view/PredictionSlider.js';
 import Property from '../../../../axon/js/Property.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import IntervalToolPlayAreaNode from './IntervalToolPlayAreaNode.js';
@@ -75,15 +76,21 @@ export default class VariabilityScreenView extends CAVScreenView {
       visibleProperty: model.isIntervalToolVisibleProperty
     };
 
-    this.backScreenViewLayer.addChild( new PredictionSlider( model.intervalTool1ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE, combineOptions<PredictionSliderOptions>( {
-      valueProperty: model.intervalTool1ValueProperty,
-      tandem: options.tandem.createTandem( 'variabilityIntervalPredictionTool1ValueNode' )
-    }, predictionSliderOptions ) ) );
+    const isIntervalHandle1BeingDraggedProperty = new BooleanProperty( false );
+    const isIntervalHandle2BeingDraggedProperty = new BooleanProperty( false );
+    const isIntervalAreaBeingDraggedProperty = new BooleanProperty( false );
 
-    this.backScreenViewLayer.addChild( new PredictionSlider( model.intervalTool2ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE, combineOptions<PredictionSliderOptions>( {
-      valueProperty: model.intervalTool2ValueProperty,
-      tandem: options.tandem.createTandem( 'variabilityIntervalPredictionTool2ValueNode' )
-    }, predictionSliderOptions ) ) );
+    this.backScreenViewLayer.addChild( new PredictionSlider( model.intervalTool1ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE,
+      isIntervalHandle1BeingDraggedProperty, combineOptions<PredictionSliderOptions>( {
+        valueProperty: model.intervalTool1ValueProperty,
+        tandem: options.tandem.createTandem( 'variabilityIntervalPredictionTool1ValueNode' )
+      }, predictionSliderOptions ) ) );
+
+    this.backScreenViewLayer.addChild( new PredictionSlider( model.intervalTool2ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE,
+      isIntervalHandle2BeingDraggedProperty, combineOptions<PredictionSliderOptions>( {
+        valueProperty: model.intervalTool2ValueProperty,
+        tandem: options.tandem.createTandem( 'variabilityIntervalPredictionTool2ValueNode' )
+      }, predictionSliderOptions ) ) );
 
     const variabilityAccordionBox = new VariabilityAccordionBox(
       model,
@@ -100,7 +107,7 @@ export default class VariabilityScreenView extends CAVScreenView {
       } );
 
     const intervalToolPlayAreaNode = new IntervalToolPlayAreaNode( model.intervalTool1ValueProperty, model.intervalTool2ValueProperty, this.modelViewTransform,
-      new DerivedProperty( [ variabilityAccordionBox.boundsProperty ], bounds => bounds.top ), {
+      new DerivedProperty( [ variabilityAccordionBox.boundsProperty ], bounds => bounds.top ), isIntervalAreaBeingDraggedProperty, {
         visibleProperty: model.isIntervalToolVisibleProperty,
         tandem: options.tandem.createTandem( 'intervalToolPlayAreaNode' )
       } );
@@ -111,10 +118,33 @@ export default class VariabilityScreenView extends CAVScreenView {
     } );
 
     const biquadFilterNode = new BiquadFilterNode( phetAudioContext, {
-      type: 'lowshelf',
+      type: 'lowpass',
       frequency: 800,
       Q: 1.5
     } );
+
+    isIntervalHandle1BeingDraggedProperty.lazyLink( value => {
+      if ( value ) {
+        biquadFilterNode.frequency.setTargetAtTime( 300, phetAudioContext.currentTime, 0 );
+      }
+    } );
+
+    isIntervalHandle2BeingDraggedProperty.lazyLink( value => {
+      if ( value ) {
+        biquadFilterNode.frequency.setTargetAtTime( 1200, phetAudioContext.currentTime, 0 );
+      }
+    } );
+
+    isIntervalAreaBeingDraggedProperty.lazyLink( value => {
+      if ( value ) {
+        biquadFilterNode.frequency.setTargetAtTime( 600, phetAudioContext.currentTime, 0 );
+      }
+    } );
+
+    Multilink.multilink( [ model.intervalTool1ValueProperty, model.intervalTool2ValueProperty ],
+      ( intervalTool1Value, intervalTool2Value ) => {
+        intervalDistanceProperty.notifyListenersStatic();
+      } );
 
     this.continuousPropertySoundGenerator = new ContinuousPropertySoundGenerator(
       intervalDistanceProperty,
@@ -125,8 +155,7 @@ export default class VariabilityScreenView extends CAVScreenView {
 
         resetInProgressProperty: model.variabilityModelResetInProgressProperty,
         trimSilence: false, // a very precise sound file is used, so make sure it doesn't get changed
-        fadeStartDelay: 0.5,
-        fadeTime: 1,
+        fadeTime: 0.2,
         delayBeforeStop: 0.5,
         playbackRateSpanOctaves: 1.5,
         additionalAudioNodes: [

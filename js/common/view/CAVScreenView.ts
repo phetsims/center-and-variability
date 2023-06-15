@@ -23,6 +23,7 @@ import CAVAccordionBox from './CAVAccordionBox.js';
 import PredictionSlider from './PredictionSlider.js';
 import CAVColors from '../CAVColors.js';
 import Property from '../../../../axon/js/Property.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CAVModel from '../model/CAVModel.js';
@@ -351,7 +352,7 @@ export default class CAVScreenView extends ScreenView {
    * The MedianPredictionNode is shared in the Median screen and MeanAndMedianScreen, so factored out here.
    */
   public static createMedianPredictionNode( model: CAVModel, modelViewTransform: ModelViewTransform2, tandem: Tandem ): PredictionSlider {
-    return new PredictionSlider( model.medianPredictionProperty, modelViewTransform, CAVConstants.PHYSICAL_RANGE, {
+    return new PredictionSlider( model.medianPredictionProperty, modelViewTransform, CAVConstants.PHYSICAL_RANGE, new BooleanProperty( false ), {
       predictionThumbNodeOptions: {
         color: CAVColors.medianColorProperty,
         style: 'arrow'

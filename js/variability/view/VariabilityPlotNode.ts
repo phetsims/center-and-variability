@@ -11,6 +11,7 @@
 import centerAndVariability from '../../centerAndVariability.js';
 import { Node, NodeOptions } from '../../../../scenery/js/imports.js';
 import Property from '../../../../axon/js/Property.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import RangeNode from './RangeNode.js';
@@ -63,7 +64,8 @@ export default class VariabilityPlotNode extends Node {
     this.toggleNode = toggleNode;
 
     const intervalToolPlayAreaNode = new IntervalToolPlayAreaNode( model.intervalTool1ValueProperty,
-      model.intervalTool2ValueProperty, toggleNode.nodes[ 0 ].modelViewTransform, new Property( 0 ), {
+      model.intervalTool2ValueProperty, toggleNode.nodes[ 0 ].modelViewTransform, new Property( 0 ),
+      new BooleanProperty( false ), {
         visibleProperty: model.isIntervalToolVisibleProperty,
         tandem: providedOptions.tandem.createTandem( 'intervalToolPlayAreaNode' )
       } );

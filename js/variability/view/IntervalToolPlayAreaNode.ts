@@ -19,7 +19,7 @@ type InternalToolPlayAreaNodeOptions = SelfOptions & NodeOptions & PickRequired<
 
 export default class IntervalToolPlayAreaNode extends Node {
   public constructor( intervalToolValue1Property: NumberProperty, intervalToolValue2Property: NumberProperty, modelViewTransform: ModelViewTransform2,
-                      topAlignmentProperty: TReadOnlyProperty<number>, providedOptions: InternalToolPlayAreaNodeOptions ) {
+                      topAlignmentProperty: TReadOnlyProperty<number>, isBeingDragged: Property<boolean>, providedOptions: InternalToolPlayAreaNodeOptions ) {
 
     const rectangleNode = new Rectangle( 0, 0, 0, 400, {
       fill: CAVColors.intervalToolFillProperty,
@@ -109,15 +109,18 @@ export default class IntervalToolPlayAreaNode extends Node {
     intervalToolValue1Property.link( updateDragBounds );
     intervalToolValue2Property.link( updateDragBounds );
 
+    // This drag listener is for translating the entire interval tool
     const dragListener = new DragListener( {
       dragBoundsProperty: dragBoundsProperty,
       useParentOffset: true,
       positionProperty: intervalToolValue1PositionProperty,
       transform: modelViewTransform,
       start: ( event, dragListener ) => {
+        isBeingDragged.value = true;
         distanceBetweenToolValues = intervalToolValue2Property.value - intervalToolValue1Property.value;
       },
       end: ( event, dragListener ) => {
+        isBeingDragged.value = false;
         distanceBetweenToolValues = null;
       },
       tandem: providedOptions.tandem.createTandem( 'dragListener' )

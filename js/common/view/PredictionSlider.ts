@@ -31,7 +31,7 @@ export type PredictionSliderOptions = SelfOptions & WithRequired<ParentOptions, 
 export default class PredictionSlider extends AccessibleSlider( Node, 0 ) {
 
   public constructor( predictionProperty: Property<number>, modelViewTransform: ModelViewTransform2, dragRange: Range,
-                      providedOptions: PredictionSliderOptions ) {
+                      isBeingDragged: Property<boolean>, providedOptions: PredictionSliderOptions ) {
 
     const thumbNode = new PredictionThumbNode( providedOptions.predictionThumbNodeOptions );
     const options = optionize<PredictionSliderOptions, SelfOptions, ParentOptions>()( {
@@ -73,7 +73,13 @@ export default class PredictionSlider extends AccessibleSlider( Node, 0 ) {
     this.addInputListener( new DragListener( {
       tandem: options.tandem.createTandem( 'dragListener' ),
       positionProperty: dragPositionProperty,
-      start: () => this.moveToFront()
+      start: () => {
+        isBeingDragged.value = true;
+        this.moveToFront();
+      },
+      end: () => {
+        isBeingDragged.value = false;
+      }
     } ) );
   }
 }
