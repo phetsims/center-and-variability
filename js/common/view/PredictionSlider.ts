@@ -48,9 +48,7 @@ export default class PredictionSlider extends AccessibleSlider( Node, 0 ) {
 
     super( options );
 
-    this.addLinkedElement( predictionProperty, {
-      tandem: options.tandem.createTandem( 'predictionProperty' )
-    } );
+    this.addLinkedElement( predictionProperty );
 
     // In view coordinates
     const dragPositionProperty = new Vector2Property( modelViewTransform.modelToViewXY( predictionProperty.value, 0 ) );

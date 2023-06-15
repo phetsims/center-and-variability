@@ -38,9 +38,7 @@ export default class CardModel extends PhetioObject {
       phetioValueType: BooleanIO
     } );
 
-    this.addLinkedElement( this.soccerBall, {
-      tandem: options.tandem.createTandem( 'soccerBall' )
-    } );
+    this.addLinkedElement( this.soccerBall );
   }
 }
 

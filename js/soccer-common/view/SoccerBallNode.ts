@@ -168,9 +168,7 @@ export default class SoccerBallNode extends AccessibleSlider( SoccerObjectNode, 
       this.touchArea = Shape.rectangle( 0, 0, 0, 0 );
     } );
 
-    this.addLinkedElement( soccerBall, {
-      tandem: options.tandem.createTandem( 'soccerBall' )
-    } );
+    this.addLinkedElement( soccerBall );
 
     // Not focusable until the ball has been kicked into the play area
     this.focusable = false;

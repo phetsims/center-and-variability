@@ -126,9 +126,7 @@ export default class CardNode extends Node {
 
     this.soccerBall.dragStartedEmitter.addListener( () => this.moveToFront() );
 
-    this.addLinkedElement( cardModel, {
-      tandem: options.tandem.createTandem( 'cardModel' )
-    } );
+    this.addLinkedElement( cardModel );
   }
 
   public animateTo( destination: Vector2, duration: number, audio: boolean ): void {
