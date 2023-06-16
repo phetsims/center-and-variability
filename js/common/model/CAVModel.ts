@@ -100,7 +100,8 @@ export default class CAVModel {
     const allValueProperties = sceneModels.flatMap( sceneModel => sceneModel.soccerBalls.map( soccerBall => soccerBall.valueProperty ) );
 
     this.soccerBallsInputEnabledProperty = new BooleanProperty( true, {
-      tandem: options.tandem.createTandem( 'soccerBallsInputEnabledProperty' )
+      tandem: options.tandem.createTandem( 'soccerBallsInputEnabledProperty' ),
+      phetioDocumentation: 'Enable or disable input on the entire set of soccer balls.'
     } );
 
     this.dragIndicatorModel = new CAVDragIndicatorModel( this.soccerBallsInputEnabledProperty, { tandem: options.tandem.createTandem( 'dragIndicatorModel' ) } );
