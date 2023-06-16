@@ -18,6 +18,7 @@ import { kickDistanceStrategyFromStateObject, RandomSkewStrategy } from '../../c
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import NumberTone from '../../soccer-common/model/NumberTone.js';
 import Utils from '../../../../dot/js/Utils.js';
+import CAVSoccerBall from '../../common/model/CAVSoccerBall.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeanAndMedianModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
@@ -49,7 +50,8 @@ export default class MeanAndMedianModel extends CAVModel {
       CAVConstants.MAX_KICKS_VALUES,
       new RandomSkewStrategy(),
       CAVConstants.PHYSICAL_RANGE,
-      kickDistanceStrategyFromStateObject, {
+      kickDistanceStrategyFromStateObject,
+      CAVSoccerBall.createSoccerBall, {
         tandem: options.tandem.createTandem( 'sceneModel' )
       } );
     super( MAX_KICKS_PROPERTY, [ sceneModel ], options );

@@ -16,6 +16,7 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import CAVConstants from '../../common/CAVConstants.js';
 import { kickDistanceStrategyFromStateObject, RandomSkewStrategy } from '../../common/model/RandomSkewStrategy.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
+import CAVSoccerBall from '../../common/model/CAVSoccerBall.js';
 
 type SelfOptions = EmptySelfOptions;
 type MedianModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
@@ -42,7 +43,8 @@ export default class MedianModel extends CAVModel {
       [ 15 ],
       new RandomSkewStrategy(),
       CAVConstants.PHYSICAL_RANGE,
-      kickDistanceStrategyFromStateObject, {
+      kickDistanceStrategyFromStateObject,
+      CAVSoccerBall.createSoccerBall, {
         tandem: options.tandem.createTandem( 'sceneModel' )
       } );
 

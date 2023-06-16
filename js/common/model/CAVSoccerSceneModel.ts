@@ -16,11 +16,11 @@ import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Property from '../../../../axon/js/Property.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import CAVSoccerBall from './CAVSoccerBall.js';
+import CAVSoccerBall, { CAVSoccerBallOptions } from './CAVSoccerBall.js';
 
 type CAVSoccerSceneModelOptions = EmptySelfOptions & SoccerSceneModelOptions;
 
-export default class CAVSoccerSceneModel extends SoccerSceneModel<CAVSoccerBall> {
+export default class CAVSoccerSceneModel<T extends CAVSoccerBall = CAVSoccerBall> extends SoccerSceneModel<T> {
 
   // Indicates the max and min values in the data set, or null if there are no values in the data set
   public readonly dataRangeProperty: Property<Range | null>;
@@ -31,11 +31,12 @@ export default class CAVSoccerSceneModel extends SoccerSceneModel<CAVSoccerBall>
                       kickDistanceStrategy: TKickDistanceStrategy,
                       physicalRange: Range,
                       kickDistanceStrategyFromStateObject: ( string: string ) => TKickDistanceStrategy,
+                      soccerBallFactory: ( isFirstSoccerBall: boolean, options: CAVSoccerBallOptions ) => T,
                       providedOptions: CAVSoccerSceneModelOptions ) {
 
     const options = providedOptions;
     super( maxKicksProperty, maxKicksChoices, kickDistanceStrategy, physicalRange,
-      kickDistanceStrategyFromStateObject, CAVSoccerBall.createSoccerBall, options );
+      kickDistanceStrategyFromStateObject, soccerBallFactory, options );
 
     this.medianValueProperty = new Property<number | null>( null, {
       tandem: options.tandem.createTandem( 'medianValueProperty' ),

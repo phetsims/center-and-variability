@@ -16,10 +16,10 @@ import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import SoccerPlayer from '../../soccer-common/model/SoccerPlayer.js';
 import { SoccerPlayerImageSet } from '../../soccer-common/view/SoccerPlayerNode.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import Range from '../../../../dot/js/Range.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
-
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 
 export default class CAVSceneView extends SoccerSceneView {
 
@@ -28,7 +28,7 @@ export default class CAVSceneView extends SoccerSceneView {
                       getSoccerPlayerImageSet: ( soccerPlayer: SoccerPlayer, sceneModel: SoccerSceneModel ) => SoccerPlayerImageSet,
                       modelViewTransform: ModelViewTransform2,
                       physicalRange: Range,
-                      options: { tandem: Tandem } ) {
+                      options: PickRequired<PhetioObject, 'tandem'> ) {
 
     super( model.dragIndicatorModel, model.soccerBallsInputEnabledProperty, sceneModel, getSoccerPlayerImageSet, modelViewTransform, physicalRange, options );
 

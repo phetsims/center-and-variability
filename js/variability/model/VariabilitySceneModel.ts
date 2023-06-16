@@ -20,8 +20,9 @@ import Utils from '../../../../dot/js/Utils.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import { kickDistanceStrategyFromStateObject } from '../../common/model/RandomSkewStrategy.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
+import VariabilitySoccerBall from './VariabilitySoccerBall.js';
 
-export default class VariabilitySceneModel extends CAVSoccerSceneModel {
+export default class VariabilitySceneModel extends CAVSoccerSceneModel<VariabilitySoccerBall> {
 
   public readonly maxValueProperty: TReadOnlyProperty<number | null>;
   public readonly minValueProperty: TReadOnlyProperty<number | null>;
@@ -35,7 +36,15 @@ export default class VariabilitySceneModel extends CAVSoccerSceneModel {
   public readonly variabilityDataMeasuresUpdatedEmitter: Emitter = new Emitter();
 
   public constructor( maxKicksProperty: TReadOnlyProperty<number>, kickDistanceStrategy: TKickDistanceStrategy, options: { tandem: Tandem } ) {
-    super( maxKicksProperty, CAVConstants.MAX_KICKS_VALUES, kickDistanceStrategy, CAVConstants.PHYSICAL_RANGE, kickDistanceStrategyFromStateObject, options );
+    super(
+      maxKicksProperty,
+      CAVConstants.MAX_KICKS_VALUES,
+      kickDistanceStrategy,
+      CAVConstants.PHYSICAL_RANGE,
+      kickDistanceStrategyFromStateObject,
+      VariabilitySoccerBall.createSoccerBall,
+      options
+    );
 
     this.maxValueProperty = new DerivedProperty( [ this.dataRangeProperty ], dataRange => {
       return dataRange === null ? null : dataRange.max;
