@@ -33,7 +33,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
 
     // Specify a "footprint" within which we do all the layout.
     const backgroundShape = CAVConstants.ACCORDION_BOX_CONTENTS_SHAPE_VARIABILITY;
-    const backgroundNode = CAVAccordionBox.createBackgroundNode( backgroundShape );
+    const backgroundNode = CAVAccordionBox.createBackgroundNode( backgroundShape, CAVColors.variabilityAccordionBoxFillProperty );
 
     // Determine which title string we are showing based off the selectedVariabilityMeasure
     const currentProperty = new DerivedProperty( [ model.selectedVariabilityMeasureProperty ], selectedVariability =>
@@ -219,7 +219,8 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       expandedProperty: model.isAccordionBoxExpandedProperty,
 
       // Leave space for the radio buttons at the left
-      left: 65
+      left: 65,
+      fill: CAVColors.variabilityAccordionBoxFillProperty
     } );
 
     this.plotToggleNode = plotToggleNode;

@@ -12,6 +12,7 @@ import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 import CardNode from './CardNode.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import AccordionBoxTitleText from '../../common/view/AccordionBoxTitleText.js';
+import CAVColors from '../../common/CAVColors.js';
 
 export default class MedianAccordionBox extends CAVAccordionBox {
 
@@ -19,7 +20,7 @@ export default class MedianAccordionBox extends CAVAccordionBox {
 
     // Specify a "footprint" within which we do all the layout.
     const backgroundShape = CAVConstants.ACCORDION_BOX_CONTENTS_SHAPE_MEAN_AND_OR_MEDIAN;
-    const backgroundNode = CAVAccordionBox.createBackgroundNode( backgroundShape );
+    const backgroundNode = CAVAccordionBox.createBackgroundNode( backgroundShape, CAVColors.meanAndMedianAccordionBoxFillProperty );
 
     const cardNodeContainer = new CardNodeContainer( model, {
 
@@ -46,7 +47,8 @@ export default class MedianAccordionBox extends CAVAccordionBox {
       top: top,
       centerX: layoutBounds.centerX,
       titleNode: new AccordionBoxTitleText( CenterAndVariabilityStrings.distanceInMetersAccordionBoxTitleStringProperty ),
-      expandedProperty: model.isAccordionBoxExpandedProperty
+      expandedProperty: model.isAccordionBoxExpandedProperty,
+      fill: CAVColors.meanAndMedianAccordionBoxFillProperty
     } );
   }
 }

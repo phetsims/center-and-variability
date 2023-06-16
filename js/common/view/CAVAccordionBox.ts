@@ -10,7 +10,7 @@
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import { Node, Path } from '../../../../scenery/js/imports.js';
+import { Node, Path, TPaint } from '../../../../scenery/js/imports.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
@@ -18,7 +18,7 @@ type SelfOptions = EmptySelfOptions;
 
 export type CAVAccordionBoxOptions =
   SelfOptions
-  & WithRequired<AccordionBoxOptions, 'tandem' | 'expandedProperty'>;
+  & WithRequired<AccordionBoxOptions, 'tandem' | 'expandedProperty' | 'fill'>;
 
 // constants
 export const CONTENT_MARGIN = 10;
@@ -53,7 +53,7 @@ export default class CAVAccordionBox extends AccordionBox {
     super( contentNode, options );
   }
 
-  public static createBackgroundNode( shape: Shape ): Node {
+  public static createBackgroundNode( shape: Shape, fill: TPaint ): Node {
     return new Node( {
 
       // add clip area so dot stacks that are taller than the accordion box are clipped appropriately
@@ -62,7 +62,8 @@ export default class CAVAccordionBox extends AccordionBox {
 
         // A sub-node so it can be non-pickable (so that click events can still reach the accordion box title bar)
         new Path( shape, {
-          pickable: false
+          pickable: false,
+          fill: fill
         } )
       ]
     } );

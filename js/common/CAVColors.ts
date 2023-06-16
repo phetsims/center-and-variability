@@ -66,7 +66,10 @@ const CAVColors = {
   intervalToolStrokeProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolStroke', { default: '#eae4c3' } ),
   playAreaIntervalToolHandleLineStrokeProperty: new ProfileColorProperty( centerAndVariability, 'playAreaIntervalToolHandleLineStroke', { default: new Color( 241, 255, 204, 0.5 ) } ),
 
-  rangeFillProperty: new ProfileColorProperty( centerAndVariability, 'rangeFill', { default: new Color( '#c3fdb9' ).withAlpha( 0.7 ) } )
+  rangeFillProperty: new ProfileColorProperty( centerAndVariability, 'rangeFill', { default: new Color( '#c3fdb9' ).withAlpha( 0.7 ) } ),
+
+  meanAndMedianAccordionBoxFillProperty: new ProfileColorProperty( centerAndVariability, 'meanAndMedianAccordionBoxFill', { default: 'rgb( 238, 238, 238 )' } ),
+  variabilityAccordionBoxFillProperty: new ProfileColorProperty( centerAndVariability, 'variabilityAccordionBoxFill', { default: 'white' } )
 };
 
 centerAndVariability.register( 'CAVColors', CAVColors );
