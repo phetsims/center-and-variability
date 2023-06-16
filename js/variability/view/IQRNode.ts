@@ -60,7 +60,9 @@ export default class IQRNode extends CAVPlotNode {
     const iqrBarLabel = new Text( '', {
       font: CAVConstants.VARIABILITY_MEASURE_NUMBER_READOUT_FONT
     } );
-    const iqrRectangle = new Rectangle( 0, 0, 0, 0, {
+
+    const iqrRectHeight = options.parentContext === 'info' ? BOX_HEIGHT : CAVConstants.VARIABILITY_PLOT_RECT_HEIGHT;
+    const iqrRectangle = new Rectangle( 0, 0, 0, iqrRectHeight, {
       fill: CAVColors.iqrColorProperty
     } );
 
@@ -281,14 +283,13 @@ export default class IQRNode extends CAVPlotNode {
 
       if ( showHighlightRectangle ) {
         const floor = this.modelViewTransform.modelToViewY( 0 );
-        iqrRectangle.rectHeight = options.parentContext === 'info' ? BOX_HEIGHT : floor - boxWhiskerNode.y + 0.5 * BOX_HEIGHT;
         iqrRectangle.rectWidth = boxRight - boxLeft;
         iqrRectangle.left = boxLeft;
         iqrRectangle.bottom = options.parentContext === 'info' ? boxWhiskerNode.y + 0.5 * BOX_HEIGHT : floor;
 
         const iqrBarY = options.parentContext === 'info' ?
                         Math.min( minLabelTextNode.y, q1LabelTextNode.y, q3LabelTextNode.y, maxLabelTextNode.y ) + 12
-                                                         : iqrRectangle.top - MedianBarNode.NOTCH_HEIGHT - 16;
+                                                         : iqrRectangle.top - MedianBarNode.NOTCH_HEIGHT - CAVConstants.VARIABILITY_PLOT_BAR_OFFSET_Y;
 
         iqrBar.setMedianBarShape( iqrBarY, iqrRectangle.left, 0, iqrRectangle.right, false );
         iqrBarLabel.string = sceneModel.iqrValueProperty.value!;

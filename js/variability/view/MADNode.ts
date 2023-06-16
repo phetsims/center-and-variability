@@ -41,7 +41,7 @@ export default class MADNode extends CAVPlotNode {
     // This adds a top margin to the text, separating it from the info dialog subheading
     needAtLeastOneKickText.localBounds = needAtLeastOneKickText.localBounds.dilatedY( MIN_KICKS_TEXT_TOP_MARGIN );
 
-    const madRectangle = new Rectangle( 0, 50, 100, 72, {
+    const madRectangle = new Rectangle( 0, 50, 100, CAVConstants.VARIABILITY_PLOT_RECT_HEIGHT, {
       fill: CAVColors.madRectangleColorProperty
     } );
 
@@ -174,8 +174,8 @@ export default class MADNode extends CAVPlotNode {
         leftReadout.string = Utils.toFixed( mad, 1 );
         rightReadout.string = Utils.toFixed( mad, 1 );
 
-        leftBar.setMedianBarShape( madRectangle.top - MedianBarNode.NOTCH_HEIGHT - 2, madRectangle.left, 0, viewCenterX, false );
-        rightBar.setMedianBarShape( madRectangle.top - MedianBarNode.NOTCH_HEIGHT - 2, viewCenterX, 0, madRectangle.right, false );
+        leftBar.setMedianBarShape( madRectangle.top - MedianBarNode.NOTCH_HEIGHT - CAVConstants.VARIABILITY_PLOT_BAR_OFFSET_Y, madRectangle.left, 0, viewCenterX, false );
+        rightBar.setMedianBarShape( madRectangle.top - MedianBarNode.NOTCH_HEIGHT - CAVConstants.VARIABILITY_PLOT_BAR_OFFSET_Y, viewCenterX, 0, madRectangle.right, false );
 
         leftReadout.centerBottom = leftBar.centerTop;
         rightReadout.centerBottom = rightBar.centerTop;

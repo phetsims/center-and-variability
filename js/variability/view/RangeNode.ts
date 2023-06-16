@@ -59,7 +59,7 @@ export default class RangeNode extends CAVPlotNode {
       stroke: 'black',
       lineWidth: 1
     } );
-    const rectangleHeight = 70;
+    const rectangleHeight = CAVConstants.VARIABILITY_PLOT_RECT_HEIGHT;
     const rangeRectangle = new Rectangle( 0, 50, 100, rectangleHeight, {
       fill: CAVColors.rangeFillProperty
     } );
@@ -94,7 +94,7 @@ export default class RangeNode extends CAVPlotNode {
         rangeRectangle.left = left;
         rangeRectangle.bottom = floor;
 
-        rangeBar.setMedianBarShape( rangeRectangle.top - MedianBarNode.NOTCH_HEIGHT - 2, rangeRectangle.left, 0, rangeRectangle.right, false );
+        rangeBar.setMedianBarShape( rangeRectangle.top - MedianBarNode.NOTCH_HEIGHT - CAVConstants.VARIABILITY_PLOT_BAR_OFFSET_Y, rangeRectangle.left, 0, rangeRectangle.right, false );
 
         rangeTextReadout.string = sceneModel.rangeValueProperty.value + '';
         rangeTextReadout.centerX = rangeRectangle.centerX;
