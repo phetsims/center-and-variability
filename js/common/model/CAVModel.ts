@@ -27,11 +27,11 @@ import NumberTone from '../../soccer-common/model/NumberTone.js';
 import CAVSoccerSceneModel from './CAVSoccerSceneModel.js';
 import CAVDragIndicatorModel from './CAVDragIndicatorModel.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import PhetioObject from '../../../../tandem/js/PhetioObject.js';
+import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 
 type SelfOptions = {
   instrumentMeanPredictionProperty: boolean;
-} & PickRequired<PhetioObject, 'tandem'>;
+} & PickRequired<PhetioObjectOptions, 'tandem'>;
 export type CAVModelOptions = SelfOptions;
 
 export default class CAVModel {

@@ -19,7 +19,7 @@ import { SoccerPlayerImageSet } from '../../soccer-common/view/SoccerPlayerNode.
 import Range from '../../../../dot/js/Range.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import PhetioObject from '../../../../tandem/js/PhetioObject.js';
+import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 
 export default class CAVSceneView extends SoccerSceneView {
 
@@ -28,7 +28,7 @@ export default class CAVSceneView extends SoccerSceneView {
                       getSoccerPlayerImageSet: ( soccerPlayer: SoccerPlayer, sceneModel: SoccerSceneModel ) => SoccerPlayerImageSet,
                       modelViewTransform: ModelViewTransform2,
                       physicalRange: Range,
-                      options: PickRequired<PhetioObject, 'tandem'> ) {
+                      options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
 
     super( model.dragIndicatorModel, model.soccerBallsInputEnabledProperty, sceneModel, getSoccerPlayerImageSet, modelViewTransform, physicalRange, options );
 
