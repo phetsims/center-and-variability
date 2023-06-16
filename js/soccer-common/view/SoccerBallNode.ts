@@ -112,10 +112,9 @@ export default class SoccerBallNode extends AccessibleSlider( SoccerObjectNode, 
     } );
 
     // When the user drags a soccer ball, play audio corresponding to its new position.
-    soccerBall.positionProperty.link( position => {
-      if ( isDragging ) {
-        const x = soccerBall.positionProperty.value.x;
-        NumberTone.play( x );
+    soccerBall.valueProperty.link( value => {
+      if ( isDragging && value !== null ) {
+        NumberTone.play( value );
       }
     } );
 

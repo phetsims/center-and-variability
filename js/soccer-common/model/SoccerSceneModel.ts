@@ -589,7 +589,6 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
 
     soccerBall.soccerPlayer = soccerPlayer;
 
-    // TODO: There is a one animation frame (about 16 ms) delay for this sound to play, see: https://github.com/phetsims/center-and-variability/issues/217
     kickSound.play();
   }
 

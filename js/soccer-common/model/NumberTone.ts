@@ -1,5 +1,11 @@
 // Copyright 2023, University of Colorado Boulder
 
+/**
+ * Class with static methods for playing the corresponding notes.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import numberTone2_mp3 from '../../../sounds/numberTone2_mp3.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
@@ -7,8 +13,7 @@ import soccerCommon from '../soccerCommon.js';
 import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 import Utils from '../../../../dot/js/Utils.js';
 
-// TODO: Create one per ball? One per location? Or multiple? See https://github.com/phetsims/center-and-variability/issues/217
-
+// This is the dominant frequency of numberTone2_mp3. If the audio file is changed, this will need to be updated.
 const E3 = 164.81; // Hz
 
 const INITIAL_OUTPUT_LEVEL = 0.1;
@@ -30,17 +35,11 @@ const meanFilter = new BiquadFilterNode( phetAudioContext, {
 } );
 
 const medianSoundClip = new SoundClip( numberTone2_mp3, {
-
-  // For unknown reasons, the initial output level must be set on the originating sound clip, to
-  // volume match it
   initialOutputLevel: INITIAL_OUTPUT_LEVEL,
   additionalAudioNodes: [ medianFilter ]
 } );
 
 const meanSoundClip = new SoundClip( numberTone2_mp3, {
-
-  // For unknown reasons, the initial output level must be set on the originating sound clip, to
-  // volume match it
   initialOutputLevel: INITIAL_OUTPUT_LEVEL,
   additionalAudioNodes: [ meanFilter ]
 } );
@@ -58,7 +57,7 @@ soundManager.addSoundGenerator( meanSoundClip );
  */
 const toStepDiscrete = ( value: number ): number => {
   assert && assert( value >= 1 && value <= 18, `value ${value} is out of range` );
-  return value === 1 ? 0 : // C
+  const step = value === 1 ? 0 : // C
          value === 1.5 ? 1 : // C#
          value === 2 ? 2 : // D
          value === 2.5 ? 3 : // D#
@@ -94,6 +93,8 @@ const toStepDiscrete = ( value: number ): number => {
          value === 17.5 ? 28.5 : // E
          value === 18 ? 29 : // F
          -1;
+  assert && assert( step >= 0, 'step must be greater than or equal to 0' );
+  return step;
 };
 
 /**
@@ -101,10 +102,10 @@ const toStepDiscrete = ( value: number ): number => {
  */
 const toStep = ( value: number ): number => {
   const nearestStep = Utils.roundToInterval( value, 0.5 );
-  if ( nearestStep === value ) {
+  if ( value === nearestStep ) {
     return toStepDiscrete( value );
   }
-  else if ( nearestStep > value ) {
+  else if ( value < nearestStep ) {
     return Utils.linear( nearestStep, nearestStep - 0.5, toStepDiscrete( nearestStep ), toStepDiscrete( nearestStep - 0.5 ), value );
   }
   else {
@@ -113,13 +114,10 @@ const toStep = ( value: number ): number => {
 };
 
 /**
- * Given a numberic value, return the playback speed that will play the corresponding note.
+ * Given a numeric value, return the playback speed that will play the corresponding note.
  */
 const toPlaybackSpeed = ( value: number ): number => Math.pow( 2, toStep( value ) / 12 );
 
-/**
- * Class with static methods for playing the corresponding notes.
- */
 export default class NumberTone {
   public static play( value: number ): void {
     const playbackSpeed = toPlaybackSpeed( value );
@@ -131,6 +129,7 @@ export default class NumberTone {
   public static playMedian( value: number ): void {
     const playbackSpeed = toPlaybackSpeed( value );
 
+    // set the frequency of the band pass filter to be equal to the frequency of the adjusted sound
     const frequency = E3 * playbackSpeed;
     medianFilter.frequency.setTargetAtTime( frequency, phetAudioContext.currentTime, 0 );
 
@@ -141,6 +140,7 @@ export default class NumberTone {
   public static playMean( value: number ): void {
     const playbackSpeed = toPlaybackSpeed( value );
 
+    // set the frequency of the band pass filter to be equal to the frequency of the adjusted sound
     const frequency = E3 * playbackSpeed;
     meanFilter.frequency.setTargetAtTime( frequency, phetAudioContext.currentTime, 0 );
 

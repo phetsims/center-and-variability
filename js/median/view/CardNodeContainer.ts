@@ -36,8 +36,6 @@ import DragIndicatorArrowNode from '../../soccer-common/view/DragIndicatorArrowN
 import TEmitter from '../../../../axon/js/TEmitter.js';
 import MedianModel from '../../median/model/MedianModel.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
-import NumberTone from '../../soccer-common/model/NumberTone.js';
-import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 
@@ -436,7 +434,6 @@ export default class CardNodeContainer extends Node {
 
           // Just animated the displaced occupant, do not play sound for it since it overlaps with the dragged sound
           this.animateToHomeCell( currentOccupant, 0.3, false );
-          CAVQueryParameters.cardTones && NumberTone.play( currentOccupant.soccerBall.valueProperty.value! );
 
           // See if the user unsorted the data.  If so, uncheck the "Sort Data" checkbox
           if ( this.model.isSortingDataProperty.value && !this.isDataSorted() ) {

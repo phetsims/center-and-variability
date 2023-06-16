@@ -21,8 +21,6 @@ import CardModel from '../model/CardModel.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import TEmitter from '../../../../axon/js/TEmitter.js';
-import NumberTone from '../../soccer-common/model/NumberTone.js';
-import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import { cardMovementSoundClips } from './CardNodeContainer.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
@@ -113,12 +111,10 @@ export default class CardNode extends Node {
       start: () => {
         dragging = true;
         this.moveToFront();
-        CAVQueryParameters.cardTones && NumberTone.play( this.soccerBall.valueProperty.value! );
         cardPickUpSoundClip.play();
       },
       end: () => {
         dragging = false;
-        CAVQueryParameters.cardTones && NumberTone.play( this.soccerBall.valueProperty.value! );
         cardDropSoundClip.play();
       }
     } );
