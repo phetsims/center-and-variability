@@ -30,7 +30,7 @@ export default class RangeNode extends CAVPlotNode {
   public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, providedOptions: RangeNodeOptions ) {
 
     const options = optionize<RangeNodeOptions, SelfOptions, CAVPlotNodeOptions>()( {
-      dataPointFill: CAVColors.grayDataPointFill
+      dataPointFill: CAVColors.variabilityDataPointFill
     }, providedOptions );
 
     super( model, sceneModel, playAreaNumberLineNode, options );

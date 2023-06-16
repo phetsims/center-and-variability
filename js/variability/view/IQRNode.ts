@@ -24,7 +24,7 @@ export default class IQRNode extends CAVPlotNode {
   public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, providedOptions: IQRNodeOptions ) {
 
     const options = optionize<IQRNodeOptions, SelfOptions, CAVPlotNodeOptions>()( {
-      dataPointFill: CAVColors.grayDataPointFill
+      dataPointFill: CAVColors.variabilityDataPointFill
     }, providedOptions );
 
     super( model, sceneModel, playAreaNumberLineNode, options );

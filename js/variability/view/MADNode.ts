@@ -24,7 +24,7 @@ export default class MADNode extends CAVPlotNode {
   public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, providedOptions: MADNodeOptions ) {
 
     const options = optionize<MADNodeOptions, SelfOptions, CAVPlotNodeOptions>()( {
-      dataPointFill: CAVColors.grayDataPointFill
+      dataPointFill: CAVColors.variabilityDataPointFill
     }, providedOptions );
     super( model, sceneModel, playAreaNumberLineNode, options );
 
