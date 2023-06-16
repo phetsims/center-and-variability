@@ -45,6 +45,7 @@ export default class CAVModel {
   public readonly selectedSceneModelProperty: Property<CAVSoccerSceneModel>;
 
   public readonly isAccordionBoxExpandedProperty: Property<boolean>;
+  public readonly soccerBallsInputEnabledProperty: Property<boolean>;
 
   public constructor( public readonly maxKicksProperty: Property<number>, public readonly sceneModels: CAVSoccerSceneModel[], options: CAVModelOptions ) {
 
@@ -96,10 +97,13 @@ export default class CAVModel {
       derive: 'maxKicksProperty'
     } );
 
-
     const allValueProperties = sceneModels.flatMap( sceneModel => sceneModel.soccerBalls.map( soccerBall => soccerBall.valueProperty ) );
 
-    this.dragIndicatorModel = new CAVDragIndicatorModel( { tandem: options.tandem.createTandem( 'dragIndicatorModel' ) } );
+    this.soccerBallsInputEnabledProperty = new BooleanProperty( true, {
+      tandem: options.tandem.createTandem( 'soccerBallsInputEnabledProperty' )
+    } );
+
+    this.dragIndicatorModel = new CAVDragIndicatorModel( this.soccerBallsInputEnabledProperty, { tandem: options.tandem.createTandem( 'dragIndicatorModel' ) } );
 
     // It is important to link to the values of all the soccer balls in the screen, so that the dragIndicator can be
     // updated after all the balls have landed, and not just after they have been kicked.

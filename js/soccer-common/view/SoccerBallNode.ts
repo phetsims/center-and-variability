@@ -41,7 +41,7 @@ export default class SoccerBallNode extends AccessibleSlider( SoccerObjectNode, 
 
   public constructor( soccerBall: SoccerBall,
                       modelViewTransform: ModelViewTransform2,
-                      objectNodesInputEnabledProperty: TProperty<boolean>,
+                      soccerBallsInputEnabledProperty: TProperty<boolean>,
                       providedOptions: SoccerBallNodeOptions ) {
 
     // Use the y dimension, since it determines how the soccer balls stack. But maintain the same aspect ratio as the image
@@ -142,7 +142,7 @@ export default class SoccerBallNode extends AccessibleSlider( SoccerObjectNode, 
     // when it is animating, if input for this individual node is disabled, or if input for all of the object nodes
     // has been disabled
     Multilink.multilink(
-      [ soccerBall.soccerBallPhaseProperty, soccerBall.valueProperty, selfInputEnabledProperty, objectNodesInputEnabledProperty ],
+      [ soccerBall.soccerBallPhaseProperty, soccerBall.valueProperty, selfInputEnabledProperty, soccerBallsInputEnabledProperty ],
       ( mode, value, selfInputEnabled, objectsInputEnabled ) => {
         const inputEnabled = value !== null && mode === SoccerBallPhase.STACKED && selfInputEnabled && objectsInputEnabled;
 

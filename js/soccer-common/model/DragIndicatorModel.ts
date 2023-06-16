@@ -16,23 +16,17 @@ import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import SoccerSceneModel from './SoccerSceneModel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 export default class DragIndicatorModel {
   public readonly isDragIndicatorVisibleProperty: Property<boolean>; // Screens 1-3
   public readonly dragIndicatorValueProperty: Property<number | null>;
-  public readonly objectNodesInputEnabledProperty: Property<boolean>; // Screens 1-3
   public readonly soccerBallHasBeenDraggedProperty: Property<boolean>;
 
-  public constructor( options: { tandem: Tandem } ) {
+  public constructor( public readonly soccerBallsInputEnabledProperty: TReadOnlyProperty<boolean>, options: { tandem: Tandem } ) {
 
     this.soccerBallHasBeenDraggedProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'soccerBallHasBeenDraggedProperty' )
-    } );
-
-    const objectNodeGroupTandem = options.tandem.createTandem( 'soccerBallNodeGroup' );
-
-    this.objectNodesInputEnabledProperty = new BooleanProperty( true, {
-      tandem: objectNodeGroupTandem.createTandem( 'inputEnabledProperty' )
     } );
 
     this.isDragIndicatorVisibleProperty = new BooleanProperty( false, { tandem: options.tandem.createTandem( 'isDragIndicatorVisibleProperty' ) } );
@@ -50,7 +44,7 @@ export default class DragIndicatorModel {
     //  don't show the dragIndicatorArrowNode
     this.isDragIndicatorVisibleProperty.value = !soccerBallHasBeenDragged &&
                                                 soccerBallCount === maxKicks &&
-                                                this.objectNodesInputEnabledProperty.value &&
+                                                this.soccerBallsInputEnabledProperty.value &&
                                                 _.every( sceneModel?.getActiveSoccerBalls(), soccerBall => soccerBall.valueProperty.value !== null );
 
     if ( this.isDragIndicatorVisibleProperty.value ) {
