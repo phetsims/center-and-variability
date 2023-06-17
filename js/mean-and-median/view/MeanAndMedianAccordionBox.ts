@@ -29,7 +29,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
     const textGroup = new AlignGroup();
 
     // Specify a "footprint" within which we do all the layout.
-    const backgroundShape = CAVConstants.ACCORDION_BOX_CONTENTS_SHAPE_MEAN_AND_OR_MEDIAN;
+    const backgroundShape = CAVConstants.ACCORDION_BOX_CONTENTS_SHAPE_MEAN_AND_MEDIAN;
     const backgroundNode = CAVAccordionBox.createBackgroundNode( backgroundShape, CAVColors.meanAndMedianAccordionBoxFillProperty );
 
     // There is only one scene in the mean and median screen

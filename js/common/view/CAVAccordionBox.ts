@@ -39,7 +39,7 @@ export default class CAVAccordionBox extends AccordionBox {
       contentXMargin: CONTENT_MARGIN,
 
       // We want the content to go all the way to the top of the accordionBox.
-      // The bottom margin is set in ACCORDION_BOX_CONTENTS_SHAPE
+      // The bottom margin is set in ACCORDION_BOX_CONTENTS_SHAPE values
       contentYMargin: 0,
       contentYSpacing: 0,
       contentAlign: 'left',
