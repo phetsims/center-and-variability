@@ -27,7 +27,6 @@ import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-player
 import TSoundPlayer from '../../../../tambo/js/TSoundPlayer.js';
 import MeanIndicatorNode from './MeanIndicatorNode.js';
 import SoccerCommonColors from '../../soccer-common/SoccerCommonColors.js';
-import SoccerCommonConstants from '../../soccer-common/SoccerCommonConstants.js';
 
 // constants
 const TEXT_OPTIONS = {
@@ -106,7 +105,7 @@ export default class PlayAreaCheckboxFactory {
           new ArrowNode( 0, 0, 0, 27, {
             fill: CAVColors.medianColorProperty,
             stroke: SoccerCommonColors.arrowStrokeProperty,
-            lineWidth: SoccerCommonConstants.ARROW_LINE_WIDTH,
+            lineWidth: CAVConstants.ARROW_LINE_WIDTH,
             headHeight: 12,
             headWidth: 18,
             maxHeight: 20

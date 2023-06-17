@@ -11,7 +11,6 @@ import centerAndVariability from '../../centerAndVariability.js';
 import { LinearGradient, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import SoccerBall from '../../soccer-common/model/SoccerBall.js';
-import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import CardNode from './CardNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Range from '../../../../dot/js/Range.js';
@@ -98,7 +97,7 @@ export default class CardNodeContainer extends Node {
     notchDirection: 'up',
     barStyle: 'split'
   } );
-  private readonly dragIndicatorArrowNode: ArrowNode;
+  private readonly dragIndicatorArrowNode: Node;
 
   // Indicates whether the user has ever dragged a card. It's used to hide the drag indicator arrow after
   // the user dragged a card

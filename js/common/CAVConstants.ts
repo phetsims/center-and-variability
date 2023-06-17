@@ -85,7 +85,9 @@ const CAVConstants = {
   // There are numerous displays for values that could take a null value. We should never see the word null in the sim.
   // The corresonding texts should be invisible when the value is null. However, the strings are created during startup
   // so we cannot throw an error if the value is null.
-  STRING_VALUE_NULL_MAP: ( value: number | null ): number | string => value === null ? 'null' : value
+  STRING_VALUE_NULL_MAP: ( value: number | null ): number | string => value === null ? 'null' : value,
+
+  ARROW_LINE_WIDTH: 0.5
 };
 
 // Global Properties

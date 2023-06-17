@@ -9,28 +9,42 @@
 
 import ArrowNode, { ArrowNodeOptions } from '../../../../scenery-phet/js/ArrowNode.js';
 import soccerCommon from '../soccerCommon.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { NodeOptions } from '../../../../scenery/js/imports.js';
+import { HBox, Node, NodeOptions } from '../../../../scenery/js/imports.js';
 import SoccerCommonColors from '../SoccerCommonColors.js';
-import SoccerCommonConstants from '../SoccerCommonConstants.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 type SelfOptions = EmptySelfOptions;
-type DragIndicatorArrowNodeOptions = PickRequired<ArrowNodeOptions, 'tandem'> & Pick<ArrowNodeOptions, 'visible'> & NodeOptions;
+type DragIndicatorArrowNodeOptions = WithRequired<NodeOptions, 'tandem'>;
 
-export default class DragIndicatorArrowNode extends ArrowNode {
+export default class DragIndicatorArrowNode extends Node {
 
-  public constructor( options: DragIndicatorArrowNodeOptions ) {
+  public constructor( providedOptions: DragIndicatorArrowNodeOptions ) {
 
-    super( 0, 0, 35, 0, optionize<DragIndicatorArrowNodeOptions, SelfOptions, ArrowNodeOptions>()( {
-      headHeight: 8,
-      headWidth: 12,
-      tailWidth: 5,
-      doubleHead: true,
-      fill: SoccerCommonColors.dragIndicatorColorProperty,
-      stroke: SoccerCommonColors.arrowStrokeProperty,
-      lineWidth: SoccerCommonConstants.ARROW_LINE_WIDTH
-    }, options ) );
+    const createArrow = ( direction: 'left' | 'right' ) => {
+      return new ArrowNode( 0, 0, 15 * ( direction === 'left' ? -1 : 1 ), 0, optionize<DragIndicatorArrowNodeOptions, SelfOptions, ArrowNodeOptions>()( {
+        headHeight: 9,
+        headWidth: 14,
+        tailWidth: 6,
+        doubleHead: false,
+        fill: SoccerCommonColors.dragIndicatorColorProperty,
+        lineWidth: 1.2
+      } ) );
+    };
+
+    const options = optionize<DragIndicatorArrowNodeOptions, SelfOptions, NodeOptions>()( {
+      children: [
+        new HBox( {
+          spacing: 26,
+          children: [
+            createArrow( 'left' ),
+            createArrow( 'right' )
+          ]
+        } )
+      ]
+    }, providedOptions );
+
+    super( options );
   }
 }
 

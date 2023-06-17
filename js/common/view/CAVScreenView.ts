@@ -45,6 +45,7 @@ import SoccerCommonConstants from '../../soccer-common/SoccerCommonConstants.js'
 import CAVSceneView from './CAVSceneView.js';
 import CAVNumberLineNode from './CAVNumberLineNode.js';
 import SoccerPlayerGroupUnnumbered from '../../soccer-common/view/SoccerPlayerGroupUnnumbered.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
 
 type SelfOptions = {
   questionBarOptions: StrictOmit<QuestionBarOptions, 'tandem'>;
@@ -174,9 +175,6 @@ export default class CAVScreenView extends ScreenView {
         this.interruptSubtreeInput();
 
         model.selectedSceneModelProperty.value.clearData();
-
-        // hide the dragIndicatorArrowNode but don't reset objectHasBeenDragged
-        // dragIndicatorArrowNode.visible = false;
       },
       iconWidth: 26,
       right: this.resetAllButton.left - CAVConstants.SCREEN_VIEW_X_MARGIN,
@@ -209,9 +207,11 @@ export default class CAVScreenView extends ScreenView {
       dragIndicatorArrowNode.visible = dragIndicatorVisible;
 
       if ( dragIndicatorVisible && dragIndicatorValue ) {
-        dragIndicatorArrowNode.centerX = modelViewTransform.modelToViewX( dragIndicatorValue );
-        const dragIndicatorArrowNodeMargin = 6;
-        dragIndicatorArrowNode.bottom = this.getTopObjectPositionY( dragIndicatorValue ) - dragIndicatorArrowNodeMargin;
+
+        dragIndicatorArrowNode.center = new Vector2(
+          modelViewTransform.modelToViewX( dragIndicatorValue ),
+          this.getTopObjectPositionY( dragIndicatorValue ) + Math.abs( this.modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) )
+        );
 
         // The arrow shouldn't overlap the accordion box
         if ( this.accordionBox ) {

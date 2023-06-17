@@ -15,7 +15,7 @@ import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import SoccerCommonColors from '../../soccer-common/SoccerCommonColors.js';
-import SoccerCommonConstants from '../../soccer-common/SoccerCommonConstants.js';
+import CAVConstants from '../CAVConstants.js';
 
 type SelfOptions = {
   color: TColor;
@@ -31,7 +31,7 @@ export default class PredictionThumbNode extends Node {
     const shadedSphereNode = new ShadedSphereNode( 16, {
       mainColor: providedOptions.color,
       stroke: SoccerCommonColors.arrowStrokeProperty,
-      lineWidth: SoccerCommonConstants.ARROW_LINE_WIDTH
+      lineWidth: CAVConstants.ARROW_LINE_WIDTH
     } );
 
     const indicatorNode =
@@ -44,7 +44,7 @@ export default class PredictionThumbNode extends Node {
         tailWidth: 2,
         fill: providedOptions.color,
         stroke: SoccerCommonColors.arrowStrokeProperty,
-        lineWidth: SoccerCommonConstants.ARROW_LINE_WIDTH
+        lineWidth: CAVConstants.ARROW_LINE_WIDTH
       } ) :
 
         // Lines for the Interval Tool Node in the Variability screen
