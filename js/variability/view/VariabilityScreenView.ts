@@ -96,7 +96,7 @@ export default class VariabilityScreenView extends CAVScreenView {
       model,
       this.layoutBounds,
       options.tandem.createTandem( 'accordionBox' ),
-      this.questionBar.bottom + CAVConstants.SCREEN_VIEW_Y_MARGIN,
+      this.questionBar.bottom + CAVConstants.ACCORDION_BOX_TOP_MARGIN,
       this.playAreaNumberLineNode
     );
     this.setAccordionBox( variabilityAccordionBox );

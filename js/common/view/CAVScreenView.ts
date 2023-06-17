@@ -46,6 +46,7 @@ import CAVSceneView from './CAVSceneView.js';
 import CAVNumberLineNode from './CAVNumberLineNode.js';
 import SoccerPlayerGroupUnnumbered from '../../soccer-common/view/SoccerPlayerGroupUnnumbered.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 
 type SelfOptions = {
   questionBarOptions: StrictOmit<QuestionBarOptions, 'tandem'>;
@@ -54,7 +55,7 @@ type SelfOptions = {
 export type CAVScreenViewOptions = SelfOptions & ScreenViewOptions;
 
 // constants
-const GROUND_POSITION_Y = 500;
+const GROUND_POSITION_Y = 515;
 const INDICATOR_MARGIN = 4;
 
 // There are 15 items in the SoccerPlayerGroupUnnumbered, so we need 2x copies to cover 30 max kicks
@@ -185,7 +186,14 @@ export default class CAVScreenView extends ScreenView {
     } );
 
     this.questionBar = new QuestionBar( this.layoutBounds, this.visibleBoundsProperty, combineOptions<QuestionBarOptions>( {
-      tandem: options.tandem.createTandem( 'questionBar' )
+      barHeight: 50,
+      tandem: options.tandem.createTandem( 'questionBar' ),
+      textOptions: {
+        font: new PhetFont( {
+          weight: 'bold',
+          size: '20px'
+        } )
+      }
     }, options.questionBarOptions ) );
 
     const kickButtonGroup = new KickButtonGroup( model, {
@@ -300,7 +308,7 @@ export default class CAVScreenView extends ScreenView {
   }
 
   private updateAccordionBoxPosition(): void {
-    this.accordionBox!.top = this.questionBar.bottom + CAVConstants.SCREEN_VIEW_Y_MARGIN;
+    this.accordionBox!.top = this.questionBar.bottom + CAVConstants.ACCORDION_BOX_TOP_MARGIN;
   }
 
   /**

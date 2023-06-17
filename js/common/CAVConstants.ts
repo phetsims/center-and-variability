@@ -42,6 +42,7 @@ const MAIN_FONT = new PhetFont( 16 );
 const CAVConstants = {
   SCREEN_VIEW_X_MARGIN: 15,
   SCREEN_VIEW_Y_MARGIN: 15,
+  ACCORDION_BOX_TOP_MARGIN: 5,
   MAIN_FONT: MAIN_FONT,
   NUMBER_OF_OBJECTS: 15, // number of objects in the play area on each screen
   CHECKBOX_TEXT_MAX_WIDTH: 107,
