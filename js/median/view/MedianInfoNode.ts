@@ -1,5 +1,10 @@
 // Copyright 2023, University of Colorado Boulder
 
+/**
+ * Shows the content for the median info dialog.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
 import { RichText, VBox } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
@@ -20,6 +25,8 @@ export default class MedianInfoNode extends VBox {
     const cardNodeContainer = new CardNodeContainer( model, {
       tandem: options.tandem.createTandem( 'cardNodeContainer' ),
       parentContext: 'info',
+
+      // So it will remain centered in the dialog
       excludeInvisibleChildrenFromBounds: true
     } );
 

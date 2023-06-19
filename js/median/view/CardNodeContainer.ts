@@ -79,6 +79,9 @@ const CARD_SPACING = 10;
 const getCardPositionX = ( index: number ) => index * ( CardNode.CARD_DIMENSION + CARD_SPACING );
 
 type SelfOptions = {
+
+  // accordionBox is the full-featured interactive version with drag input and sound effects
+  // info is the non-interactive version used in the info dialog
   parentContext: 'info' | 'accordionBox';
 };
 export type CardNodeContainerOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
