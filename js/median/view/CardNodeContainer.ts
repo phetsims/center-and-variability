@@ -319,7 +319,7 @@ export default class CardNodeContainer extends Node {
 
     // Add or remove the arrow node child
     const dragIndicatorContainer = new Node();
-    this.addChild( dragIndicatorContainer );
+    // this.addChild( dragIndicatorContainer ); // TODO: See https://github.com/phetsims/center-and-variability/issues/273
 
     const updateDragIndicator = () => {
 
