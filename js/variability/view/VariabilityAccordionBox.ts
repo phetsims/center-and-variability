@@ -104,13 +104,13 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       value: VariabilityMeasure.RANGE,
       tandemName: 'rangeReadoutToggleNode',
       createNode: tandem => {
-        const rangeReadoutPatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.rangeEqualsValuePatternStringProperty,
+        const rangeEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.rangeEqualsValuePatternStringProperty,
           { value: rangeValueProperty }, {
             tandem: tandem.createTandem( 'rangeEqualsValueStringProperty' )
           }
         );
 
-        const rangeReadoutText = new VariabilityReadoutText( rangeReadoutPatternStringProperty, {
+        const rangeReadoutText = new VariabilityReadoutText( rangeEqualsValueStringProperty, {
           fill: CAVColors.meanColorProperty,
           visibleProperty: model.isRangeVisibleProperty,
           tandem: tandem.createTandem( 'rangeReadoutText' )
@@ -128,22 +128,22 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       tandemName: 'iqrReadoutToggleNode',
       createNode: tandem => {
 
-        const medianReadoutPatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty,
+        const medianEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty,
           { value: medianValueProperty }, {
             tandem: tandem.createTandem( 'medianEqualsValueStringProperty' )
           }
         );
-        const medianReadoutText = new VariabilityReadoutText( medianReadoutPatternStringProperty, {
+        const medianReadoutText = new VariabilityReadoutText( medianEqualsValueStringProperty, {
           fill: CAVColors.medianColorProperty,
           tandem: tandem.createTandem( 'medianReadoutText' )
         } );
 
-        const iqrReadoutPatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.iqrEqualsValuePatternStringProperty,
+        const iqrEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.iqrEqualsValuePatternStringProperty,
           { value: iqrValueProperty }, {
             tandem: tandem.createTandem( 'iqrEqualsValueStringProperty' )
           }
         );
-        const iqrReadoutText = new VariabilityReadoutText( iqrReadoutPatternStringProperty, {
+        const iqrReadoutText = new VariabilityReadoutText( iqrEqualsValueStringProperty, {
           fill: CAVColors.iqrLabelColorProperty,
           visibleProperty: model.isIQRVisibleProperty,
           tandem: tandem.createTandem( 'iqrReadoutText' )
@@ -164,22 +164,22 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       tandemName: 'madReadoutToggleNode',
       createNode: tandem => {
 
-        const meanReadoutPatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.meanEqualsValuePatternStringProperty,
+        const meanEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.meanEqualsValuePatternStringProperty,
           { value: meanValueProperty }, {
             tandem: tandem.createTandem( 'meanEqualsValueStringProperty' )
           }
         );
-        const madReadoutPatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.madEqualsValuePatternStringProperty,
+        const madEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.madEqualsValuePatternStringProperty,
           { value: madValueProperty }, {
             tandem: tandem.createTandem( 'madEqualsValueStringProperty' )
           }
         );
 
-        const meanReadoutText = new VariabilityReadoutText( meanReadoutPatternStringProperty, {
+        const meanReadoutText = new VariabilityReadoutText( meanEqualsValueStringProperty, {
           fill: CAVColors.meanColorProperty,
           tandem: tandem.createTandem( 'meanReadoutText' )
         } );
-        const madReadoutText = new VariabilityReadoutText( madReadoutPatternStringProperty, {
+        const madReadoutText = new VariabilityReadoutText( madEqualsValueStringProperty, {
           fill: CAVColors.madColorProperty,
           visibleProperty: model.isMADVisibleProperty,
           tandem: tandem.createTandem( 'madReadoutText' )

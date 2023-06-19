@@ -51,16 +51,14 @@ export default class KickButtonGroup extends VBox {
 
     const createKickButton = ( content: Node, tandem: Tandem, numberToKick: number, multikick: boolean ) => {
 
-      const isButtonVisibleProperty = new BooleanProperty( true, {
-        tandem: tandem.createTandem( 'visibleProperty' )
-      } );
-
       const hasKickableSoccerBallsProperty = new DynamicProperty<boolean, unknown, SoccerSceneModel>( model.selectedSceneModelProperty, {
         derive: 'hasKickableSoccerBallsStableProperty'
       } );
 
       return new RectangularPushButton( {
-        visibleProperty: DerivedProperty.and( [ hasKickableSoccerBallsProperty, isButtonVisibleProperty ] ),
+        visibleProperty: DerivedProperty.and( [ hasKickableSoccerBallsProperty, new BooleanProperty( true, {
+          tandem: tandem.createTandem( 'visibleProperty' )
+        } ) ] ),
         content: content,
         baseColor: CAVColors.kickButtonFillColorProperty,
         xMargin: 12,

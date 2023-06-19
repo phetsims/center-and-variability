@@ -35,7 +35,7 @@ export default class MedianAccordionBox extends CAVAccordionBox {
       AccordionBoxCheckboxFactory.getSortDataCheckboxItem( model.isSortingDataProperty, model.sceneModels[ 0 ], cardNodeContainer ),
       AccordionBoxCheckboxFactory.getMedianCheckboxWithoutIconItem( model.isTopMedianVisibleProperty, model )
     ], {
-      tandem: tandem.createTandem( 'accordionCheckboxGroup' ),
+      tandem: tandem.createTandem( 'checkboxGroup' ),
       right: backgroundShape.bounds.width - CAVConstants.ACCORDION_BOX_HORIZONTAL_MARGIN,
       centerY: backgroundShape.bounds.centerY
     } );

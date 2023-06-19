@@ -16,7 +16,7 @@ import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 export default class VariabilityInfoDialog extends Dialog {
   public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
 
-    const content = new ToggleNode( model.selectedVariabilityMeasureProperty, [ {
+    const toggleNode = new ToggleNode( model.selectedVariabilityMeasureProperty, [ {
       value: VariabilityMeasure.RANGE,
       createNode: tandem => new RangeInfoNode( model, sceneModel, playAreaNumberLineNode, { tandem: tandem } ),
       tandemName: 'rangeInfoNode'
@@ -29,12 +29,12 @@ export default class VariabilityInfoDialog extends Dialog {
       createNode: tandem => new MADInfoNode( model, sceneModel, playAreaNumberLineNode, { tandem: tandem } ),
       tandemName: 'madInfoNode'
     } ], {
-      tandem: options.tandem.createTandem( 'infoNode' ),
+      tandem: options.tandem.createTandem( 'toggleNode' ),
       excludeInvisibleChildrenFromBounds: true,
       alignChildren: ToggleNode.NONE
     } );
 
-    super( content, {
+    super( toggleNode, {
 
       // When the user manually dismisses the Dialog, we need to reflect it back in the model property.
       // The Dialog API does not function with a visibleProperty on its own. We know that this is circular,

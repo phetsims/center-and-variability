@@ -12,9 +12,9 @@ import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 export default class MedianInfoDialog extends Dialog {
   public constructor( model: MedianModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
 
-    const content = new MedianInfoNode( model, sceneModel, playAreaNumberLineNode, { tandem: options.tandem.createTandem( 'medianInfoNode' ) } );
+    const medianInfoNode = new MedianInfoNode( model, sceneModel, playAreaNumberLineNode, { tandem: options.tandem.createTandem( 'medianInfoNode' ) } );
 
-    super( content, {
+    super( medianInfoNode, {
 
       // When the user manually dismisses the Dialog, we need to reflect it back in the model property.
       // The Dialog API does not function with a visibleProperty on its own. We know that this is circular,

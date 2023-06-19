@@ -30,7 +30,7 @@ export default class SimulationPreferencesContentNode extends VBox {
       font: PreferencesDialog.CONTENT_FONT,
       maxWidth: PreferencesDialog.CONTENT_MAX_WIDTH
     };
-    const radioButtonGroup = new VerticalAquaRadioButtonGroup<PlotType>( CAVConstants.PLOT_TYPE_PROPERTY, [ {
+    const plotTypeRadioButtonGroup = new VerticalAquaRadioButtonGroup<PlotType>( CAVConstants.PLOT_TYPE_PROPERTY, [ {
       createNode: () => new Text( CenterAndVariabilityStrings.linePlotStringProperty, TEXT_OPTIONS ),
       value: PlotType.LINE_PLOT,
       tandemName: 'linePlotRadioButton'
@@ -48,7 +48,7 @@ export default class SimulationPreferencesContentNode extends VBox {
 
     // VBox is used to make it easy to add additional controls
     super( {
-      children: [ title, radioButtonGroup, outliersCheckbox, new MaxKicksControlNode( MAX_KICKS_PROPERTY, parentNode, {
+      children: [ title, plotTypeRadioButtonGroup, outliersCheckbox, new MaxKicksControlNode( MAX_KICKS_PROPERTY, parentNode, {
         tandem: tandem.createTandem( 'maxKicksControlNode' )
       } ) ],
       spacing: PreferencesDialog.LABEL_CONTENT_SPACING,
