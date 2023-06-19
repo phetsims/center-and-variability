@@ -56,6 +56,8 @@ export default class SoccerBallNode extends AccessibleSlider( SoccerObjectNode, 
       inverseMap: function( value: number ) { return value === 0 ? null : value; }
     } );
 
+    let isSliderDragging = false;
+
     const options = optionize<SoccerBallNodeOptions, SelfOptions, ParentOptions>()( {
       cursor: 'pointer',
       valueProperty: dynamicProperty,
@@ -67,7 +69,14 @@ export default class SoccerBallNode extends AccessibleSlider( SoccerObjectNode, 
 
       // Data point should be visible if the soccer ball landed
       visibleProperty: new DerivedProperty( [ soccerBall.soccerBallPhaseProperty ], phase =>
-        phase !== SoccerBallPhase.INACTIVE )
+        phase !== SoccerBallPhase.INACTIVE ),
+
+      startDrag: () => {
+        isSliderDragging = true;
+      },
+      endDrag: () => {
+        isSliderDragging = false;
+      }
     }, providedOptions );
 
     super( soccerBall, modelViewTransform, SoccerCommonConstants.SOCCER_BALL_RADIUS, options );
@@ -113,7 +122,7 @@ export default class SoccerBallNode extends AccessibleSlider( SoccerObjectNode, 
 
     // When the user drags a soccer ball, play audio corresponding to its new position.
     soccerBall.valueProperty.link( value => {
-      if ( isDragging && value !== null ) {
+      if ( value !== null && ( isDragging || isSliderDragging ) ) {
         NumberTone.play( value );
       }
     } );
