@@ -30,22 +30,23 @@ export default class MedianInfoNode extends VBox {
       excludeInvisibleChildrenFromBounds: true
     } );
 
+    const textVBox = new VBox( {
+      align: 'left',
+      spacing: 5,
+      children: [
+        new RichText( CenterAndVariabilityStrings.medianDescriptionStringProperty, {
+          font: new PhetFont( 18 ),
+          maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
+          layoutOptions: { bottomMargin: CAVConstants.INFO_DIALOG_SUBHEADING_BOTTOM_MARGIN }
+        } ),
+        infoDataValuesNode
+      ]
+    } );
     super( {
       align: 'center',
       spacing: 20,
       children: [
-        new VBox( {
-          align: 'left',
-          spacing: 5,
-          children: [
-            new RichText( CenterAndVariabilityStrings.medianDescriptionStringProperty, {
-              font: new PhetFont( 18 ),
-              maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
-              layoutOptions: { bottomMargin: CAVConstants.INFO_DIALOG_SUBHEADING_BOTTOM_MARGIN }
-            } ),
-            infoDataValuesNode
-          ]
-        } ),
+        textVBox,
         cardNodeContainer
       ]
     } );
@@ -55,6 +56,10 @@ export default class MedianInfoNode extends VBox {
       // We only need to update the data display if the info box is showing, to improve performance on reset.
       if ( model.isInfoVisibleProperty.value ) {
         infoDataValuesNode.update();
+
+        // The text should always be on the left, and the card node container should always be centered. This can be
+        // implemented by checking if the card node container is wider than the text, and if so, centering the contents.
+        this.align = cardNodeContainer.width > textVBox.width ? 'left' : 'center';
       }
     };
 
