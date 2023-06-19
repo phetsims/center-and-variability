@@ -9,7 +9,6 @@
 
 import centerAndVariability from '../../centerAndVariability.js';
 import { LinearGradient, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import SoccerBall from '../../soccer-common/model/SoccerBall.js';
 import CardNode from './CardNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -79,7 +78,9 @@ cardMovementSoundClips.forEach( soundClip => soundManager.addSoundGenerator( sou
 const CARD_SPACING = 10;
 const getCardPositionX = ( index: number ) => index * ( CardNode.CARD_DIMENSION + CARD_SPACING );
 
-type SelfOptions = EmptySelfOptions;
+type SelfOptions = {
+  parentContext: 'info' | 'accordionBox';
+};
 export type CardNodeContainerOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
 export default class CardNodeContainer extends Node {
@@ -233,7 +234,7 @@ export default class CardNodeContainer extends Node {
         if ( isActive && !isSettingPhetioStateProperty.value ) {
 
           let targetIndex = this.cardNodeCells.length;
-          if ( this.model.isSortingDataProperty.value ) {
+          if ( this.model.isSortingDataProperty.value || options.parentContext === 'info' ) {
             const newValue = cardNode.soccerBall.valueProperty.value!;
             const existingLowerCardNodes = this.cardNodeCells.filter( cardNode => cardNode.soccerBall.valueProperty.value! <= newValue );
 
@@ -271,7 +272,7 @@ export default class CardNodeContainer extends Node {
 
       // A ball landed OR a value changed
       soccerBall.valueProperty.link( value => {
-        if ( this.model.isSortingDataProperty.value && value !== null ) {
+        if ( ( this.model.isSortingDataProperty.value && value !== null ) || options.parentContext === 'info' ) {
           this.sortData();
         }
       } );
@@ -365,7 +366,7 @@ export default class CardNodeContainer extends Node {
       const MARGIN_Y = 5;
 
       // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card
-      if ( model.isTopMedianVisibleProperty.value && this.isDataSorted() && leftmostCard ) {
+      if ( leftmostCard && ( ( model.isTopMedianVisibleProperty.value && this.isDataSorted() ) || options.parentContext === 'info' ) ) {
         const barY = leftmostCard.bottom + MARGIN_Y;
 
         const rightmostCard = this.cardNodeCells[ this.cardNodeCells.length - 1 ];
@@ -384,7 +385,7 @@ export default class CardNodeContainer extends Node {
           medianReadoutPanel.left = 0;
         }
         medianReadoutPanel.top = leftmostCard.bottom + MARGIN_Y + 5;
-        medianReadoutPanel.visible = model.isTopMedianVisibleProperty.value;
+        medianReadoutPanel.visible = model.isTopMedianVisibleProperty.value || options.parentContext === 'info';
       }
       else {
         medianReadoutPanel.visible = false;
@@ -404,6 +405,10 @@ export default class CardNodeContainer extends Node {
         this.dataSortedNodeAnimation = null;
       }
     } );
+
+    if ( options.parentContext === 'info' ) {
+      this.pickable = false;
+    }
   }
 
   // The listener which is linked to the cardNode.positionProperty

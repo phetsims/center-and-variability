@@ -11,38 +11,44 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import MedianModel from '../model/MedianModel.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import InfoValuesNode from '../../common/view/InfoValuesNode.js';
+import CardNodeContainer from './CardNodeContainer.js';
 
 export default class MedianInfoNode extends VBox {
   public constructor( model: MedianModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
 
     const infoDataValuesNode = new InfoValuesNode( sceneModel );
+    const cardNodeContainer = new CardNodeContainer( model, {
+      tandem: options.tandem.createTandem( 'cardNodeContainer' ),
+      parentContext: 'info',
+      excludeInvisibleChildrenFromBounds: true
+    } );
+
     super( {
-      align: 'left',
-      spacing: 5,
+      align: 'center',
+      spacing: 20,
       children: [
-        new RichText( CenterAndVariabilityStrings.medianDescriptionStringProperty, {
-          font: new PhetFont( 18 ),
-          maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
-          layoutOptions: { bottomMargin: CAVConstants.INFO_DIALOG_SUBHEADING_BOTTOM_MARGIN }
+        new VBox( {
+          align: 'left',
+          spacing: 5,
+          children: [
+            new RichText( CenterAndVariabilityStrings.medianDescriptionStringProperty, {
+              font: new PhetFont( 18 ),
+              maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
+              layoutOptions: { bottomMargin: CAVConstants.INFO_DIALOG_SUBHEADING_BOTTOM_MARGIN }
+            } ),
+            infoDataValuesNode
+          ]
         } ),
-
-        infoDataValuesNode
-
+        cardNodeContainer
       ]
     } );
 
     const updateDataValuesDisplay = () => {
 
-      // We only need to update the data display if the info box is showing.
-      // This is for performance improvements on reset.
-      if ( !model.isInfoVisibleProperty.value ) {
-        return;
+      // We only need to update the data display if the info box is showing, to improve performance on reset.
+      if ( model.isInfoVisibleProperty.value ) {
+        infoDataValuesNode.update();
       }
-
-      infoDataValuesNode.update();
-
-      // updateQuartileRect( dataValuesQ1Rect, q1TextNodes );
-      // updateQuartileRect( dataValuesQ3Rect, q3TextNodes );
     };
 
     sceneModel.objectChangedEmitter.addListener( updateDataValuesDisplay );
