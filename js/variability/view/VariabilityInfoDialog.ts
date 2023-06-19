@@ -13,7 +13,7 @@ import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 
-export default class InfoDialog extends Dialog {
+export default class VariabilityInfoDialog extends Dialog {
   public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
 
     const content = new ToggleNode( model.selectedVariabilityMeasureProperty, [ {
@@ -44,4 +44,4 @@ export default class InfoDialog extends Dialog {
   }
 }
 
-centerAndVariability.register( 'InfoDialog', InfoDialog );
+centerAndVariability.register( 'VariabilityInfoDialog', VariabilityInfoDialog );

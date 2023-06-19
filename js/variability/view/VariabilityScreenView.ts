@@ -24,7 +24,7 @@ import CAVConstants from '../../common/CAVConstants.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 import SoccerPlayer from '../../soccer-common/model/SoccerPlayer.js';
 import { SoccerPlayerImageSet } from '../../soccer-common/view/SoccerPlayerNode.js';
-import InfoDialog from './InfoDialog.js';
+import VariabilityInfoDialog from './VariabilityInfoDialog.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import PredictionSlider, { PredictionSliderOptions } from '../../common/view/PredictionSlider.js';
 import Property from '../../../../axon/js/Property.js';
@@ -199,7 +199,7 @@ export default class VariabilityScreenView extends CAVScreenView {
       // The infoDialog only exists in the VariabilityScreen, so having CAVScreenView be in charge of creating custom subclasses
       // of CAVSceneView is overcomplicated and unnecessary. Instead, we create an equivalent tandem, so that it will appear
       // under the appropriate sceneView in the studio tree.
-      const infoDialog = new InfoDialog( model, sceneModel, this.playAreaNumberLineNode, {
+      const infoDialog = new VariabilityInfoDialog( model, sceneModel, this.playAreaNumberLineNode, {
         tandem: options.tandem.createTandem1Indexed( CAVConstants.SCENE_VIEW_TANDEM, index ).createTandem( 'infoDialog' )
       } );
 
