@@ -107,6 +107,9 @@
   "youSortedTheData": {
     "value": "You sorted the data!"
   },
+  "medianDescription": {
+    "value": "<strong>Median</strong> is the midpoint of any sorted data set."
+  },
   "rangeDescription": {
     "value": "<strong>Range</strong> is the distance between the minimum and maximum data points."
   },

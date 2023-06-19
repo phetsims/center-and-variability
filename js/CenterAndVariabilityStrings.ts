@@ -49,6 +49,7 @@ type StringsType = {
   'predictMedianStringProperty': LinkableProperty<string>;
   'valueUnknownStringProperty': LinkableProperty<string>;
   'youSortedTheDataStringProperty': LinkableProperty<string>;
+  'medianDescriptionStringProperty': LinkableProperty<string>;
   'rangeDescriptionStringProperty': LinkableProperty<string>;
   'iqrDescriptionStringProperty': LinkableProperty<string>;
   'iqrDataValuesStringProperty': LinkableProperty<string>;

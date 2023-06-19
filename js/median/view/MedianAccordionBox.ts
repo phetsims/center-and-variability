@@ -13,6 +13,7 @@ import CardNode from './CardNode.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import AccordionBoxTitleText from '../../common/view/AccordionBoxTitleText.js';
 import CAVColors from '../../common/CAVColors.js';
+import CAVInfoButton from '../../common/view/CAVInfoButton.js';
 
 export default class MedianAccordionBox extends CAVAccordionBox {
 
@@ -38,6 +39,8 @@ export default class MedianAccordionBox extends CAVAccordionBox {
       right: backgroundShape.bounds.width - CAVConstants.ACCORDION_BOX_HORIZONTAL_MARGIN,
       centerY: backgroundShape.bounds.centerY
     } );
+
+    backgroundNode.addChild( new CAVInfoButton( model.isInfoVisibleProperty, backgroundShape, tandem.createTandem( 'infoButton' ) ) );
 
     backgroundNode.addChild( cardNodeContainer );
     backgroundNode.addChild( checkboxGroup );

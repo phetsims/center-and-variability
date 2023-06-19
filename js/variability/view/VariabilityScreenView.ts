@@ -196,7 +196,7 @@ export default class VariabilityScreenView extends CAVScreenView {
 
     model.variabilitySceneModels.forEach( ( sceneModel, index ) => {
 
-      // The infoDialog only exists in the VariabilityScreen, so having CAVScreenView be in charge of creating custom subclasses
+      // The VariabilityInfoDialog only exists in the VariabilityScreen, so having CAVScreenView be in charge of creating custom subclasses
       // of CAVSceneView is overcomplicated and unnecessary. Instead, we create an equivalent tandem, so that it will appear
       // under the appropriate sceneView in the studio tree.
       const infoDialog = new VariabilityInfoDialog( model, sceneModel, this.playAreaNumberLineNode, {

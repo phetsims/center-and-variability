@@ -19,6 +19,7 @@ import PlayAreaCheckboxFactory from '../../common/view/PlayAreaCheckboxFactory.j
 import { AlignGroup } from '../../../../scenery/js/imports.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
+import MedianInfoDialog from './MedianInfoDialog.js';
 
 type SelfOptions = EmptySelfOptions;
 type MedianScreenViewOptions =
@@ -59,6 +60,19 @@ export default class MedianScreenView extends CAVScreenView {
       this.modelViewTransform,
       options.tandem.createTandem( 'medianPredictionNode' )
     ) );
+
+    const infoDialog = new MedianInfoDialog( model, model.sceneModels[ 0 ], this.playAreaNumberLineNode, {
+      tandem: options.tandem.createTandem( 'infoDialog' )
+    } );
+
+    model.isInfoVisibleProperty.link( isInfoVisible => {
+      if ( isInfoVisible ) {
+        infoDialog.show();
+      }
+      else {
+        infoDialog.hide();
+      }
+    } );
   }
 }
 

@@ -48,6 +48,8 @@ export default class CAVModel {
   public readonly isAccordionBoxExpandedProperty: Property<boolean>;
   public readonly soccerBallsInputEnabledProperty: Property<boolean>;
 
+  public readonly isInfoVisibleProperty: Property<boolean>;
+
   public constructor( public readonly maxKicksProperty: Property<number>, public readonly sceneModels: CAVSoccerSceneModel[], options: CAVModelOptions ) {
 
     this.isAccordionBoxExpandedProperty = new BooleanProperty( true, {
@@ -88,6 +90,9 @@ export default class CAVModel {
       } );
     } );
 
+    this.isInfoVisibleProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isInfoVisibleProperty' )
+    } );
 
     // These DynamicProperties allow us to track all the necessary scenes Properties for dragIndicator update, and not
     // just the first selectedScene

@@ -7,14 +7,13 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import VariabilityPlotNode from './VariabilityPlotNode.js';
-import InfoButton from '../../../../scenery-phet/js/buttons/InfoButton.js';
 import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import VariabilityReadoutText from './VariabilityReadoutText.js';
 import CAVColors from '../../common/CAVColors.js';
-import CAVAccordionBox, { CONTENT_MARGIN } from '../../common/view/CAVAccordionBox.js';
+import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
 import Utils from '../../../../dot/js/Utils.js';
@@ -24,6 +23,7 @@ import VariabilityMeasureCheckbox from './VariabilityMeasureCheckbox.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import AccordionBoxTitleText from '../../common/view/AccordionBoxTitleText.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
+import CAVInfoButton from '../../common/view/CAVInfoButton.js';
 
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 
@@ -58,18 +58,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       bottom: backgroundShape.bounds.height
     } );
 
-    const infoButton = new InfoButton( {
-      iconFill: 'cornflowerblue',
-      scale: 0.5,
-      touchAreaDilation: 5,
-      tandem: tandem.createTandem( 'infoButton' ),
-      listener: () => {
-        model.isInfoVisibleProperty.value = true;
-      },
-      top: backgroundShape.bounds.top + CONTENT_MARGIN,
-      right: backgroundShape.bounds.right
-    } );
-    backgroundNode.addChild( infoButton );
+    backgroundNode.addChild( new CAVInfoButton( model.isInfoVisibleProperty, backgroundShape, tandem.createTandem( 'infoButton' ) ) );
 
     // Ensure a consistent width among both the icons and the text across the different accordionBox views.
     const textGroup = new AlignGroup();
