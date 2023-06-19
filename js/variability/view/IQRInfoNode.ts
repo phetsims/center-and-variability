@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import { HBox, Node, Rectangle, Text, VBox } from '../../../../scenery/js/imports.js';
+import { HBox, Node, Rectangle, RichText, Text, VBox } from '../../../../scenery/js/imports.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
@@ -16,6 +16,7 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import CAVColors from '../../common/CAVColors.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 
 export default class IQRInfoNode extends VBox {
   public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
@@ -70,14 +71,8 @@ export default class IQRInfoNode extends VBox {
     super( {
       align: 'left',
       children: [
-        new Text( CenterAndVariabilityStrings.interquartileRangeIQRStringProperty, {
-          fontSize: 25,
-          maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
-          layoutOptions: { bottomMargin: CAVConstants.INFO_DIALOG_HEADING_BOTTOM_MARGIN }
-        } ),
-
-        new Text( CenterAndVariabilityStrings.iqrDescriptionStringProperty, {
-          fontSize: 18,
+        new RichText( CenterAndVariabilityStrings.iqrDescriptionStringProperty, {
+          font: new PhetFont( 18 ),
           maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
           layoutOptions: { bottomMargin: CAVConstants.INFO_DIALOG_SUBHEADING_BOTTOM_MARGIN }
         } ),

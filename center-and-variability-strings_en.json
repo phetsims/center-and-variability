@@ -108,10 +108,10 @@
     "value": "You sorted the data!"
   },
   "rangeDescription": {
-    "value": "Range is the distance between the minimum and maximum data points."
+    "value": "<strong>Range</strong> is the distance between the minimum and maximum data points."
   },
   "iqrDescription": {
-    "value": "IQR is the middle 50% of the data."
+    "value": "<strong>Interquartile range (IQR)</strong> is the middle 50% of the data."
   },
   "iqrDataValues": {
     "value": "Data Values:"
@@ -123,7 +123,7 @@
     "value": "IQR = {{iqr}} meters"
   },
   "madDescription": {
-    "value": "MAD is the average distance from each data point to the mean."
+    "value": "<strong>Mean absolute deviation (MAD)</strong> is the average distance from each data point to the mean."
   },
   "madEquals": {
     "value": "MAD ="
