@@ -26,7 +26,7 @@ export default class InfoValuesNode<T extends CAVSoccerBall> extends Node {
 
     const hasAtLeastOneDataPointProperty = new DerivedProperty( [ sceneModel.numberOfDataPointsProperty ], numberOfDataPoints => numberOfDataPoints >= 1 );
 
-    const dataValuesLabel = new Text( CenterAndVariabilityStrings.iqrDataValuesStringProperty, {
+    const dataValuesLabel = new Text( CenterAndVariabilityStrings.valuesStringProperty, {
       visibleProperty: hasAtLeastOneDataPointProperty,
       fontSize: 18,
       maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH

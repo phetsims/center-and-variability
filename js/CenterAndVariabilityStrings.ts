@@ -52,7 +52,7 @@ type StringsType = {
   'medianDescriptionStringProperty': LinkableProperty<string>;
   'rangeDescriptionStringProperty': LinkableProperty<string>;
   'iqrDescriptionStringProperty': LinkableProperty<string>;
-  'iqrDataValuesStringProperty': LinkableProperty<string>;
+  'valuesStringProperty': LinkableProperty<string>;
   'iqrCalculationPattern1StringProperty': LinkableProperty<string>;
   'iqrCalculationPattern2StringProperty': LinkableProperty<string>;
   'madDescriptionStringProperty': LinkableProperty<string>;
