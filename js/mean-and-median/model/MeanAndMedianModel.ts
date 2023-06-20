@@ -67,7 +67,7 @@ export default class MeanAndMedianModel extends CAVModel {
 
     // Don't show animation on startup or when setting PhET-iO state
     this.isTopMedianVisibleProperty.lazyLink( isTopMedianVisible => {
-      if ( isTopMedianVisible && sceneModel.medianValueProperty.value ) {
+      if ( isTopMedianVisible && sceneModel.medianValueProperty.value !== null ) {
 
         if ( !isSettingPhetioStateProperty.value ) {
           this.setHighlightAnimationIndex( 0 );
