@@ -18,21 +18,11 @@ import NumberTone, { toStepDiscrete } from '../../soccer-common/model/NumberTone
 // TODO https://github.com/phetsims/center-and-variability/issues/253 Start with the Marimba sound for the counting down animation and use the Woodblock for the final number readout of the median.
 
 const INITIAL_OUTPUT_LEVEL = 0.1;
-const soundClip = new SoundClip( numberTone2_mp3, {
-  initialOutputLevel: INITIAL_OUTPUT_LEVEL
-} );
-soundManager.addSoundGenerator( soundClip );
 
 // Filter to make the median sound different from the main sound
 const medianFilter = new BiquadFilterNode( phetAudioContext, {
   type: 'bandpass',
   Q: 0.5
-} );
-
-// Filter to make the mean sound different from the main sound and from the median sound
-const meanFilter = new BiquadFilterNode( phetAudioContext, {
-  type: 'bandpass',
-  Q: 2
 } );
 
 const upperSoundClip = new SoundClip( numberTone2_mp3, {
@@ -45,14 +35,14 @@ const lowerSoundClip = new SoundClip( numberTone2_mp3, {
   additionalAudioNodes: [ medianFilter ]
 } );
 
-const meanSoundClip = new SoundClip( numberTone2_mp3, {
+const finalSoundClip = new SoundClip( numberTone2_mp3, {
   initialOutputLevel: INITIAL_OUTPUT_LEVEL,
-  additionalAudioNodes: [ meanFilter ]
+  additionalAudioNodes: [ medianFilter ]
 } );
 
 soundManager.addSoundGenerator( upperSoundClip );
 soundManager.addSoundGenerator( lowerSoundClip );
-soundManager.addSoundGenerator( meanSoundClip );
+soundManager.addSoundGenerator( finalSoundClip );
 
 centerAndVariability.register( 'NumberTone', NumberTone );
 
@@ -93,11 +83,7 @@ const toPlaybackRate = ( value: number, stepsAway: number ): number => {
 
 export default class MedianAnimationTone {
 
-  public static playIntermediateTone( index: number, numberOfSteps: number, median: number ): void {
-
-    // compute the lower note based on the pentatonic scale.  If index===numberOfSteps, we should arrive at median
-    const numberOfStepsAwayFromMedian = numberOfSteps - index;
-    // console.log( 'playIntermediateTone', index, numberOfSteps, median, numberOfStepsAwayFromMedian );
+  public static playIntermediateTone( numberOfStepsAwayFromMedian: number, median: number ): void {
 
     const upperPlaybackRate = toPlaybackRate( median, numberOfStepsAwayFromMedian );
     upperSoundClip.setPlaybackRate( upperPlaybackRate );
@@ -108,11 +94,11 @@ export default class MedianAnimationTone {
     lowerSoundClip.play();
   }
 
-  public static playFinalTone( index: number, numberOfSteps: number, median: number ): void {
+  public static playFinalTone( median: number ): void {
 
-    console.log( 'playFinalTone' );
-
-    // NumberTone.playMedian( median );
+    const playbackRate = toPlaybackRate( median, 0 );
+    finalSoundClip.setPlaybackRate( playbackRate );
+    finalSoundClip.play();
   }
 }
 

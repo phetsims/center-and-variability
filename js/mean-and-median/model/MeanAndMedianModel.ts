@@ -70,7 +70,7 @@ export default class MeanAndMedianModel extends CAVModel {
       if ( isTopMedianVisible ) {
 
         if ( !isSettingPhetioStateProperty.value ) {
-          this.highlightAnimationIndex = 0;
+          this.setHighlightAnimationIndex( 0 );
           this.lastHighlightAnimationStepTime = sceneModel.timeProperty.value;
         }
         else {
@@ -118,7 +118,7 @@ export default class MeanAndMedianModel extends CAVModel {
 
   public override reset(): void {
     super.reset();
-    this.highlightAnimationIndex = null;
+    this.setHighlightAnimationIndex( null );
     this.isMedianAnimationCompleteProperty.reset();
     this.isTopMeanVisibleProperty.reset();
     this.isTopMedianVisibleProperty.reset();
@@ -132,7 +132,7 @@ export default class MeanAndMedianModel extends CAVModel {
   }
 
   private clearAnimation(): void {
-    this.highlightAnimationIndex = null;
+    this.setHighlightAnimationIndex( null );
     this.selectedSceneModelProperty.value.soccerBalls.forEach( soccerBall => soccerBall.isAnimationHighlightVisibleProperty.set( false ) );
   }
 
@@ -154,16 +154,36 @@ export default class MeanAndMedianModel extends CAVModel {
     if ( isAnimationFinished ) {
       this.clearAnimation();
       this.isMedianAnimationCompleteProperty.value = true;
-      MedianAnimationTone.playFinalTone( this.highlightAnimationIndex!, Math.ceil( sortedObjects.length / 2 ), this.sceneModels[ 0 ].medianValueProperty.value! );
     }
     else if ( this.highlightAnimationIndex !== null &&
               this.selectedSceneModelProperty.value.timeProperty.value > this.lastHighlightAnimationStepTime + HIGHLIGHT_ANIMATION_TIME_STEP ) {
 
       // if the animation has already started, step it to the next animation index
-      this.highlightAnimationIndex++;
+      this.setHighlightAnimationIndex( this.highlightAnimationIndex + 1 );
       this.lastHighlightAnimationStepTime = this.selectedSceneModelProperty.value.timeProperty.value;
+    }
+  }
 
-      MedianAnimationTone.playIntermediateTone( this.highlightAnimationIndex, Math.ceil( sortedObjects.length / 2 ), this.sceneModels[ 0 ].medianValueProperty.value! );
+  private setHighlightAnimationIndex( value: number | null ): void {
+    this.highlightAnimationIndex = value;
+
+    if ( typeof value === 'number' ) {
+      const sortedObjects = this.selectedSceneModelProperty.value.getSortedStackedObjects();
+
+      const a = this.highlightAnimationIndex!;
+      const b = Math.ceil( sortedObjects.length / 2 );
+
+      if ( a <= b + 1 ) {
+
+        const numberOfStepsAway = b - a;
+
+        if ( numberOfStepsAway >= 1 ) {
+          MedianAnimationTone.playIntermediateTone( numberOfStepsAway - 1, this.sceneModels[ 0 ].medianValueProperty.value! );
+        }
+        else {
+          MedianAnimationTone.playFinalTone( this.sceneModels[ 0 ].medianValueProperty.value! );
+        }
+      }
     }
   }
 }
