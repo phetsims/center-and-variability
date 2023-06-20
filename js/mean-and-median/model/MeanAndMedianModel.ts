@@ -19,6 +19,8 @@ import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import NumberTone from '../../soccer-common/model/NumberTone.js';
 import Utils from '../../../../dot/js/Utils.js';
 import CAVSoccerBall from '../../common/model/CAVSoccerBall.js';
+// eslint-disable-next-line no-view-imported-from-model
+import MedianAnimationTone from '../../median/view/MedianAnimationTone.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeanAndMedianModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
@@ -152,6 +154,7 @@ export default class MeanAndMedianModel extends CAVModel {
     if ( isAnimationFinished ) {
       this.clearAnimation();
       this.isMedianAnimationCompleteProperty.value = true;
+      MedianAnimationTone.playFinalTone( this.highlightAnimationIndex!, Math.ceil( sortedObjects.length / 2 ), this.sceneModels[ 0 ].medianValueProperty.value! );
     }
     else if ( this.highlightAnimationIndex !== null &&
               this.selectedSceneModelProperty.value.timeProperty.value > this.lastHighlightAnimationStepTime + HIGHLIGHT_ANIMATION_TIME_STEP ) {
@@ -159,6 +162,8 @@ export default class MeanAndMedianModel extends CAVModel {
       // if the animation has already started, step it to the next animation index
       this.highlightAnimationIndex++;
       this.lastHighlightAnimationStepTime = this.selectedSceneModelProperty.value.timeProperty.value;
+
+      MedianAnimationTone.playIntermediateTone( this.highlightAnimationIndex, Math.ceil( sortedObjects.length / 2 ), this.sceneModels[ 0 ].medianValueProperty.value! );
     }
   }
 }
