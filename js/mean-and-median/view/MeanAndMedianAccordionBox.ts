@@ -13,13 +13,13 @@ import AccordionBoxCheckboxFactory from '../../common/view/AccordionBoxCheckboxF
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import LinkableProperty from '../../../../axon/js/LinkableProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
 import CAVColors from '../../common/CAVColors.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import AccordionBoxTitleText from '../../common/view/AccordionBoxTitleText.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
+import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 
 export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
   private readonly medianPlotNode: MeanAndMedianPlotNode;
@@ -55,7 +55,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
     backgroundNode.addChild( meanAndMedianPlotNode );
 
     const createReadoutText = ( valueProperty: TReadOnlyProperty<number | null>, visibleProperty: TReadOnlyProperty<boolean>,
-                                templateStringProperty: LinkableProperty<string>, fill: TPaint, readoutTandem: Tandem ) => {
+                                templateStringProperty: PhetioProperty<string>, fill: TPaint, readoutTandem: Tandem ) => {
 
       const readoutProperty = new DerivedProperty( [ valueProperty, CenterAndVariabilityStrings.valueUnknownStringProperty ],
         ( value, valueUnknownString ) => {

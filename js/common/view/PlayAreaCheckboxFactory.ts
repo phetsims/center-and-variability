@@ -17,7 +17,6 @@ import CAVConstants from '../CAVConstants.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVColors from '../CAVColors.js';
 import PredictionThumbNode from './PredictionThumbNode.js';
-import LinkableProperty from '../../../../axon/js/LinkableProperty.js';
 import VariabilityModel from '../../variability/model/VariabilityModel.js';
 import CAVModel from '../model/CAVModel.js';
 import MeanAndMedianModel from '../../mean-and-median/model/MeanAndMedianModel.js';
@@ -27,6 +26,7 @@ import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-player
 import TSoundPlayer from '../../../../tambo/js/TSoundPlayer.js';
 import MeanIndicatorNode from './MeanIndicatorNode.js';
 import SoccerCommonColors from '../../soccer-common/SoccerCommonColors.js';
+import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 
 // constants
 const TEXT_OPTIONS = {
@@ -132,7 +132,7 @@ export default class PlayAreaCheckboxFactory {
     };
   }
 
-  private static createPredictionItem( property: Property<boolean>, stringProperty: LinkableProperty<string>, color: TColor, spacing: number,
+  private static createPredictionItem( property: Property<boolean>, stringProperty: PhetioProperty<string>, color: TColor, spacing: number,
                                        tandemName: string, alignGroup: AlignGroup ): VerticalCheckboxGroupItem {
     return {
       createNode: ( tandem: Tandem ) => {
