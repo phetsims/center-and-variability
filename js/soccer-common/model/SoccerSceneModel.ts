@@ -295,6 +295,13 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
     stack.forEach( soccerBall => soccerBall.clearAnimation() );
   }
 
+  public getDataValues(): number[] {
+    const sortedObjects = this.getSortedStackedObjects();
+
+    assert && assert( sortedObjects.length > 0, 'There are no data points to return values for.' );
+    return sortedObjects.map( soccerBall => soccerBall.valueProperty.value! );
+  }
+
   protected updateDataMeasures(): void {
     if ( this.isClearingData ) {
       return;
@@ -302,7 +309,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
 
     const sortedObjects = this.getSortedStackedObjects();
     if ( sortedObjects.length > 0 ) {
-      this.meanValueProperty.value = _.mean( sortedObjects.map( soccerBall => soccerBall.valueProperty.value ) );
+      this.meanValueProperty.value = _.mean( this.getDataValues() );
     }
     else {
       this.meanValueProperty.value = null;

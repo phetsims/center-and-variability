@@ -23,6 +23,7 @@ import PredictionSlider from '../../common/view/PredictionSlider.js';
 import Property from '../../../../axon/js/Property.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
+import MeanAndMedianInfoDialog from './MeanAndMedianInfoDialog.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeanAndMedianScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
@@ -61,21 +62,34 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
 
     this.backScreenViewLayer.addChild( new PredictionSlider( model.meanPredictionProperty, this.modelViewTransform,
       CAVConstants.PHYSICAL_RANGE, new BooleanProperty( false ), {
-      predictionThumbNodeOptions: {
-        color: CAVColors.meanColorProperty,
-        style: 'arrow'
-      },
-      valueProperty: model.meanPredictionProperty,
-      enabledRangeProperty: new Property<Range>( CAVConstants.PHYSICAL_RANGE ),
-      roundToInterval: null, // continuous
-      visibleProperty: model.isMeanPredictionVisibleProperty,
-      tandem: options.tandem.createTandem( 'meanPredictionNode' )
-    } ) );
+        predictionThumbNodeOptions: {
+          color: CAVColors.meanColorProperty,
+          style: 'arrow'
+        },
+        valueProperty: model.meanPredictionProperty,
+        enabledRangeProperty: new Property<Range>( CAVConstants.PHYSICAL_RANGE ),
+        roundToInterval: null, // continuous
+        visibleProperty: model.isMeanPredictionVisibleProperty,
+        tandem: options.tandem.createTandem( 'meanPredictionNode' )
+      } ) );
     this.backScreenViewLayer.addChild( CAVScreenView.createMedianPredictionNode(
       model,
       this.modelViewTransform,
       options.tandem.createTandem( 'medianPredictionNode' )
     ) );
+
+    const infoDialog = new MeanAndMedianInfoDialog( model, model.sceneModels[ 0 ], this.playAreaNumberLineNode, {
+      tandem: options.tandem.createTandem( 'infoDialog' )
+    } );
+
+    model.isInfoVisibleProperty.link( isInfoVisible => {
+      if ( isInfoVisible ) {
+        infoDialog.show();
+      }
+      else {
+        infoDialog.hide();
+      }
+    } );
   }
 }
 

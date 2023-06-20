@@ -20,6 +20,7 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import AccordionBoxTitleText from '../../common/view/AccordionBoxTitleText.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
+import CAVInfoButton from '../../common/view/CAVInfoButton.js';
 
 export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
   private readonly medianPlotNode: MeanAndMedianPlotNode;
@@ -37,6 +38,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
 
     const meanAndMedianPlotNode = new MeanAndMedianPlotNode( model, sceneModel, playAreaNumberLineNode, {
       dataPointFill: 'black',
+      parentContext: 'accordion',
       tandem: tandem.createTandem( 'plotNode' )
     } ).mutate( {
       bottom: backgroundShape.bounds.height
@@ -51,6 +53,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
       centerY: backgroundShape.bounds.centerY
     } );
 
+    backgroundNode.addChild( new CAVInfoButton( model.isInfoVisibleProperty, backgroundShape, tandem.createTandem( 'infoButton' ) ) );
     backgroundNode.addChild( checkboxGroup );
     backgroundNode.addChild( meanAndMedianPlotNode );
 

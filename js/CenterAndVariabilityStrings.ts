@@ -50,6 +50,8 @@ type StringsType = {
   'valueUnknownStringProperty': LocalizedStringProperty;
   'youSortedTheDataStringProperty': LocalizedStringProperty;
   'medianDescriptionStringProperty': LocalizedStringProperty;
+  'meanDescriptionStringProperty': LocalizedStringProperty;
+  'meanEqualsStringProperty': LocalizedStringProperty;
   'rangeDescriptionStringProperty': LocalizedStringProperty;
   'iqrDescriptionStringProperty': LocalizedStringProperty;
   'dataValuesStringProperty': LocalizedStringProperty;

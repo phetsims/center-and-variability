@@ -11,14 +11,18 @@
 import centerAndVariability from '../../centerAndVariability.js';
 import MedianBarNode from '../../common/view/MedianBarNode.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import CAVPlotNode, { CAVPlotNodeOptions } from '../../common/view/CAVPlotNode.js';
+import CAVPlotNode, { CAVPlotNodeOptions, MIN_KICKS_TEXT_OFFSET } from '../../common/view/CAVPlotNode.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 import { SoccerBallPhase } from '../../soccer-common/model/SoccerBallPhase.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
+import { ManualConstraint, Text } from '../../../../scenery/js/imports.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
+import CAVConstants from '../../common/CAVConstants.js';
 
-type SelfOptions = EmptySelfOptions;
+type SelfOptions = {
+  parentContext: 'accordion' | 'info';
+};
 type MeanAndMedianPlotNodeOptions = SelfOptions & CAVPlotNodeOptions & PickRequired<CAVPlotNodeOptions, 'tandem'>;
 
 export default class MeanAndMedianPlotNode extends CAVPlotNode {
@@ -30,6 +34,15 @@ export default class MeanAndMedianPlotNode extends CAVPlotNode {
 
   public constructor( model: MeanAndMedianModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, options: MeanAndMedianPlotNodeOptions ) {
     super( model, sceneModel, playAreaNumberLineNode, options );
+
+    const needAtLeastOneKickText = new Text( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {
+      fontSize: 18,
+      maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH
+    } );
+    ManualConstraint.create( this, [ needAtLeastOneKickText ], textProxy => {
+      textProxy.center = this.modelViewTransform.modelToViewXY( CAVConstants.PHYSICAL_RANGE.getCenter(), MIN_KICKS_TEXT_OFFSET );
+    } );
+    this.addChild( needAtLeastOneKickText );
 
     this.addChild( this.medianBarNode );
 
@@ -71,13 +84,20 @@ export default class MeanAndMedianPlotNode extends CAVPlotNode {
       else {
         this.medianBarNode.clear();
       }
+
     };
+
+    const updateOneKickTextVisibility = ( ) => {
+      needAtLeastOneKickText.visible = sceneModel.numberOfDataPointsProperty.value === 0 && ( options.parentContext === 'info' || model.isTopMeanVisibleProperty.value );
+    };
+
     sceneModel.objectChangedEmitter.addListener( updateMedianBarNode );
+    sceneModel.objectChangedEmitter.addListener( updateOneKickTextVisibility );
     sceneModel.medianValueProperty.link( updateMedianBarNode );
     model.isTopMedianVisibleProperty.link( updateMedianBarNode );
-    if ( model instanceof MeanAndMedianModel ) {
-      model.isMedianAnimationCompleteProperty.link( updateMedianBarNode );
-    }
+    model.isMedianAnimationCompleteProperty.link( updateMedianBarNode );
+    model.isTopMeanVisibleProperty.link( updateOneKickTextVisibility );
+
   }
 }
 
