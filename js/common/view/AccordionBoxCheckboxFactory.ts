@@ -89,7 +89,22 @@ export default class AccordionBoxCheckboxFactory {
       tandemName: 'medianCheckbox',
 
       options: {
-        checkedSoundPlayer: PlayAreaCheckboxFactory.getMedianCheckedSoundPlayer( model )
+        checkedSoundPlayer: {
+          play: () => {
+
+            // TODO: Don't overlap with the median animation sound, if any, see https://github.com/phetsims/center-and-variability/issues/253
+            // const median = model.selectedSceneModelProperty.value.medianValueProperty.value;
+            // if ( median !== null ) {
+            //   NumberTone.playMedian( median );
+            // }
+            // else {
+            //   checkboxCheckedSoundPlayer.play();
+            // }
+          },
+          stop: () => {
+            // nothing to do since those are short-term clips
+          }
+        }
       }
     };
   }
