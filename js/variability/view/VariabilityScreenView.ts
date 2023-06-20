@@ -185,6 +185,7 @@ export default class VariabilityScreenView extends CAVScreenView {
     const numberOfKicksProperty = new DynamicProperty<number, number, CAVSoccerSceneModel>( model.selectedSceneModelProperty, { derive: 'numberOfDataPointsProperty' } );
     this.setBottomControls( new VBox( {
       spacing: 15,
+      align: 'left',
       children: [
         new VerticalCheckboxGroup( [
           PlayAreaCheckboxFactory.getMedianCheckboxItem( iconGroup, model ),
@@ -196,7 +197,9 @@ export default class VariabilityScreenView extends CAVScreenView {
         new Text( new PatternStringProperty( CenterAndVariabilityStrings.kicksPatternStringProperty,
           { value: numberOfKicksProperty }, {
           tandem: options.tandem.createTandem( 'kicksPatternStringProperty' )
-        } ) )
+        } ), {
+          font: CAVConstants.MAIN_FONT
+        } )
       ]
     } ) );
 
