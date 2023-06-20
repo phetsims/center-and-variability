@@ -141,9 +141,6 @@ export default class CAVModel {
     this.sceneModels.forEach( sceneModel => sceneModel.reset() );
     this.selectedSceneModelProperty.reset();
     this.dragIndicatorModel.reset();
-
-    this.maxKicksProperty.reset();
-
     this.isAccordionBoxExpandedProperty.reset();
   }
 }
