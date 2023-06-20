@@ -6,43 +6,24 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import numberTone2_mp3 from '../../../sounds/numberTone2_mp3.js';
+import marimbaToneE3_mp3 from '../../../sounds/marimbaToneE3_mp3.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
-import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import NumberTone, { toStepDiscrete } from '../../soccer-common/model/NumberTone.js';
 
-// This is the dominant frequency of numberTone2_mp3. If the audio file is changed, this will need to be updated.
-// const E3 = 164.81; // Hz // TODO: https://github.com/phetsims/center-and-variability/issues/253 do we need filters
-// TODO https://github.com/phetsims/center-and-variability/issues/253 Start with the Marimba sound for the counting down animation and use the Woodblock for the final number readout of the median.
-
 const INITIAL_OUTPUT_LEVEL = 0.1;
 
-// Filter to make the median sound different from the main sound
-const medianFilter = new BiquadFilterNode( phetAudioContext, {
-  type: 'bandpass',
-  Q: 0.5
+const upperSoundClip = new SoundClip( marimbaToneE3_mp3, {
+  initialOutputLevel: INITIAL_OUTPUT_LEVEL
 } );
 
-const upperSoundClip = new SoundClip( numberTone2_mp3, {
-  initialOutputLevel: INITIAL_OUTPUT_LEVEL,
-  additionalAudioNodes: [ medianFilter ]
-} );
-
-const lowerSoundClip = new SoundClip( numberTone2_mp3, {
-  initialOutputLevel: INITIAL_OUTPUT_LEVEL,
-  additionalAudioNodes: [ medianFilter ]
-} );
-
-const finalSoundClip = new SoundClip( numberTone2_mp3, {
-  initialOutputLevel: INITIAL_OUTPUT_LEVEL,
-  additionalAudioNodes: [ medianFilter ]
+const lowerSoundClip = new SoundClip( marimbaToneE3_mp3, {
+  initialOutputLevel: INITIAL_OUTPUT_LEVEL
 } );
 
 soundManager.addSoundGenerator( upperSoundClip );
 soundManager.addSoundGenerator( lowerSoundClip );
-soundManager.addSoundGenerator( finalSoundClip );
 
 centerAndVariability.register( 'NumberTone', NumberTone );
 
@@ -96,9 +77,8 @@ export default class MedianAnimationTone {
 
   public static playFinalTone( median: number ): void {
 
-    const playbackRate = toPlaybackRate( median, 0 );
-    finalSoundClip.setPlaybackRate( playbackRate );
-    finalSoundClip.play();
+    // Wood block
+    NumberTone.play( median );
   }
 }
 
