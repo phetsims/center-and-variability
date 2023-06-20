@@ -5,7 +5,7 @@
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-import { VBox } from '../../../../scenery/js/imports.js';
+import { Text, VBox } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
@@ -16,17 +16,23 @@ import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import InfoValuesNode from '../../common/view/InfoValuesNode.js';
 import CardNodeContainer from './CardNodeContainer.js';
 import InfoTitleDescriptionRichText from '../../common/view/InfoTitleDescriptionRichText.js';
+import CAVConstants from '../../common/CAVConstants.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 export default class MedianInfoNode extends VBox {
   public constructor( model: MedianModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
 
+    const hasZeroKicksProperty = DerivedProperty.valueEqualsConstant( sceneModel.numberOfDataPointsProperty, 0 );
     const infoDataValuesNode = new InfoValuesNode( sceneModel );
+
     const cardNodeContainer = new CardNodeContainer( model, {
       tandem: options.tandem.createTandem( 'cardNodeContainer' ),
       parentContext: 'info',
 
       // So it will remain centered in the dialog
-      excludeInvisibleChildrenFromBounds: true
+      excludeInvisibleChildrenFromBounds: true,
+
+      visibleProperty: DerivedProperty.not( hasZeroKicksProperty )
     } );
 
     const textVBox = new VBox( {
@@ -35,14 +41,23 @@ export default class MedianInfoNode extends VBox {
       children: [
         new InfoTitleDescriptionRichText( CenterAndVariabilityStrings.medianDescriptionStringProperty ),
         infoDataValuesNode
-      ]
+      ],
+      excludeInvisibleChildrenFromBounds: true
     } );
+
+    const needAtLeastOneKickText = new Text( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {
+      fontSize: 18,
+      maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
+      visibleProperty: hasZeroKicksProperty
+    } );
+
     super( {
       align: 'center',
       spacing: 20,
       children: [
         textVBox,
-        cardNodeContainer
+        cardNodeContainer,
+        needAtLeastOneKickText
       ]
     } );
 
