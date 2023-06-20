@@ -64,8 +64,6 @@ centerAndVariability.register( 'NumberTone', NumberTone );
  * @returns The corresponding step in the pentatonic scale.
  */
 const toStepDiscretePentatonic = ( value: number, animationStepsAway: number ): number => {
-  // Ensure the base frequency is within the valid range
-  assert && assert( value >= 1 && value <= 12, `value ${value} is out of range` );
 
   // Get the step for the base frequency in the chromatic scale
   const fundamental = toStepDiscrete( value );
