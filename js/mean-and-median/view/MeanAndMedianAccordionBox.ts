@@ -21,6 +21,8 @@ import AccordionBoxTitleText from '../../common/view/AccordionBoxTitleText.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import CAVInfoButton from '../../common/view/CAVInfoButton.js';
+import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js';
+import PlotType from '../../common/model/PlotType.js';
 
 export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
   private readonly medianPlotNode: MeanAndMedianPlotNode;
@@ -101,8 +103,15 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
 
     backgroundNode.addChild( readoutsNode );
 
+    const titleTextProperty = new DerivedStringProperty( [
+      CenterAndVariabilityStrings.dotPlotStringProperty,
+      CenterAndVariabilityStrings.linePlotStringProperty,
+      CAVConstants.PLOT_TYPE_PROPERTY
+    ], ( dotPlotString, linePlotString, plotType ) => {
+      return plotType === PlotType.DOT_PLOT ? dotPlotString : linePlotString;
+    } );
     super( backgroundNode, {
-        titleNode: new AccordionBoxTitleText( CenterAndVariabilityStrings.distanceInMetersAccordionBoxTitleStringProperty ),
+        titleNode: new AccordionBoxTitleText( titleTextProperty ),
         tandem: tandem,
         top: top,
         centerX: layoutBounds.centerX,
