@@ -67,6 +67,7 @@ type StringsType = {
   'maxKicksForScreensWithPlotsStringProperty': LocalizedStringProperty;
   'showOutliersBoxplotOnlyStringProperty': LocalizedStringProperty;
   'valuesMayNotMatchDueToRoundingErrorsStringProperty': LocalizedStringProperty;
+  'kicksPatternStringProperty': LocalizedStringProperty;
 };
 
 const CenterAndVariabilityStrings = getStringModule( 'CENTER_AND_VARIABILITY' ) as StringsType;

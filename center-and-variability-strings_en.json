@@ -160,5 +160,8 @@
   },
   "valuesMayNotMatchDueToRoundingErrors": {
     "value": "Values may not match due to rounding errors."
+  },
+  "kicksPattern": {
+    "value": "{{value}} Kicks"
   }
 }
