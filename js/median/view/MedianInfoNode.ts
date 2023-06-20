@@ -5,18 +5,17 @@
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-import { RichText, VBox } from '../../../../scenery/js/imports.js';
+import { VBox } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import CAVConstants from '../../common/CAVConstants.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
-import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import MedianModel from '../model/MedianModel.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import InfoValuesNode from '../../common/view/InfoValuesNode.js';
 import CardNodeContainer from './CardNodeContainer.js';
+import InfoTitleDescriptionRichText from '../../common/view/InfoTitleDescriptionRichText.js';
 
 export default class MedianInfoNode extends VBox {
   public constructor( model: MedianModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
@@ -34,11 +33,7 @@ export default class MedianInfoNode extends VBox {
       align: 'left',
       spacing: 5,
       children: [
-        new RichText( CenterAndVariabilityStrings.medianDescriptionStringProperty, {
-          font: new PhetFont( CAVConstants.INFO_DIALOG_TITLE_FONT_SIZE ),
-          maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
-          layoutOptions: { bottomMargin: CAVConstants.INFO_DIALOG_SUBHEADING_BOTTOM_MARGIN }
-        } ),
+        new InfoTitleDescriptionRichText( CenterAndVariabilityStrings.medianDescriptionStringProperty ),
         infoDataValuesNode
       ]
     } );

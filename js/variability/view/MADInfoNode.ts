@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import { HBox, HSeparator, RichText, Text, VBox } from '../../../../scenery/js/imports.js';
+import { HBox, HSeparator, Text, VBox } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import VariabilityModel from '../model/VariabilityModel.js';
@@ -15,8 +15,8 @@ import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
-import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { PLOT_NODE_TOP_MARGIN } from '../../common/view/CAVPlotNode.js';
+import InfoTitleDescriptionRichText from '../../common/view/InfoTitleDescriptionRichText.js';
 
 export default class MADInfoNode extends VBox {
   public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
@@ -57,11 +57,7 @@ export default class MADInfoNode extends VBox {
       align: 'left',
       spacing: 6,
       children: [
-        new RichText( CenterAndVariabilityStrings.madDescriptionStringProperty, {
-          font: new PhetFont( CAVConstants.INFO_DIALOG_TITLE_FONT_SIZE ),
-          maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
-          layoutOptions: { bottomMargin: CAVConstants.INFO_DIALOG_SUBHEADING_BOTTOM_MARGIN }
-        } ),
+        new InfoTitleDescriptionRichText( CenterAndVariabilityStrings.madDescriptionStringProperty ),
 
         new HBox( {
           spacing: 6,

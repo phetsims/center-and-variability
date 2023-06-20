@@ -23,6 +23,7 @@ import MeanAndMedianModel from '../../mean-and-median/model/MeanAndMedianModel.j
 import CAVColors from '../../common/CAVColors.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
+import InfoTitleDescriptionRichText from '../../common/view/InfoTitleDescriptionRichText.js';
 
 export default class MeanAndMedianInfoNode extends VBox {
   public constructor( model: MeanAndMedianModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
@@ -63,11 +64,7 @@ export default class MeanAndMedianInfoNode extends VBox {
       align: 'left',
       spacing: 5,
       children: [
-        new RichText( CenterAndVariabilityStrings.medianDescriptionStringProperty, {
-          font: new PhetFont( CAVConstants.INFO_DIALOG_TITLE_FONT_SIZE ),
-          maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
-          layoutOptions: { bottomMargin: CAVConstants.INFO_DIALOG_SUBHEADING_BOTTOM_MARGIN }
-        } ),
+        new InfoTitleDescriptionRichText( CenterAndVariabilityStrings.medianDescriptionStringProperty ),
         medianInfoValuesNode,
         new Text( new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty, {
           value: sceneModel.medianValueProperty
