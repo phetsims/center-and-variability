@@ -55,7 +55,7 @@ soundManager.addSoundGenerator( meanSoundClip );
  * Also note, this is the discrete version and for the continuous mean values, there is a linear interpolation of the
  * steps.
  */
-const toStepDiscrete = ( value: number ): number => {
+export const toStepDiscrete = ( value: number ): number => {
   assert && assert( value >= 1 && value <= 18, `value ${value} is out of range` );
   const step = value === 1 ? 0 : // C
          value === 1.5 ? 1 : // C#
@@ -116,18 +116,18 @@ const toStep = ( value: number ): number => {
 /**
  * Given a numeric value, return the playback speed that will play the corresponding note.
  */
-const toPlaybackSpeed = ( value: number ): number => Math.pow( 2, toStep( value ) / 12 );
+const toPlaybackRate = ( value: number ): number => Math.pow( 2, toStep( value ) / 12 );
 
 export default class NumberTone {
   public static play( value: number ): void {
-    const playbackSpeed = toPlaybackSpeed( value );
+    const playbackSpeed = toPlaybackRate( value );
 
     soundClip.setPlaybackRate( playbackSpeed );
     soundClip.play();
   }
 
   public static playMedian( value: number ): void {
-    const playbackSpeed = toPlaybackSpeed( value );
+    const playbackSpeed = toPlaybackRate( value );
 
     // set the frequency of the band pass filter to be equal to the frequency of the adjusted sound
     const frequency = E3 * playbackSpeed;
@@ -138,13 +138,13 @@ export default class NumberTone {
   }
 
   public static playMean( value: number ): void {
-    const playbackSpeed = toPlaybackSpeed( value );
+    const playbackRate = toPlaybackRate( value );
 
     // set the frequency of the band pass filter to be equal to the frequency of the adjusted sound
-    const frequency = E3 * playbackSpeed;
+    const frequency = E3 * playbackRate;
     meanFilter.frequency.setTargetAtTime( frequency, phetAudioContext.currentTime, 0 );
 
-    meanSoundClip.setPlaybackRate( playbackSpeed );
+    meanSoundClip.setPlaybackRate( playbackRate );
     meanSoundClip.play();
   }
 }
