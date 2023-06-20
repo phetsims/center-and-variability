@@ -11,7 +11,7 @@ import { ManualConstraint, Rectangle, Text } from '../../../../scenery/js/import
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import CAVPlotNode, { CAVPlotNodeOptions, MIN_KICKS_TEXT_OFFSET, MIN_KICKS_TEXT_TOP_MARGIN } from '../../common/view/CAVPlotNode.js';
+import CAVPlotNode, { CAVPlotNodeOptions, MIN_KICKS_TEXT_OFFSET } from '../../common/view/CAVPlotNode.js';
 import CAVObjectType from '../../common/model/CAVObjectType.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import CAVConstants from '../../common/CAVConstants.js';
@@ -37,8 +37,7 @@ export default class RangeNode extends CAVPlotNode {
 
     const needAtLeastOneKickText = new Text( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {
       fontSize: 18,
-      maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
-      layoutOptions: { topMargin: MIN_KICKS_TEXT_TOP_MARGIN }
+      maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH
     } );
 
     ManualConstraint.create( this, [ needAtLeastOneKickText ], textProxy => {
@@ -47,7 +46,7 @@ export default class RangeNode extends CAVPlotNode {
     this.addChild( needAtLeastOneKickText );
 
     // This adds a top margin to the text, separating it from the info dialog subheading
-    needAtLeastOneKickText.localBounds = needAtLeastOneKickText.localBounds.dilatedY( MIN_KICKS_TEXT_TOP_MARGIN );
+    // needAtLeastOneKickText.localBounds = needAtLeastOneKickText.localBounds.dilatedY( MIN_KICKS_TEXT_TOP_MARGIN );
 
     const rangeTextReadout = new Text( '', {
       font: CAVConstants.VARIABILITY_MEASURE_NUMBER_READOUT_FONT

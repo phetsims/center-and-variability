@@ -14,6 +14,7 @@ import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import IQRInfoValuesNode from './IQRInfoValuesNode.js';
+import { PLOT_NODE_TOP_MARGIN } from '../../common/view/CAVPlotNode.js';
 
 export default class IQRInfoNode extends VBox {
   public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
@@ -26,7 +27,7 @@ export default class IQRInfoNode extends VBox {
       align: 'left',
       children: [
         new RichText( CenterAndVariabilityStrings.iqrDescriptionStringProperty, {
-          font: new PhetFont( 18 ),
+          font: new PhetFont( CAVConstants.INFO_DIALOG_TITLE_FONT_SIZE ),
           maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
           layoutOptions: { bottomMargin: CAVConstants.INFO_DIALOG_SUBHEADING_BOTTOM_MARGIN }
         } ),
@@ -43,10 +44,10 @@ export default class IQRInfoNode extends VBox {
           },
           tandem: options.tandem.createTandem( 'iqrCalculation1StringProperty' )
         } ), {
-          fontSize: 18,
+          fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE,
           visibleProperty: hasEnoughDataForIQRProperty,
           maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
-          layoutOptions: { topMargin: 10 }
+          layoutOptions: { topMargin: 5 }
         } ),
 
         new Text( new PatternStringProperty( CenterAndVariabilityStrings.iqrCalculationPattern2StringProperty, {
@@ -57,14 +58,16 @@ export default class IQRInfoNode extends VBox {
           },
           tandem: options.tandem.createTandem( 'iqrCalculation2StringProperty' )
         } ), {
-          fontSize: 18,
+          fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE,
           visibleProperty: hasEnoughDataForIQRProperty,
-          maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH
+          maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
+          layoutOptions: { topMargin: 5 }
         } ),
 
         new IQRNode( model, sceneModel, playAreaNumberLineNode, {
           parentContext: 'info',
-          tandem: options.tandem.createTandem( 'iqrNode' )
+          tandem: options.tandem.createTandem( 'iqrNode' ),
+          layoutOptions: { topMargin: PLOT_NODE_TOP_MARGIN }
         } )
       ]
     } );

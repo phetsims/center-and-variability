@@ -13,6 +13,7 @@ import CAVConstants from '../../common/CAVConstants.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import { PLOT_NODE_TOP_MARGIN } from '../../common/view/CAVPlotNode.js';
 
 export default class RangeInfoNode extends VBox {
   public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
@@ -23,7 +24,7 @@ export default class RangeInfoNode extends VBox {
       spacing: 5,
       children: [
         new RichText( CenterAndVariabilityStrings.rangeDescriptionStringProperty, {
-          font: new PhetFont( 18 ),
+          font: new PhetFont( CAVConstants.INFO_DIALOG_TITLE_FONT_SIZE ),
           maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
           layoutOptions: { bottomMargin: CAVConstants.INFO_DIALOG_SUBHEADING_BOTTOM_MARGIN }
         } ),
@@ -38,7 +39,12 @@ export default class RangeInfoNode extends VBox {
             min: CAVConstants.STRING_VALUE_NULL_MAP
           },
           tandem: options.tandem.createTandem( 'rangeCalculationStringProperty' )
-        } ), { fontSize: 18, visibleProperty: hasEnoughDataProperty, maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH } ),
+        } ), {
+          fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE,
+          visibleProperty: hasEnoughDataProperty,
+          maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
+          layoutOptions: { topMargin: 5 }
+        } ),
         new Text( new PatternStringProperty( CenterAndVariabilityStrings.rangeCalculationResultPatternStringProperty, {
           range: sceneModel.rangeValueProperty
         }, {
@@ -46,11 +52,17 @@ export default class RangeInfoNode extends VBox {
             range: CAVConstants.STRING_VALUE_NULL_MAP
           },
           tandem: options.tandem.createTandem( 'rangeCalculationResultStringProperty' )
-        } ), { fontSize: 18, visibleProperty: hasEnoughDataProperty, maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH } ),
+        } ), {
+          fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE,
+          visibleProperty: hasEnoughDataProperty,
+          maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
+          layoutOptions: { topMargin: 5 }
+        } ),
 
         new RangeNode( model, sceneModel, playAreaNumberLineNode, {
           parentContext: 'info',
-          tandem: options.tandem.createTandem( 'rangeNode' )
+          tandem: options.tandem.createTandem( 'rangeNode' ),
+          layoutOptions: { topMargin: PLOT_NODE_TOP_MARGIN }
         } )
       ]
     } );

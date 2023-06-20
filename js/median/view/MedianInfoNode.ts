@@ -35,7 +35,7 @@ export default class MedianInfoNode extends VBox {
       spacing: 5,
       children: [
         new RichText( CenterAndVariabilityStrings.medianDescriptionStringProperty, {
-          font: new PhetFont( 18 ),
+          font: new PhetFont( CAVConstants.INFO_DIALOG_TITLE_FONT_SIZE ),
           maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
           layoutOptions: { bottomMargin: CAVConstants.INFO_DIALOG_SUBHEADING_BOTTOM_MARGIN }
         } ),

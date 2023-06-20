@@ -6,7 +6,7 @@ import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import CAVPlotNode, { CAVPlotNodeOptions, MIN_KICKS_TEXT_OFFSET, MIN_KICKS_TEXT_TOP_MARGIN } from '../../common/view/CAVPlotNode.js';
+import CAVPlotNode, { CAVPlotNodeOptions, MIN_KICKS_TEXT_OFFSET } from '../../common/view/CAVPlotNode.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import CAVColors from '../../common/CAVColors.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
@@ -31,8 +31,7 @@ export default class IQRNode extends CAVPlotNode {
 
     const needAtLeastFiveKicksText = new Text( CenterAndVariabilityStrings.needAtLeastFiveKicksStringProperty, {
       fontSize: 18,
-      maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
-      layoutOptions: { topMargin: MIN_KICKS_TEXT_TOP_MARGIN }
+      maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH
     } );
     ManualConstraint.create( this, [ needAtLeastFiveKicksText ], textProxy => {
       needAtLeastFiveKicksText.center = this.modelViewTransform.modelToViewXY( CAVConstants.PHYSICAL_RANGE.getCenter(),
@@ -41,7 +40,7 @@ export default class IQRNode extends CAVPlotNode {
     this.addChild( needAtLeastFiveKicksText );
 
     // This adds a top margin to the text, separating it from the info dialog subheading
-    needAtLeastFiveKicksText.localBounds = needAtLeastFiveKicksText.localBounds.dilatedY( MIN_KICKS_TEXT_TOP_MARGIN );
+    // needAtLeastFiveKicksText.localBounds = needAtLeastFiveKicksText.localBounds.dilatedY( MIN_KICKS_TEXT_TOP_MARGIN );
 
     const BOX_WHISKER_OFFSET_Y = options.parentContext === 'info' ? 3.4 : 2.4;
     const BOX_HEIGHT = 25;

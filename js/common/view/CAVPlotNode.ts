@@ -32,7 +32,7 @@ type SelfOptions = {
 
 export type CAVPlotNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
 export const MIN_KICKS_TEXT_OFFSET = 2;
-export const MIN_KICKS_TEXT_TOP_MARGIN = 20;
+export const PLOT_NODE_TOP_MARGIN = 25;
 
 export default class CAVPlotNode extends Node {
 

@@ -26,9 +26,9 @@ export default class InfoValuesNode<T extends CAVSoccerBall> extends Node {
 
     const hasAtLeastOneDataPointProperty = new DerivedProperty( [ sceneModel.numberOfDataPointsProperty ], numberOfDataPoints => numberOfDataPoints >= 1 );
 
-    const dataValuesLabel = new Text( CenterAndVariabilityStrings.valuesStringProperty, {
+    const dataValuesLabel = new Text( CenterAndVariabilityStrings.dataValuesStringProperty, {
       visibleProperty: hasAtLeastOneDataPointProperty,
-      fontSize: 18,
+      fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE,
       maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH
     } );
 
@@ -77,11 +77,11 @@ export default class InfoValuesNode<T extends CAVSoccerBall> extends Node {
       const valueTextGroupNode = new HBox( { spacing: 0 } );
       const valueTextGroupNodeChildren: Node[] = [];
 
-      const valueTextNode = new Text( sortedData[ i ]!, { fontSize: 18 } );
+      const valueTextNode = new Text( sortedData[ i ]!, { fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE } );
       valueTextGroupNodeChildren.push( valueTextNode );
 
       if ( i < sortedObjects.length - 1 ) {
-        valueTextGroupNodeChildren.push( new Text( ',', { fontSize: 18 } ) );
+        valueTextGroupNodeChildren.push( new Text( ',', { fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE } ) );
       }
 
       valueTextGroupNode.setChildren( valueTextGroupNodeChildren );
