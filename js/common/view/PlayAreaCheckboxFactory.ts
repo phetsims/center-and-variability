@@ -109,8 +109,8 @@ export default class PlayAreaCheckboxFactory {
             stroke: SoccerCommonColors.arrowStrokeProperty,
             lineWidth: CAVConstants.ARROW_LINE_WIDTH,
             headHeight: 12,
-            headWidth: 18,
-            maxHeight: 20
+            headWidth: CAVConstants.CHECKBOX_ICON_DIMENSION - 5,
+            maxHeight: CAVConstants.CHECKBOX_ICON_DIMENSION
           } ), alignGroup );
       },
       property: model.isPlayAreaMedianVisibleProperty,

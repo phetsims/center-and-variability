@@ -25,7 +25,7 @@ import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
 import MeanIndicatorNode from './MeanIndicatorNode.js';
 
 // constants
-const ICON_WIDTH = 24;
+const ICON_WIDTH = CAVConstants.CHECKBOX_ICON_DIMENSION;
 
 const LINE_WIDTH = MedianBarNode.LINE_WIDTH;
 
