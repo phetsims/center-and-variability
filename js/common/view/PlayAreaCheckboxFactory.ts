@@ -20,13 +20,13 @@ import PredictionThumbNode from './PredictionThumbNode.js';
 import VariabilityModel from '../../variability/model/VariabilityModel.js';
 import CAVModel from '../model/CAVModel.js';
 import MeanAndMedianModel from '../../mean-and-median/model/MeanAndMedianModel.js';
-import IntervalToolIconNode from '../../variability/view/IntervalToolIconNode.js';
 import NumberTone from '../../soccer-common/model/NumberTone.js';
 import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-players/checkboxCheckedSoundPlayer.js';
 import TSoundPlayer from '../../../../tambo/js/TSoundPlayer.js';
 import MeanIndicatorNode from './MeanIndicatorNode.js';
 import SoccerCommonColors from '../../soccer-common/SoccerCommonColors.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
+import VariabilityMeasureIconNode from '../../variability/view/VariabilityMeasureIconNode.js';
 
 // constants
 const TEXT_OPTIONS = {
@@ -53,7 +53,9 @@ export default class PlayAreaCheckboxFactory {
       createNode: ( tandem: Tandem ) => {
         return PlayAreaCheckboxFactory.createGridBox(
           new Text( CenterAndVariabilityStrings.intervalToolStringProperty, TEXT_OPTIONS ),
-          new IntervalToolIconNode(),
+
+          // Sampled from the design in https://github.com/phetsims/center-and-variability/issues/182
+          new VariabilityMeasureIconNode( CAVColors.intervalToolIconRectangleFillColorProperty ),
           alignGroup
         );
       },
