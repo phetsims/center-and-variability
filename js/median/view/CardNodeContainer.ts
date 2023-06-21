@@ -369,7 +369,7 @@ export default class CardNodeContainer extends Node {
 
       // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card
       if ( leftmostCard && ( ( model.isTopMedianVisibleProperty.value && this.isDataSorted() ) || options.parentContext === 'info' ) ) {
-        const barY = leftmostCard.bottom + MARGIN_Y;
+        const barY = leftmostCard.top - MARGIN_Y;
 
         const rightmostCard = this.cardNodeCells[ this.cardNodeCells.length - 1 ];
         const left = getCardPositionX( 0 ) - MARGIN_X;
@@ -386,7 +386,7 @@ export default class CardNodeContainer extends Node {
         if ( medianReadoutPanel.left < 0 ) {
           medianReadoutPanel.left = 0;
         }
-        medianReadoutPanel.top = leftmostCard.bottom + MARGIN_Y + 5;
+        medianReadoutPanel.bottom = leftmostCard.top - MARGIN_Y - 5;
         medianReadoutPanel.visible = model.isTopMedianVisibleProperty.value || options.parentContext === 'info';
       }
       else {
