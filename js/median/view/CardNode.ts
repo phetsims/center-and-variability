@@ -25,20 +25,19 @@ import dotRandom from '../../../../dot/js/dotRandom.js';
 import { cardMovementSoundClips } from './CardNodeContainer.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
-import cvCardMovementSound1_mp3 from '../../../sounds/cv-card-movement-sounds-001_mp3.js'; // eslint-disable-line default-import-match-filename
-import cvCardMovementSound2_mp3 from '../../../sounds/cv-card-movement-sounds-002_mp3.js'; // eslint-disable-line default-import-match-filename
+import cvCardPickupSound_mp3 from '../../../sounds/cvCardPickupSound_mp3.js';
+import cvCardDropSound_mp3 from '../../../sounds/cvCardDropSound_mp3.js';
 import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 
 type SelfOptions = EmptySelfOptions;
 export type CardNodeOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
-const cardPickUpSoundClip = new SoundClip( cvCardMovementSound1_mp3, {
-  initialPlaybackRate: 1.3,
+const cardPickUpSoundClip = new SoundClip( cvCardPickupSound_mp3, {
   initialOutputLevel: 0.3
 } );
 soundManager.addSoundGenerator( cardPickUpSoundClip );
 
-const cardDropSoundClip = new SoundClip( cvCardMovementSound2_mp3, {
+const cardDropSoundClip = new SoundClip( cvCardDropSound_mp3, {
   initialOutputLevel: 0.3
 } );
 soundManager.addSoundGenerator( cardDropSoundClip );
