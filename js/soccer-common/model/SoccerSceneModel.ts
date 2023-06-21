@@ -645,6 +645,7 @@ type CAVSceneModelState = { distributionType: string };
 
 // TODO: This adds a new IOType stub into PhetioElementView. Is that how we want to continue doing this? See https://github.com/phetsims/center-and-variability/issues/117 But maybe the long term solution for that problem is https://github.com/phetsims/studio/issues/292
 // TODO: Review overlap between getValue/getValue and setState/getState.  Make sure both work correctly and in concert. See https://github.com/phetsims/center-and-variability/issues/117
+// TODO: Rename to SoccerSceneModelIO: see https://github.com/phetsims/center-and-variability/issues/117
 const CAVSceneModelIO = new IOType( 'CAVSceneModelIO', {
   valueType: SoccerSceneModel,
   stateSchema: {
