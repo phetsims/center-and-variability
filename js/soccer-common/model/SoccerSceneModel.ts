@@ -46,6 +46,7 @@ import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioS
 import SoccerCommonConstants from '../SoccerCommonConstants.js';
 import SoccerCommonQueryParameters from '../SoccerCommonQueryParameters.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
 
 const kickSound = new SoundClip( basicKick_mp3, { initialOutputLevel: 0.2 } );
 soundManager.addSoundGenerator( kickSound );
@@ -611,6 +612,33 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
   public applyState( stateObject: CAVSceneModelState ): void {
     this.kickDistanceStrategy = this.kickDistanceStrategyFromStateObject( stateObject.distributionType );
   }
+
+  /**
+   * For PhET-iO, support setting a static set of data points.
+   */
+  public setDataPoints( dataPoints: number[] ): void {
+
+    // Clear pre-existing data
+    this.clearData();
+
+    // Iterate through data points and create the soccer balls
+    for ( let i = 0; i < dataPoints.length; i++ ) {
+      this.kickBall( this.soccerPlayers[ i ], this.soccerBalls[ i ] );
+      this.soccerBalls[ i ].valueProperty.value = dataPoints[ i ];
+      this.soccerBalls[ i ].soccerBallPhaseProperty.value = SoccerBallPhase.STACKED;
+
+      // Leave the sim in a usable state for the next kicks (even after the data has been set)
+      this.advanceLine();
+    }
+
+    // Reorganize the stacks
+    _.uniq( dataPoints ).forEach( value => this.reorganizeStack( this.getStackAtLocation( value ) ) );
+
+    this.updateDataMeasures();
+
+    // This emitter was suppressed during isClearingData, so we must synchronize listeners now
+    this.objectChangedEmitter.emit();
+  }
 }
 
 type CAVSceneModelState = { distributionType: string };
@@ -629,6 +657,15 @@ const CAVSceneModelIO = new IOType( 'CAVSceneModelIO', {
     cavSceneModel.applyState( stateObject );
   },
   methods: {
+    setDataPoints: {
+      returnType: VoidIO,
+      parameterTypes: [ ArrayIO( NumberIO ) ],
+      implementation: function( this: SoccerSceneModel, dataPoints: number[] ) {
+        this.setDataPoints( dataPoints );
+      },
+      documentation: 'Sets the data points for the scene model.'
+    },
+
     getValue: {
       returnType: ObjectLiteralIO,
       parameterTypes: [],
