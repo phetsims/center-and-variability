@@ -667,6 +667,15 @@ const CAVSceneModelIO = new IOType( 'CAVSceneModelIO', {
       documentation: 'Sets the data points for the scene model.'
     },
 
+    getDataPoints: {
+      returnType: ArrayIO( NumberIO ),
+      parameterTypes: [],
+      implementation: function( this: SoccerSceneModel ) {
+        return this.getSortedStackedObjects().map( soccerBall => soccerBall.valueProperty.value );
+      },
+      documentation: 'Gets the data points for the scene model.'
+    },
+
     getValue: {
       returnType: ObjectLiteralIO,
       parameterTypes: [],
