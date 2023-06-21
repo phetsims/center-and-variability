@@ -15,6 +15,7 @@ import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import CAVConstants, { SHOW_OUTLIERS_PROPERTY } from '../../common/CAVConstants.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
+import IntervalBarNode from '../../common/view/IntervalBarNode.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
@@ -51,12 +52,7 @@ export default class IQRNode extends CAVPlotNode {
     const boxWhiskerNode = new Node();
     boxWhiskerNode.y = this.modelViewTransform.modelToViewY( BOX_WHISKER_OFFSET_Y );
 
-    const iqrBar = new MedianBarNode( {
-      notchDirection: 'down',
-      barStyle: 'continuous',
-      stroke: 'black',
-      lineWidth: 1
-    } );
+    const iqrBar = new IntervalBarNode();
     const iqrBarLabel = new Text( '', {
       font: CAVConstants.VARIABILITY_MEASURE_NUMBER_READOUT_FONT
     } );
@@ -146,7 +142,7 @@ export default class IQRNode extends CAVPlotNode {
     medianArrowNode.y = -31;
     q1LabelNode.y = q3LabelNode.y = minLabelNode.y = maxLabelNode.y = -35;
 
-    const outlierDisplay = new Node( );
+    const outlierDisplay = new Node();
 
     boxWhiskerNode.addChild( boxWhiskerMedianLine );
     boxWhiskerNode.addChild( boxWhiskerBox );
@@ -302,11 +298,10 @@ export default class IQRNode extends CAVPlotNode {
         iqrRectangle.left = boxLeft;
         iqrRectangle.bottom = options.parentContext === 'info' ? boxWhiskerNode.y + 0.5 * BOX_HEIGHT : floor;
 
-        const iqrBarY = options.parentContext === 'info' ?
-                        Math.min( minLabelTextNode.y, q1LabelTextNode.y, q3LabelTextNode.y, maxLabelTextNode.y ) + 12
-                                                         : iqrRectangle.top - MedianBarNode.NOTCH_HEIGHT - CAVConstants.VARIABILITY_PLOT_BAR_OFFSET_Y;
+        iqrBar.setIntervalBarNodeWidth( iqrRectangle.rectWidth );
+        iqrBar.bottom = options.parentContext === 'accordion' ? iqrRectangle.top : Math.min( minLabelTextNode.y, q1LabelTextNode.y, q3LabelTextNode.y, maxLabelTextNode.y ) + 12;
+        iqrBar.centerX = iqrRectangle.centerX;
 
-        iqrBar.setMedianBarShape( iqrBarY, iqrRectangle.left, 0, iqrRectangle.right, false );
         iqrBarLabel.string = sceneModel.iqrValueProperty.value!;
         iqrBarLabel.centerX = iqrRectangle.centerX;
         iqrBarLabel.bottom = iqrBar.top - 2;

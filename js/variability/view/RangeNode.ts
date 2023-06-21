@@ -6,7 +6,6 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import MedianBarNode from '../../common/view/MedianBarNode.js';
 import { ManualConstraint, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
@@ -20,6 +19,7 @@ import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 import SoccerBall from '../../soccer-common/model/SoccerBall.js';
+import IntervalBarNode from '../../common/view/IntervalBarNode.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
@@ -52,12 +52,7 @@ export default class RangeNode extends CAVPlotNode {
       font: CAVConstants.VARIABILITY_MEASURE_NUMBER_READOUT_FONT
     } );
 
-    const rangeBar = new MedianBarNode( {
-      notchDirection: 'down',
-      barStyle: 'continuous',
-      stroke: 'black',
-      lineWidth: 1
-    } );
+    const rangeBar = new IntervalBarNode();
     const rectangleHeight = CAVConstants.VARIABILITY_PLOT_RECT_HEIGHT;
     const rangeRectangle = new Rectangle( 0, 50, 100, rectangleHeight, {
       fill: CAVColors.rangeFillProperty
@@ -93,7 +88,9 @@ export default class RangeNode extends CAVPlotNode {
         rangeRectangle.left = left;
         rangeRectangle.bottom = floor;
 
-        rangeBar.setMedianBarShape( rangeRectangle.top - MedianBarNode.NOTCH_HEIGHT - CAVConstants.VARIABILITY_PLOT_BAR_OFFSET_Y, rangeRectangle.left, 0, rangeRectangle.right, false );
+        rangeBar.setIntervalBarNodeWidth( rangeRectangle.rectWidth );
+        rangeBar.centerX = rangeRectangle.centerX;
+        rangeBar.bottom = rangeRectangle.top;
 
         rangeTextReadout.string = sceneModel.rangeValueProperty.value + '';
         rangeTextReadout.centerX = rangeRectangle.centerX;

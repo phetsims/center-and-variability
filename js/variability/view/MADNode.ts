@@ -4,7 +4,6 @@ import { Circle, Line, ManualConstraint, Node, Rectangle, Text } from '../../../
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import MedianBarNode from '../../common/view/MedianBarNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Utils from '../../../../dot/js/Utils.js';
 import CAVPlotNode, { CAVPlotNodeOptions, MIN_KICKS_TEXT_OFFSET } from '../../common/view/CAVPlotNode.js';
@@ -14,6 +13,7 @@ import CAVColors from '../../common/CAVColors.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
+import IntervalBarNode from '../../common/view/IntervalBarNode.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
@@ -49,18 +49,8 @@ export default class MADNode extends CAVPlotNode {
       lineWidth: 1
     } );
 
-    const leftBar = new MedianBarNode( {
-      notchDirection: 'down',
-      barStyle: 'continuous',
-      stroke: 'black',
-      lineWidth: 1
-    } );
-    const rightBar = new MedianBarNode( {
-      notchDirection: 'down',
-      barStyle: 'continuous',
-      stroke: 'black',
-      lineWidth: 1
-    } );
+    const leftBar = new IntervalBarNode();
+    const rightBar = new IntervalBarNode();
 
     const leftReadout = new Text( '', {
       font: CAVConstants.VARIABILITY_MEASURE_NUMBER_READOUT_FONT
@@ -179,8 +169,13 @@ export default class MADNode extends CAVPlotNode {
         // In the info dialog, when text nodes are present, the MAD bars should be offset so they don't overlap the text
         const barYOffset = ( options.parentContext === 'info' && textNodes.length > 0 ) ? -textNodes[ 0 ].height : 0;
 
-        leftBar.setMedianBarShape( madRectangle.top - MedianBarNode.NOTCH_HEIGHT - CAVConstants.VARIABILITY_PLOT_BAR_OFFSET_Y + barYOffset, madRectangle.left, 0, viewCenterX, false );
-        rightBar.setMedianBarShape( madRectangle.top - MedianBarNode.NOTCH_HEIGHT - CAVConstants.VARIABILITY_PLOT_BAR_OFFSET_Y + barYOffset, viewCenterX, 0, madRectangle.right, false );
+        leftBar.setIntervalBarNodeWidth( viewCenterX - madRectangle.left );
+        rightBar.setIntervalBarNodeWidth( madRectangle.right - viewCenterX );
+
+        leftBar.bottom = madRectangle.top + barYOffset;
+        rightBar.bottom = madRectangle.top + barYOffset;
+        leftBar.right = viewCenterX + leftBar.lineWidth / 2;
+        rightBar.left = viewCenterX - rightBar.lineWidth / 2;
 
         leftReadout.centerBottom = leftBar.centerTop;
         rightReadout.centerBottom = rightBar.centerTop;
