@@ -298,7 +298,7 @@ export default class IQRNode extends CAVPlotNode {
         iqrRectangle.bottom = options.parentContext === 'info' ? boxWhiskerNode.y + 0.5 * BOX_HEIGHT : floor;
 
         iqrBar.setIntervalBarNodeWidth( iqrRectangle.rectWidth );
-        iqrBar.bottom = options.parentContext === 'accordion' ? iqrRectangle.top : Math.min( minLabelTextNode.y, q1LabelTextNode.y, q3LabelTextNode.y, maxLabelTextNode.y ) + 12;
+        iqrBar.bottom = options.parentContext === 'accordion' ? iqrRectangle.top + CAVConstants.VARIABILITY_PLOT_BAR_OFFSET_Y : Math.min( minLabelTextNode.y, q1LabelTextNode.y, q3LabelTextNode.y, maxLabelTextNode.y ) + 12;
         iqrBar.centerX = iqrRectangle.centerX;
 
         iqrBarLabel.string = sceneModel.iqrValueProperty.value!;

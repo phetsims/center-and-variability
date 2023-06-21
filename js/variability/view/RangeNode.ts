@@ -90,7 +90,7 @@ export default class RangeNode extends CAVPlotNode {
 
         rangeBar.setIntervalBarNodeWidth( rangeRectangle.rectWidth );
         rangeBar.centerX = rangeRectangle.centerX;
-        rangeBar.bottom = rangeRectangle.top;
+        rangeBar.bottom = rangeRectangle.top + CAVConstants.VARIABILITY_PLOT_BAR_OFFSET_Y;
 
         rangeTextReadout.string = sceneModel.rangeValueProperty.value + '';
         rangeTextReadout.centerX = rangeRectangle.centerX;

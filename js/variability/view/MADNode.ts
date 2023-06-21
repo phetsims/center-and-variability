@@ -88,7 +88,7 @@ export default class MADNode extends CAVPlotNode {
         const mean = _.mean( soccerBalls.map( dot => dot.valueProperty.value ) );
 
         // Underneath the accordion box title
-        let y = 60;
+        let y = 15;
         soccerBalls.forEach( soccerBall => {
           const x1 = this.modelViewTransform.modelToViewX( soccerBall.valueProperty.value! );
           const x2 = this.modelViewTransform.modelToViewX( mean );
@@ -128,7 +128,7 @@ export default class MADNode extends CAVPlotNode {
           }
 
           // Enough spacing so they don't overlap the bottom row of data points
-          y += options.parentContext === 'info' ? 11 : 4.2;
+          y += options.parentContext === 'info' ? 11 : 3.7;
         } );
       }
 
@@ -166,8 +166,9 @@ export default class MADNode extends CAVPlotNode {
         leftReadout.string = Utils.toFixed( mad, 1 );
         rightReadout.string = Utils.toFixed( mad, 1 );
 
+        // TODO: Check if the bar offset is correct in info dialog - https://github.com/phetsims/center-and-variability/issues/280
         // In the info dialog, when text nodes are present, the MAD bars should be offset so they don't overlap the text
-        const barYOffset = ( options.parentContext === 'info' && textNodes.length > 0 ) ? -textNodes[ 0 ].height : 0;
+        const barYOffset = ( options.parentContext === 'info' && textNodes.length > 0 ) ? -textNodes[ 0 ].height : CAVConstants.VARIABILITY_PLOT_BAR_OFFSET_Y;
 
         leftBar.setIntervalBarNodeWidth( viewCenterX - madRectangle.left );
         rightBar.setIntervalBarNodeWidth( madRectangle.right - viewCenterX );
