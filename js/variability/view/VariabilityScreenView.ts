@@ -14,7 +14,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import CAVColors from '../../common/CAVColors.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import { AlignGroup, ManualConstraint, VBox, Text } from '../../../../scenery/js/imports.js';
+import { AlignGroup, ManualConstraint } from '../../../../scenery/js/imports.js';
 import SceneRadioButtonGroup from './SceneRadioButtonGroup.js';
 import VariabilityMeasureRadioButtonGroup from './VariabilityMeasureRadioButtonGroup.js';
 import CAVScreenView, { CAVScreenViewOptions } from '../../common/view/CAVScreenView.js';
@@ -42,8 +42,6 @@ import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import SoccerPlayerGroupNumbered from '../../soccer-common/view/SoccerPlayerGroupNumbered.js';
-import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
-import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
@@ -182,26 +180,15 @@ export default class VariabilityScreenView extends CAVScreenView {
     this.addChild( variabilityMeasureRadioButtonGroup );
 
     const iconGroup = new AlignGroup();
-    const numberOfKicksProperty = new DynamicProperty<number, number, CAVSoccerSceneModel>( model.selectedSceneModelProperty, { derive: 'numberOfDataPointsProperty' } );
-    this.setBottomControls( new VBox( {
-      spacing: 15,
-      align: 'left',
-      children: [
-        new VerticalCheckboxGroup( [
-          PlayAreaCheckboxFactory.getMedianCheckboxItem( iconGroup, model ),
-          PlayAreaCheckboxFactory.getMeanCheckboxItem( iconGroup, model ),
-          PlayAreaCheckboxFactory.getIntervalToolCheckboxItem( iconGroup, model )
-        ], {
-          tandem: this.tandem.createTandem( 'bottomCheckboxGroup' )
-        } ),
-        new Text( new PatternStringProperty( CenterAndVariabilityStrings.kicksPatternStringProperty,
-          { value: numberOfKicksProperty }, {
-          tandem: options.tandem.createTandem( 'kicksPatternStringProperty' )
-        } ), {
-          font: CAVConstants.MAIN_FONT
-        } )
-      ]
-    } ) );
+
+    this.setBottomControls(
+      new VerticalCheckboxGroup( [
+        PlayAreaCheckboxFactory.getMedianCheckboxItem( iconGroup, model ),
+        PlayAreaCheckboxFactory.getMeanCheckboxItem( iconGroup, model ),
+        PlayAreaCheckboxFactory.getIntervalToolCheckboxItem( iconGroup, model )
+      ], {
+        tandem: this.tandem.createTandem( 'bottomCheckboxGroup' )
+      } ), options.tandem );
 
     model.variabilitySceneModels.forEach( ( sceneModel, index ) => {
 

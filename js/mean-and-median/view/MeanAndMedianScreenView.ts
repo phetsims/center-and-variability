@@ -58,7 +58,7 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
       PlayAreaCheckboxFactory.getMeanCheckboxItem( iconGroup, model )
     ], {
       tandem: this.tandem.createTandem( 'bottomCheckboxGroup' )
-    } ) );
+    } ), options.tandem );
 
     this.backScreenViewLayer.addChild( new PredictionSlider( model.meanPredictionProperty, this.modelViewTransform,
       CAVConstants.PHYSICAL_RANGE, new BooleanProperty( false ), {

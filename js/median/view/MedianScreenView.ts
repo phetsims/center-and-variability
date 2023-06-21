@@ -53,7 +53,7 @@ export default class MedianScreenView extends CAVScreenView {
       PlayAreaCheckboxFactory.getMedianCheckboxItem( iconGroup, model )
     ], {
       tandem: this.tandem.createTandem( 'bottomCheckboxGroup' )
-    } ) );
+    } ), this.tandem );
 
     this.backScreenViewLayer.addChild( CAVScreenView.createMedianPredictionNode(
       model,

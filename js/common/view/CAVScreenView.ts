@@ -13,7 +13,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import CAVConstants from '../CAVConstants.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import { AlignBox, Node } from '../../../../scenery/js/imports.js';
+import { AlignBox, Node, Text, VBox } from '../../../../scenery/js/imports.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import QuestionBar, { QuestionBarOptions } from '../../../../scenery-phet/js/QuestionBar.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
@@ -47,6 +47,9 @@ import CAVNumberLineNode from './CAVNumberLineNode.js';
 import SoccerPlayerGroupUnnumbered from '../../soccer-common/view/SoccerPlayerGroupUnnumbered.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 
 type SelfOptions = {
   questionBarOptions: StrictOmit<QuestionBarOptions, 'tandem'>;
@@ -85,6 +88,7 @@ export default class CAVScreenView extends ScreenView {
 
   private readonly updateMedianNode: () => void;
   private readonly updateDragIndicatorNode: () => void;
+  protected readonly numberOfKicksProperty: DynamicProperty<number, number, CAVSoccerSceneModel>;
 
   public constructor( model: CAVModel, providedOptions: CAVScreenViewOptions ) {
     const options = optionize<CAVScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
@@ -99,6 +103,8 @@ export default class CAVScreenView extends ScreenView {
     );
 
     super( options );
+    this.numberOfKicksProperty = new DynamicProperty<number, number, CAVSoccerSceneModel>( model.selectedSceneModelProperty, { derive: 'numberOfDataPointsProperty' } );
+
 
     this.modelViewTransform = modelViewTransform;
     this.model = model;
@@ -335,13 +341,25 @@ export default class CAVScreenView extends ScreenView {
     this.accordionBox.boundsProperty.link( this.updateDragIndicatorNode );
   }
 
-  protected setBottomControls( controlNode: Node ): void {
+  protected setBottomControls( controlNode: Node, tandem: Tandem ): void {
 
     // In order to use the AlignBox we need to know the distance from the top of the screen, to the top of the grass.
     const BOTTOM_CHECKBOX_PANEL_MARGIN = 12.5;
     const BOTTOM_CHECKBOX_PANEL_Y_MARGIN = this.layoutBounds.maxY - this.modelViewTransform.modelToViewY( 0 ) + BOTTOM_CHECKBOX_PANEL_MARGIN;
 
-    this.addChild( new AlignBox( controlNode, {
+    const controlsVBox = new VBox( { spacing: 15,
+      align: 'left',
+      children: [
+      controlNode,
+        new Text( new PatternStringProperty( CenterAndVariabilityStrings.kicksPatternStringProperty,
+          { value: this.numberOfKicksProperty }, {
+            tandem: tandem.createTandem( 'kicksPatternStringProperty' )
+          } ), {
+          font: CAVConstants.MAIN_FONT
+        } )
+      ] } );
+
+    this.addChild( new AlignBox( controlsVBox, {
       alignBounds: this.layoutBounds,
       xAlign: 'right',
       yAlign: 'bottom',
