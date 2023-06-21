@@ -1,7 +1,8 @@
 // Copyright 2023, University of Colorado Boulder
 
 import MedianBarNode from '../../common/view/MedianBarNode.js';
-import { Line, ManualConstraint, Node, ProfileColorProperty, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { Line, ManualConstraint, Node, Path, ProfileColorProperty, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { Shape } from '../../../../kite/js/imports.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
@@ -145,7 +146,7 @@ export default class IQRNode extends CAVPlotNode {
     medianArrowNode.y = -31;
     q1LabelNode.y = q3LabelNode.y = minLabelNode.y = maxLabelNode.y = -35;
 
-    const outlierDisplay = new Node( { y: 17 } );
+    const outlierDisplay = new Node( );
 
     boxWhiskerNode.addChild( boxWhiskerMedianLine );
     boxWhiskerNode.addChild( boxWhiskerBox );
@@ -214,6 +215,21 @@ export default class IQRNode extends CAVPlotNode {
     const isOutlier = ( value: number ) => {
       const deltaForOutlier = 1.5 * sceneModel.iqrValueProperty.value!;
       return sceneModel.q1ValueProperty.value! - value > deltaForOutlier || value - sceneModel.q3ValueProperty.value! > deltaForOutlier;
+    };
+
+    const diamondOutlierNode = ( centerX: number ) => {
+      const WIDTH = 12;
+      const HEIGHT = 8;
+      return new Path(
+        new Shape().moveTo( -WIDTH / 2, 0 )
+          .lineTo( 0, HEIGHT / 2 ).lineTo( WIDTH / 2, 0 ).lineTo( 0, -HEIGHT / 2 ).close(),
+        {
+          stroke: 'black',
+          lineWidth: 2,
+          lineCap: 'round',
+          centerX: centerX
+        }
+      );
     };
 
     const updateIQRNode = () => {
@@ -296,12 +312,9 @@ export default class IQRNode extends CAVPlotNode {
         iqrBarLabel.bottom = iqrBar.top - 2;
       }
 
-      let outlierDisplayChildren: Text[] = [];
+      let outlierDisplayChildren: Path[] = [];
       if ( enoughDataForIQR && SHOW_OUTLIERS_PROPERTY.value ) {
-        outlierDisplayChildren = outlierValues.map( value => new Text( '*', {
-          centerX: this.modelViewTransform.modelToViewX( value ),
-          fontSize: 30
-        } ) );
+        outlierDisplayChildren = outlierValues.map( value => diamondOutlierNode( this.modelViewTransform.modelToViewX( value ) ) );
       }
       outlierDisplay.setChildren( outlierDisplayChildren );
     };
