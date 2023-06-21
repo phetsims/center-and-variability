@@ -249,7 +249,10 @@ export default class CardNodeContainer extends Node {
 
           // Animate all displaced cards
           for ( let i = targetIndex; i < this.cardNodeCells.length; i++ ) {
-            this.animateToHomeCell( this.cardNodeCells[ i ], 0.3, true );
+
+            // When animating a card due to another card being created, it means a soccer ball just landed, and we
+            // want to hear the audio from the ball landing rather than from the card, so skip audio in this case.
+            this.animateToHomeCell( this.cardNodeCells[ i ], 0.3, false );
           }
 
           this.cardNodeCellsChangedEmitter.emit();
