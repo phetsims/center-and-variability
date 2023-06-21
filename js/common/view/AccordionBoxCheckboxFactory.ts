@@ -23,6 +23,7 @@ import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-player
 import boundaryReachedSoundPlayer from '../../../../tambo/js/shared-sound-players/boundaryReachedSoundPlayer.js';
 import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
 import MeanIndicatorNode from './MeanIndicatorNode.js';
+import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
 
 // constants
 const ICON_WIDTH = CAVConstants.CHECKBOX_ICON_DIMENSION;
@@ -88,22 +89,9 @@ export default class AccordionBoxCheckboxFactory {
       tandemName: 'medianCheckbox',
 
       options: {
-        checkedSoundPlayer: {
-          play: () => {
 
-            // TODO: Don't overlap with the median animation sound, if any, see https://github.com/phetsims/center-and-variability/issues/253
-            // const median = model.selectedSceneModelProperty.value.medianValueProperty.value;
-            // if ( median !== null ) {
-            //   NumberTone.playMedian( median );
-            // }
-            // else {
-            //   checkboxCheckedSoundPlayer.play();
-            // }
-          },
-          stop: () => {
-            // nothing to do since those are short-term clips
-          }
-        }
+        // Sound managed in the MedianAnimationTone
+        checkedSoundPlayer: nullSoundPlayer
       }
     };
   }
