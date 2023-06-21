@@ -28,7 +28,6 @@ type MeanAndMedianPlotNodeOptions = SelfOptions & CAVPlotNodeOptions & PickRequi
 export default class MeanAndMedianPlotNode extends CAVPlotNode {
 
   private readonly medianBarNode = new MedianBarNode( {
-    notchDirection: 'down',
     barStyle: 'continuous'
   } );
 

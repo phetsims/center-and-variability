@@ -98,7 +98,6 @@ export default class CardNodeContainer extends Node {
   private readonly model: MedianModel;
   public readonly cardNodes: CardNode[];
   private readonly medianBarNode = new MedianBarNode( {
-    notchDirection: 'up',
     barStyle: 'split'
   } );
   private readonly dragIndicatorArrowNode: Node;

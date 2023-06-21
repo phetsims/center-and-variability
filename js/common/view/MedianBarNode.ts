@@ -16,17 +16,14 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import CAVColors from '../CAVColors.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 
-export type NotchDirection = 'up' | 'down';
 export type BarStyle = 'continuous' | 'split';
 type SelfOptions = {
-  notchDirection: NotchDirection;
   barStyle: BarStyle;
   arrowScale?: number;
 };
 export type MedianBarNodeOptions = SelfOptions & PathOptions;
 
 export default class MedianBarNode extends Path {
-  private readonly notchDirection: NotchDirection;
   private readonly barStyle: BarStyle;
   private readonly medianArrowNode: ArrowNode;
 
@@ -45,7 +42,6 @@ export default class MedianBarNode extends Path {
 
     super( null, options );
 
-    this.notchDirection = options.notchDirection;
     this.barStyle = options.barStyle;
 
     this.medianArrowNode = new ArrowNode( 0, 0, 0, MedianBarNode.NOTCH_HEIGHT + 3, {
@@ -63,7 +59,7 @@ export default class MedianBarNode extends Path {
   public setMedianBarShape( y: number, left: number, median: number, right: number, includeMedianArrow: boolean ): this {
     const shape = new Shape();
 
-    const notchSign = this.notchDirection === 'up' ? -1 : 1;
+    const notchSign = 1;
     const leftCorner = new Vector2( left, y );
     const rightCorner = new Vector2( right, y );
     const medianVector = new Vector2( median, y );

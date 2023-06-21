@@ -77,7 +77,6 @@ export default class AccordionBoxCheckboxFactory {
         return AccordionBoxCheckboxFactory.createGridBox(
           new Text( CenterAndVariabilityStrings.medianStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
           new MedianBarNode( {
-            notchDirection: 'down',
             barStyle: 'continuous',
             arrowScale: 0.75
           } )
