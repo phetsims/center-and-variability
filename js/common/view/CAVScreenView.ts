@@ -187,7 +187,7 @@ export default class CAVScreenView extends ScreenView {
       right: this.resetAllButton.left - CAVConstants.SCREEN_VIEW_X_MARGIN,
       centerY: this.resetAllButton.centerY,
       soundPlayer: new SoundClipPlayer( cvEraserOptions001_mp3, {
-        soundClipOptions: { initialOutputLevel: 0.3 }
+        soundClipOptions: { initialOutputLevel: 0.08 }
       } )
     } );
 
