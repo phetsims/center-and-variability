@@ -140,25 +140,13 @@ export default class MADNode extends CAVPlotNode {
       madRectangle.rectWidth = this.modelViewTransform.modelToViewDeltaX( mad === null ? 0 : mad * 2 );
       madRectangle.visible = ( options.parentContext === 'info' || model.isMADVisibleProperty.value ) && mad !== null;
 
-      meanLine.visible = sceneModel.meanValueProperty.value !== null;
-      if ( meanLine.visible ) {
-
-        // In the info dialog, the mean line should extend to the top of the MAD rectangle
-        if ( options.parentContext === 'info' ) {
-          meanLine.setY2( madRectangle.height );
-        }
-
-        meanLine.centerX = this.modelViewTransform.modelToViewX( sceneModel.meanValueProperty.value! );
-        meanLine.bottom = this.modelViewTransform.modelToViewY( 0 );
-      }
-
       if ( mad !== null ) {
         const viewCenterX = this.modelViewTransform.modelToViewX( sceneModel.meanValueProperty.value! );
         const viewFloorY = this.modelViewTransform.modelToViewY( 0 );
 
         if ( options.parentContext === 'info' ) {
           lineContainer.bottom = viewFloorY - 10;
-          madRectangle.rectHeight = children.length > 0 ? lineContainer.height : 0;
+          madRectangle.rectHeight = children.length > 0 ? lineContainer.height + textNodes[ 0 ].height : 0;
         }
 
         madRectangle.centerX = viewCenterX;
@@ -166,15 +154,11 @@ export default class MADNode extends CAVPlotNode {
         leftReadout.string = Utils.toFixed( mad, 1 );
         rightReadout.string = Utils.toFixed( mad, 1 );
 
-        // TODO: Check if the bar offset is correct in info dialog - https://github.com/phetsims/center-and-variability/issues/280
-        // In the info dialog, when text nodes are present, the MAD bars should be offset so they don't overlap the text
-        const barYOffset = ( options.parentContext === 'info' && textNodes.length > 0 ) ? -textNodes[ 0 ].height : CAVConstants.VARIABILITY_PLOT_BAR_OFFSET_Y;
-
         leftBar.setIntervalBarNodeWidth( viewCenterX - madRectangle.left );
         rightBar.setIntervalBarNodeWidth( madRectangle.right - viewCenterX );
 
-        leftBar.bottom = madRectangle.top + barYOffset;
-        rightBar.bottom = madRectangle.top + barYOffset;
+        leftBar.bottom = madRectangle.top + CAVConstants.VARIABILITY_PLOT_BAR_OFFSET_Y;
+        rightBar.bottom = madRectangle.top + CAVConstants.VARIABILITY_PLOT_BAR_OFFSET_Y;
         leftBar.right = viewCenterX + leftBar.lineWidth / 2;
         rightBar.left = viewCenterX - rightBar.lineWidth / 2;
 
@@ -182,6 +166,13 @@ export default class MADNode extends CAVPlotNode {
         rightReadout.centerBottom = rightBar.centerTop;
       }
       madAnnotationContainer.visible = ( options.parentContext === 'info' || model.isMADVisibleProperty.value ) && mad !== null && soccerBalls.length > 1;
+
+      meanLine.visible = sceneModel.meanValueProperty.value !== null;
+      if ( meanLine.visible ) {
+        meanLine.centerX = this.modelViewTransform.modelToViewX( sceneModel.meanValueProperty.value! );
+        meanLine.setY2( madRectangle.rectHeight );
+        meanLine.bottom = this.modelViewTransform.modelToViewY( 0 );
+      }
 
       // If the readouts overlap, move them apart
       if ( leftReadout.visible && rightReadout.visible ) {
