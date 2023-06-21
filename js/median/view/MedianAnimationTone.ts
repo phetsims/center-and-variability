@@ -80,7 +80,7 @@ export default class MedianAnimationTone {
   public static playFinalTone( median: number ): void {
 
     // Wood block
-    NumberTone.play( median );
+    NumberTone.playValue( median );
   }
 }
 

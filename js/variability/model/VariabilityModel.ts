@@ -19,6 +19,7 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import CAVConstants, { MAX_KICKS_PROPERTY } from '../../common/CAVConstants.js';
 import { DistributionStrategy } from '../../soccer-common/model/TKickDistanceStrategy.js';
+import NumberTone from '../../soccer-common/model/NumberTone.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityModelOptions = SelfOptions & CAVModelOptions;
@@ -51,6 +52,15 @@ export default class VariabilityModel extends CAVModel {
       new VariabilitySceneModel( MAX_KICKS_PROPERTY, new DistributionStrategy( [ 10, 18, 30, 45, 26, 18, 10, 5, 4, 4, 4, 4, 4, 4, 4 ] ), { tandem: options.tandem.createTandem( 'sceneModel3' ) } ),
       new VariabilitySceneModel( MAX_KICKS_PROPERTY, new DistributionStrategy( [ 4, 4, 4, 4, 4, 4, 4, 5, 10, 18, 26, 45, 30, 18, 10 ] ), { tandem: options.tandem.createTandem( 'sceneModel4' ) } )
     ];
+
+    sceneModels.forEach( sceneModel => {
+      sceneModel.soccerBalls.forEach( soccerBall => {
+        soccerBall.toneEmitter.addListener( value => {
+          NumberTone.play( this, sceneModel, value );
+        } );
+      } );
+    } );
+
     super( MAX_KICKS_PROPERTY, sceneModels, options );
 
     this.initialized = true;

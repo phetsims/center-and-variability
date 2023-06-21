@@ -17,6 +17,7 @@ import CAVConstants from '../../common/CAVConstants.js';
 import { kickDistanceStrategyFromStateObject, RandomSkewStrategy } from '../../common/model/RandomSkewStrategy.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import CAVSoccerBall from '../../common/model/CAVSoccerBall.js';
+import NumberTone from '../../soccer-common/model/NumberTone.js';
 
 type SelfOptions = EmptySelfOptions;
 type MedianModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
@@ -47,6 +48,12 @@ export default class MedianModel extends CAVModel {
       CAVSoccerBall.createSoccerBall, {
         tandem: options.tandem.createTandem( 'sceneModel' )
       } );
+
+    sceneModel.soccerBalls.forEach( soccerBall => {
+      soccerBall.toneEmitter.addListener( value => {
+        NumberTone.play( this, sceneModel, value );
+      } );
+    } );
 
     super( maxKicksProperty, [ sceneModel ], options );
 

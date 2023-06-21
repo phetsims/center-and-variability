@@ -25,7 +25,6 @@ import AccessibleSlider, { AccessibleSliderOptions } from '../../../../sun/js/ac
 import Property from '../../../../axon/js/Property.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import NumberTone from '../model/NumberTone.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
@@ -123,7 +122,7 @@ export default class SoccerBallNode extends AccessibleSlider( SoccerObjectNode, 
     // When the user drags a soccer ball, play audio corresponding to its new position.
     soccerBall.valueProperty.link( value => {
       if ( value !== null && ( isDragging || isSliderDragging ) ) {
-        NumberTone.play( value );
+        soccerBall.toneEmitter.emit( value );
       }
     } );
 

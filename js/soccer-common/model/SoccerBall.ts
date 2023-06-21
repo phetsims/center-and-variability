@@ -22,7 +22,6 @@ import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 import TEmitter from '../../../../axon/js/TEmitter.js';
 import SoccerPlayer from './SoccerPlayer.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import NumberTone from './NumberTone.js';
 import SoccerCommonConstants from '../SoccerCommonConstants.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
@@ -61,6 +60,12 @@ export default class SoccerBall extends PhetioObject {
 
   public readonly soccerBallLandedEmitter = new Emitter<[ SoccerBall ]>( {
     parameters: [ { valueType: SoccerBall } ]
+  } );
+
+  // When the soccer ball has moved and wants to emit a sound, use this emitter, so that the context can decide whether
+  // to play a mean, median or value sound, depending on the context.
+  public readonly toneEmitter = new Emitter<[ number ]>( {
+    parameters: [ { valueType: 'number' } ]
   } );
 
   public constructor( public readonly isFirstSoccerBall: boolean, providedOptions: SoccerBallOptions ) {
@@ -128,7 +133,7 @@ export default class SoccerBall extends PhetioObject {
 
       if ( landed ) {
         this.soccerBallLandedEmitter.emit( this );
-        NumberTone.play( x );
+        this.toneEmitter.emit( x );
       }
     }
   }
