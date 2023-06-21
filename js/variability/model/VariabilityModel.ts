@@ -46,10 +46,10 @@ export default class VariabilityModel extends CAVModel {
   public constructor( options: VariabilityModelOptions ) {
 
     const sceneModels = [
-      new VariabilitySceneModel( MAX_KICKS_PROPERTY, new DistributionStrategy( [ 0, 0, 0, 1, 3, 10, 18, 20, 18, 10, 3, 1, 0, 0, 0 ] ), { tandem: options.tandem.createTandem( 'sceneModel1' ) } ),
-      new VariabilitySceneModel( MAX_KICKS_PROPERTY, new DistributionStrategy( [ 5, 5, 10, 10, 25, 30, 40, 50, 40, 30, 25, 10, 10, 5, 5 ] ), { tandem: options.tandem.createTandem( 'sceneModel2' ) } ),
-      new VariabilitySceneModel( MAX_KICKS_PROPERTY, new DistributionStrategy( [ 6, 9, 11, 14, 11, 8, 6, 5, 5, 5, 5, 5, 5, 5, 5 ] ), { tandem: options.tandem.createTandem( 'sceneModel3' ) } ),
-      new VariabilitySceneModel( MAX_KICKS_PROPERTY, new DistributionStrategy( [ 5, 5, 5, 5, 5, 5, 5, 5, 6, 8, 11, 14, 11, 9, 6 ] ), { tandem: options.tandem.createTandem( 'sceneModel4' ) } )
+      new VariabilitySceneModel( MAX_KICKS_PROPERTY, new DistributionStrategy( [ 0, 0, 0, 1, 3, 12, 20, 32, 20, 12, 3, 1, 0, 0, 0 ] ), { tandem: options.tandem.createTandem( 'sceneModel1' ) } ),
+      new VariabilitySceneModel( MAX_KICKS_PROPERTY, new DistributionStrategy( [ 3, 5, 10, 10, 25, 32, 45, 65, 45, 32, 25, 10, 10, 5, 3 ] ), { tandem: options.tandem.createTandem( 'sceneModel2' ) } ),
+      new VariabilitySceneModel( MAX_KICKS_PROPERTY, new DistributionStrategy( [ 10, 18, 30, 45, 26, 18, 10, 5, 4, 4, 4, 4, 4, 4, 4 ] ), { tandem: options.tandem.createTandem( 'sceneModel3' ) } ),
+      new VariabilitySceneModel( MAX_KICKS_PROPERTY, new DistributionStrategy( [ 4, 4, 4, 4, 4, 4, 4, 5, 10, 18, 26, 45, 30, 18, 10 ] ), { tandem: options.tandem.createTandem( 'sceneModel4' ) } )
     ];
     super( MAX_KICKS_PROPERTY, sceneModels, options );
 
