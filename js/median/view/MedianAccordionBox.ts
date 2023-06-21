@@ -9,7 +9,6 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import AccordionBoxCheckboxFactory from '../../common/view/AccordionBoxCheckboxFactory.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
-import CardNode from './CardNode.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import AccordionBoxTitleText from '../../common/view/AccordionBoxTitleText.js';
 import CAVColors from '../../common/CAVColors.js';
