@@ -27,14 +27,18 @@ import NumberTone from '../../soccer-common/model/NumberTone.js';
 import CAVSoccerSceneModel from './CAVSoccerSceneModel.js';
 import CAVDragIndicatorModel from './CAVDragIndicatorModel.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import VoidIO from '../../../../tandem/js/types/VoidIO.js';
+import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
+import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 
 type SelfOptions = {
   instrumentMeanPredictionProperty: boolean;
 } & PickRequired<PhetioObjectOptions, 'tandem'>;
 export type CAVModelOptions = SelfOptions;
 
-export default class CAVModel {
+export default class CAVModel extends PhetioObject {
 
   public readonly dragIndicatorModel: CAVDragIndicatorModel;
 
@@ -50,7 +54,15 @@ export default class CAVModel {
 
   public readonly isInfoVisibleProperty: Property<boolean>;
 
-  public constructor( public readonly maxKicksProperty: Property<number>, public readonly sceneModels: CAVSoccerSceneModel[], options: CAVModelOptions ) {
+  public constructor( public readonly maxKicksProperty: Property<number>, public readonly sceneModels: CAVSoccerSceneModel[], providedOptions: CAVModelOptions ) {
+
+    const options = optionize<CAVModelOptions, SelfOptions, PhetioObjectOptions>()( {
+      phetioType: CAVModelIO,
+      phetioState: false,
+      phetioDocumentation: 'The model for the "Center and Variability" simulation. Contains 1+ sceneModels which contains the data itself. Also includes settings, like selections for checkboxes.'
+    }, providedOptions );
+
+    super( options );
 
     this.isAccordionBoxExpandedProperty = new BooleanProperty( true, {
       tandem: options.tandem.createTandem( 'isAccordionBoxExpandedProperty' )
@@ -144,5 +156,29 @@ export default class CAVModel {
     this.isAccordionBoxExpandedProperty.reset();
   }
 }
+
+const CAVModelIO = new IOType( 'CAVModelIO', {
+  valueType: CAVModel,
+  methods: {
+    setDataPoints: {
+      returnType: VoidIO,
+      parameterTypes: [ ArrayIO( NumberIO ) ],
+      implementation: function( this: CAVModel, dataPoints: number[] ) {
+        this.selectedSceneModelProperty.value.setDataPoints( dataPoints );
+      },
+      documentation: 'Sets the data points for the currently selected scene model.'
+    },
+
+    getDataPoints: {
+      returnType: ArrayIO( NumberIO ),
+      parameterTypes: [],
+      implementation: function( this: CAVModel ) {
+        return this.selectedSceneModelProperty.value.getSortedStackedObjects().map( soccerBall => soccerBall.valueProperty.value );
+      },
+      documentation: 'Gets the data points for the currently selected scene model.'
+    }
+  }
+} );
+
 
 centerAndVariability.register( 'CAVModel', CAVModel );
