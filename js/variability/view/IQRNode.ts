@@ -1,6 +1,5 @@
 // Copyright 2023, University of Colorado Boulder
 
-import MedianBarNode from '../../common/view/MedianBarNode.js';
 import { Line, ManualConstraint, Node, Path, ProfileColorProperty, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
