@@ -26,8 +26,8 @@ import { cardMovementSoundClips } from './CardNodeContainer.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import cvCardMovementSound1_mp3 from '../../../sounds/cv-card-movement-sounds-001_mp3.js'; // eslint-disable-line default-import-match-filename
-import cvCardMovementSound2_mp3 from '../../../sounds/cv-card-movement-sounds-002_mp3.js';
-import CAVQueryParameters from '../../common/CAVQueryParameters.js'; // eslint-disable-line default-import-match-filename
+import cvCardMovementSound2_mp3 from '../../../sounds/cv-card-movement-sounds-002_mp3.js'; // eslint-disable-line default-import-match-filename
+import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 
 type SelfOptions = EmptySelfOptions;
 export type CardNodeOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
