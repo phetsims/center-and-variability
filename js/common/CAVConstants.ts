@@ -32,10 +32,10 @@ const NUMBER_LINE_MARGIN_X = 207;
 // scales are empirically determined so that data points cut off when outside of
 // clip-area (so that we show half of an "x" instead of ending on a complete "x").
 export const MAX_KICKS_CONFIG = [
-  { kicks: 15, scale: 0.98 },
-  { kicks: 20, scale: 0.98 },
-  { kicks: 25, scale: 0.91 },
-  { kicks: 30, scale: 0.84 }
+  { kicks: 15, scale: 1 },
+  { kicks: 20, scale: 0.97 },
+  { kicks: 25, scale: 0.92 },
+  { kicks: 30, scale: 0.87 }
 ];
 
 const MAIN_FONT = new PhetFont( 16 );
