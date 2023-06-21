@@ -1,7 +1,9 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Class with static methods for playing the corresponding notes for the median animation.
+ * Class with static methods for playing the corresponding notes for the median animation. The notes are played using
+ * pairwise/stepwise notes in the pentatonic scale.  For instance, if there are 5 data points, then it plays the outermost pair
+ * with an upper pitch note and lower pitch note, then the next pair, and so on.  In this case, for a total of 3 "pairs" of notes.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
@@ -14,10 +16,12 @@ import NumberTone, { toStepDiscrete } from '../../soccer-common/model/NumberTone
 
 const INITIAL_OUTPUT_LEVEL = 0.1;
 
+// The higher pitched note in the pair
 const upperSoundClip = new SoundClip( marimbaToneE3_mp3, {
   initialOutputLevel: INITIAL_OUTPUT_LEVEL
 } );
 
+// The lower pitched note in the pair
 const lowerSoundClip = new SoundClip( marimbaToneE3_mp3, {
   initialOutputLevel: INITIAL_OUTPUT_LEVEL
 } );
@@ -66,12 +70,10 @@ export default class MedianAnimationTone {
 
   public static playIntermediateTone( numberOfStepsAwayFromMedian: number, median: number ): void {
 
-    const upperPlaybackRate = toPlaybackRate( median, numberOfStepsAwayFromMedian );
-    upperSoundClip.setPlaybackRate( upperPlaybackRate );
+    upperSoundClip.setPlaybackRate( toPlaybackRate( median, numberOfStepsAwayFromMedian ) );
     upperSoundClip.play();
 
-    const lowerPlaybackRate = toPlaybackRate( median, -numberOfStepsAwayFromMedian );
-    lowerSoundClip.setPlaybackRate( lowerPlaybackRate );
+    lowerSoundClip.setPlaybackRate( toPlaybackRate( median, -numberOfStepsAwayFromMedian ) );
     lowerSoundClip.play();
   }
 
