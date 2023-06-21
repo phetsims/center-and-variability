@@ -27,7 +27,7 @@ export default class MedianBarNode extends Path {
   private readonly barStyle: BarStyle;
   private readonly medianArrowNode: ArrowNode;
 
-  public static readonly NOTCH_HEIGHT = 6;
+  public static readonly NOTCH_HEIGHT = 10;
   public static readonly HALF_SPLIT_WIDTH = 2;
   public static readonly LINE_WIDTH = 2;
 
