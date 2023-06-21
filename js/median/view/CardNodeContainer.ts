@@ -53,6 +53,7 @@ import cvCardMovementSoundsV2006_mp3 from '../../../sounds/cvCardMovementSoundsV
 
 import cvSuccessOptions007Shorter_mp3 from '../../../sounds/cv-success-options-007-shorter_mp3.js'; // eslint-disable-line default-import-match-filename
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
+import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 
 const cvSuccessOptions007ShorterSoundClip = new SoundClip( cvSuccessOptions007Shorter_mp3, {
   initialOutputLevel: 0.2
@@ -457,7 +458,7 @@ export default class CardNodeContainer extends Node {
           const randomSound = cardMovementSoundClips[ dotRandom.nextInt( cardMovementSoundClips.length ) ];
 
           // Moving to the right, go up in pitch by 4 semitones
-          randomSound.setPlaybackRate( dragCell < originalCell ? 1 : Math.pow( 2, 4 / 12 ) );
+          randomSound.setPlaybackRate( CAVQueryParameters.cardMovementSoundPlaybackRate * ( dragCell < originalCell ? 1 : Math.pow( 2, 4 / 12 ) ) );
           randomSound.play();
         }
       }

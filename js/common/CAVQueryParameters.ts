@@ -26,6 +26,11 @@ const CAVQueryParameters = QueryStringMachine.getAll( {
   intervalToolSoundInterval: {
     type: 'number',
     defaultValue: 1E-4
+  },
+
+  cardMovementSoundPlaybackRate: {
+    type: 'number',
+    defaultValue: 1.1
   }
 } );
 

@@ -26,7 +26,8 @@ import { cardMovementSoundClips } from './CardNodeContainer.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import cvCardMovementSound1_mp3 from '../../../sounds/cv-card-movement-sounds-001_mp3.js'; // eslint-disable-line default-import-match-filename
-import cvCardMovementSound2_mp3 from '../../../sounds/cv-card-movement-sounds-002_mp3.js'; // eslint-disable-line default-import-match-filename
+import cvCardMovementSound2_mp3 from '../../../sounds/cv-card-movement-sounds-002_mp3.js';
+import CAVQueryParameters from '../../common/CAVQueryParameters.js'; // eslint-disable-line default-import-match-filename
 
 type SelfOptions = EmptySelfOptions;
 export type CardNodeOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
@@ -167,7 +168,7 @@ export default class CardNode extends Node {
       const randomSound = cardMovementSoundClips[ dotRandom.nextInt( cardMovementSoundClips.length ) ];
 
       // Moving to the right, go up in pitch by 4 semitones
-      randomSound.setPlaybackRate( destination.x < this.positionProperty.value.x ? 1 : Math.pow( 2, 4 / 12 ) );
+      randomSound.setPlaybackRate( CAVQueryParameters.cardMovementSoundPlaybackRate * ( destination.x < this.positionProperty.value.x ? 1 : Math.pow( 2, 4 / 12 ) ) );
       randomSound.play();
     }
 
