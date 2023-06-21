@@ -86,7 +86,7 @@ export default class CAVModel extends PhetioObject {
       tandem: options.tandem.createTandem( 'medianPredictionProperty' )
     } );
 
-    this.medianPredictionProperty.link( median => {
+    this.medianPredictionProperty.lazyLink( median => {
       NumberTone.playMedian( median );
     } );
 

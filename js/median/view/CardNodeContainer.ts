@@ -139,7 +139,7 @@ export default class CardNodeContainer extends Node {
       cardNode.positionProperty.link( this.createDragPositionListener( cardNode ) );
 
       // When a card is dropped, send it to its home cell
-      cardNode.dragListener.isPressedProperty.link( isPressed => {
+      cardNode.dragListener.isPressedProperty.lazyLink( isPressed => {
 
         if ( isPressed ) {
           this.wasSortedBefore = this.isDataSorted();
