@@ -92,6 +92,8 @@ export default class MADNode extends CAVPlotNode {
 
       const soccerBalls = sceneModel.getSortedLandedObjects();
 
+      const textNodes: Text[] = [];
+
       if ( soccerBalls.length > 0 ) {
         const mean = _.mean( soccerBalls.map( dot => dot.valueProperty.value ) );
 
@@ -120,6 +122,7 @@ export default class MADNode extends CAVPlotNode {
               font: new PhetFont( 10 ),
               centerBottom: line.centerTop
             } );
+            textNodes.push( text );
 
             // If the text overlaps the mean line, move it further away so it doesn't overlap
             const MARGIN = 2;
@@ -173,8 +176,11 @@ export default class MADNode extends CAVPlotNode {
         leftReadout.string = Utils.toFixed( mad, 1 );
         rightReadout.string = Utils.toFixed( mad, 1 );
 
-        leftBar.setMedianBarShape( madRectangle.top - MedianBarNode.NOTCH_HEIGHT - CAVConstants.VARIABILITY_PLOT_BAR_OFFSET_Y, madRectangle.left, 0, viewCenterX, false );
-        rightBar.setMedianBarShape( madRectangle.top - MedianBarNode.NOTCH_HEIGHT - CAVConstants.VARIABILITY_PLOT_BAR_OFFSET_Y, viewCenterX, 0, madRectangle.right, false );
+        // In the info dialog, when text nodes are present, the MAD bars should be offset so they don't overlap the text
+        const barYOffset = ( options.parentContext === 'info' && textNodes.length > 0 ) ? -textNodes[ 0 ].height : 0;
+
+        leftBar.setMedianBarShape( madRectangle.top - MedianBarNode.NOTCH_HEIGHT - CAVConstants.VARIABILITY_PLOT_BAR_OFFSET_Y + barYOffset, madRectangle.left, 0, viewCenterX, false );
+        rightBar.setMedianBarShape( madRectangle.top - MedianBarNode.NOTCH_HEIGHT - CAVConstants.VARIABILITY_PLOT_BAR_OFFSET_Y + barYOffset, viewCenterX, 0, madRectangle.right, false );
 
         leftReadout.centerBottom = leftBar.centerTop;
         rightReadout.centerBottom = rightBar.centerTop;
