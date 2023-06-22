@@ -24,8 +24,6 @@ export default class RangeInfoNode extends VBox {
       spacing: 5,
       children: [
         new InfoTitleDescriptionRichText( CenterAndVariabilityStrings.rangeDescriptionStringProperty ),
-
-        // TODO: String key name, see https://github.com/phetsims/center-and-variability/issues/181
         new Text( new PatternStringProperty( CenterAndVariabilityStrings.rangeCalculationPatternStringProperty, {
           max: sceneModel.maxValueProperty,
           min: sceneModel.minValueProperty
