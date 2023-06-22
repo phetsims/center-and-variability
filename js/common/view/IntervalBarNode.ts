@@ -1,4 +1,4 @@
-// Copyright 2022-2023, University of Colorado Boulder
+// Copyright 2023, University of Colorado Boulder
 
 /**
  * Renders a horizontal line with short vertical drop lines on each end, to indicate some interval over data.
