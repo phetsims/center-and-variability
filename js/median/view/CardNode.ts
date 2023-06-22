@@ -33,12 +33,14 @@ type SelfOptions = EmptySelfOptions;
 export type CardNodeOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
 const cardPickUpSoundClip = new SoundClip( cvCardPickupSound_mp3, {
-  initialOutputLevel: 0.3
+  initialOutputLevel: 0.3,
+  initialPlaybackRate: CAVQueryParameters.cardMovementSoundPlaybackRate
 } );
 soundManager.addSoundGenerator( cardPickUpSoundClip );
 
 const cardDropSoundClip = new SoundClip( cvCardDropSound_mp3, {
-  initialOutputLevel: 0.3
+  initialOutputLevel: 0.3,
+  initialPlaybackRate: CAVQueryParameters.cardMovementSoundPlaybackRate
 } );
 soundManager.addSoundGenerator( cardDropSoundClip );
 
