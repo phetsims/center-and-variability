@@ -29,6 +29,7 @@ import Multilink from '../../../../axon/js/Multilink.js';
 import PredictionSlider, { PredictionSliderOptions } from '../../common/view/PredictionSlider.js';
 import Property from '../../../../axon/js/Property.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import IntervalToolPlayAreaNode from './IntervalToolPlayAreaNode.js';
@@ -117,6 +118,30 @@ export default class VariabilityScreenView extends CAVScreenView {
       return Utils.roundToInterval( Utils.linear( 0, 16, 2, 1, interval ), CAVQueryParameters.intervalToolSoundInterval );
     } );
 
+    // the minimum distance that the interval must change before a sound is played (to prevent sound playing on tiny movements)
+    const INTERVAL_WIDTH_CHANGE_THRESHOLD = 0.01;
+    const INTERVAL_POSITION_CHANGE_THRESHOLD = 0.1;
+
+    let lastIntervalWidthValue = intervalDistanceProperty.value;
+    let lastIntervalTool1Value = model.intervalTool1ValueProperty.value;
+
+    const intervalDistanceWithThresholdProperty = new NumberProperty( lastIntervalWidthValue );
+
+    intervalDistanceProperty.link( newValue => {
+      if ( Math.abs( newValue - lastIntervalWidthValue ) >= INTERVAL_WIDTH_CHANGE_THRESHOLD ) {
+        intervalDistanceWithThresholdProperty.value = newValue;
+        lastIntervalWidthValue = newValue;
+      }
+    } );
+
+    // keeps track of the translation of the entire interval tool
+    model.intervalTool1ValueProperty.link( newValue => {
+      if ( Math.abs( newValue - lastIntervalTool1Value ) >= INTERVAL_POSITION_CHANGE_THRESHOLD ) {
+        intervalDistanceWithThresholdProperty.notifyListenersStatic();
+        lastIntervalTool1Value = newValue;
+      }
+    } );
+
     const biquadFilterNode = new BiquadFilterNode( phetAudioContext, {
       type: 'lowpass',
       frequency: 800,
@@ -141,13 +166,8 @@ export default class VariabilityScreenView extends CAVScreenView {
       }
     } );
 
-    Multilink.multilink( [ model.intervalTool1ValueProperty, model.intervalTool2ValueProperty ],
-      ( intervalTool1Value, intervalTool2Value ) => {
-        intervalDistanceProperty.notifyListenersStatic();
-      } );
-
     this.continuousPropertySoundGenerator = new ContinuousPropertySoundGenerator(
-      intervalDistanceProperty,
+      intervalDistanceWithThresholdProperty,
       saturatedSineLoopTrimmed_wav,
       new Range( 1, 2 ), {
         initialOutputLevel: 0.3,
