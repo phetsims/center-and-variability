@@ -83,13 +83,14 @@ export default class MADNode extends CAVPlotNode {
       const soccerBalls = sceneModel.getSortedLandedObjects();
 
       const textNodes: Text[] = [];
-      const MAD_MARGIN_Y = 5;
+      const MAD_MARGIN_TOP = 5;
+      const MAD_MARGIN_BOTTOM = 8;
 
       if ( soccerBalls.length > 0 ) {
         const mean = _.mean( soccerBalls.map( dot => dot.valueProperty.value ) );
 
         // this was adjusted so that the bottom-most line passes through the middle of the bottom row of data points
-        const lineDeltaY = ( CAVConstants.VARIABILITY_PLOT_RECT_HEIGHT - ( 2 * MAD_MARGIN_Y ) ) / ( MAX_KICKS_PROPERTY.value - 1 );
+        const lineDeltaY = ( CAVConstants.VARIABILITY_PLOT_RECT_HEIGHT - ( MAD_MARGIN_TOP + MAD_MARGIN_BOTTOM ) ) / ( MAX_KICKS_PROPERTY.value - 1 );
 
         // Underneath the top of the rectangle
         let y = 0;
@@ -152,7 +153,7 @@ export default class MADNode extends CAVPlotNode {
           madRectangle.rectHeight = children.length > 0 ? lineContainer.height + textNodes[ 0 ].height : 0;
         }
         else {
-          lineContainer.top = madRectangle.top + MAD_MARGIN_Y;
+          lineContainer.top = madRectangle.top + MAD_MARGIN_TOP;
         }
 
         madRectangle.centerX = viewCenterX;
