@@ -279,14 +279,16 @@ export default class CardNodeContainer extends Node {
       // A ball landed OR a value changed
       soccerBall.valueProperty.link( value => {
         if ( ( this.model.isSortingDataProperty.value && value !== null ) || options.parentContext === 'info' ) {
-          this.sortData();
+
+          // Sort but do not play audio when a ball lands or value changes, since the soccer ball should play its own sound
+          this.sortData( false );
         }
       } );
     } );
 
     model.isSortingDataProperty.link( isSortingData => {
       if ( isSortingData ) {
-        this.sortData();
+        this.sortData( true );
       }
     } );
 
@@ -646,7 +648,7 @@ export default class CardNodeContainer extends Node {
     return this.cardNodeCells.find( cardNode => cardNode.soccerBall === soccerBall ) || null;
   }
 
-  private sortData(): void {
+  private sortData( allowSound: boolean ): void {
 
     // Only allow one sound in each direction.  Playing too many swamps the audio channel and you don't hear e.g. if a soccer ball lands
     let readyToPlayRightSound = true;
@@ -662,8 +664,8 @@ export default class CardNodeContainer extends Node {
                         cardNode.positionProperty.value.x > this.getHomePosition( cardNode ).x ? 'right' :
                         'none';
 
-      this.animateToHomeCell( cardNode, 0.5, ( direction === 'left' && readyToPlayLeftSound ) ||
-                                             ( direction === 'right' && readyToPlayRightSound ) );
+      this.animateToHomeCell( cardNode, 0.5, allowSound && ( ( direction === 'left' && readyToPlayLeftSound ) ||
+                                                             ( direction === 'right' && readyToPlayRightSound ) ) );
 
       if ( direction === 'left' ) {
         readyToPlayLeftSound = false;
