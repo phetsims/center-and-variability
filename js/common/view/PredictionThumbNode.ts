@@ -38,7 +38,7 @@ export default class PredictionThumbNode extends Node {
       providedOptions.style === 'arrow' ?
 
         // Arrows for Median and Mean & Median screens.
-      new ArrowNode( 0, 0, 0, -50, {
+      new ArrowNode( 0, 0, 0, -43, {
         headHeight: 10,
         headWidth: 14,
         tailWidth: 2,
