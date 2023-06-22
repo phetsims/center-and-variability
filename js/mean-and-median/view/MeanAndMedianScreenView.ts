@@ -61,7 +61,7 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
     } ), options.tandem );
 
     this.backScreenViewLayer.addChild( new PredictionSlider( model.meanPredictionProperty, this.modelViewTransform,
-      CAVConstants.PHYSICAL_RANGE, new BooleanProperty( false ), {
+      CAVConstants.PHYSICAL_RANGE, new BooleanProperty( false ), model.isMeanPredictionKeyboardDraggingProperty, {
         predictionThumbNodeOptions: {
           color: CAVColors.meanColorProperty,
           style: 'arrow'

@@ -21,6 +21,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import CAVSoccerBall from '../../common/model/CAVSoccerBall.js';
 // eslint-disable-next-line no-view-imported-from-model
 import MedianAnimationTone from '../../median/view/MedianAnimationTone.js';
+import Property from '../../../../axon/js/Property.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeanAndMedianModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
@@ -40,6 +41,7 @@ export default class MeanAndMedianModel extends CAVModel {
   public readonly isTopMeanVisibleProperty: BooleanProperty;
   public readonly isMeanPredictionVisibleProperty: BooleanProperty;
   public readonly meanPredictionProperty: NumberProperty;
+  public readonly isMeanPredictionKeyboardDraggingProperty: Property<boolean>;
 
   public constructor( providedOptions: MeanAndMedianModelOptions ) {
 
@@ -116,8 +118,15 @@ export default class MeanAndMedianModel extends CAVModel {
       return integerCheck || halfIntegerCheck;
     };
 
+    this.isMeanPredictionKeyboardDraggingProperty = new BooleanProperty( false );
+
     this.meanPredictionProperty.lazyLink( ( meanPrediction, oldMeanPrediction ) => {
-      if ( crossedCheckpoint( meanPrediction, oldMeanPrediction ) ) {
+      if ( this.isMeanPredictionKeyboardDraggingProperty.value ) {
+
+        // TODO: Make sure this is the value after the keyboard event, not before the keyboard event https://github.com/phetsims/center-and-variability/issues/302
+        NumberTone.playMean( meanPrediction );
+      }
+      else if ( crossedCheckpoint( meanPrediction, oldMeanPrediction ) ) {
         NumberTone.playMean( Utils.roundToInterval( meanPrediction, 0.5 ) );
       }
     } );

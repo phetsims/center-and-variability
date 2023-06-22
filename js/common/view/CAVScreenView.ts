@@ -347,17 +347,19 @@ export default class CAVScreenView extends ScreenView {
     const BOTTOM_CHECKBOX_PANEL_MARGIN = 12.5;
     const BOTTOM_CHECKBOX_PANEL_Y_MARGIN = this.layoutBounds.maxY - this.modelViewTransform.modelToViewY( 0 ) + BOTTOM_CHECKBOX_PANEL_MARGIN;
 
-    const controlsVBox = new VBox( { spacing: 15,
+    const controlsVBox = new VBox( {
+      spacing: 15,
       align: 'left',
       children: [
-      controlNode,
+        controlNode,
         new Text( new PatternStringProperty( CenterAndVariabilityStrings.kicksPatternStringProperty,
           { value: this.numberOfKicksProperty }, {
             tandem: tandem.createTandem( 'kicksPatternStringProperty' )
           } ), {
           font: CAVConstants.MAIN_FONT
         } )
-      ] } );
+      ]
+    } );
 
     this.addChild( new AlignBox( controlsVBox, {
       alignBounds: this.layoutBounds,
@@ -376,7 +378,7 @@ export default class CAVScreenView extends ScreenView {
    * The MedianPredictionNode is shared in the Median screen and MeanAndMedianScreen, so factored out here.
    */
   public static createMedianPredictionNode( model: CAVModel, modelViewTransform: ModelViewTransform2, tandem: Tandem ): PredictionSlider {
-    return new PredictionSlider( model.medianPredictionProperty, modelViewTransform, CAVConstants.PHYSICAL_RANGE, new BooleanProperty( false ), {
+    return new PredictionSlider( model.medianPredictionProperty, modelViewTransform, CAVConstants.PHYSICAL_RANGE, new BooleanProperty( false ), new BooleanProperty( false ), {
       predictionThumbNodeOptions: {
         color: CAVColors.medianColorProperty,
         style: 'arrow'
