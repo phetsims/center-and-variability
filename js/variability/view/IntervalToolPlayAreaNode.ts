@@ -7,12 +7,16 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
+import AccessibleSlider, { AccessibleSliderOptions } from '../../../../sun/js/accessibility/AccessibleSlider.js';
+import Range from '../../../../dot/js/Range.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 
 /**
  * Shows the highlighted area for the interval tool in the play area.
@@ -21,11 +25,12 @@ import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
  */
 
 type SelfOptions = EmptySelfOptions;
-type InternalToolPlayAreaNodeOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
+type ParentOptions = NodeOptions & AccessibleSliderOptions;
+type IntervalToolPlayAreaNodeOptions = StrictOmit<SelfOptions & WithRequired<ParentOptions, 'tandem'>, 'enabledRangeProperty' | 'valueProperty'>;
 
-export default class IntervalToolPlayAreaNode extends Node {
+export default class IntervalToolPlayAreaNode extends AccessibleSlider( Node, 0 ) {
   public constructor( intervalToolValue1Property: NumberProperty, intervalToolValue2Property: NumberProperty, modelViewTransform: ModelViewTransform2,
-                      topAlignmentProperty: TReadOnlyProperty<number>, isBeingDragged: Property<boolean>, providedOptions: InternalToolPlayAreaNodeOptions ) {
+                      topAlignmentProperty: TReadOnlyProperty<number>, isBeingDragged: Property<boolean>, providedOptions: IntervalToolPlayAreaNodeOptions ) {
 
     const rectangleNode = new Rectangle( 0, 0, 0, 400, {
       fill: CAVColors.intervalToolFillProperty,
@@ -37,30 +42,6 @@ export default class IntervalToolPlayAreaNode extends Node {
     const rightEdge = new Line( 0, 0, 0, 400, {
       stroke: CAVColors.intervalToolStrokeProperty
     } );
-
-    const options = optionize<InternalToolPlayAreaNodeOptions, SelfOptions, NodeOptions>()( {
-      children: [
-        rectangleNode,
-        leftEdge,
-        rightEdge
-      ]
-    }, providedOptions );
-
-    super( options );
-
-    Multilink.multilink( [ intervalToolValue1Property, intervalToolValue2Property, topAlignmentProperty ],
-      ( value1, value2, topAlignment ) => {
-        const viewX1 = modelViewTransform.modelToViewX( value1 );
-        const viewX2 = modelViewTransform.modelToViewX( value2 );
-        const rectBottom = modelViewTransform.modelToViewY( 0 );
-
-        // offset the top of the rect down by one pixel so that it doesn't peek out behind the top of the AccordionBox
-        const rectTop = topAlignment + 1;
-        const rectHeight = rectBottom - rectTop;
-        rectangleNode.setRect( Math.min( viewX1, viewX2 ), rectBottom - rectHeight, Math.abs( viewX2 - viewX1 ), rectHeight );
-        leftEdge.setLine( viewX1, rectBottom, viewX1, rectTop );
-        rightEdge.setLine( viewX2, rectBottom, viewX2, rectTop );
-      } );
 
     // TODO: https://github.com/phetsims/center-and-variability/issues/225 support or exclude multi-touch
     const getDragBounds = () => {
@@ -82,6 +63,44 @@ export default class IntervalToolPlayAreaNode extends Node {
 
     // The drag listener operates in 2D but our model value is 1D, so we just have an extent-less y bounds.
     const dragBoundsProperty = new Property( getDragBounds() );
+
+    const dragRangeProperty = new DerivedProperty( [ dragBoundsProperty ], dragBounds => {
+      return new Range( dragBounds.minX, dragBounds.maxX );
+    } );
+
+    const options = optionize<IntervalToolPlayAreaNodeOptions, SelfOptions, ParentOptions>()( {
+      children: [
+        rectangleNode,
+        leftEdge,
+        rightEdge
+      ],
+      enabledRangeProperty: dragRangeProperty,
+      valueProperty: intervalToolValue1Property,
+      startDrag: () => {
+        isBeingDragged.value = true;
+        distanceBetweenToolValues = intervalToolValue2Property.value - intervalToolValue1Property.value;
+      },
+      endDrag: () => {
+        isBeingDragged.value = false;
+        distanceBetweenToolValues = null;
+      }
+    }, providedOptions );
+
+    super( options );
+
+    Multilink.multilink( [ intervalToolValue1Property, intervalToolValue2Property, topAlignmentProperty ],
+      ( value1, value2, topAlignment ) => {
+        const viewX1 = modelViewTransform.modelToViewX( value1 );
+        const viewX2 = modelViewTransform.modelToViewX( value2 );
+        const rectBottom = modelViewTransform.modelToViewY( 0 );
+
+        // offset the top of the rect down by one pixel so that it doesn't peek out behind the top of the AccordionBox
+        const rectTop = topAlignment + 1;
+        const rectHeight = rectBottom - rectTop;
+        rectangleNode.setRect( Math.min( viewX1, viewX2 ), rectBottom - rectHeight, Math.abs( viewX2 - viewX1 ), rectHeight );
+        leftEdge.setLine( viewX1, rectBottom, viewX1, rectTop );
+        rightEdge.setLine( viewX2, rectBottom, viewX2, rectTop );
+      } );
 
     const updateDragBounds = () => {
       dragBoundsProperty.value = getDragBounds();
