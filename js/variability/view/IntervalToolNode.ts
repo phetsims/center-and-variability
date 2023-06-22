@@ -26,11 +26,11 @@ import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 
 type SelfOptions = EmptySelfOptions;
 type ParentOptions = NodeOptions & AccessibleSliderOptions;
-type IntervalToolPlayAreaNodeOptions = StrictOmit<SelfOptions & WithRequired<ParentOptions, 'tandem'>, 'enabledRangeProperty' | 'valueProperty'>;
+type IntervalToolNodeOptions = StrictOmit<SelfOptions & WithRequired<ParentOptions, 'tandem'>, 'enabledRangeProperty' | 'valueProperty'>;
 
-export default class IntervalToolPlayAreaNode extends AccessibleSlider( Node, 0 ) {
+export default class IntervalToolNode extends AccessibleSlider( Node, 0 ) {
   public constructor( intervalToolValue1Property: NumberProperty, intervalToolValue2Property: NumberProperty, modelViewTransform: ModelViewTransform2,
-                      topAlignmentProperty: TReadOnlyProperty<number>, isBeingDragged: Property<boolean>, providedOptions: IntervalToolPlayAreaNodeOptions ) {
+                      topAlignmentProperty: TReadOnlyProperty<number>, isBeingDragged: Property<boolean>, providedOptions: IntervalToolNodeOptions ) {
 
     const rectangleNode = new Rectangle( 0, 0, 0, 400, {
       fill: CAVColors.intervalToolFillProperty,
@@ -68,7 +68,7 @@ export default class IntervalToolPlayAreaNode extends AccessibleSlider( Node, 0 
       return new Range( dragBounds.minX, dragBounds.maxX );
     } );
 
-    const options = optionize<IntervalToolPlayAreaNodeOptions, SelfOptions, ParentOptions>()( {
+    const options = optionize<IntervalToolNodeOptions, SelfOptions, ParentOptions>()( {
       children: [
         rectangleNode,
         leftEdge,
@@ -154,4 +154,4 @@ export default class IntervalToolPlayAreaNode extends AccessibleSlider( Node, 0 
   }
 }
 
-centerAndVariability.register( 'IntervalToolPlayAreaNode', IntervalToolPlayAreaNode );
+centerAndVariability.register( 'IntervalToolNode', IntervalToolNode );

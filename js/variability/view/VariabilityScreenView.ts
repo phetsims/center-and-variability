@@ -32,7 +32,7 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Range from '../../../../dot/js/Range.js';
-import IntervalToolPlayAreaNode from './IntervalToolPlayAreaNode.js';
+import IntervalToolNode from './IntervalToolNode.js';
 import ContinuousPropertySoundGenerator from '../../../../tambo/js/sound-generators/ContinuousPropertySoundGenerator.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 
@@ -107,12 +107,12 @@ export default class VariabilityScreenView extends CAVScreenView {
         variabilityRadioButtonGroupWrapper.top = accordionBoxWrapper.top + 8;
       } );
 
-    const intervalToolPlayAreaNode = new IntervalToolPlayAreaNode( model.intervalTool1ValueProperty, model.intervalTool2ValueProperty, this.modelViewTransform,
+    const intervalToolNode = new IntervalToolNode( model.intervalTool1ValueProperty, model.intervalTool2ValueProperty, this.modelViewTransform,
       new DerivedProperty( [ variabilityAccordionBox.boundsProperty ], bounds => bounds.top ), isIntervalAreaBeingDraggedProperty, {
         visibleProperty: model.isIntervalToolVisibleProperty,
-        tandem: options.tandem.createTandem( 'intervalToolPlayAreaNode' )
+        tandem: options.tandem.createTandem( 'intervalToolNode' )
       } );
-    this.intervalToolLayer.addChild( intervalToolPlayAreaNode );
+    this.intervalToolLayer.addChild( intervalToolNode );
 
     const intervalDistanceProperty = new DerivedProperty( [ model.intervalToolDeltaStableProperty ], interval => {
       return Utils.roundToInterval( Utils.linear( 0, 16, 2, 1, interval ), CAVQueryParameters.intervalToolSoundInterval );

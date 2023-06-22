@@ -21,7 +21,7 @@ import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import CAVPlotNode from '../../common/view/CAVPlotNode.js';
-import IntervalToolPlayAreaNode from './IntervalToolPlayAreaNode.js';
+import IntervalToolNode from './IntervalToolNode.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 
 export type CAVPlotOptions = NodeOptions & PickRequired<NodeOptions, 'tandem'>;
@@ -63,14 +63,15 @@ export default class VariabilityPlotNode extends Node {
 
     this.toggleNode = toggleNode;
 
-    const intervalToolPlayAreaNode = new IntervalToolPlayAreaNode( model.intervalTool1ValueProperty,
+    const intervalToolNode = new IntervalToolNode( model.intervalTool1ValueProperty,
       model.intervalTool2ValueProperty, toggleNode.nodes[ 0 ].modelViewTransform, new Property( 0 ),
       new BooleanProperty( false ), {
+        focusable: false,
         visibleProperty: model.isIntervalToolVisibleProperty,
-        tandem: providedOptions.tandem.createTandem( 'intervalToolPlayAreaNode' )
+        tandem: providedOptions.tandem.createTandem( 'intervalToolNode' )
       } );
 
-    toggleNode.nodes.forEach( node => node.insertChild( 0, intervalToolPlayAreaNode ) );
+    toggleNode.nodes.forEach( node => node.insertChild( 0, intervalToolNode ) );
   }
 }
 
