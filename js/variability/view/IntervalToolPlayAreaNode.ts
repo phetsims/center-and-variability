@@ -14,6 +14,12 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 
+/**
+ * Shows the highlighted area for the interval tool in the play area.
+ *
+ * @author Sam Reid (PhET Interactive Simulations);
+ */
+
 type SelfOptions = EmptySelfOptions;
 type InternalToolPlayAreaNodeOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
