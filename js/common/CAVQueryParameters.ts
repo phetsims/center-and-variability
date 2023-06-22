@@ -30,7 +30,7 @@ const CAVQueryParameters = QueryStringMachine.getAll( {
 
   cardMovementSoundPlaybackRate: {
     type: 'number',
-    defaultValue: 1.1
+    defaultValue: 1.5
   }
 } );
 
