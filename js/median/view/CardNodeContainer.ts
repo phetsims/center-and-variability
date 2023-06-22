@@ -274,7 +274,7 @@ export default class CardNodeContainer extends Node {
 
     this.addChild( this.medianBarNode );
 
-    const objectCreatedListener = ( soccerBall: SoccerBall ) => {
+    model.selectedSceneModelProperty.value.soccerBalls.forEach( soccerBall => {
 
       // A ball landed OR a value changed
       soccerBall.valueProperty.link( value => {
@@ -282,9 +282,7 @@ export default class CardNodeContainer extends Node {
           this.sortData();
         }
       } );
-    };
-
-    model.selectedSceneModelProperty.value.getActiveSoccerBalls().forEach( objectCreatedListener );
+    } );
 
     model.isSortingDataProperty.link( isSortingData => {
       if ( isSortingData ) {
