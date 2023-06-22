@@ -155,7 +155,7 @@ export default class VariabilityScreenView extends CAVScreenView {
 
         resetInProgressProperty: model.variabilityModelResetInProgressProperty,
         trimSilence: false, // a very precise sound file is used, so make sure it doesn't get changed
-        fadeTime: 0.2,
+        fadeTime: 0,
         delayBeforeStop: 0.5,
         playbackRateSpanOctaves: 1.5,
         additionalAudioNodes: [
