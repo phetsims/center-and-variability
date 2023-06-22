@@ -7,7 +7,7 @@ import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Utils from '../../../../dot/js/Utils.js';
 import CAVPlotNode, { CAVPlotNodeOptions, MIN_KICKS_TEXT_OFFSET } from '../../common/view/CAVPlotNode.js';
-import CAVConstants from '../../common/CAVConstants.js';
+import CAVConstants, { MAX_KICKS_PROPERTY } from '../../common/CAVConstants.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import CAVColors from '../../common/CAVColors.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
@@ -83,12 +83,16 @@ export default class MADNode extends CAVPlotNode {
       const soccerBalls = sceneModel.getSortedLandedObjects();
 
       const textNodes: Text[] = [];
+      const MAD_MARGIN_Y = 5;
 
       if ( soccerBalls.length > 0 ) {
         const mean = _.mean( soccerBalls.map( dot => dot.valueProperty.value ) );
 
-        // Underneath the accordion box title
-        let y = 15;
+        // this was adjusted so that the bottom-most line passes through the middle of the bottom row of data points
+        const lineDeltaY = ( CAVConstants.VARIABILITY_PLOT_RECT_HEIGHT - ( 2 * MAD_MARGIN_Y ) ) / ( MAX_KICKS_PROPERTY.value - 1 );
+
+        // Underneath the top of the rectangle
+        let y = 0;
         soccerBalls.forEach( soccerBall => {
           const x1 = this.modelViewTransform.modelToViewX( soccerBall.valueProperty.value! );
           const x2 = this.modelViewTransform.modelToViewX( mean );
@@ -127,8 +131,7 @@ export default class MADNode extends CAVPlotNode {
             children.push( text );
           }
 
-          // Enough spacing so they don't overlap the bottom row of data points
-          y += options.parentContext === 'info' ? 11 : 3.7;
+          y += options.parentContext === 'info' ? 11 : lineDeltaY;
         } );
       }
 
@@ -147,6 +150,9 @@ export default class MADNode extends CAVPlotNode {
         if ( options.parentContext === 'info' ) {
           lineContainer.bottom = viewFloorY - 10;
           madRectangle.rectHeight = children.length > 0 ? lineContainer.height + textNodes[ 0 ].height : 0;
+        }
+        else {
+          lineContainer.top = madRectangle.top + MAD_MARGIN_Y;
         }
 
         madRectangle.centerX = viewCenterX;
