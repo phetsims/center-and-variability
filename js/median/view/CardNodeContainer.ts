@@ -28,7 +28,6 @@ import Animation from '../../../../twixt/js/Animation.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import AsyncCounter from '../../common/model/AsyncCounter.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Matrix3 from '../../../../dot/js/Matrix3.js';
 import TEmitter from '../../../../axon/js/TEmitter.js';
 import MedianModel from '../../median/model/MedianModel.js';
@@ -54,6 +53,11 @@ import cvCardMovementSoundsV2006_mp3 from '../../../sounds/cvCardMovementSoundsV
 import cvSuccessOptions007Shorter_mp3 from '../../../sounds/cv-success-options-007-shorter_mp3.js'; // eslint-disable-line default-import-match-filename
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 import CAVQueryParameters from '../../common/CAVQueryParameters.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import IOType from '../../../../tandem/js/types/IOType.js';
+import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
+import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 
 const cvSuccessOptions007ShorterSoundClip = new SoundClip( cvSuccessOptions007Shorter_mp3, {
   initialOutputLevel: 0.2
@@ -85,7 +89,7 @@ type SelfOptions = {
   // info is the non-interactive version used in the info dialog
   parentContext: 'info' | 'accordionBox';
 };
-export type CardNodeContainerOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
+export type CardNodeContainerOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
 
 export default class CardNodeContainer extends Node {
 
@@ -112,7 +116,12 @@ export default class CardNodeContainer extends Node {
   private dataSortedNodeAnimation: Animation | null = null;
   private wasSortedBefore = true;
 
-  public constructor( model: MedianModel, options: CardNodeContainerOptions ) {
+  public constructor( model: MedianModel, providedOptions: CardNodeContainerOptions ) {
+
+    const options = optionize<CardNodeContainerOptions, SelfOptions, NodeOptions>()( {
+      phetioType: CardNodeContainerIO,
+      phetioState: false
+    }, providedOptions );
 
     super( options );
 
@@ -684,5 +693,19 @@ export default class CardNodeContainer extends Node {
     return new Range( 0, maxX );
   }
 }
+
+const CardNodeContainerIO = new IOType( 'CardNodeContainerIO', {
+  valueType: CardNodeContainer,
+  methods: {
+    getData: {
+      returnType: ArrayIO( NumberIO ),
+      parameterTypes: [],
+      implementation: function( this: CardNodeContainer ) {
+        return this.cardNodeCells.filter( cardNode => cardNode.soccerBall.valueProperty.value !== null ).map( cardNode => cardNode.soccerBall.valueProperty.value );
+      },
+      documentation: 'Gets the data points the cards in the order they appear.'
+    }
+  }
+} );
 
 centerAndVariability.register( 'CardNodeContainer', CardNodeContainer );
