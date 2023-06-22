@@ -8,7 +8,7 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import { LinearGradient, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
+import { Image, LinearGradient, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
 import SoccerBall from '../../soccer-common/model/SoccerBall.js';
 import CardNode from './CardNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -30,12 +30,12 @@ import AsyncCounter from '../../common/model/AsyncCounter.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Matrix3 from '../../../../dot/js/Matrix3.js';
-import DragIndicatorArrowNode from '../../soccer-common/view/DragIndicatorArrowNode.js';
 import TEmitter from '../../../../axon/js/TEmitter.js';
 import MedianModel from '../../median/model/MedianModel.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
+import handWithArrow_png from '../../../images/handWithArrow_png.js';
 
 // import cvCardMovementSound1_mp3 from '../../../sounds/cv-card-movement-sounds-001_mp3.js'; // eslint-disable-line default-import-match-filename
 // import cvCardMovementSound2_mp3 from '../../../sounds/cv-card-movement-sounds-002_mp3.js'; // eslint-disable-line default-import-match-filename
@@ -101,7 +101,7 @@ export default class CardNodeContainer extends Node {
   private readonly medianBarNode = new MedianBarNode( {
     barStyle: 'split'
   } );
-  private readonly dragIndicatorArrowNode: Node;
+  private readonly handWithArrowNode: Node;
 
   // Indicates whether the user has ever dragged a card. It's used to hide the drag indicator arrow after
   // the user dragged a card
@@ -320,13 +320,14 @@ export default class CardNodeContainer extends Node {
 
     this.addChild( this.cardLayer );
 
-    this.dragIndicatorArrowNode = new DragIndicatorArrowNode( {
-      tandem: options.tandem.createTandem( 'dragIndicatorArrowNode' )
+    this.handWithArrowNode = new Image( handWithArrow_png, {
+      tandem: options.tandem.createTandem( 'handWithArrowNode' ),
+      maxWidth: 25
     } );
 
     // Add or remove the arrow node child
-    const dragIndicatorContainer = new Node();
-    // this.addChild( dragIndicatorContainer ); // TODO: See https://github.com/phetsims/center-and-variability/issues/273
+    const handContainer = new Node();
+    this.addChild( handContainer );
 
     const updateDragIndicator = () => {
 
@@ -335,13 +336,13 @@ export default class CardNodeContainer extends Node {
 
       const hasPressedCard = this.hasDraggedCardProperty.value;
 
-      const newChildren = leftCard && rightCard && !hasPressedCard ? [ this.dragIndicatorArrowNode ] : [];
+      const newChildren = leftCard && rightCard && !hasPressedCard ? [ this.handWithArrowNode ] : [];
 
-      if ( newChildren.length !== dragIndicatorContainer.children.length ) {
-        dragIndicatorContainer.children = newChildren;
+      if ( newChildren.length !== handContainer.children.length ) {
+        handContainer.children = newChildren;
 
         if ( leftCard && rightCard ) {
-          this.dragIndicatorArrowNode.centerBottom = leftCard.bounds.centerTop.plusXY( 0, -8 );
+          this.handWithArrowNode.centerTop = leftCard.bounds.centerBottom.plusXY( 0, -8 );
         }
       }
     };
