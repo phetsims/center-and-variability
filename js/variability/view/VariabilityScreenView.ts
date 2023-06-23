@@ -81,17 +81,19 @@ export default class VariabilityScreenView extends CAVScreenView {
     const isIntervalHandle2BeingDraggedProperty = new BooleanProperty( false );
     const isIntervalAreaBeingDraggedProperty = new BooleanProperty( false );
 
-    this.backScreenViewLayer.addChild( new PredictionSlider( model.intervalTool1ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE,
+    const handle1 = new PredictionSlider( model.intervalTool1ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE,
       isIntervalHandle1BeingDraggedProperty, new BooleanProperty( false ), combineOptions<PredictionSliderOptions>( {
         valueProperty: model.intervalTool1ValueProperty,
         tandem: options.tandem.createTandem( 'variabilityIntervalPredictionTool1ValueNode' )
-      }, predictionSliderOptions ) ) );
+      }, predictionSliderOptions ) );
+    this.backScreenViewLayer.addChild( handle1 );
 
-    this.backScreenViewLayer.addChild( new PredictionSlider( model.intervalTool2ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE,
+    const handle2 = new PredictionSlider( model.intervalTool2ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE,
       isIntervalHandle2BeingDraggedProperty, new BooleanProperty( false ), combineOptions<PredictionSliderOptions>( {
         valueProperty: model.intervalTool2ValueProperty,
         tandem: options.tandem.createTandem( 'variabilityIntervalPredictionTool2ValueNode' )
-      }, predictionSliderOptions ) ) );
+      }, predictionSliderOptions ) );
+    this.backScreenViewLayer.addChild( handle2 );
 
     const variabilityAccordionBox = new VariabilityAccordionBox(
       model,
@@ -113,6 +115,12 @@ export default class VariabilityScreenView extends CAVScreenView {
         tandem: options.tandem.createTandem( 'intervalToolNode' )
       } );
     this.intervalToolLayer.addChild( intervalToolNode );
+
+    // Prevent multitouch on the handles when the main interval tool is being dragged, see https://github.com/phetsims/center-and-variability/issues/225
+    isIntervalAreaBeingDraggedProperty.link( isIntervalAreaBeingDragged => {
+      handle1.inputEnabled = !isIntervalAreaBeingDragged;
+      handle2.inputEnabled = !isIntervalAreaBeingDragged;
+    } );
 
     const intervalDistanceProperty = new DerivedProperty( [ model.intervalToolDeltaStableProperty ], interval => {
       return Utils.roundToInterval( Utils.linear( 0, 16, 2, 1, interval ), CAVQueryParameters.intervalToolSoundInterval );
