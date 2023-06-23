@@ -36,7 +36,7 @@ import IntervalToolNode from './IntervalToolNode.js';
 import ContinuousPropertySoundGenerator from '../../../../tambo/js/sound-generators/ContinuousPropertySoundGenerator.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 
-// TODO: https://github.com/phetsims/center-and-variability/issues/236 should this be in common code? It was copied from GFL
+// TODO: https://github.com/phetsims/center-and-variability/issues/307 should this be in common code? It was copied from GFL
 import saturatedSineLoopTrimmed_wav from '../../../sounds/saturatedSineLoopTrimmed_wav.js';
 import Utils from '../../../../dot/js/Utils.js';
 import CAVQueryParameters from '../../common/CAVQueryParameters.js';
