@@ -122,6 +122,11 @@ export default class VariabilityScreenView extends CAVScreenView {
       handle2.inputEnabled = !isIntervalAreaBeingDragged;
     } );
 
+    // Prevent multitouch on the intervalToolNode if the user is manipulating either of the arrow handles, see https://github.com/phetsims/center-and-variability/issues/225
+    Multilink.multilink( [ handle1.isKeyboardDragging, handle1.isMouseTouchDragging, handle2.isKeyboardDragging, handle2.isMouseTouchDragging ], ( keyboard1, mouse1, keyboard2, mouse2 ) => {
+      intervalToolNode.inputEnabled = !keyboard1 && !mouse1 && !keyboard2 && !mouse2;
+    } );
+
     const intervalDistanceProperty = new DerivedProperty( [ model.intervalToolDeltaStableProperty ], interval => {
       return Utils.roundToInterval( Utils.linear( 0, 16, 2, 1, interval ), CAVQueryParameters.intervalToolSoundInterval );
     } );

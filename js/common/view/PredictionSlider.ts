@@ -31,7 +31,7 @@ export type PredictionSliderOptions = SelfOptions & WithRequired<ParentOptions, 
 export default class PredictionSlider extends AccessibleSlider( Node, 0 ) {
 
   public constructor( predictionProperty: Property<number>, modelViewTransform: ModelViewTransform2, dragRange: Range,
-                      isMouseTouchDragging: Property<boolean>, isKeyboardDragging: Property<boolean>, providedOptions: PredictionSliderOptions ) {
+                      public readonly isMouseTouchDragging: Property<boolean>, public readonly isKeyboardDragging: Property<boolean>, providedOptions: PredictionSliderOptions ) {
 
     const thumbNode = new PredictionThumbNode( providedOptions.predictionThumbNodeOptions );
 
