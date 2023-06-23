@@ -52,7 +52,9 @@ export default class PredictionSlider extends AccessibleSlider( Node, 0 ) {
       },
       endDrag: () => {
         isKeyboardDragging.value = false;
-      }
+      },
+
+      allowTouchSnag: true
     }, providedOptions );
 
     super( options );
