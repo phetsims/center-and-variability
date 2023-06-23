@@ -50,7 +50,7 @@ import cvCardMovementSoundsV2004_mp3 from '../../../sounds/cvCardMovementSoundsV
 import cvCardMovementSoundsV2005_mp3 from '../../../sounds/cvCardMovementSoundsV2005_mp3.js';
 import cvCardMovementSoundsV2006_mp3 from '../../../sounds/cvCardMovementSoundsV2006_mp3.js';
 
-import cvSuccessOptions007Shorter_mp3 from '../../../sounds/cv-success-options-007-shorter_mp3.js'; // eslint-disable-line default-import-match-filename
+import cvSuccessOptions002_mp3 from '../../../sounds/cvSuccessOptions002_mp3.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 import optionize from '../../../../phet-core/js/optionize.js';
@@ -59,10 +59,10 @@ import IOType from '../../../../tandem/js/types/IOType.js';
 import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 
-const cvSuccessOptions007ShorterSoundClip = new SoundClip( cvSuccessOptions007Shorter_mp3, {
+const successSoundClip = new SoundClip( cvSuccessOptions002_mp3, {
   initialOutputLevel: 0.2
 } );
-soundManager.addSoundGenerator( cvSuccessOptions007ShorterSoundClip );
+soundManager.addSoundGenerator( successSoundClip );
 
 const cardMovementSounds = [
   cvCardMovementSoundsV2001_mp3,
@@ -205,7 +205,7 @@ export default class CardNodeContainer extends Node {
               } );
               this.dataSortedNodeAnimation.start();
 
-              cvSuccessOptions007ShorterSoundClip.play();
+              successSoundClip.play();
 
               const cardBeingDragged = this.cardNodeCells.filter( cardNode => cardNode.dragListener.isPressed ).length;
               const cardsAnimating = this.cardNodeCells.filter( cardNode => cardNode.animation ).length;
