@@ -123,7 +123,7 @@ export default class VariabilityScreenView extends CAVScreenView {
     } );
 
     // Prevent multitouch on the intervalToolNode if the user is manipulating either of the arrow handles, see https://github.com/phetsims/center-and-variability/issues/225
-    Multilink.multilink( [ handle1.isKeyboardDragging, handle1.isMouseTouchDragging, handle2.isKeyboardDragging, handle2.isMouseTouchDragging ], ( keyboard1, mouse1, keyboard2, mouse2 ) => {
+    Multilink.multilink( [ handle1.isKeyboardDraggingProperty, handle1.isMouseTouchDraggingProperty, handle2.isKeyboardDraggingProperty, handle2.isMouseTouchDraggingProperty ], ( keyboard1, mouse1, keyboard2, mouse2 ) => {
       intervalToolNode.inputEnabled = !keyboard1 && !mouse1 && !keyboard2 && !mouse2;
     } );
 

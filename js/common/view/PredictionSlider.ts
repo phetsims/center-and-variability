@@ -31,7 +31,7 @@ export type PredictionSliderOptions = SelfOptions & WithRequired<ParentOptions, 
 export default class PredictionSlider extends AccessibleSlider( Node, 0 ) {
 
   public constructor( predictionProperty: Property<number>, modelViewTransform: ModelViewTransform2, dragRange: Range,
-                      public readonly isMouseTouchDragging: Property<boolean>, public readonly isKeyboardDragging: Property<boolean>, providedOptions: PredictionSliderOptions ) {
+                      public readonly isMouseTouchDraggingProperty: Property<boolean>, public readonly isKeyboardDraggingProperty: Property<boolean>, providedOptions: PredictionSliderOptions ) {
 
     const thumbNode = new PredictionThumbNode( providedOptions.predictionThumbNodeOptions );
 
@@ -48,13 +48,11 @@ export default class PredictionSlider extends AccessibleSlider( Node, 0 ) {
 
       // Only for keyboard
       startDrag: () => {
-        isKeyboardDragging.value = true;
+        isKeyboardDraggingProperty.value = true;
       },
       endDrag: () => {
-        isKeyboardDragging.value = false;
-      },
-
-      allowTouchSnag: true
+        isKeyboardDraggingProperty.value = false;
+      }
     }, providedOptions );
 
     super( options );
@@ -83,11 +81,11 @@ export default class PredictionSlider extends AccessibleSlider( Node, 0 ) {
       tandem: options.tandem.createTandem( 'dragListener' ),
       positionProperty: dragPositionProperty,
       start: () => {
-        isMouseTouchDragging.value = true;
+        isMouseTouchDraggingProperty.value = true;
         this.moveToFront();
       },
       end: () => {
-        isMouseTouchDragging.value = false;
+        isMouseTouchDraggingProperty.value = false;
       }
     } ) );
   }
