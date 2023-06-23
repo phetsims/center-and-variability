@@ -23,7 +23,8 @@ export default class MADInfoNode extends VBox {
 
     const hasEnoughDataProperty = new DerivedProperty( [ sceneModel.numberOfDataPointsProperty ], numberOfDataPoints => numberOfDataPoints >= 1 );
 
-    const numeratorText = new Text( '', { fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE } );
+    // Limit the width of the sum in the numerator since it can get very wide
+    const numeratorText = new Text( '', { fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE, maxWidth: 700 } );
     const denominatorText = new Text( '', { fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE } );
 
     const resultNumeratorText = new Text( '', { fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE } );
