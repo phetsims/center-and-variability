@@ -13,6 +13,7 @@ import CAVConstants from '../../common/CAVConstants.js';
 import AccordionBoxTitleText from '../../common/view/AccordionBoxTitleText.js';
 import CAVColors from '../../common/CAVColors.js';
 import CAVInfoButton from '../../common/view/CAVInfoButton.js';
+import { AlignBox } from '../../../../scenery/js/imports.js';
 
 export default class MedianAccordionBox extends CAVAccordionBox {
 
@@ -35,15 +36,20 @@ export default class MedianAccordionBox extends CAVAccordionBox {
       AccordionBoxCheckboxFactory.getSortDataCheckboxItem( model.isSortingDataProperty, model.sceneModels[ 0 ], cardNodeContainer ),
       AccordionBoxCheckboxFactory.getMedianCheckboxWithoutIconItem( model.isTopMedianVisibleProperty, model )
     ], {
-      tandem: tandem.createTandem( 'checkboxGroup' ),
-      right: backgroundShape.bounds.width - CAVConstants.ACCORDION_BOX_HORIZONTAL_MARGIN,
-      centerY: backgroundShape.bounds.centerY
+      tandem: tandem.createTandem( 'checkboxGroup' )
+    } );
+
+    const checkboxGroupAlignBox = new AlignBox( checkboxGroup, {
+      alignBounds: backgroundShape.bounds,
+      xAlign: 'right',
+      yAlign: 'center',
+      margin: CAVConstants.ACCORDION_BOX_HORIZONTAL_MARGIN
     } );
 
     backgroundNode.addChild( new CAVInfoButton( model.isInfoVisibleProperty, backgroundShape, tandem.createTandem( 'infoButton' ) ) );
 
     backgroundNode.addChild( cardNodeContainer );
-    backgroundNode.addChild( checkboxGroup );
+    backgroundNode.addChild( checkboxGroupAlignBox );
 
     super( backgroundNode, {
       tandem: tandem,
