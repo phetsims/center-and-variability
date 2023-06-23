@@ -39,8 +39,8 @@ const cardPickUpSoundClip = new SoundClip( cvCardPickupSound_mp3, {
 soundManager.addSoundGenerator( cardPickUpSoundClip );
 
 const cardDropSoundClip = new SoundClip( cvCardDropSound_mp3, {
-  initialOutputLevel: 0.3,
-  initialPlaybackRate: CAVQueryParameters.cardMovementSoundPlaybackRate
+  initialOutputLevel: 0.1,
+  initialPlaybackRate: CAVQueryParameters.cardMovementSoundPlaybackRate * 1.3
 } );
 soundManager.addSoundGenerator( cardDropSoundClip );
 
