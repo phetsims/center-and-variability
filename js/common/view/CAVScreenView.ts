@@ -386,6 +386,9 @@ export default class CAVScreenView extends ScreenView {
       valueProperty: model.medianPredictionProperty,
       enabledRangeProperty: new Property<Range>( CAVConstants.PHYSICAL_RANGE ),
       roundToInterval: 0.5,
+
+      // always step 0.5 even if holding shift (median is always integer or half-integer)
+      shiftKeyboardStep: 0.5,
       visibleProperty: model.isMedianPredictionVisibleProperty,
       tandem: tandem
     } );
