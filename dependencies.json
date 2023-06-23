@@ -1,5 +1,5 @@
 {
-  "comment": "# center-and-variability 1.1.0-dev.8 Fri Jun 23 2023 12:56:39 GMT-0400 (Eastern Daylight Time)",
+  "comment": "# center-and-variability 1.1.0-dev.9 Fri Jun 23 2023 13:03:19 GMT-0400 (Eastern Daylight Time)",
   "assert": {
     "sha": "cc59d7f0574270924a886cb3d43a1b7507cd0553",
     "branch": "master"
@@ -17,7 +17,7 @@
     "branch": "master"
   },
   "center-and-variability": {
-    "sha": "b24053c31bad88cf1d46a590a40fe839f9c56ecb",
+    "sha": "0546a9529631e4ed35b042c30ca72c82a7bb8c4c",
     "branch": "master"
   },
   "chipper": {
