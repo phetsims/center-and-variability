@@ -425,6 +425,12 @@ export default class CardNodeContainer extends Node {
     if ( options.parentContext === 'info' ) {
       this.pickable = false;
     }
+
+    if ( options.parentContext === 'accordionBox' ) {
+      this.cardNodeCellsChangedEmitter.addListener( () => {
+        model.areCardsSortedProperty.value = this.isDataSorted();
+      } );
+    }
   }
 
   // The listener which is linked to the cardNode.positionProperty
@@ -612,14 +618,14 @@ export default class CardNodeContainer extends Node {
    * it is using the cell the card may be animating to.
    */
   public isDataSorted(): boolean {
-    let lastValue = null;
-    for ( let i = 0; i < this.cardNodeCells.length; i++ ) {
-      const value = this.cardNodeCells[ i ].soccerBall.valueProperty.value!;
 
-      if ( lastValue !== null && value < lastValue ) {
+    for ( let i = 1; i < this.cardNodeCells.length; i++ ) {
+      const previousValue = this.cardNodeCells[ i - 1 ].soccerBall.valueProperty.value;
+      const value = this.cardNodeCells[ i ].soccerBall.valueProperty.value;
+
+      if ( previousValue !== null && value !== null && value < previousValue ) {
         return false;
       }
-      lastValue = value;
     }
     return true;
   }

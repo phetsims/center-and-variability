@@ -27,6 +27,7 @@ export default class MedianModel extends CAVModel {
   public readonly cards: CardModel[];
   public readonly isSortingDataProperty: BooleanProperty;
   public readonly isTopMedianVisibleProperty: BooleanProperty;
+  public readonly areCardsSortedProperty: BooleanProperty;
 
   public constructor( providedOptions: MedianModelOptions ) {
 
@@ -67,6 +68,12 @@ export default class MedianModel extends CAVModel {
 
     this.isTopMedianVisibleProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isTopMedianVisibleProperty' )
+    } );
+
+    // For PhET-iO
+    this.areCardsSortedProperty = new BooleanProperty( true, {
+      tandem: options.tandem.createTandem( 'areCardsSortedProperty' ),
+      phetioReadOnly: true
     } );
   }
 
