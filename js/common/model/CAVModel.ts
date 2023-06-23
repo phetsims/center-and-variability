@@ -32,6 +32,7 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import VoidIO from '../../../../tandem/js/types/VoidIO.js';
 import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
+import ObjectLiteralIO from '../../../../tandem/js/types/ObjectLiteralIO.js';
 
 type SelfOptions = {
   instrumentMeanPredictionProperty: boolean;
@@ -176,6 +177,15 @@ const CAVModelIO = new IOType( 'CAVModelIO', {
         return this.selectedSceneModelProperty.value.getSortedStackedObjects().map( soccerBall => soccerBall.valueProperty.value );
       },
       documentation: 'Gets the data points for the currently selected scene model.'
+    },
+
+    getCurrentSceneData: {
+      returnType: ObjectLiteralIO,
+      parameterTypes: [],
+      implementation: function( this: CAVModel ) {
+        return phet.phetio.phetioEngine.phetioStateEngine.getState( this.selectedSceneModelProperty.value );
+      },
+      documentation: 'Gets the PhET-iO state for the currently selected scene model.'
     }
   }
 } );
