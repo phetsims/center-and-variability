@@ -2,8 +2,8 @@
 import dotRandom from '../../../../dot/js/dotRandom.js';
 
 /**
- * Strategies for how the kick distances are generated. State is represented in the CAVSceneModel for save/load and phet-io
- * customizability.
+ * Strategies for how the kick distances are generated. State is represented in the KickDistanceStrategy for save/load and phet-io
+ * customizability. KickDistanceStrategy is a container that switches between specific TKickDistanceStrategy implementations.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

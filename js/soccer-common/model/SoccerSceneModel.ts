@@ -8,7 +8,6 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-
 import soccerCommon from '../soccerCommon.js';
 import SoccerBall from './SoccerBall.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -34,8 +33,6 @@ import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioO
 import Multilink from '../../../../axon/js/Multilink.js';
 import { TKickDistanceStrategy } from './TKickDistanceStrategy.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
-import StringIO from '../../../../tandem/js/types/StringIO.js';
-import ObjectLiteralIO from '../../../../tandem/js/types/ObjectLiteralIO.js';
 import VoidIO from '../../../../tandem/js/types/VoidIO.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
@@ -47,6 +44,7 @@ import SoccerCommonConstants from '../SoccerCommonConstants.js';
 import SoccerCommonQueryParameters from '../SoccerCommonQueryParameters.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
+import KickDistanceStrategy from './KickDistanceStrategy.js';
 
 const kickSound = new SoundClip( basicKick_mp3, { initialOutputLevel: 0.2 } );
 soundManager.addSoundGenerator( kickSound );
@@ -106,31 +104,29 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
   // This is to avoid performance issues when the data is cleared.
   public isClearingData = false;
 
+  private readonly kickDistanceStrategy: KickDistanceStrategy;
+
   public constructor(
     public readonly maxKicksProperty: TReadOnlyProperty<number>,
     maxKicksChoices: number[],
-    public kickDistanceStrategy: TKickDistanceStrategy,
+    initialKickDistanceStrategy: TKickDistanceStrategy,
     public readonly physicalRange: Range,
-    public readonly kickDistanceStrategyFromStateObject: ( string: string ) => TKickDistanceStrategy,
+    kickDistanceStrategyFromStateObject: ( string: string ) => TKickDistanceStrategy,
     createSoccerBall: ( isFirstSoccerBall: boolean, options: { tandem: Tandem } ) => T,
     providedOptions: SoccerSceneModelOptions
   ) {
 
-    // TODO: should we move styles like this into studio? See https://github.com/phetsims/center-and-variability/issues/117
-    const pre = '<pre style="display: block; padding: 10px; border: 1px solid #ccc; border-radius: 3px; overflow: auto;">';
-    const code = '<code style="background-color: #f9f9f9; font-family: \'Courier New\', Courier, monospace;">';
-
     const options = optionize<SoccerSceneModelOptions, SelfOptions, PhetioObjectOptions>()( {
-      phetioState: true,
-      phetioType: CAVSceneModelIO,
-      phetioDocumentation: 'The model for the CAV scene, which includes the soccer balls and the soccer players. The ' +
-                           'values for the kicks can be specified using the state object. <br><ul>' +
-                           `<li>Random Skew: randomly chooses a left or right skewed distribution each time the sim is reset. (Recall that a right-skewed data set means most of the values fall to the left.) ${pre}${code}{ "distributionType": "randomSkew[currentlyRightSkewed]" }</code></pre></li>` +
-                           `<li>Probability Distribution by Distance: The distribution of probabilities of where the balls will land is represented as an un-normalized array of non-negative, floating-point numbers, one value for each location in the physical range e.g., ${pre}${code}{ "distributionType": "probabilityDistributionByDistance[0,0,1,3,5,7,3,3,1,1,0,0,0,0,1]" }</code></pre></li>` +
-                           `<li>Exact Location each ball will land (in order). Indicates the exact distance each ball will be kicked in order. Keep in mind the maximum number of kicks may be as high as 30, depending on the selection in the preferences dialog. e.g., ${pre}${code}{ "distributionType": "exactDistanceByIndex[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,2]" }</code></pre></li>`
+      phetioState: false,
+      phetioType: SoccerSceneModelIO,
+      phetioDocumentation: 'The model for the CAV scene, which includes the soccer balls and the soccer players.'
     }, providedOptions );
 
     super( options );
+
+    this.kickDistanceStrategy = new KickDistanceStrategy( initialKickDistanceStrategy, kickDistanceStrategyFromStateObject, {
+      tandem: options.tandem.createTandem( 'kickDistanceStrategy' )
+    } );
 
     const updateDataMeasures = () => this.updateDataMeasures();
 
@@ -393,11 +389,8 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
    * Resets the model.
    */
   public reset(): void {
-
     this.kickDistanceStrategy.reset();
-
     this.clearData();
-
     this.resetEmitter.emit();
   }
 
@@ -580,7 +573,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
     soccerPlayer.poseProperty.value = Pose.KICKING;
 
     const x1 = SoccerCommonQueryParameters.sameSpot ? 7 :
-               this.kickDistanceStrategy.getNextKickDistance( this.soccerBalls.indexOf( soccerBall ) );
+               this.kickDistanceStrategy.currentStrategy.getNextKickDistance( this.soccerBalls.indexOf( soccerBall ) );
 
     // Range equation is R=v0^2 sin(2 theta0) / g, see https://openstax.org/books/university-physics-volume-1/pages/4-3-projectile-motion
     // Equation 4.26
@@ -598,19 +591,6 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
     soccerBall.soccerPlayer = soccerPlayer;
 
     kickSound.play();
-  }
-
-  /**
-   * Gets the state object for this scene model. Includes the strategy for how kick distances are generated.
-   */
-  public toStateObject(): CAVSceneModelState {
-    return {
-      distributionType: this.kickDistanceStrategy.toStateObject()
-    };
-  }
-
-  public applyState( stateObject: CAVSceneModelState ): void {
-    this.kickDistanceStrategy = this.kickDistanceStrategyFromStateObject( stateObject.distributionType );
   }
 
   /**
@@ -641,22 +621,8 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
   }
 }
 
-type CAVSceneModelState = { distributionType: string };
-
-// TODO: This adds a new IOType stub into PhetioElementView. Is that how we want to continue doing this? See https://github.com/phetsims/center-and-variability/issues/117 But maybe the long term solution for that problem is https://github.com/phetsims/studio/issues/292
-// TODO: Review overlap between getValue/getValue and setState/getState.  Make sure both work correctly and in concert. See https://github.com/phetsims/center-and-variability/issues/117
-// TODO: Rename to SoccerSceneModelIO: see https://github.com/phetsims/center-and-variability/issues/117
-const CAVSceneModelIO = new IOType( 'CAVSceneModelIO', {
+const SoccerSceneModelIO = new IOType( 'SoccerSceneModelIO', {
   valueType: SoccerSceneModel,
-  stateSchema: {
-    distributionType: StringIO
-  },
-  toStateObject: ( cavSceneModel: SoccerSceneModel ) => {
-    return cavSceneModel.toStateObject();
-  },
-  applyState: ( cavSceneModel: SoccerSceneModel, stateObject: CAVSceneModelState ) => {
-    cavSceneModel.applyState( stateObject );
-  },
   methods: {
     setDataPoints: {
       returnType: VoidIO,
@@ -674,34 +640,6 @@ const CAVSceneModelIO = new IOType( 'CAVSceneModelIO', {
         return this.getSortedStackedObjects().map( soccerBall => soccerBall.valueProperty.value );
       },
       documentation: 'Gets the data points for the scene model.'
-    },
-
-    getValue: {
-      returnType: ObjectLiteralIO,
-      parameterTypes: [],
-      implementation: function( this: SoccerSceneModel ) {
-        return this.toStateObject();
-      },
-      documentation: 'Gets the current value of the CAVSceneModel'
-    },
-    getValidationError: {
-      returnType: NullableIO( StringIO ),
-      parameterTypes: [ ObjectLiteralIO ],
-      implementation: function( this: SoccerSceneModel, value: CAVSceneModelState ) {
-
-        // TODO: check validation, see https://github.com/phetsims/center-and-variability/issues/117
-        return null;
-      },
-      documentation: 'Checks to see if a proposed value is valid. Returns the first validation error, or null if the value is valid.'
-    },
-
-    setValue: {
-      returnType: VoidIO,
-      parameterTypes: [ ObjectLiteralIO ],
-      documentation: 'Sets the value for the scene model, including the kick distance strategy.',
-      implementation: function( this: SoccerSceneModel, state: CAVSceneModelState ) {
-        this.applyState( state );
-      }
     }
   }
 } );
