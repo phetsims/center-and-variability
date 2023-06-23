@@ -12,7 +12,6 @@ import centerAndVariability from '../../centerAndVariability.js';
 import { Node, NodeOptions } from '../../../../scenery/js/imports.js';
 import Property from '../../../../axon/js/Property.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import RangeNode from './RangeNode.js';
 import IQRNode from './IQRNode.js';
@@ -23,8 +22,9 @@ import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import CAVPlotNode from '../../common/view/CAVPlotNode.js';
 import IntervalToolNode from './IntervalToolNode.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
-export type CAVPlotOptions = NodeOptions & PickRequired<NodeOptions, 'tandem'>;
+export type CAVPlotOptions = WithRequired<NodeOptions, 'tandem'>;
 
 export default class VariabilityPlotNode extends Node {
   private toggleNode: ToggleNode<VariabilityMeasure, CAVPlotNode>;

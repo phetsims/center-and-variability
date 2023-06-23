@@ -48,14 +48,18 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       return {
         value: model.sceneModels[ i ],
         createNode: ( tandem: Tandem ) => new VariabilityPlotNode( model, model.variabilitySceneModels[ i ], playAreaNumberLineNode, {
-          tandem: tandem.createTandem1Indexed( 'plotNode', i ),
+          tandem: tandem,
           bottom: backgroundShape.bounds.height
         } )
+
+        // TODO: Add this line for https://github.com/phetsims/center-and-variability/issues/288
+        // tandemName: 'plotNode' + ( i + 1 )
       };
     } );
 
     const plotToggleNode = new ToggleNode( model.selectedSceneModelProperty, contents, {
-      bottom: backgroundShape.bounds.height
+      bottom: backgroundShape.bounds.height,
+      tandem: tandem.createTandem( 'plotToggleNode' )
     } );
 
     backgroundNode.addChild( new CAVInfoButton( model.isInfoVisibleProperty, backgroundShape, tandem.createTandem( 'infoButton' ) ) );

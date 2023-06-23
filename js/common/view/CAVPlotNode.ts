@@ -36,7 +36,7 @@ export const PLOT_NODE_TOP_MARGIN = 25;
 
 export default class CAVPlotNode extends Node {
 
-  private readonly dotLayer = new Node();
+  private readonly dataPointLayer;
   public readonly modelViewTransform: ModelViewTransform2;
   private readonly numberLineNode: NumberLineNode;
 
@@ -47,6 +47,10 @@ export default class CAVPlotNode extends Node {
     }, providedOptions );
 
     super( options );
+
+    this.dataPointLayer = new Node( {
+      tandem: options.tandem.createTandem( 'dataPointLayer' )
+    } );
 
     const backgroundNode = new Node();
     this.addChild( backgroundNode );
@@ -93,7 +97,7 @@ export default class CAVPlotNode extends Node {
       textProxy.centerX = tickMarkSetProxy.centerX;
     } );
 
-    backgroundNode.addChild( this.dotLayer );
+    backgroundNode.addChild( this.dataPointLayer );
 
     model.sceneModels.forEach( ( scene, sceneIndex ) => {
 
@@ -114,7 +118,7 @@ export default class CAVPlotNode extends Node {
         dataPointLayer.addChild( dotNode );
       } );
 
-      this.dotLayer.addChild( dataPointLayer );
+      this.dataPointLayer.addChild( dataPointLayer );
     } );
 
     // Align with the play are number line node, based on the tick mark locations
