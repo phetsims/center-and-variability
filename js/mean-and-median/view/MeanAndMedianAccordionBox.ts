@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
-import { AlignGroup, Text, TPaint, VBox } from '../../../../scenery/js/imports.js';
+import { AlignBox, AlignGroup, Text, TPaint, VBox } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
@@ -55,8 +55,15 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
       centerY: backgroundShape.bounds.centerY
     } );
 
+    const checkboxGroupAlignBox = new AlignBox( checkboxGroup, {
+      alignBounds: backgroundShape.bounds,
+      xAlign: 'right',
+      yAlign: 'center',
+      margin: CAVConstants.ACCORDION_BOX_HORIZONTAL_MARGIN
+    } );
+
     backgroundNode.addChild( new CAVInfoButton( model.isInfoVisibleProperty, backgroundShape, tandem.createTandem( 'infoButton' ) ) );
-    backgroundNode.addChild( checkboxGroup );
+    backgroundNode.addChild( checkboxGroupAlignBox );
     backgroundNode.addChild( meanAndMedianPlotNode );
 
     const createReadoutText = ( valueProperty: TReadOnlyProperty<number | null>, visibleProperty: TReadOnlyProperty<boolean>,
