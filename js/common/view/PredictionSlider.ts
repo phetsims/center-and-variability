@@ -8,7 +8,7 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import { DragListener, Node, NodeOptions } from '../../../../scenery/js/imports.js';
+import { DragListener, Node, NodeOptions, SceneryConstants } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Property from '../../../../axon/js/Property.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
@@ -52,7 +52,10 @@ export default class PredictionSlider extends AccessibleSlider( Node, 0 ) {
       },
       endDrag: () => {
         isKeyboardDraggingProperty.value = false;
-      }
+      },
+
+      phetioEnabledPropertyInstrumented: true,
+      disabledOpacity: SceneryConstants.DISABLED_OPACITY
     }, providedOptions );
 
     super( options );
