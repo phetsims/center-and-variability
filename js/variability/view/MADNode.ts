@@ -84,13 +84,14 @@ export default class MADNode extends CAVPlotNode {
 
       const textNodes: Text[] = [];
       const MAD_MARGIN_TOP = 5;
-      const MAD_MARGIN_BOTTOM = 8;
+      const MAD_MARGIN_BOTTOM_MIN = 5;
+      const MAD_MARGIN_BOTTOM_FACTOR = 1; // how many lineDeltaY's make up the additional bottom margin
 
       if ( soccerBalls.length > 0 ) {
         const mean = _.mean( soccerBalls.map( dot => dot.valueProperty.value ) );
 
-        // this was adjusted so that the bottom-most line passes through the middle of the bottom row of data points
-        const lineDeltaY = ( CAVConstants.VARIABILITY_PLOT_RECT_HEIGHT - ( MAD_MARGIN_TOP + MAD_MARGIN_BOTTOM ) ) / ( MAX_KICKS_PROPERTY.value - 1 );
+        // top margin is MAD_MARGIN_TOP, bottom margin is MAD_MARGIN_BOTTOM_MIN + MAD_MARGIN_BOTTOM_FACTOR * lineDeltaY
+        const lineDeltaY = ( CAVConstants.VARIABILITY_PLOT_RECT_HEIGHT - MAD_MARGIN_TOP - MAD_MARGIN_BOTTOM_MIN ) / ( MAX_KICKS_PROPERTY.value - 1 + MAD_MARGIN_BOTTOM_FACTOR );
 
         // Underneath the top of the rectangle
         let y = 0;
