@@ -71,12 +71,15 @@ export default class CAVPlotNode extends Node {
     );
     this.modelViewTransform = modelViewTransform;
 
+    const includeRangeOnXAxis = !( model instanceof VariabilityModel ) && options.parentContext === 'accordion';
+    const visibleProperty = model instanceof MeanAndMedianModel && options.parentContext === 'accordion' ? model.isTopMeanVisibleProperty :
+                            model instanceof VariabilityModel ? DerivedProperty.valueEqualsConstant( model.selectedVariabilityMeasureProperty, VariabilityMeasure.MAD ) :
+                            new BooleanProperty( true );
+
     this.numberLineNode = new CAVNumberLineNode(
       sceneModel.meanValueProperty,
       modelViewTransform,
-      model instanceof MeanAndMedianModel ? model.isTopMeanVisibleProperty :
-      model instanceof VariabilityModel ? DerivedProperty.valueEqualsConstant( model.selectedVariabilityMeasureProperty, VariabilityMeasure.MAD ) :
-      new BooleanProperty( true ),
+      visibleProperty,
       sceneModel.dataRangeProperty,
       CAVConstants.CHART_VIEW_WIDTH,
       CAVConstants.PHYSICAL_RANGE, {
@@ -85,7 +88,7 @@ export default class CAVPlotNode extends Node {
         includeMeanStroke: false,
         tandem: options.tandem.createTandem( 'numberLineNode' ),
         y: numberLinePositionY,
-        includeRangeOnXAxis: !( model instanceof VariabilityModel )
+        includeRangeOnXAxis: includeRangeOnXAxis
       } );
     backgroundNode.addChild( this.numberLineNode );
 

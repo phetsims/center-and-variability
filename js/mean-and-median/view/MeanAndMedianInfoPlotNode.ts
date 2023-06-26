@@ -20,6 +20,7 @@ import CAVColors from '../../common/CAVColors.js';
 import MedianBarNode from '../../common/view/MedianBarNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import { DATA_POINT_SCALE_PROPERTY } from '../../common/CAVConstants.js';
+import MeanIndicatorNode from '../../common/view/MeanIndicatorNode.js';
 
 
 type MeanAndMedianInfoPlotNodeOptions = StrictOmit<MeanAndMedianPlotNodeOptions, 'parentContext' | 'dataPointFill'> & EmptySelfOptions;
@@ -41,7 +42,8 @@ export default class MeanAndMedianInfoPlotNode extends MeanAndMedianPlotNode {
       headWidth: 9,
       tailWidth: MedianBarNode.LINE_WIDTH,
       fill: CAVColors.medianColorProperty,
-      stroke: null
+      stroke: null,
+      visible: false
     } );
 
     this.addChild( medianArrowNode );
@@ -57,11 +59,30 @@ export default class MeanAndMedianInfoPlotNode extends MeanAndMedianPlotNode {
         const y = modelViewTransfrom.modelToViewY( medianArrowYPosition * scale );
         const dataPointRadius = medianArrowYPosition === 0 ? 0 : modelViewTransfrom.modelToViewDeltaY( scale / 2 );
         medianArrowNode.centerBottom = new Vector2( x, y + dataPointRadius );
+        medianArrowNode.visible = true;
+      }
+      else {
+        medianArrowNode.visible = false;
       }
 
     };
 
+    const meanIndicatorNode = new MeanIndicatorNode( false, false );
+    this.addChild( meanIndicatorNode );
+
+    const updateMeanIndicatorNode = () => {
+      const meanValue = sceneModel.meanValueProperty.value;
+      if ( meanValue !== null ) {
+        meanIndicatorNode.centerTop = modelViewTransfrom.modelToViewXY( meanValue, 0 );
+        meanIndicatorNode.visible = true;
+      }
+      else {
+        meanIndicatorNode.visible = false;
+      }
+    };
+
     sceneModel.objectChangedEmitter.addListener( updateMedianArrow );
+    sceneModel.meanValueProperty.link( updateMeanIndicatorNode );
   }
 
 }
