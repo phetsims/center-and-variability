@@ -50,10 +50,9 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         createNode: ( tandem: Tandem ) => new VariabilityPlotNode( model, model.variabilitySceneModels[ i ], playAreaNumberLineNode, {
           tandem: tandem,
           bottom: backgroundShape.bounds.height
-        } )
+        } ),
 
-        // TODO: Add this line for https://github.com/phetsims/center-and-variability/issues/288
-        // tandemName: 'plotNode' + ( i + 1 )
+        tandemName: 'plotNode' + ( i + 1 )
       };
     } );
 

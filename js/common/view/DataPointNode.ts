@@ -15,8 +15,10 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import { SoccerBallPhase } from '../../soccer-common/model/SoccerBallPhase.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import CAVSoccerBall from '../model/CAVSoccerBall.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
-type DataPointNodeOptions = CAVObjectNodeOptions & { fill: TColor };
+type DataPointNodeOptions = StrictOmit<CAVObjectNodeOptions & { fill: TColor }, 'tandem'>;
 
 export default class DataPointNode extends SoccerObjectNode {
 
@@ -38,6 +40,10 @@ export default class DataPointNode extends SoccerObjectNode {
 
     const options = optionize<DataPointNodeOptions, EmptySelfOptions, CAVObjectNodeOptions>()( {
       translationStrategy: translationStrategy,
+
+      // Individual data points are not interactive and not PhET-iO instrumented, but the client can hide/show all data points
+      // at once using dataPointLayer.visibleProperty
+      tandem: Tandem.OPT_OUT,
 
       // Data point should be visible if the soccer ball landed
       visibleProperty: new DerivedProperty( [ soccerBall.soccerBallPhaseProperty ], phase =>
