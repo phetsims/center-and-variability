@@ -115,7 +115,7 @@ export default class MADNode extends CAVPlotNode {
           if ( options.parentContext === 'info' ) {
             const distanceToMean = Math.abs( soccerBall.valueProperty.value! - sceneModel.meanValueProperty.value! );
             const text = new Text( Utils.toFixed( distanceToMean, 1 ), {
-              font: new PhetFont( 10 ),
+              font: new PhetFont( { size: 10, weight: 'bold' } ),
               centerBottom: line.centerTop
             } );
             textNodes.push( text );
