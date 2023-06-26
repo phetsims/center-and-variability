@@ -302,8 +302,7 @@ export default class IQRNode extends CAVPlotNode {
         iqrBar.centerX = iqrRectangle.centerX;
 
         iqrBarLabel.string = sceneModel.iqrValueProperty.value!;
-        iqrBarLabel.centerX = iqrRectangle.centerX;
-        iqrBarLabel.bottom = iqrBar.top - 2;
+        iqrBarLabel.centerBottom = iqrBar.centerTop;
       }
 
       let outlierDisplayChildren: Path[] = [];

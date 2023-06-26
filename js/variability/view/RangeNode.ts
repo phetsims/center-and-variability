@@ -93,8 +93,7 @@ export default class RangeNode extends CAVPlotNode {
         rangeBar.bottom = rangeRectangle.top + CAVConstants.VARIABILITY_PLOT_BAR_OFFSET_Y;
 
         rangeTextReadout.string = sceneModel.rangeValueProperty.value + '';
-        rangeTextReadout.centerX = rangeRectangle.centerX;
-        rangeTextReadout.bottom = rangeBar.top - 5;
+        rangeTextReadout.centerBottom = rangeBar.centerTop;
       }
       const rangeVisibility = ( options.parentContext === 'info' && hasNonZeroRange ) ||
                               ( options.parentContext === 'accordion' && hasNonZeroRange && model.isRangeVisibleProperty.value );
