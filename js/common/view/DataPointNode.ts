@@ -19,8 +19,8 @@ import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 
 type SelfOptions = {
-  parentContext: 'accordion' | 'info';
   fill: TColor;
+  isMeanAndMedianInfoNode?: boolean;
 };
 
 type DataPointNodeOptions = StrictOmit<CAVObjectNodeOptions, 'tandem'> & SelfOptions;
@@ -45,6 +45,7 @@ export default class DataPointNode extends SoccerObjectNode {
 
     const options = optionize<DataPointNodeOptions, SelfOptions, CAVObjectNodeOptions>()( {
       translationStrategy: translationStrategy,
+      isMeanAndMedianInfoNode: false,
 
       // Individual data points are not interactive and not PhET-iO instrumented, but the client can hide/show all data points
       // at once using dataPointLayer.visibleProperty
@@ -68,7 +69,7 @@ export default class DataPointNode extends SoccerObjectNode {
 
     const viewRadius = modelViewTransform.modelToViewDeltaX( CAVObjectType.DATA_POINT.radius );
 
-    const medianHighlightVisibleProperty = options.parentContext === 'info' ? new DerivedProperty( [ soccerBall.isMedianObjectProperty ], isMedianObject => isMedianObject ) : soccerBall.isAnimationHighlightVisibleProperty;
+    const medianHighlightVisibleProperty = options.isMeanAndMedianInfoNode ? new DerivedProperty( [ soccerBall.isMedianObjectProperty ], isMedianObject => isMedianObject ) : soccerBall.isAnimationHighlightVisibleProperty;
 
     this.medianHighlight = new Circle( viewRadius + 1, {
       visibleProperty: medianHighlightVisibleProperty,

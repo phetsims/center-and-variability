@@ -29,6 +29,7 @@ import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 type SelfOptions = {
   dataPointFill: TColor;
   parentContext: 'accordion' | 'info';
+  isMeanAndMedianInfoPlot?: boolean;
 };
 
 export type CAVPlotNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
@@ -44,7 +45,8 @@ export default class CAVPlotNode extends Node {
   public constructor( model: CAVModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, providedOptions?: CAVPlotNodeOptions ) {
 
     const options = optionize<CAVPlotNodeOptions, SelfOptions, NodeOptions>()( {
-      excludeInvisibleChildrenFromBounds: true
+      excludeInvisibleChildrenFromBounds: true,
+      isMeanAndMedianInfoPlot: false
     }, providedOptions );
 
     super( options );
@@ -112,7 +114,7 @@ export default class CAVPlotNode extends Node {
 
         const dotNode = new DataPointNode( soccerBall,
           modelViewTransform, {
-            parentContext: options.parentContext,
+            isMeanAndMedianInfoNode: options.isMeanAndMedianInfoPlot,
             fill: options.dataPointFill
           } );
 

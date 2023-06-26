@@ -28,7 +28,8 @@ export default class MeanAndMedianInfoPlotNode extends MeanAndMedianPlotNode {
   public constructor( model: MeanAndMedianModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLine: NumberLineNode, providedOptions: MeanAndMedianInfoPlotNodeOptions ) {
     const options = optionize<MeanAndMedianInfoPlotNodeOptions, EmptySelfOptions, MeanAndMedianPlotNodeOptions>()( {
       parentContext: 'info',
-      dataPointFill: CAVColors.meanAndMedianDataPointFill
+      dataPointFill: CAVColors.meanAndMedianDataPointFill,
+      isMeanAndMedianInfoPlot: true
     }, providedOptions );
 
     super( model, sceneModel, playAreaNumberLine, options );
