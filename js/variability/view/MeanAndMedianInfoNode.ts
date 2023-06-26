@@ -18,12 +18,12 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import { PLOT_NODE_TOP_MARGIN } from '../../common/view/CAVPlotNode.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import InfoValuesNode from '../../common/view/InfoValuesNode.js';
-import MeanAndMedianPlotNode from '../../mean-and-median/view/MeanAndMedianPlotNode.js';
 import MeanAndMedianModel from '../../mean-and-median/model/MeanAndMedianModel.js';
 import CAVColors from '../../common/CAVColors.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import InfoTitleDescriptionRichText from '../../common/view/InfoTitleDescriptionRichText.js';
+import MeanAndMedianInfoPlotNode from '../../mean-and-median/view/MeanAndMedianInfoPlotNode.js';
 
 export default class MeanAndMedianInfoNode extends VBox {
   public constructor( model: MeanAndMedianModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
@@ -109,10 +109,9 @@ export default class MeanAndMedianInfoNode extends VBox {
         } ),
 
 
-        new MeanAndMedianPlotNode( model, sceneModel, playAreaNumberLineNode, {
+        new MeanAndMedianInfoPlotNode( model, sceneModel, playAreaNumberLineNode, {
           dataPointFill: CAVColors.variabilityDataPointFill,
-          parentContext: 'info',
-          tandem: options.tandem.createTandem( 'meanAndMedianNode' ),
+          tandem: options.tandem.createTandem( 'meanAndMedianPlotNode' ),
           layoutOptions: { topMargin: PLOT_NODE_TOP_MARGIN }
         } )
       ]

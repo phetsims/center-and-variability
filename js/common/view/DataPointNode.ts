@@ -11,14 +11,19 @@ import CAVConstants, { DATA_POINT_SCALE_PROPERTY } from '../CAVConstants.js';
 import PlotType from '../model/PlotType.js';
 import CAVColors from '../CAVColors.js';
 import Property from '../../../../axon/js/Property.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import { SoccerBallPhase } from '../../soccer-common/model/SoccerBallPhase.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import CAVSoccerBall from '../model/CAVSoccerBall.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 
-type DataPointNodeOptions = StrictOmit<CAVObjectNodeOptions & { fill: TColor }, 'tandem'>;
+type SelfOptions = {
+  parentContext: 'accordion' | 'info';
+  fill: TColor;
+};
+
+type DataPointNodeOptions = StrictOmit<CAVObjectNodeOptions, 'tandem'> & SelfOptions;
 
 export default class DataPointNode extends SoccerObjectNode {
 
@@ -38,7 +43,7 @@ export default class DataPointNode extends SoccerObjectNode {
       translationProperty.value = modelViewTransform.modelToViewPosition( scaledPosition );
     };
 
-    const options = optionize<DataPointNodeOptions, EmptySelfOptions, CAVObjectNodeOptions>()( {
+    const options = optionize<DataPointNodeOptions, SelfOptions, CAVObjectNodeOptions>()( {
       translationStrategy: translationStrategy,
 
       // Individual data points are not interactive and not PhET-iO instrumented, but the client can hide/show all data points
@@ -63,8 +68,10 @@ export default class DataPointNode extends SoccerObjectNode {
 
     const viewRadius = modelViewTransform.modelToViewDeltaX( CAVObjectType.DATA_POINT.radius );
 
+    const medianHighlightVisibleProperty = options.parentContext === 'info' ? new DerivedProperty( [ soccerBall.isMedianObjectProperty ], isMedianObject => isMedianObject ) : soccerBall.isAnimationHighlightVisibleProperty;
+
     this.medianHighlight = new Circle( viewRadius + 1, {
-      visibleProperty: soccerBall.isAnimationHighlightVisibleProperty,
+      visibleProperty: medianHighlightVisibleProperty,
       fill: CAVColors.medianColorProperty
     } );
     this.addChild( this.medianHighlight );

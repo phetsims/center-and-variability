@@ -23,7 +23,7 @@ import CAVConstants from '../../common/CAVConstants.js';
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
 };
-type MeanAndMedianPlotNodeOptions = SelfOptions & CAVPlotNodeOptions & PickRequired<CAVPlotNodeOptions, 'tandem'>;
+export type MeanAndMedianPlotNodeOptions = SelfOptions & CAVPlotNodeOptions & PickRequired<CAVPlotNodeOptions, 'tandem'>;
 
 export default class MeanAndMedianPlotNode extends CAVPlotNode {
 
@@ -31,7 +31,9 @@ export default class MeanAndMedianPlotNode extends CAVPlotNode {
     barStyle: 'continuous'
   } );
 
-  public constructor( model: MeanAndMedianModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, options: MeanAndMedianPlotNodeOptions ) {
+  public constructor( model: MeanAndMedianModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, providedOptions: MeanAndMedianPlotNodeOptions ) {
+
+    const options = providedOptions;
     super( model, sceneModel, playAreaNumberLineNode, options );
 
     const needAtLeastOneKickText = new Text( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {
@@ -60,7 +62,7 @@ export default class MeanAndMedianPlotNode extends CAVPlotNode {
       const MARGIN_Y = 5;
 
       // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card
-      if ( model.isTopMedianVisibleProperty.value && leftmostSoccerBall && medianValue !== null ) {
+      if ( options.parentContext === 'accordion' && model.isTopMedianVisibleProperty.value && leftmostSoccerBall && medianValue !== null ) {
 
         // No matter how high the stack of dots or x's is, we only want the median bar to go up to 5.
         // Assumes all the dots have the same radius. Also move up based on the notch height.
@@ -86,7 +88,7 @@ export default class MeanAndMedianPlotNode extends CAVPlotNode {
 
     };
 
-    const updateOneKickTextVisibility = ( ) => {
+    const updateOneKickTextVisibility = () => {
       needAtLeastOneKickText.visible = sceneModel.numberOfDataPointsProperty.value === 0 && ( options.parentContext === 'info' || model.isTopMeanVisibleProperty.value );
     };
 
