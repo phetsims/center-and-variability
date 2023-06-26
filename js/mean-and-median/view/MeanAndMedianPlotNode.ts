@@ -10,7 +10,6 @@
 
 import centerAndVariability from '../../centerAndVariability.js';
 import MedianBarNode from '../../common/view/MedianBarNode.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import CAVPlotNode, { CAVPlotNodeOptions, MIN_KICKS_TEXT_OFFSET } from '../../common/view/CAVPlotNode.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
@@ -19,11 +18,13 @@ import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import { ManualConstraint, Text } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVConstants from '../../common/CAVConstants.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
 };
-export type MeanAndMedianPlotNodeOptions = SelfOptions & CAVPlotNodeOptions & PickRequired<CAVPlotNodeOptions, 'tandem'>;
+export type MeanAndMedianPlotNodeOptions = SelfOptions & WithRequired<CAVPlotNodeOptions, 'tandem' | 'dataPointFill'>;
 
 export default class MeanAndMedianPlotNode extends CAVPlotNode {
 
@@ -33,7 +34,7 @@ export default class MeanAndMedianPlotNode extends CAVPlotNode {
 
   public constructor( model: MeanAndMedianModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, providedOptions: MeanAndMedianPlotNodeOptions ) {
 
-    const options = providedOptions;
+    const options = optionize<MeanAndMedianPlotNodeOptions, SelfOptions, CAVPlotNodeOptions>()( {}, providedOptions );
     super( model, sceneModel, playAreaNumberLineNode, options );
 
     const needAtLeastOneKickText = new Text( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {

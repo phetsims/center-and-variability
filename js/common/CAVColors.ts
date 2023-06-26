@@ -54,6 +54,7 @@ const CAVColors = {
   madRectangleColorProperty: new ProfileColorProperty( centerAndVariability, 'madRectangleColor', { default: new Color( '#cba3e6' ).withAlpha( 0.7 ) } ),
 
   variabilityDataPointFill: new ProfileColorProperty( centerAndVariability, 'variabilityDataPointFill', { default: '#949494' } ),
+  meanAndMedianDataPointFill: new ProfileColorProperty( centerAndVariability, 'meanAndMedianDataPointFill', { default: 'black' } ),
 
   // Darker gray than the ones in the plot area, to show up better in the radio button
   rangeMarkerColorProperty: new ProfileColorProperty( centerAndVariability, 'rangeMarkerColor', { default: new Color( '#717171' ) } ),

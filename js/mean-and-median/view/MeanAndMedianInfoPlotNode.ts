@@ -22,12 +22,13 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import { DATA_POINT_SCALE_PROPERTY } from '../../common/CAVConstants.js';
 
 
-type MeanAndMedianInfoPlotNodeOptions = StrictOmit<MeanAndMedianPlotNodeOptions, 'parentContext'> & EmptySelfOptions;
+type MeanAndMedianInfoPlotNodeOptions = StrictOmit<MeanAndMedianPlotNodeOptions, 'parentContext' | 'dataPointFill'> & EmptySelfOptions;
 
 export default class MeanAndMedianInfoPlotNode extends MeanAndMedianPlotNode {
   public constructor( model: MeanAndMedianModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLine: NumberLineNode, providedOptions: MeanAndMedianInfoPlotNodeOptions ) {
     const options = optionize<MeanAndMedianInfoPlotNodeOptions, EmptySelfOptions, MeanAndMedianPlotNodeOptions>()( {
-      parentContext: 'info'
+      parentContext: 'info',
+      dataPointFill: CAVColors.meanAndMedianDataPointFill
     }, providedOptions );
 
     super( model, sceneModel, playAreaNumberLine, options );

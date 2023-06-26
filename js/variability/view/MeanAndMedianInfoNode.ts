@@ -19,7 +19,6 @@ import { PLOT_NODE_TOP_MARGIN } from '../../common/view/CAVPlotNode.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import InfoValuesNode from '../../common/view/InfoValuesNode.js';
 import MeanAndMedianModel from '../../mean-and-median/model/MeanAndMedianModel.js';
-import CAVColors from '../../common/CAVColors.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import InfoTitleDescriptionRichText from '../../common/view/InfoTitleDescriptionRichText.js';
@@ -110,7 +109,6 @@ export default class MeanAndMedianInfoNode extends VBox {
 
 
         new MeanAndMedianInfoPlotNode( model, sceneModel, playAreaNumberLineNode, {
-          dataPointFill: CAVColors.variabilityDataPointFill,
           tandem: options.tandem.createTandem( 'meanAndMedianPlotNode' ),
           layoutOptions: { topMargin: PLOT_NODE_TOP_MARGIN }
         } )
