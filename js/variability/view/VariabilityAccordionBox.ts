@@ -156,6 +156,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         return new VBox( {
           align: 'left',
           spacing: 10,
+          excludeInvisibleChildrenFromBounds: false,
           children: [
             medianReadoutText,
             iqrReadoutText
@@ -192,6 +193,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         return new VBox( {
           spacing: 10,
           align: 'left',
+          excludeInvisibleChildrenFromBounds: false,
           children: [
             meanReadoutText,
             madReadoutText
