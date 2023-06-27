@@ -16,6 +16,7 @@ import CAVInfoButton from '../../common/view/CAVInfoButton.js';
 import { AlignBox } from '../../../../scenery/js/imports.js';
 
 export default class MedianAccordionBox extends CAVAccordionBox {
+  private readonly cardNodeContainer: CardNodeContainer;
 
   public constructor( model: MedianModel, layoutBounds: Bounds2, tandem: Tandem, top: number ) {
 
@@ -59,6 +60,12 @@ export default class MedianAccordionBox extends CAVAccordionBox {
       expandedProperty: model.isAccordionBoxExpandedProperty,
       fill: CAVColors.meanAndMedianAccordionBoxFillProperty
     } );
+
+    this.cardNodeContainer = cardNodeContainer;
+  }
+
+  public step( dt: number ): void {
+    this.cardNodeContainer.step( dt );
   }
 }
 

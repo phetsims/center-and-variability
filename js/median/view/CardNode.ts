@@ -21,8 +21,7 @@ import CardModel from '../model/CardModel.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import TEmitter from '../../../../axon/js/TEmitter.js';
-import dotRandom from '../../../../dot/js/dotRandom.js';
-import { cardMovementSoundClips } from './CardNodeContainer.js';
+import CardNodeContainer from './CardNodeContainer.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import cvCardPickupSound_mp3 from '../../../sounds/cvCardPickupSound_mp3.js';
@@ -52,6 +51,10 @@ export default class CardNode extends Node {
   public readonly positionProperty: Vector2Property;
   public readonly dragListener: DragListener;
 
+  // Track whether the card is being dragged, for purposes of hiding the drag indicator arrow when the user
+  // has dragged a sufficient amount and to play sound effects for the dragged card
+  public isDragging = false;
+
   // Emit how far the card has been dragged for purposes of hiding the drag indicator arrow when the user
   // has dragged a sufficient amount
   public readonly dragDistanceEmitter: TEmitter<[ number ]> = new Emitter( {
@@ -63,8 +66,12 @@ export default class CardNode extends Node {
   private animationTo: Vector2 | null = null;
 
   public static readonly CARD_DIMENSION = 43;
+  private cardsToTheLeft: CardNode[] = [];
 
-  public constructor( cardModel: CardModel, position: Vector2, getDragRange: () => Range, providedOptions: CardNodeOptions ) {
+  // Avoid sound effects for cards that landed recently, since cards sometimes swap when a new soccer ball lands and "sort data" is checked.
+  public timeSinceLanded = 0;
+
+  public constructor( public readonly cardNodeContainer: CardNodeContainer, public readonly cardModel: CardModel, position: Vector2, getDragRange: () => Range, providedOptions: CardNodeOptions ) {
 
     const cornerRadius = 10;
     const rectangle = new Rectangle( 0, 0, CardNode.CARD_DIMENSION, CardNode.CARD_DIMENSION, cornerRadius, cornerRadius, {
@@ -107,17 +114,13 @@ export default class CardNode extends Node {
 
     this.soccerBall = cardModel.soccerBall;
 
-    // Track whether the card is being dragged, for purposes of hiding the drag indicator arrow when the user
-    // has dragged a sufficient amount
-    let dragging = false;
-
     this.positionProperty.link( position => {
       const range = getDragRange();
       const before = this.translation.copy();
       this.translation = new Vector2( range.constrainValue( position.x ), 0 );
 
       const delta = this.translation.minus( before );
-      if ( dragging ) {
+      if ( this.isDragging ) {
         this.dragDistanceEmitter.emit( Math.abs( delta.x ) );
 
         // Set the relative position within the parent.
@@ -129,7 +132,7 @@ export default class CardNode extends Node {
       tandem: options.tandem.createTandem( 'dragListener' ),
       positionProperty: this.positionProperty,
       start: () => {
-        dragging = true;
+        this.isDragging = true;
         this.moveToFront();
 
         // Set the relative position within the parent.
@@ -137,7 +140,7 @@ export default class CardNode extends Node {
         cardPickUpSoundClip.play();
       },
       end: () => {
-        dragging = false;
+        this.isDragging = false;
 
         // Restore the relative position within the parent.
         card.setTranslation( 0, 0 );
@@ -151,7 +154,7 @@ export default class CardNode extends Node {
     this.addLinkedElement( cardModel );
   }
 
-  public animateTo( destination: Vector2, duration: number, audio: boolean ): void {
+  public animateTo( destination: Vector2, duration: number ): void {
 
     if ( this.animation ) {
 
@@ -188,14 +191,6 @@ export default class CardNode extends Node {
       this.animation = null;
       this.animationTo = null;
     } );
-
-    if ( audio ) {
-      const randomSound = cardMovementSoundClips[ dotRandom.nextInt( cardMovementSoundClips.length ) ];
-
-      // Moving to the right, go up in pitch by 4 semitones
-      randomSound.setPlaybackRate( CAVQueryParameters.cardMovementSoundPlaybackRate * ( destination.x < this.positionProperty.value.x ? 1 : Math.pow( 2, 4 / 12 ) ) );
-      randomSound.play();
-    }
 
     this.animation.start();
   }

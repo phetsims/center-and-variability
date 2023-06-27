@@ -36,13 +36,6 @@ import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import handWithArrow_png from '../../../images/handWithArrow_png.js';
 
-// import cvCardMovementSound1_mp3 from '../../../sounds/cv-card-movement-sounds-001_mp3.js'; // eslint-disable-line default-import-match-filename
-// import cvCardMovementSound2_mp3 from '../../../sounds/cv-card-movement-sounds-002_mp3.js'; // eslint-disable-line default-import-match-filename
-// import cvCardMovementSound3_mp3 from '../../../sounds/cv-card-movement-sounds-003_mp3.js'; // eslint-disable-line default-import-match-filename
-// import cvCardMovementSound4_mp3 from '../../../sounds/cv-card-movement-sounds-004_mp3.js'; // eslint-disable-line default-import-match-filename
-// import cvCardMovementSound5_mp3 from '../../../sounds/cv-card-movement-sounds-005_mp3.js'; // eslint-disable-line default-import-match-filename
-// import cvCardMovementSound6_mp3 from '../../../sounds/cv-card-movement-sounds-006_mp3.js'; // eslint-disable-line default-import-match-filename
-// import cvCardMovementSound7_mp3 from '../../../sounds/cv-card-movement-sounds-007_mp3.js'; // eslint-disable-line default-import-match-filename
 import cvCardMovementSoundsV2001_mp3 from '../../../sounds/cvCardMovementSoundsV2001_mp3.js';
 import cvCardMovementSoundsV2002_mp3 from '../../../sounds/cvCardMovementSoundsV2002_mp3.js';
 import cvCardMovementSoundsV2003_mp3 from '../../../sounds/cvCardMovementSoundsV2003_mp3.js';
@@ -52,7 +45,6 @@ import cvCardMovementSoundsV2006_mp3 from '../../../sounds/cvCardMovementSoundsV
 
 import cvSuccessOptions002_mp3 from '../../../sounds/cvSuccessOptions002_mp3.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
-import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
@@ -61,6 +53,7 @@ import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Property from '../../../../axon/js/Property.js';
 import TProperty from '../../../../axon/js/TProperty.js';
+import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 
 const successSoundClip = new SoundClip( cvSuccessOptions002_mp3, {
   initialOutputLevel: 0.2
@@ -119,6 +112,10 @@ export default class CardNodeContainer extends Node {
   private dataSortedNodeAnimation: Animation | null = null;
   private wasSortedBefore = true;
 
+  // For sonification, order the active, non-displaced cards appeared in the last step
+  private lastStepOrder: CardNode[] = [];
+  private parentContext: 'info' | 'accordion';
+
   public constructor( model: MedianModel, providedOptions: CardNodeContainerOptions ) {
 
     const options = optionize<CardNodeContainerOptions, SelfOptions, NodeOptions>()( {
@@ -127,6 +124,8 @@ export default class CardNodeContainer extends Node {
     }, providedOptions );
 
     super( options );
+
+    this.parentContext = options.parentContext;
 
     this.model = model;
 
@@ -142,7 +141,7 @@ export default class CardNodeContainer extends Node {
     this.cardWithHandAttachedProperty = new Property( null );
 
     this.cardNodes = model.cards.map( ( cardModel, index ) => {
-      const cardNode = new CardNode( cardModel, new Vector2( 0, 0 ), () => this.getDragRange(), {
+      const cardNode = new CardNode( this, cardModel, new Vector2( 0, 0 ), () => this.getDragRange(), {
         tandem: options.tandem.createTandem( 'cardNodes' ).createTandem1Indexed( 'cardNode', index )
       } );
 
@@ -161,7 +160,7 @@ export default class CardNodeContainer extends Node {
         if ( !isPressed && !isSettingPhetioStateProperty.value ) {
 
           // Animate the dropped card home
-          this.animateToHomeCell( cardNode, 0.2, true );
+          this.animateToHomeCell( cardNode, 0.2 );
 
           if ( this.isReadyForCelebration ) {
             const inProgressAnimations = this.cardNodeCells.filter( cardNode => cardNode.animation )
@@ -261,14 +260,13 @@ export default class CardNodeContainer extends Node {
           }
 
           this.cardNodeCells.splice( targetIndex, 0, cardNode );
+          cardNode.timeSinceLanded = 0;
           this.setAtHomeCell( cardNode );
 
           // Animate all displaced cards
           for ( let i = targetIndex; i < this.cardNodeCells.length; i++ ) {
-
-            // When animating a card due to another card being created, it means a soccer ball just landed, and we
-            // want to hear the audio from the ball landing rather than from the card, so skip audio in this case.
-            this.animateToHomeCell( this.cardNodeCells[ i ], 0.3, false );
+            this.cardNodeCells[ i ].positionProperty.value = this.cardNodeCells[ i ].positionProperty.value.plusXY( 1, 0 );
+            this.animateToHomeCell( this.cardNodeCells[ i ], 0.3 );
           }
 
           this.cardNodeCellsChangedEmitter.emit();
@@ -506,8 +504,7 @@ export default class CardNodeContainer extends Node {
           this.cardNodeCells[ closestCell ] = cardNode;
           this.cardNodeCells[ originalCell ] = currentOccupant;
 
-          // Just animated the displaced occupant, do not play sound for it since it overlaps with the dragged sound
-          this.animateToHomeCell( currentOccupant, 0.3, false );
+          this.animateToHomeCell( currentOccupant, 0.3 );
 
           // See if the user unsorted the data.  If so, uncheck the "Sort Data" checkbox
           if ( this.model.isSortingDataProperty.value && !this.isDataSorted() ) {
@@ -518,12 +515,6 @@ export default class CardNodeContainer extends Node {
           this.isReadyForCelebration = this.isDataSorted() && !this.wasSortedBefore;
 
           this.cardNodeCellsChangedEmitter.emit();
-
-          const randomSound = cardMovementSoundClips[ dotRandom.nextInt( cardMovementSoundClips.length ) ];
-
-          // Moving to the right, go up in pitch by 4 semitones
-          randomSound.setPlaybackRate( CAVQueryParameters.cardMovementSoundPlaybackRate * ( dragCell < originalCell ? 1 : Math.pow( 2, 4 / 12 ) ) );
-          randomSound.play();
         }
       }
     };
@@ -687,8 +678,8 @@ export default class CardNodeContainer extends Node {
     return new Vector2( getCardPositionX( homeIndex ), 0 );
   }
 
-  public animateToHomeCell( cardNode: CardNode, duration: number, audio: boolean ): void {
-    cardNode.animateTo( this.getHomePosition( cardNode ), duration, audio );
+  public animateToHomeCell( cardNode: CardNode, duration: number ): void {
+    cardNode.animateTo( this.getHomePosition( cardNode ), duration );
   }
 
   public setAtHomeCell( cardNode: CardNode ): void {
@@ -714,37 +705,87 @@ export default class CardNodeContainer extends Node {
 
   private sortData( allowSound: boolean ): void {
 
-    // Only allow one sound in each direction.  Playing too many swamps the audio channel and you don't hear e.g. if a soccer ball lands
-    let readyToPlayRightSound = true;
-    let readyToPlayLeftSound = true;
-
     // If the card is visible, the value property should be non-null
     const sorted = _.sortBy( this.cardNodeCells, cardNode => cardNode.soccerBall.valueProperty.value );
     this.cardNodeCells.length = 0;
     this.cardNodeCells.push( ...sorted );
-    this.cardNodeCells.forEach( cardNode => {
-
-      const direction = cardNode.positionProperty.value.x < this.getHomePosition( cardNode ).x ? 'left' :
-                        cardNode.positionProperty.value.x > this.getHomePosition( cardNode ).x ? 'right' :
-                        'none';
-
-      this.animateToHomeCell( cardNode, 0.5, allowSound && ( ( direction === 'left' && readyToPlayLeftSound ) ||
-                                                             ( direction === 'right' && readyToPlayRightSound ) ) );
-
-      if ( direction === 'left' ) {
-        readyToPlayLeftSound = false;
-      }
-      else if ( direction === 'right' ) {
-        readyToPlayRightSound = false;
-      }
-
-    } );
+    this.cardNodeCells.forEach( cardNode => this.animateToHomeCell( cardNode, 0.5 ) );
     this.cardNodeCellsChangedEmitter.emit();
   }
 
   private getDragRange(): Range {
     const maxX = this.cardNodeCells.length > 0 ? getCardPositionX( this.cardNodeCells.length - 1 ) : 0;
     return new Range( 0, maxX );
+  }
+
+  /**
+   * Play sound effects whenever two cards pass each other. If the user is dragging it, that card gets precedence for choosing the pitch.  Moving to the right is a higher pitch. If one card animates past another, that movement direction chooses the pitch. If both cards are animating, use an in-between pitch.
+   */
+  public step( dt: number ): void {
+
+    // Only consider cards that landed more than 0.1 seconds ago, to avoid an edge case that was mistakenly playing audio when soccer balls land
+    const activeCardNodes = this.cardNodes.filter( cardNode => cardNode.cardModel.isActiveProperty.value && cardNode.timeSinceLanded > 0.1 );
+
+    // Determine the sort order to see which cards have swapped
+    const newOrder = _.sortBy( activeCardNodes, cardNode => cardNode.positionProperty.value.x );
+
+    // Consider only cards which are both in the old and new lists
+    const oldList = this.lastStepOrder.filter( cardNode => newOrder.includes( cardNode ) );
+    const newList = newOrder.filter( cardNode => this.lastStepOrder.includes( cardNode ) );
+
+    const swappedPairs: Array<{ first: CardNode; second: CardNode; direction: string }> = [];
+
+    // Compare the old list and the new list
+    for ( let i = 0; i < oldList.length; i++ ) {
+      if ( oldList[ i ] !== newList[ i ] ) {
+        // If the items at the same index in both lists are different, then they have swapped places.
+        const direction = newList.indexOf( oldList[ i ] ) > i ? 'right' : 'left';
+        const pairExists = swappedPairs.some( pair => pair.first === newList[ i ] && pair.second === oldList[ i ] );
+
+        if ( !pairExists ) {
+          swappedPairs.push( { first: oldList[ i ], second: newList[ i ], direction: direction } );
+        }
+      }
+    }
+
+    const opposite = ( direction: string ) => direction === 'left' ? 'right' : 'left';
+
+    // You now have a list of pairs of CardNodes that swapped places and their directions
+    swappedPairs.forEach( pair => {
+
+      // If the user dragged a card, that takes precedence for choosing the pitch
+      const directionToPlayFromInteraction = pair.first.isDragging && !pair.second.isDragging ? pair.direction :
+                                             pair.second.isDragging && !pair.first.isDragging ? opposite( pair.direction ) :
+                                             'none';
+
+      // If one card animated past a stationary card, the moving card chooses the pitch.
+      // If both cards are animating, use an in-between pitch.
+      const directionToPlayFromAnimation = pair.first.animation && !pair.second.animation ? pair.direction :
+                                           pair.second.animation && !pair.first.animation ? opposite( pair.direction ) :
+                                           'both';
+
+      const directionToPlay = directionToPlayFromInteraction !== 'none' ? directionToPlayFromInteraction : directionToPlayFromAnimation;
+
+      const availableSoundClips = cardMovementSoundClips.filter( clip => !clip.isPlayingProperty.value );
+
+      if ( ( directionToPlay === 'left' || directionToPlay === 'right' || directionToPlay === 'both' ) && availableSoundClips.length > 0 ) {
+
+        const randomClip = availableSoundClips[ dotRandom.nextInt( availableSoundClips.length ) ];
+
+        // Moving to the right, go up in pitch by 4 semitones
+        randomClip.setPlaybackRate( CAVQueryParameters.cardMovementSoundPlaybackRate *
+                                    ( directionToPlay === 'left' ? 1 :
+                                      directionToPlay === 'right' ? Math.pow( 2, 4 / 12 ) :
+                                      directionToPlay === 'both' ? Math.pow( 2, 2 / 12 ) : 0 ) );
+        randomClip.play();
+      }
+    } );
+
+    this.lastStepOrder = newOrder;
+
+    this.cardNodes.forEach( cardNode => {
+      cardNode.timeSinceLanded += dt;
+    } );
   }
 }
 

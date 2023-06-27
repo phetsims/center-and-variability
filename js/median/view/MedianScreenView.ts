@@ -27,6 +27,7 @@ type MedianScreenViewOptions =
   & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
 
 export default class MedianScreenView extends CAVScreenView {
+  private readonly medianAccordionBox: MedianAccordionBox;
 
   public constructor( model: MedianModel, providedOptions: MedianScreenViewOptions ) {
 
@@ -39,12 +40,12 @@ export default class MedianScreenView extends CAVScreenView {
 
     super( model, options );
 
-    this.setAccordionBox( new MedianAccordionBox(
+    this.medianAccordionBox = new MedianAccordionBox(
       model,
       this.layoutBounds,
       options.tandem.createTandem( 'accordionBox' ),
-      this.questionBar.bottom + CAVConstants.ACCORDION_BOX_TOP_MARGIN )
-    );
+      this.questionBar.bottom + CAVConstants.ACCORDION_BOX_TOP_MARGIN );
+    this.setAccordionBox( this.medianAccordionBox );
 
     const iconGroup = new AlignGroup();
 
@@ -73,6 +74,12 @@ export default class MedianScreenView extends CAVScreenView {
         infoDialog.hide();
       }
     } );
+  }
+
+
+  public override step( dt: number ): void {
+    super.step( dt );
+    this.medianAccordionBox.step( dt );
   }
 }
 
