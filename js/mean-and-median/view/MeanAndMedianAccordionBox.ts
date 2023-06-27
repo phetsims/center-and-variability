@@ -19,7 +19,6 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import AccordionBoxTitleNode from '../../common/view/AccordionBoxTitleNode.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
-import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import CAVInfoButton from '../../common/view/CAVInfoButton.js';
 import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js';
 import PlotType from '../../common/model/PlotType.js';
