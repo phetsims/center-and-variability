@@ -338,6 +338,15 @@ export default class CardNodeContainer extends Node {
     const handContainer = new Node();
     this.addChild( handContainer );
 
+    const fadeInAnimation = new Animation( {
+      duration: 0.75,
+      targets: [ {
+        property: this.handWithArrowNode.opacityProperty,
+        to: 1,
+        easing: Easing.QUADRATIC_IN_OUT
+      } ]
+    } );
+
     const updateDragIndicator = () => {
 
       const leftCard = this.cardNodeCells[ 0 ];
@@ -345,13 +354,17 @@ export default class CardNodeContainer extends Node {
 
       const hasPressedCard = this.hasDraggedCardProperty.value;
 
-      const newChildren = leftCard && rightCard && !hasPressedCard ? [ this.handWithArrowNode ] : [];
+      const showHandWithArrowNode = leftCard && rightCard && !hasPressedCard;
+      const newChildren = showHandWithArrowNode ? [ this.handWithArrowNode ] : [];
 
       if ( newChildren.length !== handContainer.children.length ) {
         handContainer.children = newChildren;
 
-        if ( leftCard && rightCard ) {
+        if ( leftCard && rightCard && showHandWithArrowNode ) {
+          this.handWithArrowNode.opacity = 0;
           this.handWithArrowNode.centerTop = leftCard.bounds.centerBottom.plusXY( 0, -8 );
+
+          fadeInAnimation.start();
         }
       }
     };
