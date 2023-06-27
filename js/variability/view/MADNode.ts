@@ -114,9 +114,15 @@ export default class MADNode extends CAVPlotNode {
 
           if ( options.parentContext === 'info' ) {
             const distanceToMean = Math.abs( soccerBall.valueProperty.value! - sceneModel.meanValueProperty.value! );
+
+            // place the text a half-integer inward from the tip of the line so that it doesn't occlude any data points
+            const textX = this.modelViewTransform.modelToViewX( soccerBall.valueProperty.value!
+                                                                - 0.5 * Math.sign( soccerBall.valueProperty.value! - sceneModel.meanValueProperty.value! ) );
+
             const text = new Text( Utils.toFixed( distanceToMean, 1 ), {
-              font: new PhetFont( { size: 10, weight: 'bold' } ),
-              centerBottom: line.centerTop
+              font: new PhetFont( { size: 10 } ),
+              centerX: textX,
+              bottom: line.top
             } );
             textNodes.push( text );
 
@@ -133,7 +139,7 @@ export default class MADNode extends CAVPlotNode {
             children.push( text );
           }
 
-          y += options.parentContext === 'info' ? 11 : lineDeltaY;
+          y += options.parentContext === 'info' ? 12 : lineDeltaY;
         } );
       }
 
