@@ -29,7 +29,7 @@ export default class MedianAccordionBox extends CAVAccordionBox {
       tandem: tandem.createTandem( 'cardNodeContainer' ),
       x: CAVConstants.ACCORDION_BOX_HORIZONTAL_MARGIN,
       y: backgroundShape.bounds.centerY - 5,
-      parentContext: 'accordionBox'
+      parentContext: 'accordion'
     } );
 
     const checkboxGroup = new VerticalCheckboxGroup( [

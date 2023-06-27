@@ -90,7 +90,7 @@ type SelfOptions = {
 
   // accordionBox is the full-featured interactive version with drag input and sound effects
   // info is the non-interactive version used in the info dialog
-  parentContext: 'info' | 'accordionBox';
+  parentContext: 'info' | 'accordion';
 };
 export type CardNodeContainerOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
 
@@ -108,7 +108,6 @@ export default class CardNodeContainer extends Node {
   private readonly medianBarNode = new MedianBarNode( {
     barStyle: 'split'
   } );
-  private readonly handWithArrowNode: Node;
 
   // Indicates whether the user has ever dragged a card. It's used to hide the drag indicator arrow after
   // the user dragged a card
@@ -336,44 +335,45 @@ export default class CardNodeContainer extends Node {
 
     this.addChild( this.cardLayer );
 
-    this.handWithArrowNode = new Image( handWithArrow_png, {
-      tandem: options.tandem.createTandem( 'handWithArrowNode' ),
-      opacity: 0,
-      maxWidth: 25
-    } );
+    if ( options.parentContext === 'accordion' ) {
+      const handWithArrowNode = new Image( handWithArrow_png, {
+        tandem: options.tandem.createTandem( 'handWithArrowNode' ),
+        opacity: 0,
+        maxWidth: 25
+      } );
 
-    this.addChild( this.handWithArrowNode );
+      this.addChild( handWithArrowNode );
 
-    // Fade in the hand with arrow node
-    const fadeInAnimation = new Animation( {
-      duration: 0.4,
-      targets: [ {
-        property: this.handWithArrowNode.opacityProperty,
-        to: 1,
-        easing: Easing.QUADRATIC_IN_OUT
-      } ]
-    } );
+      // Fade in the hand with arrow node
+      const fadeInAnimation = new Animation( {
+        duration: 0.4,
+        targets: [ {
+          property: handWithArrowNode.opacityProperty,
+          to: 1,
+          easing: Easing.QUADRATIC_IN_OUT
+        } ]
+      } );
 
-    // Fade out the hand with arrow node
-    const fadeOutAnimation = new Animation( {
-      duration: 0.4,
-      targets: [ {
-        property: this.handWithArrowNode.opacityProperty,
-        to: 0,
-        easing: Easing.QUADRATIC_IN_OUT
-      } ]
-    } );
+      // Fade out the hand with arrow node
+      const fadeOutAnimation = new Animation( {
+        duration: 0.4,
+        targets: [ {
+          property: handWithArrowNode.opacityProperty,
+          to: 0,
+          easing: Easing.QUADRATIC_IN_OUT
+        } ]
+      } );
 
-    const updateDragIndicator = () => {
+      const updateDragIndicator = () => {
 
-      const leftCard = this.cardNodeCells[ 0 ] || null;
-      const rightCard = this.cardNodeCells[ 1 ] || null;
+        const leftCard = this.cardNodeCells[ 0 ] || null;
+        const rightCard = this.cardNodeCells[ 1 ] || null;
 
-      // if the user has not yet dragged a card and there are multiple cards showing, fade in the drag indicator
-      if ( !this.hasDraggedCardProperty.value && leftCard && rightCard ) {
+        // if the user has not yet dragged a card and there are multiple cards showing, fade in the drag indicator
+        if ( !this.hasDraggedCardProperty.value && leftCard && rightCard ) {
 
           // Position below the card
-          this.handWithArrowNode.centerTop = leftCard.bounds.centerBottom.plusXY( 0, -8 );
+          handWithArrowNode.centerTop = leftCard.bounds.centerBottom.plusXY( 0, -8 );
 
           // Expand the card's touch + mouse area to cover the hand. Much simpler than adding a DragListener.createForwardingListener
           const newArea = new Bounds2( leftCard.localBounds.minX, leftCard.localBounds.minY, leftCard.localBounds.maxX, leftCard.localBounds.maxY + 30 );
@@ -382,26 +382,27 @@ export default class CardNodeContainer extends Node {
           this.cardWithHandAttachedProperty.value = leftCard;
 
           fadeInAnimation.start();
-      }
-
-      // if the user has dragged a card and the hand indicator is showing, fade the hand indicator out
-      if ( this.hasDraggedCardProperty.value && this.cardWithHandAttachedProperty.value !== null ) {
-
-        // Restore the ordinary pointer areas
-        this.cardWithHandAttachedProperty.value.mouseArea = this.cardWithHandAttachedProperty.value.localBounds;
-        this.cardWithHandAttachedProperty.value.touchArea = this.cardWithHandAttachedProperty.value.localBounds;
-        this.cardWithHandAttachedProperty.value = null;
-
-        if ( fadeInAnimation.animatingProperty.value ) {
-          fadeInAnimation.stop();
         }
 
-        fadeOutAnimation.start();
-      }
-    };
+        // if the user has dragged a card and the hand indicator is showing, fade the hand indicator out
+        if ( this.hasDraggedCardProperty.value && this.cardWithHandAttachedProperty.value !== null ) {
 
-    this.cardNodeCellsChangedEmitter.addListener( updateDragIndicator );
-    this.hasDraggedCardProperty.link( updateDragIndicator );
+          // Restore the ordinary pointer areas
+          this.cardWithHandAttachedProperty.value.mouseArea = this.cardWithHandAttachedProperty.value.localBounds;
+          this.cardWithHandAttachedProperty.value.touchArea = this.cardWithHandAttachedProperty.value.localBounds;
+          this.cardWithHandAttachedProperty.value = null;
+
+          if ( fadeInAnimation.animatingProperty.value ) {
+            fadeInAnimation.stop();
+          }
+
+          fadeOutAnimation.start();
+        }
+      };
+
+      this.cardNodeCellsChangedEmitter.addListener( updateDragIndicator );
+      this.hasDraggedCardProperty.link( updateDragIndicator );
+    }
 
     const medianTextNode = new Text( new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty, { value: model.selectedSceneModelProperty.value.medianValueProperty }, {
       tandem: options.tandem.createTandem( 'medianStringProperty' ),
@@ -471,7 +472,7 @@ export default class CardNodeContainer extends Node {
       this.pickable = false;
     }
 
-    if ( options.parentContext === 'accordionBox' ) {
+    if ( options.parentContext === 'accordion' ) {
       this.cardNodeCellsChangedEmitter.addListener( () => {
         model.areCardsSortedProperty.value = this.isDataSorted();
       } );
