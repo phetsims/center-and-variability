@@ -157,9 +157,6 @@ export default class VariabilityScreenView extends CAVScreenView {
       if ( value ) {
         biquadFilterNode.frequency.setTargetAtTime( 600, phetAudioContext.currentTime, 0 );
       }
-
-      // Play a short sound on pick-up and drop-off
-      // intervalDistanceProperty.notifyListenersStatic();
     } );
 
     this.continuousPropertySoundGenerator = new ContinuousPropertySoundGenerator(
