@@ -176,11 +176,13 @@ export default class CardNodeContainer extends Node {
 
               if ( leftmostCard ) {
                 dataSortedNode.centerX = getCardPositionX( ( this.cardNodeCells.length - 1 ) / 2 ) + leftmostCard.width / 2;
-                dataSortedNode.bottom = leftmostCard.top - 7;
+                dataSortedNode.top = leftmostCard.bottom + 7;
               }
               else {
                 dataSortedNode.centerX = getCardPositionX( ( this.cardNodeCells.length - 1 ) / 2 );
-                dataSortedNode.bottom = -7.5;
+
+                // TODO: I have no clue how to test this scenario to see where this actually ends up, https://github.com/phetsims/center-and-variability/issues/317
+                dataSortedNode.top = 14;
               }
 
               if ( dataSortedNode.left < 0 ) {
