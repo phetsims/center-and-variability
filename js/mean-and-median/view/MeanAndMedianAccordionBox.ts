@@ -67,7 +67,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
     backgroundNode.addChild( meanAndMedianPlotNode );
 
     const createReadoutText = ( valueProperty: TReadOnlyProperty<number | null>, visibleProperty: TReadOnlyProperty<boolean>,
-                                templateStringProperty: PhetioProperty<string>, fill: TPaint, readoutTandem: Tandem ) => {
+                                templateStringProperty: TReadOnlyProperty<string>, fill: TPaint, readoutTandem: Tandem ) => {
 
       const readoutProperty = new DerivedProperty( [ valueProperty, CenterAndVariabilityStrings.valueUnknownStringProperty ],
         ( value, valueUnknownString ) => {
