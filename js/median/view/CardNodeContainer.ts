@@ -58,6 +58,7 @@ import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 
 const successSoundClip = new SoundClip( cvSuccessOptions002_mp3, {
   initialOutputLevel: 0.2
@@ -338,6 +339,7 @@ export default class CardNodeContainer extends Node {
     const handContainer = new Node();
     this.addChild( handContainer );
 
+    // Fade in the hand with arrow node
     const fadeInAnimation = new Animation( {
       duration: 0.75,
       targets: [ {
@@ -346,6 +348,8 @@ export default class CardNodeContainer extends Node {
         easing: Easing.QUADRATIC_IN_OUT
       } ]
     } );
+
+    let cardWithHandAttached: CardNode | null = null;
 
     const updateDragIndicator = () => {
 
@@ -361,10 +365,27 @@ export default class CardNodeContainer extends Node {
         handContainer.children = newChildren;
 
         if ( leftCard && rightCard && showHandWithArrowNode ) {
-          this.handWithArrowNode.opacity = 0;
+
+          // Position below the card
           this.handWithArrowNode.centerTop = leftCard.bounds.centerBottom.plusXY( 0, -8 );
 
+          // Prepare to fade in with animation
+          this.handWithArrowNode.opacity = 0;
+
+          // Expand the card's touch + mouse area to cover the hand. Much simpler than adding a DragListener.createForwardingListener
+          const newArea = new Bounds2( leftCard.localBounds.minX, leftCard.localBounds.minY, leftCard.localBounds.maxX, leftCard.localBounds.maxY + 30 );
+          leftCard.mouseArea = newArea;
+          leftCard.touchArea = newArea;
+          cardWithHandAttached = leftCard;
+
           fadeInAnimation.start();
+        }
+        else if ( cardWithHandAttached ) {
+
+          // Restore the ordinary pointer areas
+          cardWithHandAttached.mouseArea = cardWithHandAttached.localBounds;
+          cardWithHandAttached.touchArea = cardWithHandAttached.localBounds;
+          cardWithHandAttached = null;
         }
       }
     };
