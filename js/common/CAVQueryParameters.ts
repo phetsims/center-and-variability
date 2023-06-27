@@ -23,11 +23,6 @@ const CAVQueryParameters = QueryStringMachine.getAll( {
     defaultValue: 'linePlot',
     public: true
   },
-  intervalToolSoundInterval: {
-    type: 'number',
-    defaultValue: 1E-4
-  },
-
   cardMovementSoundPlaybackRate: {
     type: 'number',
     defaultValue: 1.5
