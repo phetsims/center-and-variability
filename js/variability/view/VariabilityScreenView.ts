@@ -29,7 +29,6 @@ import Multilink from '../../../../axon/js/Multilink.js';
 import PredictionSlider, { PredictionSliderOptions } from '../../common/view/PredictionSlider.js';
 import Property from '../../../../axon/js/Property.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import IntervalToolNode from './IntervalToolNode.js';
@@ -37,12 +36,13 @@ import ContinuousPropertySoundGenerator from '../../../../tambo/js/sound-generat
 import soundManager from '../../../../tambo/js/soundManager.js';
 
 // TODO: https://github.com/phetsims/center-and-variability/issues/307 should this be in common code? It was copied from GFL
-import saturatedSineLoopTrimmed_wav from '../../../sounds/saturatedSineLoopTrimmed_wav.js';
-import Utils from '../../../../dot/js/Utils.js';
-import CAVQueryParameters from '../../common/CAVQueryParameters.js';
+// import saturatedSineLoopTrimmed_wav from '../../../sounds/saturatedSineLoopTrimmed_wav.js';
+// import cvWaveMeterSawTone_mp3 from '../../../sounds/cvWaveMeterSawTone_mp3.js';
+import cvIntervalToolLoopSoundV1_wav from '../../../sounds/cvIntervalToolLoopSoundV1_wav.js';
 import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import SoccerPlayerGroupNumbered from '../../soccer-common/view/SoccerPlayerGroupNumbered.js';
+import Utils from '../../../../dot/js/Utils.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
@@ -128,31 +128,11 @@ export default class VariabilityScreenView extends CAVScreenView {
     } );
 
     const intervalDistanceProperty = new DerivedProperty( [ model.intervalToolDeltaStableProperty ], interval => {
-      return Utils.roundToInterval( Utils.linear( 0, 16, 2, 1, interval ), CAVQueryParameters.intervalToolSoundInterval );
+      return Utils.linear( 0, 16, 2, 1, interval );
     } );
 
-    // the minimum distance that the interval must change before a sound is played (to prevent sound playing on tiny movements)
-    const INTERVAL_WIDTH_CHANGE_THRESHOLD = 0.01;
-    const INTERVAL_POSITION_CHANGE_THRESHOLD = 0.1;
-
-    let lastIntervalWidthValue = intervalDistanceProperty.value;
-    let lastIntervalTool1Value = model.intervalTool1ValueProperty.value;
-
-    const intervalDistanceWithThresholdProperty = new NumberProperty( lastIntervalWidthValue );
-
-    intervalDistanceProperty.link( newValue => {
-      if ( Math.abs( newValue - lastIntervalWidthValue ) >= INTERVAL_WIDTH_CHANGE_THRESHOLD ) {
-        intervalDistanceWithThresholdProperty.value = newValue;
-        lastIntervalWidthValue = newValue;
-      }
-    } );
-
-    // keeps track of the translation of the entire interval tool
     model.intervalTool1ValueProperty.link( newValue => {
-      if ( Math.abs( newValue - lastIntervalTool1Value ) >= INTERVAL_POSITION_CHANGE_THRESHOLD ) {
-        intervalDistanceWithThresholdProperty.notifyListenersStatic();
-        lastIntervalTool1Value = newValue;
-      }
+      intervalDistanceProperty.notifyListenersStatic();
     } );
 
     const biquadFilterNode = new BiquadFilterNode( phetAudioContext, {
@@ -177,18 +157,21 @@ export default class VariabilityScreenView extends CAVScreenView {
       if ( value ) {
         biquadFilterNode.frequency.setTargetAtTime( 600, phetAudioContext.currentTime, 0 );
       }
+
+      // Play a short sound on pick-up and drop-off
+      // intervalDistanceProperty.notifyListenersStatic();
     } );
 
     this.continuousPropertySoundGenerator = new ContinuousPropertySoundGenerator(
-      intervalDistanceWithThresholdProperty,
-      saturatedSineLoopTrimmed_wav,
+      intervalDistanceProperty,
+      cvIntervalToolLoopSoundV1_wav,
       new Range( 1, 2 ), {
-        initialOutputLevel: 0.3,
+        initialOutputLevel: 1,
         playbackRateCenterOffset: 0,
 
         resetInProgressProperty: model.variabilityModelResetInProgressProperty,
         trimSilence: false, // a very precise sound file is used, so make sure it doesn't get changed
-        fadeTime: 0,
+        fadeTime: 0.7,
         delayBeforeStop: 0.5,
         playbackRateSpanOctaves: 1.5,
         additionalAudioNodes: [
