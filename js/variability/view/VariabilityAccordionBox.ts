@@ -21,7 +21,7 @@ import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import VariabilityMeasureCheckbox from './VariabilityMeasureCheckbox.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
-import AccordionBoxTitleText from '../../common/view/AccordionBoxTitleText.js';
+import AccordionBoxTitleNode from '../../common/view/AccordionBoxTitleNode.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 import CAVInfoButton from '../../common/view/CAVInfoButton.js';
 
@@ -209,7 +209,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
 
     super( backgroundNode, {
       tandem: tandem,
-      titleNode: new AccordionBoxTitleText( accordionBoxTitleProperty ),
+      titleNode: new AccordionBoxTitleNode( accordionBoxTitleProperty, CAVColors.variabilityAccordionBoxFillProperty ),
       expandedProperty: model.isAccordionBoxExpandedProperty,
 
       // Leave space for the radio buttons at the left

@@ -10,7 +10,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import AccordionBoxCheckboxFactory from '../../common/view/AccordionBoxCheckboxFactory.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 import CAVConstants from '../../common/CAVConstants.js';
-import AccordionBoxTitleText from '../../common/view/AccordionBoxTitleText.js';
+import AccordionBoxTitleNode from '../../common/view/AccordionBoxTitleNode.js';
 import CAVColors from '../../common/CAVColors.js';
 import CAVInfoButton from '../../common/view/CAVInfoButton.js';
 import { AlignBox } from '../../../../scenery/js/imports.js';
@@ -55,7 +55,7 @@ export default class MedianAccordionBox extends CAVAccordionBox {
       tandem: tandem,
       top: top,
       centerX: layoutBounds.centerX,
-      titleNode: new AccordionBoxTitleText( CenterAndVariabilityStrings.distanceInMetersAccordionBoxTitleStringProperty ),
+      titleNode: new AccordionBoxTitleNode( CenterAndVariabilityStrings.distanceInMetersAccordionBoxTitleStringProperty, CAVColors.meanAndMedianAccordionBoxFillProperty ),
       expandedProperty: model.isAccordionBoxExpandedProperty,
       fill: CAVColors.meanAndMedianAccordionBoxFillProperty
     } );

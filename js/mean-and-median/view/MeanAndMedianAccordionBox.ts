@@ -17,7 +17,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import CAVColors from '../../common/CAVColors.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import AccordionBoxTitleText from '../../common/view/AccordionBoxTitleText.js';
+import AccordionBoxTitleNode from '../../common/view/AccordionBoxTitleNode.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import CAVInfoButton from '../../common/view/CAVInfoButton.js';
@@ -118,7 +118,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
       return plotType === PlotType.DOT_PLOT ? dotPlotString : linePlotString;
     } );
     super( backgroundNode, {
-        titleNode: new AccordionBoxTitleText( titleTextProperty ),
+        titleNode: new AccordionBoxTitleNode( titleTextProperty, CAVColors.meanAndMedianAccordionBoxFillProperty ),
         tandem: tandem,
         top: top,
         centerX: layoutBounds.centerX,
