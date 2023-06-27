@@ -8,7 +8,7 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import { DragListener, Node, NodeOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { Color, DragListener, Node, NodeOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import SoccerBall from '../../soccer-common/model/SoccerBall.js';
@@ -44,6 +44,10 @@ const cardDropSoundClip = new SoundClip( cvCardDropSound_mp3, {
 } );
 soundManager.addSoundGenerator( cardDropSoundClip );
 
+// How much to translate the card on pick up and drop
+export const PICK_UP_DELTA_X = -4;
+export const PICK_UP_DELTA_Y = -4;
+
 export default class CardNode extends Node {
   public readonly positionProperty: Vector2Property;
   public readonly dragListener: DragListener;
@@ -72,8 +76,19 @@ export default class CardNode extends Node {
       font: new PhetFont( 24 )
     } );
 
+    const card = new Node( {
+      children: [ rectangle, text ]
+    } );
+
+    // For layout only, a bounding box that the card animates within for the "pick up" and "drop" effects.
+    const offsetContainer = new Rectangle( PICK_UP_DELTA_X, PICK_UP_DELTA_Y, CardNode.CARD_DIMENSION - PICK_UP_DELTA_X, CardNode.CARD_DIMENSION - PICK_UP_DELTA_Y, {
+      stroke: Color.TRANSPARENT,
+      lineWidth: 0,
+      children: [ card ]
+    } );
+
     const options = optionize<CardNodeOptions, SelfOptions, NodeOptions>()( {
-      children: [ rectangle, text ],
+      children: [ offsetContainer ],
       cursor: 'pointer'
     }, providedOptions );
 
@@ -104,6 +119,9 @@ export default class CardNode extends Node {
       const delta = this.translation.minus( before );
       if ( dragging ) {
         this.dragDistanceEmitter.emit( Math.abs( delta.x ) );
+
+        // Set the relative position within the parent.
+        card.setTranslation( PICK_UP_DELTA_X, PICK_UP_DELTA_Y );
       }
     } );
 
@@ -113,10 +131,16 @@ export default class CardNode extends Node {
       start: () => {
         dragging = true;
         this.moveToFront();
+
+        // Set the relative position within the parent.
+        card.setTranslation( PICK_UP_DELTA_X, PICK_UP_DELTA_Y );
         cardPickUpSoundClip.play();
       },
       end: () => {
         dragging = false;
+
+        // Restore the relative position within the parent.
+        card.setTranslation( 0, 0 );
         cardDropSoundClip.play();
       }
     } );

@@ -10,7 +10,7 @@
 import centerAndVariability from '../../centerAndVariability.js';
 import { Image, LinearGradient, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
 import SoccerBall from '../../soccer-common/model/SoccerBall.js';
-import CardNode from './CardNode.js';
+import CardNode, { PICK_UP_DELTA_Y } from './CardNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Range from '../../../../dot/js/Range.js';
 import Emitter from '../../../../axon/js/Emitter.js';
@@ -425,11 +425,13 @@ export default class CardNodeContainer extends Node {
       const leftmostCard = this.cardNodeCells[ 0 ];
 
       const MARGIN_X = CARD_SPACING / 2 - MedianBarNode.HALF_SPLIT_WIDTH;
-      const MARGIN_Y = 5;
+
+      // Distance above the top card to the median bar and the median readout
+      const MARGIN_Y = 3;
 
       // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card
       if ( leftmostCard && ( ( model.isTopMedianVisibleProperty.value && this.isDataSorted() ) || options.parentContext === 'info' ) ) {
-        const barY = leftmostCard.top - MARGIN_Y;
+        const barY = PICK_UP_DELTA_Y - MARGIN_Y;
 
         const rightmostCard = this.cardNodeCells[ this.cardNodeCells.length - 1 ];
         const left = getCardPositionX( 0 ) - MARGIN_X;
@@ -446,7 +448,7 @@ export default class CardNodeContainer extends Node {
         if ( medianReadoutPanel.left < 0 ) {
           medianReadoutPanel.left = 0;
         }
-        medianReadoutPanel.bottom = leftmostCard.top - MARGIN_Y - 5;
+        medianReadoutPanel.bottom = PICK_UP_DELTA_Y - MARGIN_Y - 5;
         medianReadoutPanel.visible = model.isTopMedianVisibleProperty.value || options.parentContext === 'info';
       }
       else {
