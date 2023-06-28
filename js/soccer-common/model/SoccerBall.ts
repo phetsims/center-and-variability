@@ -217,7 +217,9 @@ const SoccerBallValuePropertyIO = ( innerType: IOType ) => new IOType( 'SoccerBa
       implementation: function( this: ReadOnlyProperty<number | null>, value: number | null ) {
 
         const validationError = validateSoccerBallValue( this.value, value );
-        assert && assert( validationError === null, validationError );
+        if ( validationError ) {
+          throw new Error( validationError );
+        }
 
         this.set( value );
       },
