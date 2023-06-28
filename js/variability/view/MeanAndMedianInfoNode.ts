@@ -65,7 +65,7 @@ export default class MeanAndMedianInfoNode extends VBox {
       children: [
         new InfoTitleDescriptionRichText( CenterAndVariabilityStrings.medianDescriptionStringProperty ),
         medianInfoValuesNode,
-        new Text( new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty, {
+        new Text( new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValueMetersPatternStringProperty, {
           value: sceneModel.medianValueProperty
         }, {
           maps: {
@@ -93,7 +93,7 @@ export default class MeanAndMedianInfoNode extends VBox {
           ],
           visibleProperty: hasEnoughDataProperty
         } ),
-        new Text( new PatternStringProperty( CenterAndVariabilityStrings.meanEqualsValuePatternStringProperty, {
+        new Text( new PatternStringProperty( CenterAndVariabilityStrings.meanEqualsValueMetersPatternStringProperty, {
           value: sceneModel.meanValueProperty
         }, {
           maps: {

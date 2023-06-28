@@ -50,7 +50,7 @@ export default class MADNode extends CAVPlotNode {
       lineWidth: 1
     } );
 
-    const meanEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.meanEqualsValuePatternStringProperty,
+    const meanEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.meanEqualsValueMPatternStringProperty,
       { value: sceneModel.meanValueProperty }, {
         tandem: options.tandem.createTandem( 'meanEqualsValueStringProperty' ),
         maps: {

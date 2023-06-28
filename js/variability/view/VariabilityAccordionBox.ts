@@ -107,7 +107,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       value: VariabilityMeasure.RANGE,
       tandemName: 'rangeReadoutToggleNode',
       createNode: tandem => {
-        const rangeEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.rangeEqualsValuePatternStringProperty,
+        const rangeEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.rangeEqualsValueMPatternStringProperty,
           { value: rangeValueProperty }, {
             tandem: tandem.createTandem( 'rangeEqualsValueStringProperty' )
           }
@@ -131,7 +131,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       tandemName: 'iqrReadoutToggleNode',
       createNode: tandem => {
 
-        const medianEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty,
+        const medianEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValueMPatternStringProperty,
           { value: medianValueProperty }, {
             tandem: tandem.createTandem( 'medianEqualsValueStringProperty' )
           }
@@ -141,7 +141,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
           tandem: tandem.createTandem( 'medianReadoutText' )
         } );
 
-        const iqrEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.iqrEqualsValuePatternStringProperty,
+        const iqrEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.iqrEqualsValueMPatternStringProperty,
           { value: iqrValueProperty }, {
             tandem: tandem.createTandem( 'iqrEqualsValueStringProperty' )
           }
@@ -168,12 +168,12 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       tandemName: 'madReadoutToggleNode',
       createNode: tandem => {
 
-        const meanEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.meanEqualsValuePatternStringProperty,
+        const meanEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.meanEqualsValueMPatternStringProperty,
           { value: meanValueProperty }, {
             tandem: tandem.createTandem( 'meanEqualsValueStringProperty' )
           }
         );
-        const madEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.madEqualsValuePatternStringProperty,
+        const madEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.madEqualsValueMPatternStringProperty,
           { value: madValueProperty }, {
             tandem: tandem.createTandem( 'madEqualsValueStringProperty' )
           }

@@ -25,11 +25,14 @@ type StringsType = {
   'distanceInMetersAccordionBoxTitleStringProperty': LocalizedStringProperty;
   'distanceInMetersChartLabelStringProperty': LocalizedStringProperty;
   'sortDataStringProperty': LocalizedStringProperty;
-  'meanEqualsValuePatternStringProperty': LocalizedStringProperty;
+  'meanEqualsValueMPatternStringProperty': LocalizedStringProperty;
+  'meanEqualsValueMetersPatternStringProperty': LocalizedStringProperty;
   'medianEqualsValuePatternStringProperty': LocalizedStringProperty;
-  'iqrEqualsValuePatternStringProperty': LocalizedStringProperty;
-  'rangeEqualsValuePatternStringProperty': LocalizedStringProperty;
-  'madEqualsValuePatternStringProperty': LocalizedStringProperty;
+  'medianEqualsValueMPatternStringProperty': LocalizedStringProperty;
+  'medianEqualsValueMetersPatternStringProperty': LocalizedStringProperty;
+  'iqrEqualsValueMPatternStringProperty': LocalizedStringProperty;
+  'rangeEqualsValueMPatternStringProperty': LocalizedStringProperty;
+  'madEqualsValueMPatternStringProperty': LocalizedStringProperty;
   'plotTypeStringProperty': LocalizedStringProperty;
   'dotPlotStringProperty': LocalizedStringProperty;
   'linePlotStringProperty': LocalizedStringProperty;

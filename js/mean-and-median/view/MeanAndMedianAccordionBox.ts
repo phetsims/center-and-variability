@@ -92,14 +92,14 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
         createReadoutText(
           sceneModel.medianValueProperty,
           model.isTopMedianVisibleProperty,
-          CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty,
+          CenterAndVariabilityStrings.medianEqualsValueMPatternStringProperty,
           CAVColors.medianColorProperty,
           tandem.createTandem( 'medianReadoutStringProperty' )
         ),
         createReadoutText(
           sceneModel.meanValueProperty,
           model.isTopMeanVisibleProperty,
-          CenterAndVariabilityStrings.meanEqualsValuePatternStringProperty,
+          CenterAndVariabilityStrings.meanEqualsValueMPatternStringProperty,
           CAVColors.meanColorProperty,
           tandem.createTandem( 'meanReadoutStringProperty' )
         )
