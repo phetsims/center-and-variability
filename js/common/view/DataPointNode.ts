@@ -50,6 +50,7 @@ export default class DataPointNode extends SoccerObjectNode {
       // Individual data points are not interactive and not PhET-iO instrumented, but the client can hide/show all data points
       // at once using dataPointLayer.visibleProperty
       tandem: Tandem.OPT_OUT,
+      pickable: false,
 
       // Data point should be visible if the soccer ball landed
       visibleProperty: new DerivedProperty( [ soccerBall.soccerBallPhaseProperty ], phase =>
