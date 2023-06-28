@@ -24,6 +24,10 @@ import SoccerPlayer from './SoccerPlayer.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import SoccerCommonConstants from '../SoccerCommonConstants.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import IOType from '../../../../tandem/js/types/IOType.js';
+import ReadOnlyProperty from '../../../../axon/js/ReadOnlyProperty.js';
+import StringIO from '../../../../tandem/js/types/StringIO.js';
+import VoidIO from '../../../../tandem/js/types/VoidIO.js';
 
 type SelfOptions = EmptySelfOptions;
 export type SoccerBallOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'>;
@@ -89,7 +93,8 @@ export default class SoccerBall extends PhetioObject {
     this.dragPositionProperty = new Vector2Property( this.positionProperty.value.copy() );
     this.valueProperty = new Property<number | null>( null, {
       tandem: options.tandem.createTandem( 'valueProperty' ),
-      phetioValueType: NullableIO( NumberIO )
+      phetioValueType: NullableIO( NumberIO ),
+      phetioOuterType: SoccerBallValuePropertyIO
     } );
 
     this.targetXProperty = new Property<number | null>( null, {
@@ -173,5 +178,54 @@ const rk4 = ( x: number, v: number, a: number, dt: number ) => {
 
   return [ xResult, vResult ];
 };
+
+// See SoccerBallValuePropertyIO.documentation
+const validateSoccerBallValue = ( oldValue: number | null, newValue: number | null ): string | null => {
+  if ( oldValue === null && newValue !== null ) {
+    return 'Cannot change a null value to a non-null value.';
+  }
+  else if ( oldValue !== null && newValue === null ) {
+    return 'Cannot change a non-null value to a null value.';
+  }
+  else {
+    return null;
+  }
+};
+
+const SoccerBallValuePropertyIO = ( innerType: IOType ) => new IOType( 'SoccerBallValuePropertyIO', {
+  documentation: 'Soccer ball values cannot be changed from null to non-null or vice versa by PhET-iO clients. This ' +
+                 'IOType adds validation and assertions for those cases.',
+  supertype: ReadOnlyProperty.PropertyIO( innerType ),
+  parameterTypes: [ innerType ],
+  methods: {
+    getValidationError: {
+      returnType: NullableIO( StringIO ),
+      parameterTypes: [ innerType ],
+      implementation: function( this: ReadOnlyProperty<number | null>, value: number | null ) {
+
+        return validateSoccerBallValue( this.value, value ) ||
+
+               // Check with the supertype to see if it is valid, this will check if it is range, etc.
+               ReadOnlyProperty.PropertyIO( innerType ).methods!.getValidationError.implementation.call( this, value );
+      },
+      documentation: 'Checks to see if a proposed value is valid. Returns the first validation error, or null if the value is valid.'
+    },
+
+    setValue: {
+      returnType: VoidIO,
+      parameterTypes: [ innerType ],
+      implementation: function( this: ReadOnlyProperty<number | null>, value: number | null ) {
+
+        const validationError = validateSoccerBallValue( this.value, value );
+        assert && assert( validationError === null, validationError );
+
+        this.set( value );
+      },
+      documentation: 'Sets the value of the Property. If the value differs from the previous value, listeners are ' +
+                     'notified with the new value.',
+      invocableForReadOnlyElements: false
+    }
+  }
+} );
 
 soccerCommon.register( 'SoccerBall', SoccerBall );
