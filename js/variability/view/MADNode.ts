@@ -14,6 +14,7 @@ import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 import IntervalBarNode from '../../common/view/IntervalBarNode.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
@@ -48,6 +49,27 @@ export default class MADNode extends CAVPlotNode {
       stroke: CAVColors.meanColorProperty,
       lineWidth: 1
     } );
+
+    const meanEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.meanEqualsValuePatternStringProperty,
+      { value: sceneModel.meanValueProperty }, {
+        tandem: options.tandem.createTandem( 'meanEqualsValueStringProperty' ),
+        maps: {
+          value: mean => {
+            return mean === null ? 'null' : Utils.toFixed( mean, CAVConstants.VARIABILITY_MEASURE_DECIMAL_POINTS );
+          }
+        }
+      }
+    );
+
+    const meanReadoutText = new Text( meanEqualsValueStringProperty, {
+      fill: CAVColors.meanColorProperty,
+      font: new PhetFont( 14 ),
+      tandem: options.tandem.createTandem( 'meanReadoutText' )
+    } );
+
+    if ( options.parentContext === 'info' ) {
+      this.addChild( meanReadoutText );
+    }
 
     const leftBar = new IntervalBarNode();
     const rightBar = new IntervalBarNode();
@@ -186,6 +208,13 @@ export default class MADNode extends CAVPlotNode {
         meanLine.centerX = this.modelViewTransform.modelToViewX( sceneModel.meanValueProperty.value! );
         meanLine.setY2( madRectangle.rectHeight );
         meanLine.bottom = this.modelViewTransform.modelToViewY( 0 );
+      }
+
+      const meanReadoutTextVisible = sceneModel.numberOfDataPointsProperty.value > 0 && options.parentContext === 'info';
+      meanReadoutText.visible = meanReadoutTextVisible;
+      if ( meanReadoutTextVisible ) {
+        meanReadoutText.centerX = meanLine.centerX;
+        meanReadoutText.bottom = leftReadout.top - 5;
       }
 
       // If the readouts overlap, move them apart

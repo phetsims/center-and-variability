@@ -89,19 +89,19 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     backgroundNode.addChild( plotToggleNode );
     backgroundNode.addChild( checkboxToggleNode );
 
-    const deriveValueProperty = ( accessor: ( variabilitySceneModel: VariabilitySceneModel ) => TReadOnlyProperty<number | null>, roundToDecimal = 0 ) => {
+    const deriveValueProperty = ( accessor: ( variabilitySceneModel: VariabilitySceneModel ) => TReadOnlyProperty<number | null>, roundToDecimal: number | null ) => {
       return DerivedProperty.deriveAny( [ model.selectedSceneModelProperty, ...model.variabilitySceneModels.map( accessor ), CenterAndVariabilityStrings.valueUnknownStringProperty ], () => {
         const result = accessor( model.selectedSceneModelProperty.value as VariabilitySceneModel ).value;
-        const resultRounded = result !== null && roundToDecimal > 0 ? Utils.toFixed( result, roundToDecimal ) : result;
+        const resultRounded = result !== null && roundToDecimal !== null ? Utils.toFixed( result, roundToDecimal ) : result;
         return resultRounded === null ? CenterAndVariabilityStrings.valueUnknownStringProperty.value : resultRounded;
       } );
     };
 
-    const rangeValueProperty = deriveValueProperty( vsm => vsm.rangeValueProperty );
-    const medianValueProperty = deriveValueProperty( vsm => vsm.medianValueProperty );
-    const iqrValueProperty = deriveValueProperty( vsm => vsm.iqrValueProperty );
-    const madValueProperty = deriveValueProperty( vsm => vsm.madValueProperty, 1 );
-    const meanValueProperty = deriveValueProperty( vsm => vsm.meanValueProperty, 1 );
+    const rangeValueProperty = deriveValueProperty( vsm => vsm.rangeValueProperty, null );
+    const medianValueProperty = deriveValueProperty( vsm => vsm.medianValueProperty, null );
+    const iqrValueProperty = deriveValueProperty( vsm => vsm.iqrValueProperty, null );
+    const madValueProperty = deriveValueProperty( vsm => vsm.madValueProperty, CAVConstants.VARIABILITY_MEASURE_DECIMAL_POINTS );
+    const meanValueProperty = deriveValueProperty( vsm => vsm.meanValueProperty, CAVConstants.VARIABILITY_MEASURE_DECIMAL_POINTS );
 
     const readoutsToggleNode = new AlignBox( new ToggleNode( model.selectedVariabilityMeasureProperty, [ {
       value: VariabilityMeasure.RANGE,
