@@ -68,7 +68,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
 
   public readonly isVisibleProperty: Property<boolean> = new BooleanProperty( true );
 
-  // Signify whenever any object's value or position changes
+  // Signify whenever any object's value changes
   public readonly objectChangedEmitter = new Emitter();
 
   public readonly timeProperty: NumberProperty;
