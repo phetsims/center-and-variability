@@ -60,7 +60,8 @@ export default class MeanAndMedianPlotNode extends CAVPlotNode {
 
       const medianValue = sceneModel.medianValueProperty.value;
 
-      const MARGIN_Y = 5;
+      // distance from the bottom of the median bar notches to the center of the topmost data point
+      const MARGIN_Y = 10;
 
       // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card
       if ( options.parentContext === 'accordion' && model.isTopMedianVisibleProperty.value && leftmostSoccerBall && medianValue !== null ) {
@@ -81,7 +82,7 @@ export default class MeanAndMedianPlotNode extends CAVPlotNode {
         this.medianBarNode.setMedianBarShape( 0, left, medianPositionX, right, model.isMedianAnimationCompleteProperty.value );
 
         const topDotToIndicate = tallestStack[ Math.min( tallestStack.length - 1, 4 ) ];
-        this.medianBarNode.bottom = modelViewTransform.modelToViewY( topDotToIndicate.positionProperty.value.y ) - MARGIN_Y;
+        this.medianBarNode.top = modelViewTransform.modelToViewY( topDotToIndicate.positionProperty.value.y ) - MARGIN_Y - MedianBarNode.NOTCH_HEIGHT;
       }
       else {
         this.medianBarNode.clear();
