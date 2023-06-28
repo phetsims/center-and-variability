@@ -49,8 +49,8 @@ export default class VariabilityModel extends CAVModel {
     const sceneModels = [
       new VariabilitySceneModel( MAX_KICKS_PROPERTY, new DistributionStrategy( [ 0, 0, 0, 1, 3, 12, 20, 32, 20, 12, 3, 1, 0, 0, 0 ] ), { tandem: options.tandem.createTandem( 'sceneModel1' ) } ),
       new VariabilitySceneModel( MAX_KICKS_PROPERTY, new DistributionStrategy( [ 3, 5, 10, 10, 25, 32, 45, 65, 45, 32, 25, 10, 10, 5, 3 ] ), { tandem: options.tandem.createTandem( 'sceneModel2' ) } ),
-      new VariabilitySceneModel( MAX_KICKS_PROPERTY, new DistributionStrategy( [ 10, 18, 30, 45, 26, 18, 10, 5, 4, 4, 4, 4, 4, 4, 4 ] ), { tandem: options.tandem.createTandem( 'sceneModel3' ) } ),
-      new VariabilitySceneModel( MAX_KICKS_PROPERTY, new DistributionStrategy( [ 4, 4, 4, 4, 4, 4, 4, 5, 10, 18, 26, 45, 30, 18, 10 ] ), { tandem: options.tandem.createTandem( 'sceneModel4' ) } )
+      new VariabilitySceneModel( MAX_KICKS_PROPERTY, new DistributionStrategy( [ ...CAVConstants.RIGHT_SKEWED_DATA ] ), { tandem: options.tandem.createTandem( 'sceneModel3' ) } ),
+      new VariabilitySceneModel( MAX_KICKS_PROPERTY, new DistributionStrategy( [ ...CAVConstants.LEFT_SKEWED_DATA ] ), { tandem: options.tandem.createTandem( 'sceneModel4' ) } )
     ];
 
     sceneModels.forEach( sceneModel => {

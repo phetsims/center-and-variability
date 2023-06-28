@@ -22,8 +22,8 @@ import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 
 // Right skewed means most of the data is on the left, see https://github.com/phetsims/center-and-variability/issues/112
 const RIGHT_SKEWED_DATA = [
-  10, 18, 30, 45, 26,
-  18, 10, 5, 4, 4,
+  10, 25, 45, 30, 18,
+  12, 10, 5, 4, 4,
   4, 4, 4, 4, 4
 ];
 
