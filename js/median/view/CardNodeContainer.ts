@@ -299,8 +299,11 @@ export default class CardNodeContainer extends Node {
           this.sortData();
         }
         else {
-          cardPickUpSoundClip.play();
-          this.animateCelebration1( () => cardDropSoundClip.play(), false );
+
+          if ( options.parentContext === 'accordion' ) {
+            cardPickUpSoundClip.play();
+            this.animateCelebration1( () => cardDropSoundClip.play(), false );
+          }
         }
       }
     } );
