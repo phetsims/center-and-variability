@@ -81,14 +81,14 @@ export default class VariabilityScreenView extends CAVScreenView {
     const handle1 = new PredictionSlider( model.intervalTool1ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE,
       isIntervalHandle1BeingDraggedProperty, new BooleanProperty( false ), combineOptions<PredictionSliderOptions>( {
         valueProperty: model.intervalTool1ValueProperty,
-        tandem: options.tandem.createTandem( 'variabilityIntervalPredictionTool1ValueNode' )
+        tandem: options.tandem.createTandem( 'intervalToolHandle1' )
       }, predictionSliderOptions ) );
     this.backScreenViewLayer.addChild( handle1 );
 
     const handle2 = new PredictionSlider( model.intervalTool2ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE,
       isIntervalHandle2BeingDraggedProperty, new BooleanProperty( false ), combineOptions<PredictionSliderOptions>( {
         valueProperty: model.intervalTool2ValueProperty,
-        tandem: options.tandem.createTandem( 'variabilityIntervalPredictionTool2ValueNode' )
+        tandem: options.tandem.createTandem( 'intervalToolHandle2' )
       }, predictionSliderOptions ) );
     this.backScreenViewLayer.addChild( handle2 );
 
