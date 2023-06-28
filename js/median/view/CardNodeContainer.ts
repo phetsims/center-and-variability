@@ -424,13 +424,12 @@ export default class CardNodeContainer extends Node {
 
       const MARGIN_X = CARD_SPACING / 2 - MedianBarNode.HALF_SPLIT_WIDTH;
 
-      // Distance above the top card to the median bar and the median readout
-      const MARGIN_Y = 3;
+      // Distance between the top card to the median bar when the card is not being held
+      const MARGIN_Y = PICK_UP_DELTA_Y - 3;
 
       // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card
       if ( leftmostCard && ( ( model.isTopMedianVisibleProperty.value && this.isDataSorted() ) || options.parentContext === 'info' ) ) {
-        const barY = PICK_UP_DELTA_Y - MARGIN_Y;
-
+        const barY = MARGIN_Y;
         const rightmostCard = this.cardNodeCells[ this.cardNodeCells.length - 1 ];
         const left = getCardPositionX( 0 ) - MARGIN_X;
         const right = getCardPositionX( this.cardNodeCells.length - 1 ) + rightmostCard.width + MARGIN_X;
@@ -446,7 +445,7 @@ export default class CardNodeContainer extends Node {
         if ( medianReadoutPanel.left < 0 ) {
           medianReadoutPanel.left = 0;
         }
-        medianReadoutPanel.bottom = PICK_UP_DELTA_Y - MARGIN_Y - 5;
+        medianReadoutPanel.bottom = MARGIN_Y - 5;
         medianReadoutPanel.visible = model.isTopMedianVisibleProperty.value || options.parentContext === 'info';
       }
       else {
