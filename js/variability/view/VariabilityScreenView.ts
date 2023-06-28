@@ -86,8 +86,8 @@ export default class VariabilityScreenView extends CAVScreenView {
     const isIntervalHandle2BeingDraggedProperty = new BooleanProperty( false );
     const isIntervalAreaBeingDraggedProperty = new BooleanProperty( false );
 
-    const toolHandle1Tandem = options.tandem.createTandem( 'intervalToolNode' ).createTandem( 'intervalToolHandle1' );
-    const toolHandle2Tandem = options.tandem.createTandem( 'intervalToolNode' ).createTandem( 'intervalToolHandle2' );
+    const toolHandle1Tandem = options.tandem.createTandem( 'intervalToolNode' ).createTandem( 'handle1' );
+    const toolHandle2Tandem = options.tandem.createTandem( 'intervalToolNode' ).createTandem( 'handle2' );
     const handle1 = new PredictionSlider( model.intervalTool1ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE,
       isIntervalHandle1BeingDraggedProperty, new BooleanProperty( false ), combineOptions<PredictionSliderOptions>( {
         valueProperty: model.intervalTool1ValueProperty,

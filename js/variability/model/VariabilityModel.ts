@@ -83,17 +83,19 @@ export default class VariabilityModel extends CAVModel {
       tandem: options.tandem.createTandem( 'isMADVisibleProperty' )
     } );
 
+    const intervalToolTandem = options.tandem.createTandem( 'intervalTool' );
+
     this.isIntervalToolVisibleProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isIntervalToolVisibleProperty' )
+      tandem: intervalToolTandem.createTandem( 'visibleProperty' )
     } );
 
     this.intervalTool1ValueProperty = new NumberProperty( 2, {
       range: CAVConstants.VARIABILITY_DRAG_RANGE,
-      tandem: options.tandem.createTandem( 'intervalToolHandle1ValueProperty' )
+      tandem: intervalToolTandem.createTandem( 'handle1ValueProperty' )
     } );
     this.intervalTool2ValueProperty = new NumberProperty( 3.4, {
       range: CAVConstants.VARIABILITY_DRAG_RANGE,
-      tandem: options.tandem.createTandem( 'intervalToolHandle2ValueProperty' )
+      tandem: intervalToolTandem.createTandem( 'handle2ValueProperty' )
     } );
 
     this.intervalToolDeltaStableProperty = new NumberProperty( Math.abs( this.intervalTool2ValueProperty.value - this.intervalTool1ValueProperty.value ), {} );
