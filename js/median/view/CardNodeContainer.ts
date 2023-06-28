@@ -337,14 +337,15 @@ export default class CardNodeContainer extends Node {
       const handWithArrowNode = new Image( handWithArrow_png, {
         tandem: options.tandem.createTandem( 'handWithArrowNode' ),
         opacity: 0,
-        maxWidth: 25
+        maxWidth: 25,
+        centerTop: new Vector2( 0.5 * CardNode.CARD_DIMENSION, CardNode.CARD_DIMENSION - 8 )
       } );
 
       this.addChild( handWithArrowNode );
 
       // Fade in the hand with arrow node
       const fadeInAnimation = new Animation( {
-        duration: 0.4,
+        duration: 0.5,
         targets: [ {
           property: handWithArrowNode.opacityProperty,
           to: 1,
@@ -354,7 +355,7 @@ export default class CardNodeContainer extends Node {
 
       // Fade out the hand with arrow node
       const fadeOutAnimation = new Animation( {
-        duration: 0.4,
+        duration: 0.1,
         targets: [ {
           property: handWithArrowNode.opacityProperty,
           to: 0,
@@ -367,11 +368,21 @@ export default class CardNodeContainer extends Node {
         const leftCard = this.cardNodeCells[ 0 ] || null;
         const rightCard = this.cardNodeCells[ 1 ] || null;
 
+        const resetCardWithHandAttached = () => {
+          if ( this.cardWithHandAttachedProperty.value !== null ) {
+            this.cardWithHandAttachedProperty.value.mouseArea = this.cardWithHandAttachedProperty.value.localBounds;
+            this.cardWithHandAttachedProperty.value.touchArea = this.cardWithHandAttachedProperty.value.localBounds;
+          }
+          this.cardWithHandAttachedProperty.value = null;
+        };
+
+        //if the left card has changed due to auto-sorting, reduce its bounds back to the default
+        if ( leftCard !== null && leftCard !== this.cardWithHandAttachedProperty.value ) {
+          resetCardWithHandAttached();
+        }
+
         // if the user has not yet dragged a card and there are multiple cards showing, fade in the drag indicator
         if ( !this.hasDraggedCardProperty.value && leftCard && rightCard ) {
-
-          // Position below the card
-          handWithArrowNode.centerTop = leftCard.bounds.centerBottom.plusXY( 0, -8 );
 
           // Expand the card's touch + mouse area to cover the hand. Much simpler than adding a DragListener.createForwardingListener
           const newArea = new Bounds2( leftCard.localBounds.minX, leftCard.localBounds.minY, leftCard.localBounds.maxX, leftCard.localBounds.maxY + 30 );
@@ -384,11 +395,7 @@ export default class CardNodeContainer extends Node {
 
         // if the user has dragged a card and the hand indicator is showing, fade the hand indicator out
         if ( this.hasDraggedCardProperty.value && this.cardWithHandAttachedProperty.value !== null ) {
-
-          // Restore the ordinary pointer areas
-          this.cardWithHandAttachedProperty.value.mouseArea = this.cardWithHandAttachedProperty.value.localBounds;
-          this.cardWithHandAttachedProperty.value.touchArea = this.cardWithHandAttachedProperty.value.localBounds;
-          this.cardWithHandAttachedProperty.value = null;
+          resetCardWithHandAttached();
 
           if ( fadeInAnimation.animatingProperty.value ) {
             fadeInAnimation.stop();
