@@ -68,6 +68,15 @@ export default class IntervalToolNode extends AccessibleSlider( Node, 0 ) {
       return new Range( dragBounds.minX, dragBounds.maxX );
     } );
 
+    const startDrag = () => {
+      isBeingDragged.value = true;
+      distanceBetweenToolValues = intervalToolValue2Property.value - intervalToolValue1Property.value;
+    };
+    const endDrag = () => {
+      isBeingDragged.value = false;
+      distanceBetweenToolValues = null;
+    };
+
     const options = optionize<IntervalToolNodeOptions, SelfOptions, ParentOptions>()( {
       children: [
         rectangleNode,
@@ -76,14 +85,8 @@ export default class IntervalToolNode extends AccessibleSlider( Node, 0 ) {
       ],
       enabledRangeProperty: dragRangeProperty,
       valueProperty: intervalToolValue1Property,
-      startDrag: () => {
-        isBeingDragged.value = true;
-        distanceBetweenToolValues = intervalToolValue2Property.value - intervalToolValue1Property.value;
-      },
-      endDrag: () => {
-        isBeingDragged.value = false;
-        distanceBetweenToolValues = null;
-      }
+      startDrag: startDrag,
+      endDrag: endDrag
     }, providedOptions );
 
     super( options );
@@ -140,14 +143,8 @@ export default class IntervalToolNode extends AccessibleSlider( Node, 0 ) {
       useParentOffset: true,
       positionProperty: intervalToolValue1PositionProperty,
       transform: modelViewTransform,
-      start: ( event, dragListener ) => {
-        isBeingDragged.value = true;
-        distanceBetweenToolValues = intervalToolValue2Property.value - intervalToolValue1Property.value;
-      },
-      end: ( event, dragListener ) => {
-        isBeingDragged.value = false;
-        distanceBetweenToolValues = null;
-      },
+      start: startDrag,
+      end: endDrag,
       tandem: providedOptions.tandem.createTandem( 'dragListener' )
     } );
     this.addInputListener( dragListener );
