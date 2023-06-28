@@ -10,7 +10,7 @@
 import centerAndVariability from '../../centerAndVariability.js';
 import { Image, LinearGradient, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
 import SoccerBall from '../../soccer-common/model/SoccerBall.js';
-import CardNode, { PICK_UP_DELTA_Y } from './CardNode.js';
+import CardNode, { cardDropSoundClip, cardPickUpSoundClip, PICK_UP_DELTA_Y } from './CardNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Range from '../../../../dot/js/Range.js';
 import Emitter from '../../../../axon/js/Emitter.js';
@@ -292,16 +292,23 @@ export default class CardNodeContainer extends Node {
       // A ball landed OR a value changed
       soccerBall.valueProperty.link( value => {
         if ( ( this.model.isSortingDataProperty.value && value !== null ) || options.parentContext === 'info' ) {
-
-          // Sort but do not play audio when a ball lands or value changes, since the soccer ball should play its own sound
-          this.sortData( false );
+          this.sortData();
         }
       } );
     } );
 
     model.isSortingDataProperty.link( isSortingData => {
       if ( isSortingData ) {
-        this.sortData( true );
+
+        if ( !this.isDataSorted() ) {
+
+          // Will play sound effects in step()
+          this.sortData();
+        }
+        else {
+          cardPickUpSoundClip.play();
+          this.animateCelebration1( () => cardDropSoundClip.play(), false );
+        }
       }
     } );
 
@@ -523,7 +530,7 @@ export default class CardNodeContainer extends Node {
   private animateRandomCelebration( callback: () => void ): void {
     if ( this.remainingCelebrationAnimations.length === 0 ) {
       const animations = [
-        () => this.animateCelebration1( callback ),
+        () => this.animateCelebration1( callback, true ),
         () => this.animateCelebration2( callback ),
         () => this.animateCelebration3( callback )
       ];
@@ -539,44 +546,40 @@ export default class CardNodeContainer extends Node {
   /**
    * The cards grow and then shrink back to normal size.
    */
-  private animateCelebration1( callback: () => void ): void {
+  private animateCelebration1( callback: () => void, adjustCentering: boolean ): void {
 
     const asyncCounter = new AsyncCounter( this.cardNodeCells.length, callback );
 
     this.cardNodeCells.forEach( cardNode => {
-      const initialScale = cardNode.getScaleVector().x;
-      const center = cardNode.center.copy();
 
-      const scaleProperty = new NumberProperty( initialScale );
-      scaleProperty.link( scale => cardNode.setScaleMagnitude( scale ) );
+      const scaleProperty = new NumberProperty( 1 );
+      scaleProperty.lazyLink( ( scale, oldScale ) => {
+        const center = cardNode.center.copy();
+        cardNode.setScaleMagnitude( scale );
+        if ( adjustCentering ) {
+          cardNode.center = center;
+        }
+      } );
 
       const scaleUpAnimation = new Animation( {
-        duration: 0.2,
+        duration: adjustCentering ? 0.2 : 0.15,
         targets: [ {
           property: scaleProperty,
-          to: initialScale * 1.2,
+          to: adjustCentering ? 1.2 : 1.15,
           easing: Easing.QUADRATIC_IN_OUT
         } ]
       } );
-
-      const updatePosition = () => {
-        cardNode.center = center;
-      };
-      scaleUpAnimation.updateEmitter.addListener( updatePosition );
 
       const scaleDownAnimation = new Animation( {
-        duration: 0.2,
+        duration: adjustCentering ? 0.2 : 0.15,
         targets: [ {
           property: scaleProperty,
-          to: initialScale,
+          to: 1,
           easing: Easing.QUADRATIC_IN_OUT
         } ]
       } );
-      scaleDownAnimation.updateEmitter.addListener( updatePosition );
       scaleDownAnimation.endedEmitter.addListener( () => asyncCounter.increment() );
-
       scaleUpAnimation.then( scaleDownAnimation );
-
       scaleUpAnimation.start();
     } );
   }
@@ -703,7 +706,7 @@ export default class CardNodeContainer extends Node {
     return this.cardNodeCells.find( cardNode => cardNode.soccerBall === soccerBall ) || null;
   }
 
-  private sortData( allowSound: boolean ): void {
+  private sortData(): void {
 
     // If the card is visible, the value property should be non-null
     const sorted = _.sortBy( this.cardNodeCells, cardNode => cardNode.soccerBall.valueProperty.value );

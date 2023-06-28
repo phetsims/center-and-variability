@@ -19,8 +19,6 @@ import Property from '../../../../axon/js/Property.js';
 import PlayAreaCheckboxFactory from './PlayAreaCheckboxFactory.js';
 import CAVModel from '../model/CAVModel.js';
 import CardNodeContainer from '../../median/view/CardNodeContainer.js';
-import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-players/checkboxCheckedSoundPlayer.js';
-import boundaryReachedSoundPlayer from '../../../../tambo/js/shared-sound-players/boundaryReachedSoundPlayer.js';
 import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
 import MeanIndicatorNode from './MeanIndicatorNode.js';
 import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
@@ -50,24 +48,9 @@ export default class AccordionBoxCheckboxFactory {
       property: isSortingDataProperty,
       tandemName: 'sortDataCheckbox',
       options: {
-        checkedSoundPlayer: {
-          play: () => {
-            if ( sceneModel.getSortedStackedObjects().length === 0 ) {
-              checkboxCheckedSoundPlayer.play();
-            }
-            else if ( !cardNodeContainer.isAnyCardMoving() ) {
 
-              // Unfortunately, the sound plays after the checkbox takes effect.  So we cannot use 'isDataSorted' here.
-              boundaryReachedSoundPlayer.play();
-            }
-            else {
-              // sound will be played by the card movement
-            }
-          },
-          stop: () => {
-            // nothing to do
-          }
-        }
+        // Sound will be played in the model based on whether the data is already sorted or not
+        checkedSoundPlayer: nullSoundPlayer
       }
     };
   }

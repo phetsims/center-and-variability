@@ -31,13 +31,13 @@ import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 type SelfOptions = EmptySelfOptions;
 export type CardNodeOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
 
-const cardPickUpSoundClip = new SoundClip( cvCardPickupSound_mp3, {
+export const cardPickUpSoundClip = new SoundClip( cvCardPickupSound_mp3, {
   initialOutputLevel: 0.3,
   initialPlaybackRate: CAVQueryParameters.cardMovementSoundPlaybackRate
 } );
 soundManager.addSoundGenerator( cardPickUpSoundClip );
 
-const cardDropSoundClip = new SoundClip( cvCardDropSound_mp3, {
+export const cardDropSoundClip = new SoundClip( cvCardDropSound_mp3, {
   initialOutputLevel: 0.1,
   initialPlaybackRate: CAVQueryParameters.cardMovementSoundPlaybackRate * 1.3
 } );
