@@ -285,7 +285,7 @@ export default class CardNodeContainer extends Node {
       // A ball landed OR a value changed
       soccerBall.valueProperty.link( value => {
         if ( ( this.model.isSortingDataProperty.value && value !== null ) || options.parentContext === 'info' ) {
-          this.sortData();
+          this.sortData( 'valueChanged' );
         }
       } );
     } );
@@ -683,8 +683,8 @@ export default class CardNodeContainer extends Node {
     return new Vector2( getCardPositionX( homeIndex ), 0 );
   }
 
-  public animateToHomeCell( cardNode: CardNode, duration: number ): void {
-    cardNode.animateTo( this.getHomePosition( cardNode ), duration );
+  public animateToHomeCell( cardNode: CardNode, duration: number, animationReason: 'valueChanged' | null = null ): void {
+    cardNode.animateTo( this.getHomePosition( cardNode ), duration, animationReason );
   }
 
   public setAtHomeCell( cardNode: CardNode ): void {
@@ -708,13 +708,13 @@ export default class CardNodeContainer extends Node {
     return this.cardNodeCells.find( cardNode => cardNode.soccerBall === soccerBall ) || null;
   }
 
-  private sortData(): void {
+  private sortData( animationReason: 'valueChanged' | null = null ): void {
 
     // If the card is visible, the value property should be non-null
     const sorted = _.sortBy( this.cardNodeCells, cardNode => cardNode.soccerBall.valueProperty.value );
     this.cardNodeCells.length = 0;
     this.cardNodeCells.push( ...sorted );
-    this.cardNodeCells.forEach( cardNode => this.animateToHomeCell( cardNode, 0.5 ) );
+    this.cardNodeCells.forEach( cardNode => this.animateToHomeCell( cardNode, 0.5, animationReason ) );
     this.cardNodeCellsChangedEmitter.emit();
   }
 
@@ -729,7 +729,7 @@ export default class CardNodeContainer extends Node {
   public step( dt: number ): void {
 
     // Only consider cards that landed more than 0.1 seconds ago, to avoid an edge case that was mistakenly playing audio when soccer balls land
-    const activeCardNodes = this.cardNodes.filter( cardNode => cardNode.cardModel.isActiveProperty.value && cardNode.timeSinceLanded > 0.1 );
+    const activeCardNodes = this.cardNodes.filter( cardNode => cardNode.cardModel.isActiveProperty.value && cardNode.timeSinceLanded > 0.1 && cardNode.animationReason !== 'valueChanged' );
 
     // Determine the sort order to see which cards have swapped
     const newOrder = _.sortBy( activeCardNodes, cardNode => cardNode.positionProperty.value.x );

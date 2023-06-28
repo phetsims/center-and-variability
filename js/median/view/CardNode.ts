@@ -71,6 +71,9 @@ export default class CardNode extends Node {
   // Avoid sound effects for cards that landed recently, since cards sometimes swap when a new soccer ball lands and "sort data" is checked.
   public timeSinceLanded = 0;
 
+  // We can also specify a reason for the animation, in order to 'mute' sound effects for this card.
+  public animationReason: 'valueChanged' | null = null;
+
   public constructor( public readonly cardNodeContainer: CardNodeContainer, public readonly cardModel: CardModel, position: Vector2, getDragRange: () => Range, providedOptions: CardNodeOptions ) {
 
     const cornerRadius = 10;
@@ -154,7 +157,7 @@ export default class CardNode extends Node {
     this.addLinkedElement( cardModel );
   }
 
-  public animateTo( destination: Vector2, duration: number ): void {
+  public animateTo( destination: Vector2, duration: number, animationReason: 'valueChanged' | null = null ): void {
 
     if ( this.animation ) {
 
@@ -163,6 +166,7 @@ export default class CardNode extends Node {
       if ( destination.equals( this.animationTo! ) ) {
 
         // Already moving to the desired destination.
+        this.animationReason = animationReason;
         return;
       }
       else {
@@ -176,6 +180,7 @@ export default class CardNode extends Node {
         return;
       }
     }
+    this.animationReason = animationReason;
 
     this.animation = new Animation( {
       duration: duration,
@@ -190,6 +195,7 @@ export default class CardNode extends Node {
     this.animation.endedEmitter.addListener( () => {
       this.animation = null;
       this.animationTo = null;
+      this.animationReason = null;
     } );
 
     this.animation.start();
