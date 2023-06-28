@@ -54,7 +54,7 @@ export default class PredictionSlider extends AccessibleSlider( Node, 0 ) {
         isKeyboardDraggingProperty.value = false;
       },
 
-      phetioEnabledPropertyInstrumented: true,
+      // phetioEnabledPropertyInstrumented: true,
       disabledOpacity: SceneryConstants.DISABLED_OPACITY
     }, providedOptions );
 

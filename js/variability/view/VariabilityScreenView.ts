@@ -40,6 +40,7 @@ import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import SoccerPlayerGroupNumbered from '../../soccer-common/view/SoccerPlayerGroupNumbered.js';
 import Utils from '../../../../dot/js/Utils.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
@@ -63,33 +64,42 @@ export default class VariabilityScreenView extends CAVScreenView {
 
     super( model, options );
 
-    const predictionSliderOptions = {
-      predictionThumbNodeOptions: {
-        color: CAVColors.intervalToolIconShadedSphereMainColorProperty,
-        style: 'line' as const
-      },
+    const createPredictionSliderOptions = ( tandem: Tandem ) => {
 
-      enabledRangeProperty: new Property<Range>( CAVConstants.PHYSICAL_RANGE ),
-      roundToInterval: null, // continuous
-      visibleProperty: model.isIntervalToolVisibleProperty
+      const visibleProperty = DerivedProperty.and( [ model.isIntervalToolVisibleProperty, new BooleanProperty( true, {
+        tandem: tandem.createTandem( 'visibleProperty' )
+      } ) ] );
+      const predictionSliderOptions = {
+        predictionThumbNodeOptions: {
+          color: CAVColors.intervalToolIconShadedSphereMainColorProperty,
+          style: 'line' as const
+        },
+
+        enabledRangeProperty: new Property<Range>( CAVConstants.PHYSICAL_RANGE ),
+        roundToInterval: null, // continuous
+        visibleProperty: visibleProperty
+      };
+      return predictionSliderOptions;
     };
 
     const isIntervalHandle1BeingDraggedProperty = new BooleanProperty( false );
     const isIntervalHandle2BeingDraggedProperty = new BooleanProperty( false );
     const isIntervalAreaBeingDraggedProperty = new BooleanProperty( false );
 
+    const toolHandle1Tandem = options.tandem.createTandem( 'intervalToolNode' ).createTandem( 'intervalToolHandle1' );
+    const toolHandle2Tandem = options.tandem.createTandem( 'intervalToolNode' ).createTandem( 'intervalToolHandle2' );
     const handle1 = new PredictionSlider( model.intervalTool1ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE,
       isIntervalHandle1BeingDraggedProperty, new BooleanProperty( false ), combineOptions<PredictionSliderOptions>( {
         valueProperty: model.intervalTool1ValueProperty,
-        tandem: options.tandem.createTandem( 'intervalToolHandle1' )
-      }, predictionSliderOptions ) );
+        tandem: toolHandle1Tandem
+      }, createPredictionSliderOptions( toolHandle1Tandem ) ) );
     this.backScreenViewLayer.addChild( handle1 );
 
     const handle2 = new PredictionSlider( model.intervalTool2ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE,
       isIntervalHandle2BeingDraggedProperty, new BooleanProperty( false ), combineOptions<PredictionSliderOptions>( {
         valueProperty: model.intervalTool2ValueProperty,
-        tandem: options.tandem.createTandem( 'intervalToolHandle2' )
-      }, predictionSliderOptions ) );
+        tandem: toolHandle2Tandem
+      }, createPredictionSliderOptions( toolHandle2Tandem ) ) );
     this.backScreenViewLayer.addChild( handle2 );
 
     const variabilityAccordionBox = new VariabilityAccordionBox(
