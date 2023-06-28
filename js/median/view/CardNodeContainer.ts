@@ -170,24 +170,17 @@ export default class CardNodeContainer extends Node {
             const asyncCounter = new AsyncCounter( inProgressAnimations.length, () => {
 
               // we know at least one card exists because we're in a dragListener link
-              const leftmostCard = this.cardNodeCells[ 0 ]!;
+              const leftmostCard = this.cardNodeCells[ 0 ];
+              assert && assert( leftmostCard, 'leftmostCard should be defined' );
 
-              if ( leftmostCard ) {
-                dataSortedNode.centerX = getCardPositionX( ( this.cardNodeCells.length - 1 ) / 2 ) + leftmostCard.width / 2;
-                dataSortedNode.top = leftmostCard.bottom + 7;
-              }
-              else {
-                dataSortedNode.centerX = getCardPositionX( ( this.cardNodeCells.length - 1 ) / 2 );
-
-                // TODO: I have no clue how to test this scenario to see where this actually ends up, https://github.com/phetsims/center-and-variability/issues/317
-                dataSortedNode.top = 14;
-              }
+              dataSortedNode.centerX = getCardPositionX( ( this.cardNodeCells.length - 1 ) / 2 ) + leftmostCard.width / 2;
+              dataSortedNode.top = leftmostCard.bottom + 7;
 
               if ( dataSortedNode.left < 0 ) {
                 dataSortedNode.left = 0;
               }
-              dataSortedNode.visible = true;
               dataSortedNode.opacity = 1;
+              dataSortedNode.visible = true;
 
               // If the user sorted the data again before the data sorted message was hidden, clear out the timer.
               if ( this.dataSortedNodeAnimation ) {
