@@ -86,7 +86,8 @@ export default class IntervalToolNode extends AccessibleSlider( Node, 0 ) {
       enabledRangeProperty: dragRangeProperty,
       valueProperty: intervalToolValue1Property,
       startDrag: startDrag,
-      endDrag: endDrag
+      endDrag: endDrag,
+      phetioEnabledPropertyInstrumented: true
     }, providedOptions );
 
     super( options );
@@ -108,6 +109,10 @@ export default class IntervalToolNode extends AccessibleSlider( Node, 0 ) {
     const updateDragBounds = () => {
       dragBoundsProperty.value = getDragBounds();
     };
+
+    this.enabledProperty.link( enabled => {
+      rectangleNode.cursor = enabled ? 'pointer' : null;
+    } );
 
     // The drag listener requires a Vector2 instead of a number, so we need to create a DynamicProperty to convert between the two
     const intervalToolValue1PositionProperty = new DynamicProperty( new Property( intervalToolValue1Property ), {
@@ -139,6 +144,7 @@ export default class IntervalToolNode extends AccessibleSlider( Node, 0 ) {
 
     // This drag listener is for translating the entire interval tool
     const dragListener = new DragListener( {
+      enabledProperty: this.enabledProperty,
       dragBoundsProperty: dragBoundsProperty,
       useParentOffset: true,
       positionProperty: intervalToolValue1PositionProperty,
