@@ -403,7 +403,7 @@ export default class CardNodeContainer extends Node {
         }
 
         // if the user has dragged a card and the hand indicator is showing, fade the hand indicator out
-        if ( this.hasDraggedCardProperty.value ) {
+        if ( this.hasDraggedCardProperty.value || !leftCard || !rightCard ) {
           this.dragIndicationCardProperty.value = null;
         }
       };
