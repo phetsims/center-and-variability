@@ -105,7 +105,7 @@ export default class CardNodeContainer extends Node {
   // Indicates whether the user has ever dragged a card. It's used to hide the drag indicator arrow after
   // the user dragged a card
   private readonly hasDraggedCardProperty: TReadOnlyProperty<boolean>;
-  private readonly cardWithExpandedPointerAreaProperty: TProperty<CardNode | null>;
+  private readonly dragIndicationCardProperty: TProperty<CardNode | null>;
   private readonly cardLayer = new Node();
   private isReadyForCelebration = false;
   private remainingCelebrationAnimations: ( () => void )[] = [];
@@ -138,7 +138,7 @@ export default class CardNodeContainer extends Node {
     this.hasDraggedCardProperty = new DerivedProperty( [ totalDragDistanceProperty ], totalDragDistance => {
       return totalDragDistance > 15;
     } );
-    this.cardWithExpandedPointerAreaProperty = new Property( null );
+    this.dragIndicationCardProperty = new Property( null );
 
     this.cardNodes = model.cards.map( ( cardModel, index ) => {
       const cardNode = new CardNode( this, cardModel, new Vector2( 0, 0 ), () => this.getDragRange(), {
@@ -372,15 +372,15 @@ export default class CardNodeContainer extends Node {
         const rightCard = this.cardNodeCells[ 1 ] || null;
 
         const resetCardWithExpandedPointerArea = () => {
-          if ( this.cardWithExpandedPointerAreaProperty.value !== null ) {
-            this.cardWithExpandedPointerAreaProperty.value.mouseArea = this.cardWithExpandedPointerAreaProperty.value.localBounds;
-            this.cardWithExpandedPointerAreaProperty.value.touchArea = this.cardWithExpandedPointerAreaProperty.value.localBounds;
+          if ( this.dragIndicationCardProperty.value !== null ) {
+            this.dragIndicationCardProperty.value.mouseArea = this.dragIndicationCardProperty.value.localBounds;
+            this.dragIndicationCardProperty.value.touchArea = this.dragIndicationCardProperty.value.localBounds;
           }
-          this.cardWithExpandedPointerAreaProperty.value = null;
+          this.dragIndicationCardProperty.value = null;
         };
 
         //if the left card has changed due to auto-sorting, reduce its bounds back to the default
-        if ( leftCard !== null && leftCard !== this.cardWithExpandedPointerAreaProperty.value ) {
+        if ( leftCard !== null && leftCard !== this.dragIndicationCardProperty.value ) {
           resetCardWithExpandedPointerArea();
         }
 
@@ -391,13 +391,13 @@ export default class CardNodeContainer extends Node {
           const newArea = new Bounds2( leftCard.localBounds.minX, leftCard.localBounds.minY, leftCard.localBounds.maxX, leftCard.localBounds.maxY + 30 );
           leftCard.mouseArea = newArea;
           leftCard.touchArea = newArea;
-          this.cardWithExpandedPointerAreaProperty.value = leftCard;
+          this.dragIndicationCardProperty.value = leftCard;
 
           fadeInAnimation.start();
         }
 
         // if the user has dragged a card and the hand indicator is showing, fade the hand indicator out
-        if ( this.hasDraggedCardProperty.value && this.cardWithExpandedPointerAreaProperty.value !== null ) {
+        if ( this.hasDraggedCardProperty.value && this.dragIndicationCardProperty.value !== null ) {
           resetCardWithExpandedPointerArea();
 
           if ( fadeInAnimation.animatingProperty.value ) {
