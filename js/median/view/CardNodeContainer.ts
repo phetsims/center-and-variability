@@ -366,7 +366,7 @@ export default class CardNodeContainer extends Node {
         } ]
       } );
 
-      const updateDragIndicator = () => {
+      const updateDragIndicationCardProperty = () => {
 
         const leftCard = this.cardNodeCells[ 0 ] || null;
         const rightCard = this.cardNodeCells[ 1 ] || null;
@@ -408,8 +408,8 @@ export default class CardNodeContainer extends Node {
         }
       };
 
-      this.cardNodeCellsChangedEmitter.addListener( updateDragIndicator );
-      this.hasDraggedCardProperty.link( updateDragIndicator );
+      this.cardNodeCellsChangedEmitter.addListener( updateDragIndicationCardProperty );
+      this.hasDraggedCardProperty.link( updateDragIndicationCardProperty );
     }
 
     const medianTextNode = new Text( new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty, { value: model.selectedSceneModelProperty.value.medianValueProperty }, {
