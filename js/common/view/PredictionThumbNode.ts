@@ -16,6 +16,7 @@ import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import SoccerCommonColors from '../../soccer-common/SoccerCommonColors.js';
 import CAVConstants from '../CAVConstants.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 
 type SelfOptions = {
   color: TColor;
@@ -33,6 +34,12 @@ export default class PredictionThumbNode extends Node {
       stroke: SoccerCommonColors.arrowStrokeProperty,
       lineWidth: CAVConstants.ARROW_LINE_WIDTH
     } );
+
+    // Expand the mouse and touch area to encompass the arrow/line
+    const oldBounds = shadedSphereNode.localBounds;
+    const expandedArea = new Bounds2( oldBounds.minX, oldBounds.minY - 40, oldBounds.maxX, oldBounds.maxY + 5 );
+    shadedSphereNode.mouseArea = expandedArea;
+    shadedSphereNode.touchArea = expandedArea;
 
     const indicatorNode =
       providedOptions.style === 'arrow' ?
