@@ -366,50 +366,51 @@ export default class CardNodeContainer extends Node {
         } ]
       } );
 
+      this.dragIndicationCardProperty.lazyLink( ( newCardNode, oldCardNode ) => {
+
+        if ( oldCardNode ) {
+          oldCardNode.mouseArea = oldCardNode.localBounds;
+          oldCardNode.touchArea = oldCardNode.localBounds;
+        }
+
+        if ( newCardNode ) {
+
+          // Expand the card's touch + mouse area to cover the hand. Much simpler than adding a DragListener.createForwardingListener
+          const newArea = new Bounds2( newCardNode.localBounds.minX, newCardNode.localBounds.minY, newCardNode.localBounds.maxX, newCardNode.localBounds.maxY + 30 );
+          newCardNode.mouseArea = newArea;
+          newCardNode.touchArea = newArea;
+        }
+
+        if ( oldCardNode && !newCardNode ) {
+          fadeInAnimation.stop();
+          fadeOutAnimation.start();
+        }
+
+        else if ( newCardNode && !oldCardNode ) {
+          fadeOutAnimation.stop();
+          fadeInAnimation.start();
+        }
+      } );
+
       const updateDragIndicationCardProperty = () => {
 
-        const leftCard = this.cardNodeCells[ 0 ] || null;
-        const rightCard = this.cardNodeCells[ 1 ] || null;
-
-        const resetCardWithExpandedPointerArea = () => {
-          if ( this.dragIndicationCardProperty.value !== null ) {
-            this.dragIndicationCardProperty.value.mouseArea = this.dragIndicationCardProperty.value.localBounds;
-            this.dragIndicationCardProperty.value.touchArea = this.dragIndicationCardProperty.value.localBounds;
-          }
-          this.dragIndicationCardProperty.value = null;
-        };
-
-        //if the left card has changed due to auto-sorting, reduce its bounds back to the default
-        if ( leftCard !== null && leftCard !== this.dragIndicationCardProperty.value ) {
-          resetCardWithExpandedPointerArea();
-        }
+        const leftCard = this.cardNodeCells[ 0 ];
+        const rightCard = this.cardNodeCells[ 1 ];
 
         // if the user has not yet dragged a card and there are multiple cards showing, fade in the drag indicator
         if ( !this.hasDraggedCardProperty.value && leftCard && rightCard ) {
-
-          // Expand the card's touch + mouse area to cover the hand. Much simpler than adding a DragListener.createForwardingListener
-          const newArea = new Bounds2( leftCard.localBounds.minX, leftCard.localBounds.minY, leftCard.localBounds.maxX, leftCard.localBounds.maxY + 30 );
-          leftCard.mouseArea = newArea;
-          leftCard.touchArea = newArea;
           this.dragIndicationCardProperty.value = leftCard;
-
-          fadeInAnimation.start();
         }
 
         // if the user has dragged a card and the hand indicator is showing, fade the hand indicator out
-        if ( this.hasDraggedCardProperty.value && this.dragIndicationCardProperty.value !== null ) {
-          resetCardWithExpandedPointerArea();
-
-          if ( fadeInAnimation.animatingProperty.value ) {
-            fadeInAnimation.stop();
-          }
-
-          fadeOutAnimation.start();
+        if ( this.hasDraggedCardProperty.value ) {
+          this.dragIndicationCardProperty.value = null;
         }
       };
 
       this.cardNodeCellsChangedEmitter.addListener( updateDragIndicationCardProperty );
       this.hasDraggedCardProperty.link( updateDragIndicationCardProperty );
+      this.cardNodes.forEach( cardNode => cardNode.soccerBall.valueProperty.lazyLink( updateDragIndicationCardProperty ) );
     }
 
     const medianTextNode = new Text( new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty, { value: model.selectedSceneModelProperty.value.medianValueProperty }, {
