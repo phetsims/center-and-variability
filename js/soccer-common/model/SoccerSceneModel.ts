@@ -452,7 +452,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
 
           // In fuzzing, sometimes there are no soccer balls available
           if ( soccerBall ) {
-            this.kickBall( frontPlayer, soccerBall );
+            this.kickBall( frontPlayer, soccerBall, true );
             this.numberOfScheduledSoccerBallsToKickProperty.value--;
           }
         }
@@ -569,7 +569,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
   /**
    * Select a target location for the nextBallToKick, set its velocity and mark it for animation.
    */
-  private kickBall( soccerPlayer: SoccerPlayer, soccerBall: T ): void {
+  private kickBall( soccerPlayer: SoccerPlayer, soccerBall: T, playAudio: boolean ): void {
     soccerPlayer.poseProperty.value = Pose.KICKING;
 
     const x1 = SoccerCommonQueryParameters.sameSpot ? 7 :
@@ -590,7 +590,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
 
     soccerBall.soccerPlayer = soccerPlayer;
 
-    kickSound.play();
+    playAudio && kickSound.play();
   }
 
   /**
@@ -603,7 +603,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
 
     // Iterate through data points and create the soccer balls
     for ( let i = 0; i < dataPoints.length; i++ ) {
-      this.kickBall( this.soccerPlayers[ i ], this.soccerBalls[ i ] );
+      this.kickBall( this.soccerPlayers[ i ], this.soccerBalls[ i ], false );
       this.soccerBalls[ i ].valueProperty.value = dataPoints[ i ];
       this.soccerBalls[ i ].soccerBallPhaseProperty.value = SoccerBallPhase.STACKED;
 
