@@ -22,6 +22,8 @@ import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 import CAVInfoButton from '../../common/view/CAVInfoButton.js';
 import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js';
 import PlotType from '../../common/model/PlotType.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
 
 export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
   private readonly medianPlotNode: MeanAndMedianPlotNode;
@@ -76,11 +78,19 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
         tandem: readoutTandem
       } );
 
+      const readoutTextTandem = readoutTandem.createTandem( 'readoutText' );
+
       return new Text( readoutPatternStringProperty, {
         fill: fill,
         font: new PhetFont( 16 ),
         maxWidth: 170,
-        visibleProperty: visibleProperty
+        visibleProperty: DerivedProperty.and( [ visibleProperty, new BooleanProperty( true, {
+          tandem: readoutTextTandem.createTandem( 'selfVisibleProperty' )
+        } ) ], {
+          tandem: readoutTextTandem.createTandem( 'visibleProperty' ),
+          phetioValueType: BooleanIO
+        } ),
+        tandem: readoutTextTandem
       } );
     };
 
