@@ -99,7 +99,8 @@ export default class CardNode extends Node {
 
     const options = optionize<CardNodeOptions, SelfOptions, NodeOptions>()( {
       children: [ offsetContainer ],
-      cursor: 'pointer'
+      cursor: 'pointer',
+      phetioVisiblePropertyInstrumented: false
     }, providedOptions );
 
     super( options );
