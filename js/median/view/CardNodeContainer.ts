@@ -120,7 +120,8 @@ export default class CardNodeContainer extends Node {
 
     const options = optionize<CardNodeContainerOptions, SelfOptions, NodeOptions>()( {
       phetioType: CardNodeContainerIO,
-      phetioState: false
+      phetioState: false,
+      phetioEnabledPropertyInstrumented: true
     }, providedOptions );
 
     super( options );
