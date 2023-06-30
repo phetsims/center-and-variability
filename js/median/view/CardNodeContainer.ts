@@ -8,7 +8,7 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import { Image, LinearGradient, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
+import { Image, LinearGradient, Node, NodeOptions, SceneryConstants, Text } from '../../../../scenery/js/imports.js';
 import SoccerBall from '../../soccer-common/model/SoccerBall.js';
 import CardNode, { cardDropSoundClip, cardPickUpSoundClip, PICK_UP_DELTA_Y } from './CardNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -121,7 +121,8 @@ export default class CardNodeContainer extends Node {
     const options = optionize<CardNodeContainerOptions, SelfOptions, NodeOptions>()( {
       phetioType: CardNodeContainerIO,
       phetioState: false,
-      phetioEnabledPropertyInstrumented: true
+      phetioEnabledPropertyInstrumented: true,
+      disabledOpacity: SceneryConstants.DISABLED_OPACITY
     }, providedOptions );
 
     super( options );
@@ -342,7 +343,8 @@ export default class CardNodeContainer extends Node {
         tandem: options.tandem.createTandem( 'handWithArrowNode' ),
         opacity: 0,
         maxWidth: 25,
-        centerTop: new Vector2( 0.5 * CardNode.CARD_DIMENSION, CardNode.CARD_DIMENSION - 8 )
+        centerTop: new Vector2( 0.5 * CardNode.CARD_DIMENSION, CardNode.CARD_DIMENSION - 8 ),
+        visibleProperty: this.enabledProperty
       } );
 
       this.addChild( handWithArrowNode );
