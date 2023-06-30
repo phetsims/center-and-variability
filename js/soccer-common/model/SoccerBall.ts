@@ -94,7 +94,11 @@ export default class SoccerBall extends PhetioObject {
     this.valueProperty = new Property<number | null>( null, {
       tandem: options.tandem.createTandem( 'valueProperty' ),
       phetioValueType: NullableIO( NumberIO ),
-      phetioOuterType: SoccerBallValuePropertyIO
+      phetioOuterType: SoccerBallValuePropertyIO,
+      phetioDocumentation: 'The location of the soccer ball in meters, or null if the soccer ball has not yet landed. ' +
+                           'This is the value that is used to calculate the statistical measures. ' +
+                           'The value cannot be changed from null to non-null (or vice versa) directly. Instead use the ' +
+                           'scene model setDataPoints function to change the entire data set. Please see the Examples document.'
     } );
 
     this.targetXProperty = new Property<number | null>( null, {
