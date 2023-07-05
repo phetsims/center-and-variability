@@ -35,9 +35,11 @@ export default class PredictionThumbNode extends Node {
       lineWidth: CAVConstants.ARROW_LINE_WIDTH
     } );
 
-    // Expand the mouse and touch area to encompass the arrow/line
+    // Expand the pointer area to encompass the arrow if there is one, otherwise add equal margins above/below the sphere
     const oldBounds = shadedSphereNode.localBounds;
-    const expandedArea = new Bounds2( oldBounds.minX, oldBounds.minY - 40, oldBounds.maxX, oldBounds.maxY + 5 );
+    const boundsHeightBelowSphere = 5;
+    const boundsHeightAboveSphere = providedOptions.style === 'arrow' ? 40 : boundsHeightBelowSphere;
+    const expandedArea = new Bounds2( oldBounds.minX, oldBounds.minY - boundsHeightAboveSphere, oldBounds.maxX, oldBounds.maxY + boundsHeightBelowSphere );
     shadedSphereNode.mouseArea = expandedArea;
     shadedSphereNode.touchArea = expandedArea;
 
