@@ -14,7 +14,7 @@ const CAVQueryParameters = QueryStringMachine.getAll( {
   maxKicks: {
     type: 'number',
     defaultValue: 15,
-    validValues: [ 15, 20, 25, 30 ],
+    validValues: [ 5, 10, 15, 20, 25, 30 ],
     public: true
   },
   plotType: {

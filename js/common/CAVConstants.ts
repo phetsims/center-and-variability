@@ -32,6 +32,8 @@ const NUMBER_LINE_MARGIN_X = 207;
 // scales are empirically determined so that data points cut off when outside of
 // clip-area (so that we show half of an "x" instead of ending on a complete "x").
 export const MAX_KICKS_CONFIG = [
+  { kicks: 5, scale: 1 },
+  { kicks: 10, scale: 1 },
   { kicks: 15, scale: 1 },
   { kicks: 20, scale: 0.97 },
   { kicks: 25, scale: 0.92 },
@@ -75,7 +77,7 @@ const CAVConstants = {
 
   PHYSICAL_RANGE: new Range( 1, 15 ),
   VARIABILITY_DRAG_RANGE: new Range( 0, 16 ),
-  MAX_KICKS_VALUES: [ 15, 20, 25, 30 ],
+  MAX_KICKS_VALUES: [ 5, 10, 15, 20, 25, 30 ],
 
   ACCORDION_BOX_CONTENTS_SHAPE_MEDIAN: Shape.rect( 0, 10, 987, 180 ),
   ACCORDION_BOX_CONTENTS_SHAPE_MEAN_AND_MEDIAN: Shape.rect( 0, 10, 987, 232 ),

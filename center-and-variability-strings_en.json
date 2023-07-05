@@ -162,7 +162,7 @@
     "value": "Need at least five kicks"
   },
   "maxKicksForScreensWithPlots": {
-    "value": "Max kicks (for screens with plots)"
+    "value": "Max kicks (Median screen cannot exceed 15)"
   },
   "showOutliersBoxplotOnly": {
     "value": "Show outliers (boxplot only)"

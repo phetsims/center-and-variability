@@ -11,13 +11,13 @@ import centerAndVariability from '../../centerAndVariability.js';
 import CardModel from '../../median/model/CardModel.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import CAVConstants from '../../common/CAVConstants.js';
+import CAVConstants, { MAX_KICKS_PROPERTY } from '../../common/CAVConstants.js';
 import { kickDistanceStrategyFromStateObject, RandomSkewStrategy } from '../../common/model/RandomSkewStrategy.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import CAVSoccerBall from '../../common/model/CAVSoccerBall.js';
 import NumberTone from '../../soccer-common/model/NumberTone.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 type MedianModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
@@ -35,14 +35,18 @@ export default class MedianModel extends CAVModel {
       instrumentMeanPredictionProperty: false
     }, providedOptions );
 
-    const maxKicksProperty = new NumberProperty( 15, {
-      validValues: [ 15 ],
+    const maxKicksAllowed = [ 5, 10, 15 ];
+
+    const maxKicksProperty = new DerivedProperty( [ MAX_KICKS_PROPERTY ], maxKicks => {
+      return maxKicksAllowed.includes( maxKicks ) ? maxKicks : maxKicksAllowed[ maxKicksAllowed.length - 1 ];
+    }, {
+      validValues: maxKicksAllowed,
       tandem: options.tandem.createTandem( 'maxKicksProperty' )
     } );
 
     const sceneModel = new CAVSoccerSceneModel(
       maxKicksProperty,
-      [ 15 ],
+      maxKicksAllowed,
       new RandomSkewStrategy(),
       CAVConstants.PHYSICAL_RANGE,
       kickDistanceStrategyFromStateObject,

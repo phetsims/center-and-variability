@@ -33,6 +33,7 @@ import VoidIO from '../../../../tandem/js/types/VoidIO.js';
 import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import ObjectLiteralIO from '../../../../tandem/js/types/ObjectLiteralIO.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 type SelfOptions = {
   instrumentMeanPredictionProperty: boolean;
@@ -55,7 +56,7 @@ export default class CAVModel extends PhetioObject {
 
   public readonly isInfoVisibleProperty: Property<boolean>;
 
-  public constructor( public readonly maxKicksProperty: Property<number>, public readonly sceneModels: CAVSoccerSceneModel[], providedOptions: CAVModelOptions ) {
+  public constructor( public readonly maxKicksProperty: TReadOnlyProperty<number>, public readonly sceneModels: CAVSoccerSceneModel[], providedOptions: CAVModelOptions ) {
 
     const options = optionize<CAVModelOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioType: CAVModelIO,
