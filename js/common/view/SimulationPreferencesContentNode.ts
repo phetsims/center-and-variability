@@ -16,8 +16,8 @@ import CAVConstants, { MAX_KICKS_PROPERTY, SHOW_OUTLIERS_PROPERTY } from '../CAV
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PreferencesDialog from '../../../../joist/js/preferences/PreferencesDialog.js';
 import MaxKicksComboBox from './MaxKicksComboBox.js';
-import ToggleSwitch from '../../../../sun/js/ToggleSwitch.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import OnOffSwitch from '../../../../sun/js/OnOffSwitch.js';
 
 export default class SimulationPreferencesContentNode extends GridBox {
 
@@ -58,7 +58,7 @@ export default class SimulationPreferencesContentNode extends GridBox {
     const outliersDescription = new Text( CenterAndVariabilityStrings.outliersDescriptionStringProperty, LABEL_TEXT_OPTIONS );
     const outliersLabel = new VBox( { children: [ outliersTitle, outliersDescription ], align: 'left', spacing: TITLE_MARGIN_BOTTOM } );
 
-    const outliersToggleSwitch = new ToggleSwitch( SHOW_OUTLIERS_PROPERTY, false, true, { tandem: tandem.createTandem( 'outliersToggleSwitch' ) } );
+    const outliersOnOffSwitch = new OnOffSwitch( SHOW_OUTLIERS_PROPERTY, { tandem: tandem.createTandem( 'outliersOnOffSwitch' ) } );
 
     // VBox is used to make it easy to add additional controls
     super( {
@@ -69,7 +69,7 @@ export default class SimulationPreferencesContentNode extends GridBox {
         [ maxKicksLabel, new MaxKicksComboBox( MAX_KICKS_PROPERTY, parentNode, {
           tandem: tandem.createTandem( 'maxKicksComboBox' )
         } ) ],
-        [ outliersLabel, outliersToggleSwitch ]
+        [ outliersLabel, outliersOnOffSwitch ]
       ],
       spacing: PreferencesDialog.LABEL_CONTENT_SPACING,
       tandem: tandem
