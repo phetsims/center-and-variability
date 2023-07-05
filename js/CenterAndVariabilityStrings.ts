@@ -34,6 +34,7 @@ type StringsType = {
   'rangeEqualsValueMPatternStringProperty': LocalizedStringProperty;
   'madEqualsValueMPatternStringProperty': LocalizedStringProperty;
   'plotTypeStringProperty': LocalizedStringProperty;
+  'plotTypeDescriptionStringProperty': LocalizedStringProperty;
   'dotPlotStringProperty': LocalizedStringProperty;
   'linePlotStringProperty': LocalizedStringProperty;
   'medianStringProperty': LocalizedStringProperty;
@@ -67,8 +68,11 @@ type StringsType = {
   'rangeCalculationResultPatternStringProperty': LocalizedStringProperty;
   'needAtLeastOneKickStringProperty': LocalizedStringProperty;
   'needAtLeastFiveKicksStringProperty': LocalizedStringProperty;
-  'maxKicksForScreensWithPlotsStringProperty': LocalizedStringProperty;
-  'showOutliersBoxplotOnlyStringProperty': LocalizedStringProperty;
+  'maxKicksStringProperty': LocalizedStringProperty;
+  'maxKicksDescription1StringProperty': LocalizedStringProperty;
+  'maxKicksDescription2StringProperty': LocalizedStringProperty;
+  'outliersStringProperty': LocalizedStringProperty;
+  'outliersDescriptionStringProperty': LocalizedStringProperty;
   'valuesMayNotMatchDueToRoundingErrorsStringProperty': LocalizedStringProperty;
   'kicksPatternStringProperty': LocalizedStringProperty;
 };

@@ -14,7 +14,7 @@ export default class MaxKicksControlNode extends HBox {
   public constructor( maxKicksProperty: Property<number>, listParent: Node, options: ComboBoxOptions & PickRequired<ComboBoxOptions, 'tandem'> ) {
     super( {
         spacing: 10,
-        children: [ new Text( CenterAndVariabilityStrings.maxKicksForScreensWithPlotsStringProperty, {
+        children: [ new Text( CenterAndVariabilityStrings.maxKicksStringProperty, {
           font: CAVConstants.MAIN_FONT,
           tandem: options.tandem.createTandem( 'maxKicksLabelText' )
         } ), new MaxKicksComboBox( maxKicksProperty, listParent, {
