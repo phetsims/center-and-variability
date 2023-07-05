@@ -807,7 +807,7 @@ const CardNodeContainerIO = new IOType( 'CardNodeContainerIO', {
       implementation: function( this: CardNodeContainer ) {
         return this.cardNodeCells.filter( cardNode => cardNode.soccerBall.valueProperty.value !== null ).map( cardNode => cardNode.soccerBall.valueProperty.value );
       },
-      documentation: 'Gets the data points the cards in the order they appear.'
+      documentation: 'Gets the values of the cards in the order they appear.'
     }
   }
 } );
