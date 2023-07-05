@@ -49,11 +49,13 @@ export default class MeanAndMedianInfoPlotNode extends MeanAndMedianPlotNode {
     this.addChild( medianArrowNode );
     const updateMedianArrow = () => {
       const medianValue = sceneModel.medianValueProperty.value;
+      console.log( 'first: ' + medianValue );
 
       if ( medianValue !== null ) {
 
         const medianArrowYPosition = sceneModel.getDataValues().includes( medianValue )
                                      ? sceneModel.getStackAtLocation( medianValue )[ sceneModel.getStackAtLocation( medianValue ).length - 1 ].positionProperty.value.y : 0;
+        console.log( medianValue );
         const x = modelViewTransfrom.modelToViewX( medianValue );
         const scale = DATA_POINT_SCALE_PROPERTY.value;
         const y = modelViewTransfrom.modelToViewY( medianArrowYPosition * scale );
@@ -82,6 +84,7 @@ export default class MeanAndMedianInfoPlotNode extends MeanAndMedianPlotNode {
     };
 
     sceneModel.objectChangedEmitter.addListener( updateMedianArrow );
+    sceneModel.medianValueProperty.link( updateMedianArrow );
     sceneModel.meanValueProperty.link( updateMeanIndicatorNode );
   }
 
