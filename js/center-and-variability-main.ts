@@ -30,7 +30,7 @@ const simOptions: SimOptions = {
   preferencesModel: new PreferencesModel( {
     simulationOptions: {
       customPreferences: [ {
-        createContent: tandem => new SimulationPreferencesContentNode( tandem.createTandem( 'simPreferences' ), phet.joist.sim.topLayer )
+        createContent: () => new SimulationPreferencesContentNode( phet.joist.sim.topLayer )
       } ]
     }
   } )
