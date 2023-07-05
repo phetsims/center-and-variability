@@ -18,6 +18,7 @@ import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import CAVSoccerBall from '../../common/model/CAVSoccerBall.js';
 import NumberTone from '../../soccer-common/model/NumberTone.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 
 type SelfOptions = EmptySelfOptions;
 type MedianModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
@@ -41,6 +42,7 @@ export default class MedianModel extends CAVModel {
       return maxKicksAllowed.includes( maxKicks ) ? maxKicks : maxKicksAllowed[ maxKicksAllowed.length - 1 ];
     }, {
       validValues: maxKicksAllowed,
+      phetioValueType: NumberIO,
       tandem: options.tandem.createTandem( 'maxKicksProperty' )
     } );
 
