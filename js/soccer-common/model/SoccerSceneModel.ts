@@ -598,6 +598,12 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
    */
   public setDataPoints( dataPoints: number[] ): void {
 
+    // Ignore any data points beyond the max supported by MAX_KICKS_PROPERTY. Note this means a PhET-iO client needs
+    // to specify the MAX_KICKS_PROPERTY value before calling this method.
+    if ( dataPoints.length > this.maxKicksProperty.value ) {
+      dataPoints.length = this.maxKicksProperty.value;
+    }
+
     // Clear pre-existing data
     this.clearData();
 
@@ -630,7 +636,7 @@ const SoccerSceneModelIO = new IOType( 'SoccerSceneModelIO', {
       implementation: function( this: SoccerSceneModel, dataPoints: number[] ) {
         this.setDataPoints( dataPoints );
       },
-      documentation: 'Sets the data points for the scene model.'
+      documentation: 'Sets the data points for the scene model. Array lengths that exceed maxKicks will ignore excess values.'
     },
 
     getDataPoints: {
