@@ -489,6 +489,8 @@ export default class CardNodeContainer extends Node {
       this.cardNodeCellsChangedEmitter.addListener( () => {
         model.areCardsSortedProperty.value = this.isDataSorted();
       } );
+
+      this.cardNodes.forEach( cardNode => cardNode.soccerBall.valueProperty.link( () => { model.areCardsSortedProperty.value = this.isDataSorted(); } ) );
     }
   }
 
