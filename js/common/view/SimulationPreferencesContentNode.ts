@@ -8,7 +8,7 @@
  */
 
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
-import { Node, RichText, Text, VBox } from '../../../../scenery/js/imports.js';
+import { Node, RichText, Text } from '../../../../scenery/js/imports.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import PlotType from '../model/PlotType.js';
 import CAVConstants, { MAX_KICKS_PROPERTY, SHOW_OUTLIERS_PROPERTY } from '../CAVConstants.js';
@@ -22,7 +22,7 @@ import PreferencesPanelContentNode from '../../../../joist/js/preferences/Prefer
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 
 const RADIO_BUTTON_LABEL_OPTIONS = {
-  font: new PhetFont( 14 )
+  font: new PhetFont( 16 )
 };
 export default class SimulationPreferencesContentNode extends PreferencesPanelContentNode {
 
@@ -44,9 +44,7 @@ export default class SimulationPreferencesContentNode extends PreferencesPanelCo
     } );
 
     const maxKicksTitle = new Text( CenterAndVariabilityStrings.maxKicksStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS );
-    const maxKicksDescription1 = new RichText( CenterAndVariabilityStrings.maxKicksDescription1StringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS );
-    const maxKicksDescription2 = new RichText( CenterAndVariabilityStrings.maxKicksDescription2StringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS );
-    const maxKicksDescription = new VBox( { children: [ maxKicksDescription1, maxKicksDescription2 ], align: 'left', spacing: 20 } );
+    const maxKicksDescription = new RichText( CenterAndVariabilityStrings.maxKicksDescriptionStringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS );
 
     const outliersTitle = new Text( CenterAndVariabilityStrings.outliersStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS );
     const outliersDescription = new RichText( CenterAndVariabilityStrings.outliersDescriptionStringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS );

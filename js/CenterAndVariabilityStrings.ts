@@ -69,8 +69,7 @@ type StringsType = {
   'needAtLeastOneKickStringProperty': LocalizedStringProperty;
   'needAtLeastFiveKicksStringProperty': LocalizedStringProperty;
   'maxKicksStringProperty': LocalizedStringProperty;
-  'maxKicksDescription1StringProperty': LocalizedStringProperty;
-  'maxKicksDescription2StringProperty': LocalizedStringProperty;
+  'maxKicksDescriptionStringProperty': LocalizedStringProperty;
   'outliersStringProperty': LocalizedStringProperty;
   'outliersDescriptionStringProperty': LocalizedStringProperty;
   'valuesMayNotMatchDueToRoundingErrorsStringProperty': LocalizedStringProperty;
