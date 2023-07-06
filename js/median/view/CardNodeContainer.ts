@@ -93,6 +93,7 @@ export default class CardNodeContainer extends Node {
     } );
     this.dragIndicationCardProperty = new Property( null );
 
+    // Allocate all the cards at start-up. Each card node must be associated with a card model.
     this.cardNodes = model.cards.map( ( cardModel, index ) => {
       const cardNode = new CardNode( this, cardModel, {
         tandem: options.tandem.createTandem( 'cardNodes' ).createTandem1Indexed( 'cardNode', index )

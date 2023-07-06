@@ -88,6 +88,8 @@ export default class CardContainerModel extends PhetioObject {
     super( options );
 
     this.parentContext = options.parentContext;
+
+    // Allocate all the card models at start-up.
     this.cards = median.selectedSceneModelProperty.value.soccerBalls.map( ( soccerBall, index ) => {
       const card = new CardModel( this, soccerBall, new Vector2( 0, 0 ), {
         tandem: options.tandem.createTandem( 'cards' ).createTandem1Indexed( 'card', index )
@@ -103,6 +105,8 @@ export default class CardContainerModel extends PhetioObject {
       };
 
       card.soccerBall.valueProperty.link( value => {
+
+        // When a ball's value is null it has been removed from the data set.
         if ( value === null ) {
           removeCardCell( card );
         }
@@ -121,6 +125,8 @@ export default class CardContainerModel extends PhetioObject {
         if ( isActive && !isSettingPhetioStateProperty.value ) {
 
           let targetIndex = this.cardCells.length;
+
+          // We want to auto-sort cards in the infoDialog no matter what the value for isSortingDataProperty is.
           if ( median.isSortingDataProperty.value || options.parentContext === 'info' ) {
             const newValue = card.soccerBall.valueProperty.value!;
             const existingLowerCards = this.cardCells.filter( card => card.soccerBall.valueProperty.value! <= newValue );
@@ -167,7 +173,9 @@ export default class CardContainerModel extends PhetioObject {
   }
 
   /**
-   * Play sound effects whenever two cards pass each other. If the user is dragging it, that card gets precedence for choosing the pitch.  Moving to the right is a higher pitch. If one card animates past another, that movement direction chooses the pitch. If both cards are animating, use an in-between pitch.
+   * Play sound effects whenever two cards pass each other. If the user is dragging it, that card gets precedence for choosing the pitch.
+   * Moving to the right is a higher pitch. If one card animates past another, that movement direction chooses the pitch.
+   * If both cards are animating, use an in-between pitch.
    */
   public step( dt: number ): void {
 
