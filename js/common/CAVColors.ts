@@ -70,7 +70,10 @@ const CAVColors = {
   rangeFillProperty: new ProfileColorProperty( centerAndVariability, 'rangeFill', { default: new Color( '#c3fdb9' ).withAlpha( 0.7 ) } ),
 
   meanAndMedianAccordionBoxFillProperty: new ProfileColorProperty( centerAndVariability, 'meanAndMedianAccordionBoxFill', { default: 'rgb( 238, 238, 238 )' } ),
-  variabilityAccordionBoxFillProperty: new ProfileColorProperty( centerAndVariability, 'variabilityAccordionBoxFill', { default: 'white' } )
+  variabilityAccordionBoxFillProperty: new ProfileColorProperty( centerAndVariability, 'variabilityAccordionBoxFill', { default: 'white' } ),
+
+  radioButtonBackgroundColorProperty: new ProfileColorProperty( centerAndVariability, 'radioButtonBackgroundColor', { default: '#EDEDED' } ),
+  radioButtonDataPointColorProperty: new ProfileColorProperty( centerAndVariability, 'radioButtonDataPointColor', { default: 'black' } )
 };
 
 centerAndVariability.register( 'CAVColors', CAVColors );

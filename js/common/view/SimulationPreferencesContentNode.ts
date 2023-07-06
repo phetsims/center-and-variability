@@ -7,7 +7,6 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
 import { Node, RichText, Text } from '../../../../scenery/js/imports.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import PlotType from '../model/PlotType.js';
@@ -19,25 +18,29 @@ import PreferencesDialogConstants from '../../../../joist/js/preferences/Prefere
 import ToggleSwitch from '../../../../sun/js/ToggleSwitch.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import PreferencesPanelContentNode from '../../../../joist/js/preferences/PreferencesPanelContentNode.js';
-import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
+import timesSolidShape from '../../../../sherpa/js/fontawesome-5/timesSolidShape.js';
+import PlotIcon, { VIEW_RADIUS } from './PlotIcon.js';
+import CAVColors from '../CAVColors.js';
+import { Shape } from '../../../../kite/js/imports.js';
 
-const RADIO_BUTTON_LABEL_OPTIONS = {
-  font: new PhetFont( 16 )
-};
 export default class SimulationPreferencesContentNode extends PreferencesPanelContentNode {
 
   public constructor( parentNode: Node ) {
 
     const plotTypeTitle = new Text( CenterAndVariabilityStrings.plotTypeStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS );
-    const plotTypeDescription = new RichText( CenterAndVariabilityStrings.plotTypeDescriptionStringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS );
 
-    const plotTypeRadioButtonGroup = new VerticalAquaRadioButtonGroup<PlotType>( CAVConstants.PLOT_TYPE_PROPERTY, [ {
-      createNode: () => new Text( CenterAndVariabilityStrings.linePlotStringProperty, RADIO_BUTTON_LABEL_OPTIONS ),
+    const plotTypeRadioButtonGroup = new RectangularRadioButtonGroup<PlotType>( CAVConstants.PLOT_TYPE_PROPERTY, [ {
+      createNode: () => new PlotIcon( timesSolidShape ),
       value: PlotType.LINE_PLOT
     }, {
-      createNode: () => new Text( CenterAndVariabilityStrings.dotPlotStringProperty, RADIO_BUTTON_LABEL_OPTIONS ),
+      createNode: () => new PlotIcon( Shape.circle( VIEW_RADIUS * 0.93 ) ),
       value: PlotType.DOT_PLOT
     } ], {
+      radioButtonOptions: {
+        baseColor: CAVColors.radioButtonBackgroundColorProperty
+      },
+      orientation: 'horizontal',
 
       // We don't want to instrument components for preferences, https://github.com/phetsims/joist/issues/744#issuecomment-1196028362
       tandem: Tandem.OPT_OUT
@@ -53,7 +56,6 @@ export default class SimulationPreferencesContentNode extends PreferencesPanelCo
 
     const plotTypeControl = new PreferencesControl( {
       labelNode: plotTypeTitle,
-      descriptionNode: plotTypeDescription,
       controlNode: plotTypeRadioButtonGroup
     } );
     const maxKicksControl = new PreferencesControl( {

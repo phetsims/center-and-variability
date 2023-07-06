@@ -34,7 +34,6 @@ type StringsType = {
   'rangeEqualsValueMPatternStringProperty': LocalizedStringProperty;
   'madEqualsValueMPatternStringProperty': LocalizedStringProperty;
   'plotTypeStringProperty': LocalizedStringProperty;
-  'plotTypeDescriptionStringProperty': LocalizedStringProperty;
   'dotPlotStringProperty': LocalizedStringProperty;
   'linePlotStringProperty': LocalizedStringProperty;
   'medianStringProperty': LocalizedStringProperty;
