@@ -26,11 +26,9 @@ import SoccerPlayer from './SoccerPlayer.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
-import Pose from './Pose.js';
 import { SoccerBallPhase } from './SoccerBallPhase.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
-import Multilink from '../../../../axon/js/Multilink.js';
 import { TKickDistanceStrategy } from './TKickDistanceStrategy.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import VoidIO from '../../../../tandem/js/types/VoidIO.js';
@@ -45,6 +43,8 @@ import SoccerCommonQueryParameters from '../SoccerCommonQueryParameters.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
 import KickDistanceStrategy from './KickDistanceStrategy.js';
+import { SoccerPlayerPhase } from './SoccerPlayerPhase.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 
 const kickSound = new SoundClip( basicKick_mp3, { initialOutputLevel: 0.2 } );
 soundManager.addSoundGenerator( kickSound );
@@ -89,7 +89,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
 
   private readonly timeWhenLastBallWasKickedProperty: NumberProperty;
 
-  // Starting at 0, iterate through the index of the kickers. This updates the SoccerPlayer.isActiveProperty to show the current kicker
+  // Starting at 0, iterate through the index of the kickers. This updates the SoccerPlayer.soccerPlayerPhaseProperty to show the current kicker
   private readonly activeKickerIndexProperty: NumberProperty;
 
   // Called when the location of a ball changed within a stack, so the pointer areas can be updated
@@ -110,6 +110,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
     public readonly maxKicksProperty: TReadOnlyProperty<number>,
     maxKicksChoices: number[],
     initialKickDistanceStrategy: TKickDistanceStrategy,
+    hidePlayersWhenDoneKicking: boolean,
     public readonly physicalRange: Range,
     kickDistanceStrategyFromStateObject: ( string: string ) => TKickDistanceStrategy,
     createSoccerBall: ( isFirstSoccerBall: boolean, options: { tandem: Tandem } ) => T,
@@ -263,7 +264,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
 
     Multilink.multilink( [ this.activeKickerIndexProperty, this.maxKicksProperty ], ( activeKickerIndex, maxKicks ) => {
       this.soccerPlayers.forEach( ( soccerPlayer, index ) => {
-        soccerPlayer.isActiveProperty.value = index === activeKickerIndex && index < maxKicks;
+        soccerPlayer.soccerPlayerPhaseProperty.value = index === activeKickerIndex && ( index < maxKicks || !hidePlayersWhenDoneKicking ) ? SoccerPlayerPhase.READY : SoccerPlayerPhase.INACTIVE;
       } );
     } );
 
@@ -433,14 +434,14 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
 
         this.advanceLine();
 
-        if ( frontPlayer.poseProperty.value === Pose.STANDING ) {
-          frontPlayer.poseProperty.value = Pose.POISED_TO_KICK;
+        if ( frontPlayer.soccerPlayerPhaseProperty.value === SoccerPlayerPhase.READY ) {
+          frontPlayer.soccerPlayerPhaseProperty.value = SoccerPlayerPhase.POISED;
           frontPlayer.timestampWhenPoisedBeganProperty.value = this.timeProperty.value;
         }
       }
 
       // How long has the front player been poised?
-      if ( frontPlayer.poseProperty.value === Pose.POISED_TO_KICK ) {
+      if ( frontPlayer.soccerPlayerPhaseProperty.value === SoccerPlayerPhase.POISED ) {
         assert && assert( typeof frontPlayer.timestampWhenPoisedBeganProperty.value === 'number', 'timestampWhenPoisedBegan should be a number' );
         const elapsedTime = this.timeProperty.value - frontPlayer.timestampWhenPoisedBeganProperty.value!;
         if ( elapsedTime > 0.075 ) {
@@ -488,8 +489,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
 
     // Allow kicking another ball while one is already in the air.
     // if the previous ball was still in the air, we need to move the line forward so the next player can kick
-    const kickers = this.soccerPlayers.filter( soccerPlayer => soccerPlayer.isActiveProperty.value &&
-                                                               soccerPlayer.poseProperty.value === Pose.KICKING );
+    const kickers = this.soccerPlayers.filter( soccerPlayer => soccerPlayer.soccerPlayerPhaseProperty.value === SoccerPlayerPhase.KICKING );
     if ( kickers.length > 0 ) {
       let nextIndex = this.activeKickerIndexProperty.value + 1;
       if ( nextIndex > this.maxKicksProperty.value ) {
@@ -570,7 +570,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
    * Select a target location for the nextBallToKick, set its velocity and mark it for animation.
    */
   private kickBall( soccerPlayer: SoccerPlayer, soccerBall: T, playAudio: boolean ): void {
-    soccerPlayer.poseProperty.value = Pose.KICKING;
+    soccerPlayer.soccerPlayerPhaseProperty.value = SoccerPlayerPhase.KICKING;
 
     const x1 = SoccerCommonQueryParameters.sameSpot ? 7 :
                this.kickDistanceStrategy.currentStrategy.getNextKickDistance( this.soccerBalls.indexOf( soccerBall ) );

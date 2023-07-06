@@ -29,13 +29,14 @@ export default class CAVSoccerSceneModel<T extends CAVSoccerBall = CAVSoccerBall
   public constructor( maxKicksProperty: TReadOnlyProperty<number>,
                       maxKicksChoices: number[],
                       kickDistanceStrategy: TKickDistanceStrategy,
+                      hidePlayersWhenDoneKicking: boolean,
                       physicalRange: Range,
                       kickDistanceStrategyFromStateObject: ( string: string ) => TKickDistanceStrategy,
                       soccerBallFactory: ( isFirstSoccerBall: boolean, options: CAVSoccerBallOptions ) => T,
                       providedOptions: CAVSoccerSceneModelOptions ) {
 
     const options = providedOptions;
-    super( maxKicksProperty, maxKicksChoices, kickDistanceStrategy, physicalRange,
+    super( maxKicksProperty, maxKicksChoices, kickDistanceStrategy, hidePlayersWhenDoneKicking, physicalRange,
       kickDistanceStrategyFromStateObject, soccerBallFactory, options );
 
     this.medianValueProperty = new Property<number | null>( null, {

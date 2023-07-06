@@ -15,7 +15,7 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Pose from '../model/Pose.js';
-import Multilink from '../../../../axon/js/Multilink.js';
+import { SoccerPlayerPhase } from '../model/SoccerPlayerPhase.js';
 
 type SelfOptions = EmptySelfOptions;
 type SoccerPlayerNodeOptions = SelfOptions & NodeOptions;
@@ -61,15 +61,15 @@ export default class SoccerPlayerNode extends Node {
       } ) );
     }
 
+    soccerPlayer.soccerPlayerPhaseProperty.link( phase => {
+      this.visible = phase !== SoccerPlayerPhase.INACTIVE;
+    } );
+
     soccerPlayer.poseProperty.link( pose => {
       standingNode.visible = pose === Pose.STANDING;
       poisedToKickNode.visible = pose === Pose.POISED_TO_KICK;
       kickingNode.visible = pose === Pose.KICKING;
       this.centerBottom = modelViewTransform.modelToViewPosition( new Vector2( 0, 0 ) ).plusXY( -28, 8.5 );
-    } );
-
-    Multilink.multilink( [ soccerPlayer.isActiveProperty ], isActive => {
-      this.visible = isActive;
     } );
 
     const options = optionize<SoccerPlayerNodeOptions, SelfOptions, NodeOptions>()( {

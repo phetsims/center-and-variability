@@ -9,28 +9,37 @@
 
 import soccerCommon from '../soccerCommon.js';
 import Pose from './Pose.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import Property from '../../../../axon/js/Property.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
+import { SoccerPlayerPhase } from './SoccerPlayerPhase.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 export default class SoccerPlayer {
-  public readonly poseProperty;
+  public readonly soccerPlayerPhaseProperty: Property<SoccerPlayerPhase>;
+  public readonly poseProperty: TReadOnlyProperty<Pose>;
+  public readonly timestampWhenPoisedBeganProperty: Property<number | null>;
 
-  // Also used to determine the artwork for rendering the SoccerPlayerNode
+  // Used to determine the artwork for rendering the SoccerPlayerNode
   public readonly initialPlaceInLine: number;
 
-  public readonly timestampWhenPoisedBeganProperty: Property<number | null>;
-  public readonly isActiveProperty: BooleanProperty;
-
   public constructor( placeInLine: number, tandem: Tandem ) {
-    this.poseProperty = new EnumerationProperty( Pose.STANDING, {
-      tandem: tandem.createTandem( 'poseProperty' )
+    this.soccerPlayerPhaseProperty = new EnumerationProperty( placeInLine === 0 ? SoccerPlayerPhase.READY : SoccerPlayerPhase.INACTIVE, {
+      tandem: tandem.createTandem( 'soccerPlayerPhaseProperty' )
     } );
-    this.isActiveProperty = new BooleanProperty( placeInLine === 0, {
-      tandem: tandem.createTandem( 'isActiveProperty' )
+    this.poseProperty = new DerivedProperty( [ this.soccerPlayerPhaseProperty ], soccerPlayerPhase => {
+      if ( soccerPlayerPhase === SoccerPlayerPhase.POISED ) {
+        return Pose.POISED_TO_KICK;
+      }
+      else if ( soccerPlayerPhase === SoccerPlayerPhase.KICKING ) {
+        return Pose.KICKING;
+      }
+      else {
+        return Pose.STANDING;
+      }
     } );
     this.timestampWhenPoisedBeganProperty = new Property<number | null>( null, {
       tandem: tandem.createTandem( 'timestampWhenPoisedBeganProperty' ),
@@ -40,9 +49,8 @@ export default class SoccerPlayer {
   }
 
   public reset(): void {
-    this.poseProperty.reset();
+    this.soccerPlayerPhaseProperty.reset();
     this.timestampWhenPoisedBeganProperty.reset();
-    this.isActiveProperty.reset();
   }
 }
 

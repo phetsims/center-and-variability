@@ -40,6 +40,7 @@ export default class VariabilitySceneModel extends CAVSoccerSceneModel<Variabili
       maxKicksProperty,
       CAVConstants.MAX_KICKS_VALUES,
       kickDistanceStrategy,
+      false,
       CAVConstants.PHYSICAL_RANGE,
       kickDistanceStrategyFromStateObject,
       VariabilitySoccerBall.createSoccerBall,

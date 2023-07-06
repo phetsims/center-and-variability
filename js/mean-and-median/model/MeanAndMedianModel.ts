@@ -53,6 +53,7 @@ export default class MeanAndMedianModel extends CAVModel {
       MAX_KICKS_PROPERTY,
       CAVConstants.MAX_KICKS_VALUES,
       new RandomSkewStrategy(),
+      true,
       CAVConstants.PHYSICAL_RANGE,
       kickDistanceStrategyFromStateObject,
       CAVSoccerBall.createSoccerBall, {
