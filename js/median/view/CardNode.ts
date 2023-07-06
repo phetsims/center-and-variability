@@ -12,11 +12,7 @@ import { Color, DragListener, Node, NodeOptions, Rectangle, Text } from '../../.
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import SoccerBall from '../../soccer-common/model/SoccerBall.js';
-import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import Animation from '../../../../twixt/js/Animation.js';
-import Range from '../../../../dot/js/Range.js';
-import Easing from '../../../../twixt/js/Easing.js';
 import CardModel from '../model/CardModel.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
@@ -27,6 +23,7 @@ import soundManager from '../../../../tambo/js/soundManager.js';
 import cvCardPickupSound_mp3 from '../../../sounds/cvCardPickupSound_mp3.js';
 import cvCardDropSound_mp3 from '../../../sounds/cvCardDropSound_mp3.js';
 import CAVQueryParameters from '../../common/CAVQueryParameters.js';
+import CAVConstants from '../../common/CAVConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 export type CardNodeOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
@@ -48,12 +45,8 @@ export const PICK_UP_DELTA_X = -4;
 export const PICK_UP_DELTA_Y = -4;
 
 export default class CardNode extends Node {
-  public readonly positionProperty: Vector2Property;
-  public readonly dragListener: DragListener;
 
-  // Track whether the card is being dragged, for purposes of hiding the drag indicator arrow when the user
-  // has dragged a sufficient amount and to play sound effects for the dragged card
-  public isDragging = false;
+  public readonly dragListener: DragListener;
 
   // Emit how far the card has been dragged for purposes of hiding the drag indicator arrow when the user
   // has dragged a sufficient amount
@@ -62,22 +55,13 @@ export default class CardNode extends Node {
   } );
 
   public readonly soccerBall: SoccerBall;
-  public animation: Animation | null = null;
-  private animationTo: Vector2 | null = null;
 
-  public static readonly CARD_DIMENSION = 43;
   private cardsToTheLeft: CardNode[] = [];
 
-  // Avoid sound effects for cards that landed recently, since cards sometimes swap when a new soccer ball lands and "sort data" is checked.
-  public timeSinceLanded = 0;
-
-  // We can also specify a reason for the animation, in order to 'mute' sound effects for this card.
-  public animationReason: 'valueChanged' | null = null;
-
-  public constructor( public readonly cardNodeContainer: CardNodeContainer, public readonly cardModel: CardModel, position: Vector2, getDragRange: () => Range, providedOptions: CardNodeOptions ) {
+  public constructor( public readonly cardNodeContainer: CardNodeContainer, public readonly cardModel: CardModel, providedOptions: CardNodeOptions ) {
 
     const cornerRadius = 10;
-    const rectangle = new Rectangle( 0, 0, CardNode.CARD_DIMENSION, CardNode.CARD_DIMENSION, cornerRadius, cornerRadius, {
+    const rectangle = new Rectangle( 0, 0, CAVConstants.CARD_DIMENSION, CAVConstants.CARD_DIMENSION, cornerRadius, cornerRadius, {
       stroke: 'black',
       lineWidth: 1,
       fill: 'white'
@@ -91,7 +75,7 @@ export default class CardNode extends Node {
     } );
 
     // For layout only, a bounding box that the card animates within for the "pick up" and "drop" effects.
-    const offsetContainer = new Rectangle( PICK_UP_DELTA_X, PICK_UP_DELTA_Y, CardNode.CARD_DIMENSION - PICK_UP_DELTA_X, CardNode.CARD_DIMENSION - PICK_UP_DELTA_Y, {
+    const offsetContainer = new Rectangle( PICK_UP_DELTA_X, PICK_UP_DELTA_Y, CAVConstants.CARD_DIMENSION - PICK_UP_DELTA_X, CAVConstants.CARD_DIMENSION - PICK_UP_DELTA_Y, {
       stroke: Color.TRANSPARENT,
       lineWidth: 0,
       children: [ card ]
@@ -111,20 +95,15 @@ export default class CardNode extends Node {
       this.visible = value !== null;
     } );
 
-    this.positionProperty = new Vector2Property( position, {
-      tandem: options.tandem.createTandem( 'positionProperty' ),
-      valueComparisonStrategy: 'equalsFunction'
-    } );
-
     this.soccerBall = cardModel.soccerBall;
 
-    this.positionProperty.link( position => {
-      const range = getDragRange();
+    cardModel.positionProperty.link( position => {
+      const range = cardModel.cardContainerModel.getDragRange();
       const before = this.translation.copy();
       this.translation = new Vector2( range.constrainValue( position.x ), 0 );
 
       const delta = this.translation.minus( before );
-      if ( this.isDragging ) {
+      if ( cardModel.isDragging ) {
         this.dragDistanceEmitter.emit( Math.abs( delta.x ) );
 
         // Set the relative position within the parent.
@@ -134,9 +113,9 @@ export default class CardNode extends Node {
 
     this.dragListener = new DragListener( {
       tandem: options.tandem.createTandem( 'dragListener' ),
-      positionProperty: this.positionProperty,
+      positionProperty: cardModel.positionProperty,
       start: () => {
-        this.isDragging = true;
+        cardModel.isDragging = true;
         this.moveToFront();
 
         // Set the relative position within the parent.
@@ -144,7 +123,7 @@ export default class CardNode extends Node {
         cardPickUpSoundClip.play();
       },
       end: () => {
-        this.isDragging = false;
+        cardModel.isDragging = false;
 
         // Restore the relative position within the parent.
         card.setTranslation( 0, 0 );
@@ -156,50 +135,6 @@ export default class CardNode extends Node {
     this.soccerBall.dragStartedEmitter.addListener( () => this.moveToFront() );
 
     this.addLinkedElement( cardModel );
-  }
-
-  public animateTo( destination: Vector2, duration: number, animationReason: 'valueChanged' | null = null ): void {
-
-    if ( this.animation ) {
-
-      assert && assert( !!this.animationTo, 'animationTo should be defined when animation is defined' );
-
-      if ( destination.equals( this.animationTo! ) ) {
-
-        // Already moving to the desired destination.
-        this.animationReason = animationReason;
-        return;
-      }
-      else {
-        this.animation.stop();
-      }
-    }
-    else {
-      if ( destination.equals( this.positionProperty.value ) ) {
-
-        // Already at the desired destination.
-        return;
-      }
-    }
-    this.animationReason = animationReason;
-
-    this.animation = new Animation( {
-      duration: duration,
-      targets: [ {
-        property: this.positionProperty,
-        to: destination,
-        easing: Easing.QUADRATIC_IN_OUT
-      } ]
-    } );
-    this.animationTo = destination;
-
-    this.animation.endedEmitter.addListener( () => {
-      this.animation = null;
-      this.animationTo = null;
-      this.animationReason = null;
-    } );
-
-    this.animation.start();
   }
 }
 

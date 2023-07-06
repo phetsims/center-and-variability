@@ -12,8 +12,6 @@ import { Image, LinearGradient, Node, NodeOptions, SceneryConstants, Text } from
 import SoccerBall from '../../soccer-common/model/SoccerBall.js';
 import CardNode, { cardDropSoundClip, cardPickUpSoundClip, PICK_UP_DELTA_Y } from './CardNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import Range from '../../../../dot/js/Range.js';
-import Emitter from '../../../../axon/js/Emitter.js';
 import Panel from '../../../../sun/js/Panel.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
@@ -29,75 +27,32 @@ import dotRandom from '../../../../dot/js/dotRandom.js';
 import AsyncCounter from '../../common/model/AsyncCounter.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Matrix3 from '../../../../dot/js/Matrix3.js';
-import TEmitter from '../../../../axon/js/TEmitter.js';
-import MedianModel from '../../median/model/MedianModel.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import handWithArrow_png from '../../../images/handWithArrow_png.js';
-
-import cvCardMovementSoundsV2001_mp3 from '../../../sounds/cvCardMovementSoundsV2001_mp3.js';
-import cvCardMovementSoundsV2002_mp3 from '../../../sounds/cvCardMovementSoundsV2002_mp3.js';
-import cvCardMovementSoundsV2003_mp3 from '../../../sounds/cvCardMovementSoundsV2003_mp3.js';
-import cvCardMovementSoundsV2004_mp3 from '../../../sounds/cvCardMovementSoundsV2004_mp3.js';
-import cvCardMovementSoundsV2005_mp3 from '../../../sounds/cvCardMovementSoundsV2005_mp3.js';
-import cvCardMovementSoundsV2006_mp3 from '../../../sounds/cvCardMovementSoundsV2006_mp3.js';
-
 import cvSuccessOptions002_mp3 from '../../../sounds/cvSuccessOptions002_mp3.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
-import optionize from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import IOType from '../../../../tandem/js/types/IOType.js';
-import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
-import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Property from '../../../../axon/js/Property.js';
 import TProperty from '../../../../axon/js/TProperty.js';
-import CAVQueryParameters from '../../common/CAVQueryParameters.js';
+import CardContainerModel from '../model/CardContainerModel.js';
+import CardModel from '../model/CardModel.js';
+import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 
 const successSoundClip = new SoundClip( cvSuccessOptions002_mp3, {
   initialOutputLevel: 0.2
 } );
 soundManager.addSoundGenerator( successSoundClip );
 
-const cardMovementSounds = [
-  cvCardMovementSoundsV2001_mp3,
-  cvCardMovementSoundsV2002_mp3,
-  cvCardMovementSoundsV2003_mp3,
-  cvCardMovementSoundsV2004_mp3,
-  cvCardMovementSoundsV2005_mp3,
-  cvCardMovementSoundsV2006_mp3
-];
-
-export const cardMovementSoundClips = cardMovementSounds.map( sound => new SoundClip( sound, {
-  initialOutputLevel: 0.2,
-  additionalAudioNodes: []
-} ) );
-cardMovementSoundClips.forEach( soundClip => soundManager.addSoundGenerator( soundClip ) );
-
-// constants
-const CARD_SPACING = 10;
-const getCardPositionX = ( index: number ) => index * ( CardNode.CARD_DIMENSION + CARD_SPACING );
-
-type SelfOptions = {
-
-  // accordionBox is the full-featured interactive version with drag input and sound effects
-  // info is the non-interactive version used in the info dialog
-  parentContext: 'info' | 'accordion';
-};
-export type CardNodeContainerOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
+export type CardNodeContainerOptions = EmptySelfOptions & WithRequired<NodeOptions, 'tandem'>;
 
 export default class CardNodeContainer extends Node {
-
-  // Each card is associated with one "cell", no two cards can be associated with the same cell.  The leftmost cell is 0.
-  // The cells linearly map to locations across the screen.
-  public readonly cardNodeCells: CardNode[] = [];
-
-  // Fires if the cardNodeCells may have changed
-  public readonly cardNodeCellsChangedEmitter: TEmitter = new Emitter<[]>();
-
-  private readonly model: MedianModel;
+  private readonly model: CardContainerModel;
   public readonly cardNodes: CardNode[];
+  private readonly cardMap = new Map<CardModel, CardNode>();
   private readonly medianBarNode = new MedianBarNode( {
     barStyle: 'split'
   } );
@@ -112,22 +67,18 @@ export default class CardNodeContainer extends Node {
   private dataSortedNodeAnimation: Animation | null = null;
   private wasSortedBefore = true;
 
-  // For sonification, order the active, non-displaced cards appeared in the last step
-  private lastStepOrder: CardNode[] = [];
-  private parentContext: 'info' | 'accordion';
+  public constructor( model: CardContainerModel,
+                      private readonly isSortingDataProperty: Property<boolean>,
+                      private readonly selectedSceneModelProperty: Property<CAVSoccerSceneModel>,
+                      private readonly isTopMedianVisibleProperty: Property<boolean>,
+                      providedOptions: CardNodeContainerOptions ) {
 
-  public constructor( model: MedianModel, providedOptions: CardNodeContainerOptions ) {
-
-    const options = optionize<CardNodeContainerOptions, SelfOptions, NodeOptions>()( {
-      phetioType: CardNodeContainerIO,
-      phetioState: false,
+    const options = optionize<CardNodeContainerOptions, EmptySelfOptions, NodeOptions>()( {
       phetioEnabledPropertyInstrumented: true,
       disabledOpacity: SceneryConstants.DISABLED_OPACITY
     }, providedOptions );
 
     super( options );
-
-    this.parentContext = options.parentContext;
 
     this.model = model;
 
@@ -143,39 +94,40 @@ export default class CardNodeContainer extends Node {
     this.dragIndicationCardProperty = new Property( null );
 
     this.cardNodes = model.cards.map( ( cardModel, index ) => {
-      const cardNode = new CardNode( this, cardModel, new Vector2( 0, 0 ), () => this.getDragRange(), {
+      const cardNode = new CardNode( this, cardModel, {
         tandem: options.tandem.createTandem( 'cardNodes' ).createTandem1Indexed( 'cardNode', index )
       } );
+      this.cardMap.set( cardNode.cardModel, cardNode );
 
       this.cardLayer.addChild( cardNode );
 
       // Update the position of all cards (via animation) whenever any card is dragged
-      cardNode.positionProperty.link( this.createDragPositionListener( cardNode ) );
+      cardNode.cardModel.positionProperty.link( this.createDragPositionListener( cardNode ) );
 
       // When a card is dropped, send it to its home cell
       cardNode.dragListener.isPressedProperty.lazyLink( isPressed => {
 
         if ( isPressed ) {
-          this.wasSortedBefore = this.isDataSorted();
+          this.wasSortedBefore = model.isDataSorted();
         }
 
         if ( !isPressed && !isSettingPhetioStateProperty.value ) {
 
           // Animate the dropped card home
-          this.animateToHomeCell( cardNode, 0.2 );
+          model.animateToHomeCell( cardNode.cardModel, 0.2 );
 
           if ( this.isReadyForCelebration ) {
-            const inProgressAnimations = this.cardNodeCells.filter( cardNode => cardNode.animation )
-              .map( cardNode => cardNode.animation! );
+            const inProgressAnimations = model.cardCells.filter( card => card.animation )
+              .map( card => card.animation! );
 
             // Setup a callback for animation when all current animations finish
             const asyncCounter = new AsyncCounter( inProgressAnimations.length, () => {
 
               // we know at least one card exists because we're in a dragListener link
-              const leftmostCard = this.cardNodeCells[ 0 ];
+              const leftmostCard = this.cardMap.get( model.cardCells[ 0 ] )!;
               assert && assert( leftmostCard, 'leftmostCard should be defined' );
 
-              dataSortedNode.centerX = getCardPositionX( ( this.cardNodeCells.length - 1 ) / 2 ) + leftmostCard.width / 2;
+              dataSortedNode.centerX = model.getCardPositionX( ( model.cardCells.length - 1 ) / 2 ) + CAVConstants.CARD_DIMENSION / 2;
               dataSortedNode.top = leftmostCard.bottom + 7;
 
               if ( dataSortedNode.left < 0 ) {
@@ -207,8 +159,8 @@ export default class CardNodeContainer extends Node {
 
               successSoundClip.play();
 
-              const cardBeingDragged = this.cardNodeCells.filter( cardNode => cardNode.dragListener.isPressed ).length;
-              const cardsAnimating = this.cardNodeCells.filter( cardNode => cardNode.animation ).length;
+              const cardBeingDragged = this.cardNodes.filter( cardNode => cardNode.dragListener.isPressed ).length;
+              const cardsAnimating = model.cardCells.filter( card => card.animation ).length;
               if ( cardBeingDragged === 0 && cardsAnimating === 0 ) {
                 this.pickable = false;
 
@@ -233,76 +185,22 @@ export default class CardNodeContainer extends Node {
         totalDragDistanceProperty.value += distance;
       } );
 
-      const removeCardCell = ( cardNode: CardNode ) => {
-        const index = this.cardNodeCells.indexOf( cardNode );
-
-        if ( index >= 0 ) {
-          this.cardNodeCells.splice( index, 1 );
-          this.cardNodeCellsChangedEmitter.emit();
-        }
-      };
-
-      cardModel.isActiveProperty.link( isActive => {
-        if ( isActive && !isSettingPhetioStateProperty.value ) {
-
-          let targetIndex = this.cardNodeCells.length;
-          if ( this.model.isSortingDataProperty.value || options.parentContext === 'info' ) {
-            const newValue = cardNode.soccerBall.valueProperty.value!;
-            const existingLowerCardNodes = this.cardNodeCells.filter( cardNode => cardNode.soccerBall.valueProperty.value! <= newValue );
-
-            const lowerNeighborCardNode = _.maxBy( existingLowerCardNodes, cardNode => this.cardNodeCells.indexOf( cardNode ) );
-            targetIndex = lowerNeighborCardNode ? this.cardNodeCells.indexOf( lowerNeighborCardNode ) + 1 : 0;
-          }
-
-          this.cardNodeCells.splice( targetIndex, 0, cardNode );
-          cardNode.timeSinceLanded = 0;
-          this.setAtHomeCell( cardNode );
-
-          // Animate all displaced cards
-          for ( let i = targetIndex; i < this.cardNodeCells.length; i++ ) {
-            this.cardNodeCells[ i ].positionProperty.value = this.cardNodeCells[ i ].positionProperty.value.plusXY( 1, 0 );
-            this.animateToHomeCell( this.cardNodeCells[ i ], 0.3 );
-          }
-
-          this.cardNodeCellsChangedEmitter.emit();
-        }
-        else if ( !isActive ) {
-          removeCardCell( cardNode );
-        }
-      } );
-
-      cardModel.soccerBall.valueProperty.link( value => {
-        if ( value === null ) {
-          removeCardCell( cardNode );
-        }
-      } );
-
       return cardNode;
     } );
 
     this.addChild( this.medianBarNode );
 
-    model.selectedSceneModelProperty.value.soccerBalls.forEach( soccerBall => {
-
-      // A ball landed OR a value changed
-      soccerBall.valueProperty.link( value => {
-        if ( ( this.model.isSortingDataProperty.value && value !== null ) || options.parentContext === 'info' ) {
-          this.sortData( 'valueChanged' );
-        }
-      } );
-    } );
-
-    model.isSortingDataProperty.link( isSortingData => {
+    this.isSortingDataProperty.link( isSortingData => {
       if ( isSortingData ) {
 
-        if ( !this.isDataSorted() ) {
+        if ( !model.isDataSorted() ) {
 
           // Will play sound effects in step()
-          this.sortData();
+          model.sortData();
         }
         else {
 
-          if ( options.parentContext === 'accordion' ) {
+          if ( model.parentContext === 'accordion' ) {
             cardPickUpSoundClip.play();
             this.animateCelebration1( () => cardDropSoundClip.play(), false );
           }
@@ -338,12 +236,12 @@ export default class CardNodeContainer extends Node {
 
     this.addChild( this.cardLayer );
 
-    if ( options.parentContext === 'accordion' ) {
+    if ( model.parentContext === 'accordion' ) {
       const handWithArrowNode = new Image( handWithArrow_png, {
         tandem: options.tandem.createTandem( 'handWithArrowNode' ),
         opacity: 0,
         maxWidth: 25,
-        centerTop: new Vector2( 0.5 * CardNode.CARD_DIMENSION, CardNode.CARD_DIMENSION - 8 ),
+        centerTop: new Vector2( 0.5 * CAVConstants.CARD_DIMENSION, CAVConstants.CARD_DIMENSION - 8 ),
         visibleProperty: this.enabledProperty
       } );
 
@@ -397,8 +295,8 @@ export default class CardNodeContainer extends Node {
 
       const updateDragIndicationCardProperty = () => {
 
-        const leftCard = this.cardNodeCells[ 0 ];
-        const rightCard = this.cardNodeCells[ 1 ];
+        const leftCard = this.cardMap.get( model.cardCells[ 0 ] );
+        const rightCard = this.cardMap.get( model.cardCells[ 1 ] );
 
         // if the user has not yet dragged a card and there are multiple cards showing, fade in the drag indicator
         if ( !this.hasDraggedCardProperty.value && leftCard && rightCard ) {
@@ -411,12 +309,12 @@ export default class CardNodeContainer extends Node {
         }
       };
 
-      this.cardNodeCellsChangedEmitter.addListener( updateDragIndicationCardProperty );
+      model.cardCellsChangedEmitter.addListener( updateDragIndicationCardProperty );
       this.hasDraggedCardProperty.link( updateDragIndicationCardProperty );
       this.cardNodes.forEach( cardNode => cardNode.soccerBall.valueProperty.lazyLink( updateDragIndicationCardProperty ) );
     }
 
-    const medianTextNode = new Text( new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty, { value: model.selectedSceneModelProperty.value.medianValueProperty }, {
+    const medianTextNode = new Text( new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty, { value: this.selectedSceneModelProperty.value.medianValueProperty }, {
       tandem: options.tandem.createTandem( 'medianStringProperty' ),
       maps: {
         value: CAVConstants.STRING_VALUE_NULL_MAP
@@ -434,19 +332,21 @@ export default class CardNodeContainer extends Node {
 
     const updateMedianNode = () => {
 
-      const leftmostCard = this.cardNodeCells[ 0 ];
+      const leftmostCard = this.cardMap.get( model.cardCells[ 0 ] );
 
-      const MARGIN_X = CARD_SPACING / 2 - MedianBarNode.HALF_SPLIT_WIDTH;
+      const MARGIN_X = CAVConstants.CARD_SPACING / 2 - MedianBarNode.HALF_SPLIT_WIDTH;
 
       // Distance between the top card to the median bar when the card is not being held
       const MARGIN_Y = PICK_UP_DELTA_Y - 3;
 
       // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card
-      if ( leftmostCard && ( ( model.isTopMedianVisibleProperty.value && this.isDataSorted() ) || options.parentContext === 'info' ) ) {
+      if ( leftmostCard && ( ( this.isTopMedianVisibleProperty.value && model.isDataSorted() ) || model.parentContext === 'info' ) ) {
         const barY = MARGIN_Y;
-        const rightmostCard = this.cardNodeCells[ this.cardNodeCells.length - 1 ];
-        const left = getCardPositionX( 0 ) - MARGIN_X;
-        const right = getCardPositionX( this.cardNodeCells.length - 1 ) + rightmostCard.width + MARGIN_X;
+
+        // If the card model exists the cardNode must also exist
+        const rightmostCard = this.cardMap.get( model.cardCells[ model.cardCells.length - 1 ] )!;
+        const left = model.getCardPositionX( 0 ) - MARGIN_X;
+        const right = model.getCardPositionX( model.cardCells.length - 1 ) + rightmostCard.width + MARGIN_X;
 
         this.medianBarNode.setMedianBarShape( barY, left, ( left + right ) / 2, right, false );
       }
@@ -455,24 +355,24 @@ export default class CardNodeContainer extends Node {
       }
 
       if ( leftmostCard ) {
-        medianReadoutPanel.centerX = getCardPositionX( ( this.cardNodeCells.length - 1 ) / 2 ) + leftmostCard.width / 2;
+        medianReadoutPanel.centerX = model.getCardPositionX( ( model.cardCells.length - 1 ) / 2 ) + leftmostCard.width / 2;
         if ( medianReadoutPanel.left < 0 ) {
           medianReadoutPanel.left = 0;
         }
         medianReadoutPanel.bottom = MARGIN_Y - 5;
-        medianReadoutPanel.visible = model.isTopMedianVisibleProperty.value || options.parentContext === 'info';
+        medianReadoutPanel.visible = this.isTopMedianVisibleProperty.value || model.parentContext === 'info';
       }
       else {
         medianReadoutPanel.visible = false;
       }
     };
-    this.cardNodeCellsChangedEmitter.addListener( updateMedianNode );
-    model.selectedSceneModelProperty.value.medianValueProperty.link( updateMedianNode );
-    model.isTopMedianVisibleProperty.link( updateMedianNode );
-    model.selectedSceneModelProperty.value.objectChangedEmitter.addListener( updateMedianNode );
+    model.cardCellsChangedEmitter.addListener( updateMedianNode );
+    this.selectedSceneModelProperty.value.medianValueProperty.link( updateMedianNode );
+    this.isTopMedianVisibleProperty.link( updateMedianNode );
+    this.selectedSceneModelProperty.value.objectChangedEmitter.addListener( updateMedianNode );
     medianTextNode.boundsProperty.link( updateMedianNode );
 
-    model.selectedSceneModelProperty.value.resetEmitter.addListener( () => {
+    this.selectedSceneModelProperty.value.resetEmitter.addListener( () => {
       totalDragDistanceProperty.reset();
       dataSortedNode.visible = false;
       if ( this.dataSortedNodeAnimation ) {
@@ -481,16 +381,8 @@ export default class CardNodeContainer extends Node {
       }
     } );
 
-    if ( options.parentContext === 'info' ) {
+    if ( model.parentContext === 'info' ) {
       this.pickable = false;
-    }
-
-    if ( options.parentContext === 'accordion' ) {
-      this.cardNodeCellsChangedEmitter.addListener( () => {
-        model.areCardsSortedProperty.value = this.isDataSorted();
-      } );
-
-      this.cardNodes.forEach( cardNode => cardNode.soccerBall.valueProperty.link( () => { model.areCardsSortedProperty.value = this.isDataSorted(); } ) );
     }
   }
 
@@ -499,10 +391,10 @@ export default class CardNodeContainer extends Node {
     return ( position: Vector2 ) => {
       if ( cardNode.dragListener.isPressedProperty.value ) {
 
-        const originalCell = this.cardNodeCells.indexOf( cardNode );
+        const originalCell = this.model.cardCells.indexOf( cardNode.cardModel );
 
         // Find the closest cell to the dragged card
-        const dragCell = this.getClosestCell( position.x );
+        const dragCell = this.model.getClosestCell( position.x );
 
         // The drag delta can suggest a match further than a neighboring cell. But we must do pairwise swaps with
         // neighbors only in order to maintain the correct ordering. See https://github.com/phetsims/center-and-variability/issues/78
@@ -510,26 +402,26 @@ export default class CardNodeContainer extends Node {
                             dragCell < originalCell ? originalCell - 1 :
                             originalCell;
 
-        const currentOccupant = this.cardNodeCells[ closestCell ];
+        const currentOccupant = this.cardMap.get( this.model.cardCells[ closestCell ] )!;
 
         // No-op if the dragged card is near its home cell
         if ( currentOccupant !== cardNode ) {
 
           // it's just a pairwise swap
-          this.cardNodeCells[ closestCell ] = cardNode;
-          this.cardNodeCells[ originalCell ] = currentOccupant;
+          this.model.cardCells[ closestCell ] = cardNode.cardModel;
+          this.model.cardCells[ originalCell ] = currentOccupant.cardModel;
 
-          this.animateToHomeCell( currentOccupant, 0.3 );
+          this.model.animateToHomeCell( currentOccupant.cardModel, 0.3 );
 
           // See if the user unsorted the data.  If so, uncheck the "Sort Data" checkbox
-          if ( this.model.isSortingDataProperty.value && !this.isDataSorted() ) {
-            this.model.isSortingDataProperty.value = false;
+          if ( this.isSortingDataProperty.value && !this.model.isDataSorted() ) {
+            this.isSortingDataProperty.value = false;
           }
 
           // celebrate after the card was dropped and gets to its home
-          this.isReadyForCelebration = this.isDataSorted() && !this.wasSortedBefore;
+          this.isReadyForCelebration = this.model.isDataSorted() && !this.wasSortedBefore;
 
-          this.cardNodeCellsChangedEmitter.emit();
+          this.model.cardCellsChangedEmitter.emit();
         }
       }
     };
@@ -556,9 +448,10 @@ export default class CardNodeContainer extends Node {
    */
   private animateCelebration1( callback: () => void, adjustCentering: boolean ): void {
 
-    const asyncCounter = new AsyncCounter( this.cardNodeCells.length, callback );
+    const asyncCounter = new AsyncCounter( this.model.cardCells.length, callback );
 
-    this.cardNodeCells.forEach( cardNode => {
+    this.model.cardCells.forEach( card => {
+      const cardNode = this.cardMap.get( card )!;
 
       const scaleProperty = new NumberProperty( 1 );
       scaleProperty.lazyLink( ( scale, oldScale ) => {
@@ -597,9 +490,11 @@ export default class CardNodeContainer extends Node {
    */
   private animateCelebration2( callback: () => void ): void {
 
-    const asyncCounter = new AsyncCounter( this.cardNodeCells.length, callback );
+    const asyncCounter = new AsyncCounter( this.model.cardCells.length, callback );
 
-    this.cardNodeCells.forEach( cardNode => {
+    this.model.cardCells.forEach( card => {
+      const cardNode = this.cardMap.get( card )!;
+
       const center = cardNode.center.copy();
 
       const rotationProperty = new NumberProperty( 0 );
@@ -626,9 +521,11 @@ export default class CardNodeContainer extends Node {
    * The cards do the "wave" from left to right.
    */
   private animateCelebration3( callback: () => void ): void {
-    const asyncCounter = new AsyncCounter( this.cardNodeCells.length, callback );
+    const asyncCounter = new AsyncCounter( this.model.cardCells.length, callback );
 
-    this.cardNodeCells.forEach( ( cardNode, index ) => {
+    this.model.cardCells.forEach( ( card, index ) => {
+      const cardNode = this.cardMap.get( card )!;
+
       const initialPositionY = cardNode.y;
       const jumpHeight = 30;
       const positionYProperty = new NumberProperty( initialPositionY );
@@ -663,155 +560,9 @@ export default class CardNodeContainer extends Node {
     } );
   }
 
-  /**
-   * Check if all of the data is in order, by using the cells associated with the card node.  Note that means
-   * it is using the cell the card may be animating to.
-   */
-  public isDataSorted(): boolean {
-
-    for ( let i = 1; i < this.cardNodeCells.length; i++ ) {
-      const previousValue = this.cardNodeCells[ i - 1 ].soccerBall.valueProperty.value;
-      const value = this.cardNodeCells[ i ].soccerBall.valueProperty.value;
-
-      if ( previousValue !== null && value !== null && value < previousValue ) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  public isAnyCardMoving(): boolean {
-    return _.some( this.cardNodeCells, cardNode => cardNode.positionProperty.value.x !== this.getHomePosition( cardNode ).x );
-  }
-
-  private getHomePosition( cardNode: CardNode ): Vector2 {
-    const homeIndex = this.cardNodeCells.indexOf( cardNode );
-    return new Vector2( getCardPositionX( homeIndex ), 0 );
-  }
-
-  public animateToHomeCell( cardNode: CardNode, duration: number, animationReason: 'valueChanged' | null = null ): void {
-    cardNode.animateTo( this.getHomePosition( cardNode ), duration, animationReason );
-  }
-
-  public setAtHomeCell( cardNode: CardNode ): void {
-    cardNode.positionProperty.value = this.getHomePosition( cardNode );
-  }
-
-  /**
-   * Find the cell the dragged card is closest to
-   */
-  private getClosestCell( x: number ): number {
-    if ( this.cardNodeCells.length === 0 ) {
-      return 0;
-    }
-    else {
-      const cellIndices = _.range( this.cardNodeCells.length );
-      return _.minBy( cellIndices, index => Math.abs( x - getCardPositionX( index ) ) )!;
-    }
-  }
-
   private getCardNode( soccerBall: SoccerBall ): CardNode | null {
-    return this.cardNodeCells.find( cardNode => cardNode.soccerBall === soccerBall ) || null;
-  }
-
-  private sortData( animationReason: 'valueChanged' | null = null ): void {
-
-    // If the card is visible, the value property should be non-null
-    const sorted = _.sortBy( this.cardNodeCells, cardNode => cardNode.soccerBall.valueProperty.value );
-    this.cardNodeCells.length = 0;
-    this.cardNodeCells.push( ...sorted );
-    this.cardNodeCells.forEach( cardNode => this.animateToHomeCell( cardNode, 0.5, animationReason ) );
-    this.cardNodeCellsChangedEmitter.emit();
-  }
-
-  private getDragRange(): Range {
-    const maxX = this.cardNodeCells.length > 0 ? getCardPositionX( this.cardNodeCells.length - 1 ) : 0;
-    return new Range( 0, maxX );
-  }
-
-  /**
-   * Play sound effects whenever two cards pass each other. If the user is dragging it, that card gets precedence for choosing the pitch.  Moving to the right is a higher pitch. If one card animates past another, that movement direction chooses the pitch. If both cards are animating, use an in-between pitch.
-   */
-  public step( dt: number ): void {
-
-    // Only consider cards that landed more than 0.1 seconds ago, to avoid an edge case that was mistakenly playing audio when soccer balls land
-    const activeCardNodes = this.cardNodes.filter( cardNode => cardNode.cardModel.isActiveProperty.value && cardNode.timeSinceLanded > 0.1 && cardNode.animationReason !== 'valueChanged' );
-
-    // Determine the sort order to see which cards have swapped
-    const newOrder = _.sortBy( activeCardNodes, cardNode => cardNode.positionProperty.value.x );
-
-    // Consider only cards which are both in the old and new lists
-    const oldList = this.lastStepOrder.filter( cardNode => newOrder.includes( cardNode ) );
-    const newList = newOrder.filter( cardNode => this.lastStepOrder.includes( cardNode ) );
-
-    const swappedPairs: Array<{ first: CardNode; second: CardNode; direction: string }> = [];
-
-    // Compare the old list and the new list
-    for ( let i = 0; i < oldList.length; i++ ) {
-      if ( oldList[ i ] !== newList[ i ] ) {
-        // If the items at the same index in both lists are different, then they have swapped places.
-        const direction = newList.indexOf( oldList[ i ] ) > i ? 'right' : 'left';
-        const pairExists = swappedPairs.some( pair => pair.first === newList[ i ] && pair.second === oldList[ i ] );
-
-        if ( !pairExists ) {
-          swappedPairs.push( { first: oldList[ i ], second: newList[ i ], direction: direction } );
-        }
-      }
-    }
-
-    const opposite = ( direction: string ) => direction === 'left' ? 'right' : 'left';
-
-    // You now have a list of pairs of CardNodes that swapped places and their directions
-    swappedPairs.forEach( pair => {
-
-      // If the user dragged a card, that takes precedence for choosing the pitch
-      const directionToPlayFromInteraction = pair.first.isDragging && !pair.second.isDragging ? pair.direction :
-                                             pair.second.isDragging && !pair.first.isDragging ? opposite( pair.direction ) :
-                                             'none';
-
-      // If one card animated past a stationary card, the moving card chooses the pitch.
-      // If both cards are animating, use an in-between pitch.
-      const directionToPlayFromAnimation = pair.first.animation && !pair.second.animation ? pair.direction :
-                                           pair.second.animation && !pair.first.animation ? opposite( pair.direction ) :
-                                           'both';
-
-      const directionToPlay = directionToPlayFromInteraction !== 'none' ? directionToPlayFromInteraction : directionToPlayFromAnimation;
-
-      const availableSoundClips = cardMovementSoundClips.filter( clip => !clip.isPlayingProperty.value );
-
-      if ( ( directionToPlay === 'left' || directionToPlay === 'right' || directionToPlay === 'both' ) && availableSoundClips.length > 0 ) {
-
-        const randomClip = availableSoundClips[ dotRandom.nextInt( availableSoundClips.length ) ];
-
-        // Moving to the right, go up in pitch by 4 semitones
-        randomClip.setPlaybackRate( CAVQueryParameters.cardMovementSoundPlaybackRate *
-                                    ( directionToPlay === 'left' ? 1 :
-                                      directionToPlay === 'right' ? Math.pow( 2, 4 / 12 ) :
-                                      directionToPlay === 'both' ? Math.pow( 2, 2 / 12 ) : 0 ) );
-        randomClip.play();
-      }
-    } );
-
-    this.lastStepOrder = newOrder;
-
-    this.cardNodes.forEach( cardNode => {
-      cardNode.timeSinceLanded += dt;
-    } );
+    return this.cardNodes.find( cardNode => cardNode.soccerBall === soccerBall ) || null;
   }
 }
-
-const CardNodeContainerIO = new IOType( 'CardNodeContainerIO', {
-  valueType: CardNodeContainer,
-  methods: {
-    getData: {
-      returnType: ArrayIO( NumberIO ),
-      parameterTypes: [],
-      implementation: function( this: CardNodeContainer ) {
-        return this.cardNodeCells.filter( cardNode => cardNode.soccerBall.valueProperty.value !== null ).map( cardNode => cardNode.soccerBall.valueProperty.value );
-      },
-      documentation: 'Gets the values of the cards in the order they appear.'
-    }
-  }
-} );
 
 centerAndVariability.register( 'CardNodeContainer', CardNodeContainer );

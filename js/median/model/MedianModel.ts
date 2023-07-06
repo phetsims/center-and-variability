@@ -8,7 +8,6 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import CardModel from '../../median/model/CardModel.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
@@ -19,13 +18,14 @@ import CAVSoccerBall from '../../common/model/CAVSoccerBall.js';
 import NumberTone from '../../soccer-common/model/NumberTone.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
+import CardContainerModel from './CardContainerModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type MedianModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
 
 export default class MedianModel extends CAVModel {
 
-  public readonly cards: CardModel[];
+  public readonly cardContainerModel: CardContainerModel;
   public readonly isSortingDataProperty: BooleanProperty;
   public readonly isTopMedianVisibleProperty: BooleanProperty;
   public readonly areCardsSortedProperty: BooleanProperty;
@@ -64,10 +64,6 @@ export default class MedianModel extends CAVModel {
 
     super( maxKicksProperty, [ sceneModel ], options );
 
-    this.cards = this.sceneModels[ 0 ].soccerBalls.map( ( soccerBall, index ) => new CardModel( soccerBall, {
-      tandem: options.tandem.createTandem( 'cards' ).createTandem1Indexed( 'card', index )
-    } ) );
-
     this.isSortingDataProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isSortingDataProperty' )
     } );
@@ -81,12 +77,19 @@ export default class MedianModel extends CAVModel {
       tandem: options.tandem.createTandem( 'areCardsSortedProperty' ),
       phetioReadOnly: true
     } );
+
+    this.cardContainerModel = new CardContainerModel( this, { tandem: options.tandem.createTandem( 'cardContainerModel' ), parentContext: 'accordion' } );
   }
 
   public override reset(): void {
     super.reset();
     this.isSortingDataProperty.reset();
     this.isTopMedianVisibleProperty.reset();
+  }
+
+  public override step( dt: number ): void {
+    super.step( dt );
+    this.cardContainerModel.step( dt );
   }
 }
 

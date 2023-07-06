@@ -75,12 +75,6 @@ export default class MedianScreenView extends CAVScreenView {
       }
     } );
   }
-
-
-  public override step( dt: number ): void {
-    super.step( dt );
-    this.medianAccordionBox.step( dt );
-  }
 }
 
 centerAndVariability.register( 'MedianScreenView', MedianScreenView );

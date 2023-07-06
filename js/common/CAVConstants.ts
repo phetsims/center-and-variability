@@ -50,6 +50,9 @@ const CAVConstants = {
   CHECKBOX_TEXT_MAX_WIDTH: 107,
   CHECKBOX_ICON_DIMENSION: 25,
 
+  CARD_DIMENSION: 43,
+  CARD_SPACING: 10,
+
   // the top checkboxes are left aligned with the play area checkboxes, so their max width is smaller to accommodate
   // for the accordion box margin
   PLOT_TYPE_PROPERTY: new EnumerationProperty( CAVQueryParameters.plotType === 'dotPlot' ? PlotType.DOT_PLOT : PlotType.LINE_PLOT, {

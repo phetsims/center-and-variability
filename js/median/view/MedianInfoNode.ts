@@ -18,6 +18,7 @@ import CardNodeContainer from './CardNodeContainer.js';
 import InfoTitleDescriptionRichText from '../../common/view/InfoTitleDescriptionRichText.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import CardContainerModel from '../model/CardContainerModel.js';
 
 export default class MedianInfoNode extends VBox {
   public constructor( model: MedianModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
@@ -25,9 +26,10 @@ export default class MedianInfoNode extends VBox {
     const hasZeroKicksProperty = DerivedProperty.valueEqualsConstant( sceneModel.numberOfDataPointsProperty, 0 );
     const infoDataValuesNode = new InfoValuesNode( sceneModel );
 
-    const cardNodeContainer = new CardNodeContainer( model, {
+    const cardContainerModel = new CardContainerModel( model, { tandem: options.tandem.createTandem( 'cardContainerModel' ), parentContext: 'info' } );
+    const cardNodeContainer = new CardNodeContainer( cardContainerModel, model.isSortingDataProperty,
+      model.selectedSceneModelProperty, model.isTopMedianVisibleProperty, {
       tandem: options.tandem.createTandem( 'cardNodeContainer' ),
-      parentContext: 'info',
 
       // So it will remain centered in the dialog
       excludeInvisibleChildrenFromBounds: true,

@@ -1,0 +1,313 @@
+// Copyright 2023, University of Colorado Boulder
+
+/**
+ * Model for the cardContainerNode. Creates card models, tracks their position and order in the accordionBox and infoDialog,
+ * handles animation and cardMovementSounds.
+ *
+ * @author Marla Schulz (PhET Interactive Simulations)
+ *
+ */
+
+import centerAndVariability from '../../centerAndVariability.js';
+import dotRandom from '../../../../dot/js/dotRandom.js';
+import CAVQueryParameters from '../../common/CAVQueryParameters.js';
+import CardModel from './CardModel.js';
+import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
+import soundManager from '../../../../tambo/js/soundManager.js';
+import cvCardMovementSoundsV2001_mp3 from '../../../sounds/cvCardMovementSoundsV2001_mp3.js';
+import cvCardMovementSoundsV2002_mp3 from '../../../sounds/cvCardMovementSoundsV2002_mp3.js';
+import cvCardMovementSoundsV2003_mp3 from '../../../sounds/cvCardMovementSoundsV2003_mp3.js';
+import cvCardMovementSoundsV2004_mp3 from '../../../sounds/cvCardMovementSoundsV2004_mp3.js';
+import cvCardMovementSoundsV2005_mp3 from '../../../sounds/cvCardMovementSoundsV2005_mp3.js';
+import cvCardMovementSoundsV2006_mp3 from '../../../sounds/cvCardMovementSoundsV2006_mp3.js';
+import MedianModel from './MedianModel.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
+import Range from '../../../../dot/js/Range.js';
+import CAVConstants from '../../common/CAVConstants.js';
+import TEmitter from '../../../../axon/js/TEmitter.js';
+import Emitter from '../../../../axon/js/Emitter.js';
+import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
+import IOType from '../../../../tandem/js/types/IOType.js';
+import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
+import NumberIO from '../../../../tandem/js/types/NumberIO.js';
+import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+
+const cardMovementSounds = [
+  cvCardMovementSoundsV2001_mp3,
+  cvCardMovementSoundsV2002_mp3,
+  cvCardMovementSoundsV2003_mp3,
+  cvCardMovementSoundsV2004_mp3,
+  cvCardMovementSoundsV2005_mp3,
+  cvCardMovementSoundsV2006_mp3
+];
+
+export const cardMovementSoundClips = cardMovementSounds.map( sound => new SoundClip( sound, {
+  initialOutputLevel: 0.2,
+  additionalAudioNodes: []
+} ) );
+cardMovementSoundClips.forEach( soundClip => soundManager.addSoundGenerator( soundClip ) );
+
+type SelfOptions = {
+
+  // accordionBox is the full-featured interactive version with drag input and sound effects
+  // info is the non-interactive version used in the info dialog
+  parentContext: 'info' | 'accordion';
+};
+
+type CardContainerModelOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'> &
+  StrictOmit<PhetioObjectOptions, 'phetioType' | 'phetioState'>;
+
+export default class CardContainerModel extends PhetioObject {
+
+  // Each card is associated with one "cell", no two cards can be associated with the same cell.  The leftmost cell is 0.
+  // The cells linearly map to locations across the screen.
+  public readonly cardCells: CardModel[] = [];
+
+  // Fires if the cardCells may have changed
+  public readonly cardCellsChangedEmitter: TEmitter = new Emitter<[]>();
+
+  // All cards are created on start-up
+  public readonly cards: CardModel[];
+
+
+  // For sonification, order the active, non-displaced cards appeared in the last step
+  private lastStepOrder: CardModel[] = [];
+
+  public readonly parentContext: 'info' | 'accordion';
+
+  public constructor( private readonly median: MedianModel, providedOptions: CardContainerModelOptions ) {
+
+    const options = optionize<CardContainerModelOptions, SelfOptions, PhetioObjectOptions>()( {
+      phetioType: CardContainerModelIO,
+      phetioState: false
+    }, providedOptions );
+
+    super( options );
+
+    this.parentContext = options.parentContext;
+    this.cards = median.selectedSceneModelProperty.value.soccerBalls.map( ( soccerBall, index ) => {
+      const card = new CardModel( this, soccerBall, new Vector2( 0, 0 ), {
+        tandem: options.tandem.createTandem( 'cards' ).createTandem1Indexed( 'card', index )
+      } );
+
+      const removeCardCell = ( card: CardModel ) => {
+        const index = this.cardCells.indexOf( card );
+
+        if ( index >= 0 ) {
+          this.cardCells.splice( index, 1 );
+          this.cardCellsChangedEmitter.emit();
+        }
+      };
+
+      card.soccerBall.valueProperty.link( value => {
+        if ( value === null ) {
+          removeCardCell( card );
+        }
+
+        // A ball landed OR a value changed
+        if ( ( median.isSortingDataProperty.value && value !== null ) || options.parentContext === 'info' ) {
+          this.sortData( 'valueChanged' );
+        }
+
+        if ( options.parentContext === 'accordion' ) {
+          median.areCardsSortedProperty.value = this.isDataSorted();
+        }
+      } );
+
+      card.isActiveProperty.link( isActive => {
+        if ( isActive && !isSettingPhetioStateProperty.value ) {
+
+          let targetIndex = this.cardCells.length;
+          if ( median.isSortingDataProperty.value || options.parentContext === 'info' ) {
+            const newValue = card.soccerBall.valueProperty.value!;
+            const existingLowerCards = this.cardCells.filter( card => card.soccerBall.valueProperty.value! <= newValue );
+
+            const lowerNeighborCard = _.maxBy( existingLowerCards, cardNode => this.cardCells.indexOf( card ) );
+            targetIndex = lowerNeighborCard ? this.cardCells.indexOf( lowerNeighborCard ) + 1 : 0;
+          }
+
+          this.cardCells.splice( targetIndex, 0, card );
+          card.timeSinceLanded = 0;
+          this.setAtHomeCell( card );
+
+          // Animate all displaced cards
+          for ( let i = targetIndex; i < this.cardCells.length; i++ ) {
+            this.cardCells[ i ].positionProperty.value = this.cardCells[ i ].positionProperty.value.plusXY( 1, 0 );
+            this.animateToHomeCell( this.cardCells[ i ], 0.3 );
+          }
+
+          this.cardCellsChangedEmitter.emit();
+        }
+        else if ( !isActive ) {
+          removeCardCell( card );
+        }
+      } );
+
+      return card;
+    } );
+
+    if ( options.parentContext === 'accordion' ) {
+      this.cardCellsChangedEmitter.addListener( () => {
+        median.areCardsSortedProperty.value = this.isDataSorted();
+      } );
+    }
+
+  }
+
+  public getDragRange( this: CardContainerModel ): Range {
+    const maxX = this.cardCells.length > 0 ? this.getCardPositionX( this.cardCells.length - 1 ) : 0;
+    return new Range( 0, maxX );
+  }
+
+  public getCardPositionX( index: number ): number {
+    return index * ( CAVConstants.CARD_DIMENSION + CAVConstants.CARD_SPACING );
+  }
+
+  /**
+   * Play sound effects whenever two cards pass each other. If the user is dragging it, that card gets precedence for choosing the pitch.  Moving to the right is a higher pitch. If one card animates past another, that movement direction chooses the pitch. If both cards are animating, use an in-between pitch.
+   */
+  public step( dt: number ): void {
+
+    // Only consider cards that landed more than 0.1 seconds ago, to avoid an edge case that was mistakenly playing audio when soccer balls land
+    const activeCards = this.cards.filter( card => card.isActiveProperty.value && card.timeSinceLanded > 0.1 && card.animationReason !== 'valueChanged' );
+
+    // Determine the sort order to see which cards have swapped
+    const newOrder = _.sortBy( activeCards, card => card.positionProperty.value.x );
+
+    // Consider only cards which are both in the old and new lists
+    const oldList = this.lastStepOrder.filter( cardNode => newOrder.includes( cardNode ) );
+    const newList = newOrder.filter( cardNode => this.lastStepOrder.includes( cardNode ) );
+
+    const swappedPairs: Array<{ first: CardModel; second: CardModel; direction: string }> = [];
+
+    // Compare the old list and the new list
+    for ( let i = 0; i < oldList.length; i++ ) {
+      if ( oldList[ i ] !== newList[ i ] ) {
+        // If the items at the same index in both lists are different, then they have swapped places.
+        const direction = newList.indexOf( oldList[ i ] ) > i ? 'right' : 'left';
+        const pairExists = swappedPairs.some( pair => pair.first === newList[ i ] && pair.second === oldList[ i ] );
+
+        if ( !pairExists ) {
+          swappedPairs.push( { first: oldList[ i ], second: newList[ i ], direction: direction } );
+        }
+      }
+    }
+
+    const opposite = ( direction: string ) => direction === 'left' ? 'right' : 'left';
+
+    // You now have a list of pairs of CardNodes that swapped places and their directions
+    swappedPairs.forEach( pair => {
+
+      // If the user dragged a card, that takes precedence for choosing the pitch
+      const directionToPlayFromInteraction = pair.first.isDragging && !pair.second.isDragging ? pair.direction :
+                                             pair.second.isDragging && !pair.first.isDragging ? opposite( pair.direction ) :
+                                             'none';
+
+      // If one card animated past a stationary card, the moving card chooses the pitch.
+      // If both cards are animating, use an in-between pitch.
+      const directionToPlayFromAnimation = pair.first.animation && !pair.second.animation ? pair.direction :
+                                           pair.second.animation && !pair.first.animation ? opposite( pair.direction ) :
+                                           'both';
+
+      const directionToPlay = directionToPlayFromInteraction !== 'none' ? directionToPlayFromInteraction : directionToPlayFromAnimation;
+
+      const availableSoundClips = cardMovementSoundClips.filter( clip => !clip.isPlayingProperty.value );
+
+      if ( ( directionToPlay === 'left' || directionToPlay === 'right' || directionToPlay === 'both' ) && availableSoundClips.length > 0 ) {
+
+        const randomClip = availableSoundClips[ dotRandom.nextInt( availableSoundClips.length ) ];
+
+        // Moving to the right, go up in pitch by 4 semitones
+        randomClip.setPlaybackRate( CAVQueryParameters.cardMovementSoundPlaybackRate *
+                                    ( directionToPlay === 'left' ? 1 :
+                                      directionToPlay === 'right' ? Math.pow( 2, 4 / 12 ) :
+                                      directionToPlay === 'both' ? Math.pow( 2, 2 / 12 ) : 0 ) );
+        randomClip.play();
+      }
+    } );
+
+    this.lastStepOrder = newOrder;
+
+    this.cardCells.forEach( card => {
+      card.timeSinceLanded += dt;
+    } );
+  }
+
+  private getHomePosition( card: CardModel ): Vector2 {
+    const homeIndex = this.cardCells.indexOf( card );
+    return new Vector2( this.getCardPositionX( homeIndex ), 0 );
+  }
+
+  public isAnyCardMoving(): boolean {
+    return _.some( this.cardCells, card => card.positionProperty.value.x !== this.getHomePosition( card ).x );
+  }
+
+  public setAtHomeCell( card: CardModel ): void {
+    card.positionProperty.value = this.getHomePosition( card );
+  }
+
+  public animateToHomeCell( card: CardModel, duration: number, animationReason: 'valueChanged' | null = null ): void {
+    card.animateTo( this.getHomePosition( card ), duration, animationReason );
+  }
+
+  /**
+   * Find the cell the dragged card is closest to
+   */
+  public getClosestCell( x: number ): number {
+    if ( this.cardCells.length === 0 ) {
+      return 0;
+    }
+    else {
+      const cellIndices = _.range( this.cardCells.length );
+      return _.minBy( cellIndices, index => Math.abs( x - this.getCardPositionX( index ) ) )!;
+    }
+  }
+
+  public sortData( animationReason: 'valueChanged' | null = null ): void {
+
+    // If the card is visible, the value property should be non-null
+    const sorted = _.sortBy( this.cardCells, card => card.soccerBall.valueProperty.value );
+    this.cardCells.length = 0;
+    this.cardCells.push( ...sorted );
+    this.cardCells.forEach( cardNode => this.animateToHomeCell( cardNode, 0.5, animationReason ) );
+    this.cardCellsChangedEmitter.emit();
+  }
+
+  /**
+   * Check if all of the data is in order, by using the cells associated with the card node.  Note that means
+   * it is using the cell the card may be animating to.
+   */
+  public isDataSorted(): boolean {
+
+    for ( let i = 1; i < this.cardCells.length; i++ ) {
+      const previousValue = this.cardCells[ i - 1 ].soccerBall.valueProperty.value;
+      const value = this.cardCells[ i ].soccerBall.valueProperty.value;
+
+      if ( previousValue !== null && value !== null && value < previousValue ) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+
+}
+
+const CardContainerModelIO = new IOType( 'CardContainerModelIO', {
+  valueType: CardContainerModel,
+  methods: {
+    getData: {
+      returnType: ArrayIO( NumberIO ),
+      parameterTypes: [],
+      implementation: function( this: CardContainerModel ) {
+        return this.cardCells.filter( card => card.soccerBall.valueProperty.value !== null ).map( card => card.soccerBall.valueProperty.value );
+      },
+      documentation: 'Gets the values of the cards in the order they appear.'
+    }
+  }
+} );
+
+centerAndVariability.register( 'CardContainerModel', CardContainerModel );
