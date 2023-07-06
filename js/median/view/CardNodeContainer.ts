@@ -210,7 +210,8 @@ export default class CardNodeContainer extends Node {
     } );
 
     const dataSortedTextNode = new Text( CenterAndVariabilityStrings.youSortedTheDataStringProperty, {
-      font: new PhetFont( 15 )
+      font: new PhetFont( 15 ),
+      maxWidth: CAVConstants.CARD_DIMENSION * 10
     } );
     const dataSortedNode = new Panel( dataSortedTextNode, {
       stroke: null,

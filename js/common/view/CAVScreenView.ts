@@ -356,7 +356,8 @@ export default class CAVScreenView extends ScreenView {
           { value: this.numberOfKicksProperty }, {
             tandem: tandem.createTandem( 'kicksPatternStringProperty' )
           } ), {
-          font: CAVConstants.MAIN_FONT
+          font: CAVConstants.MAIN_FONT,
+          maxWidth: CAVConstants.CHECKBOX_TEXT_MAX_WIDTH + 50
         } )
       ]
     } );
