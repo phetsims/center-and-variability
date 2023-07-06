@@ -455,7 +455,7 @@ export default class CardNodeContainer extends Node {
       }
 
       if ( leftmostCard ) {
-        medianReadoutPanel.centerX = getCardPositionX( ( this.cardNodeCells.length - 1 ) / 2 ) + leftmostCard.width / 2;
+        medianReadoutPanel.centerX = getCardPositionX( ( this.cardNodeCells.length - 1 ) / 2 ) + leftmostCard.width / 2 + PICK_UP_DELTA_X;
         if ( medianReadoutPanel.left < 0 ) {
           medianReadoutPanel.left = 0;
         }
