@@ -10,7 +10,7 @@
 import centerAndVariability from '../../centerAndVariability.js';
 import { Image, LinearGradient, Node, NodeOptions, SceneryConstants, Text } from '../../../../scenery/js/imports.js';
 import SoccerBall from '../../soccer-common/model/SoccerBall.js';
-import CardNode, { cardDropSoundClip, cardPickUpSoundClip, PICK_UP_DELTA_Y } from './CardNode.js';
+import CardNode, { cardDropSoundClip, cardPickUpSoundClip, PICK_UP_DELTA_X, PICK_UP_DELTA_Y } from './CardNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Panel from '../../../../sun/js/Panel.js';
 import CAVConstants from '../../common/CAVConstants.js';
@@ -346,7 +346,7 @@ export default class CardNodeContainer extends Node {
         // If the card model exists the cardNode must also exist
         const rightmostCard = this.cardMap.get( model.cardCells[ model.cardCells.length - 1 ] )!;
         const left = model.getCardPositionX( 0 ) - MARGIN_X;
-        const right = model.getCardPositionX( model.cardCells.length - 1 ) + rightmostCard.width + MARGIN_X;
+        const right = model.getCardPositionX( model.cardCells.length - 1 ) + rightmostCard.width + PICK_UP_DELTA_X + MARGIN_X;
 
         this.medianBarNode.setMedianBarShape( barY, left, ( left + right ) / 2, right, false );
       }
@@ -355,7 +355,7 @@ export default class CardNodeContainer extends Node {
       }
 
       if ( leftmostCard ) {
-        medianReadoutPanel.centerX = model.getCardPositionX( ( model.cardCells.length - 1 ) / 2 ) + leftmostCard.width / 2;
+        medianReadoutPanel.centerX = model.getCardPositionX( ( model.cardCells.length - 1 ) / 2 ) + leftmostCard.width / 2 + PICK_UP_DELTA_X;
         if ( medianReadoutPanel.left < 0 ) {
           medianReadoutPanel.left = 0;
         }
