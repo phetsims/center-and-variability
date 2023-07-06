@@ -125,7 +125,7 @@ export default class CardContainerModel extends PhetioObject {
             const newValue = card.soccerBall.valueProperty.value!;
             const existingLowerCards = this.cardCells.filter( card => card.soccerBall.valueProperty.value! <= newValue );
 
-            const lowerNeighborCard = _.maxBy( existingLowerCards, cardNode => this.cardCells.indexOf( card ) );
+            const lowerNeighborCard = _.maxBy( existingLowerCards, card => this.cardCells.indexOf( card ) );
             targetIndex = lowerNeighborCard ? this.cardCells.indexOf( lowerNeighborCard ) + 1 : 0;
           }
 
