@@ -139,10 +139,6 @@ export default class VariabilityScreenView extends CAVScreenView {
       return Utils.linear( 0, 16, 2, 1, interval );
     } );
 
-    // model.intervalTool1ValueProperty.link( newValue => {
-    //   intervalDistanceProperty.notifyListenersStatic();
-    // } );
-
     // the minimum distance that the interval must change before a sound is played (to prevent sound playing on tiny movements)
     const INTERVAL_WIDTH_CHANGE_THRESHOLD = 0.005;
     const INTERVAL_POSITION_CHANGE_THRESHOLD = 0.05;
