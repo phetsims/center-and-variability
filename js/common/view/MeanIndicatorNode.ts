@@ -19,8 +19,8 @@ export default class MeanIndicatorNode extends Path {
 
   public constructor( includeStroke: boolean, isIcon: boolean ) {
 
-    const TRIANGLE_LENGTH = isIcon ? CAVConstants.CHECKBOX_ICON_DIMENSION : 15;
-    const TRIANGLE_ALTITUDE = isIcon ? CAVConstants.CHECKBOX_ICON_DIMENSION - 5 : 13;
+    const TRIANGLE_LENGTH = isIcon ? CAVConstants.CHECKBOX_ICON_DIMENSION - 8 : 15;
+    const TRIANGLE_ALTITUDE = isIcon ? CAVConstants.CHECKBOX_ICON_DIMENSION - 11 : 13;
 
     // This is a triangle that points up.  Start at the top center tip.
     const TRIANGLE_SHAPE = new Shape().moveTo( 0, 0 )

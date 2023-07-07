@@ -14,8 +14,8 @@ import CAVConstants from '../../common/CAVConstants.js';
 
 export default class VariabilityMeasureIconNode extends Node {
 
-  public constructor( color: TColor ) {
-    const rectangle = new Rectangle( 0, 0, CAVConstants.CHECKBOX_ICON_DIMENSION, CAVConstants.CHECKBOX_ICON_DIMENSION, {
+  public constructor( color: TColor, iconDimension: number = CAVConstants.CHECKBOX_ICON_DIMENSION ) {
+    const rectangle = new Rectangle( 0, 0, iconDimension, iconDimension, {
       fill: color,
       stroke: Color.toColor( color ).colorUtilsDarker( 0.1 )
     } );

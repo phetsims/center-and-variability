@@ -55,7 +55,7 @@ export default class PlayAreaCheckboxFactory {
           new Text( CenterAndVariabilityStrings.intervalToolStringProperty, TEXT_OPTIONS ),
 
           // Sampled from the design in https://github.com/phetsims/center-and-variability/issues/182
-          new VariabilityMeasureIconNode( CAVColors.intervalToolIconRectangleFillColorProperty ),
+          new VariabilityMeasureIconNode( CAVColors.intervalToolIconRectangleFillColorProperty, CAVConstants.CHECKBOX_ICON_DIMENSION - 5 ),
           alignGroup
         );
       },
@@ -109,8 +109,8 @@ export default class PlayAreaCheckboxFactory {
             stroke: SoccerCommonColors.arrowStrokeProperty,
             lineWidth: CAVConstants.ARROW_LINE_WIDTH,
             headHeight: 12,
-            headWidth: CAVConstants.CHECKBOX_ICON_DIMENSION - 5,
-            maxHeight: CAVConstants.CHECKBOX_ICON_DIMENSION
+            headWidth: CAVConstants.CHECKBOX_ICON_DIMENSION - 7,
+            maxHeight: CAVConstants.CHECKBOX_ICON_DIMENSION - 4
           } ), alignGroup );
       },
       property: model.isPlayAreaMedianVisibleProperty,
@@ -140,7 +140,7 @@ export default class PlayAreaCheckboxFactory {
       createNode: ( tandem: Tandem ) => {
         return PlayAreaCheckboxFactory.createGridBox(
           new Text( stringProperty, TEXT_OPTIONS ),
-          new PredictionThumbNode( { color: color, maxHeight: 20, pickable: false, style: 'arrow' } ),
+          new PredictionThumbNode( { color: color, maxHeight: 24, pickable: false, style: 'arrow' } ),
           alignGroup );
       },
       property: property,
