@@ -87,8 +87,10 @@ export default class VariabilityScreenView extends CAVScreenView {
     const isIntervalHandle2BeingDraggedProperty = new BooleanProperty( false );
     const isIntervalAreaBeingDraggedProperty = new BooleanProperty( false );
 
-    const toolHandle1Tandem = options.tandem.createTandem( 'intervalToolNode' ).createTandem( 'handle1' );
-    const toolHandle2Tandem = options.tandem.createTandem( 'intervalToolNode' ).createTandem( 'handle2' );
+    const intervalToolNodeTandem = options.tandem.createTandem( 'intervalToolNode' );
+    const toolHandle1Tandem = intervalToolNodeTandem.createTandem( 'handle1' );
+    const toolHandle2Tandem = intervalToolNodeTandem.createTandem( 'handle2' );
+
     const handle1 = new PredictionSlider( model.intervalTool1ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE,
       isIntervalHandle1BeingDraggedProperty, new BooleanProperty( false ), combineOptions<PredictionSliderOptions>( {
         valueProperty: model.intervalTool1ValueProperty,
@@ -120,7 +122,7 @@ export default class VariabilityScreenView extends CAVScreenView {
     const intervalToolNode = new IntervalToolNode( model.intervalTool1ValueProperty, model.intervalTool2ValueProperty, this.modelViewTransform,
       new DerivedProperty( [ variabilityAccordionBox.boundsProperty ], bounds => bounds.top ), isIntervalAreaBeingDraggedProperty, {
         visibleProperty: model.isIntervalToolVisibleProperty,
-        tandem: options.tandem.createTandem( 'intervalToolNode' )
+        tandem: intervalToolNodeTandem
       } );
     this.intervalToolLayer.addChild( intervalToolNode );
 
