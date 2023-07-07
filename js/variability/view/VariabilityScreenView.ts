@@ -41,6 +41,7 @@ import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import SoccerPlayerGroupNumbered from '../../soccer-common/view/SoccerPlayerGroupNumbered.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
@@ -138,8 +139,32 @@ export default class VariabilityScreenView extends CAVScreenView {
       return Utils.linear( 0, 16, 2, 1, interval );
     } );
 
+    // model.intervalTool1ValueProperty.link( newValue => {
+    //   intervalDistanceProperty.notifyListenersStatic();
+    // } );
+
+    // the minimum distance that the interval must change before a sound is played (to prevent sound playing on tiny movements)
+    const INTERVAL_WIDTH_CHANGE_THRESHOLD = 0.005;
+    const INTERVAL_POSITION_CHANGE_THRESHOLD = 0.05;
+
+    let lastIntervalWidthValue = intervalDistanceProperty.value;
+    let lastIntervalTool1Value = model.intervalTool1ValueProperty.value;
+
+    const intervalDistanceWithThresholdProperty = new NumberProperty( lastIntervalWidthValue );
+
+    intervalDistanceProperty.link( newValue => {
+      if ( Math.abs( newValue - lastIntervalWidthValue ) >= INTERVAL_WIDTH_CHANGE_THRESHOLD ) {
+        intervalDistanceWithThresholdProperty.value = newValue;
+        lastIntervalWidthValue = newValue;
+      }
+    } );
+
+    // keeps track of the translation of the entire interval tool
     model.intervalTool1ValueProperty.link( newValue => {
-      intervalDistanceProperty.notifyListenersStatic();
+      if ( Math.abs( newValue - lastIntervalTool1Value ) >= INTERVAL_POSITION_CHANGE_THRESHOLD ) {
+        intervalDistanceWithThresholdProperty.notifyListenersStatic();
+        lastIntervalTool1Value = newValue;
+      }
     } );
 
     const biquadFilterNode = new BiquadFilterNode( phetAudioContext, {
@@ -167,7 +192,7 @@ export default class VariabilityScreenView extends CAVScreenView {
     } );
 
     this.continuousPropertySoundGenerator = new ContinuousPropertySoundGenerator(
-      intervalDistanceProperty,
+      intervalDistanceWithThresholdProperty,
       cvIntervalToolLoopSoundV1_wav,
       new Range( 1, 2 ), {
         initialOutputLevel: 1,
