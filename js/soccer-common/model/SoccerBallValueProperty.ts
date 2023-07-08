@@ -1,4 +1,4 @@
-// Copyright 2016-2023, University of Colorado Boulder
+// Copyright 2023, University of Colorado Boulder
 
 /**
  * Property for the value of a soccer ball in a soccer scene. Can be a number or null, but cannot be set from null to non-null via PhET-IO.
