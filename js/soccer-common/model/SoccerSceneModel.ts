@@ -110,7 +110,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
     public readonly maxKicksProperty: TReadOnlyProperty<number>,
     maxKicksChoices: number[],
     initialKickDistanceStrategy: TKickDistanceStrategy,
-    hidePlayersWhenDoneKicking: boolean,
+    showPlayersWhenDoneKicking: boolean,
     public readonly physicalRange: Range,
     kickDistanceStrategyFromStateObject: ( string: string ) => TKickDistanceStrategy,
     createSoccerBall: ( isFirstSoccerBall: boolean, options: { tandem: Tandem } ) => T,

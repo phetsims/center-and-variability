@@ -50,7 +50,7 @@ export default class MedianModel extends CAVModel {
       maxKicksProperty,
       maxKicksAllowed,
       new RandomSkewStrategy(),
-      true,
+      false,
       CAVConstants.PHYSICAL_RANGE,
       kickDistanceStrategyFromStateObject,
       CAVSoccerBall.createSoccerBall, {
