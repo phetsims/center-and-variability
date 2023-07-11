@@ -259,7 +259,8 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
     this.hasKickableSoccerBallsStableProperty = new BooleanProperty( this.hasKickableSoccerBallsProperty.value );
 
     this.activeKickerIndexProperty = new NumberProperty( 0, {
-      tandem: options.tandem.createTandem( 'activeKickerIndexProperty' )
+      tandem: options.tandem.createTandem( 'activeKickerIndexProperty' ),
+      phetioReadOnly: true
     } );
 
     Multilink.multilink( [ this.activeKickerIndexProperty, this.maxKicksProperty ], ( activeKickerIndex, maxKicks ) => {
