@@ -14,9 +14,7 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import SoccerBall from '../../soccer-common/model/SoccerBall.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import CardModel from '../model/CardModel.js';
-import Emitter from '../../../../axon/js/Emitter.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import TEmitter from '../../../../axon/js/TEmitter.js';
 import CardNodeContainer from './CardNodeContainer.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
@@ -47,12 +45,6 @@ export const PICK_UP_DELTA_Y = -4;
 export default class CardNode extends Node {
 
   public readonly dragListener: DragListener;
-
-  // Emit how far the card has been dragged for purposes of hiding the drag indicator arrow when the user
-  // has dragged a sufficient amount
-  public readonly dragDistanceEmitter: TEmitter<[ number ]> = new Emitter( {
-    parameters: [ { valueType: 'number' } ]
-  } );
 
   public readonly soccerBall: SoccerBall;
 
@@ -104,7 +96,7 @@ export default class CardNode extends Node {
 
       const delta = this.translation.minus( before );
       if ( cardModel.isDragging ) {
-        this.dragDistanceEmitter.emit( Math.abs( delta.x ) );
+        cardModel.dragDistanceEmitter.emit( Math.abs( delta.x ) );
 
         // Set the relative position within the parent.
         card.setTranslation( PICK_UP_DELTA_X, PICK_UP_DELTA_Y );

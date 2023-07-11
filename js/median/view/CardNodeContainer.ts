@@ -17,8 +17,6 @@ import CAVConstants from '../../common/CAVConstants.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import MedianBarNode from '../../common/view/MedianBarNode.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
 import stepTimer from '../../../../axon/js/stepTimer.js';
 import Easing from '../../../../twixt/js/Easing.js';
@@ -37,7 +35,6 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Property from '../../../../axon/js/Property.js';
-import TProperty from '../../../../axon/js/TProperty.js';
 import CardContainerModel from '../model/CardContainerModel.js';
 import CardModel from '../model/CardModel.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
@@ -57,10 +54,6 @@ export default class CardNodeContainer extends Node {
     barStyle: 'split'
   } );
 
-  // Indicates whether the user has ever dragged a card. It's used to hide the drag indicator arrow after
-  // the user dragged a card
-  private readonly hasDraggedCardProperty: TReadOnlyProperty<boolean>;
-  private readonly dragIndicationCardProperty: TProperty<CardNode | null>;
   private readonly cardLayer = new Node();
   private isReadyForCelebration = false;
   private remainingCelebrationAnimations: ( () => void )[] = [];
@@ -81,17 +74,6 @@ export default class CardNodeContainer extends Node {
     super( options );
 
     this.model = model;
-
-    // Accumulated card drag distance, for purposes of hiding the drag indicator node
-    const totalDragDistanceProperty = new NumberProperty( 0, {
-      tandem: options.tandem.createTandem( 'totalDragDistanceProperty' ),
-      phetioReadOnly: true,
-      phetioDocumentation: 'For PhET-iO internal use only. Accumulated card drag distance, for purposes of hiding the drag indicator node'
-    } );
-    this.hasDraggedCardProperty = new DerivedProperty( [ totalDragDistanceProperty ], totalDragDistance => {
-      return totalDragDistance > 15;
-    } );
-    this.dragIndicationCardProperty = new Property( null );
 
     // Allocate all the cards at start-up. Each card node must be associated with a card model.
     this.cardNodes = model.cards.map( ( cardModel, index ) => {
@@ -182,8 +164,8 @@ export default class CardNodeContainer extends Node {
       } );
 
       // Accumulate drag distance
-      cardNode.dragDistanceEmitter.addListener( distance => {
-        totalDragDistanceProperty.value += distance;
+      cardModel.dragDistanceEmitter.addListener( distance => {
+        model.totalDragDistanceProperty.value += distance;
       } );
 
       return cardNode;
@@ -269,14 +251,17 @@ export default class CardNodeContainer extends Node {
         } ]
       } );
 
-      this.dragIndicationCardProperty.lazyLink( ( newCardNode, oldCardNode ) => {
+      model.dragIndicationCardProperty.lazyLink( ( newCard, oldCard ) => {
 
-        if ( oldCardNode ) {
+
+        if ( oldCard ) {
+          const oldCardNode = this.cardMap.get( oldCard )!;
           oldCardNode.mouseArea = oldCardNode.localBounds;
           oldCardNode.touchArea = oldCardNode.localBounds;
         }
 
-        if ( newCardNode ) {
+        if ( newCard ) {
+          const newCardNode = this.cardMap.get( newCard )!;
 
           // Expand the card's touch + mouse area to cover the hand. Much simpler than adding a DragListener.createForwardingListener
           const newArea = new Bounds2( newCardNode.localBounds.minX, newCardNode.localBounds.minY, newCardNode.localBounds.maxX, newCardNode.localBounds.maxY + 30 );
@@ -284,36 +269,16 @@ export default class CardNodeContainer extends Node {
           newCardNode.touchArea = newArea;
         }
 
-        if ( oldCardNode && !newCardNode ) {
+        if ( oldCard && !newCard ) {
           fadeInAnimation.stop();
           fadeOutAnimation.start();
         }
 
-        else if ( newCardNode && !oldCardNode ) {
+        else if ( newCard && !oldCard ) {
           fadeOutAnimation.stop();
           fadeInAnimation.start();
         }
       } );
-
-      const updateDragIndicationCardProperty = () => {
-
-        const leftCard = this.cardMap.get( model.cardCells[ 0 ] );
-        const rightCard = this.cardMap.get( model.cardCells[ 1 ] );
-
-        // if the user has not yet dragged a card and there are multiple cards showing, fade in the drag indicator
-        if ( !this.hasDraggedCardProperty.value && leftCard && rightCard ) {
-          this.dragIndicationCardProperty.value = leftCard;
-        }
-
-        // if the user has dragged a card and the hand indicator is showing, fade the hand indicator out
-        if ( this.hasDraggedCardProperty.value || !leftCard || !rightCard ) {
-          this.dragIndicationCardProperty.value = null;
-        }
-      };
-
-      model.cardCellsChangedEmitter.addListener( updateDragIndicationCardProperty );
-      this.hasDraggedCardProperty.link( updateDragIndicationCardProperty );
-      this.cardNodes.forEach( cardNode => cardNode.soccerBall.valueProperty.lazyLink( updateDragIndicationCardProperty ) );
     }
 
     const medianTextNode = new Text( new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty, { value: this.selectedSceneModelProperty.value.medianValueProperty }, {
@@ -375,7 +340,6 @@ export default class CardNodeContainer extends Node {
     medianTextNode.boundsProperty.link( updateMedianNode );
 
     this.selectedSceneModelProperty.value.resetEmitter.addListener( () => {
-      totalDragDistanceProperty.reset();
       dataSortedNode.visible = false;
       if ( this.dataSortedNodeAnimation ) {
         this.dataSortedNodeAnimation.stop();

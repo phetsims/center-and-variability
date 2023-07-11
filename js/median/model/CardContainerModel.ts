@@ -34,6 +34,10 @@ import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioO
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import Property from '../../../../axon/js/Property.js';
 
 const cardMovementSounds = [
   cvCardMovementSoundsV2001_mp3,
@@ -78,6 +82,12 @@ export default class CardContainerModel extends PhetioObject {
 
   public readonly parentContext: 'info' | 'accordion';
 
+  // Indicates whether the user has ever dragged a card. It's used to hide the drag indicator arrow after
+  // the user dragged a card
+  public readonly hasDraggedCardProperty: TReadOnlyProperty<boolean>;
+  public readonly dragIndicationCardProperty: Property<CardModel | null>;
+  public readonly totalDragDistanceProperty: Property<number>;
+
   public constructor( private readonly median: MedianModel, providedOptions: CardContainerModelOptions ) {
 
     const options = optionize<CardContainerModelOptions, SelfOptions, PhetioObjectOptions>()( {
@@ -88,6 +98,20 @@ export default class CardContainerModel extends PhetioObject {
     super( options );
 
     this.parentContext = options.parentContext;
+
+    // Accumulated card drag distance, for purposes of hiding the drag indicator node
+    this.totalDragDistanceProperty = new NumberProperty( 0, {
+      tandem: options.tandem.createTandem( 'totalDragDistanceProperty' ),
+      phetioReadOnly: true,
+      phetioDocumentation: 'For PhET-iO internal use only. Accumulated card drag distance, for purposes of hiding the drag indicator node'
+    } );
+
+    this.hasDraggedCardProperty = new DerivedProperty( [ this.totalDragDistanceProperty ], totalDragDistance => {
+      return totalDragDistance > 15;
+    } );
+
+    this.dragIndicationCardProperty = new Property<CardModel | null>( null );
+
 
     // Allocate all the card models at start-up.
     this.cards = median.selectedSceneModelProperty.value.soccerBalls.map( ( soccerBall, index ) => {
@@ -159,7 +183,30 @@ export default class CardContainerModel extends PhetioObject {
       this.cardCellsChangedEmitter.addListener( () => {
         median.areCardsSortedProperty.value = this.isDataSorted();
       } );
+
+      const updateDragIndicationCardProperty = () => {
+
+        const leftCard = this.cardCells[ 0 ];
+        const rightCard = this.cardCells[ 1 ];
+
+        // if the user has not yet dragged a card and there are multiple cards showing, fade in the drag indicator
+        if ( !this.hasDraggedCardProperty.value && leftCard && rightCard ) {
+          this.dragIndicationCardProperty.value = leftCard;
+        }
+
+        // if the user has dragged a card and the hand indicator is showing, fade the hand indicator out
+        if ( this.hasDraggedCardProperty.value || !leftCard || !rightCard ) {
+          this.dragIndicationCardProperty.value = null;
+        }
+      };
+
+      this.cardCellsChangedEmitter.addListener( updateDragIndicationCardProperty );
+      this.hasDraggedCardProperty.link( updateDragIndicationCardProperty );
+      this.cards.forEach( card => card.soccerBall.valueProperty.lazyLink( updateDragIndicationCardProperty ) );
     }
+
+    median.selectedSceneModelProperty.value.resetEmitter.addListener( () => this.totalDragDistanceProperty.reset() );
+
 
   }
 

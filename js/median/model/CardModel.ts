@@ -20,6 +20,8 @@ import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import CardContainerModel from './CardContainerModel.js';
+import TEmitter from '../../../../axon/js/TEmitter.js';
+import Emitter from '../../../../axon/js/Emitter.js';
 
 type SelfOptions = EmptySelfOptions;
 type CardModelOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'>;
@@ -42,6 +44,12 @@ export default class CardModel extends PhetioObject {
   public animation: Animation | null = null;
   private animationTo: Vector2 | null = null;
 
+  // Emit how far the card has been dragged for purposes of hiding the drag indicator arrow when the user
+  // has dragged a sufficient amount
+  public readonly dragDistanceEmitter: TEmitter<[ number ]> = new Emitter( {
+    parameters: [ { valueType: 'number' } ]
+  } );
+
   public constructor( public readonly cardContainerModel: CardContainerModel, soccerBall: SoccerBall, position: Vector2, providedOptions: CardModelOptions ) {
 
     const options = optionize<CardModelOptions, SelfOptions, PhetioObjectOptions>()( {
@@ -49,6 +57,8 @@ export default class CardModel extends PhetioObject {
     }, providedOptions );
 
     super( options );
+
+
     this.soccerBall = soccerBall;
     this.isActiveProperty = new DerivedProperty( [ soccerBall.soccerBallPhaseProperty ], phase =>
       phase === SoccerBallPhase.STACKED || phase === SoccerBallPhase.STACKING, {
