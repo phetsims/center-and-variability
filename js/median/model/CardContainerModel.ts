@@ -91,7 +91,7 @@ export default class CardContainerModel extends PhetioObject {
   public constructor( private readonly median: MedianModel, providedOptions: CardContainerModelOptions ) {
 
     const options = optionize<CardContainerModelOptions, SelfOptions, PhetioObjectOptions>()( {
-      phetioType: CardContainerModelIO,
+      phetioType: CardContainerModel.CardContainerModelIO,
       phetioState: false
     }, providedOptions );
 
@@ -348,21 +348,19 @@ export default class CardContainerModel extends PhetioObject {
     return true;
   }
 
-
-}
-
-const CardContainerModelIO = new IOType( 'CardContainerModelIO', {
-  valueType: CardContainerModel,
-  methods: {
-    getData: {
-      returnType: ArrayIO( NumberIO ),
-      parameterTypes: [],
-      implementation: function( this: CardContainerModel ) {
-        return this.cardCells.filter( card => card.soccerBall.valueProperty.value !== null ).map( card => card.soccerBall.valueProperty.value );
-      },
-      documentation: 'Gets the values of the cards in the order they appear.'
+  private static CardContainerModelIO = new IOType( 'CardContainerModelIO', {
+    valueType: CardContainerModel,
+    methods: {
+      getData: {
+        returnType: ArrayIO( NumberIO ),
+        parameterTypes: [],
+        implementation: function( this: CardContainerModel ) {
+          return this.cardCells.filter( card => card.soccerBall.valueProperty.value !== null ).map( card => card.soccerBall.valueProperty.value );
+        },
+        documentation: 'Gets the values of the cards in the order they appear.'
+      }
     }
-  }
-} );
+  } );
+}
 
 centerAndVariability.register( 'CardContainerModel', CardContainerModel );
