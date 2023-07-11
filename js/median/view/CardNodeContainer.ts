@@ -106,52 +106,54 @@ export default class CardNodeContainer extends Node {
             // Setup a callback for animation when all current animations finish
             const asyncCounter = new AsyncCounter( inProgressAnimations.length, () => {
 
-              // we know at least one card exists because we're in a dragListener link
-              const leftmostCard = this.cardMap.get( model.cardCells[ 0 ] )!;
-              assert && assert( leftmostCard, 'leftmostCard should be defined' );
+              // If the cards have been removed after the asyncCounter has completed, don't do anything
+              if ( model.cardCells.length > 0 ) {
+                const leftmostCard = this.cardMap.get( model.cardCells[ 0 ] )!;
+                assert && assert( leftmostCard, 'leftmostCard should be defined' );
 
-              dataSortedNode.centerX = model.getCardPositionX( ( model.cardCells.length - 1 ) / 2 ) + CAVConstants.CARD_DIMENSION / 2;
-              dataSortedNode.top = leftmostCard.bottom + 7;
+                dataSortedNode.centerX = model.getCardPositionX( ( model.cardCells.length - 1 ) / 2 ) + CAVConstants.CARD_DIMENSION / 2;
+                dataSortedNode.top = leftmostCard.bottom + 7;
 
-              if ( dataSortedNode.left < 0 ) {
-                dataSortedNode.left = 0;
-              }
-              dataSortedNode.opacity = 1;
-              dataSortedNode.visible = true;
+                if ( dataSortedNode.left < 0 ) {
+                  dataSortedNode.left = 0;
+                }
+                dataSortedNode.opacity = 1;
+                dataSortedNode.visible = true;
 
-              // If the user sorted the data again before the data sorted message was hidden, clear out the timer.
-              if ( this.dataSortedNodeAnimation ) {
-                this.dataSortedNodeAnimation.stop();
-              }
+                // If the user sorted the data again before the data sorted message was hidden, clear out the timer.
+                if ( this.dataSortedNodeAnimation ) {
+                  this.dataSortedNodeAnimation.stop();
+                }
 
-              // start a timer to hide the data sorted node
-              this.dataSortedNodeAnimation = new Animation( {
-                duration: 0.6,
-                delay: 2,
-                targets: [ {
-                  property: dataSortedNode.opacityProperty,
-                  to: 0,
-                  easing: Easing.QUADRATIC_IN_OUT
-                } ]
-              } );
-              this.dataSortedNodeAnimation.finishEmitter.addListener( () => {
-                dataSortedNode.visible = false;
-                this.dataSortedNodeAnimation = null;
-              } );
-              this.dataSortedNodeAnimation.start();
-
-              successSoundClip.play();
-
-              const cardBeingDragged = this.cardNodes.filter( cardNode => cardNode.dragListener.isPressed ).length;
-              const cardsAnimating = model.cardCells.filter( card => card.animation ).length;
-              if ( cardBeingDragged === 0 && cardsAnimating === 0 ) {
-                this.pickable = false;
-
-                this.animateRandomCelebration( () => {
-
-                  this.isReadyForCelebration = false;
-                  this.pickable = true;
+                // start a timer to hide the data sorted node
+                this.dataSortedNodeAnimation = new Animation( {
+                  duration: 0.6,
+                  delay: 2,
+                  targets: [ {
+                    property: dataSortedNode.opacityProperty,
+                    to: 0,
+                    easing: Easing.QUADRATIC_IN_OUT
+                  } ]
                 } );
+                this.dataSortedNodeAnimation.finishEmitter.addListener( () => {
+                  dataSortedNode.visible = false;
+                  this.dataSortedNodeAnimation = null;
+                } );
+                this.dataSortedNodeAnimation.start();
+
+                successSoundClip.play();
+
+                const cardBeingDragged = this.cardNodes.filter( cardNode => cardNode.dragListener.isPressed ).length;
+                const cardsAnimating = model.cardCells.filter( card => card.animation ).length;
+                if ( cardBeingDragged === 0 && cardsAnimating === 0 ) {
+                  this.pickable = false;
+
+                  this.animateRandomCelebration( () => {
+
+                    this.isReadyForCelebration = false;
+                    this.pickable = true;
+                  } );
+                }
               }
             } );
 
