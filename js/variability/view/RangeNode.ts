@@ -82,10 +82,8 @@ export default class RangeNode extends CAVPlotNode {
 
         if ( options.parentContext === 'info' ) {
           const dataPointRadius = this.modelViewTransform.modelToViewDeltaX( CAVObjectType.DATA_POINT.radius );
-          const minHeightInDataPoints = 3;
-          const minHeightWithoutMargin = 2 * minHeightInDataPoints * dataPointRadius;
-          const heightWithoutMargin = Math.max( minHeightWithoutMargin, floor - highestYValue + dataPointRadius );
-          rangeRectangle.rectHeight = heightWithoutMargin + 3;
+          const topPadding = 3 * dataPointRadius;
+          rangeRectangle.rectHeight = floor - highestYValue + dataPointRadius + topPadding;
         }
         rangeRectangle.rectWidth = right - left;
         rangeRectangle.left = left;
