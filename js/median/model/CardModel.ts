@@ -67,6 +67,7 @@ export default class CardModel extends PhetioObject {
     } );
 
     this.positionProperty = new Vector2Property( position, {
+      phetioReadOnly: true,
       tandem: options.tandem.createTandem( 'positionProperty' ),
       valueComparisonStrategy: 'equalsFunction'
     } );
