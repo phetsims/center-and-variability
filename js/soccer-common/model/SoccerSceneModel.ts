@@ -265,7 +265,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
     Multilink.multilink( [ this.activeKickerIndexProperty, this.maxKicksProperty ], ( activeKickerIndex, maxKicks ) => {
       this.soccerPlayers.forEach( ( soccerPlayer, index ) => {
 
-        // If activeKickerIndex is greater than the number of kickers, but we want showing the last  kicker, show the last available player
+        // If activeKickerIndex is greater than the number of kickers, but we want to show the last kicker, show the last available player
         const showAsLastKicker = showPlayersWhenDoneKicking && ( activeKickerIndex === this.maxKicksLimit && index === activeKickerIndex - 1 );
         soccerPlayer.soccerPlayerPhaseProperty.value = ( ( index === activeKickerIndex && ( index < maxKicks || showPlayersWhenDoneKicking ) ) || showAsLastKicker ) ? SoccerPlayerPhase.READY : SoccerPlayerPhase.INACTIVE;
       } );
