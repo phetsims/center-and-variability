@@ -7,7 +7,7 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import { HBox, Node, Text } from '../../../../scenery/js/imports.js';
+import { HBox, ManualConstraint, Node, Text } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVConstants from '../CAVConstants.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
@@ -21,6 +21,7 @@ export default class InfoValuesNode<T extends CAVSoccerBall> extends Node {
 
   private readonly dataValuesMedianArrow: ArrowNode;
   private readonly dataValuesContainer: HBox;
+  private medianTextNodes: Node[] = [];
 
   public constructor( public readonly sceneModel: CAVSoccerSceneModel<T> ) {
 
@@ -60,16 +61,28 @@ export default class InfoValuesNode<T extends CAVSoccerBall> extends Node {
 
     this.dataValuesMedianArrow = dataValuesMedianArrow;
     this.dataValuesContainer = dataValuesContainer;
+
+    ManualConstraint.create( this, [ dataValuesContainer ], () => {
+      this.updateArrowNode();
+    } );
+  }
+
+  private updateArrowNode(): void {
+    if ( this.medianTextNodes.length > 0 ) {
+      const arrowPosition = this.dataValuesMedianArrow.globalToLocalPoint( new Vector2( _.mean( this.medianTextNodes.map( textNode =>
+        textNode.globalBounds.x + 0.5 * textNode.globalBounds.width ) ), this.medianTextNodes[ 0 ].globalBounds.y ) );
+      this.dataValuesMedianArrow.setTail( arrowPosition.x, this.dataValuesMedianArrow.tailY );
+      this.dataValuesMedianArrow.setTip( arrowPosition.x, this.dataValuesMedianArrow.tipY );
+    }
   }
 
   public update(): void {
-
     const sortedObjects = this.sceneModel.getSortedStackedObjects();
     const sortedData = sortedObjects.map( object => object.valueProperty.value );
 
     const dataValuesChildren: Node[] = [];
 
-    const medianTextNodes: Node[] = [];
+    this.medianTextNodes = [];
 
     const results: Array<{ text: Text; soccerBall: T }> = [];
 
@@ -88,7 +101,7 @@ export default class InfoValuesNode<T extends CAVSoccerBall> extends Node {
       dataValuesChildren.push( valueTextGroupNode );
 
       if ( sortedObjects[ i ].isMedianObjectProperty.value ) {
-        medianTextNodes.push( valueTextNode );
+        this.medianTextNodes.push( valueTextNode );
       }
 
       results.push( {
@@ -99,12 +112,7 @@ export default class InfoValuesNode<T extends CAVSoccerBall> extends Node {
 
     this.dataValuesContainer.setChildren( dataValuesChildren );
 
-    if ( medianTextNodes.length > 0 ) {
-      const arrowPosition = this.dataValuesMedianArrow.globalToLocalPoint( new Vector2( _.mean( medianTextNodes.map( textNode =>
-        textNode.globalBounds.x + 0.5 * textNode.globalBounds.width ) ), medianTextNodes[ 0 ].globalBounds.y ) );
-      this.dataValuesMedianArrow.setTail( arrowPosition.x, this.dataValuesMedianArrow.tailY );
-      this.dataValuesMedianArrow.setTip( arrowPosition.x, this.dataValuesMedianArrow.tipY );
-    }
+    this.updateArrowNode();
 
     this.decorate( results );
   }
