@@ -146,24 +146,19 @@ export default class CardContainerModel extends PhetioObject {
       card.isActiveProperty.link( isActive => {
         if ( isActive && !isSettingPhetioStateProperty.value ) {
 
-          // The targetIndex is the amount of activeCards minus ourselves.
-          // let targetIndex = this.getActiveCards().length - 1;
-
           // We want to auto-sort cards in the infoDialog no matter what the value for isSortingDataProperty is.
           if ( median.isSortingDataProperty.value || options.parentContext === 'info' ) {
-            // const newValue = card.soccerBall.valueProperty.value!;
-            // const existingLowerCards = this.getActiveCards().filter( card => card.soccerBall.valueProperty.value! <= newValue );
-            //
-            // const lowerNeighborCard = _.maxBy( existingLowerCards, card => card.cellPositionProperty.value );
-            // targetIndex = lowerNeighborCard ? lowerNeighborCard.cellPositionProperty.value + 1 : 0;
-
-            // Active cards cannot have
-            const sorted = this.getActiveCards().sort( card => {
+            const sorted = _.sortBy( this.getActiveCards(), ( card => {
 
               assert && assert( card.soccerBall.valueProperty.value, 'An active card cannot have a null value.' );
               return card.soccerBall.valueProperty.value!;
-            } );
+            } ) );
+
             sorted.forEach( ( card, index ) => { card.cellPositionProperty.value = index; } );
+            const sortedValues = sorted.map( card => card.soccerBall.valueProperty.value );
+            const sortedCardPositions = sorted.map( card => card.cellPositionProperty.value );
+            console.log( sortedCardPositions );
+            console.log( sortedValues );
           }
 
           card.timeSinceLanded = 0;
@@ -175,10 +170,6 @@ export default class CardContainerModel extends PhetioObject {
             card.positionProperty.value = card.positionProperty.value.plusXY( 1, 0 );
             this.animateToHomeCell( card, 0.3 );
           } );
-          // for ( let i = targetIndex; i < cardCells.length; i++ ) {
-          //   cardCells[ i ].positionProperty.value = cardCells[ i ].positionProperty.value.plusXY( 1, 0 );
-          //   this.animateToHomeCell( cardCells[ i ], 0.3 );
-          // }
 
           this.cardCellsChangedEmitter.emit();
         }
@@ -310,7 +301,6 @@ export default class CardContainerModel extends PhetioObject {
   }
 
   public animateToHomeCell( card: CardModel, duration: number, animationReason: 'valueChanged' | null = null ): void {
-    console.log( 'animateHome' );
     card.animateTo( this.getHomePosition( card ), duration, animationReason );
   }
 
@@ -333,11 +323,10 @@ export default class CardContainerModel extends PhetioObject {
   }
 
   public getCardsInCellOrder(): CardModel[] {
-    return this.getActiveCards().sort( card => card.cellPositionProperty.value );
+    return _.sortBy( this.getActiveCards(), ( card => card.cellPositionProperty.value ) );
   }
 
   public sortData( animationReason: 'valueChanged' | null = null ): void {
-    console.log( 'sorting' );
     // If the card is visible, the value property should be non-null
     const sorted = _.sortBy( this.getActiveCards(), card => card.soccerBall.valueProperty.value );
     sorted.forEach( ( card, index ) => {
