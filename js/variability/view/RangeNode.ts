@@ -53,8 +53,7 @@ export default class RangeNode extends CAVPlotNode {
     } );
 
     const rangeBar = new IntervalBarNode();
-    const rectangleHeight = CAVConstants.VARIABILITY_PLOT_RECT_HEIGHT;
-    const rangeRectangle = new Rectangle( 0, 50, 100, rectangleHeight, {
+    const rangeRectangle = new Rectangle( 0, 50, 100, CAVConstants.VARIABILITY_PLOT_RECT_HEIGHT, {
       fill: CAVColors.rangeFillProperty
     } );
     this.addChild( rangeBar );
@@ -82,7 +81,11 @@ export default class RangeNode extends CAVPlotNode {
         const floor = this.modelViewTransform.modelToViewY( 0 );
 
         if ( options.parentContext === 'info' ) {
-          rangeRectangle.rectHeight = floor - highestYValue + this.modelViewTransform.modelToViewDeltaX( CAVObjectType.DATA_POINT.radius ) + 3;
+          const dataPointRadius = this.modelViewTransform.modelToViewDeltaX( CAVObjectType.DATA_POINT.radius );
+          const minHeightInDataPoints = 3;
+          const minHeightWithoutMargin = 2 * minHeightInDataPoints * dataPointRadius;
+          const heightWithoutMargin = Math.max( minHeightWithoutMargin, floor - highestYValue + dataPointRadius );
+          rangeRectangle.rectHeight = heightWithoutMargin + 3;
         }
         rangeRectangle.rectWidth = right - left;
         rangeRectangle.left = left;
