@@ -43,7 +43,8 @@ export default class MedianModel extends CAVModel {
     }, {
       validValues: maxKicksAllowed,
       phetioValueType: NumberIO,
-      tandem: options.tandem.createTandem( 'maxKicksProperty' )
+      tandem: options.tandem.createTandem( 'maxKicksProperty' ),
+      phetioDocumentation: 'The Median screen is restricted to a maximum of 15 kicks.'
     } );
 
     const sceneModel = new CAVSoccerSceneModel(
