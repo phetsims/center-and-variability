@@ -47,12 +47,10 @@ export default class DragIndicatorModel {
                                                 this.soccerBallsInputEnabledProperty.value &&
                                                 _.every( sceneModel?.getActiveSoccerBalls(), soccerBall => soccerBall.valueProperty.value !== null );
 
-    if ( this.isDragIndicatorVisibleProperty.value ) {
-      const reversedBalls = sceneModel.getActiveSoccerBalls().reverse();
+    const reversedBalls = sceneModel.getActiveSoccerBalls().reverse();
 
-      // Show the drag indicator over the most recently landed ball
-      this.dragIndicatorValueProperty.value = reversedBalls[ 0 ].valueProperty.value;
-    }
+    // Show the drag indicator over the most recently landed ball
+    this.dragIndicatorValueProperty.value = reversedBalls[ 0 ].valueProperty.value;
   }
 
   public reset(): void {
