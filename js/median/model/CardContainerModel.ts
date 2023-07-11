@@ -155,10 +155,6 @@ export default class CardContainerModel extends PhetioObject {
             } ) );
 
             sorted.forEach( ( card, index ) => { card.cellPositionProperty.value = index; } );
-            const sortedValues = sorted.map( card => card.soccerBall.valueProperty.value );
-            const sortedCardPositions = sorted.map( card => card.cellPositionProperty.value );
-            console.log( sortedCardPositions );
-            console.log( sortedValues );
           }
 
           card.timeSinceLanded = 0;
