@@ -100,18 +100,19 @@ export default class CardNodeContainer extends Node {
           model.animateToHomeCell( cardNode.cardModel, 0.2 );
 
           if ( this.isReadyForCelebration ) {
-            const inProgressAnimations = model.cardCells.filter( card => card.animation )
+            const cardCells = model.getCardsInCellOrder();
+            const inProgressAnimations = cardCells.filter( card => card.animation )
               .map( card => card.animation! );
 
             // Setup a callback for animation when all current animations finish
             const asyncCounter = new AsyncCounter( inProgressAnimations.length, () => {
 
               // If the cards have been removed after the asyncCounter has completed, don't do anything
-              if ( model.cardCells.length > 0 ) {
-                const leftmostCard = this.cardMap.get( model.cardCells[ 0 ] )!;
+              if ( cardCells.length > 0 ) {
+                const leftmostCard = this.cardMap.get( cardCells[ 0 ] )!;
                 assert && assert( leftmostCard, 'leftmostCard should be defined' );
 
-                dataSortedNode.centerX = model.getCardPositionX( ( model.cardCells.length - 1 ) / 2 ) + CAVConstants.CARD_DIMENSION / 2;
+                dataSortedNode.centerX = model.getCardPositionX( ( cardCells.length - 1 ) / 2 ) + CAVConstants.CARD_DIMENSION / 2;
                 dataSortedNode.top = leftmostCard.bottom + 7;
 
                 if ( dataSortedNode.left < 0 ) {
@@ -144,7 +145,7 @@ export default class CardNodeContainer extends Node {
                 successSoundClip.play();
 
                 const cardBeingDragged = this.cardNodes.filter( cardNode => cardNode.dragListener.isPressed ).length;
-                const cardsAnimating = model.cardCells.filter( card => card.animation ).length;
+                const cardsAnimating = cardCells.filter( card => card.animation ).length;
                 if ( cardBeingDragged === 0 && cardsAnimating === 0 ) {
                   this.pickable = false;
 
@@ -301,7 +302,8 @@ export default class CardNodeContainer extends Node {
 
     const updateMedianNode = () => {
 
-      const leftmostCard = this.cardMap.get( model.cardCells[ 0 ] );
+      const cardCells = model.getCardsInCellOrder();
+      const leftmostCard = this.cardMap.get( cardCells[ 0 ] );
 
       const MARGIN_X = CAVConstants.CARD_SPACING / 2 - MedianBarNode.HALF_SPLIT_WIDTH;
 
@@ -313,9 +315,9 @@ export default class CardNodeContainer extends Node {
         const barY = MARGIN_Y;
 
         // If the card model exists the cardNode must also exist
-        const rightmostCard = this.cardMap.get( model.cardCells[ model.cardCells.length - 1 ] )!;
+        const rightmostCard = this.cardMap.get( cardCells[ cardCells.length - 1 ] )!;
         const left = model.getCardPositionX( 0 ) - MARGIN_X;
-        const right = model.getCardPositionX( model.cardCells.length - 1 ) + rightmostCard.width + PICK_UP_DELTA_X + MARGIN_X;
+        const right = model.getCardPositionX( cardCells.length - 1 ) + rightmostCard.width + PICK_UP_DELTA_X + MARGIN_X;
 
         this.medianBarNode.setMedianBarShape( barY, left, ( left + right ) / 2, right, false );
       }
@@ -324,7 +326,7 @@ export default class CardNodeContainer extends Node {
       }
 
       if ( leftmostCard ) {
-        medianReadoutPanel.centerX = model.getCardPositionX( ( model.cardCells.length - 1 ) / 2 ) + leftmostCard.width / 2 + PICK_UP_DELTA_X;
+        medianReadoutPanel.centerX = model.getCardPositionX( ( cardCells.length - 1 ) / 2 ) + leftmostCard.width / 2 + PICK_UP_DELTA_X;
         if ( medianReadoutPanel.left < 0 ) {
           medianReadoutPanel.left = 0;
         }
@@ -359,7 +361,7 @@ export default class CardNodeContainer extends Node {
     return ( position: Vector2 ) => {
       if ( cardNode.dragListener.isPressedProperty.value ) {
 
-        const originalCell = this.model.cardCells.indexOf( cardNode.cardModel );
+        const originalCell = cardNode.cardModel.cellPositionProperty.value;
 
         // Find the closest cell to the dragged card
         const dragCell = this.model.getClosestCell( position.x );
@@ -370,14 +372,14 @@ export default class CardNodeContainer extends Node {
                             dragCell < originalCell ? originalCell - 1 :
                             originalCell;
 
-        const currentOccupant = this.cardMap.get( this.model.cardCells[ closestCell ] )!;
+        const currentOccupant = this.cardMap.get( this.model.getActiveCards().find( card => card.cellPositionProperty.value === closestCell )! )!;
 
         // No-op if the dragged card is near its home cell
         if ( currentOccupant !== cardNode ) {
 
           // it's just a pairwise swap
-          this.model.cardCells[ closestCell ] = cardNode.cardModel;
-          this.model.cardCells[ originalCell ] = currentOccupant.cardModel;
+          cardNode.cardModel.cellPositionProperty.value = closestCell;
+          currentOccupant.cardModel.cellPositionProperty.value = originalCell;
 
           this.model.animateToHomeCell( currentOccupant.cardModel, 0.3 );
 
@@ -415,10 +417,10 @@ export default class CardNodeContainer extends Node {
    * The cards grow and then shrink back to normal size.
    */
   private animateCelebration1( callback: () => void, adjustCentering: boolean ): void {
+    const cardCells = this.model.getCardsInCellOrder();
+    const asyncCounter = new AsyncCounter( cardCells.length, callback );
 
-    const asyncCounter = new AsyncCounter( this.model.cardCells.length, callback );
-
-    this.model.cardCells.forEach( card => {
+    cardCells.forEach( card => {
       const cardNode = this.cardMap.get( card )!;
 
       const scaleProperty = new NumberProperty( 1 );
@@ -457,10 +459,10 @@ export default class CardNodeContainer extends Node {
    * The cards do one clockwise rotation.
    */
   private animateCelebration2( callback: () => void ): void {
+    const cardCells = this.model.getCardsInCellOrder();
+    const asyncCounter = new AsyncCounter( cardCells.length, callback );
 
-    const asyncCounter = new AsyncCounter( this.model.cardCells.length, callback );
-
-    this.model.cardCells.forEach( card => {
+    cardCells.forEach( card => {
       const cardNode = this.cardMap.get( card )!;
 
       const center = cardNode.center.copy();
@@ -489,9 +491,10 @@ export default class CardNodeContainer extends Node {
    * The cards do the "wave" from left to right.
    */
   private animateCelebration3( callback: () => void ): void {
-    const asyncCounter = new AsyncCounter( this.model.cardCells.length, callback );
+    const cardCells = this.model.getCardsInCellOrder();
+    const asyncCounter = new AsyncCounter( cardCells.length, callback );
 
-    this.model.cardCells.forEach( ( card, index ) => {
+    cardCells.forEach( ( card, index ) => {
       const cardNode = this.cardMap.get( card )!;
 
       const initialPositionY = cardNode.y;

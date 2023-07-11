@@ -22,6 +22,8 @@ import Easing from '../../../../twixt/js/Easing.js';
 import CardContainerModel from './CardContainerModel.js';
 import TEmitter from '../../../../axon/js/TEmitter.js';
 import Emitter from '../../../../axon/js/Emitter.js';
+import Property from '../../../../axon/js/Property.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 type CardModelOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'>;
@@ -31,6 +33,7 @@ export default class CardModel extends PhetioObject {
   public readonly soccerBall: SoccerBall;
   public readonly isActiveProperty: TReadOnlyProperty<boolean>;
   public readonly positionProperty: Vector2Property;
+  public readonly cellPositionProperty: Property<number>;
 
   // Track whether the card is being dragged, for purposes of hiding the drag indicator arrow when the user
   // has dragged a sufficient amount and to play sound effects for the dragged card
@@ -50,7 +53,7 @@ export default class CardModel extends PhetioObject {
     parameters: [ { valueType: 'number' } ]
   } );
 
-  public constructor( public readonly cardContainerModel: CardContainerModel, soccerBall: SoccerBall, position: Vector2, providedOptions: CardModelOptions ) {
+  public constructor( public readonly cardContainerModel: CardContainerModel, soccerBall: SoccerBall, position: Vector2, cellPosition: number, providedOptions: CardModelOptions ) {
 
     const options = optionize<CardModelOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioState: false
@@ -58,7 +61,9 @@ export default class CardModel extends PhetioObject {
 
     super( options );
 
-
+    this.cellPositionProperty = new NumberProperty( cellPosition, {
+      tandem: options.tandem.createTandem( 'cellPositionProperty' )
+    } );
     this.soccerBall = soccerBall;
     this.isActiveProperty = new DerivedProperty( [ soccerBall.soccerBallPhaseProperty ], phase =>
       phase === SoccerBallPhase.STACKED || phase === SoccerBallPhase.STACKING, {
