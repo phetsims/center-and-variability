@@ -10,7 +10,6 @@ import SoccerBall from '../../soccer-common/model/SoccerBall.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { SoccerBallPhase } from '../../soccer-common/model/SoccerBallPhase.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
@@ -23,7 +22,8 @@ import CardContainerModel from './CardContainerModel.js';
 import TEmitter from '../../../../axon/js/TEmitter.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import Property from '../../../../axon/js/Property.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import NullableIO from '../../../../tandem/js/types/NullableIO.js';
+import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 
 type SelfOptions = EmptySelfOptions;
 type CardModelOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'>;
@@ -33,7 +33,7 @@ export default class CardModel extends PhetioObject {
   public readonly soccerBall: SoccerBall;
   public readonly isActiveProperty: TReadOnlyProperty<boolean>;
   public readonly positionProperty: Vector2Property;
-  public readonly cellPositionProperty: Property<number>;
+  public readonly cellPositionProperty: Property<number | null>;
 
   // Track whether the card is being dragged, for purposes of hiding the drag indicator arrow when the user
   // has dragged a sufficient amount and to play sound effects for the dragged card
@@ -53,7 +53,7 @@ export default class CardModel extends PhetioObject {
     parameters: [ { valueType: 'number' } ]
   } );
 
-  public constructor( public readonly cardContainerModel: CardContainerModel, soccerBall: SoccerBall, position: Vector2, cellPosition: number, providedOptions: CardModelOptions ) {
+  public constructor( public readonly cardContainerModel: CardContainerModel, soccerBall: SoccerBall, position: Vector2, providedOptions: CardModelOptions ) {
 
     const options = optionize<CardModelOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioState: false
@@ -61,12 +61,13 @@ export default class CardModel extends PhetioObject {
 
     super( options );
 
-    this.cellPositionProperty = new NumberProperty( cellPosition, {
-      tandem: options.tandem.createTandem( 'cellPositionProperty' )
+    this.cellPositionProperty = new Property<number | null>( null, {
+      tandem: options.tandem.createTandem( 'cellPositionProperty' ),
+      phetioValueType: NullableIO( NumberIO )
     } );
     this.soccerBall = soccerBall;
-    this.isActiveProperty = new DerivedProperty( [ soccerBall.soccerBallPhaseProperty ], phase =>
-      phase === SoccerBallPhase.STACKED || phase === SoccerBallPhase.STACKING, {
+    this.isActiveProperty = new DerivedProperty( [ soccerBall.valueProperty ], value =>
+      value !== null, {
       tandem: options.tandem.createTandem( 'isActiveProperty' ),
       phetioValueType: BooleanIO
     } );

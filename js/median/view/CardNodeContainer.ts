@@ -361,7 +361,8 @@ export default class CardNodeContainer extends Node {
     return ( position: Vector2 ) => {
       if ( cardNode.dragListener.isPressedProperty.value ) {
 
-        const originalCell = cardNode.cardModel.cellPositionProperty.value;
+        assert && assert( cardNode.cardModel.cellPositionProperty.value !== null, 'The cardNode\'s cellPositionProperty cannot be null if it is being dragged.' );
+        const originalCell = cardNode.cardModel.cellPositionProperty.value!;
 
         // Find the closest cell to the dragged card
         const dragCell = this.model.getClosestCell( position.x );
@@ -372,7 +373,10 @@ export default class CardNodeContainer extends Node {
                             dragCell < originalCell ? originalCell - 1 :
                             originalCell;
 
-        const currentOccupant = this.cardMap.get( this.model.getActiveCards().find( card => card.cellPositionProperty.value === closestCell )! )!;
+        const closestCardModel = this.model.getCardsInCells().find( card => card.cellPositionProperty.value === closestCell );
+
+        assert && assert( closestCardModel, `closestCardModel is undefined. closestCell: ${closestCell}` );
+        const currentOccupant = this.cardMap.get( closestCardModel! )!;
 
         // No-op if the dragged card is near its home cell
         if ( currentOccupant !== cardNode ) {
