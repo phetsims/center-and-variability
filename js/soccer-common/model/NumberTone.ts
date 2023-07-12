@@ -60,43 +60,45 @@ soundManager.addSoundGenerator( meanSoundClip );
  * steps.
  */
 export const toStepDiscrete = ( value: number ): number => {
-  assert && assert( value >= 1 && value <= 18, `value ${value} is out of range` );
-  const step = value === 1 ? 0 : // C
-               value === 1.5 ? 1 : // C#
-               value === 2 ? 2 : // D
-               value === 2.5 ? 3 : // D#
-               value === 3 ? 4 : // E
-               value === 3.5 ? 4.5 : // FAKE
-               value === 4 ? 5 : // F
-               value === 4.5 ? 6 : // F#
-               value === 5 ? 7 : // G
-               value === 5.5 ? 8 : // G#
-               value === 6 ? 9 : // A
-               value === 6.5 ? 10 : // A#
-               value === 7 ? 11 : // B
-               value === 7.5 ? 11.5 : // FAKE
-               value === 8 ? 12 : // C
-               value === 8.5 ? 13 : // C#
-               value === 9 ? 14 : // D
-               value === 9.5 ? 15 : // D#
-               value === 10 ? 16 : // E
-               value === 10.5 ? 16.5 : // FAKE
-               value === 11 ? 17 : // F
-               value === 11.5 ? 18 : // F#
-               value === 12 ? 19 : // G
-               value === 12.5 ? 20 : // G#
-               value === 13 ? 21 : // A
-               value === 13.5 ? 22 : // A#
-               value === 14 ? 23 : // B
-               value === 14.5 ? 23.5 : // B
-               value === 15 ? 24 : // C
-               value === 15.5 ? 25 : // C#
-               value === 16 ? 26 : // D
-               value === 16.5 ? 27 : // D#
-               value === 17 ? 28 : // E
-               value === 17.5 ? 28.5 : // E
-               value === 18 ? 29 : // F
-               -1;
+  assert && assert( value >= 0 && value <= 18, `value ${value} is out of range` );
+  const step =
+    value === 0 ? 0 : // C
+    value === 0.5 ? 1 : // C#
+    value === 1 ? 2 : // D
+    value === 1.5 ? 3 : // D#
+    value === 2 ? 4 : // E
+    value === 2.5 ? 4.5 : // FAKE
+    value === 3 ? 5 : // F
+    value === 3.5 ? 6 : // F#
+    value === 4 ? 7 : // G
+    value === 4.5 ? 8 : // G#
+    value === 5 ? 9 : // A
+    value === 5.5 ? 10 : // A#
+    value === 6 ? 11 : // B
+    value === 6.5 ? 11.5 : // FAKE
+    value === 7 ? 12 : // C
+    value === 7.5 ? 13 : // C#
+    value === 8 ? 14 : // D
+    value === 8.5 ? 15 : // D#
+    value === 9 ? 16 : // E
+    value === 9.5 ? 16.5 : // FAKE
+    value === 10 ? 17 : // F
+    value === 10.5 ? 18 : // F#
+    value === 11 ? 19 : // G
+    value === 11.5 ? 20 : // G#
+    value === 12 ? 21 : // A
+    value === 12.5 ? 22 : // A#
+    value === 13 ? 23 : // B
+    value === 13.5 ? 23.5 : // B
+    value === 14 ? 24 : // C
+    value === 14.5 ? 25 : // C#
+    value === 15 ? 26 : // D
+    value === 15.5 ? 27 : // D#
+    value === 16 ? 28 : // E
+    value === 16.5 ? 28.5 : // E
+    value === 17 ? 29 : // F
+    -1;
+
   assert && assert( step >= 0, 'step must be greater than or equal to 0' );
   return step;
 };

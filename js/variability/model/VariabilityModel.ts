@@ -20,6 +20,7 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import CAVConstants, { MAX_KICKS_PROPERTY } from '../../common/CAVConstants.js';
 import { DistributionStrategy } from '../../soccer-common/model/TKickDistanceStrategy.js';
 import NumberTone from '../../soccer-common/model/NumberTone.js';
+import Utils from '../../../../dot/js/Utils.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityModelOptions = SelfOptions & CAVModelOptions;
@@ -31,7 +32,11 @@ export default class VariabilityModel extends CAVModel {
   public readonly isRangeVisibleProperty: Property<boolean>;
   public readonly isIQRVisibleProperty: Property<boolean>;
   public readonly isMADVisibleProperty: Property<boolean>;
+
   public readonly isPointerVisibleProperty: Property<boolean>;
+  public readonly pointerValueProperty: Property<number>;
+  public readonly isPointerKeyboardDraggingProperty: Property<boolean>;
+
   public readonly isIntervalToolVisibleProperty: Property<boolean>;
   public readonly intervalTool1ValueProperty: NumberProperty;
   public readonly intervalTool2ValueProperty: NumberProperty;
@@ -39,7 +44,7 @@ export default class VariabilityModel extends CAVModel {
   // The absolute value of the distance between the interval tool handles in meters. To work around inconsistent
   // intermediate values in the axon library, update this value once at the end of each step.
   // Used in sonification.
-  public readonly intervalToolDeltaStableProperty: NumberProperty;
+  public readonly intervalToolDeltaStableProperty: Property<number>;
 
   public readonly variabilityModelResetInProgressProperty = new BooleanProperty( false );
   public readonly resetEmitter = new Emitter();
@@ -84,9 +89,17 @@ export default class VariabilityModel extends CAVModel {
       tandem: options.tandem.createTandem( 'isMADVisibleProperty' )
     } );
 
+    const pointerTandem = options.tandem.createTandem( 'pointer' );
+
     this.isPointerVisibleProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isPointerVisibleProperty' )
+      tandem: pointerTandem.createTandem( 'isPointerVisibleProperty' )
     } );
+
+    this.pointerValueProperty = new NumberProperty( 5, {
+      tandem: pointerTandem.createTandem( 'pointerValueProperty' )
+    } );
+
+    this.isPointerKeyboardDraggingProperty = new BooleanProperty( false );
 
     const intervalToolTandem = options.tandem.createTandem( 'intervalTool' );
 
@@ -104,6 +117,17 @@ export default class VariabilityModel extends CAVModel {
     } );
 
     this.intervalToolDeltaStableProperty = new NumberProperty( Math.abs( this.intervalTool2ValueProperty.value - this.intervalTool1ValueProperty.value ), {} );
+
+    this.pointerValueProperty.lazyLink( ( value, oldValue ) => {
+      if ( this.isPointerKeyboardDraggingProperty.value ) {
+
+        // TODO: Make sure this is the value after the keyboard event, not before the keyboard event https://github.com/phetsims/center-and-variability/issues/302
+        NumberTone.playMean( value );
+      }
+      else if ( this.crossedCheckpoint( value, oldValue ) ) {
+        NumberTone.playMean( Utils.roundToInterval( value, 0.5 ) );
+      }
+    } );
   }
 
   public override step( dt: number ): void {

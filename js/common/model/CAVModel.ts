@@ -7,12 +7,6 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-
-// TODO: I think we'll want base class SoccerContextModel that CAV Model can extend from, see: https://github.com/phetsims/center-and-variability/issues/222
-// If not, then we will at least want a DragIndicatorModel that can be generalized.
-// The properties that we want: isDragIndicatorVisibleProperty, dragIndicatorValueProperty, objectNodesInputEnabledProperty
-// soccerBallHasBeenDraggedProperty.
-// The methods that we want: updateDragIndicator, reset
 import centerAndVariability from '../../centerAndVariability.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
@@ -135,6 +129,20 @@ export default class CAVModel extends PhetioObject {
       this.dragIndicatorModel.updateDragIndicator( this.selectedSceneModelProperty.value, this.dragIndicatorModel.soccerBallHasBeenDraggedProperty.value,
         selectedSceneStackedSoccerBallCountProperty.value, selectedSceneMaxKicksProperty.value );
     } );
+  }
+
+ // This function determines whether a value has crossed an integer or half-integer boundary, or lands exactly on an
+  // integer or half-integer. It's used to trigger sound effects when a value moves past these boundaries or hits them
+  // exactly. This is important for applications where the input method is discrete, such as keyboard input.
+  public crossedCheckpoint( value1: number, value2: number ): boolean {
+
+    // Check if both values are on opposite sides of an integer or land exactly on an integer
+    const integerCheck = Math.floor( value1 ) !== Math.floor( value2 ) || value1 === Math.floor( value1 ) || value2 === Math.floor( value2 );
+
+    // Check if both values are on opposite sides of a half integer or land exactly on a half integer
+    const halfIntegerCheck = Math.floor( value1 * 2 ) !== Math.floor( value2 * 2 ) || value1 * 2 === Math.floor( value1 * 2 ) || value2 * 2 === Math.floor( value2 * 2 );
+
+    return integerCheck || halfIntegerCheck;
   }
 
 
