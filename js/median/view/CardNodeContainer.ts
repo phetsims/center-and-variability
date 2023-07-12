@@ -416,7 +416,7 @@ export default class CardNodeContainer extends Node {
   /**
    * The cards grow and then shrink back to normal size.
    */
-  private animateCelebration1( callback: () => void, adjustCentering: boolean ): void {
+  private animateCelebration1( callback: () => void, animateFromCenter: boolean ): void {
     const cardCells = this.model.getCardsInCellOrder();
     const asyncCounter = new AsyncCounter( cardCells.length, callback );
 
@@ -427,22 +427,22 @@ export default class CardNodeContainer extends Node {
       scaleProperty.lazyLink( ( scale, oldScale ) => {
         const center = cardNode.center.copy();
         cardNode.setScaleMagnitude( scale );
-        if ( adjustCentering ) {
+        if ( animateFromCenter ) {
           cardNode.center = center;
         }
       } );
 
       const scaleUpAnimation = new Animation( {
-        duration: adjustCentering ? 0.2 : 0.15,
+        duration: animateFromCenter ? 0.2 : 0.15,
         targets: [ {
           property: scaleProperty,
-          to: adjustCentering ? 1.2 : 1.15,
+          to: animateFromCenter ? 1.2 : 1.15,
           easing: Easing.QUADRATIC_IN_OUT
         } ]
       } );
 
       const scaleDownAnimation = new Animation( {
-        duration: adjustCentering ? 0.2 : 0.15,
+        duration: animateFromCenter ? 0.2 : 0.15,
         targets: [ {
           property: scaleProperty,
           to: 1,
