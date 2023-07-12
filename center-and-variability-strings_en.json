@@ -172,5 +172,8 @@
   },
   "kicksPattern": {
     "value": "{{value}} Kicks"
+  },
+  "pointer": {
+    "value": "Pointer"
   }
 }

@@ -134,7 +134,7 @@ export default class PlayAreaCheckboxFactory {
     };
   }
 
-  private static createPredictionItem( property: Property<boolean>, stringProperty: PhetioProperty<string>, color: TColor, spacing: number,
+  private static createPredictionItem( property: Property<boolean>, stringProperty: PhetioProperty<string>, color: TColor,
                                        tandemName: string, alignGroup: AlignGroup ): VerticalCheckboxGroupItem {
     return {
       createNode: ( tandem: Tandem ) => {
@@ -153,7 +153,6 @@ export default class PlayAreaCheckboxFactory {
       model.isMedianPredictionVisibleProperty,
       CenterAndVariabilityStrings.predictMedianStringProperty,
       CAVColors.medianColorProperty,
-      8,
       'predictMedianCheckbox',
       alignGroup
     );
@@ -164,8 +163,17 @@ export default class PlayAreaCheckboxFactory {
       model.isMeanPredictionVisibleProperty,
       CenterAndVariabilityStrings.predictMeanStringProperty,
       CAVColors.meanColorProperty,
-      20.3,
       'predictMeanCheckbox',
+      alignGroup
+    );
+  }
+
+  public static getPointerCheckboxItem( alignGroup: AlignGroup, model: VariabilityModel ): VerticalCheckboxGroupItem {
+    return PlayAreaCheckboxFactory.createPredictionItem(
+      model.isPointerVisibleProperty,
+      CenterAndVariabilityStrings.pointerStringProperty,
+      CAVColors.pointerColorProperty,
+      'pointerCheckbox',
       alignGroup
     );
   }

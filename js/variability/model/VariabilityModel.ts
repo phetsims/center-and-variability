@@ -31,7 +31,8 @@ export default class VariabilityModel extends CAVModel {
   public readonly isRangeVisibleProperty: Property<boolean>;
   public readonly isIQRVisibleProperty: Property<boolean>;
   public readonly isMADVisibleProperty: Property<boolean>;
-  public readonly isIntervalToolVisibleProperty: BooleanProperty;
+  public readonly isPointerVisibleProperty: Property<boolean>;
+  public readonly isIntervalToolVisibleProperty: Property<boolean>;
   public readonly intervalTool1ValueProperty: NumberProperty;
   public readonly intervalTool2ValueProperty: NumberProperty;
 
@@ -81,6 +82,10 @@ export default class VariabilityModel extends CAVModel {
 
     this.isMADVisibleProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isMADVisibleProperty' )
+    } );
+
+    this.isPointerVisibleProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isPointerVisibleProperty' )
     } );
 
     const intervalToolTandem = options.tandem.createTandem( 'intervalTool' );

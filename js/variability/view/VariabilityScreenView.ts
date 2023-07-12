@@ -228,6 +228,7 @@ export default class VariabilityScreenView extends CAVScreenView {
       new VerticalCheckboxGroup( [
         PlayAreaCheckboxFactory.getMedianCheckboxItem( iconGroup, model ),
         PlayAreaCheckboxFactory.getMeanCheckboxItem( iconGroup, model ),
+        PlayAreaCheckboxFactory.getPointerCheckboxItem( iconGroup, model ),
         PlayAreaCheckboxFactory.getIntervalToolCheckboxItem( iconGroup, model )
       ], {
         tandem: this.tandem.createTandem( 'bottomCheckboxGroup' )

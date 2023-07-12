@@ -71,6 +71,7 @@ type StringsType = {
   'outliersStringProperty': LocalizedStringProperty;
   'outliersDescriptionStringProperty': LocalizedStringProperty;
   'kicksPatternStringProperty': LocalizedStringProperty;
+  'pointerStringProperty': LocalizedStringProperty;
 };
 
 const CenterAndVariabilityStrings = getStringModule( 'CENTER_AND_VARIABILITY' ) as StringsType;
