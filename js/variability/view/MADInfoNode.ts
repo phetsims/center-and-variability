@@ -13,7 +13,6 @@ import CAVConstants from '../../common/CAVConstants.js';
 import MADNode from './MADNode.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 import { PLOT_NODE_TOP_MARGIN } from '../../common/view/CAVPlotNode.js';
 import InfoTitleDescriptionRichText from '../../common/view/InfoTitleDescriptionRichText.js';
@@ -29,8 +28,6 @@ export default class MADInfoNode extends VBox {
 
     const resultNumeratorText = new Text( '', { fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE } );
     const resultDenominatorText = new Text( '', { fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE } );
-
-    const footnoteVisibleProperty = new BooleanProperty( false );
 
     sceneModel.objectChangedEmitter.addListener( () => {
 
@@ -89,16 +86,6 @@ export default class MADInfoNode extends VBox {
           visibleProperty: hasEnoughDataProperty,
           maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
           layoutOptions: { topMargin: 5 }
-        } ),
-
-        new HBox( {
-          visibleProperty: footnoteVisibleProperty,
-          children: [
-            new Text( '*', { fontSize: 14 } ),
-            new Text( CenterAndVariabilityStrings.valuesMayNotMatchDueToRoundingErrorsStringProperty, {
-              fontSize: 12
-            } )
-          ]
         } ),
 
         new MADNode( model, sceneModel, playAreaNumberLineNode, {

@@ -16,7 +16,6 @@ type StringsType = {
     'medianStringProperty': LocalizedStringProperty;
     'meanAndMedianStringProperty': LocalizedStringProperty;
     'variabilityStringProperty': LocalizedStringProperty;
-    'labStringProperty': LocalizedStringProperty;
   };
   'medianQuestionStringProperty': LocalizedStringProperty;
   'meanAndMedianQuestionStringProperty': LocalizedStringProperty;
@@ -71,7 +70,6 @@ type StringsType = {
   'maxKicksDescriptionStringProperty': LocalizedStringProperty;
   'outliersStringProperty': LocalizedStringProperty;
   'outliersDescriptionStringProperty': LocalizedStringProperty;
-  'valuesMayNotMatchDueToRoundingErrorsStringProperty': LocalizedStringProperty;
   'kicksPatternStringProperty': LocalizedStringProperty;
 };
 
