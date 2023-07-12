@@ -1,7 +1,7 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * Minimal model element for each CardNode, in order to support PhET-iO State.
+ * Contains logic for the position, cellPosition, and active status of a CardNode.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
@@ -33,6 +33,8 @@ export default class CardModel extends PhetioObject {
   public readonly soccerBall: SoccerBall;
   public readonly isActiveProperty: TReadOnlyProperty<boolean>;
   public readonly positionProperty: Vector2Property;
+
+  // Where the card is in the line-up. If a card is not active it's cellPosition will be null.
   public readonly cellPositionProperty: Property<number | null>;
 
   // Track whether the card is being dragged, for purposes of hiding the drag indicator arrow when the user
@@ -65,7 +67,9 @@ export default class CardModel extends PhetioObject {
       tandem: options.tandem.createTandem( 'cellPositionProperty' ),
       phetioValueType: NullableIO( NumberIO )
     } );
+
     this.soccerBall = soccerBall;
+
     this.isActiveProperty = new DerivedProperty( [ soccerBall.valueProperty ], value =>
       value !== null, {
       tandem: options.tandem.createTandem( 'isActiveProperty' ),
