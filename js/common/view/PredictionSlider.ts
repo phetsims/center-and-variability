@@ -24,6 +24,8 @@ type SelfOptions = {
 
   // Round to the nearest specified number, or, if null, there is no rounding. Mean is continuous, median is rounded to 0.5
   roundToInterval: number | null;
+
+  isIntervalToolHandle?: boolean;
 };
 type ParentOptions = AccessibleSliderOptions & NodeOptions;
 export type PredictionSliderOptions = SelfOptions & WithRequired<ParentOptions, 'tandem'>;
@@ -36,6 +38,8 @@ export default class PredictionSlider extends AccessibleSlider( Node, 0 ) {
     const thumbNode = new PredictionThumbNode( providedOptions.predictionThumbNodeOptions );
 
     const options = optionize<PredictionSliderOptions, SelfOptions, ParentOptions>()( {
+      isIntervalToolHandle: false,
+
       children: [ thumbNode ],
       cursor: 'pointer',
 
@@ -83,7 +87,11 @@ export default class PredictionSlider extends AccessibleSlider( Node, 0 ) {
       positionProperty: dragPositionProperty,
       start: () => {
         isMouseTouchDraggingProperty.value = true;
-        this.moveToFront();
+
+        // The interval tool handle should never move in front of the pointer.
+        if ( !options.isIntervalToolHandle ) {
+          this.moveToFront();
+        }
       },
       end: () => {
         isMouseTouchDraggingProperty.value = false;

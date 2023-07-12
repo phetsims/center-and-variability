@@ -105,12 +105,14 @@ export default class VariabilityScreenView extends CAVScreenView {
 
     const handle1 = new PredictionSlider( model.intervalTool1ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE,
       isIntervalHandle1BeingDraggedProperty, new BooleanProperty( false ), combineOptions<PredictionSliderOptions>( {
+        isIntervalToolHandle: true,
         valueProperty: model.intervalTool1ValueProperty,
         tandem: toolHandle1Tandem
       }, createPredictionSliderOptions( toolHandle1Tandem ) ) );
 
     const handle2 = new PredictionSlider( model.intervalTool2ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE,
       isIntervalHandle2BeingDraggedProperty, new BooleanProperty( false ), combineOptions<PredictionSliderOptions>( {
+        isIntervalToolHandle: true,
         valueProperty: model.intervalTool2ValueProperty,
         tandem: toolHandle2Tandem
       }, createPredictionSliderOptions( toolHandle2Tandem ) ) );
@@ -136,10 +138,13 @@ export default class VariabilityScreenView extends CAVScreenView {
       } );
 
     // Add play area tools to scene graph
-    this.backScreenViewLayer.addChild( pointerSlier );
     this.backScreenViewLayer.addChild( handle1 );
     this.backScreenViewLayer.addChild( handle2 );
     this.intervalToolLayer.addChild( intervalToolNode );
+
+    // pointer should always be in front of the interval tool so must be added after.
+    this.backScreenViewLayer.addChild( pointerSlier );
+
 
     // Prevent multitouch on the handles when the main interval tool is being dragged, see https://github.com/phetsims/center-and-variability/issues/225
     isIntervalAreaBeingDraggedProperty.link( isIntervalAreaBeingDragged => {
