@@ -2,7 +2,7 @@
 
 /**
  * Model for the cardContainerNode. Creates card models, tracks their position and order in the accordionBox and infoDialog,
- * handles animation and cardMovementSounds.
+ * handles step animation and cardMovementSounds.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
  *
@@ -152,7 +152,7 @@ export default class CardContainerModel extends PhetioObject {
           if ( median.isSortingDataProperty.value || options.parentContext === 'info' ) {
 
             const newValue = card.soccerBall.valueProperty.value!;
-            const existingLowerCards = cardCells.filter( card => card.soccerBall.valueProperty.value! < newValue );
+            const existingLowerCards = cardCells.filter( card => card.soccerBall.valueProperty.value! <= newValue );
 
             const lowerNeighborCard = _.maxBy( existingLowerCards, card => cardCells.indexOf( card ) );
 
@@ -330,6 +330,10 @@ export default class CardContainerModel extends PhetioObject {
   public getActiveCards(): CardModel[] {
     return this.cards.filter( card => card.isActiveProperty.value );
   }
+
+  /**
+   * To be in a cell a card must both be active and have an assigned cellPosition
+   */
   public getCardsInCells(): CardModel[] {
     return this.getActiveCards().filter( card => card.cellPositionProperty.value !== null );
   }
