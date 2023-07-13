@@ -89,7 +89,7 @@ export default class PredictionSlider extends AccessibleSlider( Node, 0 ) {
         isMouseTouchDraggingProperty.value = true;
 
         // The interval tool handle should never move in front of the pointer.
-        if ( !options.isIntervalToolHandle ) {
+        if ( options.isIntervalToolHandle ) {
           this.moveToFront();
         }
       },

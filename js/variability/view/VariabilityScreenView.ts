@@ -14,7 +14,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import CAVColors from '../../common/CAVColors.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import { AlignGroup, ManualConstraint } from '../../../../scenery/js/imports.js';
+import { AlignGroup, ManualConstraint, Node } from '../../../../scenery/js/imports.js';
 import SceneRadioButtonGroup from './SceneRadioButtonGroup.js';
 import VariabilityMeasureRadioButtonGroup from './VariabilityMeasureRadioButtonGroup.js';
 import CAVScreenView, { CAVScreenViewOptions } from '../../common/view/CAVScreenView.js';
@@ -67,10 +67,10 @@ export default class VariabilityScreenView extends CAVScreenView {
 
     const pointerSlider = new PredictionSlider( model.pointerValueProperty, this.modelViewTransform,
       CAVConstants.VARIABILITY_DRAG_RANGE, new BooleanProperty( false ), model.isPointerKeyboardDraggingProperty, {
-      predictionThumbNodeOptions: {
-        color: CAVColors.pointerColorProperty,
-        style: 'arrow'
-      },
+        predictionThumbNodeOptions: {
+          color: CAVColors.pointerColorProperty,
+          style: 'arrow'
+        },
         valueProperty: model.pointerValueProperty,
         enabledRangeProperty: new Property<Range>( CAVConstants.VARIABILITY_DRAG_RANGE ),
         roundToInterval: null, // continuous
@@ -137,9 +137,10 @@ export default class VariabilityScreenView extends CAVScreenView {
         tandem: intervalToolNodeTandem
       } );
 
+    const intervalToolHandleContainer = new Node( { children: [ handle1, handle2 ] } );
+
     // Add play area tools to scene graph
-    this.backScreenViewLayer.addChild( handle1 );
-    this.backScreenViewLayer.addChild( handle2 );
+    this.backScreenViewLayer.addChild( intervalToolHandleContainer );
     this.intervalToolLayer.addChild( intervalToolNode );
 
     // pointer should always be in front of the interval tool so must be added after.
