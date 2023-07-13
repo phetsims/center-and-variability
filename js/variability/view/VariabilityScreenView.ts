@@ -65,7 +65,7 @@ export default class VariabilityScreenView extends CAVScreenView {
 
     super( model, options );
 
-    const pointerSlier = new PredictionSlider( model.pointerValueProperty, this.modelViewTransform,
+    const pointerSlider = new PredictionSlider( model.pointerValueProperty, this.modelViewTransform,
       CAVConstants.VARIABILITY_DRAG_RANGE, new BooleanProperty( false ), model.isPointerKeyboardDraggingProperty, {
       predictionThumbNodeOptions: {
         color: CAVColors.pointerColorProperty,
@@ -143,7 +143,7 @@ export default class VariabilityScreenView extends CAVScreenView {
     this.intervalToolLayer.addChild( intervalToolNode );
 
     // pointer should always be in front of the interval tool so must be added after.
-    this.backScreenViewLayer.addChild( pointerSlier );
+    this.backScreenViewLayer.addChild( pointerSlider );
 
 
     // Prevent multitouch on the handles when the main interval tool is being dragged, see https://github.com/phetsims/center-and-variability/issues/225
