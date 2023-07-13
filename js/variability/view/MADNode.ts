@@ -98,6 +98,15 @@ export default class MADNode extends CAVPlotNode {
 
     this.addChild( madAnnotationContainer );
 
+    const meanLabelLine = new Line( 0, 0, 0, 25, {
+      stroke: CAVColors.meanColorProperty,
+      lineWidth: 1
+    } );
+
+    if ( options.parentContext === 'info' ) {
+      this.addChild( meanLabelLine );
+    }
+
     const update = () => {
 
       const children: Node[] = [];
@@ -204,10 +213,20 @@ export default class MADNode extends CAVPlotNode {
       madAnnotationContainer.visible = ( options.parentContext === 'info' || model.isMADVisibleProperty.value ) && mad !== null && soccerBalls.length > 1;
 
       meanLine.visible = sceneModel.meanValueProperty.value !== null;
+
       if ( meanLine.visible ) {
         meanLine.centerX = this.modelViewTransform.modelToViewX( sceneModel.meanValueProperty.value! );
         meanLine.setY2( madRectangle.rectHeight );
         meanLine.bottom = this.modelViewTransform.modelToViewY( 0 );
+      }
+
+      if ( options.parentContext === 'info' ) {
+        meanLabelLine.visible = sceneModel.meanValueProperty.value !== null;
+
+        if ( meanLabelLine.visible ) {
+          meanLabelLine.centerX = this.modelViewTransform.modelToViewX( sceneModel.meanValueProperty.value! );
+          meanLabelLine.bottom = madRectangle.top + CAVConstants.VARIABILITY_PLOT_BAR_OFFSET_Y;
+        }
       }
 
       const meanReadoutTextVisible = sceneModel.numberOfDataPointsProperty.value > 0 && options.parentContext === 'info';
