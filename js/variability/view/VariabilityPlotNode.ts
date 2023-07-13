@@ -64,7 +64,7 @@ export default class VariabilityPlotNode extends Node {
     this.toggleNode = toggleNode;
 
     const intervalToolNode = new IntervalToolNode( model.intervalTool1ValueProperty,
-      model.intervalTool2ValueProperty, toggleNode.nodes[ 0 ].modelViewTransform, new Property( 0 ),
+      model.intervalTool2ValueProperty, toggleNode.nodes[ 0 ].modelViewTransform, new Property( -30 ),
       new BooleanProperty( false ), {
         focusable: false,
         visibleProperty: model.isIntervalToolVisibleProperty,
