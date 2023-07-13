@@ -174,9 +174,9 @@ export default class IQRNode extends CAVPlotNode {
         ARROW_LABEL_TEXT_OFFSET_DEFAULT
       ];
 
-      const quartileLabelsStacked = Math.abs( q1LabelNode.x - q3LabelNode.x ) < widthTolerance;
+      const quartileLabelsOverlap = Math.abs( q1LabelNode.x - q3LabelNode.x ) < widthTolerance;
 
-      if ( quartileLabelsStacked ) {
+      if ( quartileLabelsOverlap ) {
         elementsToCheck.splice( 2, 0, medianArrowNode );
         verticalOffsets.push( ARROW_LABEL_TEXT_OFFSET_DEFAULT );
 
@@ -192,7 +192,7 @@ export default class IQRNode extends CAVPlotNode {
       }
 
       const elementsToResolve = [ minLabelTextNode, q1LabelTextNode, q3LabelTextNode, maxLabelTextNode ];
-      if ( quartileLabelsStacked ) {
+      if ( quartileLabelsOverlap ) {
         elementsToResolve.splice( 2, 0, medianArrowNode );
 
         //offset the median arrow additionally since it has a different anchor point than the text labels
@@ -204,6 +204,15 @@ export default class IQRNode extends CAVPlotNode {
 
       for ( let i = 0; i < elementsToResolve.length; i++ ) {
         elementsToResolve[ i ].y = verticalOffsets[ i ];
+      }
+
+      const q1OverlapsMin = Math.abs( q1LabelNode.x - minLabelNode.x ) < widthTolerance;
+
+      // if q1 is in the same place as the min but the quartiles don't overlap, put the quartile labels on the same level
+      if ( q1OverlapsMin && !quartileLabelsOverlap ) {
+        const q1LabelY = q1LabelTextNode.y;
+        q1LabelTextNode.y = minLabelTextNode.y;
+        minLabelTextNode.y = q1LabelY;
       }
     };
 
