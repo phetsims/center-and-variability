@@ -14,7 +14,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import CAVColors from '../../common/CAVColors.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import { AlignGroup, ManualConstraint, Node } from '../../../../scenery/js/imports.js';
+import { AlignGroup, ManualConstraint } from '../../../../scenery/js/imports.js';
 import SceneRadioButtonGroup from './SceneRadioButtonGroup.js';
 import VariabilityMeasureRadioButtonGroup from './VariabilityMeasureRadioButtonGroup.js';
 import CAVScreenView, { CAVScreenViewOptions } from '../../common/view/CAVScreenView.js';
@@ -137,10 +137,11 @@ export default class VariabilityScreenView extends CAVScreenView {
         tandem: intervalToolNodeTandem
       } );
 
-    const intervalToolHandleContainer = new Node( { children: [ handle1, handle2 ] } );
+    // const intervalToolHandleContainer = new Node( { children: [ handle1, handle2 ] } );
 
     // Add play area tools to scene graph
-    this.backScreenViewLayer.addChild( intervalToolHandleContainer );
+    this.backScreenViewLayer.addChild( handle1 );
+    this.backScreenViewLayer.addChild( handle2 );
     this.intervalToolLayer.addChild( intervalToolNode );
 
     // pointer should always be in front of the interval tool so must be added after.
