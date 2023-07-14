@@ -151,6 +151,8 @@ export default class VariabilityModel extends CAVModel {
     this.intervalTool2ValueProperty.reset();
     this.intervalToolDeltaStableProperty.reset();
 
+    this.isPointerVisibleProperty.reset();
+
     this.resetEmitter.emit();
 
     this.variabilityModelResetInProgressProperty.value = false;
