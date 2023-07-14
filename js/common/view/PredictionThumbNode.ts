@@ -29,7 +29,8 @@ export default class PredictionThumbNode extends Node {
 
   public constructor( providedOptions: PredictionThumbNodeOptions ) {
 
-    const shadedSphereNode = new ShadedSphereNode( 16, {
+    const sphereDiameter = 16;
+    const shadedSphereNode = new ShadedSphereNode( sphereDiameter, {
       mainColor: providedOptions.color,
       stroke: SoccerCommonColors.arrowStrokeProperty,
       lineWidth: CAVConstants.ARROW_LINE_WIDTH
@@ -57,7 +58,7 @@ export default class PredictionThumbNode extends Node {
       } ) :
 
         // Lines for the Interval Tool Node in the Variability screen
-      new Line( 0, 0, 0, -50, {
+      new Line( 0, -0.5 * sphereDiameter, 0, -50, {
         stroke: CAVColors.playAreaIntervalToolHandleLineStrokeProperty,
         lineWidth: 1
       } );
