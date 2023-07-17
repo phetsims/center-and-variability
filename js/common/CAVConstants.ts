@@ -107,7 +107,8 @@ const CAVConstants = {
 
 export const MAX_KICKS_PROPERTY = new NumberProperty( CAVQueryParameters.maxKicks, {
   validValues: MAX_KICKS_CONFIG.map( config => config.kicks ),
-  tandem: Tandem.PREFERENCES.createTandem( 'maxKicksProperty' )
+  tandem: Tandem.PREFERENCES.createTandem( 'maxKicksProperty' ),
+  phetioDocumentation: 'This property is a global property that affects all screens. However, the Median screen is restricted to a maximum of 15 kicks.'
 } );
 
 export const SHOW_OUTLIERS_PROPERTY = new BooleanProperty( false, {
