@@ -135,8 +135,6 @@ export default class VariabilityScreenView extends CAVScreenView {
         tandem: intervalToolNodeTandem
       } );
 
-    // const intervalToolHandleContainer = new Node( { children: [ handle1, handle2 ] } );
-
     // Add play area tools to scene graph
     this.backScreenViewLayer.addChild( handle1 );
     this.backScreenViewLayer.addChild( handle2 );
