@@ -39,8 +39,17 @@ export default class RangeInfoNode extends VBox {
           maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
           layoutOptions: { topMargin: 5 }
         } ),
+
+
         new Text( new PatternStringProperty( CenterAndVariabilityStrings.rangeCalculationResultPatternStringProperty, {
-          range: sceneModel.rangeValueProperty
+          range: sceneModel.rangeValueProperty,
+
+          // Show "1 meter" but "1.5 meters"
+          units: new DerivedProperty( [
+            sceneModel.rangeValueProperty,
+            CenterAndVariabilityStrings.meterStringProperty,
+            CenterAndVariabilityStrings.metersStringProperty
+          ], rangeValue => rangeValue === 1 ? CenterAndVariabilityStrings.meterStringProperty.value : CenterAndVariabilityStrings.metersStringProperty.value )
         }, {
           maps: {
             range: CAVConstants.STRING_VALUE_NULL_MAP

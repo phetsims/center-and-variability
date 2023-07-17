@@ -45,7 +45,7 @@
     "value": "Median = {{value}} m"
   },
   "medianEqualsValueMetersPattern": {
-    "value": "Median = {{value}} meters"
+    "value": "Median = {{value}} {{units}}"
   },
   "iqrEqualsValueMPattern": {
     "value": "IQR = {{value}} m"
@@ -156,7 +156,7 @@
     "value": "Range = {{max}} – {{min}}"
   },
   "rangeCalculationResultPattern": {
-    "value": "Range = {{range}} meters"
+    "value": "Range = {{range}} {{units}}"
   },
   "needAtLeastOneKick": {
     "value": "Need at least one kick"
