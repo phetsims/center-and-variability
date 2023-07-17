@@ -64,6 +64,7 @@ export default class CardModel extends PhetioObject {
     super( options );
 
     this.cellPositionProperty = new Property<number | null>( null, {
+      phetioReadOnly: true,
       tandem: options.tandem.createTandem( 'cellPositionProperty' ),
       phetioValueType: NullableIO( NumberIO )
     } );
