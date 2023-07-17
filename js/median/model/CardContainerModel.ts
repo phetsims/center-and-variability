@@ -98,11 +98,7 @@ export default class CardContainerModel extends PhetioObject {
     this.parentContext = options.parentContext;
 
     // Accumulated card drag distance, for purposes of hiding the drag indicator node
-    this.totalDragDistanceProperty = new NumberProperty( 0, {
-      tandem: options.tandem.createTandem( 'totalDragDistanceProperty' ),
-      phetioReadOnly: true,
-      phetioDocumentation: 'For PhET-iO internal use only. Accumulated card drag distance, for purposes of hiding the drag indicator node'
-    } );
+    this.totalDragDistanceProperty = new NumberProperty( 0 );
 
     this.hasDraggedCardProperty = new DerivedProperty( [ this.totalDragDistanceProperty ], totalDragDistance => {
       return totalDragDistance > 15;
