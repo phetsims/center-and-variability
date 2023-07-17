@@ -18,11 +18,11 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import { PLOT_NODE_TOP_MARGIN } from '../../common/view/CAVPlotNode.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import InfoValuesNode from '../../common/view/InfoValuesNode.js';
-import MeanAndMedianModel from '../../mean-and-median/model/MeanAndMedianModel.js';
+import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import InfoTitleDescriptionRichText from '../../common/view/InfoTitleDescriptionRichText.js';
-import MeanAndMedianInfoPlotNode from '../../mean-and-median/view/MeanAndMedianInfoPlotNode.js';
+import MeanAndMedianInfoPlotNode from './MeanAndMedianInfoPlotNode.js';
 
 export default class MeanAndMedianInfoNode extends VBox {
   public constructor( model: MeanAndMedianModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
