@@ -59,6 +59,8 @@ type StringsType = {
   'dataValuesStringProperty': LocalizedStringProperty;
   'iqrCalculationPattern1StringProperty': LocalizedStringProperty;
   'iqrCalculationPattern2StringProperty': LocalizedStringProperty;
+  'metersStringProperty': LocalizedStringProperty;
+  'meterStringProperty': LocalizedStringProperty;
   'madDescriptionStringProperty': LocalizedStringProperty;
   'madEqualsStringProperty': LocalizedStringProperty;
   'madCalculationResultPatternStringProperty': LocalizedStringProperty;

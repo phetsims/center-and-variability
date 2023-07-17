@@ -46,7 +46,14 @@ export default class IQRInfoNode extends VBox {
         } ),
 
         new Text( new PatternStringProperty( CenterAndVariabilityStrings.iqrCalculationPattern2StringProperty, {
-          iqr: sceneModel.iqrValueProperty
+          iqr: sceneModel.iqrValueProperty,
+
+          // Show "1 meter" but "1.5 meters"
+          units: new DerivedProperty( [
+            sceneModel.iqrValueProperty,
+            CenterAndVariabilityStrings.meterStringProperty,
+            CenterAndVariabilityStrings.metersStringProperty
+          ], iqrValue => iqrValue === 1 ? CenterAndVariabilityStrings.meterStringProperty.value : CenterAndVariabilityStrings.metersStringProperty.value )
         }, {
           maps: {
             iqr: CAVConstants.STRING_VALUE_NULL_MAP
