@@ -69,8 +69,10 @@ export default class InfoValuesNode<T extends CAVSoccerBall> extends Node {
 
   private updateArrowNode(): void {
     if ( this.medianTextNodes.length > 0 ) {
-      const arrowPosition = this.dataValuesMedianArrow.globalToLocalPoint( new Vector2( _.mean( this.medianTextNodes.map( textNode =>
-        textNode.globalBounds.x + 0.5 * textNode.globalBounds.width ) ), this.medianTextNodes[ 0 ].globalBounds.y ) );
+      const arrowPosition = this.dataValuesMedianArrow.globalToLocalPoint( new Vector2(
+        _.mean( this.medianTextNodes.map( textNode => textNode.globalBounds.centerX ) ),
+        this.medianTextNodes[ 0 ].globalBounds.y )
+      );
       this.dataValuesMedianArrow.setTail( arrowPosition.x, this.dataValuesMedianArrow.tailY );
       this.dataValuesMedianArrow.setTip( arrowPosition.x, this.dataValuesMedianArrow.tipY );
     }
