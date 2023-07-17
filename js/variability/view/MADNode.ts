@@ -49,6 +49,10 @@ export default class MADNode extends CAVPlotNode {
       stroke: CAVColors.meanColorProperty,
       lineWidth: 1
     } );
+    const meanLabelLine = new Line( 0, 0, 0, 25, {
+      stroke: CAVColors.meanColorProperty,
+      lineWidth: 1
+    } );
 
     const meanEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.meanEqualsValueMPatternStringProperty,
       { value: sceneModel.meanValueProperty }, {
@@ -81,8 +85,6 @@ export default class MADNode extends CAVPlotNode {
       font: CAVConstants.VARIABILITY_MEASURE_NUMBER_READOUT_FONT
     } );
 
-    this.addChild( meanLine );
-
     const lineContainer = new Node();
     this.addChild( madRectangle );
     madRectangle.moveToBack();
@@ -98,11 +100,7 @@ export default class MADNode extends CAVPlotNode {
 
     this.addChild( madAnnotationContainer );
 
-    const meanLabelLine = new Line( 0, 0, 0, 25, {
-      stroke: CAVColors.meanColorProperty,
-      lineWidth: 1
-    } );
-
+    this.addChild( meanLine );
     if ( options.parentContext === 'info' ) {
       this.addChild( meanLabelLine );
     }
@@ -225,7 +223,8 @@ export default class MADNode extends CAVPlotNode {
 
         if ( meanLabelLine.visible ) {
           meanLabelLine.centerX = this.modelViewTransform.modelToViewX( sceneModel.meanValueProperty.value! );
-          meanLabelLine.bottom = madRectangle.top + CAVConstants.VARIABILITY_PLOT_BAR_OFFSET_Y;
+          const offsetY = sceneModel.numberOfDataPointsProperty.value === 1 ? 0 : CAVConstants.VARIABILITY_PLOT_BAR_OFFSET_Y;
+          meanLabelLine.bottom = madRectangle.top + offsetY;
         }
       }
 
