@@ -19,6 +19,11 @@ export default class AsyncCounter {
     this.complete = false;
     this.count = count;
     this.callback = callback;
+
+    if ( count === 0 ) {
+      this.complete = true;
+      this.callback();
+    }
   }
 
   public increment(): void {
