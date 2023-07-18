@@ -187,7 +187,6 @@ export default class CardContainerModel extends PhetioObject {
         }
         else if ( !isActive ) {
           removeCardCell( card );
-          this.cardDragRangeProperty.value.max = this.getCardsInCells().length;
         }
       } );
 
