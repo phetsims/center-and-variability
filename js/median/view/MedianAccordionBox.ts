@@ -14,9 +14,10 @@ import AccordionBoxTitleNode from '../../common/view/AccordionBoxTitleNode.js';
 import CAVColors from '../../common/CAVColors.js';
 import CAVInfoButton from '../../common/view/CAVInfoButton.js';
 import { AlignBox } from '../../../../scenery/js/imports.js';
+import ButtonNode from '../../../../sun/js/buttons/ButtonNode.js';
 
 export default class MedianAccordionBox extends CAVAccordionBox {
-  private readonly cardNodeContainer: CardNodeContainer;
+  public readonly infoButton: ButtonNode;
 
   public constructor( model: MedianModel, layoutBounds: Bounds2, tandem: Tandem, top: number ) {
 
@@ -62,13 +63,8 @@ export default class MedianAccordionBox extends CAVAccordionBox {
       fill: CAVColors.meanAndMedianAccordionBoxFillProperty
     } );
 
-    this.cardNodeContainer = cardNodeContainer;
-
-    this.pdomOrder = [
-      this.cardNodeContainer,
-      checkboxGroup,
-      infoButton
-    ];
+    // for pdom order
+    this.infoButton = infoButton;
   }
 }
 

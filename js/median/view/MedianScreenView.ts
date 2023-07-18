@@ -56,11 +56,13 @@ export default class MedianScreenView extends CAVScreenView {
       tandem: this.tandem.createTandem( 'bottomCheckboxGroup' )
     } ), this.tandem );
 
-    this.backScreenViewLayer.addChild( CAVScreenView.createMedianPredictionNode(
+    const medianPredictionNode = CAVScreenView.createMedianPredictionNode(
       model,
       this.modelViewTransform,
       options.tandem.createTandem( 'medianPredictionNode' )
-    ) );
+    );
+
+    this.backScreenViewLayer.addChild( medianPredictionNode );
 
     const infoDialog = new MedianInfoDialog( model, model.sceneModels[ 0 ], this.playAreaNumberLineNode, {
       tandem: options.tandem.createTandem( 'infoDialog' )
@@ -79,7 +81,10 @@ export default class MedianScreenView extends CAVScreenView {
       this.kickButtonGroup,
       this.backScreenViewLayer,
       bottomControls,
+      medianPredictionNode,
+      this.intervalToolLayer,
       this.accordionBox,
+      this.medianAccordionBox.infoButton,
       infoDialog,
       this.eraseButton,
       this.resetAllButton

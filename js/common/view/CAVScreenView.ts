@@ -166,8 +166,7 @@ export default class CAVScreenView extends ScreenView {
       ]
     } );
     this.backScreenViewLayer.pdomOrder = [
-      backLayerToggleNode,
-      this.intervalToolLayer
+      backLayerToggleNode
     ];
 
     this.resetAllButton = new ResetAllButton( {
