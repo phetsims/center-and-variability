@@ -49,7 +49,7 @@ export default class MedianScreenView extends CAVScreenView {
 
     const iconGroup = new AlignGroup();
 
-    this.setBottomControls( new VerticalCheckboxGroup( [
+    const bottomControls = this.setBottomControls( new VerticalCheckboxGroup( [
       PlayAreaCheckboxFactory.getPredictMedianCheckboxItem( iconGroup, model ),
       PlayAreaCheckboxFactory.getMedianCheckboxItem( iconGroup, model )
     ], {
@@ -74,6 +74,16 @@ export default class MedianScreenView extends CAVScreenView {
         infoDialog.hide();
       }
     } );
+
+    this.screenViewRootNode.pdomOrder = [
+      this.kickButtonGroup,
+      this.backScreenViewLayer,
+      bottomControls,
+      this.accordionBox,
+      infoDialog,
+      this.eraseButton,
+      this.resetAllButton
+    ];
   }
 }
 

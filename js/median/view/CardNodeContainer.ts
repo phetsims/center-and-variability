@@ -77,15 +77,37 @@ export default class CardNodeContainer extends Node {
 
     // Allocate all the cards at start-up. Each card node must be associated with a card model.
     this.cardNodes = model.cards.map( ( cardModel, index ) => {
+
+      // Synthetic property for use in keyboard input
+      const indexProperty = new NumberProperty( 0 );
+
       const cardNode = new CardNode( this, cardModel, {
-        tandem: options.tandem.createTandem( 'cardNodes' ).createTandem1Indexed( 'cardNode', index )
+        tandem: options.tandem.createTandem( 'cardNodes' ).createTandem1Indexed( 'cardNode', index ),
+        enabledRangeProperty: model.cardDragRangeProperty,
+        valueProperty: indexProperty
       } );
-      this.cardMap.set( cardNode.cardModel, cardNode );
+
+      indexProperty.lazyLink( ( newIndex, originalIndex ) => {
+
+        const cardCells = model.getCardsInCellOrder();
+        const cardAtNewCell = cardCells[ newIndex ];
+
+        // swap cards
+        cardAtNewCell.cellPositionProperty.value = originalIndex;
+        cardModel.cellPositionProperty.value = newIndex;
+
+        model.setAtHomeCell( cardAtNewCell );
+        model.setAtHomeCell( cardModel );
+        model.cardCellsChangedEmitter.emit();
+
+      } );
+
+      this.cardMap.set( cardNode.model, cardNode );
 
       this.cardLayer.addChild( cardNode );
 
       // Update the position of all cards (via animation) whenever any card is dragged
-      cardNode.cardModel.positionProperty.link( this.createDragPositionListener( cardNode ) );
+      cardNode.model.positionProperty.link( this.createDragPositionListener( cardNode ) );
 
       // When a card is dropped, send it to its home cell
       cardNode.dragListener.isPressedProperty.lazyLink( isPressed => {
@@ -97,7 +119,7 @@ export default class CardNodeContainer extends Node {
         if ( !isPressed && !isSettingPhetioStateProperty.value ) {
 
           // Animate the dropped card home
-          model.animateToHomeCell( cardNode.cardModel, 0.2 );
+          model.animateToHomeCell( cardNode.model, 0.2 );
 
           if ( this.isReadyForCelebration ) {
             const cardCells = model.getCardsInCellOrder();
@@ -357,8 +379,8 @@ export default class CardNodeContainer extends Node {
     return ( position: Vector2 ) => {
       if ( cardNode.dragListener.isPressedProperty.value ) {
 
-        assert && assert( cardNode.cardModel.cellPositionProperty.value !== null, 'The cardNode\'s cellPositionProperty cannot be null if it is being dragged.' );
-        const originalCell = cardNode.cardModel.cellPositionProperty.value!;
+        assert && assert( cardNode.model.cellPositionProperty.value !== null, 'The cardNode\'s cellPositionProperty cannot be null if it is being dragged.' );
+        const originalCell = cardNode.model.cellPositionProperty.value!;
 
         // Find the closest cell to the dragged card
         const dragCell = this.model.getClosestCell( position.x );
@@ -378,10 +400,10 @@ export default class CardNodeContainer extends Node {
         if ( currentOccupant !== cardNode ) {
 
           // it's just a pairwise swap
-          cardNode.cardModel.cellPositionProperty.value = closestCell;
-          currentOccupant.cardModel.cellPositionProperty.value = originalCell;
+          cardNode.model.cellPositionProperty.value = closestCell;
+          currentOccupant.model.cellPositionProperty.value = originalCell;
 
-          this.model.animateToHomeCell( currentOccupant.cardModel, 0.3 );
+          this.model.animateToHomeCell( currentOccupant.model, 0.3 );
 
           // See if the user unsorted the data.  If so, uncheck the "Sort Data" checkbox
           if ( this.isSortingDataProperty.value && !this.model.isDataSorted() ) {

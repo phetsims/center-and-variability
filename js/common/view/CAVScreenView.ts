@@ -75,6 +75,7 @@ export default class CAVScreenView extends ScreenView {
   protected readonly backScreenViewLayer;
   private readonly middleScreenViewLayer = new Node();
   private readonly frontScreenViewLayer;
+  protected readonly screenViewRootNode = new Node();
 
   protected readonly intervalToolLayer = new Node();
 
@@ -89,6 +90,7 @@ export default class CAVScreenView extends ScreenView {
   private readonly updateMedianNode: () => void;
   private readonly updateDragIndicatorNode: () => void;
   protected readonly numberOfKicksProperty: DynamicProperty<number, number, CAVSoccerSceneModel>;
+  protected readonly kickButtonGroup: KickButtonGroup;
 
   public constructor( model: CAVModel, providedOptions: CAVScreenViewOptions ) {
     const options = optionize<CAVScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
@@ -163,6 +165,10 @@ export default class CAVScreenView extends ScreenView {
         backLayerToggleNode
       ]
     } );
+    this.backScreenViewLayer.pdomOrder = [
+      backLayerToggleNode,
+      this.intervalToolLayer
+    ];
 
     this.resetAllButton = new ResetAllButton( {
       listener: () => {
@@ -202,7 +208,7 @@ export default class CAVScreenView extends ScreenView {
       }
     }, options.questionBarOptions ) );
 
-    const kickButtonGroup = new KickButtonGroup( model, {
+    this.kickButtonGroup = new KickButtonGroup( model, {
 
       // Center under where the soccer player nodes will be. Since the SoccerPlayerNode are positioned in the
       // SceneView, we can't use those node bounds to position the kick buttons, so this is a manually tuned magic number.
@@ -265,7 +271,7 @@ export default class CAVScreenView extends ScreenView {
         this.eraseButton,
         this.resetAllButton,
         this.questionBar,
-        kickButtonGroup,
+        this.kickButtonGroup,
         playAreaMedianIndicatorNode
       ]
     } );
@@ -298,9 +304,13 @@ export default class CAVScreenView extends ScreenView {
 
     this.middleScreenViewLayer.addChild( dragIndicatorArrowNode );
 
-    this.addChild( this.backScreenViewLayer );
-    this.addChild( this.middleScreenViewLayer );
-    this.addChild( this.frontScreenViewLayer );
+    // TODO: check for other this.addChild calls that should move into screenViewRootNode, see: https://github.com/phetsims/center-and-variability/issues/351
+    // Add to screenViewRootNode for alternativeInput
+    this.screenViewRootNode.addChild( this.backScreenViewLayer );
+    this.screenViewRootNode.addChild( this.middleScreenViewLayer );
+    this.screenViewRootNode.addChild( this.frontScreenViewLayer );
+
+    this.addChild( this.screenViewRootNode );
   }
 
   // calculate where the top object is at a given value
@@ -341,7 +351,9 @@ export default class CAVScreenView extends ScreenView {
     this.accordionBox.boundsProperty.link( this.updateDragIndicatorNode );
   }
 
-  protected setBottomControls( controlNode: Node, tandem: Tandem ): void {
+  protected setBottomControls( controlNode: Node, tandem: Tandem ): AlignBox {
+
+    // TODO: only call once? or rename to addBottomControls, see: https://github.com/phetsims/center-and-variability/issues/351
 
     // In order to use the AlignBox we need to know the distance from the top of the screen, to the top of the grass.
     const BOTTOM_CHECKBOX_PANEL_LEFT_MARGIN = 30;
@@ -365,12 +377,16 @@ export default class CAVScreenView extends ScreenView {
     const checkboxBounds = this.layoutBounds.withMinX(
       this.layoutBounds.minX + CAVConstants.NUMBER_LINE_MARGIN_X + CAVConstants.CHART_VIEW_WIDTH + BOTTOM_CHECKBOX_PANEL_LEFT_MARGIN );
 
-    this.addChild( new AlignBox( controlsVBox, {
+    const bottomControls = new AlignBox( controlsVBox, {
       alignBounds: checkboxBounds,
       xAlign: 'left',
       yAlign: 'bottom',
       yMargin: BOTTOM_CHECKBOX_PANEL_Y_MARGIN
-    } ) );
+    } );
+
+    this.screenViewRootNode.addChild( bottomControls );
+
+    return bottomControls;
   }
 
   public getSoccerPlayerImageSet( soccerPlayer: SoccerPlayer, sceneModel: SoccerSceneModel ): SoccerPlayerImageSet {

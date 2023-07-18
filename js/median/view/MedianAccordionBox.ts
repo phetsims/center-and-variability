@@ -47,8 +47,9 @@ export default class MedianAccordionBox extends CAVAccordionBox {
       margin: CAVConstants.ACCORDION_BOX_HORIZONTAL_MARGIN
     } );
 
-    backgroundNode.addChild( new CAVInfoButton( model.isInfoVisibleProperty, backgroundShape, tandem.createTandem( 'infoButton' ) ) );
+    const infoButton = new CAVInfoButton( model.isInfoVisibleProperty, backgroundShape, tandem.createTandem( 'infoButton' ) );
 
+    backgroundNode.addChild( infoButton );
     backgroundNode.addChild( cardNodeContainer );
     backgroundNode.addChild( checkboxGroupAlignBox );
 
@@ -62,6 +63,12 @@ export default class MedianAccordionBox extends CAVAccordionBox {
     } );
 
     this.cardNodeContainer = cardNodeContainer;
+
+    this.pdomOrder = [
+      this.cardNodeContainer,
+      checkboxGroup,
+      infoButton
+    ];
   }
 }
 

@@ -86,6 +86,9 @@ export default class CardContainerModel extends PhetioObject {
   public readonly dragIndicationCardProperty: Property<CardModel | null>;
   public readonly totalDragDistanceProperty: Property<number>;
 
+  // Used to determine drag range for keyboard input, which changes based on the amount of active cards.
+  public readonly cardDragRangeProperty: Property<Range>;
+
   public constructor( private readonly median: MedianModel, providedOptions: CardContainerModelOptions ) {
 
     const options = optionize<CardContainerModelOptions, SelfOptions, PhetioObjectOptions>()( {
@@ -111,6 +114,8 @@ export default class CardContainerModel extends PhetioObject {
       tandem: options.tandem.createTandem( 'dragIndicationCardProperty' ),
       phetioDocumentation: 'Tracks which card the drag indication icon is pointing to. This is for internal use only.'
     } );
+
+    this.cardDragRangeProperty = new Property<Range>( new Range( 0, 0 ) );
 
 
     // Allocate all the card models at start-up.
@@ -144,6 +149,7 @@ export default class CardContainerModel extends PhetioObject {
       card.isActiveProperty.link( isActive => {
         if ( isActive && !isSettingPhetioStateProperty.value ) {
           const cardCells = this.getCardsInCellOrder();
+          this.cardDragRangeProperty.value.max = cardCells.length;
           let targetIndex = cardCells.length;
 
           // We want to auto-sort cards in the infoDialog no matter what the value for isSortingDataProperty is.
@@ -181,6 +187,7 @@ export default class CardContainerModel extends PhetioObject {
         }
         else if ( !isActive ) {
           removeCardCell( card );
+          this.cardDragRangeProperty.value.max = this.getCardsInCells().length;
         }
       } );
 

@@ -14,7 +14,6 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import SoccerBall from '../../soccer-common/model/SoccerBall.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import CardModel from '../model/CardModel.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import CardNodeContainer from './CardNodeContainer.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
@@ -22,9 +21,12 @@ import cvCardPickupSound_mp3 from '../../../sounds/cvCardPickupSound_mp3.js';
 import cvCardDropSound_mp3 from '../../../sounds/cvCardDropSound_mp3.js';
 import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 import CAVConstants from '../../common/CAVConstants.js';
+import AccessibleSlider, { AccessibleSliderOptions } from '../../../../sun/js/accessibility/AccessibleSlider.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 type SelfOptions = EmptySelfOptions;
-export type CardNodeOptions = SelfOptions & NodeOptions & PickRequired<NodeOptions, 'tandem'>;
+type ParentOptions = WithRequired<AccessibleSliderOptions, 'enabledRangeProperty'> & WithRequired<NodeOptions, 'tandem'>;
+export type CardNodeOptions = SelfOptions & ParentOptions;
 
 export const cardPickUpSoundClip = new SoundClip( cvCardPickupSound_mp3, {
   initialOutputLevel: 0.3,
@@ -42,7 +44,7 @@ soundManager.addSoundGenerator( cardDropSoundClip );
 export const PICK_UP_DELTA_X = -4;
 export const PICK_UP_DELTA_Y = -4;
 
-export default class CardNode extends Node {
+export default class CardNode extends AccessibleSlider( Node, 0 ) {
 
   public readonly dragListener: DragListener;
 
@@ -50,7 +52,7 @@ export default class CardNode extends Node {
 
   private cardsToTheLeft: CardNode[] = [];
 
-  public constructor( public readonly cardNodeContainer: CardNodeContainer, public readonly cardModel: CardModel, providedOptions: CardNodeOptions ) {
+  public constructor( public readonly cardNodeContainer: CardNodeContainer, public readonly model: CardModel, providedOptions: CardNodeOptions ) {
 
     const cornerRadius = 10;
     const rectangle = new Rectangle( 0, 0, CAVConstants.CARD_DIMENSION, CAVConstants.CARD_DIMENSION, cornerRadius, cornerRadius, {
@@ -62,7 +64,7 @@ export default class CardNode extends Node {
       font: new PhetFont( 24 )
     } );
 
-    const card = new Node( {
+    const cardNode = new Node( {
       children: [ rectangle, text ]
     } );
 
@@ -70,63 +72,76 @@ export default class CardNode extends Node {
     const offsetContainer = new Rectangle( PICK_UP_DELTA_X, PICK_UP_DELTA_Y, CAVConstants.CARD_DIMENSION - PICK_UP_DELTA_X, CAVConstants.CARD_DIMENSION - PICK_UP_DELTA_Y, {
       stroke: Color.TRANSPARENT,
       lineWidth: 0,
-      children: [ card ]
+      children: [ cardNode ]
     } );
 
-    const options = optionize<CardNodeOptions, SelfOptions, NodeOptions>()( {
+    const startDrag = () => {
+      model.isDragging = true;
+      offsetContainer.moveToFront();
+
+      // Set the relative position within the parent.
+      cardNode.setTranslation( PICK_UP_DELTA_X, PICK_UP_DELTA_Y );
+      cardPickUpSoundClip.play();
+    };
+
+    const endDrag = () => {
+      model.isDragging = false;
+      // Restore the relative position within the parent.
+      cardNode.setTranslation( 0, 0 );
+      cardDropSoundClip.play();
+    };
+
+    const options = optionize<CardNodeOptions, SelfOptions, ParentOptions>()( {
       children: [ offsetContainer ],
       cursor: 'pointer',
-      phetioVisiblePropertyInstrumented: false
+      phetioVisiblePropertyInstrumented: false,
+      keyboardStep: 1,
+      shiftKeyboardStep: 1,
+
+      // TODO: let's test this, see: https://github.com/phetsims/center-and-variability/issues/351
+      pageKeyboardStep: 5,
+      roundToStepSize: true,
+
+      // TODO: Do we want to pop the card up whenever it's focused?, see: https://github.com/phetsims/center-and-variability/issues/351
+      startDrag: startDrag,
+      endDrag: endDrag
     }, providedOptions );
 
     super( options );
 
-    cardModel.soccerBall.valueProperty.link( value => {
+    model.soccerBall.valueProperty.link( value => {
       text.string = value === null ? '' : value + '';
       text.center = rectangle.center;
       this.visible = value !== null;
     } );
 
-    this.soccerBall = cardModel.soccerBall;
+    this.soccerBall = model.soccerBall;
 
-    cardModel.positionProperty.link( position => {
-      const range = cardModel.cardContainerModel.getDragRange();
+    model.positionProperty.link( position => {
+      const range = model.cardContainerModel.getDragRange();
       const before = this.translation.copy();
       this.translation = new Vector2( range.constrainValue( position.x ), 0 );
 
       const delta = this.translation.minus( before );
-      if ( cardModel.isDragging ) {
-        cardModel.dragDistanceEmitter.emit( Math.abs( delta.x ) );
+      if ( model.isDragging ) {
+        model.dragDistanceEmitter.emit( Math.abs( delta.x ) );
 
         // Set the relative position within the parent.
-        card.setTranslation( PICK_UP_DELTA_X, PICK_UP_DELTA_Y );
+        cardNode.setTranslation( PICK_UP_DELTA_X, PICK_UP_DELTA_Y );
       }
     } );
 
     this.dragListener = new DragListener( {
       tandem: options.tandem.createTandem( 'dragListener' ),
-      positionProperty: cardModel.positionProperty,
-      start: () => {
-        cardModel.isDragging = true;
-        this.moveToFront();
-
-        // Set the relative position within the parent.
-        card.setTranslation( PICK_UP_DELTA_X, PICK_UP_DELTA_Y );
-        cardPickUpSoundClip.play();
-      },
-      end: () => {
-        cardModel.isDragging = false;
-
-        // Restore the relative position within the parent.
-        card.setTranslation( 0, 0 );
-        cardDropSoundClip.play();
-      }
+      positionProperty: model.positionProperty,
+      start: startDrag,
+      end: endDrag
     } );
     this.addInputListener( this.dragListener );
 
     this.soccerBall.dragStartedEmitter.addListener( () => this.moveToFront() );
 
-    this.addLinkedElement( cardModel );
+    this.addLinkedElement( model );
   }
 }
 
