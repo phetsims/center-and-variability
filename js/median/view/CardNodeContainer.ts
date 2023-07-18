@@ -311,12 +311,13 @@ export default class CardNodeContainer extends Node {
       font: CAVConstants.MAIN_FONT,
       maxWidth: 300
     } );
-    const medianReadoutPanel = new Panel( medianTextNode, {
+    const medianReadoutText = new Panel( medianTextNode, {
       stroke: 'lightgray',
       lineWidth: 0.6,
-      cornerRadius: 4
+      cornerRadius: 4,
+      tandem: options.tandem.createTandem( 'medianReadoutText' )
     } );
-    this.addChild( medianReadoutPanel );
+    this.addChild( medianReadoutText );
 
     const updateMedianNode = () => {
 
@@ -344,15 +345,15 @@ export default class CardNodeContainer extends Node {
       }
 
       if ( leftmostCard ) {
-        medianReadoutPanel.centerX = model.getCardPositionX( ( cardCells.length - 1 ) / 2 ) + leftmostCard.width / 2 + PICK_UP_DELTA_X;
-        if ( medianReadoutPanel.left < 0 ) {
-          medianReadoutPanel.left = 0;
+        medianReadoutText.centerX = model.getCardPositionX( ( cardCells.length - 1 ) / 2 ) + leftmostCard.width / 2 + PICK_UP_DELTA_X;
+        if ( medianReadoutText.left < 0 ) {
+          medianReadoutText.left = 0;
         }
-        medianReadoutPanel.bottom = MARGIN_Y - 5;
-        medianReadoutPanel.visible = this.isTopMedianVisibleProperty.value || model.parentContext === 'info';
+        medianReadoutText.bottom = MARGIN_Y - 5;
+        medianReadoutText.visible = this.isTopMedianVisibleProperty.value || model.parentContext === 'info';
       }
       else {
-        medianReadoutPanel.visible = false;
+        medianReadoutText.visible = false;
       }
     };
     model.cardCellsChangedEmitter.addListener( updateMedianNode );
