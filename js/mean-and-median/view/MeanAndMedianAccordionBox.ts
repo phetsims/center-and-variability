@@ -24,9 +24,11 @@ import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js'
 import PlotType from '../../common/model/PlotType.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
+import ButtonNode from '../../../../sun/js/buttons/ButtonNode.js';
 
 export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
   private readonly medianPlotNode: MeanAndMedianPlotNode;
+  public readonly infoButton: ButtonNode;
 
   public constructor( model: MeanAndMedianModel, layoutBounds: Bounds2, tandem: Tandem, top: number, playAreaNumberLineNode: NumberLineNode ) {
     const iconGroup = new AlignGroup();
@@ -63,7 +65,8 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
       margin: CAVConstants.ACCORDION_BOX_HORIZONTAL_MARGIN
     } );
 
-    backgroundNode.addChild( new CAVInfoButton( model.isInfoVisibleProperty, backgroundShape, tandem.createTandem( 'infoButton' ) ) );
+    const infoButton = new CAVInfoButton( model.isInfoVisibleProperty, backgroundShape, tandem.createTandem( 'infoButton' ) );
+    backgroundNode.addChild( infoButton );
     backgroundNode.addChild( checkboxGroupAlignBox );
     backgroundNode.addChild( meanAndMedianPlotNode );
 
@@ -152,6 +155,9 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
     );
 
     this.medianPlotNode = meanAndMedianPlotNode;
+
+    // for pdom order
+    this.infoButton = infoButton;
   }
 }
 
