@@ -107,17 +107,19 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       value: VariabilityMeasure.RANGE,
       tandemName: 'rangeReadoutToggleNode',
       createNode: tandem => {
-        const rangeEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.rangeEqualsValueMPatternStringProperty,
+        const rangeEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.rangeEqualsValuePatternStringProperty,
           { value: rangeValueProperty }, {
             tandem: tandem.createTandem( 'rangeEqualsValueStringProperty' )
           }
         );
 
-        const rangeReadoutText = new VariabilityReadoutText( rangeEqualsValueStringProperty, {
-          fill: CAVColors.meanColorProperty,
-          visibleProperty: model.isRangeVisibleProperty,
-          tandem: tandem.createTandem( 'rangeReadoutText' )
-        } );
+        const selectedScene = model.selectedSceneModelProperty.value as VariabilitySceneModel;
+        const rangeReadoutText = new VariabilityReadoutText( rangeEqualsValueStringProperty, selectedScene.rangeValueProperty,
+          model.isRangeVisibleProperty, {
+            fill: CAVColors.meanColorProperty,
+            visibleProperty: model.isRangeVisibleProperty,
+            tandem: tandem.createTandem( 'rangeReadoutText' )
+          } );
 
         // Nest in a new Node so that ToggleNode has independent control over the visibility
         return new VBox( {
@@ -131,26 +133,30 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       tandemName: 'iqrReadoutToggleNode',
       createNode: tandem => {
 
-        const medianEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValueMPatternStringProperty,
+        const medianEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty,
           { value: medianValueProperty }, {
             tandem: tandem.createTandem( 'medianEqualsValueStringProperty' )
           }
         );
-        const medianReadoutText = new VariabilityReadoutText( medianEqualsValueStringProperty, {
-          fill: CAVColors.medianColorProperty,
-          tandem: tandem.createTandem( 'medianReadoutText' )
-        } );
 
-        const iqrEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.iqrEqualsValueMPatternStringProperty,
+        const selectedScene = model.selectedSceneModelProperty.value as VariabilitySceneModel;
+        const medianReadoutText = new VariabilityReadoutText( medianEqualsValueStringProperty, selectedScene.medianValueProperty,
+          model.isIQRVisibleProperty, {
+            fill: CAVColors.medianColorProperty,
+            tandem: tandem.createTandem( 'medianReadoutText' )
+          } );
+
+        const iqrEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.iqrEqualsValuePatternStringProperty,
           { value: iqrValueProperty }, {
             tandem: tandem.createTandem( 'iqrEqualsValueStringProperty' )
           }
         );
-        const iqrReadoutText = new VariabilityReadoutText( iqrEqualsValueStringProperty, {
-          fill: CAVColors.iqrLabelColorProperty,
-          visibleProperty: model.isIQRVisibleProperty,
-          tandem: tandem.createTandem( 'iqrReadoutText' )
-        } );
+        const iqrReadoutText = new VariabilityReadoutText( iqrEqualsValueStringProperty, selectedScene.iqrValueProperty,
+          model.isIQRVisibleProperty, {
+            fill: CAVColors.iqrLabelColorProperty,
+            visibleProperty: model.isIQRVisibleProperty,
+            tandem: tandem.createTandem( 'iqrReadoutText' )
+          } );
 
         // Nest in a new Node so that ToggleNode has independent control over the visibility
         return new VBox( {
@@ -173,21 +179,24 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
             tandem: tandem.createTandem( 'meanEqualsValueStringProperty' )
           }
         );
-        const madEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.madEqualsValueMPatternStringProperty,
+        const madEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.madEqualsValuePatternStringProperty,
           { value: madValueProperty }, {
             tandem: tandem.createTandem( 'madEqualsValueStringProperty' )
           }
         );
 
-        const meanReadoutText = new VariabilityReadoutText( meanEqualsValueStringProperty, {
-          fill: CAVColors.meanColorProperty,
-          tandem: tandem.createTandem( 'meanReadoutText' )
-        } );
-        const madReadoutText = new VariabilityReadoutText( madEqualsValueStringProperty, {
-          fill: CAVColors.madColorProperty,
-          visibleProperty: model.isMADVisibleProperty,
-          tandem: tandem.createTandem( 'madReadoutText' )
-        } );
+        const selectedScene = model.selectedSceneModelProperty.value as VariabilitySceneModel;
+        const meanReadoutText = new VariabilityReadoutText( meanEqualsValueStringProperty, selectedScene.meanValueProperty,
+          model.isMADVisibleProperty, {
+            fill: CAVColors.meanColorProperty,
+            tandem: tandem.createTandem( 'meanReadoutText' )
+          } );
+        const madReadoutText = new VariabilityReadoutText( madEqualsValueStringProperty, selectedScene.madValueProperty,
+          model.isMADVisibleProperty, {
+            fill: CAVColors.madColorProperty,
+            visibleProperty: model.isMADVisibleProperty,
+            tandem: tandem.createTandem( 'madReadoutText' )
+          } );
 
         // Nest in a new Node so that ToggleNode has independent control over the visibility
         return new VBox( {

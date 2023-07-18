@@ -27,11 +27,10 @@ type StringsType = {
   'meanEqualsValueMPatternStringProperty': LocalizedStringProperty;
   'meanEqualsValueMetersPatternStringProperty': LocalizedStringProperty;
   'medianEqualsValuePatternStringProperty': LocalizedStringProperty;
-  'medianEqualsValueMPatternStringProperty': LocalizedStringProperty;
   'medianEqualsValueMetersPatternStringProperty': LocalizedStringProperty;
-  'iqrEqualsValueMPatternStringProperty': LocalizedStringProperty;
-  'rangeEqualsValueMPatternStringProperty': LocalizedStringProperty;
-  'madEqualsValueMPatternStringProperty': LocalizedStringProperty;
+  'iqrEqualsValuePatternStringProperty': LocalizedStringProperty;
+  'rangeEqualsValuePatternStringProperty': LocalizedStringProperty;
+  'madEqualsValuePatternStringProperty': LocalizedStringProperty;
   'plotTypeStringProperty': LocalizedStringProperty;
   'dotPlotStringProperty': LocalizedStringProperty;
   'linePlotStringProperty': LocalizedStringProperty;
@@ -74,6 +73,7 @@ type StringsType = {
   'outliersDescriptionStringProperty': LocalizedStringProperty;
   'kicksPatternStringProperty': LocalizedStringProperty;
   'pointerStringProperty': LocalizedStringProperty;
+  'metersAbbreviationStringProperty': LocalizedStringProperty;
 };
 
 const CenterAndVariabilityStrings = getStringModule( 'CENTER_AND_VARIABILITY' ) as StringsType;

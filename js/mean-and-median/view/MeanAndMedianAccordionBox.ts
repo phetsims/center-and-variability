@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
-import { AlignBox, AlignGroup, Text, TPaint, VBox } from '../../../../scenery/js/imports.js';
+import { AlignBox, AlignGroup, HBox, Text, TPaint, VBox } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
@@ -80,7 +80,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
 
       const readoutTextTandem = readoutTandem.createTandem( 'readoutText' );
 
-      return new Text( readoutPatternStringProperty, {
+      const readoutValueText = new Text( readoutPatternStringProperty, {
         fill: fill,
         font: new PhetFont( 16 ),
         maxWidth: 170,
@@ -92,6 +92,21 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
         } ),
         tandem: readoutTextTandem
       } );
+
+      const metersVisibilityProperty = new DerivedProperty( [ valueProperty, visibleProperty ], ( value, visible ) => {
+        return value !== null && visible;
+      } );
+
+      return new HBox( {
+        children: [ readoutValueText,
+          new Text( CenterAndVariabilityStrings.metersAbbreviationStringProperty, {
+            visibleProperty: metersVisibilityProperty,
+            fill: fill,
+            font: new PhetFont( 16 )
+          } ) ],
+        spacing: 4,
+        excludeInvisibleChildrenFromBounds: false
+      } );
     };
 
     const readoutsNode = new VBox( {
@@ -102,7 +117,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
         createReadoutText(
           sceneModel.medianValueProperty,
           model.isTopMedianVisibleProperty,
-          CenterAndVariabilityStrings.medianEqualsValueMPatternStringProperty,
+          CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty,
           CAVColors.medianColorProperty,
           tandem.createTandem( 'medianReadoutStringProperty' )
         ),
