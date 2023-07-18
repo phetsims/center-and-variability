@@ -344,8 +344,8 @@ export default class CAVScreenView extends ScreenView {
   protected setBottomControls( controlNode: Node, tandem: Tandem ): void {
 
     // In order to use the AlignBox we need to know the distance from the top of the screen, to the top of the grass.
-    const BOTTOM_CHECKBOX_PANEL_MARGIN = 12.5;
-    const BOTTOM_CHECKBOX_PANEL_Y_MARGIN = this.layoutBounds.maxY - this.modelViewTransform.modelToViewY( 0 ) + BOTTOM_CHECKBOX_PANEL_MARGIN;
+    const BOTTOM_CHECKBOX_PANEL_LEFT_MARGIN = 30;
+    const BOTTOM_CHECKBOX_PANEL_Y_MARGIN = this.layoutBounds.maxY - this.modelViewTransform.modelToViewY( 0 ) + 12.5;
 
     const controlsVBox = new VBox( {
       spacing: 15,
@@ -362,11 +362,13 @@ export default class CAVScreenView extends ScreenView {
       ]
     } );
 
+    const checkboxBounds = this.layoutBounds.withMinX(
+      this.layoutBounds.minX + CAVConstants.NUMBER_LINE_MARGIN_X + CAVConstants.CHART_VIEW_WIDTH + BOTTOM_CHECKBOX_PANEL_LEFT_MARGIN );
+
     this.addChild( new AlignBox( controlsVBox, {
-      alignBounds: this.layoutBounds,
-      xAlign: 'right',
+      alignBounds: checkboxBounds,
+      xAlign: 'left',
       yAlign: 'bottom',
-      xMargin: BOTTOM_CHECKBOX_PANEL_MARGIN,
       yMargin: BOTTOM_CHECKBOX_PANEL_Y_MARGIN
     } ) );
   }
