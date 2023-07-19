@@ -63,8 +63,12 @@ export default class InfoValuesNode<T extends CAVSoccerBall> extends Node {
     this.dataValuesContainer = dataValuesContainer;
 
     ManualConstraint.create( this, [ dataValuesContainer ], () => {
-      this.updateArrowNode();
+      this.updateDecorations();
     } );
+  }
+
+  public updateDecorations(): void {
+    this.updateArrowNode();
   }
 
   private updateArrowNode(): void {
@@ -113,9 +117,7 @@ export default class InfoValuesNode<T extends CAVSoccerBall> extends Node {
     }
 
     this.dataValuesContainer.setChildren( dataValuesChildren );
-
     this.updateArrowNode();
-
     this.decorate( results );
   }
 

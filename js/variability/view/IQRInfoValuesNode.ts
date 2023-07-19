@@ -17,6 +17,8 @@ import VariabilitySoccerBall from '../model/VariabilitySoccerBall.js';
 export default class IQRInfoValuesNode extends InfoValuesNode<VariabilitySoccerBall> {
   private readonly dataValuesQ1Rect: Rectangle;
   private readonly dataValuesQ3Rect: Rectangle;
+  private q1TextNodes: Node[] = [];
+  private q3TextNodes: Node[] = [];
 
   public constructor( sceneModel: VariabilitySceneModel, hasEnoughDataForIQRProperty: TReadOnlyProperty<boolean> ) {
     super( sceneModel );
@@ -39,12 +41,26 @@ export default class IQRInfoValuesNode extends InfoValuesNode<VariabilitySoccerB
     this.dataValuesQ3Rect.moveToBack();
   }
 
-  public override decorate( results: Array<{ text: Text; soccerBall: VariabilitySoccerBall }> ): void {
-    const q1TextNodes = results.filter( result => result.soccerBall.isQ1ObjectProperty.value ).map( result => result.text );
-    const q3TextNodes = results.filter( result => result.soccerBall.isQ3ObjectProperty.value ).map( result => result.text );
+  public override updateDecorations(): void {
 
-    IQRInfoValuesNode.updateQuartileRect( this.dataValuesQ1Rect, q1TextNodes );
-    IQRInfoValuesNode.updateQuartileRect( this.dataValuesQ3Rect, q3TextNodes );
+    //update the arrow node position
+    super.updateDecorations();
+
+    // check if these exist first to prevent calling when the ManualConstraint in the superclass constructor is set
+    if ( this.dataValuesQ1Rect && this.q1TextNodes ) {
+      IQRInfoValuesNode.updateQuartileRect( this.dataValuesQ1Rect, this.q1TextNodes );
+    }
+    if ( this.dataValuesQ3Rect && this.q3TextNodes ) {
+      IQRInfoValuesNode.updateQuartileRect( this.dataValuesQ3Rect, this.q3TextNodes );
+    }
+  }
+
+  public override decorate( results: Array<{ text: Text; soccerBall: VariabilitySoccerBall }> ): void {
+    this.q1TextNodes = results.filter( result => result.soccerBall.isQ1ObjectProperty.value ).map( result => result.text );
+    this.q3TextNodes = results.filter( result => result.soccerBall.isQ3ObjectProperty.value ).map( result => result.text );
+
+    IQRInfoValuesNode.updateQuartileRect( this.dataValuesQ1Rect, this.q1TextNodes );
+    IQRInfoValuesNode.updateQuartileRect( this.dataValuesQ3Rect, this.q3TextNodes );
   }
 
   private static updateQuartileRect( quartileRect: Rectangle, dataValueTextNodes: Node[] ): void {
