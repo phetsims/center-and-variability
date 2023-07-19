@@ -115,6 +115,7 @@ export default class MeanAndMedianInfoNode extends VBox {
           layoutOptions: { topMargin: 5 }
         } ),
 
+        //test change
 
         new MeanAndMedianInfoPlotNode( model, sceneModel, playAreaNumberLineNode, {
           tandem: options.tandem.createTandem( 'meanAndMedianPlotNode' ),
