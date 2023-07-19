@@ -23,6 +23,7 @@ import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import InfoTitleDescriptionRichText from '../../common/view/InfoTitleDescriptionRichText.js';
 import MeanAndMedianInfoPlotNode from './MeanAndMedianInfoPlotNode.js';
+import Utils from '../../../../dot/js/Utils.js';
 
 export default class MeanAndMedianInfoNode extends VBox {
   public constructor( model: MeanAndMedianModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
@@ -104,7 +105,7 @@ export default class MeanAndMedianInfoNode extends VBox {
           value: sceneModel.meanValueProperty
         }, {
           maps: {
-            value: CAVConstants.STRING_VALUE_NULL_MAP
+            value: value => value === null ? 'null' : Utils.toFixed( value, 1 )
           },
           tandem: options.tandem.createTandem( 'meanEqualsValueStringProperty' )
         } ), {
