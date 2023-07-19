@@ -29,8 +29,7 @@ export default class MADInfoNode extends VBox {
     const resultNumeratorText = new Text( '', { fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE } );
     const resultDenominatorText = new Text( '', { fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE } );
 
-    sceneModel.objectChangedEmitter.addListener( () => {
-
+    sceneModel.variabilityDataMeasuresUpdatedEmitter.addListener( () => {
       const deviations = sceneModel.getDeviationTenths();
       const denominator = sceneModel.getSortedStackedObjects().length;
 
