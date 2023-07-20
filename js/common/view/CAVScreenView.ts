@@ -207,6 +207,8 @@ export default class CAVScreenView extends ScreenView {
       }
     }, options.questionBarOptions ) );
 
+    this.questionBar.visibleProperty.link( () => this.updateAccordionBoxPosition() );
+
     this.kickButtonGroup = new KickButtonGroup( model, {
 
       // Center under where the soccer player nodes will be. Since the SoccerPlayerNode are positioned in the
@@ -323,7 +325,10 @@ export default class CAVScreenView extends ScreenView {
   }
 
   private updateAccordionBoxPosition(): void {
-    this.accordionBox!.top = this.questionBar.bottom + CAVConstants.ACCORDION_BOX_TOP_MARGIN;
+    if ( this.accordionBox ) {
+      const top = this.questionBar.visible ? this.questionBar.bottom : this.questionBar.top;
+      this.accordionBox.top = top + CAVConstants.ACCORDION_BOX_TOP_MARGIN;
+    }
   }
 
   /**
