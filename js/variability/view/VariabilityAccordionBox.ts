@@ -25,10 +25,12 @@ import AccordionBoxTitleNode from '../../common/view/AccordionBoxTitleNode.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 import CAVInfoButton from '../../common/view/CAVInfoButton.js';
 import { createGatedVisibleProperty } from '../../common/model/createGatedVisibleProperty.js';
+import ButtonNode from '../../../../sun/js/buttons/ButtonNode.js';
 
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 
   private readonly plotToggleNode: ToggleNode<SoccerSceneModel, VariabilityPlotNode>;
+  public readonly infoButton: ButtonNode;
 
   public constructor( model: VariabilityModel, layoutBounds: Bounds2, tandem: Tandem, top: number, playAreaNumberLineNode: NumberLineNode ) {
 
@@ -62,7 +64,8 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       tandem: tandem.createTandem( 'plotToggleNode' )
     } );
 
-    backgroundNode.addChild( new CAVInfoButton( model.isInfoVisibleProperty, backgroundShape, tandem.createTandem( 'infoButton' ) ) );
+    const infoButton = new CAVInfoButton( model.isInfoVisibleProperty, backgroundShape, tandem.createTandem( 'infoButton' ) );
+    backgroundNode.addChild( infoButton );
 
     // Ensure a consistent width among both the icons and the text across the different accordionBox views.
     const textGroup = new AlignGroup();
@@ -236,6 +239,9 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     } );
 
     this.plotToggleNode = plotToggleNode;
+
+    // for pdom order
+    this.infoButton = infoButton;
   }
 }
 

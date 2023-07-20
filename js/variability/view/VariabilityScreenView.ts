@@ -241,7 +241,7 @@ export default class VariabilityScreenView extends CAVScreenView {
 
     const iconGroup = new AlignGroup();
 
-    this.setBottomControls(
+    const bottomControls = this.setBottomControls(
       new VerticalCheckboxGroup( [
         PlayAreaCheckboxFactory.getMedianCheckboxItem( iconGroup, model ),
         PlayAreaCheckboxFactory.getMeanCheckboxItem( iconGroup, model ),
@@ -251,7 +251,7 @@ export default class VariabilityScreenView extends CAVScreenView {
         tandem: this.tandem.createTandem( 'bottomCheckboxGroup' )
       } ), options.tandem );
 
-    model.variabilitySceneModels.forEach( ( sceneModel, index ) => {
+    const infoDialogs = model.variabilitySceneModels.map( ( sceneModel, index ) => {
 
       // The VariabilityInfoDialog only exists in the VariabilityScreen, so having CAVScreenView be in charge of creating custom subclasses
       // of CAVSceneView is overcomplicated and unnecessary. Instead, we create an equivalent tandem, so that it will appear
@@ -269,7 +269,26 @@ export default class VariabilityScreenView extends CAVScreenView {
             infoDialog.hide();
           }
         } );
+
+      return infoDialog;
     } );
+
+    this.screenViewRootNode.pdomOrder = [
+      this.kickButtonGroup,
+      this.backScreenViewLayer,
+      bottomControls,
+      pointerSlider,
+      handle1,
+      handle2,
+      this.intervalToolLayer,
+      sceneRadioButtonGroup,
+      variabilityMeasureRadioButtonGroup,
+      this.accordionBox,
+      variabilityAccordionBox.infoButton,
+      ...infoDialogs,
+      this.eraseButton,
+      this.resetAllButton
+    ];
   }
 
   public override getSoccerPlayerImageSet( soccerPlayer: SoccerPlayer, sceneModel: CAVSoccerSceneModel ): SoccerPlayerImageSet {
