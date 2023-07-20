@@ -251,7 +251,7 @@ export default class VariabilityScreenView extends CAVScreenView {
         tandem: this.tandem.createTandem( 'bottomCheckboxGroup' )
       } ), options.tandem );
 
-    const infoDialogs = model.variabilitySceneModels.map( ( sceneModel, index ) => {
+    model.variabilitySceneModels.forEach( ( sceneModel, index ) => {
 
       // The VariabilityInfoDialog only exists in the VariabilityScreen, so having CAVScreenView be in charge of creating custom subclasses
       // of CAVSceneView is overcomplicated and unnecessary. Instead, we create an equivalent tandem, so that it will appear
@@ -269,8 +269,6 @@ export default class VariabilityScreenView extends CAVScreenView {
             infoDialog.hide();
           }
         } );
-
-      return infoDialog;
     } );
 
     this.screenViewRootNode.pdomOrder = [
@@ -285,7 +283,6 @@ export default class VariabilityScreenView extends CAVScreenView {
       variabilityMeasureRadioButtonGroup,
       this.accordionBox,
       variabilityAccordionBox.infoButton,
-      ...infoDialogs,
       this.eraseButton,
       this.resetAllButton
     ];

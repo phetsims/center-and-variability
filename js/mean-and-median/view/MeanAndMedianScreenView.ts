@@ -105,7 +105,6 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
       this.intervalToolLayer,
       this.accordionBox,
       meanAndMedianAccordionBox.infoButton,
-      infoDialog,
       this.eraseButton,
       this.resetAllButton
     ];

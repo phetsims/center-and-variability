@@ -85,7 +85,6 @@ export default class MedianScreenView extends CAVScreenView {
       this.intervalToolLayer,
       this.accordionBox,
       this.medianAccordionBox.infoButton,
-      infoDialog,
       this.eraseButton,
       this.resetAllButton
     ];
