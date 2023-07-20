@@ -24,6 +24,9 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import AccordionBoxTitleNode from '../../common/view/AccordionBoxTitleNode.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 import CAVInfoButton from '../../common/view/CAVInfoButton.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
+import Property from '../../../../axon/js/Property.js';
 
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 
@@ -103,6 +106,15 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     const madValueProperty = deriveValueProperty( vsm => vsm.madValueProperty, CAVConstants.VARIABILITY_MEASURE_DECIMAL_POINTS );
     const meanValueProperty = deriveValueProperty( vsm => vsm.meanValueProperty, CAVConstants.VARIABILITY_MEASURE_DECIMAL_POINTS );
 
+    const createGatedVisibleProperty = ( visibleProperty: Property<boolean>, tandem: Tandem ) => {
+      return DerivedProperty.and( [ visibleProperty, new BooleanProperty( true, {
+        tandem: tandem.createTandem( 'selfVisibleProperty' )
+      } ) ], {
+        tandem: tandem.createTandem( 'visibleProperty' ),
+        phetioValueType: BooleanIO
+      } );
+    };
+
     const readoutsToggleNode = new AlignBox( new ToggleNode( model.selectedVariabilityMeasureProperty, [ {
       value: VariabilityMeasure.RANGE,
       tandemName: 'rangeReadoutToggleNode',
@@ -113,12 +125,14 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
           }
         );
 
+
         const selectedScene = model.selectedSceneModelProperty.value as VariabilitySceneModel;
+        const rangeReadoutTextTandem = tandem.createTandem( 'rangeReadoutText' );
         const rangeReadoutText = new VariabilityReadoutText( rangeEqualsValueStringProperty, selectedScene.rangeValueProperty,
           model.isRangeVisibleProperty, {
             fill: CAVColors.meanColorProperty,
-            visibleProperty: model.isRangeVisibleProperty,
-            tandem: tandem.createTandem( 'rangeReadoutText' )
+            visibleProperty: createGatedVisibleProperty( model.isRangeVisibleProperty, rangeReadoutTextTandem ),
+            tandem: rangeReadoutTextTandem
           } );
 
         // Nest in a new Node so that ToggleNode has independent control over the visibility
@@ -143,7 +157,8 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         const medianReadoutText = new VariabilityReadoutText( medianEqualsValueStringProperty, selectedScene.medianValueProperty,
           model.isIQRVisibleProperty, {
             fill: CAVColors.medianColorProperty,
-            tandem: tandem.createTandem( 'medianReadoutText' )
+            tandem: tandem.createTandem( 'medianReadoutText' ),
+            phetioVisiblePropertyInstrumented: true
           } );
 
         const iqrEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.iqrEqualsValuePatternStringProperty,
@@ -151,11 +166,13 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
             tandem: tandem.createTandem( 'iqrEqualsValueStringProperty' )
           }
         );
+
+        const iqrReadoutTextTandem = tandem.createTandem( 'iqrReadoutText' );
         const iqrReadoutText = new VariabilityReadoutText( iqrEqualsValueStringProperty, selectedScene.iqrValueProperty,
           model.isIQRVisibleProperty, {
             fill: CAVColors.iqrLabelColorProperty,
-            visibleProperty: model.isIQRVisibleProperty,
-            tandem: tandem.createTandem( 'iqrReadoutText' )
+            visibleProperty: createGatedVisibleProperty( model.isIQRVisibleProperty, iqrReadoutTextTandem ),
+            tandem: iqrReadoutTextTandem
           } );
 
         // Nest in a new Node so that ToggleNode has independent control over the visibility
@@ -189,13 +206,16 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         const meanReadoutText = new VariabilityReadoutText( meanEqualsValueStringProperty, selectedScene.meanValueProperty,
           model.isMADVisibleProperty, {
             fill: CAVColors.meanColorProperty,
-            tandem: tandem.createTandem( 'meanReadoutText' )
+            tandem: tandem.createTandem( 'meanReadoutText' ),
+            phetioVisiblePropertyInstrumented: true
           } );
+
+        const madReadoutTextTandem = tandem.createTandem( 'madReadoutText' );
         const madReadoutText = new VariabilityReadoutText( madEqualsValueStringProperty, selectedScene.madValueProperty,
           model.isMADVisibleProperty, {
             fill: CAVColors.madColorProperty,
-            visibleProperty: model.isMADVisibleProperty,
-            tandem: tandem.createTandem( 'madReadoutText' )
+            visibleProperty: createGatedVisibleProperty( model.isMADVisibleProperty, madReadoutTextTandem ),
+            tandem: madReadoutTextTandem
           } );
 
         // Nest in a new Node so that ToggleNode has independent control over the visibility
@@ -218,7 +238,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
 
     super( backgroundNode, {
       tandem: tandem,
-      titleNode: new AccordionBoxTitleNode( accordionBoxTitleProperty, CAVColors.variabilityAccordionBoxFillProperty ),
+      titleNode: new AccordionBoxTitleNode( accordionBoxTitleProperty, CAVColors.variabilityAccordionBoxFillProperty, tandem ),
       expandedProperty: model.isAccordionBoxExpandedProperty,
 
       // Leave space for the radio buttons at the left

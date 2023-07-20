@@ -12,9 +12,10 @@ import centerAndVariability from '../../centerAndVariability.js';
 import { ManualConstraint, Node, Rectangle, TColor, Text } from '../../../../scenery/js/imports.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import CAVConstants from '../CAVConstants.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class AccordionBoxTitleNode extends Node {
-  public constructor( stringProperty: TReadOnlyProperty<string>, backgroundFill: TColor ) {
+  public constructor( stringProperty: TReadOnlyProperty<string>, backgroundFill: TColor, tandem: Tandem ) {
 
     const titleText = new Text( stringProperty, {
       font: CAVConstants.MAIN_FONT,
@@ -31,7 +32,12 @@ export default class AccordionBoxTitleNode extends Node {
       opacity: 0.5
     } );
 
-    super( { children: [ titleBackground, titleText ], layoutOptions: { grow: 1, stretch: true } } );
+    super( {
+      children: [ titleBackground, titleText ],
+      layoutOptions: { grow: 1, stretch: true },
+      tandem: tandem.createTandem( 'accordionBoxTitle' ),
+      phetioVisiblePropertyInstrumented: true
+    } );
 
     ManualConstraint.create( this, [ titleText ], titleTextProxy => {
       titleBackground.rectBounds = titleTextProxy.bounds;
