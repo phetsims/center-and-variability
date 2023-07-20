@@ -42,6 +42,7 @@ import SoccerPlayerGroupNumbered from '../../soccer-common/view/SoccerPlayerGrou
 import Utils from '../../../../dot/js/Utils.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import { createGatedVisibleProperty } from '../../common/model/createGatedVisibleProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
@@ -80,9 +81,7 @@ export default class VariabilityScreenView extends CAVScreenView {
 
     const createPredictionSliderOptions = ( tandem: Tandem ) => {
 
-      const visibleProperty = DerivedProperty.and( [ model.isIntervalToolVisibleProperty, new BooleanProperty( true, {
-        tandem: tandem.createTandem( 'visibleProperty' )
-      } ) ] );
+      const visibleProperty = createGatedVisibleProperty( model.isIntervalToolVisibleProperty, tandem );
       return {
         predictionThumbNodeOptions: {
           color: CAVColors.intervalToolIconShadedSphereMainColorProperty,

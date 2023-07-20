@@ -24,7 +24,7 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import AccordionBoxTitleNode from '../../common/view/AccordionBoxTitleNode.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 import CAVInfoButton from '../../common/view/CAVInfoButton.js';
-import { CreateGatedVisibleProperty } from '../../common/model/CreateGatedVisibleProperty.js';
+import { createGatedVisibleProperty } from '../../common/model/createGatedVisibleProperty.js';
 
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 
@@ -120,7 +120,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         const rangeReadoutText = new VariabilityReadoutText( rangeEqualsValueStringProperty, selectedScene.rangeValueProperty,
           model.isRangeVisibleProperty, {
             fill: CAVColors.meanColorProperty,
-            visibleProperty: CreateGatedVisibleProperty( model.isRangeVisibleProperty, rangeReadoutTextTandem ),
+            visibleProperty: createGatedVisibleProperty( model.isRangeVisibleProperty, rangeReadoutTextTandem ),
             tandem: rangeReadoutTextTandem
           } );
 
@@ -160,7 +160,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         const iqrReadoutText = new VariabilityReadoutText( iqrEqualsValueStringProperty, selectedScene.iqrValueProperty,
           model.isIQRVisibleProperty, {
             fill: CAVColors.iqrLabelColorProperty,
-            visibleProperty: CreateGatedVisibleProperty( model.isIQRVisibleProperty, iqrReadoutTextTandem ),
+            visibleProperty: createGatedVisibleProperty( model.isIQRVisibleProperty, iqrReadoutTextTandem ),
             tandem: iqrReadoutTextTandem
           } );
 
@@ -203,7 +203,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         const madReadoutText = new VariabilityReadoutText( madEqualsValueStringProperty, selectedScene.madValueProperty,
           model.isMADVisibleProperty, {
             fill: CAVColors.madColorProperty,
-            visibleProperty: CreateGatedVisibleProperty( model.isMADVisibleProperty, madReadoutTextTandem ),
+            visibleProperty: createGatedVisibleProperty( model.isMADVisibleProperty, madReadoutTextTandem ),
             tandem: madReadoutTextTandem
           } );
 

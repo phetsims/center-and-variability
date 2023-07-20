@@ -16,14 +16,13 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import CAVColors from '../CAVColors.js';
 import CAVConstants from '../CAVConstants.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import CAVModel from '../model/CAVModel.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
 import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
+import { createGatedVisibleProperty } from '../model/createGatedVisibleProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 export type KickButtonGroupOptions = SelfOptions & VBoxOptions & PickRequired<VBoxOptions, 'tandem'>;
@@ -56,9 +55,7 @@ export default class KickButtonGroup extends VBox {
       } );
 
       return new RectangularPushButton( {
-        visibleProperty: DerivedProperty.and( [ hasKickableSoccerBallsProperty, new BooleanProperty( true, {
-          tandem: tandem.createTandem( 'visibleProperty' )
-        } ) ] ),
+        visibleProperty: createGatedVisibleProperty( hasKickableSoccerBallsProperty, tandem ),
         content: content,
         baseColor: CAVColors.kickButtonFillColorProperty,
         xMargin: 12,
