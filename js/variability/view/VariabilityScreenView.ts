@@ -14,7 +14,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import CAVColors from '../../common/CAVColors.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import { AlignGroup, ManualConstraint } from '../../../../scenery/js/imports.js';
+import { ManualConstraint } from '../../../../scenery/js/imports.js';
 import SceneRadioButtonGroup from './SceneRadioButtonGroup.js';
 import VariabilityMeasureRadioButtonGroup from './VariabilityMeasureRadioButtonGroup.js';
 import CAVScreenView, { CAVScreenViewOptions } from '../../common/view/CAVScreenView.js';
@@ -239,14 +239,12 @@ export default class VariabilityScreenView extends CAVScreenView {
     this.addChild( sceneRadioButtonGroup );
     this.addChild( variabilityMeasureRadioButtonGroup );
 
-    const iconGroup = new AlignGroup();
-
     const bottomControls = this.setBottomControls(
       new VerticalCheckboxGroup( [
-        PlayAreaCheckboxFactory.getMedianCheckboxItem( iconGroup, model ),
-        PlayAreaCheckboxFactory.getMeanCheckboxItem( iconGroup, model ),
-        PlayAreaCheckboxFactory.getPointerCheckboxItem( iconGroup, model ),
-        PlayAreaCheckboxFactory.getIntervalToolCheckboxItem( iconGroup, model )
+        PlayAreaCheckboxFactory.getMedianCheckboxItem( model ),
+        PlayAreaCheckboxFactory.getMeanCheckboxItem( model ),
+        PlayAreaCheckboxFactory.getPointerCheckboxItem( model ),
+        PlayAreaCheckboxFactory.getIntervalToolCheckboxItem( model )
       ], {
         tandem: this.tandem.createTandem( 'bottomCheckboxGroup' )
       } ), options.tandem );

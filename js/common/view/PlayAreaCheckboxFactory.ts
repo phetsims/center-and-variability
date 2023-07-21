@@ -8,7 +8,6 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
@@ -34,29 +33,31 @@ const TEXT_OPTIONS = {
   maxWidth: CAVConstants.CHECKBOX_TEXT_MAX_WIDTH
 };
 
+const TEXT_ALIGN_GROUP = new AlignGroup();
+const ICON_ALIGN_GROUP = new AlignGroup();
+
 export default class PlayAreaCheckboxFactory {
 
-  private static createGridBox( text: Node, icon: Node, iconGroup: AlignGroup ): GridBox {
+  private static createGridBox( text: Node, icon: Node ): GridBox {
     return new GridBox( {
       stretch: true,
       spacing: 5,
       grow: 1,
       rows: [ [
-        new Node( { children: [ text ], layoutOptions: { xAlign: 'left' } } ),
-        iconGroup.createBox( icon, { layoutOptions: { xAlign: 'right' }, xAlign: 'center' } )
+        TEXT_ALIGN_GROUP.createBox( new Node( { children: [ text ] } ), { layoutOptions: { xAlign: 'left' }, xAlign: 'left' } ),
+        ICON_ALIGN_GROUP.createBox( icon, { layoutOptions: { xAlign: 'right' }, xAlign: 'center' } )
       ] ]
     } );
   }
 
-  public static getIntervalToolCheckboxItem( alignGroup: AlignGroup, model: VariabilityModel ): VerticalCheckboxGroupItem {
+  public static getIntervalToolCheckboxItem( model: VariabilityModel ): VerticalCheckboxGroupItem {
     return {
-      createNode: ( tandem: Tandem ) => {
+      createNode: () => {
         return PlayAreaCheckboxFactory.createGridBox(
           new Text( CenterAndVariabilityStrings.intervalToolStringProperty, TEXT_OPTIONS ),
 
           // Sampled from the design in https://github.com/phetsims/center-and-variability/issues/182
-          new VariabilityMeasureIconNode( CAVColors.intervalToolIconRectangleFillColorProperty, CAVConstants.CHECKBOX_ICON_DIMENSION - 5 ),
-          alignGroup
+          new VariabilityMeasureIconNode( CAVColors.intervalToolIconRectangleFillColorProperty, CAVConstants.CHECKBOX_ICON_DIMENSION - 5 )
         );
       },
       property: model.isIntervalToolVisibleProperty,
@@ -98,10 +99,10 @@ export default class PlayAreaCheckboxFactory {
     };
   }
 
-  public static getMedianCheckboxItem( alignGroup: AlignGroup, model: CAVModel ): VerticalCheckboxGroupItem {
+  public static getMedianCheckboxItem( model: CAVModel ): VerticalCheckboxGroupItem {
 
     return {
-      createNode: ( tandem: Tandem ) => {
+      createNode: () => {
         return PlayAreaCheckboxFactory.createGridBox(
           new Text( CenterAndVariabilityStrings.medianStringProperty, TEXT_OPTIONS ),
           new ArrowNode( 0, 0, 0, 27, {
@@ -111,7 +112,7 @@ export default class PlayAreaCheckboxFactory {
             headHeight: 12,
             headWidth: CAVConstants.CHECKBOX_ICON_DIMENSION - 7,
             maxHeight: CAVConstants.CHECKBOX_ICON_DIMENSION - 4
-          } ), alignGroup );
+          } ) );
       },
       property: model.isPlayAreaMedianVisibleProperty,
       tandemName: 'medianCheckbox',
@@ -122,10 +123,10 @@ export default class PlayAreaCheckboxFactory {
     };
   }
 
-  public static getMeanCheckboxItem( alignGroup: AlignGroup, model: CAVModel ): VerticalCheckboxGroupItem {
+  public static getMeanCheckboxItem( model: CAVModel ): VerticalCheckboxGroupItem {
     return {
-      createNode: ( tandem: Tandem ) => PlayAreaCheckboxFactory.createGridBox( new Text( CenterAndVariabilityStrings.meanStringProperty, TEXT_OPTIONS ),
-        new MeanIndicatorNode( true, true ), alignGroup ),
+      createNode: () => PlayAreaCheckboxFactory.createGridBox( new Text( CenterAndVariabilityStrings.meanStringProperty, TEXT_OPTIONS ),
+        new MeanIndicatorNode( true, true ) ),
       property: model.isPlayAreaMeanVisibleProperty,
       tandemName: 'meanCheckbox',
       options: {
@@ -135,46 +136,42 @@ export default class PlayAreaCheckboxFactory {
   }
 
   private static createPredictionItem( property: Property<boolean>, stringProperty: PhetioProperty<string>, color: TColor,
-                                       tandemName: string, alignGroup: AlignGroup ): VerticalCheckboxGroupItem {
+                                       tandemName: string ): VerticalCheckboxGroupItem {
     return {
-      createNode: ( tandem: Tandem ) => {
+      createNode: () => {
         return PlayAreaCheckboxFactory.createGridBox(
           new Text( stringProperty, TEXT_OPTIONS ),
-          new PredictionThumbNode( { color: color, maxHeight: 24, pickable: false, style: 'arrow' } ),
-          alignGroup );
+          new PredictionThumbNode( { color: color, maxHeight: 24, pickable: false, style: 'arrow' } ) );
       },
       property: property,
       tandemName: tandemName
     };
   }
 
-  public static getPredictMedianCheckboxItem( alignGroup: AlignGroup, model: CAVModel ): VerticalCheckboxGroupItem {
+  public static getPredictMedianCheckboxItem( model: CAVModel ): VerticalCheckboxGroupItem {
     return PlayAreaCheckboxFactory.createPredictionItem(
       model.isMedianPredictionVisibleProperty,
       CenterAndVariabilityStrings.predictMedianStringProperty,
       CAVColors.medianColorProperty,
-      'predictMedianCheckbox',
-      alignGroup
+      'predictMedianCheckbox'
     );
   }
 
-  public static getPredictMeanCheckboxItem( alignGroup: AlignGroup, model: MeanAndMedianModel ): VerticalCheckboxGroupItem {
+  public static getPredictMeanCheckboxItem( model: MeanAndMedianModel ): VerticalCheckboxGroupItem {
     return PlayAreaCheckboxFactory.createPredictionItem(
       model.isMeanPredictionVisibleProperty,
       CenterAndVariabilityStrings.predictMeanStringProperty,
       CAVColors.meanColorProperty,
-      'predictMeanCheckbox',
-      alignGroup
+      'predictMeanCheckbox'
     );
   }
 
-  public static getPointerCheckboxItem( alignGroup: AlignGroup, model: VariabilityModel ): VerticalCheckboxGroupItem {
+  public static getPointerCheckboxItem( model: VariabilityModel ): VerticalCheckboxGroupItem {
     return PlayAreaCheckboxFactory.createPredictionItem(
       model.isPointerVisibleProperty,
       CenterAndVariabilityStrings.pointerStringProperty,
       CAVColors.pointerColorProperty,
-      'pointerCheckbox',
-      alignGroup
+      'pointerCheckbox'
     );
   }
 }
