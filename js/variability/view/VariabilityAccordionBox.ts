@@ -88,7 +88,8 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       tandemName: 'madAccordionCheckbox',
       value: VariabilityMeasure.MAD
     } ], {
-      alignChildren: ToggleNode.RIGHT
+      alignChildren: ToggleNode.RIGHT,
+      tandem: tandem.createTandem( 'checkboxesToggleNode' )
     } ), { alignBounds: backgroundShape.bounds, xAlign: 'right', yAlign: 'center' } );
 
     backgroundNode.addChild( plotToggleNode );
