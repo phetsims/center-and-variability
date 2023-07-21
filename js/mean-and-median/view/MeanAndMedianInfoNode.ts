@@ -38,7 +38,8 @@ export default class MeanAndMedianInfoNode extends VBox {
     const resultDenominatorText = new Text( '', { fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE, maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH } );
 
     sceneModel.objectChangedEmitter.addListener( () => {
-      if ( hasEnoughDataProperty.value ) {
+
+      if ( sceneModel.getSortedStackedObjects().length > 0 ) {
         const values = sceneModel.getDataValues();
         const denominator = values.length;
 
