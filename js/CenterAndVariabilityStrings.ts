@@ -25,12 +25,18 @@ type StringsType = {
   'distanceInMetersChartLabelStringProperty': LocalizedStringProperty;
   'sortDataStringProperty': LocalizedStringProperty;
   'meanEqualsValueMPatternStringProperty': LocalizedStringProperty;
+  'meanUnknownValueStringProperty': LocalizedStringProperty;
   'meanEqualsValueMetersPatternStringProperty': LocalizedStringProperty;
   'medianEqualsValuePatternStringProperty': LocalizedStringProperty;
+  'medianEqualsValueMPatternStringProperty': LocalizedStringProperty;
+  'medianUnknownValueStringProperty': LocalizedStringProperty;
   'medianEqualsValueMetersPatternStringProperty': LocalizedStringProperty;
-  'iqrEqualsValuePatternStringProperty': LocalizedStringProperty;
-  'rangeEqualsValuePatternStringProperty': LocalizedStringProperty;
-  'madEqualsValuePatternStringProperty': LocalizedStringProperty;
+  'iqrEqualsValueMPatternStringProperty': LocalizedStringProperty;
+  'iqrUnknownValueStringProperty': LocalizedStringProperty;
+  'rangeEqualsValueMPatternStringProperty': LocalizedStringProperty;
+  'rangeUnknownValueStringProperty': LocalizedStringProperty;
+  'madEqualsValueMPatternStringProperty': LocalizedStringProperty;
+  'madUnknownValueStringProperty': LocalizedStringProperty;
   'plotTypeStringProperty': LocalizedStringProperty;
   'dotPlotStringProperty': LocalizedStringProperty;
   'linePlotStringProperty': LocalizedStringProperty;
@@ -73,7 +79,6 @@ type StringsType = {
   'outliersDescriptionStringProperty': LocalizedStringProperty;
   'kicksPatternStringProperty': LocalizedStringProperty;
   'pointerStringProperty': LocalizedStringProperty;
-  'metersAbbreviationStringProperty': LocalizedStringProperty;
 };
 
 const CenterAndVariabilityStrings = getStringModule( 'CENTER_AND_VARIABILITY' ) as StringsType;

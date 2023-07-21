@@ -8,7 +8,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import VariabilityPlotNode from './VariabilityPlotNode.js';
 import VariabilityMeasure from '../model/VariabilityMeasure.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import DerivedProperty, { UnknownDerivedProperty } from '../../../../axon/js/DerivedProperty.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import VariabilityReadoutText from './VariabilityReadoutText.js';
@@ -26,6 +26,7 @@ import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 import CAVInfoButton from '../../common/view/CAVInfoButton.js';
 import { createGatedVisibleProperty } from '../../common/model/createGatedVisibleProperty.js';
 import ButtonNode from '../../../../sun/js/buttons/ButtonNode.js';
+import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
 
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 
@@ -107,25 +108,50 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     const madValueProperty = deriveValueProperty( vsm => vsm.madValueProperty, CAVConstants.VARIABILITY_MEASURE_DECIMAL_POINTS );
     const meanValueProperty = deriveValueProperty( vsm => vsm.meanValueProperty, CAVConstants.VARIABILITY_MEASURE_DECIMAL_POINTS );
 
+    const rangePatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.rangeEqualsValueMPatternStringProperty, {
+      value: rangeValueProperty
+    } );
+
+    const medianPatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValueMPatternStringProperty, {
+      value: medianValueProperty
+    } );
+
+    const iqrPatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.iqrEqualsValueMPatternStringProperty, {
+      value: iqrValueProperty
+    } );
+
+    const meanPatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.meanEqualsValueMPatternStringProperty, {
+      value: meanValueProperty
+    } );
+
+    const madPatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.madEqualsValueMPatternStringProperty, {
+      value: madValueProperty
+    } );
+
+    const deriveStringProperty = ( accessor: ( variabilitySceneModel: VariabilitySceneModel ) => TReadOnlyProperty<number | null>,
+                                   valueUnknownStringProperty: LocalizedStringProperty, valuePatternStringProperty: PatternStringProperty<{
+        value: UnknownDerivedProperty<number | string>;
+      }> ) => {
+      return DerivedProperty.deriveAny( [ model.selectedSceneModelProperty, ...model.variabilitySceneModels.map( accessor ) ], () => {
+        const result = accessor( model.selectedSceneModelProperty.value as VariabilitySceneModel ).value;
+        return result === null ? valueUnknownStringProperty.value : valuePatternStringProperty.value;
+      } );
+    };
+
+
     const readoutsToggleNode = new AlignBox( new ToggleNode( model.selectedVariabilityMeasureProperty, [ {
       value: VariabilityMeasure.RANGE,
       tandemName: 'rangeReadoutToggleNode',
       createNode: tandem => {
-        const rangeEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.rangeEqualsValuePatternStringProperty,
-          { value: rangeValueProperty }, {
-            tandem: tandem.createTandem( 'rangeEqualsValueStringProperty' )
-          }
-        );
+        const rangeEqualsValueStringProperty = deriveStringProperty( vsm => vsm.rangeValueProperty,
+          CenterAndVariabilityStrings.rangeUnknownValueStringProperty, rangePatternStringProperty );
 
-
-        const selectedScene = model.selectedSceneModelProperty.value as VariabilitySceneModel;
         const rangeReadoutTextTandem = tandem.createTandem( 'rangeReadoutText' );
-        const rangeReadoutText = new VariabilityReadoutText( rangeEqualsValueStringProperty, selectedScene.rangeValueProperty,
-          model.isRangeVisibleProperty, {
-            fill: CAVColors.meanColorProperty,
-            visibleProperty: createGatedVisibleProperty( model.isRangeVisibleProperty, rangeReadoutTextTandem ),
-            tandem: rangeReadoutTextTandem
-          } );
+        const rangeReadoutText = new VariabilityReadoutText( rangeEqualsValueStringProperty, {
+          fill: CAVColors.meanColorProperty,
+          visibleProperty: createGatedVisibleProperty( model.isRangeVisibleProperty, rangeReadoutTextTandem ),
+          tandem: rangeReadoutTextTandem
+        } );
 
         // Nest in a new Node so that ToggleNode has independent control over the visibility
         return new VBox( {
@@ -139,33 +165,24 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       tandemName: 'iqrReadoutToggleNode',
       createNode: tandem => {
 
-        const medianEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty,
-          { value: medianValueProperty }, {
-            tandem: tandem.createTandem( 'medianEqualsValueStringProperty' )
-          }
-        );
+        const medianEqualsValueStringProperty = deriveStringProperty( vsm => vsm.medianValueProperty,
+          CenterAndVariabilityStrings.medianUnknownValueStringProperty, medianPatternStringProperty );
 
-        const selectedScene = model.selectedSceneModelProperty.value as VariabilitySceneModel;
-        const medianReadoutText = new VariabilityReadoutText( medianEqualsValueStringProperty, selectedScene.medianValueProperty,
-          model.isIQRVisibleProperty, {
-            fill: CAVColors.medianColorProperty,
-            tandem: tandem.createTandem( 'medianReadoutText' ),
-            phetioVisiblePropertyInstrumented: true
-          } );
+        const medianReadoutText = new VariabilityReadoutText( medianEqualsValueStringProperty, {
+          fill: CAVColors.medianColorProperty,
+          tandem: tandem.createTandem( 'medianReadoutText' ),
+          phetioVisiblePropertyInstrumented: true
+        } );
 
-        const iqrEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.iqrEqualsValuePatternStringProperty,
-          { value: iqrValueProperty }, {
-            tandem: tandem.createTandem( 'iqrEqualsValueStringProperty' )
-          }
-        );
+        const iqrEqualsValueStringProperty = deriveStringProperty( vsm => vsm.iqrValueProperty,
+          CenterAndVariabilityStrings.iqrUnknownValueStringProperty, iqrPatternStringProperty );
 
         const iqrReadoutTextTandem = tandem.createTandem( 'iqrReadoutText' );
-        const iqrReadoutText = new VariabilityReadoutText( iqrEqualsValueStringProperty, selectedScene.iqrValueProperty,
-          model.isIQRVisibleProperty, {
-            fill: CAVColors.iqrLabelColorProperty,
-            visibleProperty: createGatedVisibleProperty( model.isIQRVisibleProperty, iqrReadoutTextTandem ),
-            tandem: iqrReadoutTextTandem
-          } );
+        const iqrReadoutText = new VariabilityReadoutText( iqrEqualsValueStringProperty, {
+          fill: CAVColors.iqrLabelColorProperty,
+          visibleProperty: createGatedVisibleProperty( model.isIQRVisibleProperty, iqrReadoutTextTandem ),
+          tandem: iqrReadoutTextTandem
+        } );
 
         // Nest in a new Node so that ToggleNode has independent control over the visibility
         return new VBox( {
@@ -183,32 +200,24 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       tandemName: 'madReadoutToggleNode',
       createNode: tandem => {
 
-        const meanEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.meanEqualsValueMPatternStringProperty,
-          { value: meanValueProperty }, {
-            tandem: tandem.createTandem( 'meanEqualsValueStringProperty' )
-          }
-        );
-        const madEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.madEqualsValuePatternStringProperty,
-          { value: madValueProperty }, {
-            tandem: tandem.createTandem( 'madEqualsValueStringProperty' )
-          }
-        );
+        const meanEqualsValueStringProperty = deriveStringProperty( vsm => vsm.meanValueProperty,
+          CenterAndVariabilityStrings.meanUnknownValueStringProperty, meanPatternStringProperty );
 
-        const selectedScene = model.selectedSceneModelProperty.value as VariabilitySceneModel;
-        const meanReadoutText = new VariabilityReadoutText( meanEqualsValueStringProperty, selectedScene.meanValueProperty,
-          model.isMADVisibleProperty, {
-            fill: CAVColors.meanColorProperty,
-            tandem: tandem.createTandem( 'meanReadoutText' ),
-            phetioVisiblePropertyInstrumented: true
-          } );
+        const madEqualsValueStringProperty = deriveStringProperty( vsm => vsm.madValueProperty,
+          CenterAndVariabilityStrings.madUnknownValueStringProperty, madPatternStringProperty );
+
+        const meanReadoutText = new VariabilityReadoutText( meanEqualsValueStringProperty, {
+          fill: CAVColors.meanColorProperty,
+          tandem: tandem.createTandem( 'meanReadoutText' ),
+          phetioVisiblePropertyInstrumented: true
+        } );
 
         const madReadoutTextTandem = tandem.createTandem( 'madReadoutText' );
-        const madReadoutText = new VariabilityReadoutText( madEqualsValueStringProperty, selectedScene.madValueProperty,
-          model.isMADVisibleProperty, {
-            fill: CAVColors.madColorProperty,
-            visibleProperty: createGatedVisibleProperty( model.isMADVisibleProperty, madReadoutTextTandem ),
-            tandem: madReadoutTextTandem
-          } );
+        const madReadoutText = new VariabilityReadoutText( madEqualsValueStringProperty, {
+          fill: CAVColors.madColorProperty,
+          visibleProperty: createGatedVisibleProperty( model.isMADVisibleProperty, madReadoutTextTandem ),
+          tandem: madReadoutTextTandem
+        } );
 
         // Nest in a new Node so that ToggleNode has independent control over the visibility
         return new VBox( {

@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
-import { AlignBox, AlignGroup, HBox, Text, TPaint, VBox } from '../../../../scenery/js/imports.js';
+import { AlignBox, AlignGroup, Text, TPaint, VBox } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
@@ -16,7 +16,7 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
 import CAVColors from '../../common/CAVColors.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import DerivedProperty, { UnknownDerivedProperty } from '../../../../axon/js/DerivedProperty.js';
 import AccordionBoxTitleNode from '../../common/view/AccordionBoxTitleNode.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 import CAVInfoButton from '../../common/view/CAVInfoButton.js';
@@ -24,6 +24,7 @@ import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js'
 import PlotType from '../../common/model/PlotType.js';
 import ButtonNode from '../../../../sun/js/buttons/ButtonNode.js';
 import { createGatedVisibleProperty } from '../../common/model/createGatedVisibleProperty.js';
+import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
 
 export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
   private readonly medianPlotNode: MeanAndMedianPlotNode;
@@ -69,40 +70,37 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
     backgroundNode.addChild( checkboxGroupAlignBox );
     backgroundNode.addChild( meanAndMedianPlotNode );
 
+    const deriveStringProperty = ( valueProperty: TReadOnlyProperty<number | null>, valueUnknownStringProperty: LocalizedStringProperty,
+                                   valuePatternStringProperty: PatternStringProperty<{
+                                     value: UnknownDerivedProperty<number | string>;
+                                   }> ) => {
+      return DerivedProperty.deriveAny( [ model.selectedSceneModelProperty, valueProperty ], () => {
+        const result = valueProperty.value;
+        return result === null ? valueUnknownStringProperty.value : valuePatternStringProperty.value;
+      } );
+    };
+
     const createReadoutText = ( valueProperty: TReadOnlyProperty<number | null>, visibleProperty: TReadOnlyProperty<boolean>,
-                                templateStringProperty: TReadOnlyProperty<string>, fill: TPaint, readoutTandem: Tandem ) => {
+                                patternStringProperty: TReadOnlyProperty<string>, unknownStringProperty: LocalizedStringProperty, fill: TPaint, readoutTandem: Tandem ) => {
 
       const readoutProperty = new DerivedProperty( [ valueProperty, CenterAndVariabilityStrings.valueUnknownStringProperty ],
         ( value, valueUnknownString ) => {
           return value === null ? valueUnknownString : Utils.toFixed( value, 1 );
         } );
-      const readoutPatternStringProperty = new PatternStringProperty( templateStringProperty, { value: readoutProperty }, {
-        tandem: readoutTandem
+
+      const valuePatternStringProperty = new PatternStringProperty( patternStringProperty, {
+        value: readoutProperty
       } );
+      const readoutPatternStringProperty = deriveStringProperty( valueProperty, unknownStringProperty, valuePatternStringProperty );
 
       const readoutTextTandem = readoutTandem.createTandem( 'readoutText' );
 
-      const readoutValueText = new Text( readoutPatternStringProperty, {
+      return new Text( readoutPatternStringProperty, {
         fill: fill,
         font: new PhetFont( 16 ),
         maxWidth: 170,
         visibleProperty: createGatedVisibleProperty( visibleProperty, readoutTextTandem ),
         tandem: readoutTextTandem
-      } );
-
-      const metersVisibilityProperty = new DerivedProperty( [ valueProperty, visibleProperty ], ( value, visible ) => {
-        return value !== null && visible;
-      } );
-
-      return new HBox( {
-        children: [ readoutValueText,
-          new Text( CenterAndVariabilityStrings.metersAbbreviationStringProperty, {
-            visibleProperty: metersVisibilityProperty,
-            fill: fill,
-            font: new PhetFont( 16 )
-          } ) ],
-        spacing: 4,
-        excludeInvisibleChildrenFromBounds: false
       } );
     };
 
@@ -114,7 +112,8 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
         createReadoutText(
           sceneModel.medianValueProperty,
           model.isTopMedianVisibleProperty,
-          CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty,
+          CenterAndVariabilityStrings.medianEqualsValueMPatternStringProperty,
+          CenterAndVariabilityStrings.medianUnknownValueStringProperty,
           CAVColors.medianColorProperty,
           tandem.createTandem( 'medianReadoutStringProperty' )
         ),
@@ -122,6 +121,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
           sceneModel.meanValueProperty,
           model.isTopMeanVisibleProperty,
           CenterAndVariabilityStrings.meanEqualsValueMPatternStringProperty,
+          CenterAndVariabilityStrings.meanUnknownValueStringProperty,
           CAVColors.meanColorProperty,
           tandem.createTandem( 'meanReadoutStringProperty' )
         )

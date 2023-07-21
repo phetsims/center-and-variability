@@ -9,19 +9,17 @@
 
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import { HBox, Text, TextOptions } from '../../../../scenery/js/imports.js';
+import { Text, TextOptions } from '../../../../scenery/js/imports.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 export type ValueReadoutTextOptions = SelfOptions & TextOptions;
 
-export default class VariabilityReadoutText extends HBox {
+export default class VariabilityReadoutText extends Text {
 
 
-  public constructor( stringProperty: TReadOnlyProperty<string>, variabilityMeasureProperty: TReadOnlyProperty<number | null>, visibleProperty: TReadOnlyProperty<boolean>, providedOptions: ValueReadoutTextOptions ) {
+  public constructor( stringProperty: TReadOnlyProperty<string>, providedOptions: ValueReadoutTextOptions ) {
 
 
     const options = optionize<ValueReadoutTextOptions, SelfOptions, TextOptions>()( {
@@ -29,18 +27,7 @@ export default class VariabilityReadoutText extends HBox {
       maxWidth: 100
     }, providedOptions );
 
-    const variabilityValueText = new Text( stringProperty, options );
-    const metersVisibleProperty = new DerivedProperty( [ variabilityMeasureProperty, visibleProperty ], ( variabilityMeasure, visible ) => {
-      return variabilityMeasure !== null && visible;
-    } );
-
-    const metersAbbreviationText = new Text( CenterAndVariabilityStrings.metersAbbreviationStringProperty, {
-      visibleProperty: metersVisibleProperty,
-      font: new PhetFont( 16 ),
-      fill: options.fill
-    } );
-
-    super( { children: [ variabilityValueText, metersAbbreviationText ], spacing: 4, excludeInvisibleChildrenFromBounds: false } );
+    super( stringProperty, options );
   }
 }
 
