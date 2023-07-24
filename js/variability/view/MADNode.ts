@@ -15,11 +15,12 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 import IntervalBarNode from '../../common/view/IntervalBarNode.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
 };
-type MADNodeOptions = SelfOptions & StrictOmit<CAVPlotNodeOptions, 'dataPointFill'>;
+type MADNodeOptions = SelfOptions & StrictOmit<CAVPlotNodeOptions, 'dataPointFill'> & PickRequired<CAVPlotNodeOptions, 'tandem'>;
 
 export default class MADNode extends CAVPlotNode {
   public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, providedOptions: MADNodeOptions ) {
@@ -67,8 +68,7 @@ export default class MADNode extends CAVPlotNode {
 
     const meanReadoutText = new Text( meanEqualsValueStringProperty, {
       fill: CAVColors.meanColorProperty,
-      font: new PhetFont( 14 ),
-      tandem: options.tandem.createTandem( 'meanReadoutText' )
+      font: new PhetFont( 14 )
     } );
 
     if ( options.parentContext === 'info' ) {

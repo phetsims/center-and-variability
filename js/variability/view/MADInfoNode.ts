@@ -89,8 +89,8 @@ export default class MADInfoNode extends VBox {
 
         new MADNode( model, sceneModel, playAreaNumberLineNode, {
           parentContext: 'info',
-          tandem: options.tandem.createTandem( 'madNode' ),
-          layoutOptions: { topMargin: PLOT_NODE_TOP_MARGIN }
+          layoutOptions: { topMargin: PLOT_NODE_TOP_MARGIN },
+          tandem: options.tandem.createTandem( 'madNode' )
         } )
       ]
     } );

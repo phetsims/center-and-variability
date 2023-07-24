@@ -20,13 +20,12 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 type SelfOptions = {
   includeRangeOnXAxis: boolean;
   includeMeanStroke: boolean;
 };
-type CAVNumberLineNodeOptions = SelfOptions & WithRequired<NumberLineNodeOptions, 'tandem'>;
+type CAVNumberLineNodeOptions = SelfOptions & NumberLineNodeOptions;
 
 export default class CAVNumberLineNode extends NumberLineNode {
 

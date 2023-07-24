@@ -24,7 +24,7 @@ import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
 };
-export type MeanAndMedianPlotNodeOptions = SelfOptions & WithRequired<CAVPlotNodeOptions, 'tandem' | 'dataPointFill'>;
+export type MeanAndMedianPlotNodeOptions = SelfOptions & WithRequired<CAVPlotNodeOptions, 'dataPointFill'>;
 
 export default class MeanAndMedianPlotNode extends CAVPlotNode {
 

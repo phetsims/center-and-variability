@@ -38,24 +38,20 @@ export default class VariabilityPlotNode extends Node {
         parentContext: 'accordion',
         tandem: tandem.createTandem( 'rangeNode' )
       } ),
-      tandemName: 'rangeNode',
       value: VariabilityMeasure.RANGE
     }, {
       createNode: tandem => new IQRNode( model, sceneModel, playAreaNumberLineNode, {
         parentContext: 'accordion',
         tandem: tandem.createTandem( 'iqrNode' )
       } ),
-      tandemName: 'iqrNode',
       value: VariabilityMeasure.IQR
     }, {
       createNode: tandem => new MADNode( model, sceneModel, playAreaNumberLineNode, {
         parentContext: 'accordion',
         tandem: tandem.createTandem( 'madNode' )
       } ),
-      tandemName: 'madNode',
       value: VariabilityMeasure.MAD
     } ], {
-      tandem: providedOptions.tandem.createTandem( 'toggleNode' ),
       alignChildren: ToggleNode.NONE
     } );
     this.addChild( toggleNode );
@@ -71,7 +67,7 @@ export default class VariabilityPlotNode extends Node {
         tandem: providedOptions.tandem.createTandem( 'intervalToolNode' )
       } );
 
-    toggleNode.nodes.forEach( node => node.insertChild( 0, intervalToolNode ) );
+    toggleNode.nodes.forEach( ( node, i ) => node.insertChild( 0, intervalToolNode ) );
   }
 }
 

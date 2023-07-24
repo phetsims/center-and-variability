@@ -17,13 +17,13 @@ import Orientation from '../../../../phet-core/js/Orientation.js';
 import TickLabelSet from '../../../../bamboo/js/TickLabelSet.js';
 import Utils from '../../../../dot/js/Utils.js';
 import { Shape } from '../../../../kite/js/imports.js';
-import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 
 type SelfOptions = {
   color?: TPaint;
   includeXAxis: boolean;
 };
-export type NumberLineNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
+export type NumberLineNodeOptions = SelfOptions & StrictOmit<NodeOptions, 'tandem'>;
 
 export default class NumberLineNode extends Node {
 

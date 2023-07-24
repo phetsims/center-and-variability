@@ -51,41 +51,38 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     const contents = _.range( 4 ).map( i => {
       return {
         value: model.sceneModels[ i ],
-        createNode: ( tandem: Tandem ) => new VariabilityPlotNode( model, model.variabilitySceneModels[ i ], playAreaNumberLineNode, {
-          tandem: tandem,
-          bottom: backgroundShape.bounds.height
-        } ),
-
-        tandemName: 'plotNode' + ( i + 1 )
+        createNode: () => new VariabilityPlotNode( model, model.variabilitySceneModels[ i ], playAreaNumberLineNode, {
+          tandem: tandem.createTandem( 'variabilityPlotNode' + ( i + 1 ) ),
+          bottom: backgroundShape.bounds.height,
+          phetioVisiblePropertyInstrumented: false
+        } )
       };
     } );
 
     const plotToggleNode = new ToggleNode( model.selectedSceneModelProperty, contents, {
-      bottom: backgroundShape.bounds.height,
-      tandem: tandem.createTandem( 'plotToggleNode' )
+      bottom: backgroundShape.bounds.height
     } );
 
     const infoButton = new CAVInfoButton( model.isInfoVisibleProperty, backgroundShape, tandem.createTandem( 'infoButton' ) );
     backgroundNode.addChild( infoButton );
 
+    const checkboxesTandem = tandem.createTandem( 'checkboxes' );
     const checkboxToggleNode = new AlignBox( new ToggleNode( model.selectedVariabilityMeasureProperty, [ {
-      createNode: tandem => new VariabilityMeasureCheckbox( model.isRangeVisibleProperty,
-        CenterAndVariabilityStrings.rangeStringProperty, CAVColors.rangeFillProperty, { tandem: tandem } ),
-      tandemName: 'rangeAccordionCheckbox',
+      createNode: () => new VariabilityMeasureCheckbox( model.isRangeVisibleProperty,
+        CenterAndVariabilityStrings.rangeStringProperty, CAVColors.rangeFillProperty,
+        { tandem: checkboxesTandem.createTandem( 'rangeAccordionCheckbox' ) } ),
       value: VariabilityMeasure.RANGE
     }, {
-      createNode: tandem => new VariabilityMeasureCheckbox( model.isIQRVisibleProperty,
-        CenterAndVariabilityStrings.iqrStringProperty, CAVColors.iqrColorProperty, { tandem: tandem } ),
-      tandemName: 'iqrAccordionCheckbox',
+      createNode: () => new VariabilityMeasureCheckbox( model.isIQRVisibleProperty,
+        CenterAndVariabilityStrings.iqrStringProperty, CAVColors.iqrColorProperty,
+        { tandem: checkboxesTandem.createTandem( 'iqrAccordionCheckbox' ) } ),
       value: VariabilityMeasure.IQR
     }, {
-      createNode: tandem => new VariabilityMeasureCheckbox( model.isMADVisibleProperty,
-        CenterAndVariabilityStrings.madStringProperty, CAVColors.madRectangleColorProperty, { tandem: tandem } ),
-      tandemName: 'madAccordionCheckbox',
+      createNode: () => new VariabilityMeasureCheckbox( model.isMADVisibleProperty,
+        CenterAndVariabilityStrings.madStringProperty, CAVColors.madRectangleColorProperty, { tandem: checkboxesTandem.createTandem( 'madAccordionCheckbox' ) } ),
       value: VariabilityMeasure.MAD
     } ], {
-      alignChildren: ToggleNode.RIGHT,
-      tandem: tandem.createTandem( 'checkboxesToggleNode' )
+      alignChildren: ToggleNode.RIGHT
     } ), { alignBounds: backgroundShape.bounds, xAlign: 'right', yAlign: 'center' } );
 
     backgroundNode.addChild( plotToggleNode );
@@ -135,15 +132,14 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       } );
     };
 
-
+    const readoutsTandem = tandem.createTandem( 'valueReadouts' );
     const readoutsToggleNode = new AlignBox( new ToggleNode( model.selectedVariabilityMeasureProperty, [ {
       value: VariabilityMeasure.RANGE,
-      tandemName: 'rangeReadoutToggleNode',
-      createNode: tandem => {
+      createNode: () => {
         const rangeEqualsValueStringProperty = deriveStringProperty( vsm => vsm.rangeValueProperty,
           CenterAndVariabilityStrings.rangeUnknownValueStringProperty, rangePatternStringProperty );
 
-        const rangeReadoutTextTandem = tandem.createTandem( 'rangeReadoutText' );
+        const rangeReadoutTextTandem = readoutsTandem.createTandem( 'rangeReadoutText' );
         const rangeReadoutText = new VariabilityReadoutText( rangeEqualsValueStringProperty, {
           fill: CAVColors.meanColorProperty,
           visibleProperty: createGatedVisibleProperty( model.isRangeVisibleProperty, rangeReadoutTextTandem ),
@@ -159,22 +155,21 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       }
     }, {
       value: VariabilityMeasure.IQR,
-      tandemName: 'iqrReadoutToggleNode',
-      createNode: tandem => {
+      createNode: () => {
 
         const medianEqualsValueStringProperty = deriveStringProperty( vsm => vsm.medianValueProperty,
           CenterAndVariabilityStrings.medianUnknownValueStringProperty, medianPatternStringProperty );
 
         const medianReadoutText = new VariabilityReadoutText( medianEqualsValueStringProperty, {
           fill: CAVColors.medianColorProperty,
-          tandem: tandem.createTandem( 'medianReadoutText' ),
+          tandem: readoutsTandem.createTandem( 'medianReadoutText' ),
           phetioVisiblePropertyInstrumented: true
         } );
 
         const iqrEqualsValueStringProperty = deriveStringProperty( vsm => vsm.iqrValueProperty,
           CenterAndVariabilityStrings.iqrUnknownValueStringProperty, iqrPatternStringProperty );
 
-        const iqrReadoutTextTandem = tandem.createTandem( 'iqrReadoutText' );
+        const iqrReadoutTextTandem = readoutsTandem.createTandem( 'iqrReadoutText' );
         const iqrReadoutText = new VariabilityReadoutText( iqrEqualsValueStringProperty, {
           fill: CAVColors.iqrLabelColorProperty,
           visibleProperty: createGatedVisibleProperty( model.isIQRVisibleProperty, iqrReadoutTextTandem ),
@@ -194,8 +189,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       }
     }, {
       value: VariabilityMeasure.MAD,
-      tandemName: 'madReadoutToggleNode',
-      createNode: tandem => {
+      createNode: () => {
 
         const meanEqualsValueStringProperty = deriveStringProperty( vsm => vsm.meanValueProperty,
           CenterAndVariabilityStrings.meanUnknownValueStringProperty, meanPatternStringProperty );
@@ -205,11 +199,11 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
 
         const meanReadoutText = new VariabilityReadoutText( meanEqualsValueStringProperty, {
           fill: CAVColors.meanColorProperty,
-          tandem: tandem.createTandem( 'meanReadoutText' ),
+          tandem: readoutsTandem.createTandem( 'meanReadoutText' ),
           phetioVisiblePropertyInstrumented: true
         } );
 
-        const madReadoutTextTandem = tandem.createTandem( 'madReadoutText' );
+        const madReadoutTextTandem = readoutsTandem.createTandem( 'madReadoutText' );
         const madReadoutText = new VariabilityReadoutText( madEqualsValueStringProperty, {
           fill: CAVColors.madColorProperty,
           visibleProperty: createGatedVisibleProperty( model.isMADVisibleProperty, madReadoutTextTandem ),
@@ -228,8 +222,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         } );
       }
     } ], {
-      alignChildren: ToggleNode.NONE,
-      tandem: tandem.createTandem( 'readoutsToggleNode' )
+      alignChildren: ToggleNode.NONE
     } ), { alignBounds: backgroundShape.bounds, xAlign: 'left', yAlign: 'center' } );
 
     backgroundNode.addChild( readoutsToggleNode );

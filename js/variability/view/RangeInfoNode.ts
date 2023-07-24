@@ -64,7 +64,6 @@ export default class RangeInfoNode extends VBox {
 
         new RangeNode( model, sceneModel, playAreaNumberLineNode, {
           parentContext: 'info',
-          tandem: options.tandem.createTandem( 'rangeNode' ),
           layoutOptions: { topMargin: PLOT_NODE_TOP_MARGIN }
         } )
       ]

@@ -14,9 +14,9 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import AccessibleSlider, { AccessibleSliderOptions } from '../../../../sun/js/accessibility/AccessibleSlider.js';
 import Range from '../../../../dot/js/Range.js';
-import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 /**
  * Shows the highlighted area for the interval tool in the play area.

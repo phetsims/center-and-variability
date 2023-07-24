@@ -15,7 +15,6 @@ import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVConstants from '../CAVConstants.js';
-import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import DataPointNode from './DataPointNode.js';
 import CAVModel from '../model/CAVModel.js';
 import MeanAndMedianModel from '../../mean-and-median/model/MeanAndMedianModel.js';
@@ -32,7 +31,7 @@ type SelfOptions = {
   isMeanAndMedianInfoPlot?: boolean;
 };
 
-export type CAVPlotNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
+export type CAVPlotNodeOptions = SelfOptions & NodeOptions;
 export const MIN_KICKS_TEXT_OFFSET = 2;
 export const PLOT_NODE_TOP_MARGIN = 25;
 
@@ -51,9 +50,7 @@ export default class CAVPlotNode extends Node {
 
     super( options );
 
-    this.dataPointLayer = new Node( {
-      tandem: options.tandem.createTandem( 'dataPointLayer' )
-    } );
+    this.dataPointLayer = new Node();
 
     const backgroundNode = new Node();
     this.addChild( backgroundNode );
@@ -86,7 +83,6 @@ export default class CAVPlotNode extends Node {
         color: 'black',
         includeXAxis: true,
         includeMeanStroke: false,
-        tandem: options.tandem.createTandem( 'numberLineNode' ),
         y: numberLinePositionY,
         includeRangeOnXAxis: includeRangeOnXAxis
       } );
