@@ -16,7 +16,7 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
 import CAVColors from '../../common/CAVColors.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
-import DerivedProperty, { UnknownDerivedProperty } from '../../../../axon/js/DerivedProperty.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import AccordionBoxTitleNode from '../../common/view/AccordionBoxTitleNode.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 import CAVInfoButton from '../../common/view/CAVInfoButton.js';
@@ -66,16 +66,6 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
     backgroundNode.addChild( checkboxGroupAlignBox );
     backgroundNode.addChild( meanAndMedianPlotNode );
 
-    const deriveStringProperty = ( valueProperty: TReadOnlyProperty<number | null>, valueUnknownStringProperty: LocalizedStringProperty,
-                                   valuePatternStringProperty: PatternStringProperty<{
-                                     value: UnknownDerivedProperty<number | string>;
-                                   }> ) => {
-      return DerivedProperty.deriveAny( [ model.selectedSceneModelProperty, valueProperty ], () => {
-        const result = valueProperty.value;
-        return result === null ? valueUnknownStringProperty.value : valuePatternStringProperty.value;
-      } );
-    };
-
     const createReadoutText = ( valueProperty: TReadOnlyProperty<number | null>, visibleProperty: TReadOnlyProperty<boolean>,
                                 patternStringProperty: TReadOnlyProperty<string>, unknownStringProperty: LocalizedStringProperty, fill: TPaint, readoutTandem: Tandem ) => {
 
@@ -87,7 +77,10 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
       const valuePatternStringProperty = new PatternStringProperty( patternStringProperty, {
         value: readoutProperty
       } );
-      const readoutPatternStringProperty = deriveStringProperty( valueProperty, unknownStringProperty, valuePatternStringProperty );
+      const readoutPatternStringProperty = DerivedProperty.deriveAny( [ unknownStringProperty, model.selectedSceneModelProperty, valueProperty ], () => {
+        const result = valueProperty.value;
+        return result === null ? unknownStringProperty.value : valuePatternStringProperty.value;
+      } );
 
       const readoutTextTandem = readoutTandem.createTandem( 'readoutText' );
 
