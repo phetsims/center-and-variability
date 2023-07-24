@@ -6,7 +6,7 @@
  */
 
 import InfoButton from '../../../../scenery-phet/js/buttons/InfoButton.js';
-import { CONTENT_MARGIN } from './CAVAccordionBox.js';
+import { BUTTON_AND_TITLE_MARGIN } from './CAVAccordionBox.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -22,7 +22,7 @@ export default class CAVInfoButton extends InfoButton {
       listener: () => {
         isInfoVisibleProperty.value = true;
       },
-      top: backgroundShape.bounds.top + CONTENT_MARGIN,
+      top: backgroundShape.bounds.top + BUTTON_AND_TITLE_MARGIN,
       right: backgroundShape.bounds.right
     } );
   }

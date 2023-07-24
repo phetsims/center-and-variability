@@ -21,7 +21,8 @@ export type CAVAccordionBoxOptions =
   & WithRequired<AccordionBoxOptions, 'tandem' | 'expandedProperty' | 'fill'>;
 
 // constants
-export const CONTENT_MARGIN = 10;
+export const CONTENT_MARGIN = 12;
+export const BUTTON_AND_TITLE_MARGIN = 10;
 const BUTTON_SIDE_LENGTH = 20;
 
 export default class CAVAccordionBox extends AccordionBox {
@@ -33,9 +34,9 @@ export default class CAVAccordionBox extends AccordionBox {
       titleAlignX: 'left',
       titleXSpacing: 8,
       cornerRadius: 6,
-      titleYMargin: CONTENT_MARGIN,
-      buttonXMargin: CONTENT_MARGIN,
-      buttonYMargin: CONTENT_MARGIN,
+      titleYMargin: BUTTON_AND_TITLE_MARGIN,
+      buttonXMargin: BUTTON_AND_TITLE_MARGIN,
+      buttonYMargin: BUTTON_AND_TITLE_MARGIN,
       contentXMargin: CONTENT_MARGIN,
 
       // We want the content to go all the way to the top of the accordionBox.
