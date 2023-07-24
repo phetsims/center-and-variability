@@ -77,7 +77,7 @@ export default class CardNode extends AccessibleSlider( Node, 0 ) {
 
     const startDrag = () => {
       model.isDragging = true;
-      offsetContainer.moveToFront();
+      this.moveToFront();
 
       // Set the relative position within the parent.
       cardNode.setTranslation( PICK_UP_DELTA_X, PICK_UP_DELTA_Y );
