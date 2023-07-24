@@ -107,7 +107,7 @@ export default class VariabilityModel extends CAVModel {
       tandem: intervalToolTandem.createTandem( 'visibleProperty' )
     } );
 
-    this.intervalTool1ValueProperty = new NumberProperty( 2, {
+    this.intervalTool1ValueProperty = new NumberProperty( 1.7, {
       range: CAVConstants.VARIABILITY_DRAG_RANGE,
       tandem: intervalToolTandem.createTandem( 'handle1ValueProperty' )
     } );
