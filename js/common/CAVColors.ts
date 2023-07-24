@@ -64,8 +64,7 @@ const CAVColors = {
   intervalToolIconRectangleFillColorProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolIconRectangleFill', { default: '#fef8ab' } ),
   intervalToolIconShadedSphereMainColorProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolIconShadedSphereMainColor', { default: '#fdf47c' } ),
   intervalToolFillProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolFill', { default: Color.toColor( '#fefccf' ).withAlpha( 0.6 ) } ),
-  intervalToolStrokeProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolStroke', { default: '#eae4c3' } ),
-  playAreaIntervalToolHandleLineStrokeProperty: new ProfileColorProperty( centerAndVariability, 'playAreaIntervalToolHandleLineStroke', { default: new Color( 241, 255, 204, 0.5 ) } ),
+  intervalToolStrokeProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolStroke', { default: '#ffed29' } ),
 
   pointerColorProperty: new ProfileColorProperty( centerAndVariability, 'pointerColor', { default: '#fef8ab' } ),
 
