@@ -347,10 +347,17 @@ export default class CardNodeContainer extends Node {
       }
 
       if ( leftmostCard ) {
-        medianReadoutText.centerX = model.getCardPositionX( ( cardCells.length - 1 ) / 2 ) + leftmostCard.width / 2 + PICK_UP_DELTA_X;
-        if ( medianReadoutText.left < 0 ) {
-          medianReadoutText.left = 0;
+
+        if ( model.parentContext === 'accordion' ) {
+          medianReadoutText.centerX = model.getCardPositionX( ( cardCells.length - 1 ) / 2 ) + leftmostCard.width / 2 + PICK_UP_DELTA_X;
+          if ( medianReadoutText.left < 0 ) {
+            medianReadoutText.left = 0;
+          }
         }
+        else {
+          medianReadoutText.centerX = model.getCardPositionX( ( cardCells.length - 1 ) / 2 ) + leftmostCard.width / 2;
+        }
+
         medianReadoutText.bottom = MARGIN_Y - 5;
         medianReadoutText.visible = this.isTopMedianVisibleProperty.value || model.parentContext === 'info';
       }
