@@ -88,19 +88,20 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     backgroundNode.addChild( plotToggleNode );
     backgroundNode.addChild( checkboxToggleNode );
 
-    const deriveValueProperty = ( accessor: ( variabilitySceneModel: VariabilitySceneModel ) => TReadOnlyProperty<number | null>, roundToDecimal: number | null ) => {
+    const createDerivedValueProperty = ( accessor: ( sceneModel: VariabilitySceneModel ) => TReadOnlyProperty<number | null>, roundToDecimal: number | null ) => {
       return DerivedProperty.deriveAny( [ model.selectedSceneModelProperty, ...model.variabilitySceneModels.map( accessor ), CenterAndVariabilityStrings.valueUnknownStringProperty ], () => {
-        const result = accessor( model.selectedSceneModelProperty.value as VariabilitySceneModel ).value;
-        const resultRounded = result !== null && roundToDecimal !== null ? Utils.toFixed( result, roundToDecimal ) : result;
-        return resultRounded === null ? CenterAndVariabilityStrings.valueUnknownStringProperty.value : resultRounded;
+        const value = accessor( model.selectedSceneModelProperty.value as VariabilitySceneModel ).value;
+        return value === null ? CenterAndVariabilityStrings.valueUnknownStringProperty.value :
+               roundToDecimal === null ? value :
+               Utils.toFixed( value, roundToDecimal );
       } );
     };
 
-    const rangeValueProperty = deriveValueProperty( vsm => vsm.rangeValueProperty, null );
-    const medianValueProperty = deriveValueProperty( vsm => vsm.medianValueProperty, null );
-    const iqrValueProperty = deriveValueProperty( vsm => vsm.iqrValueProperty, null );
-    const madValueProperty = deriveValueProperty( vsm => vsm.madValueProperty, CAVConstants.VARIABILITY_MEASURE_DECIMAL_POINTS );
-    const meanValueProperty = deriveValueProperty( vsm => vsm.meanValueProperty, CAVConstants.VARIABILITY_MEASURE_DECIMAL_POINTS );
+    const rangeValueProperty = createDerivedValueProperty( sceneModel => sceneModel.rangeValueProperty, null );
+    const medianValueProperty = createDerivedValueProperty( sceneModel => sceneModel.medianValueProperty, null );
+    const iqrValueProperty = createDerivedValueProperty( sceneModel => sceneModel.iqrValueProperty, null );
+    const madValueProperty = createDerivedValueProperty( sceneModel => sceneModel.madValueProperty, CAVConstants.VARIABILITY_MEASURE_DECIMAL_POINTS );
+    const meanValueProperty = createDerivedValueProperty( sceneModel => sceneModel.meanValueProperty, CAVConstants.VARIABILITY_MEASURE_DECIMAL_POINTS );
 
     const rangePatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.rangeEqualsValueMPatternStringProperty, {
       value: rangeValueProperty
