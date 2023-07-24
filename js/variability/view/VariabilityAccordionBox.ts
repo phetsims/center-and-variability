@@ -1,6 +1,6 @@
 // Copyright 2023, University of Colorado Boulder
 
-import { AlignBox, AlignGroup, VBox } from '../../../../scenery/js/imports.js';
+import { AlignBox, VBox } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -68,23 +68,19 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     const infoButton = new CAVInfoButton( model.isInfoVisibleProperty, backgroundShape, tandem.createTandem( 'infoButton' ) );
     backgroundNode.addChild( infoButton );
 
-    // Ensure a consistent width among both the icons and the text across the different accordionBox views.
-    const textGroup = new AlignGroup();
-    const iconGroup = new AlignGroup();
-
     const checkboxToggleNode = new AlignBox( new ToggleNode( model.selectedVariabilityMeasureProperty, [ {
       createNode: tandem => new VariabilityMeasureCheckbox( model.isRangeVisibleProperty,
-        CenterAndVariabilityStrings.rangeStringProperty, iconGroup, textGroup, CAVColors.rangeFillProperty, { tandem: tandem } ),
+        CenterAndVariabilityStrings.rangeStringProperty, CAVColors.rangeFillProperty, { tandem: tandem } ),
       tandemName: 'rangeAccordionCheckbox',
       value: VariabilityMeasure.RANGE
     }, {
       createNode: tandem => new VariabilityMeasureCheckbox( model.isIQRVisibleProperty,
-        CenterAndVariabilityStrings.iqrStringProperty, iconGroup, textGroup, CAVColors.iqrColorProperty, { tandem: tandem } ),
+        CenterAndVariabilityStrings.iqrStringProperty, CAVColors.iqrColorProperty, { tandem: tandem } ),
       tandemName: 'iqrAccordionCheckbox',
       value: VariabilityMeasure.IQR
     }, {
       createNode: tandem => new VariabilityMeasureCheckbox( model.isMADVisibleProperty,
-        CenterAndVariabilityStrings.madStringProperty, iconGroup, textGroup, CAVColors.madRectangleColorProperty, { tandem: tandem } ),
+        CenterAndVariabilityStrings.madStringProperty, CAVColors.madRectangleColorProperty, { tandem: tandem } ),
       tandemName: 'madAccordionCheckbox',
       value: VariabilityMeasure.MAD
     } ], {

@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
-import { AlignBox, AlignGroup, Text, TPaint, VBox } from '../../../../scenery/js/imports.js';
+import { AlignBox, Text, TPaint, VBox } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
@@ -31,8 +31,6 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
   public readonly infoButton: ButtonNode;
 
   public constructor( model: MeanAndMedianModel, layoutBounds: Bounds2, tandem: Tandem, top: number, playAreaNumberLineNode: NumberLineNode ) {
-    const iconGroup = new AlignGroup();
-    const textGroup = new AlignGroup();
 
     // Specify a "footprint" within which we do all the layout.
     const backgroundShape = CAVConstants.ACCORDION_BOX_CONTENTS_SHAPE_MEAN_AND_MEDIAN;
@@ -50,8 +48,8 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
     } );
 
     const checkboxGroup = new VerticalCheckboxGroup( [
-      AccordionBoxCheckboxFactory.getMedianCheckboxWithIconItem( iconGroup, textGroup, model.isTopMedianVisibleProperty, model ),
-      AccordionBoxCheckboxFactory.getMeanCheckboxWithIconItem( iconGroup, textGroup, model.isTopMeanVisibleProperty, model )
+      AccordionBoxCheckboxFactory.getMedianCheckboxWithIconItem( model.isTopMedianVisibleProperty ),
+      AccordionBoxCheckboxFactory.getMeanCheckboxWithIconItem( model.isTopMeanVisibleProperty, model )
     ], {
       tandem: tandem.createTandem( 'checkboxGroup' ),
       right: backgroundShape.bounds.width,

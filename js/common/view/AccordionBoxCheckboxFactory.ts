@@ -18,8 +18,6 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import Property from '../../../../axon/js/Property.js';
 import PlayAreaCheckboxFactory from './PlayAreaCheckboxFactory.js';
 import CAVModel from '../model/CAVModel.js';
-import CardNodeContainer from '../../median/view/CardNodeContainer.js';
-import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
 import MeanIndicatorNode from './MeanIndicatorNode.js';
 import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
 
@@ -28,23 +26,27 @@ const ICON_WIDTH = CAVConstants.CHECKBOX_ICON_DIMENSION;
 
 const LINE_WIDTH = MedianBarNode.LINE_WIDTH;
 
+const TEXT_GROUP = new AlignGroup();
+const ICON_GROUP = new AlignGroup();
+const CHECKBOX_GROUP = new AlignGroup();
+
 export default class AccordionBoxCheckboxFactory {
 
-  public static createGridBox( text: Node, icon: Node, iconGroup: AlignGroup, textGroup: AlignGroup ): GridBox {
-    return new GridBox( {
+  public static createGridBox( text: Node, icon: Node ): Node {
+    return CHECKBOX_GROUP.createBox( new GridBox( {
       spacing: 10,
       stretch: true,
       grow: 1,
       rows: [ [
-        textGroup.createBox( text, { xAlign: 'left' } ),
-        iconGroup.createBox( icon, { xAlign: 'right' } )
+        TEXT_GROUP.createBox( text, { xAlign: 'left' } ),
+        ICON_GROUP.createBox( icon, { xAlign: 'right' } )
       ] ]
-    } );
+    } ) );
   }
 
-  public static getSortDataCheckboxItem( isSortingDataProperty: Property<boolean>, sceneModel: SoccerSceneModel, cardNodeContainer: CardNodeContainer ): VerticalCheckboxGroupItem {
+  public static getSortDataCheckboxItem( isSortingDataProperty: Property<boolean> ): VerticalCheckboxGroupItem {
     return {
-      createNode: ( tandem: Tandem ) => new Text( CenterAndVariabilityStrings.sortDataStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
+      createNode: ( tandem: Tandem ) => CHECKBOX_GROUP.createBox( new Text( CenterAndVariabilityStrings.sortDataStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ), { xAlign: 'left' } ),
       property: isSortingDataProperty,
       tandemName: 'sortDataCheckbox',
       options: {
@@ -55,7 +57,7 @@ export default class AccordionBoxCheckboxFactory {
     };
   }
 
-  public static getMedianCheckboxWithIconItem( iconGroup: AlignGroup, textGroup: AlignGroup, isTopMedianVisibleProperty: Property<boolean>, model: CAVModel ): VerticalCheckboxGroupItem {
+  public static getMedianCheckboxWithIconItem( isTopMedianVisibleProperty: Property<boolean> ): VerticalCheckboxGroupItem {
     return {
       createNode: ( tandem: Tandem ) => {
         return AccordionBoxCheckboxFactory.createGridBox(
@@ -64,8 +66,7 @@ export default class AccordionBoxCheckboxFactory {
             barStyle: 'continuous',
             arrowScale: 0.75
           } )
-            .setMedianBarShape( 0, 0, ICON_WIDTH / 2 - LINE_WIDTH / 2, ICON_WIDTH - LINE_WIDTH, true ),
-          iconGroup, textGroup
+            .setMedianBarShape( 0, 0, ICON_WIDTH / 2 - LINE_WIDTH / 2, ICON_WIDTH - LINE_WIDTH, true )
         );
       },
       property: isTopMedianVisibleProperty,
@@ -81,7 +82,7 @@ export default class AccordionBoxCheckboxFactory {
 
   public static getMedianCheckboxWithoutIconItem( isTopMedianVisibleProperty: Property<boolean>, model: CAVModel ): VerticalCheckboxGroupItem {
     return {
-      createNode: ( tandem: Tandem ) => new Text( CenterAndVariabilityStrings.medianStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
+      createNode: () => CHECKBOX_GROUP.createBox( new Text( CenterAndVariabilityStrings.medianStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ), { xAlign: 'left' } ),
       property: isTopMedianVisibleProperty,
       tandemName: 'medianCheckbox',
       options: {
@@ -90,9 +91,9 @@ export default class AccordionBoxCheckboxFactory {
     };
   }
 
-  public static getMeanCheckboxWithIconItem( iconGroup: AlignGroup, textGroup: AlignGroup, isTopMeanVisibleProperty: Property<boolean>, model: CAVModel ): VerticalCheckboxGroupItem {
+  public static getMeanCheckboxWithIconItem( isTopMeanVisibleProperty: Property<boolean>, model: CAVModel ): VerticalCheckboxGroupItem {
     return {
-      createNode: ( tandem: Tandem ) => {
+      createNode: () => {
         return AccordionBoxCheckboxFactory.createGridBox(
           new Text( CenterAndVariabilityStrings.meanStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
           new Node( {
@@ -107,8 +108,7 @@ export default class AccordionBoxCheckboxFactory {
               // Triangle
               new MeanIndicatorNode( false, true )
             ]
-          } ),
-          iconGroup, textGroup
+          } )
         );
       },
       property: isTopMeanVisibleProperty,
