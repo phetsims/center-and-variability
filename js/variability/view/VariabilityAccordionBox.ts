@@ -141,7 +141,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
 
         const rangeReadoutTextTandem = readoutsTandem.createTandem( 'rangeReadoutText' );
         const rangeReadoutText = new VariabilityReadoutText( rangeEqualsValueStringProperty, {
-          fill: CAVColors.meanColorProperty,
+          fill: CAVColors.rangeReadoutColorProperty,
           visibleProperty: createGatedVisibleProperty( model.isRangeVisibleProperty, rangeReadoutTextTandem ),
           tandem: rangeReadoutTextTandem
         } );
