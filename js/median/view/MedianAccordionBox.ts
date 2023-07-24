@@ -28,11 +28,10 @@ export default class MedianAccordionBox extends CAVAccordionBox {
     const cardNodeContainer = new CardNodeContainer( model.cardContainerModel, model.isSortingDataProperty,
       model.selectedSceneModelProperty, model.isTopMedianVisibleProperty, {
 
-      // Expose this intermediate layer to make it so that clients can hide the number cards with one call
-      tandem: tandem.createTandem( 'cardNodeContainer' ),
-      x: CAVConstants.ACCORDION_BOX_HORIZONTAL_MARGIN,
-      y: backgroundShape.bounds.centerY - 5
-    } );
+        // Expose this intermediate layer to make it so that clients can hide the number cards with one call
+        tandem: tandem.createTandem( 'cardNodeContainer' ),
+        y: backgroundShape.bounds.centerY - 5
+      } );
 
     const checkboxGroup = new VerticalCheckboxGroup( [
       AccordionBoxCheckboxFactory.getSortDataCheckboxItem( model.isSortingDataProperty, model.sceneModels[ 0 ], cardNodeContainer ),
@@ -44,8 +43,7 @@ export default class MedianAccordionBox extends CAVAccordionBox {
     const checkboxGroupAlignBox = new AlignBox( checkboxGroup, {
       alignBounds: backgroundShape.bounds,
       xAlign: 'right',
-      yAlign: 'center',
-      margin: CAVConstants.ACCORDION_BOX_HORIZONTAL_MARGIN
+      yAlign: 'center'
     } );
 
     const infoButton = new CAVInfoButton( model.isInfoVisibleProperty, backgroundShape, tandem.createTandem( 'infoButton' ) );

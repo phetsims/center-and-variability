@@ -54,7 +54,8 @@ export default class CardNodeContainer extends Node {
     barStyle: 'split'
   } );
 
-  private readonly cardLayer = new Node();
+  // Add padding to the card layer to give space for the medianBarNode
+  private readonly cardLayer = new Node( { x: CAVConstants.CARD_SPACING / 2 - MedianBarNode.HALF_SPLIT_WIDTH + MedianBarNode.LINE_WIDTH } );
   private isReadyForCelebration = false;
   private remainingCelebrationAnimations: ( () => void )[] = [];
   private dataSortedNodeAnimation: Animation | null = null;
@@ -324,7 +325,7 @@ export default class CardNodeContainer extends Node {
       const cardCells = model.getCardsInCellOrder();
       const leftmostCard = this.cardMap.get( cardCells[ 0 ] );
 
-      const MARGIN_X = CAVConstants.CARD_SPACING / 2 - MedianBarNode.HALF_SPLIT_WIDTH;
+      const MARGIN_X = CAVConstants.CARD_SPACING / 2 + MedianBarNode.HALF_SPLIT_WIDTH;
 
       // Distance between the top card to the median bar when the card is not being held
       const MARGIN_Y = PICK_UP_DELTA_Y - 3;
@@ -335,10 +336,11 @@ export default class CardNodeContainer extends Node {
 
         // If the card model exists the cardNode must also exist
         const rightmostCard = this.cardMap.get( cardCells[ cardCells.length - 1 ] )!;
-        const left = model.getCardPositionX( 0 ) - MARGIN_X;
+        const left = model.getCardPositionX( 0 ) + MedianBarNode.LINE_WIDTH;
         const right = model.getCardPositionX( cardCells.length - 1 ) + rightmostCard.width + PICK_UP_DELTA_X + MARGIN_X;
+        const median = ( left + right ) / 2;
 
-        this.medianBarNode.setMedianBarShape( barY, left, ( left + right ) / 2, right, false );
+        this.medianBarNode.setMedianBarShape( barY, left, median, right, false );
       }
       else {
         this.medianBarNode.clear();
@@ -346,8 +348,8 @@ export default class CardNodeContainer extends Node {
 
       if ( leftmostCard ) {
         medianReadoutText.centerX = model.getCardPositionX( ( cardCells.length - 1 ) / 2 ) + leftmostCard.width / 2 + PICK_UP_DELTA_X;
-        if ( medianReadoutText.left < -12 ) {
-          medianReadoutText.left = -12;
+        if ( medianReadoutText.left < 0 ) {
+          medianReadoutText.left = 0;
         }
         medianReadoutText.bottom = MARGIN_Y - 5;
         medianReadoutText.visible = this.isTopMedianVisibleProperty.value || model.parentContext === 'info';
