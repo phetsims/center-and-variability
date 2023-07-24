@@ -66,7 +66,7 @@ const CAVColors = {
   intervalToolFillProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolFill', { default: Color.toColor( '#fefccf' ).withAlpha( 0.6 ) } ),
   intervalToolStrokeProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolStroke', { default: '#ffed29' } ),
 
-  pointerColorProperty: new ProfileColorProperty( centerAndVariability, 'pointerColor', { default: '#fef8ab' } ),
+  pointerColorProperty: new ProfileColorProperty( centerAndVariability, 'pointerColor', { default: '#ffdd00' } ),
 
   rangeFillProperty: new ProfileColorProperty( centerAndVariability, 'rangeFill', { default: new Color( '#c3fdb9' ).withAlpha( 0.7 ) } ),
 
