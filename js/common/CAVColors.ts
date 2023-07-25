@@ -48,7 +48,7 @@ const CAVColors = {
   medianColorProperty: new ProfileColorProperty( centerAndVariability, 'medianColor', { default: '#f03000' } ),
   meanColorProperty: new ProfileColorProperty( centerAndVariability, 'meanColor', { default: '#8500bd' } ),
 
-  rangeReadoutColorProperty: new ProfileColorProperty( centerAndVariability, 'rangeReadoutColor', { default: 'blue' } ),
+  rangeReadoutColorProperty: new ProfileColorProperty( centerAndVariability, 'rangeReadoutColor', { default: new Color( '#215E2B' ) } ),
   iqrLabelColorProperty: new ProfileColorProperty( centerAndVariability, 'iqrLabelColor', { default: 'black' } ),
   madColorProperty: new ProfileColorProperty( centerAndVariability, 'madColor', { default: 'black' } ),
   iqrColorProperty: new ProfileColorProperty( centerAndVariability, 'iqrColor', { default: new Color( '#99ffff' ).withAlpha( 0.55 ) } ),
