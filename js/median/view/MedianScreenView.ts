@@ -74,17 +74,7 @@ export default class MedianScreenView extends CAVScreenView {
       }
     } );
 
-    this.screenViewRootNode.pdomOrder = [
-      this.kickButtonGroup,
-      this.backScreenViewLayer,
-      bottomControls,
-      medianPredictionNode,
-      this.intervalToolLayer,
-      this.accordionBox,
-      this.medianAccordionBox.infoButton,
-      this.eraseButton,
-      this.resetAllButton
-    ];
+    this.cavSetPDOMOrder( bottomControls, [ medianPredictionNode ], this.medianAccordionBox.infoButton );
   }
 }
 

@@ -94,18 +94,7 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
       }
     } );
 
-    this.screenViewRootNode.pdomOrder = [
-      this.kickButtonGroup,
-      this.backScreenViewLayer,
-      bottomControls,
-      medianPredictionNode,
-      meanPredictionNode,
-      this.intervalToolLayer,
-      this.accordionBox,
-      meanAndMedianAccordionBox.infoButton,
-      this.eraseButton,
-      this.resetAllButton
-    ];
+    this.cavSetPDOMOrder( bottomControls, [ medianPredictionNode, meanPredictionNode ], meanAndMedianAccordionBox.infoButton );
   }
 }
 

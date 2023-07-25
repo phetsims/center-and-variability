@@ -269,21 +269,8 @@ export default class VariabilityScreenView extends CAVScreenView {
         } );
     } );
 
-    this.screenViewRootNode.pdomOrder = [
-      this.kickButtonGroup,
-      this.backScreenViewLayer,
-      bottomControls,
-      pointerSlider,
-      handle1,
-      handle2,
-      this.intervalToolLayer,
-      sceneRadioButtonGroup,
-      variabilityMeasureRadioButtonGroup,
-      this.accordionBox,
-      variabilityAccordionBox.infoButton,
-      this.eraseButton,
-      this.resetAllButton
-    ];
+    this.cavSetPDOMOrder( bottomControls, [ pointerSlider, handle1, handle2 ], variabilityAccordionBox.infoButton,
+      sceneRadioButtonGroup, variabilityMeasureRadioButtonGroup );
   }
 
   public override getSoccerPlayerImageSet( soccerPlayer: SoccerPlayer, sceneModel: CAVSoccerSceneModel ): SoccerPlayerImageSet {
