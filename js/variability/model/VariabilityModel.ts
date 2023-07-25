@@ -95,7 +95,7 @@ export default class VariabilityModel extends CAVModel {
       tandem: pointerTandem.createTandem( 'isPointerVisibleProperty' )
     } );
 
-    this.pointerValueProperty = new NumberProperty( 5, {
+    this.pointerValueProperty = new NumberProperty( 1, {
       tandem: pointerTandem.createTandem( 'pointerValueProperty' )
     } );
 
