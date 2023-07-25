@@ -75,6 +75,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
 
   public readonly objectValueBecameNonNullEmitter: TEmitter;
   public readonly resetEmitter: TEmitter = new Emitter();
+  public readonly clearDataEmitter: TEmitter = new Emitter();
   public readonly numberOfDataPointsProperty: NumberProperty;
 
   public readonly kickers: Kicker[];
@@ -385,6 +386,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
 
     this.isClearingData = false;
     this.updateDataMeasures();
+    this.clearDataEmitter.emit();
 
     // This emitter was suppressed during isClearingData, so we must synchronize listeners now
     this.objectChangedEmitter.emit();

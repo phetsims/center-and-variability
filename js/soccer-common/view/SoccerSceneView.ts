@@ -106,6 +106,11 @@ export default class SoccerSceneView {
     // TODO: What if there is no focusedSoccerBallProperty? Make sure this isn't true in that case, see https://github.com/phetsims/center-and-variability/issues/351
     const isSoccerBallGrabbedProperty = new Property( false );
 
+    sceneModel.clearDataEmitter.addListener( () => {
+      focusedSoccerBallProperty.reset();
+      isSoccerBallGrabbedProperty.reset();
+    } );
+
     // Update pointer areas when topmost ball changes
     sceneModel.stackChangedEmitter.addListener( stack => {
 
