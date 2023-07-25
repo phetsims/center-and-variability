@@ -95,7 +95,7 @@ export default class VariabilityModel extends CAVModel {
       tandem: pointerTandem.createTandem( 'isPointerVisibleProperty' )
     } );
 
-    this.pointerValueProperty = new NumberProperty( 1, {
+    this.pointerValueProperty = new NumberProperty( 5, {
       tandem: pointerTandem.createTandem( 'pointerValueProperty' )
     } );
 
@@ -151,6 +151,7 @@ export default class VariabilityModel extends CAVModel {
     this.intervalTool2ValueProperty.reset();
     this.intervalToolDeltaStableProperty.reset();
 
+    this.pointerValueProperty.reset();
     this.isPointerVisibleProperty.reset();
 
     this.resetEmitter.emit();
