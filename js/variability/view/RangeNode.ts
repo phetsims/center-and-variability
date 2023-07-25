@@ -13,7 +13,7 @@ import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVPlotNode, { CAVPlotNodeOptions, MIN_KICKS_TEXT_OFFSET } from '../../common/view/CAVPlotNode.js';
 import CAVObjectType from '../../common/model/CAVObjectType.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import CAVConstants from '../../common/CAVConstants.js';
+import CAVConstants, { DATA_POINT_SCALE_PROPERTY } from '../../common/CAVConstants.js';
 import CAVColors from '../../common/CAVColors.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import optionize from '../../../../phet-core/js/optionize.js';
@@ -81,7 +81,7 @@ export default class RangeNode extends CAVPlotNode {
         const floor = this.modelViewTransform.modelToViewY( 0 );
 
         if ( options.parentContext === 'info' ) {
-          const dataPointRadius = this.modelViewTransform.modelToViewDeltaX( CAVObjectType.DATA_POINT.radius );
+          const dataPointRadius = this.modelViewTransform.modelToViewDeltaX( CAVObjectType.DATA_POINT.radius ) * DATA_POINT_SCALE_PROPERTY.value;
           const topPadding = 3 * dataPointRadius;
           rangeRectangle.rectHeight = floor - highestYValue + dataPointRadius + topPadding;
         }
