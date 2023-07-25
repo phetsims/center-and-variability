@@ -8,7 +8,7 @@
  */
 
 
-import { FocusHighlightFromNode, KeyboardListener, Node, FocusHighlightPath } from '../../../../scenery/js/imports.js';
+import { FocusHighlightFromNode, FocusHighlightPath, KeyboardListener, Node } from '../../../../scenery/js/imports.js';
 import SoccerBallNode from './SoccerBallNode.js';
 import { SoccerBallPhase } from '../model/SoccerBallPhase.js';
 import SoccerSceneModel from '../model/SoccerSceneModel.js';
@@ -100,7 +100,7 @@ export default class SoccerSceneView {
       return soccerBallNode;
     } );
 
-    // The index of the top soccer ball Nodes that is focusable.
+    // The soccerBall that is receiving highlight focus in the backLayerSoccerBallLayer group highlight.
     const focusedSoccerBallProperty = new Property<SoccerBall | null>( null );
 
     // TODO: What if there is no focusedSoccerBallProperty? Make sure this isn't true in that case, see https://github.com/phetsims/center-and-variability/issues/351
@@ -140,13 +140,28 @@ export default class SoccerSceneView {
           soccerBallNode.touchArea = Shape.rectangle( 0, 0, 0, 0 );
         }
       }
+
+      // When a user is focused on the backLayerSoccerBallLayer, but no balls have landed yet, we want to ensure that
+      // a focusedSoccerBall gets assigned once the ball lands.
+      const topSoccerBalls = sceneModel.getTopSoccerBalls();
+      if ( focusedSoccerBallProperty.value === null && topSoccerBalls.length > 0 && backLayerSoccerBallLayer.focused ) {
+        focusedSoccerBallProperty.value = topSoccerBalls[ 0 ];
+      }
+
+      // Anytime a stack changes and the focusedSoccerBall is assigned, we want to make sure the focusedSoccerBall
+      // stays on top.
+      if ( focusedSoccerBallProperty.value !== null ) {
+        assert && assert( focusedSoccerBallProperty.value.valueProperty.value !== null, 'The valueProperty of the focusedSoccerBall should not be null.' );
+        const focusedStack = sceneModel.getStackAtLocation( focusedSoccerBallProperty.value.valueProperty.value! );
+        focusedSoccerBallProperty.value = focusedStack[ focusedStack.length - 1 ];
+      }
     } );
 
     backLayerSoccerBallLayer.addInputListener( {
       focus: () => {
-        if ( focusedSoccerBallProperty.value === null ) {
-          const leftmostBall = sceneModel.getTopSoccerBalls()[ 0 ];
-          focusedSoccerBallProperty.value = leftmostBall;
+        const topSoccerBalls = sceneModel.getTopSoccerBalls();
+        if ( focusedSoccerBallProperty.value === null && topSoccerBalls.length > 0 ) {
+          focusedSoccerBallProperty.value = topSoccerBalls[ 0 ];
         }
       },
       blur: () => {
@@ -183,46 +198,48 @@ export default class SoccerSceneView {
         const topBallNodes = sceneModel.getTopSoccerBalls().map( soccerBall => soccerBallMap.get( soccerBall )! );
 
         // Select a soccer ball
-        if ( ( keysPressed === 'arrowRight' || keysPressed === 'arrowLeft' ) ) {
+        if ( focusedSoccerBallProperty.value !== null ) {
+          if ( ( keysPressed === 'arrowRight' || keysPressed === 'arrowLeft' ) ) {
 
-          if ( !isSoccerBallGrabbedProperty.value ) {
-            const delta = listener.keysPressed === 'arrowRight' ? 1 : -1;
-            const numberOfTopSoccerBalls = sceneModel.getTopSoccerBalls().length;
+            if ( !isSoccerBallGrabbedProperty.value ) {
+              const delta = listener.keysPressed === 'arrowRight' ? 1 : -1;
+              const numberOfTopSoccerBalls = sceneModel.getTopSoccerBalls().length;
 
-            // We are deciding not to wrap the value around the ends of the range because the grabbed soccer ball
-            // also does not wrap.
-            const currentIndex = topBallNodes.indexOf( soccerBallMap.get( focusedSoccerBallProperty.value! )! );
-            const nextIndex = Utils.clamp( currentIndex + delta, 0, numberOfTopSoccerBalls - 1 );
-            focusedSoccerBallProperty.value = topBallNodes[ nextIndex ].soccerBall;
+              // We are deciding not to wrap the value around the ends of the range because the grabbed soccer ball
+              // also does not wrap.
+              const currentIndex = topBallNodes.indexOf( soccerBallMap.get( focusedSoccerBallProperty.value )! );
+              const nextIndex = Utils.clamp( currentIndex + delta, 0, numberOfTopSoccerBalls - 1 );
+              focusedSoccerBallProperty.value = topBallNodes[ nextIndex ].soccerBall;
+            }
+            else {
+              const delta = listener.keysPressed === 'arrowLeft' ? -1 : 1;
+              const soccerBall = focusedSoccerBallProperty.value;
+              soccerBall.valueProperty.value = physicalRange.constrainValue( soccerBall.valueProperty.value! + delta );
+            }
           }
-          else {
-            const delta = listener.keysPressed === 'arrowLeft' ? -1 : 1;
-            const soccerBall = focusedSoccerBallProperty.value!;
-            soccerBall.valueProperty.value = physicalRange.constrainValue( soccerBall.valueProperty.value! + delta );
+          else if ( keysPressed === 'enter' || keysPressed === 'space' ) {
+            isSoccerBallGrabbedProperty.value = !isSoccerBallGrabbedProperty.value;
           }
-        }
-        else if ( keysPressed === 'enter' || keysPressed === 'space' ) {
-          isSoccerBallGrabbedProperty.value = !isSoccerBallGrabbedProperty.value;
-        }
-        else if ( isSoccerBallGrabbedProperty.value && focusedSoccerBallProperty.value ) {
+          else if ( isSoccerBallGrabbedProperty.value ) {
 
-          if ( keysPressed === 'escape' ) {
-            isSoccerBallGrabbedProperty.value = false;
-          }
-          else {
-            focusedSoccerBallProperty.value.valueProperty.value = keysPressed === 'home' ? physicalRange.min :
-                                                                  keysPressed === 'end' ? physicalRange.max :
-                                                                  keysPressed === '1' ? 1 :
-                                                                  keysPressed === '2' ? 2 :
-                                                                  keysPressed === '3' ? 3 :
-                                                                  keysPressed === '4' ? 4 :
-                                                                  keysPressed === '5' ? 5 :
-                                                                  keysPressed === '6' ? 6 :
-                                                                  keysPressed === '7' ? 7 :
-                                                                  keysPressed === '8' ? 8 :
-                                                                  keysPressed === '9' ? 9 :
-                                                                  keysPressed === '0' ? 10 :
-                                                                  focusedSoccerBallProperty.value.valueProperty.value;
+            if ( keysPressed === 'escape' ) {
+              isSoccerBallGrabbedProperty.value = false;
+            }
+            else {
+              focusedSoccerBallProperty.value.valueProperty.value = keysPressed === 'home' ? physicalRange.min :
+                                                                    keysPressed === 'end' ? physicalRange.max :
+                                                                    keysPressed === '1' ? 1 :
+                                                                    keysPressed === '2' ? 2 :
+                                                                    keysPressed === '3' ? 3 :
+                                                                    keysPressed === '4' ? 4 :
+                                                                    keysPressed === '5' ? 5 :
+                                                                    keysPressed === '6' ? 6 :
+                                                                    keysPressed === '7' ? 7 :
+                                                                    keysPressed === '8' ? 8 :
+                                                                    keysPressed === '9' ? 9 :
+                                                                    keysPressed === '0' ? 10 :
+                                                                    focusedSoccerBallProperty.value.valueProperty.value;
+            }
           }
         }
       }
