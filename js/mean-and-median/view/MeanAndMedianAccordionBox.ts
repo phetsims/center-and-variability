@@ -23,7 +23,6 @@ import CAVInfoButton from '../../common/view/CAVInfoButton.js';
 import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js';
 import PlotType from '../../common/model/PlotType.js';
 import ButtonNode from '../../../../sun/js/buttons/ButtonNode.js';
-import { createGatedVisibleProperty } from '../../common/model/createGatedVisibleProperty.js';
 import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
 
 export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
@@ -76,7 +75,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
 
       const valuePatternStringProperty = new PatternStringProperty( patternStringProperty, {
         value: readoutProperty
-      } );
+      }, { tandem: readoutTandem } );
       const readoutPatternStringProperty = DerivedProperty.deriveAny( [ unknownStringProperty, model.selectedSceneModelProperty, valueProperty ], () => {
         const result = valueProperty.value;
         return result === null ? unknownStringProperty.value : valuePatternStringProperty.value;
@@ -88,7 +87,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
         fill: fill,
         font: new PhetFont( 16 ),
         maxWidth: 170,
-        visibleProperty: createGatedVisibleProperty( visibleProperty, readoutTextTandem ),
+        visibleProperty: visibleProperty,
         tandem: readoutTextTandem
       } );
     };

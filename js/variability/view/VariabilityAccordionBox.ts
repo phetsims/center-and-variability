@@ -24,7 +24,6 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import AccordionBoxTitleNode from '../../common/view/AccordionBoxTitleNode.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 import CAVInfoButton from '../../common/view/CAVInfoButton.js';
-import { createGatedVisibleProperty } from '../../common/model/createGatedVisibleProperty.js';
 import ButtonNode from '../../../../sun/js/buttons/ButtonNode.js';
 import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
 
@@ -143,7 +142,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         const rangeReadoutTextTandem = readoutsTandem.createTandem( 'rangeReadoutText' );
         const rangeReadoutText = new VariabilityReadoutText( rangeEqualsValueStringProperty, {
           fill: CAVColors.rangeReadoutColorProperty,
-          visibleProperty: createGatedVisibleProperty( model.isRangeVisibleProperty, rangeReadoutTextTandem ),
+          visibleProperty: model.isRangeVisibleProperty,
           tandem: rangeReadoutTextTandem
         } );
 
@@ -173,7 +172,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         const iqrReadoutTextTandem = readoutsTandem.createTandem( 'iqrReadoutText' );
         const iqrReadoutText = new VariabilityReadoutText( iqrEqualsValueStringProperty, {
           fill: CAVColors.iqrLabelColorProperty,
-          visibleProperty: createGatedVisibleProperty( model.isIQRVisibleProperty, iqrReadoutTextTandem ),
+          visibleProperty: model.isIQRVisibleProperty,
           tandem: iqrReadoutTextTandem
         } );
 
@@ -207,7 +206,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         const madReadoutTextTandem = readoutsTandem.createTandem( 'madReadoutText' );
         const madReadoutText = new VariabilityReadoutText( madEqualsValueStringProperty, {
           fill: CAVColors.madColorProperty,
-          visibleProperty: createGatedVisibleProperty( model.isMADVisibleProperty, madReadoutTextTandem ),
+          visibleProperty: model.isMADVisibleProperty,
           tandem: madReadoutTextTandem
         } );
 
