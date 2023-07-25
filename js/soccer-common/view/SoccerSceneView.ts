@@ -8,7 +8,7 @@
  */
 
 
-import { Node } from '../../../../scenery/js/imports.js';
+import { FocusHighlightFromNode, KeyboardListener, Node, FocusHighlightPath } from '../../../../scenery/js/imports.js';
 import SoccerBallNode from './SoccerBallNode.js';
 import { SoccerBallPhase } from '../model/SoccerBallPhase.js';
 import SoccerSceneModel from '../model/SoccerSceneModel.js';
@@ -23,6 +23,9 @@ import Kicker from '../model/Kicker.js';
 import Property from '../../../../axon/js/Property.js';
 import Range from '../../../../dot/js/Range.js';
 import DragIndicatorModel from '../model/DragIndicatorModel.js';
+import Utils from '../../../../dot/js/Utils.js';
+import Multilink from '../../../../axon/js/Multilink.js';
+import Matrix3 from '../../../../dot/js/Matrix3.js';
 
 /**
  * Renders view elements for a CAVSceneModel. Note that to satisfy the correct z-ordering, elements
@@ -45,7 +48,11 @@ export default class SoccerSceneView {
     const soccerBallMap = new Map<SoccerBall, SoccerBallNode>();
 
     // Keep soccer balls in one layer so we can control the focus order
-    const backLayerSoccerBallLayer = new Node();
+    const backLayerSoccerBallLayer = new Node( {
+      // groupFocusHighlight: true,
+      focusable: true,
+      tagName: 'div'
+    } );
     const backLayer = new Node( {
       children: [ backLayerSoccerBallLayer ]
     } );
@@ -59,8 +66,7 @@ export default class SoccerSceneView {
         modelViewTransform,
         soccerBallsInputEnabledProperty, {
           tandem: options.tandem.createTandem( 'soccerBallNodes' ).createTandem1Indexed( 'soccerBallNode', index ),
-          pickable: false,
-          enabledRangeProperty: new Property( physicalRange )
+          pickable: false
         } );
 
       backLayerSoccerBallLayer.addChild( soccerBallNode );
@@ -94,6 +100,12 @@ export default class SoccerSceneView {
       return soccerBallNode;
     } );
 
+    // The index of the top soccer ball Nodes that is focusable.
+    const focusedSoccerBallProperty = new Property<SoccerBall | null>( null );
+
+    // TODO: What if there is no focusedSoccerBallProperty? Make sure this isn't true in that case, see https://github.com/phetsims/center-and-variability/issues/351
+    const isSoccerBallGrabbedProperty = new Property( false );
+
     // Update pointer areas when topmost ball changes
     sceneModel.stackChangedEmitter.addListener( stack => {
 
@@ -123,17 +135,17 @@ export default class SoccerSceneView {
           soccerBallNode.touchArea = Shape.rectangle( 0, 0, 0, 0 );
         }
       }
+    } );
 
-      // Also do the z-ordering
-      for ( let i = 0; i < stack.length; i++ ) {
-
-        const soccerBallNode = soccerBallMap.get( stack[ i ] )!;
-
-        // Only the top ball in each stack is focusable for keyboard navigation
-        soccerBallNode.focusable = i === stack.length - 1;
-
-        // Focus order goes left to right
-        backLayerSoccerBallLayer.setPDOMOrder( sceneModel.getTopSoccerBalls().map( soccerBall => soccerBallMap.get( soccerBall )! ) );
+    backLayerSoccerBallLayer.addInputListener( {
+      focus: () => {
+        if ( focusedSoccerBallProperty.value === null ) {
+          const leftmostBall = sceneModel.getTopSoccerBalls()[ 0 ];
+          focusedSoccerBallProperty.value = leftmostBall;
+        }
+      },
+      blur: () => {
+        isSoccerBallGrabbedProperty.value = false;
       }
     } );
 
@@ -144,6 +156,82 @@ export default class SoccerSceneView {
         modelViewTransform ) );
 
     kickerNodes.forEach( kickerNode => frontLayer.addChild( kickerNode ) );
+
+    Multilink.multilink( [ focusedSoccerBallProperty, isSoccerBallGrabbedProperty ], ( focusedSoccerBall, isSoccerBallGrabbed ) => {
+        if ( focusedSoccerBall ) {
+          const focusForSelectedBall = new FocusHighlightFromNode( soccerBallMap.get( focusedSoccerBall )! );
+          backLayerSoccerBallLayer.setFocusHighlight( focusForSelectedBall );
+
+          focusForSelectedBall.makeDashed( isSoccerBallGrabbed );
+        }
+        else {
+          backLayerSoccerBallLayer.setFocusHighlight( 'invisible' );
+        }
+      }
+    );
+
+    const keyboardListener = new KeyboardListener( {
+      keys: [ 'arrowRight', 'arrowLeft', 'enter', 'space', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'home', 'end', 'escape' ],
+      callback: ( event, listener ) => {
+
+        const keysPressed = listener.keysPressed;
+        const topBallNodes = sceneModel.getTopSoccerBalls().map( soccerBall => soccerBallMap.get( soccerBall )! );
+
+        // Select a soccer ball
+        if ( ( keysPressed === 'arrowRight' || keysPressed === 'arrowLeft' ) ) {
+
+          if ( !isSoccerBallGrabbedProperty.value ) {
+            const delta = listener.keysPressed === 'arrowRight' ? 1 : -1;
+            const numberOfTopSoccerBalls = sceneModel.getTopSoccerBalls().length;
+
+            // We are deciding not to wrap the value around the ends of the range because the grabbed soccer ball
+            // also does not wrap.
+            const currentIndex = topBallNodes.indexOf( soccerBallMap.get( focusedSoccerBallProperty.value! )! );
+            const nextIndex = Utils.clamp( currentIndex + delta, 0, numberOfTopSoccerBalls - 1 );
+            focusedSoccerBallProperty.value = topBallNodes[ nextIndex ].soccerBall;
+          }
+          else {
+            const delta = listener.keysPressed === 'arrowLeft' ? -1 : 1;
+            const soccerBall = focusedSoccerBallProperty.value!;
+            soccerBall.valueProperty.value = physicalRange.constrainValue( soccerBall.valueProperty.value! + delta );
+          }
+        }
+        else if ( keysPressed === 'enter' || keysPressed === 'space' ) {
+          isSoccerBallGrabbedProperty.value = !isSoccerBallGrabbedProperty.value;
+        }
+        else if ( isSoccerBallGrabbedProperty.value && focusedSoccerBallProperty.value ) {
+
+          if ( keysPressed === 'escape' ) {
+            isSoccerBallGrabbedProperty.value = false;
+          }
+          else {
+            focusedSoccerBallProperty.value.valueProperty.value = keysPressed === 'home' ? physicalRange.min :
+                                                                  keysPressed === 'end' ? physicalRange.max :
+                                                                  keysPressed === '1' ? 1 :
+                                                                  keysPressed === '2' ? 2 :
+                                                                  keysPressed === '3' ? 3 :
+                                                                  keysPressed === '4' ? 4 :
+                                                                  keysPressed === '5' ? 5 :
+                                                                  keysPressed === '6' ? 6 :
+                                                                  keysPressed === '7' ? 7 :
+                                                                  keysPressed === '8' ? 8 :
+                                                                  keysPressed === '9' ? 9 :
+                                                                  keysPressed === '0' ? 10 :
+                                                                  focusedSoccerBallProperty.value.valueProperty.value;
+          }
+        }
+      }
+    } );
+
+    // Set the outer group focus region to cover the entire area where soccer balls may land, translate lower so it also includes the number line and labels
+    const focusHighlightFromNode = new FocusHighlightPath( modelViewTransform.modelToViewShape( Shape.rect( 0.5, 0, 15, 6 ) ).transformed( Matrix3.translation( 0, 37 ) ), {
+      outerStroke: FocusHighlightPath.OUTER_LIGHT_GROUP_FOCUS_COLOR,
+      innerStroke: FocusHighlightPath.INNER_LIGHT_GROUP_FOCUS_COLOR,
+      outerLineWidth: FocusHighlightPath.GROUP_OUTER_LINE_WIDTH,
+      innerLineWidth: FocusHighlightPath.GROUP_INNER_LINE_WIDTH
+    } );
+    backLayerSoccerBallLayer.setGroupFocusHighlight( focusHighlightFromNode );
+    backLayerSoccerBallLayer.addInputListener( keyboardListener );
 
     this.backSceneViewLayer = backLayer;
     this.frontSceneViewLayer = frontLayer;

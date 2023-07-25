@@ -5,7 +5,6 @@
  * similarly to a slider in alternativeInput.
  *
  * @author Sam Reid (PhET Interactive Simulations)
- *
  */
 
 import SoccerObjectNode, { CAVObjectNodeOptions } from './SoccerObjectNode.js';
@@ -21,22 +20,18 @@ import { SoccerBallPhase } from '../model/SoccerBallPhase.js';
 import ballDark_png from '../../../images/ballDark_png.js';
 import ball_png from '../../../images/ball_png.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import AccessibleSlider, { AccessibleSliderOptions } from '../../../../sun/js/accessibility/AccessibleSlider.js';
 import Property from '../../../../axon/js/Property.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import SoccerCommonConstants from '../SoccerCommonConstants.js';
 
 type SelfOptions = EmptySelfOptions;
-type ParentOptions = CAVObjectNodeOptions & AccessibleSliderOptions;
+type ParentOptions = CAVObjectNodeOptions;
 
-type SoccerBallNodeOptions = SelfOptions & StrictOmit<ParentOptions, 'valueProperty'> & PickRequired<AccessibleSliderOptions, 'enabledRangeProperty'>;
+type SoccerBallNodeOptions = SelfOptions & ParentOptions;
 
-export default class SoccerBallNode extends AccessibleSlider( SoccerObjectNode, 3 ) {
+export default class SoccerBallNode extends SoccerObjectNode {
 
   public constructor( soccerBall: SoccerBall,
                       modelViewTransform: ModelViewTransform2,
@@ -48,34 +43,13 @@ export default class SoccerBallNode extends AccessibleSlider( SoccerObjectNode, 
 
     const enabledProperty = new Property( true );
 
-    // The drag listener requires a numeric value (does not support null), so map it through a DynamicProperty
-    const dynamicProperty = new DynamicProperty( new Property( soccerBall.valueProperty ), {
-      bidirectional: true,
-      map: function( value: number | null ) { return value === null ? 0 : value;},
-      inverseMap: function( value: number ) { return value === 0 ? null : value; }
-    } );
-
-    let isSliderDragging = false;
-
     const options = optionize<SoccerBallNodeOptions, SelfOptions, ParentOptions>()( {
       cursor: 'pointer',
-      valueProperty: dynamicProperty,
-      keyboardStep: 1,
-      shiftKeyboardStep: 1,
-      pageKeyboardStep: 5,
-      roundToStepSize: true,
       enabledProperty: enabledProperty,
 
       // Data point should be visible if the soccer ball landed
       visibleProperty: new DerivedProperty( [ soccerBall.soccerBallPhaseProperty ], phase =>
-        phase !== SoccerBallPhase.INACTIVE ),
-
-      startDrag: () => {
-        isSliderDragging = true;
-      },
-      endDrag: () => {
-        isSliderDragging = false;
-      }
+        phase !== SoccerBallPhase.INACTIVE )
     }, providedOptions );
 
     super( soccerBall, modelViewTransform, SoccerCommonConstants.SOCCER_BALL_RADIUS, options );
@@ -96,7 +70,7 @@ export default class SoccerBallNode extends AccessibleSlider( SoccerObjectNode, 
     } );
 
     // Play sound only when dragging
-    let isDragging = false;
+    const isDraggingProperty = new BooleanProperty( false );
 
     // only setup input-related things if dragging is enabled
     const dragListener = new DragListener( {
@@ -104,7 +78,7 @@ export default class SoccerBallNode extends AccessibleSlider( SoccerObjectNode, 
       positionProperty: soccerBall.dragPositionProperty,
       transform: modelViewTransform,
       start: () => {
-        isDragging = true;
+        isDraggingProperty.value = true;
 
         // if the user presses an object that's animating, allow it to keep animating up in the stack
         soccerBall.dragStartedEmitter.emit();
@@ -115,13 +89,14 @@ export default class SoccerBallNode extends AccessibleSlider( SoccerObjectNode, 
       },
 
       end: () => {
-        isDragging = false;
+        isDraggingProperty.value = false;
       }
     } );
 
+
     // When the user drags a soccer ball, play audio corresponding to its new position.
     soccerBall.valueProperty.link( value => {
-      if ( value !== null && ( isDragging || isSliderDragging ) ) {
+      if ( value !== null && ( isDraggingProperty.value ) ) {
         soccerBall.toneEmitter.emit( value );
       }
     } );
