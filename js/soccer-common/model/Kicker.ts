@@ -14,12 +14,12 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import Property from '../../../../axon/js/Property.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import { SoccerPlayerPhase } from './SoccerPlayerPhase.js';
+import { KickerPhase } from './KickerPhase.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
-export default class SoccerPlayer {
-  public readonly soccerPlayerPhaseProperty: Property<SoccerPlayerPhase>;
+export default class Kicker {
+  public readonly soccerPlayerPhaseProperty: Property<KickerPhase>;
   public readonly poseProperty: TReadOnlyProperty<Pose>;
   public readonly timestampWhenPoisedBeganProperty: Property<number | null>;
 
@@ -27,14 +27,14 @@ export default class SoccerPlayer {
   public readonly initialPlaceInLine: number;
 
   public constructor( placeInLine: number, tandem: Tandem ) {
-    this.soccerPlayerPhaseProperty = new EnumerationProperty( placeInLine === 0 ? SoccerPlayerPhase.READY : SoccerPlayerPhase.INACTIVE, {
+    this.soccerPlayerPhaseProperty = new EnumerationProperty( placeInLine === 0 ? KickerPhase.READY : KickerPhase.INACTIVE, {
       tandem: tandem.createTandem( 'soccerPlayerPhaseProperty' )
     } );
     this.poseProperty = new DerivedProperty( [ this.soccerPlayerPhaseProperty ], soccerPlayerPhase => {
-      if ( soccerPlayerPhase === SoccerPlayerPhase.POISED ) {
+      if ( soccerPlayerPhase === KickerPhase.POISED ) {
         return Pose.POISED_TO_KICK;
       }
-      else if ( soccerPlayerPhase === SoccerPlayerPhase.KICKING ) {
+      else if ( soccerPlayerPhase === KickerPhase.KICKING ) {
         return Pose.KICKING;
       }
       else {
@@ -54,4 +54,4 @@ export default class SoccerPlayer {
   }
 }
 
-soccerCommon.register( 'SoccerPlayer', SoccerPlayer );
+soccerCommon.register( 'Kicker', Kicker );

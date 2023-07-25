@@ -23,7 +23,7 @@ import variabilityPlayer04Standing_png from '../../../images/variabilityPlayer04
 import variabilityPlayer04PoisedToKick_png from '../../../images/variabilityPlayer04PoisedToKick_png.js';
 import variabilityPlayer04Kicking_png from '../../../images/variabilityPlayer04Kicking_png.js';
 
-const SoccerPlayerGroupNumbered = [ {
+const KickerGroupNumbered = [ {
   standing: variabilityPlayer01Standing_png,
   poisedToKick: variabilityPlayer01PoisedToKick_png,
   kicking: variabilityPlayer01Kicking_png
@@ -40,4 +40,4 @@ const SoccerPlayerGroupNumbered = [ {
   poisedToKick: variabilityPlayer04PoisedToKick_png,
   kicking: variabilityPlayer04Kicking_png
 } ];
-export default SoccerPlayerGroupNumbered;
+export default KickerGroupNumbered;

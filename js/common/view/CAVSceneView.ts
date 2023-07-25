@@ -14,8 +14,8 @@ import MedianHighlightLayer from './MedianHighlightLayer.js';
 import CAVModel from '../model/CAVModel.js';
 import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import SoccerPlayer from '../../soccer-common/model/SoccerPlayer.js';
-import { SoccerPlayerImageSet } from '../../soccer-common/view/SoccerPlayerNode.js';
+import Kicker from '../../soccer-common/model/Kicker.js';
+import { SoccerPlayerImageSet } from '../../soccer-common/view/KickerNode.js';
 import Range from '../../../../dot/js/Range.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
@@ -25,7 +25,7 @@ export default class CAVSceneView extends SoccerSceneView {
 
   public constructor( model: CAVModel,
                       sceneModel: CAVSoccerSceneModel,
-                      getSoccerPlayerImageSet: ( soccerPlayer: SoccerPlayer, sceneModel: SoccerSceneModel ) => SoccerPlayerImageSet,
+                      getSoccerPlayerImageSet: ( soccerPlayer: Kicker, sceneModel: SoccerSceneModel ) => SoccerPlayerImageSet,
                       modelViewTransform: ModelViewTransform2,
                       physicalRange: Range,
                       options: PickRequired<PhetioObjectOptions, 'tandem'> ) {

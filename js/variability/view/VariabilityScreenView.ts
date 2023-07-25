@@ -22,8 +22,8 @@ import VariabilityAccordionBox from './VariabilityAccordionBox.js';
 import PlayAreaCheckboxFactory from '../../common/view/PlayAreaCheckboxFactory.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
-import SoccerPlayer from '../../soccer-common/model/SoccerPlayer.js';
-import { SoccerPlayerImageSet } from '../../soccer-common/view/SoccerPlayerNode.js';
+import Kicker from '../../soccer-common/model/Kicker.js';
+import { SoccerPlayerImageSet } from '../../soccer-common/view/KickerNode.js';
 import VariabilityInfoDialog from './VariabilityInfoDialog.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import PredictionSlider, { PredictionSliderOptions } from '../../common/view/PredictionSlider.js';
@@ -38,7 +38,7 @@ import soundManager from '../../../../tambo/js/soundManager.js';
 import cvIntervalToolLoopSoundV1_wav from '../../../sounds/cvIntervalToolLoopSoundV1_wav.js';
 import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
-import SoccerPlayerGroupNumbered from '../../soccer-common/view/SoccerPlayerGroupNumbered.js';
+import KickerGroupNumbered from '../../soccer-common/view/KickerGroupNumbered.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
@@ -273,9 +273,9 @@ export default class VariabilityScreenView extends CAVScreenView {
       sceneRadioButtonGroup, variabilityMeasureRadioButtonGroup );
   }
 
-  public override getSoccerPlayerImageSet( soccerPlayer: SoccerPlayer, sceneModel: CAVSoccerSceneModel ): SoccerPlayerImageSet {
+  public override getSoccerPlayerImageSet( soccerPlayer: Kicker, sceneModel: CAVSoccerSceneModel ): SoccerPlayerImageSet {
     const index = this.model.sceneModels.indexOf( sceneModel );
-    return SoccerPlayerGroupNumbered[ index ];
+    return KickerGroupNumbered[ index ];
   }
 
   public override step( dt: number ): void {

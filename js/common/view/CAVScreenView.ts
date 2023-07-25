@@ -30,8 +30,8 @@ import CAVModel from '../model/CAVModel.js';
 import SoccerSceneView from '../../soccer-common/view/SoccerSceneView.js';
 import KickButtonGroup from './KickButtonGroup.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import { SoccerPlayerImageSet } from '../../soccer-common/view/SoccerPlayerNode.js';
-import SoccerPlayer from '../../soccer-common/model/SoccerPlayer.js';
+import { SoccerPlayerImageSet } from '../../soccer-common/view/KickerNode.js';
+import Kicker from '../../soccer-common/model/Kicker.js';
 import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
 import DragIndicatorArrowNode from '../../soccer-common/view/DragIndicatorArrowNode.js';
 import CAVObjectType from '../model/CAVObjectType.js';
@@ -44,7 +44,7 @@ import SoundClipPlayer from '../../../../tambo/js/sound-generators/SoundClipPlay
 import SoccerCommonConstants from '../../soccer-common/SoccerCommonConstants.js';
 import CAVSceneView from './CAVSceneView.js';
 import CAVNumberLineNode from './CAVNumberLineNode.js';
-import SoccerPlayerGroupUnnumbered from '../../soccer-common/view/SoccerPlayerGroupUnnumbered.js';
+import KickerGroupUnnumbered from '../../soccer-common/view/KickerGroupUnnumbered.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
@@ -61,8 +61,8 @@ export type CAVScreenViewOptions = SelfOptions & ScreenViewOptions;
 const GROUND_POSITION_Y = 515;
 const INDICATOR_MARGIN = 4;
 
-// There are 15 items in the SoccerPlayerGroupUnnumbered, so we need 2x copies to cover 30 max kicks
-const MULTI_GROUP = [ ...SoccerPlayerGroupUnnumbered, ...SoccerPlayerGroupUnnumbered ];
+// There are 15 items in the KickerGroupUnnumbered, so we need 2x copies to cover 30 max kicks
+const MULTI_GROUP = [ ...KickerGroupUnnumbered, ...KickerGroupUnnumbered ];
 
 export default class CAVScreenView extends ScreenView {
 
@@ -411,7 +411,7 @@ export default class CAVScreenView extends ScreenView {
     ];
   }
 
-  public getSoccerPlayerImageSet( soccerPlayer: SoccerPlayer, sceneModel: SoccerSceneModel ): SoccerPlayerImageSet {
+  public getSoccerPlayerImageSet( soccerPlayer: Kicker, sceneModel: SoccerSceneModel ): SoccerPlayerImageSet {
     return MULTI_GROUP[ soccerPlayer.initialPlaceInLine ];
   }
 

@@ -10,12 +10,12 @@
 import soccerCommon from '../soccerCommon.js';
 import { Image, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
 
-import SoccerPlayer from '../model/SoccerPlayer.js';
+import Kicker from '../model/Kicker.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Pose from '../model/Pose.js';
-import { SoccerPlayerPhase } from '../model/SoccerPlayerPhase.js';
+import { KickerPhase } from '../model/KickerPhase.js';
 
 type SelfOptions = EmptySelfOptions;
 type SoccerPlayerNodeOptions = SelfOptions & NodeOptions;
@@ -29,10 +29,10 @@ export type SoccerPlayerImageSet = {
 
 const SCALE = 0.155;
 
-export default class SoccerPlayerNode extends Node {
-  public readonly soccerPlayer: SoccerPlayer;
+export default class KickerNode extends Node {
+  public readonly soccerPlayer: Kicker;
 
-  public constructor( soccerPlayer: SoccerPlayer, playerImageSet: SoccerPlayerImageSet, modelViewTransform: ModelViewTransform2, providedOptions?: SoccerPlayerNodeOptions ) {
+  public constructor( soccerPlayer: Kicker, playerImageSet: SoccerPlayerImageSet, modelViewTransform: ModelViewTransform2, providedOptions?: SoccerPlayerNodeOptions ) {
     super( {
 
       // Avoid a flickering on firefox where the image temporarily disappears (even in built mode)
@@ -62,7 +62,7 @@ export default class SoccerPlayerNode extends Node {
     }
 
     soccerPlayer.soccerPlayerPhaseProperty.link( phase => {
-      this.visible = phase !== SoccerPlayerPhase.INACTIVE;
+      this.visible = phase !== KickerPhase.INACTIVE;
     } );
 
     soccerPlayer.poseProperty.link( pose => {
@@ -81,4 +81,4 @@ export default class SoccerPlayerNode extends Node {
   }
 }
 
-soccerCommon.register( 'SoccerPlayerNode', SoccerPlayerNode );
+soccerCommon.register( 'KickerNode', KickerNode );

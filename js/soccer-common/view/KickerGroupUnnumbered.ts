@@ -53,7 +53,7 @@ import player15Standing_png from '../../../images/player15Standing_png.js';
 import player15PoisedToKick_png from '../../../images/player15PoisedToKick_png.js';
 import player05Kicking_png from '../../../images/player05Kicking_png.js';
 
-const SoccerPlayerGroupUnnumbered = [ {
+const KickerGroupUnnumbered = [ {
   standing: player01Standing_png,
   poisedToKick: player01PoisedToKick_png,
   kicking: player01Kicking_png
@@ -115,4 +115,4 @@ const SoccerPlayerGroupUnnumbered = [ {
   kicking: player15Kicking_png
 } ];
 
-export default SoccerPlayerGroupUnnumbered;
+export default KickerGroupUnnumbered;

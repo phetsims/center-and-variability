@@ -12,14 +12,14 @@ import { Node } from '../../../../scenery/js/imports.js';
 import SoccerBallNode from './SoccerBallNode.js';
 import { SoccerBallPhase } from '../model/SoccerBallPhase.js';
 import SoccerSceneModel from '../model/SoccerSceneModel.js';
-import SoccerPlayerNode, { SoccerPlayerImageSet } from './SoccerPlayerNode.js';
+import KickerNode, { SoccerPlayerImageSet } from './KickerNode.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import soccerCommon from '../soccerCommon.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import SoccerBall from '../model/SoccerBall.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import SoccerPlayer from '../model/SoccerPlayer.js';
+import Kicker from '../model/Kicker.js';
 import Property from '../../../../axon/js/Property.js';
 import Range from '../../../../dot/js/Range.js';
 import DragIndicatorModel from '../model/DragIndicatorModel.js';
@@ -37,7 +37,7 @@ export default class SoccerSceneView {
     dragIndicatorModel: DragIndicatorModel,
     soccerBallsInputEnabledProperty: Property<boolean>,
     public readonly sceneModel: SoccerSceneModel,
-    getSoccerPlayerImageSet: ( soccerPlayer: SoccerPlayer, sceneModel: SoccerSceneModel ) => SoccerPlayerImageSet,
+    getSoccerPlayerImageSet: ( soccerPlayer: Kicker, sceneModel: SoccerSceneModel ) => SoccerPlayerImageSet,
     modelViewTransform: ModelViewTransform2,
     physicalRange: Range,
     options: { tandem: Tandem } ) {
@@ -138,7 +138,7 @@ export default class SoccerSceneView {
     } );
 
     const soccerPlayerNodes = sceneModel.soccerPlayers.map( soccerPlayer =>
-      new SoccerPlayerNode(
+      new KickerNode(
         soccerPlayer,
         getSoccerPlayerImageSet( soccerPlayer, sceneModel ),
         modelViewTransform ) );

@@ -20,7 +20,7 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import { SoccerBallPhase } from './SoccerBallPhase.js';
 import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 import TEmitter from '../../../../axon/js/TEmitter.js';
-import SoccerPlayer from './SoccerPlayer.js';
+import Kicker from './Kicker.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import SoccerCommonConstants from '../SoccerCommonConstants.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
@@ -54,7 +54,7 @@ export default class SoccerBall extends PhetioObject {
   public readonly resetEmitter: TEmitter = new Emitter();
 
   public animation: Animation | null = null;
-  public soccerPlayer: SoccerPlayer | null = null;
+  public soccerPlayer: Kicker | null = null;
 
   // Global index for debugging
   public readonly index = count++;

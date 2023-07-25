@@ -1,7 +1,7 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * Ways a SoccerPlayer can be posed as part of the animation lifecycle.
+ * Ways a Kicker can be posed as part of the animation lifecycle.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
