@@ -30,7 +30,7 @@ import CAVModel from '../model/CAVModel.js';
 import SoccerSceneView from '../../soccer-common/view/SoccerSceneView.js';
 import KickButtonGroup from './KickButtonGroup.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import { SoccerPlayerImageSet } from '../../soccer-common/view/KickerNode.js';
+import { KickerImageSet } from '../../soccer-common/view/KickerNode.js';
 import Kicker from '../../soccer-common/model/Kicker.js';
 import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
 import DragIndicatorArrowNode from '../../soccer-common/view/DragIndicatorArrowNode.js';
@@ -132,7 +132,7 @@ export default class CAVScreenView extends ScreenView {
     this.sceneViews = model.sceneModels.map( ( sceneModel, index ) => new CAVSceneView(
       model,
       sceneModel,
-      ( soccerPlayer, sceneModel ) => this.getSoccerPlayerImageSet( soccerPlayer, sceneModel ),
+      ( kicker, sceneModel ) => this.getKickerImageSet( kicker, sceneModel ),
       modelViewTransform,
       CAVConstants.PHYSICAL_RANGE, {
         tandem: options.tandem.createTandem1Indexed( CAVConstants.SCENE_VIEW_TANDEM, index )
@@ -210,7 +210,7 @@ export default class CAVScreenView extends ScreenView {
 
     this.kickButtonGroup = new KickButtonGroup( model, {
 
-      // Center under where the soccer player nodes will be. Since the SoccerPlayerNode are positioned in the
+      // Center under where the soccer player nodes will be. Since the KickerNode are positioned in the
       // SceneView, we can't use those node bounds to position the kick buttons, so this is a manually tuned magic number.
       centerX: modelViewTransform.modelToViewX( 0 ) - 63,
 
@@ -411,8 +411,8 @@ export default class CAVScreenView extends ScreenView {
     ];
   }
 
-  public getSoccerPlayerImageSet( soccerPlayer: Kicker, sceneModel: SoccerSceneModel ): SoccerPlayerImageSet {
-    return MULTI_GROUP[ soccerPlayer.initialPlaceInLine ];
+  public getKickerImageSet( kicker: Kicker, sceneModel: SoccerSceneModel ): KickerImageSet {
+    return MULTI_GROUP[ kicker.initialPlaceInLine ];
   }
 
   /**

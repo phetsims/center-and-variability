@@ -77,7 +77,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
   public readonly resetEmitter: TEmitter = new Emitter();
   public readonly numberOfDataPointsProperty: NumberProperty;
 
-  public readonly soccerPlayers: Kicker[];
+  public readonly kickers: Kicker[];
 
   private readonly numberOfScheduledSoccerBallsToKickProperty: NumberProperty;
   public readonly numberOfUnkickedBallsProperty: TReadOnlyProperty<number>;
@@ -89,7 +89,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
 
   private readonly timeWhenLastBallWasKickedProperty: NumberProperty;
 
-  // Starting at 0, iterate through the index of the kickers. This updates the Kicker.soccerPlayerPhaseProperty to show the current kicker
+  // Starting at 0, iterate through the index of the kickers. This updates the Kicker.kickerPhaseProperty to show the current kicker
   private readonly activeKickerIndexProperty: NumberProperty;
 
   // Called when the location of a ball changed within a stack, so the pointer areas can be updated
@@ -152,7 +152,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
         this.animateSoccerBallToTopOfStack( soccerBall, soccerBall.valueProperty.value! );
 
         // If the soccer player that kicked that ball was still in line when the ball lands, they can leave the line now.
-        if ( soccerBall.soccerPlayer === this.getFrontSoccerPlayer() ) {
+        if ( soccerBall.kicker === this.getFrontKicker() ) {
           this.advanceLine();
         }
 
@@ -234,8 +234,8 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
       tandem: options.tandem.createTandem( 'timeWhenLastBallWasKickedProperty' )
     } );
 
-    this.soccerPlayers = _.range( 0, this.maxKicksLimit ).map( placeInLine => new Kicker( placeInLine,
-      options.tandem.createTandem( 'soccerPlayers' ).createTandem1Indexed( 'soccerPlayer', placeInLine )
+    this.kickers = _.range( 0, this.maxKicksLimit ).map( placeInLine => new Kicker( placeInLine,
+      options.tandem.createTandem( 'kickers' ).createTandem1Indexed( 'kicker', placeInLine )
     ) );
 
     this.numberOfUnkickedBallsProperty = DerivedProperty.deriveAny( [
@@ -264,11 +264,11 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
     } );
 
     Multilink.multilink( [ this.activeKickerIndexProperty, this.maxKicksProperty ], ( activeKickerIndex, maxKicks ) => {
-      this.soccerPlayers.forEach( ( soccerPlayer, index ) => {
+      this.kickers.forEach( ( kicker, index ) => {
 
         // If activeKickerIndex is greater than the number of kickers, but we want to show the last kicker, show the last available player
         const showAsLastKicker = showPlayersWhenDoneKicking && ( activeKickerIndex === this.maxKicksLimit && index === activeKickerIndex - 1 );
-        soccerPlayer.soccerPlayerPhaseProperty.value = ( ( index === activeKickerIndex && ( index < maxKicks || showPlayersWhenDoneKicking ) ) || showAsLastKicker ) ? KickerPhase.READY : KickerPhase.INACTIVE;
+        kicker.kickerPhaseProperty.value = ( ( index === activeKickerIndex && ( index < maxKicks || showPlayersWhenDoneKicking ) ) || showAsLastKicker ) ? KickerPhase.READY : KickerPhase.INACTIVE;
       } );
     } );
 
@@ -378,7 +378,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
     this.timeProperty.reset();
     this.timeWhenLastBallWasKickedProperty.reset();
 
-    this.soccerPlayers.forEach( soccerPlayer => soccerPlayer.reset() );
+    this.kickers.forEach( kicker => kicker.reset() );
     this.soccerBalls.forEach( soccerBall => soccerBall.reset() );
 
     this.activeKickerIndexProperty.reset();
@@ -416,8 +416,8 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
     );
   }
 
-  public getFrontSoccerPlayer(): Kicker | null {
-    return this.soccerPlayers[ this.activeKickerIndexProperty.value ];
+  public getFrontKicker(): Kicker | null {
+    return this.kickers[ this.activeKickerIndexProperty.value ];
   }
 
   /**
@@ -429,7 +429,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
     this.timeProperty.value += dt;
     this.getActiveSoccerBalls().forEach( soccerBall => soccerBall.step( dt ) );
 
-    const frontPlayer = this.getFrontSoccerPlayer();
+    const frontPlayer = this.getFrontKicker();
 
     if ( frontPlayer ) {
 
@@ -438,14 +438,14 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
 
         this.advanceLine();
 
-        if ( frontPlayer.soccerPlayerPhaseProperty.value === KickerPhase.READY ) {
-          frontPlayer.soccerPlayerPhaseProperty.value = KickerPhase.POISED;
+        if ( frontPlayer.kickerPhaseProperty.value === KickerPhase.READY ) {
+          frontPlayer.kickerPhaseProperty.value = KickerPhase.POISED;
           frontPlayer.timestampWhenPoisedBeganProperty.value = this.timeProperty.value;
         }
       }
 
       // How long has the front player been poised?
-      if ( frontPlayer.soccerPlayerPhaseProperty.value === KickerPhase.POISED ) {
+      if ( frontPlayer.kickerPhaseProperty.value === KickerPhase.POISED ) {
         assert && assert( typeof frontPlayer.timestampWhenPoisedBeganProperty.value === 'number', 'timestampWhenPoisedBegan should be a number' );
         const elapsedTime = this.timeProperty.value - frontPlayer.timestampWhenPoisedBeganProperty.value!;
         if ( elapsedTime > 0.075 ) {
@@ -493,7 +493,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
 
     // Allow kicking another ball while one is already in the air.
     // if the previous ball was still in the air, we need to move the line forward so the next player can kick
-    const kickers = this.soccerPlayers.filter( soccerPlayer => soccerPlayer.soccerPlayerPhaseProperty.value === KickerPhase.KICKING );
+    const kickers = this.kickers.filter( kicker => kicker.kickerPhaseProperty.value === KickerPhase.KICKING );
     if ( kickers.length > 0 ) {
       let nextIndex = this.activeKickerIndexProperty.value + 1;
       if ( nextIndex > this.maxKicksProperty.value ) {
@@ -573,8 +573,8 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
   /**
    * Select a target location for the nextBallToKick, set its velocity and mark it for animation.
    */
-  private kickBall( soccerPlayer: Kicker, soccerBall: T, playAudio: boolean ): void {
-    soccerPlayer.soccerPlayerPhaseProperty.value = KickerPhase.KICKING;
+  private kickBall( kicker: Kicker, soccerBall: T, playAudio: boolean ): void {
+    kicker.kickerPhaseProperty.value = KickerPhase.KICKING;
 
     const x1 = SoccerCommonQueryParameters.sameSpot ? 7 :
                this.kickDistanceStrategy.currentStrategy.getNextKickDistance( this.soccerBalls.indexOf( soccerBall ) );
@@ -592,7 +592,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
     soccerBall.soccerBallPhaseProperty.value = SoccerBallPhase.FLYING;
     this.timeWhenLastBallWasKickedProperty.value = this.timeProperty.value;
 
-    soccerBall.soccerPlayer = soccerPlayer;
+    soccerBall.kicker = kicker;
 
     playAudio && kickSound.play();
   }
@@ -613,7 +613,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
 
     // Iterate through data points and create the soccer balls
     for ( let i = 0; i < dataPoints.length; i++ ) {
-      this.kickBall( this.soccerPlayers[ i ], this.soccerBalls[ i ], false );
+      this.kickBall( this.kickers[ i ], this.soccerBalls[ i ], false );
       this.soccerBalls[ i ].valueProperty.value = dataPoints[ i ];
       this.soccerBalls[ i ].soccerBallPhaseProperty.value = SoccerBallPhase.STACKED;
 

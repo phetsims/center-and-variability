@@ -23,7 +23,7 @@ import PlayAreaCheckboxFactory from '../../common/view/PlayAreaCheckboxFactory.j
 import CAVConstants from '../../common/CAVConstants.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 import Kicker from '../../soccer-common/model/Kicker.js';
-import { SoccerPlayerImageSet } from '../../soccer-common/view/KickerNode.js';
+import { KickerImageSet } from '../../soccer-common/view/KickerNode.js';
 import VariabilityInfoDialog from './VariabilityInfoDialog.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import PredictionSlider, { PredictionSliderOptions } from '../../common/view/PredictionSlider.js';
@@ -273,7 +273,7 @@ export default class VariabilityScreenView extends CAVScreenView {
       sceneRadioButtonGroup, variabilityMeasureRadioButtonGroup );
   }
 
-  public override getSoccerPlayerImageSet( soccerPlayer: Kicker, sceneModel: CAVSoccerSceneModel ): SoccerPlayerImageSet {
+  public override getKickerImageSet( kicker: Kicker, sceneModel: CAVSoccerSceneModel ): KickerImageSet {
     const index = this.model.sceneModels.indexOf( sceneModel );
     return KickerGroupNumbered[ index ];
   }

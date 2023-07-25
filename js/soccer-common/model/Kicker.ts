@@ -19,22 +19,22 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 export default class Kicker {
-  public readonly soccerPlayerPhaseProperty: Property<KickerPhase>;
+  public readonly kickerPhaseProperty: Property<KickerPhase>;
   public readonly poseProperty: TReadOnlyProperty<Pose>;
   public readonly timestampWhenPoisedBeganProperty: Property<number | null>;
 
-  // Used to determine the artwork for rendering the SoccerPlayerNode
+  // Used to determine the artwork for rendering the KickerNode
   public readonly initialPlaceInLine: number;
 
   public constructor( placeInLine: number, tandem: Tandem ) {
-    this.soccerPlayerPhaseProperty = new EnumerationProperty( placeInLine === 0 ? KickerPhase.READY : KickerPhase.INACTIVE, {
-      tandem: tandem.createTandem( 'soccerPlayerPhaseProperty' )
+    this.kickerPhaseProperty = new EnumerationProperty( placeInLine === 0 ? KickerPhase.READY : KickerPhase.INACTIVE, {
+      tandem: tandem.createTandem( 'kickerPhaseProperty' )
     } );
-    this.poseProperty = new DerivedProperty( [ this.soccerPlayerPhaseProperty ], soccerPlayerPhase => {
-      if ( soccerPlayerPhase === KickerPhase.POISED ) {
+    this.poseProperty = new DerivedProperty( [ this.kickerPhaseProperty ], kickerPhase => {
+      if ( kickerPhase === KickerPhase.POISED ) {
         return Pose.POISED_TO_KICK;
       }
-      else if ( soccerPlayerPhase === KickerPhase.KICKING ) {
+      else if ( kickerPhase === KickerPhase.KICKING ) {
         return Pose.KICKING;
       }
       else {
@@ -49,7 +49,7 @@ export default class Kicker {
   }
 
   public reset(): void {
-    this.soccerPlayerPhaseProperty.reset();
+    this.kickerPhaseProperty.reset();
     this.timestampWhenPoisedBeganProperty.reset();
   }
 }

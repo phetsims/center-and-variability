@@ -18,10 +18,10 @@ import Pose from '../model/Pose.js';
 import { KickerPhase } from '../model/KickerPhase.js';
 
 type SelfOptions = EmptySelfOptions;
-type SoccerPlayerNodeOptions = SelfOptions & NodeOptions;
+type KickerNodeOptions = SelfOptions & NodeOptions;
 
 
-export type SoccerPlayerImageSet = {
+export type KickerImageSet = {
   standing: HTMLImageElement;
   poisedToKick: HTMLImageElement;
   kicking: HTMLImageElement;
@@ -30,16 +30,16 @@ export type SoccerPlayerImageSet = {
 const SCALE = 0.155;
 
 export default class KickerNode extends Node {
-  public readonly soccerPlayer: Kicker;
+  public readonly kicker: Kicker;
 
-  public constructor( soccerPlayer: Kicker, playerImageSet: SoccerPlayerImageSet, modelViewTransform: ModelViewTransform2, providedOptions?: SoccerPlayerNodeOptions ) {
+  public constructor( kicker: Kicker, playerImageSet: KickerImageSet, modelViewTransform: ModelViewTransform2, providedOptions?: KickerNodeOptions ) {
     super( {
 
       // Avoid a flickering on firefox where the image temporarily disappears (even in built mode)
       renderer: 'webgl'
     } );
 
-    this.soccerPlayer = soccerPlayer;
+    this.kicker = kicker;
 
     const standingNode = new Image( playerImageSet.standing );
     this.addChild( standingNode );
@@ -54,25 +54,25 @@ export default class KickerNode extends Node {
 
     // Show index when debugging with ?dev
     if ( phet.chipper.queryParameters.dev ) {
-      this.addChild( new Text( soccerPlayer.initialPlaceInLine, {
+      this.addChild( new Text( kicker.initialPlaceInLine, {
         x: 130,
         y: 380,
         scale: 13
       } ) );
     }
 
-    soccerPlayer.soccerPlayerPhaseProperty.link( phase => {
+    kicker.kickerPhaseProperty.link( phase => {
       this.visible = phase !== KickerPhase.INACTIVE;
     } );
 
-    soccerPlayer.poseProperty.link( pose => {
+    kicker.poseProperty.link( pose => {
       standingNode.visible = pose === Pose.STANDING;
       poisedToKickNode.visible = pose === Pose.POISED_TO_KICK;
       kickingNode.visible = pose === Pose.KICKING;
       this.centerBottom = modelViewTransform.modelToViewPosition( new Vector2( 0, 0 ) ).plusXY( -28, 8.5 );
     } );
 
-    const options = optionize<SoccerPlayerNodeOptions, SelfOptions, NodeOptions>()( {
+    const options = optionize<KickerNodeOptions, SelfOptions, NodeOptions>()( {
       excludeInvisibleChildrenFromBounds: false,
       phetioVisiblePropertyInstrumented: false
     }, providedOptions );

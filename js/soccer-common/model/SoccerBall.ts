@@ -54,7 +54,7 @@ export default class SoccerBall extends PhetioObject {
   public readonly resetEmitter: TEmitter = new Emitter();
 
   public animation: Animation | null = null;
-  public soccerPlayer: Kicker | null = null;
+  public kicker: Kicker | null = null;
 
   // Global index for debugging
   public readonly index = count++;
@@ -156,7 +156,7 @@ export default class SoccerBall extends PhetioObject {
     this.valueProperty.reset();
 
     this.targetXProperty.value = null;
-    this.soccerPlayer = null;
+    this.kicker = null;
 
     this.resetEmitter.emit();
   }

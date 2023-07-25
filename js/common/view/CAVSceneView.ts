@@ -15,7 +15,7 @@ import CAVModel from '../model/CAVModel.js';
 import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Kicker from '../../soccer-common/model/Kicker.js';
-import { SoccerPlayerImageSet } from '../../soccer-common/view/KickerNode.js';
+import { KickerImageSet } from '../../soccer-common/view/KickerNode.js';
 import Range from '../../../../dot/js/Range.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
@@ -25,12 +25,12 @@ export default class CAVSceneView extends SoccerSceneView {
 
   public constructor( model: CAVModel,
                       sceneModel: CAVSoccerSceneModel,
-                      getSoccerPlayerImageSet: ( soccerPlayer: Kicker, sceneModel: SoccerSceneModel ) => SoccerPlayerImageSet,
+                      getKickerImageSet: ( kicker: Kicker, sceneModel: SoccerSceneModel ) => KickerImageSet,
                       modelViewTransform: ModelViewTransform2,
                       physicalRange: Range,
                       options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
 
-    super( model.dragIndicatorModel, model.soccerBallsInputEnabledProperty, sceneModel, getSoccerPlayerImageSet, modelViewTransform, physicalRange, options );
+    super( model.dragIndicatorModel, model.soccerBallsInputEnabledProperty, sceneModel, getKickerImageSet, modelViewTransform, physicalRange, options );
 
     const medianHighlightLayer = new MedianHighlightLayer( sceneModel, modelViewTransform, model.isPlayAreaMedianVisibleProperty, {
       visibleProperty: model.isPlayAreaMedianVisibleProperty

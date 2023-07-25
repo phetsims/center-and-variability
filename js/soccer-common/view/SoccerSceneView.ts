@@ -12,7 +12,7 @@ import { Node } from '../../../../scenery/js/imports.js';
 import SoccerBallNode from './SoccerBallNode.js';
 import { SoccerBallPhase } from '../model/SoccerBallPhase.js';
 import SoccerSceneModel from '../model/SoccerSceneModel.js';
-import KickerNode, { SoccerPlayerImageSet } from './KickerNode.js';
+import KickerNode, { KickerImageSet } from './KickerNode.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import soccerCommon from '../soccerCommon.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
@@ -37,7 +37,7 @@ export default class SoccerSceneView {
     dragIndicatorModel: DragIndicatorModel,
     soccerBallsInputEnabledProperty: Property<boolean>,
     public readonly sceneModel: SoccerSceneModel,
-    getSoccerPlayerImageSet: ( soccerPlayer: Kicker, sceneModel: SoccerSceneModel ) => SoccerPlayerImageSet,
+    getKickerImageSet: ( kicker: Kicker, sceneModel: SoccerSceneModel ) => KickerImageSet,
     modelViewTransform: ModelViewTransform2,
     physicalRange: Range,
     options: { tandem: Tandem } ) {
@@ -137,13 +137,13 @@ export default class SoccerSceneView {
       }
     } );
 
-    const soccerPlayerNodes = sceneModel.soccerPlayers.map( soccerPlayer =>
+    const kickerNodes = sceneModel.kickers.map( kicker =>
       new KickerNode(
-        soccerPlayer,
-        getSoccerPlayerImageSet( soccerPlayer, sceneModel ),
+        kicker,
+        getKickerImageSet( kicker, sceneModel ),
         modelViewTransform ) );
 
-    soccerPlayerNodes.forEach( soccerPlayerNode => frontLayer.addChild( soccerPlayerNode ) );
+    kickerNodes.forEach( kickerNode => frontLayer.addChild( kickerNode ) );
 
     this.backSceneViewLayer = backLayer;
     this.frontSceneViewLayer = frontLayer;
