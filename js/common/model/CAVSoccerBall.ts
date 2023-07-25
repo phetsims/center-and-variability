@@ -28,9 +28,7 @@ export default class CAVSoccerBall extends SoccerBall {
     this.isMedianObjectProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isMedianObjectProperty' )
     } );
-    this.isAnimationHighlightVisibleProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isAnimationHighlightVisibleProperty' )
-    } );
+    this.isAnimationHighlightVisibleProperty = new BooleanProperty( false );
   }
 
   public static createSoccerBall( isFirstSoccerBall: boolean, options: CAVSoccerBallOptions ): CAVSoccerBall {
