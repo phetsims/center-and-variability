@@ -304,7 +304,7 @@ export default class CAVScreenView extends ScreenView {
 
     this.middleScreenViewLayer.addChild( dragIndicatorArrowNode );
 
-    // TODO: check for other this.addChild calls that should move into screenViewRootNode, see: https://github.com/phetsims/center-and-variability/issues/351
+    // TODO: check for other this.addChild calls that should move into screenViewRootNode, see: https://github.com/phetsims/center-and-variability/issues/351, see 2 occurrences in VariabilityScreenView
     // Add to screenViewRootNode for alternativeInput
     this.screenViewRootNode.addChild( this.backScreenViewLayer );
     this.screenViewRootNode.addChild( this.middleScreenViewLayer );

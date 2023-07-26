@@ -94,10 +94,6 @@ export default class CardNode extends Node {
       children: [ offsetContainer ],
       cursor: 'pointer',
       phetioVisiblePropertyInstrumented: false
-
-      // TODO: Do we want to pop the card up whenever it's focused?, see: https://github.com/phetsims/center-and-variability/issues/351
-      // startDrag: startDrag,
-      // endDrag: endDrag
     }, providedOptions );
 
     super( options );
