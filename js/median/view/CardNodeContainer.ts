@@ -233,6 +233,7 @@ export default class CardNodeContainer extends Node {
         tandem: options.tandem.createTandem( 'handWithArrowNode' ),
         opacity: 0,
         maxWidth: 25,
+        pickable: false,
         centerTop: new Vector2( 0.5 * CAVConstants.CARD_DIMENSION, CAVConstants.CARD_DIMENSION - 8 ),
         visibleProperty: this.enabledProperty
       } );
