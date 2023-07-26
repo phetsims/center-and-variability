@@ -49,7 +49,7 @@ export default class CardNode extends Node {
 
   public readonly soccerBall: SoccerBall;
 
-  private cardsToTheLeft: CardNode[] = [];
+  // We want to access the cardNode without the offset container for focusHighlight
   public readonly cardNode: Node;
 
   public constructor( public readonly cardNodeContainer: CardNodeContainer, public readonly model: CardModel, providedOptions: CardNodeOptions ) {
@@ -99,7 +99,6 @@ export default class CardNode extends Node {
 
     super( options );
 
-    // We want to access the cardNode without the offset container for focusHighlight
     this.cardNode = cardNode;
 
     model.soccerBall.valueProperty.link( value => {
