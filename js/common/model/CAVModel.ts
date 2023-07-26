@@ -131,7 +131,7 @@ export default class CAVModel extends PhetioObject {
     } );
   }
 
- // This function determines whether a value has crossed an integer or half-integer boundary, or lands exactly on an
+  // This function determines whether a value has crossed an integer or half-integer boundary, or lands exactly on an
   // integer or half-integer. It's used to trigger sound effects when a value moves past these boundaries or hits them
   // exactly. This is important for applications where the input method is discrete, such as keyboard input.
   public crossedCheckpoint( value1: number, value2: number ): boolean {

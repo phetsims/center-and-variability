@@ -55,7 +55,7 @@ export default class SoccerObjectNode extends Node {
       } );
   }
 
-  public addDebugText( soccerBall: SoccerBall ) : void {
+  public addDebugText( soccerBall: SoccerBall ): void {
     // Show index when debugging with ?dev
     if ( phet.chipper.queryParameters.dev ) {
       this.addChild( new Text( soccerBall.index + '', {

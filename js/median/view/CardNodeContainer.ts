@@ -448,65 +448,65 @@ export default class CardNodeContainer extends Node {
   }
 
   private celebrate(): void {
-  const cardCells = this.model.getCardsInCellOrder();
-  const inProgressAnimations = cardCells.filter( card => card.animation ).map( card => card.animation! );
+    const cardCells = this.model.getCardsInCellOrder();
+    const inProgressAnimations = cardCells.filter( card => card.animation ).map( card => card.animation! );
 
-  // Setup a callback for animation when all current animations finish
-  const asyncCounter = new AsyncCounter( inProgressAnimations.length, () => {
+    // Setup a callback for animation when all current animations finish
+    const asyncCounter = new AsyncCounter( inProgressAnimations.length, () => {
 
-    const leftmostCard = this.cardMap.get( cardCells[ 0 ] )!;
-    assert && assert( leftmostCard, 'leftmostCard should be defined' );
+      const leftmostCard = this.cardMap.get( cardCells[ 0 ] )!;
+      assert && assert( leftmostCard, 'leftmostCard should be defined' );
 
-    this.dataSortedNode.centerX = this.model.getCardPositionX( ( cardCells.length - 1 ) / 2 ) + CAVConstants.CARD_DIMENSION / 2;
-    this.dataSortedNode.top = leftmostCard.bottom + 7;
+      this.dataSortedNode.centerX = this.model.getCardPositionX( ( cardCells.length - 1 ) / 2 ) + CAVConstants.CARD_DIMENSION / 2;
+      this.dataSortedNode.top = leftmostCard.bottom + 7;
 
-    if ( this.dataSortedNode.left < 0 ) {
-      this.dataSortedNode.left = 0;
-    }
-    this.dataSortedNode.opacity = 1;
-    this.dataSortedNode.visible = true;
+      if ( this.dataSortedNode.left < 0 ) {
+        this.dataSortedNode.left = 0;
+      }
+      this.dataSortedNode.opacity = 1;
+      this.dataSortedNode.visible = true;
 
-    // If the user sorted the data again before the data sorted message was hidden, clear out the timer.
-    if ( this.dataSortedNodeAnimation ) {
-      this.dataSortedNodeAnimation.stop();
-    }
+      // If the user sorted the data again before the data sorted message was hidden, clear out the timer.
+      if ( this.dataSortedNodeAnimation ) {
+        this.dataSortedNodeAnimation.stop();
+      }
 
-    // start a timer to hide the data sorted node
-    this.dataSortedNodeAnimation = new Animation( {
-      duration: 0.6,
-      delay: 2,
-      targets: [ {
-        property: this.dataSortedNode.opacityProperty,
-        to: 0,
-        easing: Easing.QUADRATIC_IN_OUT
-      } ]
-    } );
-    this.dataSortedNodeAnimation.finishEmitter.addListener( () => {
-      this.dataSortedNode.visible = false;
-      this.dataSortedNodeAnimation = null;
-    } );
-    this.dataSortedNodeAnimation.start();
-
-    successSoundClip.play();
-
-    const cardBeingDragged = this.cardNodes.filter( cardNode => cardNode.dragListener.isPressed ).length;
-    const cardsAnimating = cardCells.filter( card => card.animation ).length;
-    if ( cardBeingDragged === 0 && cardsAnimating === 0 ) {
-      this.pickable = false;
-
-      this.animateRandomCelebration( () => {
-
-        this.isReadyForCelebration = false;
-        this.pickable = true;
+      // start a timer to hide the data sorted node
+      this.dataSortedNodeAnimation = new Animation( {
+        duration: 0.6,
+        delay: 2,
+        targets: [ {
+          property: this.dataSortedNode.opacityProperty,
+          to: 0,
+          easing: Easing.QUADRATIC_IN_OUT
+        } ]
       } );
-    }
-  } );
+      this.dataSortedNodeAnimation.finishEmitter.addListener( () => {
+        this.dataSortedNode.visible = false;
+        this.dataSortedNodeAnimation = null;
+      } );
+      this.dataSortedNodeAnimation.start();
 
-  // Notify the asyncCounter when any in-progress animation finishes
-  inProgressAnimations.forEach( animation => {
-  animation.endedEmitter.addListener( () => asyncCounter.increment() );
-} );
-}
+      successSoundClip.play();
+
+      const cardBeingDragged = this.cardNodes.filter( cardNode => cardNode.dragListener.isPressed ).length;
+      const cardsAnimating = cardCells.filter( card => card.animation ).length;
+      if ( cardBeingDragged === 0 && cardsAnimating === 0 ) {
+        this.pickable = false;
+
+        this.animateRandomCelebration( () => {
+
+          this.isReadyForCelebration = false;
+          this.pickable = true;
+        } );
+      }
+    } );
+
+    // Notify the asyncCounter when any in-progress animation finishes
+    inProgressAnimations.forEach( animation => {
+      animation.endedEmitter.addListener( () => asyncCounter.increment() );
+    } );
+  }
 
   // The listener which is linked to the cardNode.positionProperty
   private createDragPositionListener( cardNode: CardNode ): ( position: Vector2 ) => void {
