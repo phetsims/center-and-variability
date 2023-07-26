@@ -21,11 +21,10 @@ import cvCardPickupSound_mp3 from '../../../sounds/cvCardPickupSound_mp3.js';
 import cvCardDropSound_mp3 from '../../../sounds/cvCardDropSound_mp3.js';
 import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 import CAVConstants from '../../common/CAVConstants.js';
-import AccessibleSlider, { AccessibleSliderOptions } from '../../../../sun/js/accessibility/AccessibleSlider.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 type SelfOptions = EmptySelfOptions;
-type ParentOptions = WithRequired<AccessibleSliderOptions, 'enabledRangeProperty'> & WithRequired<NodeOptions, 'tandem'>;
+type ParentOptions = WithRequired<NodeOptions, 'tandem'>;
 export type CardNodeOptions = SelfOptions & ParentOptions;
 
 export const cardPickUpSoundClip = new SoundClip( cvCardPickupSound_mp3, {
@@ -44,7 +43,7 @@ soundManager.addSoundGenerator( cardDropSoundClip );
 export const PICK_UP_DELTA_X = -4;
 export const PICK_UP_DELTA_Y = -4;
 
-export default class CardNode extends AccessibleSlider( Node, 0 ) {
+export default class CardNode extends Node {
 
   public readonly dragListener: DragListener;
 
@@ -94,17 +93,11 @@ export default class CardNode extends AccessibleSlider( Node, 0 ) {
     const options = optionize<CardNodeOptions, SelfOptions, ParentOptions>()( {
       children: [ offsetContainer ],
       cursor: 'pointer',
-      phetioVisiblePropertyInstrumented: false,
-      keyboardStep: 1,
-      shiftKeyboardStep: 1,
-
-      // TODO: let's test this, see: https://github.com/phetsims/center-and-variability/issues/351
-      pageKeyboardStep: 5,
-      roundToStepSize: true,
+      phetioVisiblePropertyInstrumented: false
 
       // TODO: Do we want to pop the card up whenever it's focused?, see: https://github.com/phetsims/center-and-variability/issues/351
-      startDrag: startDrag,
-      endDrag: endDrag
+      // startDrag: startDrag,
+      // endDrag: endDrag
     }, providedOptions );
 
     super( options );

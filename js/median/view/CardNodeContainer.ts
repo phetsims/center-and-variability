@@ -8,8 +8,7 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import { Image, LinearGradient, Node, NodeOptions, SceneryConstants, Text } from '../../../../scenery/js/imports.js';
-import SoccerBall from '../../soccer-common/model/SoccerBall.js';
+import { FocusHighlightFromNode, FocusHighlightPath, Image, KeyboardListener, LinearGradient, Node, NodeOptions, SceneryConstants, Text } from '../../../../scenery/js/imports.js';
 import CardNode, { cardDropSoundClip, cardPickUpSoundClip, PICK_UP_DELTA_X, PICK_UP_DELTA_Y } from './CardNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Panel from '../../../../sun/js/Panel.js';
@@ -38,6 +37,8 @@ import Property from '../../../../axon/js/Property.js';
 import CardContainerModel from '../model/CardContainerModel.js';
 import CardModel from '../model/CardModel.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
+import Multilink from '../../../../axon/js/Multilink.js';
+import Utils from '../../../../dot/js/Utils.js';
 
 const successSoundClip = new SoundClip( cvSuccessOptions002_mp3, {
   initialOutputLevel: 0.2
@@ -69,7 +70,9 @@ export default class CardNodeContainer extends Node {
 
     const options = optionize<CardNodeContainerOptions, EmptySelfOptions, NodeOptions>()( {
       phetioEnabledPropertyInstrumented: true,
-      disabledOpacity: SceneryConstants.DISABLED_OPACITY
+      disabledOpacity: SceneryConstants.DISABLED_OPACITY,
+      focusable: true,
+      tagName: 'div'
     }, providedOptions );
 
     super( options );
@@ -80,27 +83,10 @@ export default class CardNodeContainer extends Node {
     this.cardNodes = model.cards.map( ( cardModel, index ) => {
 
       // Synthetic property for use in keyboard input
-      const indexProperty = new NumberProperty( 0 );
+      // const indexProperty = new NumberProperty( 0 );
 
       const cardNode = new CardNode( this, cardModel, {
-        tandem: options.tandem.createTandem( 'cardNodes' ).createTandem1Indexed( 'cardNode', index ),
-        enabledRangeProperty: model.cardDragRangeProperty,
-        valueProperty: indexProperty
-      } );
-
-      indexProperty.lazyLink( ( newIndex, originalIndex ) => {
-
-        const cardCells = model.getCardsInCellOrder();
-        const cardAtNewCell = cardCells[ newIndex ];
-
-        // swap cards
-        cardAtNewCell.cellPositionProperty.value = originalIndex;
-        cardModel.cellPositionProperty.value = newIndex;
-
-        model.setAtHomeCell( cardAtNewCell );
-        model.setAtHomeCell( cardModel );
-        model.cardCellsChangedEmitter.emit();
-
+        tandem: options.tandem.createTandem( 'cardNodes' ).createTandem1Indexed( 'cardNode', index )
       } );
 
       this.cardMap.set( cardNode.model, cardNode );
@@ -371,6 +357,8 @@ export default class CardNodeContainer extends Node {
     this.selectedSceneModelProperty.value.objectChangedEmitter.addListener( updateMedianNode );
     medianTextNode.boundsProperty.link( updateMedianNode );
 
+    const sceneModel = selectedSceneModelProperty.value;
+
     this.selectedSceneModelProperty.value.resetEmitter.addListener( () => {
       dataSortedNode.visible = false;
       if ( this.dataSortedNodeAnimation ) {
@@ -382,6 +370,123 @@ export default class CardNodeContainer extends Node {
     if ( model.parentContext === 'info' ) {
       this.pickable = false;
     }
+
+    const focusedCardNodeProperty = new Property<CardNode | null>( null );
+
+    // TODO: What if there is no focusedCardNodeProperty? Make sure this isn't true in that case, see https://github.com/phetsims/center-and-variability/issues/351
+    // TODO: When a card is grabbed, translate it up and left like for the mouse/touch, see https://github.com/phetsims/center-and-variability/issues/351
+    const isCardGrabbedProperty = new Property( false );
+
+    sceneModel.clearDataEmitter.addListener( () => {
+      focusedCardNodeProperty.reset();
+      isCardGrabbedProperty.reset();
+    } );
+
+    // Update focused card when cards are created.  TODO: https://github.com/phetsims/center-and-variability/issues/351 listen for cardAdded or something like that
+    sceneModel.stackChangedEmitter.addListener( () => {
+
+      const activeCardNodes = this.getActiveCardNodesInOrder();
+
+      // When a user is focused on the card container but there are no cards yet, we want to ensure that a card gets focused
+      // once there is a card.
+      if ( focusedCardNodeProperty.value === null && this.focused && this.cardNodes[ 0 ].model.isActiveProperty.value ) {
+        focusedCardNodeProperty.value = activeCardNodes[ 0 ];
+      }
+    } );
+
+    this.addInputListener( {
+      focus: () => {
+        const activeCardNodes = this.getActiveCardNodesInOrder();
+        if ( focusedCardNodeProperty.value === null && activeCardNodes.length > 0 ) {
+          focusedCardNodeProperty.value = activeCardNodes[ 0 ];
+        }
+      },
+      blur: () => {
+        isCardGrabbedProperty.value = false;
+      }
+    } );
+
+    Multilink.multilink( [ focusedCardNodeProperty, isCardGrabbedProperty ], ( focusedCardNode, isCardNodeGrabbed ) => {
+        if ( focusedCardNode ) {
+
+          // TODO: Add isDashed to the FocusHighlightFromNode options, see https://github.com/phetsims/center-and-variability/issues/351
+          // TODO: There is an odd offset due to the pick/up grab area for the cards, see https://github.com/phetsims/center-and-variability/issues/351
+          const focusForSelectedCard = new FocusHighlightFromNode( focusedCardNode );
+          this.setFocusHighlight( focusForSelectedCard );
+
+          focusForSelectedCard.makeDashed( isCardNodeGrabbed );
+        }
+        else {
+          this.setFocusHighlight( 'invisible' );
+        }
+      }
+    );
+
+    // TODO: Some duplication with SoccerSceneView, see https://github.com/phetsims/center-and-variability/issues/351
+    const keyboardListener = new KeyboardListener( {
+      keys: [ 'arrowRight', 'arrowLeft', 'enter', 'space', 'escape' ],
+      callback: ( event, listener ) => {
+
+        const keysPressed = listener.keysPressed;
+
+        // Select a card
+        const focusedCardNode = focusedCardNodeProperty.value;
+        const activeCardNodes = this.getActiveCardNodesInOrder();
+        const numberOfActiveCards = activeCardNodes.length;
+
+        if ( focusedCardNode ) {
+          if ( ( keysPressed === 'arrowRight' || keysPressed === 'arrowLeft' ) ) {
+
+            if ( !isCardGrabbedProperty.value ) {
+              const delta = listener.keysPressed === 'arrowRight' ? 1 : -1;
+
+              // We are deciding not to wrap the value around the ends of the range because the sort order is important and does not wrap
+              const currentIndex = activeCardNodes.indexOf( focusedCardNode );
+              const nextIndex = Utils.clamp( currentIndex + delta, 0, numberOfActiveCards - 1 );
+              focusedCardNodeProperty.value = activeCardNodes[ nextIndex ];
+            }
+            else {
+
+              // Move a selected card
+              const delta = listener.keysPressed === 'arrowLeft' ? -1 : 1;
+
+              const currentIndex = activeCardNodes.indexOf( focusedCardNode );
+
+              // swap cards
+              const targetIndex = Utils.clamp( currentIndex + delta, 0, numberOfActiveCards - 1 );
+              if ( targetIndex !== currentIndex ) {
+                const displacedCardNode = activeCardNodes[ targetIndex ];
+
+                focusedCardNode.model.cellPositionProperty.value = targetIndex;
+                displacedCardNode.model.cellPositionProperty.value = currentIndex;
+
+                // TODO: https://github.com/phetsims/center-and-variability/issues/351 animation
+                model.setAtHomeCell( focusedCardNode.model );
+                model.setAtHomeCell( displacedCardNode.model );
+                model.cardCellsChangedEmitter.emit();
+              }
+            }
+          }
+          else if ( keysPressed === 'enter' || keysPressed === 'space' ) {
+            isCardGrabbedProperty.value = !isCardGrabbedProperty.value;
+          }
+          else if ( isCardGrabbedProperty.value ) {
+            if ( keysPressed === 'escape' ) {
+              isCardGrabbedProperty.value = false;
+            }
+          }
+        }
+      }
+    } );
+
+    const focusHighlightFromNode = new FocusHighlightFromNode( this, {
+      outerStroke: FocusHighlightPath.OUTER_LIGHT_GROUP_FOCUS_COLOR,
+      innerStroke: FocusHighlightPath.INNER_LIGHT_GROUP_FOCUS_COLOR,
+      outerLineWidth: FocusHighlightPath.GROUP_OUTER_LINE_WIDTH,
+      innerLineWidth: FocusHighlightPath.GROUP_INNER_LINE_WIDTH
+    } );
+    this.setGroupFocusHighlight( focusHighlightFromNode );
+    this.addInputListener( keyboardListener );
   }
 
   // The listener which is linked to the cardNode.positionProperty
@@ -563,8 +668,9 @@ export default class CardNodeContainer extends Node {
     } );
   }
 
-  private getCardNode( soccerBall: SoccerBall ): CardNode | null {
-    return this.cardNodes.find( cardNode => cardNode.soccerBall === soccerBall ) || null;
+  // TODO: See model.getCardsInCellOrder(); https://github.com/phetsims/center-and-variability/issues/351
+  private getActiveCardNodesInOrder(): CardNode[] {
+    return _.sortBy( this.cardNodes.filter( cardNode => cardNode.model.isActiveProperty.value ), cardNode => cardNode.model.cellPositionProperty.value! );
   }
 }
 
