@@ -64,7 +64,7 @@ export default class CardNodeContainer extends Node {
 
   public constructor( model: CardContainerModel,
                       private readonly isSortingDataProperty: Property<boolean>,
-                      private readonly selectedSceneModelProperty: Property<CAVSoccerSceneModel>,
+                      private readonly sceneModel: CAVSoccerSceneModel,
                       private readonly isTopMedianVisibleProperty: Property<boolean>,
                       providedOptions: CardNodeContainerOptions ) {
 
@@ -290,7 +290,7 @@ export default class CardNodeContainer extends Node {
       } );
     }
 
-    const medianTextNode = new Text( new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty, { value: this.selectedSceneModelProperty.value.medianValueProperty }, {
+    const medianTextNode = new Text( new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty, { value: this.sceneModel.medianValueProperty }, {
       tandem: options.tandem.createTandem( 'medianStringProperty' ),
       maps: {
         value: CAVConstants.STRING_VALUE_NULL_MAP
@@ -353,14 +353,12 @@ export default class CardNodeContainer extends Node {
       }
     };
     model.cardCellsChangedEmitter.addListener( updateMedianNode );
-    this.selectedSceneModelProperty.value.medianValueProperty.link( updateMedianNode );
+    this.sceneModel.medianValueProperty.link( updateMedianNode );
     this.isTopMedianVisibleProperty.link( updateMedianNode );
-    this.selectedSceneModelProperty.value.objectChangedEmitter.addListener( updateMedianNode );
+    this.sceneModel.objectChangedEmitter.addListener( updateMedianNode );
     medianTextNode.boundsProperty.link( updateMedianNode );
 
-    const sceneModel = selectedSceneModelProperty.value;
-
-    this.selectedSceneModelProperty.value.resetEmitter.addListener( () => {
+    this.sceneModel.resetEmitter.addListener( () => {
       dataSortedNode.visible = false;
       if ( this.dataSortedNodeAnimation ) {
         this.dataSortedNodeAnimation.stop();
@@ -467,6 +465,9 @@ export default class CardNodeContainer extends Node {
 
                 // TODO: Celebrate if the user sorted the data, see https://github.com/phetsims/center-and-variability/issues/351
                 model.cardCellsChangedEmitter.emit();
+
+                // Gets rid of the hand icon
+                model.hasKeyboardMovedCardProperty.value = true;
               }
             }
           }
@@ -488,6 +489,8 @@ export default class CardNodeContainer extends Node {
       outerLineWidth: FocusHighlightPath.GROUP_OUTER_LINE_WIDTH,
       innerLineWidth: FocusHighlightPath.GROUP_INNER_LINE_WIDTH
     } );
+
+    // TODO: The right edge of this rectangle fluctuates as you move a card fully to the right, see https://github.com/phetsims/center-and-variability/issues/351
     this.setGroupFocusHighlight( focusHighlightFromNode );
     this.addInputListener( keyboardListener );
   }

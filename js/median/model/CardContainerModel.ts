@@ -40,6 +40,7 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 
 const cardMovementSounds = [
   cvCardMovementSoundsV2001_mp3,
@@ -85,11 +86,12 @@ export default class CardContainerModel extends PhetioObject {
   public readonly hasDraggedCardProperty: TReadOnlyProperty<boolean>;
   public readonly dragIndicationCardProperty: Property<CardModel | null>;
   public readonly totalDragDistanceProperty: Property<number>;
+  public readonly hasKeyboardMovedCardProperty = new BooleanProperty( false );
 
   // Used to determine drag range for keyboard input, which changes based on the amount of active cards.
   public readonly cardDragRangeProperty: Property<Range>;
 
-  public constructor( private readonly median: MedianModel, providedOptions: CardContainerModelOptions ) {
+  public constructor( medianModel: MedianModel, providedOptions: CardContainerModelOptions ) {
 
     const options = optionize<CardContainerModelOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioType: CardContainerModel.CardContainerModelIO,
@@ -103,10 +105,9 @@ export default class CardContainerModel extends PhetioObject {
     // Accumulated card drag distance, for purposes of hiding the drag indicator node
     this.totalDragDistanceProperty = new NumberProperty( 0 );
 
-    this.hasDraggedCardProperty = new DerivedProperty( [ this.totalDragDistanceProperty ], totalDragDistance => {
-      return totalDragDistance > 15;
+    this.hasDraggedCardProperty = new DerivedProperty( [ this.totalDragDistanceProperty, this.hasKeyboardMovedCardProperty ], ( totalDragDistance, hasKeyboardMovedCard ) => {
+      return totalDragDistance > 15 || hasKeyboardMovedCard;
     } );
-
 
     this.dragIndicationCardProperty = new Property<CardModel | null>( null, {
       phetioReadOnly: true,
@@ -117,9 +118,8 @@ export default class CardContainerModel extends PhetioObject {
 
     this.cardDragRangeProperty = new Property<Range>( new Range( 0, 0 ) );
 
-
     // Allocate all the card models at start-up.
-    this.cards = median.selectedSceneModelProperty.value.soccerBalls.map( ( soccerBall, index ) => {
+    this.cards = medianModel.selectedSceneModelProperty.value.soccerBalls.map( ( soccerBall, index ) => {
       const card = new CardModel( this, soccerBall, new Vector2( 0, 0 ), {
         tandem: options.tandem.createTandem( 'cards' ).createTandem1Indexed( 'card', index )
       } );
@@ -137,12 +137,12 @@ export default class CardContainerModel extends PhetioObject {
         }
 
         // A ball landed OR a value changed
-        if ( ( median.isSortingDataProperty.value && value !== null ) || options.parentContext === 'info' ) {
+        if ( ( medianModel.isSortingDataProperty.value && value !== null ) || options.parentContext === 'info' ) {
           this.sortData( 'valueChanged' );
         }
 
         if ( options.parentContext === 'accordion' ) {
-          median.areCardsSortedProperty.value = this.isDataSorted();
+          medianModel.areCardsSortedProperty.value = this.isDataSorted();
         }
       } );
 
@@ -153,7 +153,7 @@ export default class CardContainerModel extends PhetioObject {
           let targetIndex = cardCells.length;
 
           // We want to auto-sort cards in the infoDialog no matter what the value for isSortingDataProperty is.
-          if ( median.isSortingDataProperty.value || options.parentContext === 'info' ) {
+          if ( medianModel.isSortingDataProperty.value || options.parentContext === 'info' ) {
 
             const newValue = card.soccerBall.valueProperty.value!;
             const existingLowerCards = cardCells.filter( card => card.soccerBall.valueProperty.value! <= newValue );
@@ -195,7 +195,7 @@ export default class CardContainerModel extends PhetioObject {
 
     if ( options.parentContext === 'accordion' ) {
       this.cardCellsChangedEmitter.addListener( () => {
-        median.areCardsSortedProperty.value = this.isDataSorted();
+        medianModel.areCardsSortedProperty.value = this.isDataSorted();
       } );
 
       const updateDragIndicationCardProperty = () => {
@@ -219,7 +219,10 @@ export default class CardContainerModel extends PhetioObject {
       this.cards.forEach( card => card.soccerBall.valueProperty.lazyLink( updateDragIndicationCardProperty ) );
     }
 
-    median.selectedSceneModelProperty.value.resetEmitter.addListener( () => this.totalDragDistanceProperty.reset() );
+    medianModel.selectedSceneModelProperty.value.resetEmitter.addListener( () => {
+      this.totalDragDistanceProperty.reset();
+      this.hasKeyboardMovedCardProperty.reset();
+    } );
   }
 
   public getDragRange( this: CardContainerModel ): Range {

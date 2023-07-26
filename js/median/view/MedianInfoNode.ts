@@ -28,14 +28,14 @@ export default class MedianInfoNode extends VBox {
 
     const cardContainerModel = new CardContainerModel( model, { tandem: options.tandem.createTandem( 'cardContainerModel' ), parentContext: 'info' } );
     const cardNodeContainer = new CardNodeContainer( cardContainerModel, model.isSortingDataProperty,
-      model.selectedSceneModelProperty, model.isTopMedianVisibleProperty, {
-      tandem: options.tandem.createTandem( 'cardNodeContainer' ),
+      model.selectedSceneModelProperty.value, model.isTopMedianVisibleProperty, {
+        tandem: options.tandem.createTandem( 'cardNodeContainer' ),
 
-      // So it will remain centered in the dialog
-      excludeInvisibleChildrenFromBounds: true,
+        // So it will remain centered in the dialog
+        excludeInvisibleChildrenFromBounds: true,
 
-      visibleProperty: DerivedProperty.not( hasZeroKicksProperty )
-    } );
+        visibleProperty: DerivedProperty.not( hasZeroKicksProperty )
+      } );
 
     const textVBox = new VBox( {
       align: 'left',

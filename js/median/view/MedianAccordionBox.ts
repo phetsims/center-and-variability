@@ -26,7 +26,7 @@ export default class MedianAccordionBox extends CAVAccordionBox {
     const backgroundNode = CAVAccordionBox.createBackgroundNode( backgroundShape, CAVColors.meanAndMedianAccordionBoxFillProperty );
 
     const cardNodeContainer = new CardNodeContainer( model.cardContainerModel, model.isSortingDataProperty,
-      model.selectedSceneModelProperty, model.isTopMedianVisibleProperty, {
+      model.selectedSceneModelProperty.value, model.isTopMedianVisibleProperty, {
 
         // Expose this intermediate layer to make it so that clients can hide the number cards with one call
         tandem: tandem.createTandem( 'cardNodeContainer' ),
