@@ -66,11 +66,11 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
     backgroundNode.addChild( meanAndMedianPlotNode );
 
     const createReadoutText = ( valueProperty: TReadOnlyProperty<number | null>, visibleProperty: TReadOnlyProperty<boolean>,
-                                patternStringProperty: TReadOnlyProperty<string>, unknownStringProperty: LocalizedStringProperty, fill: TPaint, readoutTandem: Tandem ) => {
+                                patternStringProperty: TReadOnlyProperty<string>, unknownStringProperty: LocalizedStringProperty, fill: TPaint, readoutTandem: Tandem, decimalPlaces: number | null ) => {
 
       const readoutProperty = new DerivedProperty( [ valueProperty, CenterAndVariabilityStrings.valueUnknownStringProperty ],
         ( value, valueUnknownString ) => {
-          return value === null ? valueUnknownString : Utils.toFixed( value, 1 );
+          return value === null ? valueUnknownString : typeof decimalPlaces === 'number' ? Utils.toFixed( value, 1 ) : value;
         } );
 
       const valuePatternStringProperty = new PatternStringProperty( patternStringProperty, {
@@ -103,7 +103,8 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
           CenterAndVariabilityStrings.medianEqualsValueMPatternStringProperty,
           CenterAndVariabilityStrings.medianUnknownValueStringProperty,
           CAVColors.medianColorProperty,
-          tandem.createTandem( 'medianReadoutStringProperty' )
+          tandem.createTandem( 'medianReadoutStringProperty' ),
+          null
         ),
         createReadoutText(
           sceneModel.meanValueProperty,
@@ -111,7 +112,8 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
           CenterAndVariabilityStrings.meanEqualsValueMPatternStringProperty,
           CenterAndVariabilityStrings.meanUnknownValueStringProperty,
           CAVColors.meanColorProperty,
-          tandem.createTandem( 'meanReadoutStringProperty' )
+          tandem.createTandem( 'meanReadoutStringProperty' ),
+          1
         )
       ],
       leftCenter: backgroundShape.bounds.leftCenter
