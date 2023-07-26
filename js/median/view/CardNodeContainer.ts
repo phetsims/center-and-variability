@@ -380,8 +380,8 @@ export default class CardNodeContainer extends Node {
       isCardGrabbedProperty.reset();
     } );
 
-    // Update focused card when cards are created.  TODO: https://github.com/phetsims/center-and-variability/issues/351 listen for cardAdded or something like that
-    sceneModel.stackChangedEmitter.addListener( () => {
+    // Update focused card when cards are created.
+    model.cardCellsChangedEmitter.addListener( () => {
 
       const activeCardNodes = this.getActiveCardNodesInOrder();
 
