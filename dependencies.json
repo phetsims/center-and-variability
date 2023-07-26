@@ -1,5 +1,5 @@
 {
-  "comment": "# center-and-variability 1.1.0-dev.12 Mon Jul 24 2023 11:55:53 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# center-and-variability 1.1.0-dev.13 Wed Jul 26 2023 10:14:55 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "cc59d7f0574270924a886cb3d43a1b7507cd0553",
     "branch": "master"
@@ -9,7 +9,7 @@
     "branch": "master"
   },
   "bamboo": {
-    "sha": "04b8c31fa729f46e91b66ed2c6737584bb7865df",
+    "sha": "1b3967cf78bd10f117d7a505b529a666c8073362",
     "branch": "master"
   },
   "brand": {
@@ -17,7 +17,7 @@
     "branch": "master"
   },
   "center-and-variability": {
-    "sha": "f921126727ed9f2fa2305e4ba803b67c1838e1cd",
+    "sha": "8aedb3149893790c3a75ab31cf8cccafee8045b7",
     "branch": "master"
   },
   "chipper": {
@@ -33,7 +33,7 @@
     "branch": "master"
   },
   "kite": {
-    "sha": "b5304ed1ba62068eb169f3833436421bfbdd283f",
+    "sha": "e6d716fc2d4417aa3a636401ce45e366083e8a26",
     "branch": "master"
   },
   "perennial-alias": {
@@ -49,7 +49,7 @@
     "branch": "master"
   },
   "phet-io-sim-specific": {
-    "sha": "8ab1c68acd5fcdfebc05d56af8765f6a2f7685e9",
+    "sha": "06c5364e66ced7da005bbab49a94cdfb4f0c8e9c",
     "branch": "master"
   },
   "phet-io-wrappers": {
@@ -69,15 +69,15 @@
     "branch": "master"
   },
   "scenery": {
-    "sha": "834b2bfa124332c2e15234d9b9f99cb2ec63bd8f",
+    "sha": "190d3c54cdfd9389c8700d8c86e57aeb58509937",
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "a53e2adc0d927bd791b73d0444f8a4ccf58c132b",
+    "sha": "bcd1b8d526e99810dc04ab8c5ba4c12824bb5930",
     "branch": "master"
   },
   "sherpa": {
-    "sha": "e172afe1d56dbda12dbff1a1397d6fd273c8ea51",
+    "sha": "288b84dba8a09b439c976eb29e8e48f6ddb23108",
     "branch": "master"
   },
   "studio": {
@@ -93,7 +93,7 @@
     "branch": "master"
   },
   "tandem": {
-    "sha": "dc59289261289b58293273d7b9e2568ee3ca6ccd",
+    "sha": "2f0be57d1b2b79bfd2724765cd2ee6bf8dc35348",
     "branch": "master"
   },
   "twixt": {
