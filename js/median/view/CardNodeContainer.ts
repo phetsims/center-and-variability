@@ -408,8 +408,7 @@ export default class CardNodeContainer extends Node {
         if ( focusedCardNode ) {
 
           // TODO: Add isDashed to the FocusHighlightFromNode options, see https://github.com/phetsims/center-and-variability/issues/351
-          // TODO: There is an odd offset due to the pick/up grab area for the cards, see https://github.com/phetsims/center-and-variability/issues/351
-          const focusForSelectedCard = new FocusHighlightFromNode( focusedCardNode );
+          const focusForSelectedCard = new FocusHighlightFromNode( focusedCardNode.cardNode );
           this.setFocusHighlight( focusForSelectedCard );
 
           focusForSelectedCard.makeDashed( isCardNodeGrabbed );
