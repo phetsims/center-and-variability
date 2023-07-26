@@ -79,7 +79,7 @@ export default class CAVScreenView extends ScreenView {
 
   protected readonly intervalToolLayer = new Node();
 
-  protected readonly eraseButton: EraserButton;
+  protected readonly eraserButton: EraserButton;
 
   protected accordionBox: CAVAccordionBox | null = null;
 
@@ -178,8 +178,8 @@ export default class CAVScreenView extends ScreenView {
       tandem: options.tandem.createTandem( 'resetAllButton' )
     } );
 
-    this.eraseButton = new EraserButton( {
-      tandem: options.tandem.createTandem( 'eraseButton' ),
+    this.eraserButton = new EraserButton( {
+      tandem: options.tandem.createTandem( 'eraserButton' ),
       listener: () => {
 
         // Interrupt dragging of existing objects
@@ -268,7 +268,7 @@ export default class CAVScreenView extends ScreenView {
     this.frontScreenViewLayer = new Node( {
       children: [
         frontLayerToggleNode,
-        this.eraseButton,
+        this.eraserButton,
         this.resetAllButton,
         this.questionBar,
         this.kickButtonGroup,
@@ -406,7 +406,7 @@ export default class CAVScreenView extends ScreenView {
       ...( variabilityMeasureRadioButtonGroup ? [ variabilityMeasureRadioButtonGroup ] : [] ),
       this.accordionBox,
       infoButton,
-      this.eraseButton,
+      this.eraserButton,
       this.resetAllButton
     ];
   }
