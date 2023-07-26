@@ -61,6 +61,7 @@ export default class CardNodeContainer extends Node {
   private remainingCelebrationAnimations: ( () => void )[] = [];
   private dataSortedNodeAnimation: Animation | null = null;
   private wasSortedBefore = true;
+  private readonly dataSortedNode: Panel;
 
   public constructor( model: CardContainerModel,
                       private readonly isSortingDataProperty: Property<boolean>,
@@ -108,66 +109,7 @@ export default class CardNodeContainer extends Node {
           // Animate the dropped card home
           model.animateToHomeCell( cardNode.model, 0.2 );
 
-          if ( this.isReadyForCelebration ) {
-            const cardCells = model.getCardsInCellOrder();
-            const inProgressAnimations = cardCells.filter( card => card.animation ).map( card => card.animation! );
-
-            // Setup a callback for animation when all current animations finish
-            const asyncCounter = new AsyncCounter( inProgressAnimations.length, () => {
-
-              const leftmostCard = this.cardMap.get( cardCells[ 0 ] )!;
-              assert && assert( leftmostCard, 'leftmostCard should be defined' );
-
-              dataSortedNode.centerX = model.getCardPositionX( ( cardCells.length - 1 ) / 2 ) + CAVConstants.CARD_DIMENSION / 2;
-              dataSortedNode.top = leftmostCard.bottom + 7;
-
-              if ( dataSortedNode.left < 0 ) {
-                dataSortedNode.left = 0;
-              }
-              dataSortedNode.opacity = 1;
-              dataSortedNode.visible = true;
-
-              // If the user sorted the data again before the data sorted message was hidden, clear out the timer.
-              if ( this.dataSortedNodeAnimation ) {
-                this.dataSortedNodeAnimation.stop();
-              }
-
-              // start a timer to hide the data sorted node
-              this.dataSortedNodeAnimation = new Animation( {
-                duration: 0.6,
-                delay: 2,
-                targets: [ {
-                  property: dataSortedNode.opacityProperty,
-                  to: 0,
-                  easing: Easing.QUADRATIC_IN_OUT
-                } ]
-              } );
-              this.dataSortedNodeAnimation.finishEmitter.addListener( () => {
-                dataSortedNode.visible = false;
-                this.dataSortedNodeAnimation = null;
-              } );
-              this.dataSortedNodeAnimation.start();
-
-              successSoundClip.play();
-
-              const cardBeingDragged = this.cardNodes.filter( cardNode => cardNode.dragListener.isPressed ).length;
-              const cardsAnimating = cardCells.filter( card => card.animation ).length;
-              if ( cardBeingDragged === 0 && cardsAnimating === 0 ) {
-                this.pickable = false;
-
-                this.animateRandomCelebration( () => {
-
-                  this.isReadyForCelebration = false;
-                  this.pickable = true;
-                } );
-              }
-            } );
-
-            // Notify the asyncCounter when any in-progress animation finishes
-            inProgressAnimations.forEach( animation => {
-              animation.endedEmitter.addListener( () => asyncCounter.increment() );
-            } );
-          }
+          this.isReadyForCelebration && this.celebrate();
         }
       } );
 
@@ -203,7 +145,7 @@ export default class CardNodeContainer extends Node {
       font: new PhetFont( 15 ),
       maxWidth: CAVConstants.CARD_DIMENSION * 10
     } );
-    const dataSortedNode = new Panel( dataSortedTextNode, {
+    this.dataSortedNode = new Panel( dataSortedTextNode, {
       stroke: null,
       cornerRadius: 4,
       lineWidth: 2,
@@ -212,8 +154,8 @@ export default class CardNodeContainer extends Node {
 
     // create a rotated linear gradient
     const gradientMargin = 20;
-    const startPoint = new Vector2( dataSortedNode.left + gradientMargin, dataSortedNode.top + gradientMargin );
-    const endPoint = new Vector2( dataSortedNode.right - gradientMargin, dataSortedNode.bottom - gradientMargin );
+    const startPoint = new Vector2( this.dataSortedNode.left + gradientMargin, this.dataSortedNode.top + gradientMargin );
+    const endPoint = new Vector2( this.dataSortedNode.right - gradientMargin, this.dataSortedNode.bottom - gradientMargin );
     const gradient = new LinearGradient( startPoint.x, startPoint.y, endPoint.x, endPoint.y );
     gradient.addColorStop( 0, '#fa9696' );
     gradient.addColorStop( 0.2, '#ffa659' );
@@ -221,10 +163,10 @@ export default class CardNodeContainer extends Node {
     gradient.addColorStop( 0.6, '#8ce685' );
     gradient.addColorStop( 0.8, '#7fd7f0' );
     gradient.addColorStop( 1, '#927feb' );
-    gradient.setTransformMatrix( Matrix3.rotationAroundPoint( Math.PI / 4 * 1.2, dataSortedNode.center ) );
-    dataSortedNode.stroke = gradient;
+    gradient.setTransformMatrix( Matrix3.rotationAroundPoint( Math.PI / 4 * 1.2, this.dataSortedNode.center ) );
+    this.dataSortedNode.stroke = gradient;
 
-    this.addChild( dataSortedNode );
+    this.addChild( this.dataSortedNode );
 
     this.addChild( this.cardLayer );
 
@@ -359,7 +301,7 @@ export default class CardNodeContainer extends Node {
     medianTextNode.boundsProperty.link( updateMedianNode );
 
     this.sceneModel.resetEmitter.addListener( () => {
-      dataSortedNode.visible = false;
+      this.dataSortedNode.visible = false;
       if ( this.dataSortedNodeAnimation ) {
         this.dataSortedNodeAnimation.stop();
         this.dataSortedNodeAnimation = null;
@@ -414,6 +356,17 @@ export default class CardNodeContainer extends Node {
           focusForSelectedCard.makeDashed( isCardNodeGrabbed );
 
           focusedCardNode.model.isDraggingProperty.value = isCardNodeGrabbed;
+
+          if ( isCardGrabbedProperty.value ) {
+            this.wasSortedBefore = model.isDataSorted();
+          }
+          else {
+
+            // celebrate after the card was dropped and gets to its home
+            this.isReadyForCelebration = this.model.isDataSorted() && !this.wasSortedBefore;
+
+            this.isReadyForCelebration && this.celebrate();
+          }
         }
         else {
           this.setFocusHighlight( 'invisible' );
@@ -493,6 +446,67 @@ export default class CardNodeContainer extends Node {
     this.setGroupFocusHighlight( focusHighlightFromNode );
     this.addInputListener( keyboardListener );
   }
+
+  private celebrate(): void {
+  const cardCells = this.model.getCardsInCellOrder();
+  const inProgressAnimations = cardCells.filter( card => card.animation ).map( card => card.animation! );
+
+  // Setup a callback for animation when all current animations finish
+  const asyncCounter = new AsyncCounter( inProgressAnimations.length, () => {
+
+    const leftmostCard = this.cardMap.get( cardCells[ 0 ] )!;
+    assert && assert( leftmostCard, 'leftmostCard should be defined' );
+
+    this.dataSortedNode.centerX = this.model.getCardPositionX( ( cardCells.length - 1 ) / 2 ) + CAVConstants.CARD_DIMENSION / 2;
+    this.dataSortedNode.top = leftmostCard.bottom + 7;
+
+    if ( this.dataSortedNode.left < 0 ) {
+      this.dataSortedNode.left = 0;
+    }
+    this.dataSortedNode.opacity = 1;
+    this.dataSortedNode.visible = true;
+
+    // If the user sorted the data again before the data sorted message was hidden, clear out the timer.
+    if ( this.dataSortedNodeAnimation ) {
+      this.dataSortedNodeAnimation.stop();
+    }
+
+    // start a timer to hide the data sorted node
+    this.dataSortedNodeAnimation = new Animation( {
+      duration: 0.6,
+      delay: 2,
+      targets: [ {
+        property: this.dataSortedNode.opacityProperty,
+        to: 0,
+        easing: Easing.QUADRATIC_IN_OUT
+      } ]
+    } );
+    this.dataSortedNodeAnimation.finishEmitter.addListener( () => {
+      this.dataSortedNode.visible = false;
+      this.dataSortedNodeAnimation = null;
+    } );
+    this.dataSortedNodeAnimation.start();
+
+    successSoundClip.play();
+
+    const cardBeingDragged = this.cardNodes.filter( cardNode => cardNode.dragListener.isPressed ).length;
+    const cardsAnimating = cardCells.filter( card => card.animation ).length;
+    if ( cardBeingDragged === 0 && cardsAnimating === 0 ) {
+      this.pickable = false;
+
+      this.animateRandomCelebration( () => {
+
+        this.isReadyForCelebration = false;
+        this.pickable = true;
+      } );
+    }
+  } );
+
+  // Notify the asyncCounter when any in-progress animation finishes
+  inProgressAnimations.forEach( animation => {
+  animation.endedEmitter.addListener( () => asyncCounter.increment() );
+} );
+}
 
   // The listener which is linked to the cardNode.positionProperty
   private createDragPositionListener( cardNode: CardNode ): ( position: Vector2 ) => void {
