@@ -459,7 +459,6 @@ export default class CardNodeContainer extends Node {
                 focusedCardNode.model.cellPositionProperty.value = targetIndex;
                 displacedCardNode.model.cellPositionProperty.value = currentIndex;
 
-                // TODO: https://github.com/phetsims/center-and-variability/issues/351 animation
                 model.animateToHomeCell( focusedCardNode.model, 0.3 );
                 model.animateToHomeCell( displacedCardNode.model, 0.3 );
 
