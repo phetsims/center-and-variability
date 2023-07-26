@@ -346,33 +346,35 @@ export default class CardNodeContainer extends Node {
       }
     } );
 
-    Multilink.multilink( [ focusedCardNodeProperty, isCardGrabbedProperty ], ( focusedCardNode, isCardNodeGrabbed ) => {
+    Multilink.multilink( [ focusedCardNodeProperty, isCardGrabbedProperty ], ( focusedCardNode, isCardGrabbed ) => {
         if ( focusedCardNode ) {
 
           // TODO: Add isDashed to the FocusHighlightFromNode options, see https://github.com/phetsims/center-and-variability/issues/351
           const focusForSelectedCard = new FocusHighlightFromNode( focusedCardNode.cardNode );
           this.setFocusHighlight( focusForSelectedCard );
 
-          focusForSelectedCard.makeDashed( isCardNodeGrabbed );
-
-          focusedCardNode.model.isDraggingProperty.value = isCardNodeGrabbed;
-
-          if ( isCardGrabbedProperty.value ) {
-            this.wasSortedBefore = model.isDataSorted();
-          }
-          else {
-
-            // celebrate after the card was dropped and gets to its home
-            this.isReadyForCelebration = this.model.isDataSorted() && !this.wasSortedBefore;
-
-            this.isReadyForCelebration && this.celebrate();
-          }
+          focusForSelectedCard.makeDashed( isCardGrabbed );
+          focusedCardNode.model.isDraggingProperty.value = isCardGrabbed;
         }
         else {
           this.setFocusHighlight( 'invisible' );
         }
       }
     );
+
+    isCardGrabbedProperty.link( isCardGrabbed => {
+      if ( isCardGrabbed ) {
+        this.wasSortedBefore = model.isDataSorted();
+      }
+      else {
+
+        // celebrate after the card was dropped and gets to its home
+        this.isReadyForCelebration = this.model.isDataSorted() && !this.wasSortedBefore;
+
+        this.isReadyForCelebration && this.celebrate();
+        this.wasSortedBefore = this.model.isDataSorted();
+      }
+    } );
 
     // TODO: Some duplication with SoccerSceneView, see https://github.com/phetsims/center-and-variability/issues/351
     const keyboardListener = new KeyboardListener( {
