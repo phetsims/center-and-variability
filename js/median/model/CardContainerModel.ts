@@ -273,8 +273,8 @@ export default class CardContainerModel extends PhetioObject {
     swappedPairs.forEach( pair => {
 
       // If the user dragged a card, that takes precedence for choosing the pitch
-      const directionToPlayFromInteraction = pair.first.isDragging && !pair.second.isDragging ? pair.direction :
-                                             pair.second.isDragging && !pair.first.isDragging ? opposite( pair.direction ) :
+      const directionToPlayFromInteraction = pair.first.isDraggingProperty.value && !pair.second.isDraggingProperty.value ? pair.direction :
+                                             pair.second.isDraggingProperty.value && !pair.first.isDraggingProperty.value ? opposite( pair.direction ) :
                                              'none';
 
       // If one card animated past a stationary card, the moving card chooses the pitch.

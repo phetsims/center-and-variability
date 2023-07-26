@@ -24,6 +24,7 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import Property from '../../../../axon/js/Property.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 type CardModelOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'>;
@@ -39,7 +40,7 @@ export default class CardModel extends PhetioObject {
 
   // Track whether the card is being dragged, for purposes of hiding the drag indicator arrow when the user
   // has dragged a sufficient amount and to play sound effects for the dragged card
-  public isDragging = false;
+  public readonly isDraggingProperty = new BooleanProperty( false );
 
   // Avoid sound effects for cards that landed recently, since cards sometimes swap when a new soccer ball lands and "sort data" is checked.
   public timeSinceLanded = 0;

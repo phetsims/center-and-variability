@@ -74,21 +74,21 @@ export default class CardNode extends Node {
       children: [ cardNode ]
     } );
 
-    const startDrag = () => {
-      model.isDragging = true;
-      this.moveToFront();
+    model.isDraggingProperty.lazyLink( isDragging => {
 
-      // Set the relative position within the parent.
-      cardNode.setTranslation( PICK_UP_DELTA_X, PICK_UP_DELTA_Y );
-      cardPickUpSoundClip.play();
-    };
+      if ( isDragging ) {
+        this.moveToFront();
 
-    const endDrag = () => {
-      model.isDragging = false;
-      // Restore the relative position within the parent.
-      cardNode.setTranslation( 0, 0 );
-      cardDropSoundClip.play();
-    };
+        // Set the relative position within the parent.
+        cardNode.setTranslation( PICK_UP_DELTA_X, PICK_UP_DELTA_Y );
+        cardPickUpSoundClip.play();
+      }
+      else {
+        // Restore the relative position within the parent.
+        cardNode.setTranslation( 0, 0 );
+        cardDropSoundClip.play();
+      }
+    } );
 
     const options = optionize<CardNodeOptions, SelfOptions, ParentOptions>()( {
       children: [ offsetContainer ],
@@ -112,7 +112,7 @@ export default class CardNode extends Node {
       this.translation = new Vector2( range.constrainValue( position.x ), 0 );
 
       const delta = this.translation.minus( before );
-      if ( model.isDragging ) {
+      if ( model.isDraggingProperty.value ) {
         model.dragDistanceEmitter.emit( Math.abs( delta.x ) );
 
         // Set the relative position within the parent.
@@ -123,8 +123,8 @@ export default class CardNode extends Node {
     this.dragListener = new DragListener( {
       tandem: options.tandem.createTandem( 'dragListener' ),
       positionProperty: model.positionProperty,
-      start: startDrag,
-      end: endDrag
+      start: () => model.isDraggingProperty.set( true ),
+      end: () => model.isDraggingProperty.set( false )
     } );
     this.addInputListener( this.dragListener );
 

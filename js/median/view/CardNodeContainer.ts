@@ -414,6 +414,8 @@ export default class CardNodeContainer extends Node {
           this.setFocusHighlight( focusForSelectedCard );
 
           focusForSelectedCard.makeDashed( isCardNodeGrabbed );
+
+          focusedCardNode.model.isDraggingProperty.value = isCardNodeGrabbed;
         }
         else {
           this.setFocusHighlight( 'invisible' );
