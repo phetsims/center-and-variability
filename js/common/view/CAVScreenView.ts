@@ -395,9 +395,9 @@ export default class CAVScreenView extends ScreenView {
   }
 
   // Set the pdom order. Only the variability screen has sceneRadioButtons and variabilityMeasureRadioButtons
-  protected cavSetPDOMOrder( bottomControls: Node, predictionTools: Node[], infoButton: Node, sceneRadioButtonGroup?: Node, variabilityMeasureRadioButtonGroup?: Node ): void {
+  protected cavSetPDOMOrder( bottomControls: Node, predictionTools: Node[], infoButton: Node, sceneKickerRadioButtonGroup?: Node, variabilityMeasureRadioButtonGroup?: Node ): void {
     this.screenViewRootNode.pdomOrder = [
-      ...( sceneRadioButtonGroup ? [ sceneRadioButtonGroup ] : [] ),
+      ...( sceneKickerRadioButtonGroup ? [ sceneKickerRadioButtonGroup ] : [] ),
       this.kickButtonGroup,
       this.backScreenViewLayer,
       bottomControls,

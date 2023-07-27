@@ -15,7 +15,7 @@ import VariabilityModel from '../model/VariabilityModel.js';
 import CAVColors from '../../common/CAVColors.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import { ManualConstraint } from '../../../../scenery/js/imports.js';
-import SceneRadioButtonGroup from './SceneRadioButtonGroup.js';
+import SceneKickerRadioButtonGroup from './SceneKickerRadioButtonGroup.js';
 import VariabilityMeasureRadioButtonGroup from './VariabilityMeasureRadioButtonGroup.js';
 import CAVScreenView, { CAVScreenViewOptions } from '../../common/view/CAVScreenView.js';
 import VariabilityAccordionBox from './VariabilityAccordionBox.js';
@@ -225,18 +225,18 @@ export default class VariabilityScreenView extends CAVScreenView {
     );
     soundManager.addSoundGenerator( this.continuousPropertySoundGenerator );
 
-    const sceneRadioButtonGroup = new SceneRadioButtonGroup( model.variabilitySceneModels, model.selectedSceneModelProperty, {
+    const sceneKickerRadioButtonGroup = new SceneKickerRadioButtonGroup( model.variabilitySceneModels, model.selectedSceneModelProperty, {
       left: 10,
-      tandem: options.tandem.createTandem( 'sceneRadioButtonGroup' )
+      tandem: options.tandem.createTandem( 'sceneKickerRadioButtonGroup' )
     } );
 
     // Float above the ground
-    ManualConstraint.create( this, [ this.playAreaNumberLineNode, sceneRadioButtonGroup ],
-      ( lowerNumberLineWrapper, sceneRadioButtonGroupWrapper ) => {
-        sceneRadioButtonGroupWrapper.bottom = lowerNumberLineWrapper.top - 10;
+    ManualConstraint.create( this, [ this.playAreaNumberLineNode, sceneKickerRadioButtonGroup ],
+      ( lowerNumberLineWrapper, sceneKickerRadioButtonGroupWrapper ) => {
+        sceneKickerRadioButtonGroupWrapper.bottom = lowerNumberLineWrapper.top - 10;
       } );
 
-    this.addChild( sceneRadioButtonGroup );
+    this.addChild( sceneKickerRadioButtonGroup );
     this.addChild( variabilityMeasureRadioButtonGroup );
 
     const bottomControls = this.setBottomControls(
@@ -270,7 +270,7 @@ export default class VariabilityScreenView extends CAVScreenView {
     } );
 
     this.cavSetPDOMOrder( bottomControls, [ pointerSlider, handle1, handle2 ], variabilityAccordionBox.infoButton,
-      sceneRadioButtonGroup, variabilityMeasureRadioButtonGroup );
+      sceneKickerRadioButtonGroup, variabilityMeasureRadioButtonGroup );
   }
 
   public override getKickerImageSet( kicker: Kicker, sceneModel: CAVSoccerSceneModel ): KickerImageSet {

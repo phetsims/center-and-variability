@@ -17,12 +17,12 @@ import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 
 type SelfOptions = EmptySelfOptions;
-type SceneRadioButtonGroupOptions = SelfOptions & RectangularRadioButtonGroupOptions;
+type SceneKickerRadioButtonGroupOptions = SelfOptions & RectangularRadioButtonGroupOptions;
 
-export default class SceneRadioButtonGroup extends RectangularRadioButtonGroup<CAVSoccerSceneModel> {
+export default class SceneKickerRadioButtonGroup extends RectangularRadioButtonGroup<CAVSoccerSceneModel> {
 
-  public constructor( sceneModels: VariabilitySceneModel[], property: Property<CAVSoccerSceneModel>, providedOptions: SceneRadioButtonGroupOptions ) {
-    const options = optionize<SceneRadioButtonGroupOptions, SelfOptions, RectangularRadioButtonGroupOptions>()( {
+  public constructor( sceneModels: VariabilitySceneModel[], property: Property<CAVSoccerSceneModel>, providedOptions: SceneKickerRadioButtonGroupOptions ) {
+    const options = optionize<SceneKickerRadioButtonGroupOptions, SelfOptions, RectangularRadioButtonGroupOptions>()( {
       radioButtonOptions: {
         baseColor: 'white'
       }
@@ -72,4 +72,4 @@ export default class SceneRadioButtonGroup extends RectangularRadioButtonGroup<C
   }
 }
 
-centerAndVariability.register( 'SceneRadioButtonGroup', SceneRadioButtonGroup );
+centerAndVariability.register( 'SceneKickerRadioButtonGroup', SceneKickerRadioButtonGroup );
