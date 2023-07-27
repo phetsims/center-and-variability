@@ -88,7 +88,7 @@ export default class CAVModel extends PhetioObject {
 
     this.selectedSceneModelProperty = new Property( sceneModels[ 0 ], {
       validValues: sceneModels,
-      tandem: options.tandem.createTandem( 'selectedSceneModelProperty' ),
+      tandem: sceneModels.length === 1 ? Tandem.OPT_OUT : options.tandem.createTandem( 'selectedSceneModelProperty' ),
       phetioValueType: ReferenceIO( IOType.ObjectIO )
     } );
 
