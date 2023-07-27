@@ -14,7 +14,6 @@ import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVConstants from '../CAVConstants.js';
 import MedianBarNode from './MedianBarNode.js';
 import CAVColors from '../CAVColors.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import Property from '../../../../axon/js/Property.js';
 import PlayAreaCheckboxFactory from './PlayAreaCheckboxFactory.js';
 import CAVModel from '../model/CAVModel.js';
@@ -46,7 +45,7 @@ export default class AccordionBoxCheckboxFactory {
 
   public static getSortDataCheckboxItem( isSortingDataProperty: Property<boolean> ): VerticalCheckboxGroupItem {
     return {
-      createNode: ( tandem: Tandem ) => CHECKBOX_GROUP.createBox( new Text( CenterAndVariabilityStrings.sortDataStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ), { xAlign: 'left' } ),
+      createNode: () => CHECKBOX_GROUP.createBox( new Text( CenterAndVariabilityStrings.sortDataStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ), { xAlign: 'left' } ),
       property: isSortingDataProperty,
       tandemName: 'sortDataCheckbox',
       options: {
@@ -59,7 +58,7 @@ export default class AccordionBoxCheckboxFactory {
 
   public static getMedianCheckboxWithIconItem( isTopMedianVisibleProperty: Property<boolean> ): VerticalCheckboxGroupItem {
     return {
-      createNode: ( tandem: Tandem ) => {
+      createNode: () => {
         return AccordionBoxCheckboxFactory.createGridBox(
           new Text( CenterAndVariabilityStrings.medianStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ),
           new MedianBarNode( {
