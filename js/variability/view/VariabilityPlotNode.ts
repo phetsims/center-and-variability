@@ -64,6 +64,7 @@ export default class VariabilityPlotNode extends Node {
       model.intervalTool2ValueProperty, toggleNode.nodes[ 0 ].modelViewTransform, new Property( -18 ),
       new BooleanProperty( false ), {
         focusable: false,
+        interactiveHighlightEnabled: false,
         visibleProperty: model.isIntervalToolVisibleProperty,
         tandem: providedOptions.tandem.createTandem( 'intervalToolNode' )
       } );
