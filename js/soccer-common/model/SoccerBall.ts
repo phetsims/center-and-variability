@@ -82,7 +82,8 @@ export default class SoccerBall extends PhetioObject {
       phetioReadOnly: true
     } );
     this.velocityProperty = new Vector2Property( new Vector2( 0, 0 ), {
-      tandem: options.tandem.createTandem( 'velocityProperty' )
+      tandem: options.tandem.createTandem( 'velocityProperty' ),
+      phetioReadOnly: true
     } );
     this.soccerBallPhaseProperty = new EnumerationProperty( isFirstSoccerBall ? SoccerBallPhase.READY : SoccerBallPhase.INACTIVE, {
       tandem: options.tandem.createTandem( 'soccerBallPhaseProperty' ),
