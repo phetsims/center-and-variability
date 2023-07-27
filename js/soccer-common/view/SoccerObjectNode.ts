@@ -8,7 +8,7 @@
  */
 
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import { Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
+import { InteractiveHighlightingNode, NodeOptions, Text } from '../../../../scenery/js/imports.js';
 import SoccerBall from '../model/SoccerBall.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import { SoccerBallPhase } from '../model/SoccerBallPhase.js';
@@ -29,7 +29,7 @@ export type CAVObjectNodeOptions =
   & StrictOmit<NodeOptions, 'inputEnabledProperty'>
   & PickRequired<NodeOptions, 'tandem'>;
 
-export default class SoccerObjectNode extends Node {
+export default class SoccerObjectNode extends InteractiveHighlightingNode {
   public constructor( public readonly soccerBall: SoccerBall,
                       modelViewTransform: ModelViewTransform2,
                       modelRadius: number,
