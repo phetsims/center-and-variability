@@ -98,7 +98,8 @@ export default class SoccerBall extends PhetioObject {
 
     this.targetXProperty = new Property<number | null>( null, {
       tandem: options.tandem.createTandem( 'targetXProperty' ),
-      phetioValueType: NullableIO( NumberIO )
+      phetioValueType: NullableIO( NumberIO ),
+      phetioReadOnly: true
     } );
   }
 
