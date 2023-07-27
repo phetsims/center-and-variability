@@ -45,14 +45,12 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
       bottom: backgroundShape.bounds.height
     } );
 
-    const checkboxGroup = new VerticalCheckboxGroup( [
+    const checkboxGroup = CAVConstants.ACCORDION_BOX_VERTICAL_CHECKBOX_GROUP.createBox( new VerticalCheckboxGroup( [
       AccordionBoxCheckboxFactory.getMedianCheckboxWithIconItem( model.isTopMedianVisibleProperty ),
       AccordionBoxCheckboxFactory.getMeanCheckboxWithIconItem( model.isTopMeanVisibleProperty, model )
     ], {
-      tandem: tandem.createTandem( 'checkboxGroup' ),
-      right: backgroundShape.bounds.width,
-      centerY: backgroundShape.bounds.centerY
-    } );
+      tandem: tandem.createTandem( 'checkboxGroup' )
+    } ), { yAlign: 'top' } );
 
     const checkboxGroupAlignBox = new AlignBox( checkboxGroup, {
       alignBounds: backgroundShape.bounds,

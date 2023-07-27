@@ -19,6 +19,7 @@ import { Shape } from '../../../kite/js/imports.js';
 import NumberProperty from '../../../axon/js/NumberProperty.js';
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
+import { AlignGroup } from '../../../scenery/js/imports.js';
 
 // Right skewed means most of the data is on the left, see https://github.com/phetsims/center-and-variability/issues/112
 const RIGHT_SKEWED_DATA = [
@@ -85,6 +86,7 @@ const CAVConstants = {
   ACCORDION_BOX_CONTENTS_SHAPE_MEDIAN: Shape.rect( 0, 10, 983, 205 ),
   ACCORDION_BOX_CONTENTS_SHAPE_MEAN_AND_MEDIAN: Shape.rect( 0, 10, 983, 232 ),
   ACCORDION_BOX_CONTENTS_SHAPE_VARIABILITY: Shape.rect( 0, 10, 926, 232 ),
+  ACCORDION_BOX_VERTICAL_CHECKBOX_GROUP: new AlignGroup( { matchHorizontal: false } ),
 
   SCENE_VIEW_TANDEM: 'sceneView',
 
