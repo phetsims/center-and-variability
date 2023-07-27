@@ -126,7 +126,7 @@ export default class CardContainerModel extends PhetioObject {
 
       const removeCardCell = ( card: CardModel ) => {
         this.cardCellsChangedEmitter.emit();
-        card.cellPositionProperty.reset();
+        card.indexProperty.reset();
       };
 
       card.soccerBall.valueProperty.lazyLink( value => {
@@ -161,8 +161,8 @@ export default class CardContainerModel extends PhetioObject {
             const lowerNeighborCard = _.maxBy( existingLowerCards, card => cardCells.indexOf( card ) );
 
             if ( lowerNeighborCard !== undefined ) {
-              assert && assert( lowerNeighborCard.cellPositionProperty.value !== null, `The lower neighbor must have a valid cell Position. lowerNeighborCellPosition: ${lowerNeighborCard.cellPositionProperty.value}` );
-              targetIndex = lowerNeighborCard.cellPositionProperty.value! + 1;
+              assert && assert( lowerNeighborCard.indexProperty.value !== null, `The lower neighbor must have a valid cell Position. lowerNeighborCellPosition: ${lowerNeighborCard.indexProperty.value}` );
+              targetIndex = lowerNeighborCard.indexProperty.value! + 1;
             }
             else {
               targetIndex = 0;
@@ -170,7 +170,7 @@ export default class CardContainerModel extends PhetioObject {
           }
 
           card.timeSinceLanded = 0;
-          card.cellPositionProperty.value = targetIndex;
+          card.indexProperty.value = targetIndex;
           this.setAtHomeCell( card );
 
           // Animate all displaced cards
@@ -178,7 +178,7 @@ export default class CardContainerModel extends PhetioObject {
           // Animate all displaced cards
           for ( let i = targetIndex; i < this.getCardsInCellOrder().length; i++ ) {
             const cardCells = this.getCardsInCellOrder();
-            cardCells[ i ].cellPositionProperty.value = i;
+            cardCells[ i ].indexProperty.value = i;
             cardCells[ i ].positionProperty.value = cardCells[ i ].positionProperty.value.plusXY( 1, 0 );
             this.animateToHomeCell( cardCells[ i ], 0.3 );
           }
@@ -308,8 +308,8 @@ export default class CardContainerModel extends PhetioObject {
   }
 
   private getHomePosition( card: CardModel ): Vector2 {
-    assert && assert( card.cellPositionProperty.value !== null, `The card's cell position cannot be null. cellPositionProperty: ${card.cellPositionProperty.value}` );
-    return new Vector2( this.getCardPositionX( card.cellPositionProperty.value! ), 0 );
+    assert && assert( card.indexProperty.value !== null, `The card's cell position cannot be null. indexProperty: ${card.indexProperty.value}` );
+    return new Vector2( this.getCardPositionX( card.indexProperty.value! ), 0 );
   }
 
   public setAtHomeCell( card: CardModel ): void {
@@ -339,22 +339,22 @@ export default class CardContainerModel extends PhetioObject {
   }
 
   /**
-   * To be in a cell a card must both be active and have an assigned cellPosition
+   * To be in a cell a card must both be active and have an assigned index
    */
   public getCardsInCells(): CardModel[] {
-    return this.getActiveCards().filter( card => card.cellPositionProperty.value !== null );
+    return this.getActiveCards().filter( card => card.indexProperty.value !== null );
   }
 
   public getCardsInCellOrder(): CardModel[] {
     const cardsInCells = this.getCardsInCells();
-    return _.sortBy( cardsInCells, ( card => card.cellPositionProperty.value ) );
+    return _.sortBy( cardsInCells, ( card => card.indexProperty.value ) );
   }
 
   public sortData( animationReason: 'valueChanged' | null = null ): void {
     // If the card is visible, the value property should be non-null
     const sorted = _.sortBy( this.getCardsInCells(), card => card.soccerBall.valueProperty.value );
     sorted.forEach( ( card, index ) => {
-      card.cellPositionProperty.value = index;
+      card.indexProperty.value = index;
       this.animateToHomeCell( card, 0.5, animationReason );
     } );
     this.cardCellsChangedEmitter.emit();
@@ -384,7 +384,7 @@ export default class CardContainerModel extends PhetioObject {
         returnType: ArrayIO( NumberIO ),
         parameterTypes: [],
         implementation: function( this: CardContainerModel ) {
-          const sorted = _.sortBy( this.getCardsInCells(), ( card => card.cellPositionProperty.value ) );
+          const sorted = _.sortBy( this.getCardsInCells(), ( card => card.indexProperty.value ) );
           return sorted.map( card => card.soccerBall.valueProperty.value );
         },
         documentation: 'Gets the values of the cards in the order they appear.'

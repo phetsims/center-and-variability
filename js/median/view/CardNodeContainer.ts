@@ -410,8 +410,8 @@ export default class CardNodeContainer extends Node {
               if ( targetIndex !== currentIndex ) {
                 const displacedCardNode = activeCardNodes[ targetIndex ];
 
-                focusedCardNode.model.cellPositionProperty.value = targetIndex;
-                displacedCardNode.model.cellPositionProperty.value = currentIndex;
+                focusedCardNode.model.indexProperty.value = targetIndex;
+                displacedCardNode.model.indexProperty.value = currentIndex;
 
                 model.animateToHomeCell( focusedCardNode.model, 0.3 );
                 model.animateToHomeCell( displacedCardNode.model, 0.3 );
@@ -514,8 +514,8 @@ export default class CardNodeContainer extends Node {
     return ( position: Vector2 ) => {
       if ( cardNode.dragListener.isPressedProperty.value ) {
 
-        assert && assert( cardNode.model.cellPositionProperty.value !== null, 'The cardNode\'s cellPositionProperty cannot be null if it is being dragged.' );
-        const originalCell = cardNode.model.cellPositionProperty.value!;
+        assert && assert( cardNode.model.indexProperty.value !== null, 'The cardNode\'s indexProperty cannot be null if it is being dragged.' );
+        const originalCell = cardNode.model.indexProperty.value!;
 
         // Find the closest cell to the dragged card
         const dragCell = this.model.getClosestCell( position.x );
@@ -526,7 +526,7 @@ export default class CardNodeContainer extends Node {
                             dragCell < originalCell ? originalCell - 1 :
                             originalCell;
 
-        const closestCardModel = this.model.getCardsInCells().find( card => card.cellPositionProperty.value === closestCell );
+        const closestCardModel = this.model.getCardsInCells().find( card => card.indexProperty.value === closestCell );
 
         assert && assert( closestCardModel, `closestCardModel is undefined. closestCell: ${closestCell}` );
         const currentOccupant = this.cardMap.get( closestCardModel! )!;
@@ -535,8 +535,8 @@ export default class CardNodeContainer extends Node {
         if ( currentOccupant !== cardNode ) {
 
           // it's just a pairwise swap
-          cardNode.model.cellPositionProperty.value = closestCell;
-          currentOccupant.model.cellPositionProperty.value = originalCell;
+          cardNode.model.indexProperty.value = closestCell;
+          currentOccupant.model.indexProperty.value = originalCell;
 
           this.model.animateToHomeCell( currentOccupant.model, 0.3 );
 
@@ -690,7 +690,7 @@ export default class CardNodeContainer extends Node {
 
   // TODO: See model.getCardsInCellOrder(); https://github.com/phetsims/center-and-variability/issues/351
   private getActiveCardNodesInOrder(): CardNode[] {
-    return _.sortBy( this.cardNodes.filter( cardNode => cardNode.model.isActiveProperty.value ), cardNode => cardNode.model.cellPositionProperty.value! );
+    return _.sortBy( this.cardNodes.filter( cardNode => cardNode.model.isActiveProperty.value ), cardNode => cardNode.model.indexProperty.value! );
   }
 }
 

@@ -35,8 +35,8 @@ export default class CardModel extends PhetioObject {
   public readonly isActiveProperty: TReadOnlyProperty<boolean>;
   public readonly positionProperty: Vector2Property;
 
-  // Where the card is in the line-up. If a card is not active it's cellPosition will be null.
-  public readonly cellPositionProperty: Property<number | null>;
+  // Where the card is in the line-up. If a card is not active it's index will be null.
+  public readonly indexProperty: Property<number | null>;
 
   // Track whether the card is being dragged, for purposes of hiding the drag indicator arrow when the user
   // has dragged a sufficient amount and to play sound effects for the dragged card
@@ -64,10 +64,11 @@ export default class CardModel extends PhetioObject {
 
     super( options );
 
-    this.cellPositionProperty = new Property<number | null>( null, {
+    this.indexProperty = new Property<number | null>( null, {
       phetioReadOnly: true,
-      tandem: options.tandem.createTandem( 'cellPositionProperty' ),
-      phetioValueType: NullableIO( NumberIO )
+      tandem: options.tandem.createTandem( 'indexProperty' ),
+      phetioValueType: NullableIO( NumberIO ),
+      phetioFeatured: false
     } );
 
     this.soccerBall = soccerBall;
