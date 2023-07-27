@@ -172,7 +172,6 @@ export default class CardNodeContainer extends Node {
 
     if ( model.parentContext === 'accordion' ) {
       const handWithArrowNode = new Image( handWithArrow_png, {
-        tandem: options.tandem.createTandem( 'handWithArrowNode' ),
         opacity: 0,
         maxWidth: 25,
         pickable: false,
