@@ -417,7 +417,6 @@ export default class CardNodeContainer extends Node {
                 model.animateToHomeCell( focusedCardNode.model, 0.3 );
                 model.animateToHomeCell( displacedCardNode.model, 0.3 );
 
-                // TODO: Celebrate if the user sorted the data, see https://github.com/phetsims/center-and-variability/issues/351
                 model.cardCellsChangedEmitter.emit();
 
                 // Gets rid of the hand icon
