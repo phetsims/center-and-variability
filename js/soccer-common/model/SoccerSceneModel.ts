@@ -80,7 +80,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
 
   public readonly kickers: Kicker[];
 
-  private readonly numberOfScheduledSoccerBallsToKickProperty: NumberProperty;
+  private readonly numberOfQueuedKicksProperty: NumberProperty;
   public readonly numberOfUnkickedBallsProperty: TReadOnlyProperty<number>;
   public readonly hasKickableSoccerBallsProperty: TReadOnlyProperty<boolean>;
 
@@ -228,8 +228,9 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
 
     this.objectValueBecameNonNullEmitter = new Emitter();
 
-    this.numberOfScheduledSoccerBallsToKickProperty = new NumberProperty( 0, {
-      tandem: options.tandem.createTandem( 'numberOfScheduledSoccerBallsToKickProperty' )
+    this.numberOfQueuedKicksProperty = new NumberProperty( 0, {
+      tandem: options.tandem.createTandem( 'numberOfQueuedKicksProperty' ),
+      phetioReadOnly: true
     } );
     this.timeWhenLastBallWasKickedProperty = new NumberProperty( 0, {
       tandem: options.tandem.createTandem( 'timeWhenLastBallWasKickedProperty' )
@@ -241,7 +242,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
 
     this.numberOfUnkickedBallsProperty = DerivedProperty.deriveAny( [
       this.maxKicksProperty,
-      this.numberOfScheduledSoccerBallsToKickProperty,
+      this.numberOfQueuedKicksProperty,
       ...this.soccerBalls.map( soccerBall => soccerBall.soccerBallPhaseProperty ) ], () => {
 
       const kickedSoccerBalls = this.getActiveSoccerBalls().filter(
@@ -249,7 +250,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
                       soccerBall.soccerBallPhaseProperty.value === SoccerBallPhase.STACKING ||
                       soccerBall.soccerBallPhaseProperty.value === SoccerBallPhase.STACKED
       );
-      const value = this.maxKicksProperty.value - kickedSoccerBalls.length - this.numberOfScheduledSoccerBallsToKickProperty.value;
+      const value = this.maxKicksProperty.value - kickedSoccerBalls.length - this.numberOfQueuedKicksProperty.value;
 
       return value;
     } );
@@ -375,7 +376,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
    */
   public clearData(): void {
     this.isClearingData = true;
-    this.numberOfScheduledSoccerBallsToKickProperty.reset();
+    this.numberOfQueuedKicksProperty.reset();
     this.timeProperty.reset();
     this.timeWhenLastBallWasKickedProperty.reset();
 
@@ -435,7 +436,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
 
     if ( frontPlayer ) {
 
-      if ( this.numberOfScheduledSoccerBallsToKickProperty.value > 0 &&
+      if ( this.numberOfQueuedKicksProperty.value > 0 &&
            this.timeProperty.value >= this.timeWhenLastBallWasKickedProperty.value + TIME_BETWEEN_RAPID_KICKS ) {
 
         this.advanceLine();
@@ -460,7 +461,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
           // In fuzzing, sometimes there are no soccer balls available
           if ( soccerBall ) {
             this.kickBall( frontPlayer, soccerBall, true );
-            this.numberOfScheduledSoccerBallsToKickProperty.value--;
+            this.numberOfQueuedKicksProperty.value--;
           }
         }
       }
@@ -569,7 +570,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
    * Adds the provided number of balls to the scheduled balls to kick
    */
   public scheduleKicks( numberOfBallsToKick: number ): void {
-    this.numberOfScheduledSoccerBallsToKickProperty.value += Math.min( numberOfBallsToKick, this.numberOfUnkickedBallsProperty.value );
+    this.numberOfQueuedKicksProperty.value += Math.min( numberOfBallsToKick, this.numberOfUnkickedBallsProperty.value );
   }
 
   /**
