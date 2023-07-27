@@ -182,9 +182,8 @@ export default class SoccerSceneView {
 
           // TODO: Add isDashed to the FocusHighlightFromNode options, see https://github.com/phetsims/center-and-variability/issues/351
           const focusForSelectedBall = new FocusHighlightFromNode( soccerBallMap.get( focusedSoccerBall )! );
-          backLayerSoccerBallLayer.setFocusHighlight( focusForSelectedBall );
-
           focusForSelectedBall.makeDashed( isSoccerBallGrabbed );
+          backLayerSoccerBallLayer.setFocusHighlight( focusForSelectedBall );
         }
         else {
           backLayerSoccerBallLayer.setFocusHighlight( 'invisible' );

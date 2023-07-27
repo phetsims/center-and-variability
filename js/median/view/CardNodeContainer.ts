@@ -351,9 +351,9 @@ export default class CardNodeContainer extends Node {
 
           // TODO: Add isDashed to the FocusHighlightFromNode options, see https://github.com/phetsims/center-and-variability/issues/351
           const focusForSelectedCard = new FocusHighlightFromNode( focusedCardNode.cardNode );
+          focusForSelectedCard.makeDashed( isCardGrabbed );
           this.setFocusHighlight( focusForSelectedCard );
 
-          focusForSelectedCard.makeDashed( isCardGrabbed );
           focusedCardNode.model.isDraggingProperty.value = isCardGrabbed;
         }
         else {
