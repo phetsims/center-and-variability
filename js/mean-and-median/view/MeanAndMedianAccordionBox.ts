@@ -38,7 +38,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
     // There is only one scene in the mean and median screen
     const sceneModel = model.selectedSceneModelProperty.value;
 
-    const meanAndMedianPlotNode = new MeanAndMedianPlotNode( model, sceneModel, playAreaNumberLineNode, {
+    const meanAndMedianPlotNode = new MeanAndMedianPlotNode( model, sceneModel, playAreaNumberLineNode, model.isDataPointLayerVisibleProperty, {
       dataPointFill: 'black',
       parentContext: 'accordion'
     } ).mutate( {

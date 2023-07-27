@@ -33,7 +33,7 @@ export default class MeanAndMedianInfoPlotNode extends MeanAndMedianPlotNode {
       isMeanAndMedianInfoPlot: true
     }, providedOptions );
 
-    super( model, sceneModel, playAreaNumberLine, options );
+    super( model, sceneModel, playAreaNumberLine, model.isDataPointLayerVisibleProperty, options );
 
     const modelViewTransfrom = this.modelViewTransform;
 

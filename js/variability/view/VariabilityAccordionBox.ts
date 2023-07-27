@@ -50,7 +50,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     const contents = _.range( 4 ).map( i => {
       return {
         value: model.sceneModels[ i ],
-        createNode: () => new VariabilityPlotNode( model, model.variabilitySceneModels[ i ], playAreaNumberLineNode, {
+        createNode: () => new VariabilityPlotNode( model, model.variabilitySceneModels[ i ], playAreaNumberLineNode, model.isDataPointLayerVisibleProperty, {
           tandem: tandem.createTandem( 'plotNodeKicker' + ( i + 1 ) ),
           bottom: backgroundShape.bounds.height,
           phetioVisiblePropertyInstrumented: false

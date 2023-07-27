@@ -15,6 +15,7 @@ import CAVConstants, { SHOW_OUTLIERS_PROPERTY } from '../../common/CAVConstants.
 import optionize from '../../../../phet-core/js/optionize.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 import IntervalBarNode from '../../common/view/IntervalBarNode.js';
+import TProperty from '../../../../axon/js/TProperty.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
@@ -22,13 +23,13 @@ type SelfOptions = {
 type IQRNodeOptions = SelfOptions & StrictOmit<CAVPlotNodeOptions, 'dataPointFill'>;
 
 export default class IQRNode extends CAVPlotNode {
-  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, providedOptions: IQRNodeOptions ) {
+  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, isDataPointLayerVisibleProperty: TProperty<boolean>, providedOptions: IQRNodeOptions ) {
 
     const options = optionize<IQRNodeOptions, SelfOptions, CAVPlotNodeOptions>()( {
       dataPointFill: CAVColors.variabilityDataPointFill
     }, providedOptions );
 
-    super( model, sceneModel, playAreaNumberLineNode, options );
+    super( model, sceneModel, playAreaNumberLineNode, isDataPointLayerVisibleProperty, options );
 
     const needAtLeastFiveKicksText = new Text( CenterAndVariabilityStrings.needAtLeastFiveKicksStringProperty, {
       fontSize: 18,

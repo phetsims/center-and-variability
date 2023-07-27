@@ -20,6 +20,7 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 import SoccerBall from '../../soccer-common/model/SoccerBall.js';
 import IntervalBarNode from '../../common/view/IntervalBarNode.js';
+import TProperty from '../../../../axon/js/TProperty.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
@@ -27,13 +28,13 @@ type SelfOptions = {
 type RangeNodeOptions = SelfOptions & StrictOmit<CAVPlotNodeOptions, 'dataPointFill'>;
 
 export default class RangeNode extends CAVPlotNode {
-  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, providedOptions: RangeNodeOptions ) {
+  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, isDataPointLayerVisibleProperty: TProperty<boolean>, providedOptions: RangeNodeOptions ) {
 
     const options = optionize<RangeNodeOptions, SelfOptions, CAVPlotNodeOptions>()( {
       dataPointFill: CAVColors.variabilityDataPointFill
     }, providedOptions );
 
-    super( model, sceneModel, playAreaNumberLineNode, options );
+    super( model, sceneModel, playAreaNumberLineNode, isDataPointLayerVisibleProperty, options );
 
     const needAtLeastOneKickText = new Text( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {
       fontSize: 18,

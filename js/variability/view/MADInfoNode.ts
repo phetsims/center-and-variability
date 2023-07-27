@@ -87,7 +87,7 @@ export default class MADInfoNode extends VBox {
           layoutOptions: { topMargin: 5 }
         } ),
 
-        new MADNode( model, sceneModel, playAreaNumberLineNode, {
+        new MADNode( model, sceneModel, playAreaNumberLineNode, model.isDataPointLayerVisibleProperty, {
           parentContext: 'info',
           layoutOptions: { topMargin: PLOT_NODE_TOP_MARGIN },
           tandem: options.tandem.createTandem( 'madNode' )

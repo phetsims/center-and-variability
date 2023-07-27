@@ -24,6 +24,7 @@ import VariabilityMeasure from '../../variability/model/VariabilityMeasure.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import CAVNumberLineNode from './CAVNumberLineNode.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
+import TProperty from '../../../../axon/js/TProperty.js';
 
 type SelfOptions = {
   dataPointFill: TColor;
@@ -41,7 +42,7 @@ export default class CAVPlotNode extends Node {
   public readonly modelViewTransform: ModelViewTransform2;
   private readonly numberLineNode: NumberLineNode;
 
-  public constructor( model: CAVModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, providedOptions?: CAVPlotNodeOptions ) {
+  public constructor( model: CAVModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, isDataPointLayerVisibleProperty: TProperty<boolean>, providedOptions?: CAVPlotNodeOptions ) {
 
     const options = optionize<CAVPlotNodeOptions, SelfOptions, NodeOptions>()( {
       excludeInvisibleChildrenFromBounds: true,
@@ -51,6 +52,9 @@ export default class CAVPlotNode extends Node {
     super( options );
 
     this.dataPointLayer = new Node();
+    if ( options.parentContext === 'accordion' ) {
+      this.dataPointLayer.visibleProperty = isDataPointLayerVisibleProperty;
+    }
 
     const backgroundNode = new Node();
     this.addChild( backgroundNode );

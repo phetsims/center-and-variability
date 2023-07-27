@@ -31,6 +31,7 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 type SelfOptions = {
   instrumentPredictMeanProperty: boolean;
+  instrumentDataPointVisibilityProperty: boolean;
 } & PickRequired<PhetioObjectOptions, 'tandem'>;
 export type CAVModelOptions = SelfOptions;
 
@@ -47,6 +48,7 @@ export default class CAVModel extends PhetioObject {
 
   public readonly isAccordionBoxExpandedProperty: Property<boolean>;
   public readonly soccerBallsInputEnabledProperty: Property<boolean>;
+  public readonly isDataPointLayerVisibleProperty: Property<boolean>;
 
   public readonly isInfoVisibleProperty: Property<boolean>;
 
@@ -62,6 +64,10 @@ export default class CAVModel extends PhetioObject {
 
     this.isAccordionBoxExpandedProperty = new BooleanProperty( true, {
       tandem: options.tandem.createTandem( 'isAccordionBoxExpandedProperty' )
+    } );
+
+    this.isDataPointLayerVisibleProperty = new BooleanProperty( true, {
+      tandem: options.instrumentDataPointVisibilityProperty ? options.tandem.createTandem( 'isDataPointLayerVisibleProperty' ) : Tandem.OPT_OUT
     } );
 
     this.isPlayAreaMeanVisibleProperty = new BooleanProperty( false, {

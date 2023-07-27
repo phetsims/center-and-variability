@@ -46,7 +46,8 @@ export default class MeanAndMedianModel extends CAVModel {
   public constructor( providedOptions: MeanAndMedianModelOptions ) {
 
     const options = optionize<MeanAndMedianModelOptions, SelfOptions, CAVModelOptions>()( {
-      instrumentPredictMeanProperty: true
+      instrumentPredictMeanProperty: true,
+      instrumentDataPointVisibilityProperty: true
     }, providedOptions );
 
     const sceneModel = new CAVSoccerSceneModel(

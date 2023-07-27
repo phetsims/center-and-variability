@@ -20,6 +20,7 @@ import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import TProperty from '../../../../axon/js/TProperty.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
@@ -32,10 +33,10 @@ export default class MeanAndMedianPlotNode extends CAVPlotNode {
     barStyle: 'continuous'
   } );
 
-  public constructor( model: MeanAndMedianModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, providedOptions: MeanAndMedianPlotNodeOptions ) {
+  public constructor( model: MeanAndMedianModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, isDataPointLayerVisibleProperty: TProperty<boolean>, providedOptions: MeanAndMedianPlotNodeOptions ) {
 
     const options = optionize<MeanAndMedianPlotNodeOptions, SelfOptions, CAVPlotNodeOptions>()( {}, providedOptions );
-    super( model, sceneModel, playAreaNumberLineNode, options );
+    super( model, sceneModel, playAreaNumberLineNode, isDataPointLayerVisibleProperty, options );
 
     const needAtLeastOneKickText = new Text( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {
       fontSize: 18,

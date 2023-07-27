@@ -62,7 +62,7 @@ export default class RangeInfoNode extends VBox {
           layoutOptions: { topMargin: 5 }
         } ),
 
-        new RangeNode( model, sceneModel, playAreaNumberLineNode, {
+        new RangeNode( model, sceneModel, playAreaNumberLineNode, model.isDataPointLayerVisibleProperty, {
           parentContext: 'info',
           layoutOptions: { topMargin: PLOT_NODE_TOP_MARGIN }
         } )

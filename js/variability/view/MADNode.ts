@@ -16,6 +16,7 @@ import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 import IntervalBarNode from '../../common/view/IntervalBarNode.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import TProperty from '../../../../axon/js/TProperty.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
@@ -23,12 +24,12 @@ type SelfOptions = {
 type MADNodeOptions = SelfOptions & StrictOmit<CAVPlotNodeOptions, 'dataPointFill'> & PickRequired<CAVPlotNodeOptions, 'tandem'>;
 
 export default class MADNode extends CAVPlotNode {
-  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, providedOptions: MADNodeOptions ) {
+  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, isDataPointLayerVisibleProperty: TProperty<boolean>, providedOptions: MADNodeOptions ) {
 
     const options = optionize<MADNodeOptions, SelfOptions, CAVPlotNodeOptions>()( {
       dataPointFill: CAVColors.variabilityDataPointFill
     }, providedOptions );
-    super( model, sceneModel, playAreaNumberLineNode, options );
+    super( model, sceneModel, playAreaNumberLineNode, isDataPointLayerVisibleProperty, options );
 
     const needAtLeastOneKickText = new Text( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {
       fontSize: 18,

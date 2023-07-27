@@ -23,30 +23,31 @@ import CAVPlotNode from '../../common/view/CAVPlotNode.js';
 import IntervalToolNode from './IntervalToolNode.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import TProperty from '../../../../axon/js/TProperty.js';
 
 export type CAVPlotOptions = WithRequired<NodeOptions, 'tandem'>;
 
 export default class VariabilityPlotNode extends Node {
   private toggleNode: ToggleNode<VariabilityMeasure, CAVPlotNode>;
 
-  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, providedOptions: CAVPlotOptions ) {
+  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, isDataPointLayerVisibleProperty: TProperty<boolean>, providedOptions: CAVPlotOptions ) {
     super( providedOptions );
 
     // We need to specify CAVPlotNode manually because otherwise TypeScript will infer all Nodes as the first element (RangeNode), see https://github.com/phetsims/sun/issues/846
     const toggleNode = new ToggleNode<VariabilityMeasure, CAVPlotNode>( model.selectedVariabilityMeasureProperty, [ {
-      createNode: tandem => new RangeNode( model, sceneModel, playAreaNumberLineNode, {
+      createNode: tandem => new RangeNode( model, sceneModel, playAreaNumberLineNode, isDataPointLayerVisibleProperty, {
         parentContext: 'accordion',
         tandem: tandem.createTandem( 'rangeNode' )
       } ),
       value: VariabilityMeasure.RANGE
     }, {
-      createNode: tandem => new IQRNode( model, sceneModel, playAreaNumberLineNode, {
+      createNode: tandem => new IQRNode( model, sceneModel, playAreaNumberLineNode, isDataPointLayerVisibleProperty, {
         parentContext: 'accordion',
         tandem: tandem.createTandem( 'iqrNode' )
       } ),
       value: VariabilityMeasure.IQR
     }, {
-      createNode: tandem => new MADNode( model, sceneModel, playAreaNumberLineNode, {
+      createNode: tandem => new MADNode( model, sceneModel, playAreaNumberLineNode, isDataPointLayerVisibleProperty, {
         parentContext: 'accordion',
         tandem: tandem.createTandem( 'madNode' )
       } ),
@@ -67,7 +68,7 @@ export default class VariabilityPlotNode extends Node {
         tandem: providedOptions.tandem.createTandem( 'intervalToolNode' )
       } );
 
-    toggleNode.nodes.forEach( ( node, i ) => node.insertChild( 0, intervalToolNode ) );
+    toggleNode.nodes.forEach( node => node.insertChild( 0, intervalToolNode ) );
   }
 }
 
