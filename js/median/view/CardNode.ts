@@ -22,6 +22,7 @@ import cvCardDropSound_mp3 from '../../../sounds/cvCardDropSound_mp3.js';
 import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 type SelfOptions = EmptySelfOptions;
 type ParentOptions = WithRequired<NodeOptions, 'tandem'>;
@@ -124,7 +125,7 @@ export default class CardNode extends Node {
     } );
 
     this.dragListener = new DragListener( {
-      tandem: options.tandem.createTandem( 'dragListener' ),
+      tandem: model.cardContainerModel.parentContext === 'info' ? Tandem.OPT_OUT : options.tandem.createTandem( 'dragListener' ),
       positionProperty: model.positionProperty,
       start: () => model.isDraggingProperty.set( true ),
       end: () => model.isDraggingProperty.set( false )
