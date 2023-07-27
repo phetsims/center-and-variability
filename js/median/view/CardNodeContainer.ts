@@ -500,6 +500,7 @@ export default class CardNodeContainer extends Node {
 
           this.isReadyForCelebration = false;
           this.pickable = true;
+          this.interruptSubtreeInput();
         } );
       }
     } );
