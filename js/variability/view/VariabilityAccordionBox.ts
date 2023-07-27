@@ -229,7 +229,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
 
     super( backgroundNode, {
       tandem: tandem,
-      titleNode: new AccordionBoxTitleNode( accordionBoxTitleProperty, CAVColors.variabilityAccordionBoxFillProperty, tandem ),
+      titleNode: new AccordionBoxTitleNode( accordionBoxTitleProperty, CAVColors.variabilityAccordionBoxFillProperty ),
       expandedProperty: model.isAccordionBoxExpandedProperty,
 
       // Leave space for the radio buttons at the left

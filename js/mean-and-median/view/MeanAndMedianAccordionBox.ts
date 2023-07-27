@@ -129,7 +129,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
       return plotType === PlotType.DOT_PLOT ? dotPlotString : linePlotString;
     } );
     super( backgroundNode, {
-        titleNode: new AccordionBoxTitleNode( titleTextProperty, CAVColors.meanAndMedianAccordionBoxFillProperty, tandem ),
+        titleNode: new AccordionBoxTitleNode( titleTextProperty, CAVColors.meanAndMedianAccordionBoxFillProperty ),
         tandem: tandem,
         top: top,
         centerX: layoutBounds.centerX,
