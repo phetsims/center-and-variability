@@ -101,7 +101,6 @@ export default class SoccerSceneView {
     } );
 
     // The soccerBall that is receiving highlight focus in the backLayerSoccerBallLayer group highlight.
-    // TODO: Focus on a SoccerBallNode to simplify things? That worked much better for cards: https://github.com/phetsims/center-and-variability/issues/351
     const focusedSoccerBallProperty = new Property<SoccerBall | null>( null );
 
     // TODO: What if there is no focusedSoccerBallProperty? Make sure this isn't true in that case, see https://github.com/phetsims/center-and-variability/issues/351
