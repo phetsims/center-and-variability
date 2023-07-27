@@ -416,21 +416,21 @@ export default class CAVScreenView extends ScreenView {
   }
 
   /**
-   * The MedianPredictionNode is shared in the Median screen and MeanAndMedianScreen, so factored out here.
+   * The predictMedianNode is shared in the Median screen and MeanAndMedianScreen, so factored out here.
    */
-  public static createMedianPredictionNode( model: CAVModel, modelViewTransform: ModelViewTransform2, tandem: Tandem ): PredictionSlider {
-    return new PredictionSlider( model.medianPredictionProperty, modelViewTransform, CAVConstants.PHYSICAL_RANGE, new BooleanProperty( false ), new BooleanProperty( false ), {
+  public static createPredictMedianNode( model: CAVModel, modelViewTransform: ModelViewTransform2, tandem: Tandem ): PredictionSlider {
+    return new PredictionSlider( model.predictMedianValueProperty, modelViewTransform, CAVConstants.PHYSICAL_RANGE, new BooleanProperty( false ), new BooleanProperty( false ), {
       predictionThumbNodeOptions: {
         color: CAVColors.medianColorProperty,
         style: 'arrow'
       },
-      valueProperty: model.medianPredictionProperty,
+      valueProperty: model.predictMedianValueProperty,
       enabledRangeProperty: new Property<Range>( CAVConstants.PHYSICAL_RANGE ),
       roundToInterval: 0.5,
 
       // always step 0.5 even if holding shift (median is always integer or half-integer)
       shiftKeyboardStep: 0.5,
-      visibleProperty: model.isMedianPredictionVisibleProperty,
+      visibleProperty: model.isPredictMedianVisibleProperty,
       tandem: tandem
     } );
   }

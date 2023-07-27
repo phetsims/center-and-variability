@@ -59,27 +59,27 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
     } ), options.tandem );
 
 
-    const meanPredictionNode = new PredictionSlider( model.meanPredictionProperty, this.modelViewTransform,
-      CAVConstants.PHYSICAL_RANGE, new BooleanProperty( false ), model.isMeanPredictionKeyboardDraggingProperty, {
+    const predictMeanNode = new PredictionSlider( model.predictMeanValueProperty, this.modelViewTransform,
+      CAVConstants.PHYSICAL_RANGE, new BooleanProperty( false ), model.isPredictMeanKeyboardDraggingProperty, {
         predictionThumbNodeOptions: {
           color: CAVColors.meanColorProperty,
           style: 'arrow'
         },
-        valueProperty: model.meanPredictionProperty,
+        valueProperty: model.predictMeanValueProperty,
         enabledRangeProperty: new Property<Range>( CAVConstants.PHYSICAL_RANGE ),
         roundToInterval: null, // continuous
-        visibleProperty: model.isMeanPredictionVisibleProperty,
-        tandem: options.tandem.createTandem( 'meanPredictionNode' )
+        visibleProperty: model.isPredictMeanVisibleProperty,
+        tandem: options.tandem.createTandem( 'predictMeanNode' )
       } );
 
-    this.backScreenViewLayer.addChild( meanPredictionNode );
+    this.backScreenViewLayer.addChild( predictMeanNode );
 
-    const medianPredictionNode = CAVScreenView.createMedianPredictionNode(
+    const predictMedianNode = CAVScreenView.createPredictMedianNode(
       model,
       this.modelViewTransform,
-      options.tandem.createTandem( 'medianPredictionNode' )
+      options.tandem.createTandem( 'predictMedianNode' )
     );
-    this.backScreenViewLayer.addChild( medianPredictionNode );
+    this.backScreenViewLayer.addChild( predictMedianNode );
 
     const infoDialog = new MeanAndMedianInfoDialog( model, model.sceneModels[ 0 ], this.playAreaNumberLineNode, {
       tandem: options.tandem.createTandem( 'infoDialog' )
@@ -94,7 +94,7 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
       }
     } );
 
-    this.cavSetPDOMOrder( bottomControls, [ medianPredictionNode, meanPredictionNode ], meanAndMedianAccordionBox.infoButton );
+    this.cavSetPDOMOrder( bottomControls, [ predictMedianNode, predictMeanNode ], meanAndMedianAccordionBox.infoButton );
   }
 }
 

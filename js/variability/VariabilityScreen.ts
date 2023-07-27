@@ -36,7 +36,7 @@ export default class VariabilityScreen extends CAVScreen<VariabilityModel, Varia
     super(
       () => new VariabilityModel( {
         tandem: options.tandem.createTandem( 'model' ),
-        instrumentMeanPredictionProperty: true
+        instrumentPredictMeanProperty: true
       } ),
       ( model: VariabilityModel ) => new VariabilityScreenView( model, { tandem: options.tandem.createTandem( 'view' ) } ),
       options

@@ -39,14 +39,14 @@ export default class MeanAndMedianModel extends CAVModel {
   public readonly isMedianAnimationCompleteProperty = new BooleanProperty( false );
   public readonly isTopMedianVisibleProperty: BooleanProperty;
   public readonly isTopMeanVisibleProperty: BooleanProperty;
-  public readonly isMeanPredictionVisibleProperty: BooleanProperty;
-  public readonly meanPredictionProperty: NumberProperty;
-  public readonly isMeanPredictionKeyboardDraggingProperty: Property<boolean>;
+  public readonly isPredictMeanVisibleProperty: BooleanProperty;
+  public readonly predictMeanValueProperty: NumberProperty;
+  public readonly isPredictMeanKeyboardDraggingProperty: Property<boolean>;
 
   public constructor( providedOptions: MeanAndMedianModelOptions ) {
 
     const options = optionize<MeanAndMedianModelOptions, SelfOptions, CAVModelOptions>()( {
-      instrumentMeanPredictionProperty: true
+      instrumentPredictMeanProperty: true
     }, providedOptions );
 
     const sceneModel = new CAVSoccerSceneModel(
@@ -95,26 +95,26 @@ export default class MeanAndMedianModel extends CAVModel {
       }
     } );
 
-    this.meanPredictionProperty = new NumberProperty( 1.5, {
+    this.predictMeanValueProperty = new NumberProperty( 1.5, {
       range: CAVConstants.PHYSICAL_RANGE,
-      tandem: options.tandem.createTandem( 'meanPredictionProperty' )
+      tandem: options.tandem.createTandem( 'predictMeanValueProperty' )
     } );
-    this.isMeanPredictionVisibleProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isMeanPredictionVisibleProperty' )
+    this.isPredictMeanVisibleProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isPredictMeanVisibleProperty' )
     } );
 
     sceneModel.objectValueBecameNonNullEmitter.addListener( () => this.updateAnimation() );
 
-    this.isMeanPredictionKeyboardDraggingProperty = new BooleanProperty( false );
+    this.isPredictMeanKeyboardDraggingProperty = new BooleanProperty( false );
 
-    this.meanPredictionProperty.lazyLink( ( meanPrediction, oldMeanPrediction ) => {
-      if ( this.isMeanPredictionKeyboardDraggingProperty.value ) {
+    this.predictMeanValueProperty.lazyLink( ( predictMeanValue, oldPredictMeanValue ) => {
+      if ( this.isPredictMeanKeyboardDraggingProperty.value ) {
 
         // TODO: Make sure this is the value after the keyboard event, not before the keyboard event https://github.com/phetsims/center-and-variability/issues/302
-        NumberTone.playMean( meanPrediction );
+        NumberTone.playMean( predictMeanValue );
       }
-      else if ( this.crossedCheckpoint( meanPrediction, oldMeanPrediction ) ) {
-        NumberTone.playMean( Utils.roundToInterval( meanPrediction, 0.5 ) );
+      else if ( this.crossedCheckpoint( predictMeanValue, oldPredictMeanValue ) ) {
+        NumberTone.playMean( Utils.roundToInterval( predictMeanValue, 0.5 ) );
       }
     } );
   }
@@ -125,8 +125,8 @@ export default class MeanAndMedianModel extends CAVModel {
     this.isMedianAnimationCompleteProperty.reset();
     this.isTopMeanVisibleProperty.reset();
     this.isTopMedianVisibleProperty.reset();
-    this.meanPredictionProperty.reset();
-    this.isMeanPredictionVisibleProperty.reset();
+    this.predictMeanValueProperty.reset();
+    this.isPredictMeanVisibleProperty.reset();
   }
 
   public override step( dt: number ): void {

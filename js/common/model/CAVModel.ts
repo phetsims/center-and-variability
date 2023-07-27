@@ -30,7 +30,7 @@ import ObjectLiteralIO from '../../../../tandem/js/types/ObjectLiteralIO.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 type SelfOptions = {
-  instrumentMeanPredictionProperty: boolean;
+  instrumentPredictMeanProperty: boolean;
 } & PickRequired<PhetioObjectOptions, 'tandem'>;
 export type CAVModelOptions = SelfOptions;
 
@@ -40,8 +40,8 @@ export default class CAVModel extends PhetioObject {
 
   public readonly isPlayAreaMedianVisibleProperty: BooleanProperty; // Screens 1-3
   public readonly isPlayAreaMeanVisibleProperty: BooleanProperty;  // Screens 2-3
-  public readonly isMedianPredictionVisibleProperty: BooleanProperty; // Screens 1-2
-  public readonly medianPredictionProperty: NumberProperty; // Screens 1-2
+  public readonly isPredictMedianVisibleProperty: BooleanProperty; // Screens 1-2
+  public readonly predictMedianValueProperty: NumberProperty; // Screens 1-2
 
   public readonly selectedSceneModelProperty: Property<CAVSoccerSceneModel>;
 
@@ -65,24 +65,24 @@ export default class CAVModel extends PhetioObject {
     } );
 
     this.isPlayAreaMeanVisibleProperty = new BooleanProperty( false, {
-      tandem: options.instrumentMeanPredictionProperty ? options.tandem.createTandem( 'isPlayAreaMeanVisibleProperty' ) : Tandem.OPT_OUT
+      tandem: options.instrumentPredictMeanProperty ? options.tandem.createTandem( 'isPlayAreaMeanVisibleProperty' ) : Tandem.OPT_OUT
     } );
     this.isPlayAreaMedianVisibleProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isPlayAreaMedianVisibleProperty' )
     } );
 
-    this.isMedianPredictionVisibleProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isMedianPredictionVisibleProperty' )
+    this.isPredictMedianVisibleProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'isPredictMedianVisibleProperty' )
     } );
 
-    this.medianPredictionProperty = new NumberProperty( 1, {
+    this.predictMedianValueProperty = new NumberProperty( 1, {
 
       // Assumes all physical ranges are the same
       range: CAVConstants.PHYSICAL_RANGE,
-      tandem: options.tandem.createTandem( 'medianPredictionProperty' )
+      tandem: options.tandem.createTandem( 'predictMedianValueProperty' )
     } );
 
-    this.medianPredictionProperty.lazyLink( median => {
+    this.predictMedianValueProperty.lazyLink( median => {
       NumberTone.playMedian( median );
     } );
 
@@ -153,12 +153,12 @@ export default class CAVModel extends PhetioObject {
   }
 
   public reset(): void {
-    this.medianPredictionProperty.reset();
+    this.predictMedianValueProperty.reset();
 
     this.isPlayAreaMeanVisibleProperty.reset();
     this.isPlayAreaMedianVisibleProperty.reset();
 
-    this.isMedianPredictionVisibleProperty.reset();
+    this.isPredictMedianVisibleProperty.reset();
 
     this.sceneModels.forEach( sceneModel => sceneModel.reset() );
     this.selectedSceneModelProperty.reset();

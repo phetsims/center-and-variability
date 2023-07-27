@@ -33,7 +33,7 @@ export default class MedianModel extends CAVModel {
   public constructor( providedOptions: MedianModelOptions ) {
 
     const options = optionize<MedianModelOptions, SelfOptions, CAVModelOptions>()( {
-      instrumentMeanPredictionProperty: false
+      instrumentPredictMeanProperty: false
     }, providedOptions );
 
     const maxKicksAllowed = [ 5, 10, 15 ];

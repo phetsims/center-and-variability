@@ -53,13 +53,13 @@ export default class MedianScreenView extends CAVScreenView {
       tandem: this.tandem.createTandem( 'bottomCheckboxGroup' )
     } ), this.tandem );
 
-    const medianPredictionNode = CAVScreenView.createMedianPredictionNode(
+    const predictMedianNode = CAVScreenView.createPredictMedianNode(
       model,
       this.modelViewTransform,
-      options.tandem.createTandem( 'medianPredictionNode' )
+      options.tandem.createTandem( 'predictMedianNode' )
     );
 
-    this.backScreenViewLayer.addChild( medianPredictionNode );
+    this.backScreenViewLayer.addChild( predictMedianNode );
 
     const infoDialog = new MedianInfoDialog( model, model.sceneModels[ 0 ], this.playAreaNumberLineNode, {
       tandem: options.tandem.createTandem( 'infoDialog' )
@@ -74,7 +74,7 @@ export default class MedianScreenView extends CAVScreenView {
       }
     } );
 
-    this.cavSetPDOMOrder( bottomControls, [ medianPredictionNode ], this.medianAccordionBox.infoButton );
+    this.cavSetPDOMOrder( bottomControls, [ predictMedianNode ], this.medianAccordionBox.infoButton );
   }
 }
 

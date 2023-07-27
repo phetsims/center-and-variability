@@ -150,7 +150,7 @@ export default class PlayAreaCheckboxFactory {
 
   public static getPredictMedianCheckboxItem( model: CAVModel ): VerticalCheckboxGroupItem {
     return PlayAreaCheckboxFactory.createPredictionItem(
-      model.isMedianPredictionVisibleProperty,
+      model.isPredictMedianVisibleProperty,
       CenterAndVariabilityStrings.predictMedianStringProperty,
       CAVColors.medianColorProperty,
       'predictMedianCheckbox'
@@ -159,7 +159,7 @@ export default class PlayAreaCheckboxFactory {
 
   public static getPredictMeanCheckboxItem( model: MeanAndMedianModel ): VerticalCheckboxGroupItem {
     return PlayAreaCheckboxFactory.createPredictionItem(
-      model.isMeanPredictionVisibleProperty,
+      model.isPredictMeanVisibleProperty,
       CenterAndVariabilityStrings.predictMeanStringProperty,
       CAVColors.meanColorProperty,
       'predictMeanCheckbox'
