@@ -66,7 +66,8 @@ export default class CardNode extends Node {
     } );
 
     const cardNode = new InteractiveHighlightingNode( {
-      children: [ rectangle, text ]
+      children: [ rectangle, text ],
+      cursor: 'pointer'
     } );
 
     // For layout only, a bounding box that the card animates within for the "pick up" and "drop" effects.
@@ -94,7 +95,6 @@ export default class CardNode extends Node {
 
     const options = optionize<CardNodeOptions, SelfOptions, ParentOptions>()( {
       children: [ offsetContainer ],
-      cursor: 'pointer',
       phetioVisiblePropertyInstrumented: false
     }, providedOptions );
 
