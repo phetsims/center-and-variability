@@ -33,7 +33,7 @@ import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import { KickerImageSet } from '../../soccer-common/view/KickerNode.js';
 import Kicker from '../../soccer-common/model/Kicker.js';
 import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
-import DragIndicatorArrowNode from '../../soccer-common/view/DragIndicatorArrowNode.js';
+import DragIndicatorHandAndArrowNode from '../../soccer-common/view/DragIndicatorHandAndArrowNode.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';
@@ -152,7 +152,7 @@ export default class CAVScreenView extends ScreenView {
       alignChildren: ToggleNode.NONE
     } );
 
-    const dragIndicatorArrowNode = new DragIndicatorArrowNode( {
+    const dragIndicatorArrowNode = new DragIndicatorHandAndArrowNode( {
       tandem: options.tandem.createTandem( 'dragIndicatorArrowNode' ),
       phetioVisiblePropertyInstrumented: false
     } );

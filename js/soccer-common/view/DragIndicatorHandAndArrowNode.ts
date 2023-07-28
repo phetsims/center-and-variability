@@ -17,7 +17,7 @@ import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 type SelfOptions = EmptySelfOptions;
 type DragIndicatorArrowNodeOptions = WithRequired<NodeOptions, 'tandem'>;
 
-export default class DragIndicatorArrowNode extends Node {
+export default class DragIndicatorHandAndArrowNode extends Node {
 
   public constructor( providedOptions: DragIndicatorArrowNodeOptions ) {
 
@@ -48,4 +48,4 @@ export default class DragIndicatorArrowNode extends Node {
   }
 }
 
-soccerCommon.register( 'DragIndicatorArrowNode', DragIndicatorArrowNode );
+soccerCommon.register( 'DragIndicatorHandAndArrowNode', DragIndicatorHandAndArrowNode );
