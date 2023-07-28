@@ -8,7 +8,7 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import { Color, DragListener, Node, NodeOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { Color, DragListener, InteractiveHighlightingNode, Node, NodeOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import SoccerBall from '../../soccer-common/model/SoccerBall.js';
@@ -65,7 +65,7 @@ export default class CardNode extends Node {
       font: new PhetFont( 24 )
     } );
 
-    const cardNode = new Node( {
+    const cardNode = new InteractiveHighlightingNode( {
       children: [ rectangle, text ]
     } );
 
