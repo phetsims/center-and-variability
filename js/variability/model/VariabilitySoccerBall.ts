@@ -24,10 +24,12 @@ export default class VariabilitySoccerBall extends CAVSoccerBall {
     super( isFirstSoccerBall, options );
 
     this.isQ1ObjectProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isQ1ObjectProperty' )
+      tandem: options.tandem.createTandem( 'isQ1ObjectProperty' ),
+      phetioReadOnly: true
     } );
     this.isQ3ObjectProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isQ3ObjectProperty' )
+      tandem: options.tandem.createTandem( 'isQ3ObjectProperty' ),
+      phetioReadOnly: true
     } );
   }
 

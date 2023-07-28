@@ -142,7 +142,6 @@ export default class VariabilityScreenView extends CAVScreenView {
     // pointer should always be in front of the interval tool so must be added after.
     this.backScreenViewLayer.addChild( pointerSlider );
 
-
     // Prevent multitouch on the handles when the main interval tool is being dragged, see https://github.com/phetsims/center-and-variability/issues/225
     isIntervalAreaBeingDraggedProperty.link( isIntervalAreaBeingDragged => {
       handle1.inputEnabled = !isIntervalAreaBeingDragged;

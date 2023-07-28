@@ -8,7 +8,7 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import { Color, DragListener, Node, NodeOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { Color, DragListener, InteractiveHighlightingNode, Node, NodeOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import SoccerBall from '../../soccer-common/model/SoccerBall.js';
@@ -65,8 +65,9 @@ export default class CardNode extends Node {
       font: new PhetFont( 24 )
     } );
 
-    const cardNode = new Node( {
-      children: [ rectangle, text ]
+    const cardNode = new InteractiveHighlightingNode( {
+      children: [ rectangle, text ],
+      cursor: 'pointer'
     } );
 
     // For layout only, a bounding box that the card animates within for the "pick up" and "drop" effects.
@@ -94,7 +95,6 @@ export default class CardNode extends Node {
 
     const options = optionize<CardNodeOptions, SelfOptions, ParentOptions>()( {
       children: [ offsetContainer ],
-      cursor: 'pointer',
       phetioVisiblePropertyInstrumented: false
     }, providedOptions );
 

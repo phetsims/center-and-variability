@@ -55,19 +55,19 @@ export default class SceneKickerRadioButtonGroup extends RectangularRadioButtonG
     super( property, [ {
       value: sceneModels[ 0 ],
       createNode: tandem => createTShirtIcon( tandem, '1', '#7bb772' ),
-      tandemName: 'uniformRadioButton'
+      tandemName: 'kicker1RadioButton'
     }, {
       value: sceneModels[ 1 ],
       createNode: tandem => createTShirtIcon( tandem, '2', '#4f61b4' ),
-      tandemName: 'gaussianRadioButton'
+      tandemName: 'kicker2RadioButton'
     }, {
       value: sceneModels[ 2 ],
       createNode: tandem => createTShirtIcon( tandem, '3', '#c15156' ),
-      tandemName: 'skewedRadioButton'
+      tandemName: 'kicker3RadioButton'
     }, {
       value: sceneModels[ 3 ],
       createNode: tandem => createTShirtIcon( tandem, '4', '#eeda63' ),
-      tandemName: 'bimodalRadioButton'
+      tandemName: 'kicker4RadioButton'
     } ], options );
   }
 }
