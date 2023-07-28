@@ -7,12 +7,12 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import ArrowNode, { ArrowNodeOptions } from '../../../../scenery-phet/js/ArrowNode.js';
 import soccerCommon from '../soccerCommon.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { HBox, Node, NodeOptions } from '../../../../scenery/js/imports.js';
-import SoccerCommonColors from '../SoccerCommonColors.js';
+import { Image, Node, NodeOptions, VBox } from '../../../../scenery/js/imports.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import soccerBallDragIndicatorHand_png from '../../../images/soccerBallDragIndicatorHand_png.js';
+import soccerBallDragIndicatorArrow_png from '../../../images/soccerBallDragIndicatorArrow_png.js';
 
 type SelfOptions = EmptySelfOptions;
 type DragIndicatorArrowNodeOptions = WithRequired<NodeOptions, 'tandem'>;
@@ -21,26 +21,31 @@ export default class DragIndicatorHandAndArrowNode extends Node {
 
   public constructor( providedOptions: DragIndicatorArrowNodeOptions ) {
 
-    const createArrow = ( direction: 'left' | 'right' ) => {
-      return new ArrowNode( 0, 0, 15 * ( direction === 'left' ? -1 : 1 ), 0, optionize<DragIndicatorArrowNodeOptions, SelfOptions, ArrowNodeOptions>()( {
-        headHeight: 9,
-        headWidth: 14,
-        tailWidth: 6,
-        doubleHead: false,
-        fill: SoccerCommonColors.dragIndicatorColorProperty,
-        lineWidth: 1.2
-      } ) );
-    };
+    const hand = new Image( soccerBallDragIndicatorHand_png, {
+      scale: 0.08,
+      layoutOptions: {
+        align: 'left'
+      }
+    } );
+    const arrow = new Image( soccerBallDragIndicatorArrow_png, {
+      scale: 0.1,
+      layoutOptions: {
+        align: 'right'
+      }
+    } );
+
+    const container = new VBox( {
+      minContentWidth: 40,
+      spacing: 10,
+      children: [
+        arrow,
+        hand
+      ]
+    } );
 
     const options = optionize<DragIndicatorArrowNodeOptions, SelfOptions, NodeOptions>()( {
       children: [
-        new HBox( {
-          spacing: 26,
-          children: [
-            createArrow( 'left' ),
-            createArrow( 'right' )
-          ]
-        } )
+        container
       ]
     }, providedOptions );
 
