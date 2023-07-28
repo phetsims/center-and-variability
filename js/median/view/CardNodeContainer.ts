@@ -70,8 +70,7 @@ export default class CardNodeContainer extends Node {
                       providedOptions: CardNodeContainerOptions ) {
 
     const options = optionize<CardNodeContainerOptions, EmptySelfOptions, NodeOptions>()( {
-      phetioEnabledPropertyInstrumented: true,
-      disabledOpacity: SceneryConstants.DISABLED_OPACITY,
+      phetioInputEnabledPropertyInstrumented: true,
       focusable: true,
       tagName: 'div'
     }, providedOptions );
@@ -176,7 +175,7 @@ export default class CardNodeContainer extends Node {
         maxWidth: 25,
         pickable: false,
         centerTop: new Vector2( 0.5 * CAVConstants.CARD_DIMENSION, CAVConstants.CARD_DIMENSION - 8 ),
-        visibleProperty: this.enabledProperty
+        visibleProperty: this.inputEnabledProperty
       } );
 
       this.addChild( handWithArrowNode );
