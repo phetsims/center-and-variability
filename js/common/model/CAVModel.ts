@@ -78,14 +78,16 @@ export default class CAVModel extends PhetioObject {
     } );
 
     this.isPredictMedianVisibleProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isPredictMedianVisibleProperty' )
+
+      // Only the Median and Mean & Median screens have a predictMedian tool. They only have one scene model each.
+      tandem: sceneModels.length === 1 ? options.tandem.createTandem( 'isPredictMedianVisibleProperty' ) : Tandem.OPT_OUT
     } );
 
     this.predictMedianValueProperty = new NumberProperty( 1, {
 
       // Assumes all physical ranges are the same
       range: CAVConstants.PHYSICAL_RANGE,
-      tandem: options.tandem.createTandem( 'predictMedianValueProperty' )
+      tandem: sceneModels.length === 1 ? options.tandem.createTandem( 'predictMedianValueProperty' ) : Tandem.OPT_OUT
     } );
 
     this.predictMedianValueProperty.lazyLink( median => {
