@@ -18,7 +18,7 @@ export default class CAVInfoButton extends InfoButton {
       iconFill: 'cornflowerblue',
       scale: 0.5,
       touchAreaDilation: 5,
-      tandem: tandem.createTandem( 'infoButton' ),
+      tandem: tandem,
       listener: () => {
         isInfoVisibleProperty.value = true;
       },
