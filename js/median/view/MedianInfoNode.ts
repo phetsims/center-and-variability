@@ -7,10 +7,7 @@
  */
 import { Text, VBox } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
 import MedianModel from '../model/MedianModel.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import InfoValuesNode from '../../common/view/InfoValuesNode.js';
@@ -21,15 +18,14 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import CardContainerModel from '../model/CardContainerModel.js';
 
 export default class MedianInfoNode extends VBox {
-  public constructor( model: MedianModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
+  public constructor( model: MedianModel, sceneModel: CAVSoccerSceneModel ) {
 
     const hasZeroKicksProperty = DerivedProperty.valueEqualsConstant( sceneModel.numberOfDataPointsProperty, 0 );
     const infoDataValuesNode = new InfoValuesNode( sceneModel );
 
-    const cardContainerModel = new CardContainerModel( model, { tandem: options.tandem.createTandem( 'cardContainerModel' ), parentContext: 'info' } );
+    const cardContainerModel = new CardContainerModel( model, { parentContext: 'info' } );
     const cardNodeContainer = new CardNodeContainer( cardContainerModel, model.isSortingDataProperty,
       model.selectedSceneModelProperty.value, model.isTopMedianVisibleProperty, {
-        tandem: options.tandem.createTandem( 'cardNodeContainer' ),
 
         // So it will remain centered in the dialog
         excludeInvisibleChildrenFromBounds: true,

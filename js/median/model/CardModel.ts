@@ -66,7 +66,7 @@ export default class CardModel extends PhetioObject {
 
     this.indexProperty = new Property<number | null>( null, {
       phetioReadOnly: true,
-      tandem: options.tandem.createTandem( 'indexProperty' ),
+      tandem: options.tandem?.createTandem( 'indexProperty' ),
       phetioValueType: NullableIO( NumberIO ),
       phetioFeatured: false
     } );
@@ -75,13 +75,13 @@ export default class CardModel extends PhetioObject {
 
     this.isActiveProperty = new DerivedProperty( [ soccerBall.valueProperty ], value =>
       value !== null, {
-      tandem: options.tandem.createTandem( 'isActiveProperty' ),
+      tandem: options.tandem?.createTandem( 'isActiveProperty' ),
       phetioValueType: BooleanIO
     } );
 
     this.positionProperty = new Vector2Property( position, {
       phetioReadOnly: true,
-      tandem: options.tandem.createTandem( 'positionProperty' ),
+      tandem: options.tandem?.createTandem( 'positionProperty' ),
       valueComparisonStrategy: 'equalsFunction'
     } );
     this.addLinkedElement( this.soccerBall );

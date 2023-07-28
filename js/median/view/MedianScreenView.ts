@@ -61,7 +61,7 @@ export default class MedianScreenView extends CAVScreenView {
 
     this.backScreenViewLayer.addChild( predictMedianNode );
 
-    const infoDialog = new MedianInfoDialog( model, model.sceneModels[ 0 ], this.playAreaNumberLineNode, {
+    const infoDialog = new MedianInfoDialog( model, model.sceneModels[ 0 ], {
       tandem: options.tandem.createTandem( 'infoDialog' )
     } );
 

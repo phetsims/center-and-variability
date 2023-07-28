@@ -31,7 +31,6 @@ import handWithArrow_png from '../../../images/handWithArrow_png.js';
 import cvSuccessOptions002_mp3 from '../../../sounds/cvSuccessOptions002_mp3.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Property from '../../../../axon/js/Property.js';
 import CardContainerModel from '../model/CardContainerModel.js';
@@ -45,7 +44,7 @@ const successSoundClip = new SoundClip( cvSuccessOptions002_mp3, {
 } );
 soundManager.addSoundGenerator( successSoundClip );
 
-export type CardNodeContainerOptions = EmptySelfOptions & WithRequired<NodeOptions, 'tandem'>;
+export type CardNodeContainerOptions = EmptySelfOptions & NodeOptions;
 
 export default class CardNodeContainer extends Node {
   private readonly model: CardContainerModel;
@@ -86,7 +85,7 @@ export default class CardNodeContainer extends Node {
       // const indexProperty = new NumberProperty( 0 );
 
       const cardNode = new CardNode( this, cardModel, {
-        tandem: options.tandem.createTandem( 'cardNodes' ).createTandem1Indexed( 'cardNode', index )
+        tandem: options.tandem?.createTandem( 'cardNodes' ).createTandem1Indexed( 'cardNode', index )
       } );
 
       this.cardMap.set( cardNode.model, cardNode );
@@ -231,7 +230,7 @@ export default class CardNodeContainer extends Node {
     }
 
     const medianTextNode = new Text( new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty, { value: this.sceneModel.medianValueProperty }, {
-      tandem: options.tandem.createTandem( 'medianStringProperty' ),
+      tandem: options.tandem?.createTandem( 'medianStringProperty' ),
       maps: {
         value: CAVConstants.STRING_VALUE_NULL_MAP
       }
@@ -243,7 +242,7 @@ export default class CardNodeContainer extends Node {
       stroke: 'lightgray',
       lineWidth: 0.6,
       cornerRadius: 4,
-      tandem: options.tandem.createTandem( 'medianReadoutText' )
+      tandem: options.tandem?.createTandem( 'medianReadoutText' )
     } );
     this.addChild( medianReadoutText );
 
