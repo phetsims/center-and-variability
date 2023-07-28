@@ -8,7 +8,7 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import { FocusHighlightFromNode, FocusHighlightPath, Image, KeyboardListener, LinearGradient, Node, NodeOptions, SceneryConstants, Text } from '../../../../scenery/js/imports.js';
+import { FocusHighlightFromNode, FocusHighlightPath, Image, KeyboardListener, LinearGradient, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
 import CardNode, { cardDropSoundClip, cardPickUpSoundClip, PICK_UP_DELTA_X, PICK_UP_DELTA_Y } from './CardNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Panel from '../../../../sun/js/Panel.js';
