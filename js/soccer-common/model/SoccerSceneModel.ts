@@ -223,7 +223,8 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
     } );
 
     this.timeProperty = new NumberProperty( 0, {
-      tandem: options.tandem.createTandem( 'timeProperty' )
+      tandem: options.tandem.createTandem( 'timeProperty' ),
+      phetioReadOnly: true
     } );
 
     this.objectValueBecameNonNullEmitter = new Emitter();

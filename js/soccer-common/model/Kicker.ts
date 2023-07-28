@@ -43,7 +43,8 @@ export default class Kicker {
     } );
     this.timestampWhenPoisedBeganProperty = new Property<number | null>( null, {
       tandem: tandem.createTandem( 'timestampWhenPoisedBeganProperty' ),
-      phetioValueType: NullableIO( NumberIO )
+      phetioValueType: NullableIO( NumberIO ),
+      phetioReadOnly: true
     } );
     this.initialPlaceInLine = placeInLine;
   }
