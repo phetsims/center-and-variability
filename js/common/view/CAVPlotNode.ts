@@ -105,27 +105,24 @@ export default class CAVPlotNode extends Node {
 
     backgroundNode.addChild( this.dataPointLayer );
 
-    model.sceneModels.forEach( ( scene, sceneIndex ) => {
-
-      const dataPointLayer = new Node( {
-        visibleProperty: scene.isVisibleProperty,
-        excludeInvisibleChildrenFromBounds: true
-      } );
-
-      // Create the data points for that scene
-      scene.soccerBalls.forEach( ( soccerBall, index ) => {
-
-        const dotNode = new DataPointNode( soccerBall,
-          modelViewTransform, {
-            isMeanAndMedianInfoNode: options.isMeanAndMedianInfoPlot,
-            fill: options.dataPointFill
-          } );
-
-        dataPointLayer.addChild( dotNode );
-      } );
-
-      this.dataPointLayer.addChild( dataPointLayer );
+    const dataPointLayer = new Node( {
+      visibleProperty: sceneModel.isVisibleProperty,
+      excludeInvisibleChildrenFromBounds: true
     } );
+
+    // Create the data points for that sceneModel
+    sceneModel.soccerBalls.forEach( ( soccerBall, index ) => {
+
+      const dotNode = new DataPointNode( soccerBall,
+        modelViewTransform, {
+          isMeanAndMedianInfoNode: options.isMeanAndMedianInfoPlot,
+          fill: options.dataPointFill
+        } );
+
+      dataPointLayer.addChild( dotNode );
+    } );
+
+    this.dataPointLayer.addChild( dataPointLayer );
 
     // Align with the play are number line node, based on the tick mark locations
     const matrixBetweenProperty = new MatrixBetweenProperty( playAreaNumberLineNode.tickMarkSet, this.numberLineNode.tickMarkSet );
