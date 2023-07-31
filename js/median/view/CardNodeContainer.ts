@@ -38,6 +38,8 @@ import CardModel from '../model/CardModel.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import Utils from '../../../../dot/js/Utils.js';
+import { Shape } from '../../../../kite/js/imports.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 const successSoundClip = new SoundClip( cvSuccessOptions002_mp3, {
   initialOutputLevel: 0.2
@@ -438,14 +440,23 @@ export default class CardNodeContainer extends Node {
       }
     } );
 
-    const focusHighlightFromNode = new FocusHighlightFromNode( this, {
+    const focusHighlightWidthProperty = new DerivedProperty( [ model.numActiveCardsProperty ], numActiveCards => {
+      return model.getCardPositionX( numActiveCards + 1 );
+    } );
+
+    const focusHighlightFromNode = new FocusHighlightPath( null, {
       outerStroke: FocusHighlightPath.OUTER_LIGHT_GROUP_FOCUS_COLOR,
       innerStroke: FocusHighlightPath.INNER_LIGHT_GROUP_FOCUS_COLOR,
       outerLineWidth: FocusHighlightPath.GROUP_OUTER_LINE_WIDTH,
       innerLineWidth: FocusHighlightPath.GROUP_INNER_LINE_WIDTH
     } );
 
-    // TODO: The right edge of this rectangle fluctuates as you move a card fully to the right, see https://github.com/phetsims/center-and-variability/issues/351
+    focusHighlightWidthProperty.link( focusHighlightWidth => {
+      const marginX = 7;
+      const marginY = CAVConstants.CARD_SPACING + 3;
+      focusHighlightFromNode.setShape( Shape.rect( -marginX, -marginY, focusHighlightWidth + 2 * marginX, CAVConstants.CARD_DIMENSION + 2 * marginY ) );
+    } );
+
     this.setGroupFocusHighlight( focusHighlightFromNode );
     this.addInputListener( keyboardListener );
   }

@@ -178,7 +178,6 @@ export default class SoccerSceneView {
     Multilink.multilink( [ focusedSoccerBallProperty, isSoccerBallGrabbedProperty ], ( focusedSoccerBall, isSoccerBallGrabbed ) => {
         if ( focusedSoccerBall ) {
 
-          // TODO: Add isDashed to the FocusHighlightFromNode options, see https://github.com/phetsims/center-and-variability/issues/351
           const focusForSelectedBall = new FocusHighlightFromNode( soccerBallMap.get( focusedSoccerBall )! );
           focusForSelectedBall.makeDashed( isSoccerBallGrabbed );
           backLayerSoccerBallLayer.setFocusHighlight( focusForSelectedBall );

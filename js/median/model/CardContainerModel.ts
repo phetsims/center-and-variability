@@ -85,9 +85,7 @@ export default class CardContainerModel extends PhetioObject {
   public readonly dragIndicationCardProperty: Property<CardModel | null>;
   public readonly totalDragDistanceProperty: Property<number>;
   public readonly hasKeyboardMovedCardProperty = new BooleanProperty( false );
-
-  // Used to determine drag range for keyboard input, which changes based on the amount of active cards.
-  public readonly cardDragRangeProperty: Property<Range>;
+  public readonly numActiveCardsProperty: Property<number>;
 
   public constructor( medianModel: MedianModel, providedOptions: CardContainerModelOptions ) {
 
@@ -114,7 +112,7 @@ export default class CardContainerModel extends PhetioObject {
       phetioDocumentation: 'Tracks which card the drag indication icon is pointing to. This is for internal use only.'
     } );
 
-    this.cardDragRangeProperty = new Property<Range>( new Range( 0, 0 ) );
+    this.numActiveCardsProperty = new Property<number>( 0 );
 
     // Allocate all the card models at start-up.
     this.cards = medianModel.selectedSceneModelProperty.value.soccerBalls.map( ( soccerBall, index ) => {
@@ -147,7 +145,7 @@ export default class CardContainerModel extends PhetioObject {
       card.isActiveProperty.link( isActive => {
         if ( isActive && !isSettingPhetioStateProperty.value ) {
           const cardCells = this.getCardsInCellOrder();
-          this.cardDragRangeProperty.value.max = cardCells.length;
+          this.numActiveCardsProperty.value = cardCells.length;
           let targetIndex = cardCells.length;
 
           // We want to auto-sort cards in the infoDialog no matter what the value for isSortingDataProperty is.
