@@ -310,8 +310,6 @@ export default class CardNodeContainer extends Node {
     }
 
     const focusedCardNodeProperty = new Property<CardNode | null>( null );
-
-    // TODO: What if there is no focusedCardNodeProperty? Make sure this isn't true in that case, see https://github.com/phetsims/center-and-variability/issues/351
     const isCardGrabbedProperty = new Property( false );
 
     sceneModel.clearDataEmitter.addListener( () => {

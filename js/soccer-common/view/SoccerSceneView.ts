@@ -102,8 +102,6 @@ export default class SoccerSceneView {
 
     // The soccerBall that is receiving highlight focus in the backLayerSoccerBallLayer group highlight.
     const focusedSoccerBallProperty = new Property<SoccerBall | null>( null );
-
-    // TODO: What if there is no focusedSoccerBallProperty? Make sure this isn't true in that case, see https://github.com/phetsims/center-and-variability/issues/351
     const isSoccerBallGrabbedProperty = new Property( false );
 
     sceneModel.clearDataEmitter.addListener( () => {
