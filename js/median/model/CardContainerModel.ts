@@ -74,7 +74,6 @@ export default class CardContainerModel extends PhetioObject {
   // All cards are created on start-up
   public readonly cards: CardModel[];
 
-
   // For sonification, order the active, non-displaced cards appeared in the last step
   private lastStepOrder: CardModel[] = [];
 

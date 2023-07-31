@@ -423,6 +423,14 @@ export default class CardNodeContainer extends Node {
           }
           else if ( keysPressed === 'enter' || keysPressed === 'space' ) {
             isCardGrabbedProperty.value = !isCardGrabbedProperty.value;
+
+            if ( !isCardGrabbedProperty.value ) {
+
+              // See if the user unsorted the data.  If so, uncheck the "Sort Data" checkbox
+              if ( this.isSortingDataProperty.value && !this.model.isDataSorted() ) {
+                this.isSortingDataProperty.value = false;
+              }
+            }
           }
           else if ( isCardGrabbedProperty.value ) {
             if ( keysPressed === 'escape' ) {
