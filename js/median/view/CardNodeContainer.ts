@@ -700,9 +700,8 @@ export default class CardNodeContainer extends Node {
     } );
   }
 
-  // TODO: See model.getCardsInCellOrder(); https://github.com/phetsims/center-and-variability/issues/351
   private getActiveCardNodesInOrder(): CardNode[] {
-    return _.sortBy( this.cardNodes.filter( cardNode => cardNode.model.isActiveProperty.value ), cardNode => cardNode.model.indexProperty.value! );
+    return this.model.getCardsInCellOrder().map( card => this.cardMap.get( card )! );
   }
 }
 
