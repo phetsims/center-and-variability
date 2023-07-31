@@ -7,62 +7,6 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
   },
-  "cv-card-movement-sounds-001.mp3": {
-    "text": [
-      "Copyright 2023 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris"
-  },
-  "cv-card-movement-sounds-002.mp3": {
-    "text": [
-      "Copyright 2023 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris"
-  },
-  "cv-card-movement-sounds-003.mp3": {
-    "text": [
-      "Copyright 2023 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris"
-  },
-  "cv-card-movement-sounds-004.mp3": {
-    "text": [
-      "Copyright 2023 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris"
-  },
-  "cv-card-movement-sounds-005.mp3": {
-    "text": [
-      "Copyright 2023 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris"
-  },
-  "cv-card-movement-sounds-006.mp3": {
-    "text": [
-      "Copyright 2023 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris"
-  },
-  "cv-card-movement-sounds-007.mp3": {
-    "text": [
-      "Copyright 2023 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris"
-  },
   "cvEraserOptions001.mp3": {
     "text": [
       "Copyright 2023 University of Colorado Boulder"
@@ -151,54 +95,6 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
   },
-  "cvWaveMeterSawTone.mp3": {
-    "text": [
-      "Copyright 2023 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris"
-  },
-  "kick1.mp3": {
-    "text": [
-      "Copyright 2023 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris"
-  },
-  "kick2.mp3": {
-    "text": [
-      "Copyright 2023 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris"
-  },
-  "kick3.mp3": {
-    "text": [
-      "Copyright 2023 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris"
-  },
-  "kick4.mp3": {
-    "text": [
-      "Copyright 2023 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris"
-  },
-  "kick5.mp3": {
-    "text": [
-      "Copyright 2023 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris"
-  },
   "marimbaToneE3.mp3": {
     "text": [
       "Copyright 2023 University of Colorado Boulder"
@@ -214,13 +110,5 @@
     "projectURL": "https://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
-  },
-  "saturatedSineLoopTrimmed.wav": {
-    "text": [
-      "Copyright 2002-2019 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris (PhET Interactive Simulations), edited by John Blanco"
   }
 }
