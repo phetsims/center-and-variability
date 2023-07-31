@@ -372,6 +372,7 @@ export default class CardNodeContainer extends Node {
     } );
 
     // TODO: Some duplication with SoccerSceneView, see https://github.com/phetsims/center-and-variability/issues/351
+    // TODO: UPDATE: MS I compare the two and there are some similarities but I'm not sure if enough to refactor, https://github.com/phetsims/center-and-variability/issues/351
     const keyboardListener = new KeyboardListener( {
       keys: [ 'arrowRight', 'arrowLeft', 'enter', 'space', 'escape' ],
       callback: ( event, listener ) => {
