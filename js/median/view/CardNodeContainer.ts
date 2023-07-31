@@ -346,8 +346,7 @@ export default class CardNodeContainer extends Node {
     Multilink.multilink( [ focusedCardNodeProperty, isCardGrabbedProperty ], ( focusedCardNode, isCardGrabbed ) => {
         if ( focusedCardNode ) {
 
-          const focusForSelectedCard = new FocusHighlightFromNode( focusedCardNode.cardNode );
-          focusForSelectedCard.makeDashed( isCardGrabbed );
+          const focusForSelectedCard = new FocusHighlightFromNode( focusedCardNode.cardNode, { dashed: isCardGrabbed } );
           this.setFocusHighlight( focusForSelectedCard );
 
           focusedCardNode.model.isDraggingProperty.value = isCardGrabbed;

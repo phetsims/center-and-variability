@@ -178,8 +178,7 @@ export default class SoccerSceneView {
     Multilink.multilink( [ focusedSoccerBallProperty, isSoccerBallGrabbedProperty ], ( focusedSoccerBall, isSoccerBallGrabbed ) => {
         if ( focusedSoccerBall ) {
 
-          const focusForSelectedBall = new FocusHighlightFromNode( soccerBallMap.get( focusedSoccerBall )! );
-          focusForSelectedBall.makeDashed( isSoccerBallGrabbed );
+          const focusForSelectedBall = new FocusHighlightFromNode( soccerBallMap.get( focusedSoccerBall )!, { dashed: isSoccerBallGrabbed } );
           backLayerSoccerBallLayer.setFocusHighlight( focusForSelectedBall );
         }
         else {
