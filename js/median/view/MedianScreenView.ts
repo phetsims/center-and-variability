@@ -46,7 +46,7 @@ export default class MedianScreenView extends CAVScreenView {
       this.questionBar.bottom + CAVConstants.ACCORDION_BOX_TOP_MARGIN );
     this.setAccordionBox( this.medianAccordionBox );
 
-    const bottomControls = this.setBottomControls( new VerticalCheckboxGroup( [
+    const bottomControls = this.addPlayAreaControls( new VerticalCheckboxGroup( [
       PlayAreaCheckboxFactory.getPredictMedianCheckboxItem( model ),
       PlayAreaCheckboxFactory.getMedianCheckboxItem( model )
     ], {

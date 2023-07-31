@@ -357,9 +357,11 @@ export default class CAVScreenView extends ScreenView {
     this.accordionBox.boundsProperty.link( this.updateDragIndicatorNode );
   }
 
-  protected setBottomControls( controlNode: Node, tandem: Tandem ): AlignBox {
-
-    // TODO: only call once? or rename to addBottomControls, see: https://github.com/phetsims/center-and-variability/issues/351
+  /**
+   * Add controls to the play area. This is the same for all screens, so factored out here.
+   * @returns the AlignBox so the pdom order can be set
+   */
+  protected addPlayAreaControls( controlNode: Node, tandem: Tandem ): AlignBox {
 
     // In order to use the AlignBox we need to know the distance from the top of the screen, to the top of the grass.
     const BOTTOM_CHECKBOX_PANEL_LEFT_MARGIN = 30;

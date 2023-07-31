@@ -238,7 +238,7 @@ export default class VariabilityScreenView extends CAVScreenView {
     this.frontScreenViewLayer.addChild( sceneKickerRadioButtonGroup );
     this.frontScreenViewLayer.addChild( variabilityMeasureRadioButtonGroup );
 
-    const bottomControls = this.setBottomControls(
+    const bottomControls = this.addPlayAreaControls(
       new VerticalCheckboxGroup( [
         PlayAreaCheckboxFactory.getMedianCheckboxItem( model ),
         PlayAreaCheckboxFactory.getMeanCheckboxItem( model ),

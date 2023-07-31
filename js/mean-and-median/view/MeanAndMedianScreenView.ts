@@ -49,7 +49,7 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
     );
     this.setAccordionBox( meanAndMedianAccordionBox );
 
-    const bottomControls = this.setBottomControls( new VerticalCheckboxGroup( [
+    const bottomControls = this.addPlayAreaControls( new VerticalCheckboxGroup( [
       PlayAreaCheckboxFactory.getPredictMedianCheckboxItem( model ),
       PlayAreaCheckboxFactory.getPredictMeanCheckboxItem( model ),
       PlayAreaCheckboxFactory.getMedianCheckboxItem( model ),
