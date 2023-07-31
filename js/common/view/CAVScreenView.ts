@@ -13,7 +13,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import CAVConstants from '../CAVConstants.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import { AlignBox, Node, Text, VBox } from '../../../../scenery/js/imports.js';
+import { AlignBox, Node, Text, VBox, Image, ManualConstraint } from '../../../../scenery/js/imports.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import QuestionBar, { QuestionBarOptions } from '../../../../scenery-phet/js/QuestionBar.js';
 import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
@@ -33,7 +33,6 @@ import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import { KickerImageSet } from '../../soccer-common/view/KickerNode.js';
 import Kicker from '../../soccer-common/model/Kicker.js';
 import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
-import DragIndicatorHandAndArrowNode from '../../soccer-common/view/DragIndicatorHandAndArrowNode.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';
@@ -50,6 +49,8 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
+import soccerBallDragIndicatorArrow_png from '../../../images/soccerBallDragIndicatorArrow_png.js';
+import soccerBallDragIndicatorHand_png from '../../../images/soccerBallDragIndicatorHand_png.js';
 
 type SelfOptions = {
   questionBarOptions: StrictOmit<QuestionBarOptions, 'tandem'>;
@@ -152,9 +153,14 @@ export default class CAVScreenView extends ScreenView {
       alignChildren: ToggleNode.NONE
     } );
 
-    const dragIndicatorArrowNode = new DragIndicatorHandAndArrowNode( {
-      tandem: options.tandem.createTandem( 'dragIndicatorArrowNode' ),
-      phetioVisiblePropertyInstrumented: false
+    const dragIndicatorArrowImage = new Image( soccerBallDragIndicatorArrow_png, {
+      scale: 0.1,
+      visibleProperty: model.dragIndicatorModel.isDragIndicatorVisibleProperty
+    } );
+
+    const dragIndicatorHandImage = new Image( soccerBallDragIndicatorHand_png, {
+      scale: 0.08,
+      visibleProperty: model.dragIndicatorModel.isDragIndicatorVisibleProperty
     } );
 
     this.backScreenViewLayer = new Node( {
@@ -228,25 +234,28 @@ export default class CAVScreenView extends ScreenView {
       const dragIndicatorVisible = model.dragIndicatorModel.isDragIndicatorVisibleProperty.value;
       const dragIndicatorValue = model.dragIndicatorModel.dragIndicatorValueProperty.value;
 
-      dragIndicatorArrowNode.visible = dragIndicatorVisible;
-
       if ( dragIndicatorVisible && dragIndicatorValue ) {
 
-        dragIndicatorArrowNode.center = new Vector2(
+        dragIndicatorArrowImage.center = new Vector2(
           modelViewTransform.modelToViewX( dragIndicatorValue ),
-          this.getTopObjectPositionY( dragIndicatorValue ) + Math.abs( this.modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) )
+          this.getTopObjectPositionY( dragIndicatorValue ) - 5
         );
 
         // The arrow shouldn't overlap the accordion box
         if ( this.accordionBox ) {
-          if ( dragIndicatorArrowNode.top < this.accordionBox.bottom + INDICATOR_MARGIN ) {
-            dragIndicatorArrowNode.top = this.accordionBox.bottom + INDICATOR_MARGIN;
+          if ( dragIndicatorArrowImage.top < this.accordionBox.bottom + INDICATOR_MARGIN ) {
+            dragIndicatorArrowImage.top = this.accordionBox.bottom + INDICATOR_MARGIN;
           }
         }
       }
     };
 
-    dragIndicatorArrowNode.addLinkedElement( model.dragIndicatorModel.dragIndicatorValueProperty );
+    ManualConstraint.create( this, [ dragIndicatorArrowImage ], dragIndicatorArrowImageProxy => {
+      dragIndicatorHandImage.right = dragIndicatorArrowImageProxy.left + 10;
+      dragIndicatorHandImage.top = dragIndicatorArrowImageProxy.bottom + Math.abs( this.modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) );
+    } );
+
+    dragIndicatorArrowImage.addLinkedElement( model.dragIndicatorModel.dragIndicatorValueProperty );
 
     model.dragIndicatorModel.isDragIndicatorVisibleProperty.link( this.updateDragIndicatorNode );
     model.dragIndicatorModel.dragIndicatorValueProperty.link( this.updateDragIndicatorNode );
@@ -306,7 +315,8 @@ export default class CAVScreenView extends ScreenView {
     this.visibleBoundsProperty.link( this.updateMedianNode );
     model.isPlayAreaMedianVisibleProperty.link( this.updateMedianNode );
 
-    this.middleScreenViewLayer.addChild( dragIndicatorArrowNode );
+    this.middleScreenViewLayer.addChild( dragIndicatorArrowImage );
+    this.middleScreenViewLayer.addChild( dragIndicatorHandImage );
 
     // Add to screenViewRootNode for alternativeInput
     this.screenViewRootNode.addChild( this.backScreenViewLayer );
