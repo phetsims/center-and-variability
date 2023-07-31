@@ -344,7 +344,6 @@ export default class CardNodeContainer extends Node {
     Multilink.multilink( [ focusedCardNodeProperty, isCardGrabbedProperty ], ( focusedCardNode, isCardGrabbed ) => {
         if ( focusedCardNode ) {
 
-          // TODO: Add isDashed to the FocusHighlightFromNode options, see https://github.com/phetsims/center-and-variability/issues/351
           const focusForSelectedCard = new FocusHighlightFromNode( focusedCardNode.cardNode );
           focusForSelectedCard.makeDashed( isCardGrabbed );
           this.setFocusHighlight( focusForSelectedCard );
