@@ -441,7 +441,7 @@ export default class CardNodeContainer extends Node {
     } );
 
     const focusHighlightWidthProperty = new DerivedProperty( [ model.numActiveCardsProperty ], numActiveCards => {
-      return model.getCardPositionX( numActiveCards + 1 );
+      return model.getCardPositionX( numActiveCards === 0 ? CAVConstants.MAX_NUMBER_OF_CARDS : numActiveCards + 1 );
     } );
 
     const focusHighlightFromNode = new FocusHighlightPath( null, {

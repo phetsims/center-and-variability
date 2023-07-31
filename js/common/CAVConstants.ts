@@ -47,7 +47,7 @@ const CAVConstants = {
   SCREEN_VIEW_Y_MARGIN: 15,
   ACCORDION_BOX_TOP_MARGIN: 5,
   MAIN_FONT: MAIN_FONT,
-  NUMBER_OF_OBJECTS: 15, // number of objects in the play area on each screen
+  MAX_NUMBER_OF_CARDS: 15,
   CHECKBOX_TEXT_MAX_WIDTH: 107,
   CHECKBOX_ICON_DIMENSION: 25,
 
