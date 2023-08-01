@@ -25,16 +25,21 @@ export default class CAVDragIndicatorModel extends DragIndicatorModel {
       if ( this.isDragIndicatorVisibleProperty.value && ( this.dragIndicatorValueProperty.value === sceneModel.medianValueProperty.value || stackHeight > maxHeight ) ) {
         const reversedBalls = sceneModel.getActiveSoccerBalls().reverse();
 
+        const topBallsInReversedLandingOrder = reversedBalls.filter( ball => {
+          const topBalls = sceneModel.getTopSoccerBalls();
+          return topBalls.includes( ball );
+        } );
+
         // add the dragIndicatorArrowNode above the last object when it is added to the play area.
         // However, we also want to make sure that the dragIndicator is not in the same position as the Median Indicator, if possible
         // Note the drag indicator only shows up after 15 soccer balls have landed, and it would be impossibly likely for
         // all 15 to be the same value unless using the ?sameSpot query parameter, which is not a public query parameter.
-        const allEqualToMedian = reversedBalls.every( soccerBall => soccerBall.valueProperty.value === sceneModel.medianValueProperty.value );
+        const allEqualToMedian = topBallsInReversedLandingOrder.every( soccerBall => soccerBall.valueProperty.value === sceneModel.medianValueProperty.value );
 
         if ( !allEqualToMedian ) {
 
           // Show it over a recently landed ball that is not in the median stack
-          this.dragIndicatorValueProperty.value = reversedBalls
+          this.dragIndicatorValueProperty.value = topBallsInReversedLandingOrder
             .find( soccerBall => soccerBall.valueProperty.value !== sceneModel.medianValueProperty.value &&
                                  sceneModel.getStackAtLocation( soccerBall.valueProperty.value! ).length <= maxHeight )!
             .valueProperty.value!;
