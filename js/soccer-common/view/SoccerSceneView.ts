@@ -212,6 +212,7 @@ export default class SoccerSceneView {
               const delta = listener.keysPressed === 'arrowLeft' ? -1 : 1;
               const soccerBall = focusedSoccerBallProperty.value;
               soccerBall.valueProperty.value = physicalRange.constrainValue( soccerBall.valueProperty.value! + delta );
+              soccerBall.toneEmitter.emit( soccerBall.valueProperty.value );
             }
           }
           else if ( keysPressed === 'enter' || keysPressed === 'space' ) {
