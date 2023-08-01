@@ -124,19 +124,11 @@ export default class MeanAndMedianInfoNode extends VBox {
       ]
     } );
 
-    const updateDataValuesDisplay = () => {
+    sceneModel.objectChangedEmitter.addListener( () => medianInfoValuesNode.update() );
+    sceneModel.numberOfDataPointsProperty.lazyLink( () => medianInfoValuesNode.update() );
+    model.infoButtonPressedEmitter.addListener( () => medianInfoValuesNode.update() );
 
-      // We only need to update the data display if the info box is showing, to improve performance on reset.
-      if ( model.isInfoVisibleProperty.value ) {
-        medianInfoValuesNode.update();
-      }
-    };
-
-    sceneModel.objectChangedEmitter.addListener( updateDataValuesDisplay );
-    sceneModel.numberOfDataPointsProperty.lazyLink( updateDataValuesDisplay );
-    model.isInfoVisibleProperty.lazyLink( updateDataValuesDisplay );
-
-    updateDataValuesDisplay();
+    medianInfoValuesNode.update();
   }
 }
 

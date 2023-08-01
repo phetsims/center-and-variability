@@ -22,11 +22,6 @@ export default class MeanAndMedianInfoDialog extends Dialog {
     const meanAndMedianInfoNode = new MeanAndMedianInfoNode( model, sceneModel, playAreaNumberLineNode, { tandem: options.tandem.createTandem( 'meanAndMedianInfoNode' ) } );
 
     super( meanAndMedianInfoNode, {
-
-      // When the user manually dismisses the Dialog, we need to reflect it back in the model property.
-      // The Dialog API does not function with a visibleProperty on its own. We know that this is circular,
-      // but is necessary for the implementation of Dialog.
-      hideCallback: () => model.isInfoVisibleProperty.set( false ),
       tandem: options.tandem
     } );
   }

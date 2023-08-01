@@ -61,19 +61,16 @@ export default class MedianInfoNode extends VBox {
 
     const updateDataValuesDisplay = () => {
 
-      // We only need to update the data display if the info box is showing, to improve performance on reset.
-      if ( model.isInfoVisibleProperty.value ) {
-        infoDataValuesNode.update();
+      infoDataValuesNode.update();
 
-        // The text should always be on the left, and the card node container should always be centered. This can be
-        // implemented by checking if the card node container is wider than the text, and if so, centering the contents.
-        this.align = cardNodeContainer.width > textVBox.width ? 'left' : 'center';
-      }
+      // The text should always be on the left, and the card node container should always be centered. This can be
+      // implemented by checking if the card node container is wider than the text, and if so, centering the contents.
+      this.align = cardNodeContainer.width > textVBox.width ? 'left' : 'center';
     };
 
     sceneModel.objectChangedEmitter.addListener( updateDataValuesDisplay );
     sceneModel.numberOfDataPointsProperty.lazyLink( updateDataValuesDisplay );
-    model.isInfoVisibleProperty.lazyLink( updateDataValuesDisplay );
+    model.infoButtonPressedEmitter.addListener( updateDataValuesDisplay );
 
     updateDataValuesDisplay();
   }

@@ -58,7 +58,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
       yAlign: 'center'
     } );
 
-    const infoButton = new CAVInfoButton( model.isInfoVisibleProperty, backgroundShape, tandem.createTandem( 'infoButton' ) );
+    const infoButton = new CAVInfoButton( model.infoButtonPressedEmitter, backgroundShape, tandem.createTandem( 'infoButton' ) );
     backgroundNode.addChild( infoButton );
     backgroundNode.addChild( checkboxGroupAlignBox );
     backgroundNode.addChild( meanAndMedianPlotNode );

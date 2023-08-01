@@ -28,6 +28,7 @@ import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import ObjectLiteralIO from '../../../../tandem/js/types/ObjectLiteralIO.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import Emitter from '../../../../axon/js/Emitter.js';
 
 type SelfOptions = {
   instrumentPredictMeanProperty: boolean;
@@ -50,7 +51,7 @@ export default class CAVModel extends PhetioObject {
   public readonly soccerBallsInputEnabledProperty: Property<boolean>;
   public readonly isDataPointLayerVisibleProperty: Property<boolean>;
 
-  public readonly isInfoVisibleProperty: Property<boolean>;
+  public readonly infoButtonPressedEmitter: Emitter;
 
   public constructor( public readonly maxKicksProperty: TReadOnlyProperty<number>, public readonly sceneModels: CAVSoccerSceneModel[], providedOptions: CAVModelOptions ) {
 
@@ -106,9 +107,7 @@ export default class CAVModel extends PhetioObject {
       } );
     } );
 
-    this.isInfoVisibleProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isInfoVisibleProperty' )
-    } );
+    this.infoButtonPressedEmitter = new Emitter( );
 
     // These DynamicProperties allow us to track all the necessary scenes Properties for dragIndicator update, and not
     // just the first selectedScene

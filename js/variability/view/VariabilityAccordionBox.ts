@@ -62,7 +62,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       bottom: backgroundShape.bounds.height
     } );
 
-    const infoButton = new CAVInfoButton( model.isInfoVisibleProperty, backgroundShape, tandem.createTandem( 'infoButton' ) );
+    const infoButton = new CAVInfoButton( model.infoButtonPressedEmitter, backgroundShape, tandem.createTandem( 'infoButton' ) );
     backgroundNode.addChild( infoButton );
 
     const checkboxesTandem = tandem.createTandem( 'checkboxes' );

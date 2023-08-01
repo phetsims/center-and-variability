@@ -256,15 +256,11 @@ export default class VariabilityScreenView extends CAVScreenView {
         tandem: options.tandem.createTandem( `sceneKicker${index + 1}View` ).createTandem( 'infoDialog' )
       } );
 
-      Multilink.multilink( [ model.isInfoVisibleProperty, sceneModel.isVisibleProperty ],
-        ( isInfoShowing, isVisible ) => {
-          if ( isInfoShowing && isVisible ) {
-            infoDialog.show();
-          }
-          else {
-            infoDialog.hide();
-          }
-        } );
+      model.infoButtonPressedEmitter.addListener( () => {
+        if ( sceneModel.isVisibleProperty.value ) {
+          infoDialog.show();
+        }
+      } );
     } );
 
     this.cavSetPDOMOrder( bottomControls, [ pointerSlider, handle1, handle2 ], variabilityAccordionBox.infoButton,

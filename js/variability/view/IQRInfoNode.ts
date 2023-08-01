@@ -73,22 +73,11 @@ export default class IQRInfoNode extends VBox {
       ]
     } );
 
-    const updateDataValuesDisplay = () => {
+    sceneModel.objectChangedEmitter.addListener( () => iqrInfoValuesNode.update() );
+    sceneModel.numberOfDataPointsProperty.lazyLink( () => iqrInfoValuesNode.update() );
+    model.infoButtonPressedEmitter.addListener( () => iqrInfoValuesNode.update() );
 
-      // We only need to update the data display if the info box is showing.
-      // This is for performance improvements on reset.
-      if ( !model.isInfoVisibleProperty.value ) {
-        return;
-      }
-
-      iqrInfoValuesNode.update();
-    };
-
-    sceneModel.objectChangedEmitter.addListener( updateDataValuesDisplay );
-    sceneModel.numberOfDataPointsProperty.lazyLink( updateDataValuesDisplay );
-    model.isInfoVisibleProperty.lazyLink( updateDataValuesDisplay );
-
-    updateDataValuesDisplay();
+    iqrInfoValuesNode.update();
   }
 }
 

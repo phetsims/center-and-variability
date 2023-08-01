@@ -85,14 +85,7 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
       tandem: options.tandem.createTandem( 'infoDialog' )
     } );
 
-    model.isInfoVisibleProperty.link( isInfoVisible => {
-      if ( isInfoVisible ) {
-        infoDialog.show();
-      }
-      else {
-        infoDialog.hide();
-      }
-    } );
+    model.infoButtonPressedEmitter.addListener( () => infoDialog.show() );
 
     this.cavSetPDOMOrder( bottomControls, [ predictMedianNode, predictMeanNode ], meanAndMedianAccordionBox.infoButton );
   }
