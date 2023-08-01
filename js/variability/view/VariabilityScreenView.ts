@@ -34,8 +34,7 @@ import Range from '../../../../dot/js/Range.js';
 import IntervalToolNode from './IntervalToolNode.js';
 import ContinuousPropertySoundGenerator from '../../../../tambo/js/sound-generators/ContinuousPropertySoundGenerator.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
-
-import cvIntervalToolLoopSoundV1_wav from '../../../sounds/cvIntervalToolLoopSoundV1_wav.js';
+import intervalToolLoop_wav from '../../../sounds/intervalToolLoop_wav.js';
 import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import KickerGroupNumbered from '../../soccer-common/view/KickerGroupNumbered.js';
@@ -207,7 +206,7 @@ export default class VariabilityScreenView extends CAVScreenView {
 
     this.continuousPropertySoundGenerator = new ContinuousPropertySoundGenerator(
       intervalDistanceWithThresholdProperty,
-      cvIntervalToolLoopSoundV1_wav,
+      intervalToolLoop_wav,
       new Range( 1, 2 ), {
         initialOutputLevel: 0.15,
         playbackRateCenterOffset: 0,

@@ -36,7 +36,7 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
-import basicKick_mp3 from '../../../sounds/basicKick_mp3.js';
+import kick_mp3 from '../../../sounds/kick_mp3.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 import SoccerCommonConstants from '../SoccerCommonConstants.js';
 import SoccerCommonQueryParameters from '../SoccerCommonQueryParameters.js';
@@ -46,7 +46,7 @@ import KickDistanceStrategy from './KickDistanceStrategy.js';
 import { KickerPhase } from './KickerPhase.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 
-const kickSound = new SoundClip( basicKick_mp3, { initialOutputLevel: 0.2 } );
+const kickSound = new SoundClip( kick_mp3, { initialOutputLevel: 0.2 } );
 soundManager.addSoundGenerator( kickSound );
 
 type SelfOptions = EmptySelfOptions;

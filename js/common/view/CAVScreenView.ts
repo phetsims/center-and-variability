@@ -38,7 +38,7 @@ import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import { SoccerBallPhase } from '../../soccer-common/model/SoccerBallPhase.js';
-import cvEraserOptions001_mp3 from '../../../sounds/cvEraserOptions001_mp3.js';
+import erase_mp3 from '../../../sounds/erase_mp3.js';
 import SoundClipPlayer from '../../../../tambo/js/sound-generators/SoundClipPlayer.js';
 import SoccerCommonConstants from '../../soccer-common/SoccerCommonConstants.js';
 import CAVSceneView from './CAVSceneView.js';
@@ -200,7 +200,7 @@ export default class CAVScreenView extends ScreenView {
       iconWidth: 26,
       right: this.resetAllButton.left - CAVConstants.SCREEN_VIEW_X_MARGIN,
       centerY: this.resetAllButton.centerY,
-      soundPlayer: new SoundClipPlayer( cvEraserOptions001_mp3, {
+      soundPlayer: new SoundClipPlayer( erase_mp3, {
         soundClipOptions: { initialOutputLevel: 0.072 }
       } )
     } );

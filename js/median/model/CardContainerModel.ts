@@ -14,12 +14,12 @@ import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 import CardModel from './CardModel.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
-import cvCardMovementSoundsV2001_mp3 from '../../../sounds/cvCardMovementSoundsV2001_mp3.js';
-import cvCardMovementSoundsV2002_mp3 from '../../../sounds/cvCardMovementSoundsV2002_mp3.js';
-import cvCardMovementSoundsV2003_mp3 from '../../../sounds/cvCardMovementSoundsV2003_mp3.js';
-import cvCardMovementSoundsV2004_mp3 from '../../../sounds/cvCardMovementSoundsV2004_mp3.js';
-import cvCardMovementSoundsV2005_mp3 from '../../../sounds/cvCardMovementSoundsV2005_mp3.js';
-import cvCardMovementSoundsV2006_mp3 from '../../../sounds/cvCardMovementSoundsV2006_mp3.js';
+import cardMovement1_mp3 from '../../../sounds/cardMovement1_mp3.js';
+import cardMovement2_mp3 from '../../../sounds/cardMovement2_mp3.js';
+import cardMovement3_mp3 from '../../../sounds/cardMovement3_mp3.js';
+import cardMovement4_mp3 from '../../../sounds/cardMovement4_mp3.js';
+import cardMovement5_mp3 from '../../../sounds/cardMovement5_mp3.js';
+import cardMovement6_mp3 from '../../../sounds/cardMovement6_mp3.js';
 import MedianModel from './MedianModel.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Range from '../../../../dot/js/Range.js';
@@ -42,12 +42,12 @@ import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 
 const cardMovementSounds = [
-  cvCardMovementSoundsV2001_mp3,
-  cvCardMovementSoundsV2002_mp3,
-  cvCardMovementSoundsV2003_mp3,
-  cvCardMovementSoundsV2004_mp3,
-  cvCardMovementSoundsV2005_mp3,
-  cvCardMovementSoundsV2006_mp3
+  cardMovement1_mp3,
+  cardMovement2_mp3,
+  cardMovement3_mp3,
+  cardMovement4_mp3,
+  cardMovement5_mp3,
+  cardMovement6_mp3
 ];
 
 export const cardMovementSoundClips = cardMovementSounds.map( sound => new SoundClip( sound, {

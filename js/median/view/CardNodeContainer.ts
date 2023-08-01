@@ -9,7 +9,7 @@
 
 import centerAndVariability from '../../centerAndVariability.js';
 import { FocusHighlightFromNode, FocusHighlightPath, Image, KeyboardListener, LinearGradient, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
-import CardNode, { cardDropSoundClip, cardPickUpSoundClip, PICK_UP_DELTA_X, PICK_UP_DELTA_Y } from './CardNode.js';
+import CardNode, { cardDropClip, cardPickUpSoundClip, PICK_UP_DELTA_X, PICK_UP_DELTA_Y } from './CardNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Panel from '../../../../sun/js/Panel.js';
 import CAVConstants from '../../common/CAVConstants.js';
@@ -28,7 +28,7 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import handWithArrow_png from '../../../images/handWithArrow_png.js';
-import cvSuccessOptions002_mp3 from '../../../sounds/cvSuccessOptions002_mp3.js';
+import sortCelebration_mp3 from '../../../sounds/sortCelebration_mp3.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
@@ -41,7 +41,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
-const successSoundClip = new SoundClip( cvSuccessOptions002_mp3, {
+const successSoundClip = new SoundClip( sortCelebration_mp3, {
   initialOutputLevel: 0.2
 } );
 soundManager.addSoundGenerator( successSoundClip );
@@ -135,7 +135,7 @@ export default class CardNodeContainer extends Node {
 
           if ( model.parentContext === 'accordion' ) {
             cardPickUpSoundClip.play();
-            this.animateCelebration1( () => cardDropSoundClip.play(), false );
+            this.animateCelebration1( () => cardDropClip.play(), false );
           }
         }
       }

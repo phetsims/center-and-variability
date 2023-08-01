@@ -17,8 +17,8 @@ import CardModel from '../model/CardModel.js';
 import CardNodeContainer from './CardNodeContainer.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
-import cvCardPickupSound_mp3 from '../../../sounds/cvCardPickupSound_mp3.js';
-import cvCardDropSound_mp3 from '../../../sounds/cvCardDropSound_mp3.js';
+import cardPickup_mp3 from '../../../sounds/cardPickup_mp3.js';
+import cardDrop_mp3 from '../../../sounds/cardDrop_mp3.js';
 import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
@@ -28,17 +28,17 @@ type SelfOptions = EmptySelfOptions;
 type ParentOptions = WithRequired<NodeOptions, 'tandem'>;
 export type CardNodeOptions = SelfOptions & ParentOptions;
 
-export const cardPickUpSoundClip = new SoundClip( cvCardPickupSound_mp3, {
+export const cardPickUpSoundClip = new SoundClip( cardPickup_mp3, {
   initialOutputLevel: 0.3,
   initialPlaybackRate: CAVQueryParameters.cardMovementSoundPlaybackRate
 } );
 soundManager.addSoundGenerator( cardPickUpSoundClip );
 
-export const cardDropSoundClip = new SoundClip( cvCardDropSound_mp3, {
+export const cardDropClip = new SoundClip( cardDrop_mp3, {
   initialOutputLevel: 0.1,
   initialPlaybackRate: CAVQueryParameters.cardMovementSoundPlaybackRate * 1.3
 } );
-soundManager.addSoundGenerator( cardDropSoundClip );
+soundManager.addSoundGenerator( cardDropClip );
 
 // How much to translate the card on pick up and drop
 export const PICK_UP_DELTA_X = -4;
@@ -89,7 +89,7 @@ export default class CardNode extends Node {
       else {
         // Restore the relative position within the parent.
         cardNode.setTranslation( 0, 0 );
-        cardDropSoundClip.play();
+        cardDropClip.play();
       }
     } );
 

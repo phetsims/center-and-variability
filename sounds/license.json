@@ -1,5 +1,5 @@
 {
-  "basicKick.mp3": {
+  "cardDrop.mp3": {
     "text": [
       "Copyright 2023 University of Colorado Boulder"
     ],
@@ -7,7 +7,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
   },
-  "cvEraserOptions001.mp3": {
+  "cardPickup.mp3": {
     "text": [
       "Copyright 2023 University of Colorado Boulder"
     ],
@@ -15,7 +15,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
   },
-  "cvSuccessOptions002.mp3": {
+  "cardMovement1.mp3": {
     "text": [
       "Copyright 2023 University of Colorado Boulder"
     ],
@@ -23,7 +23,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
   },
-  "cvCardDropSound.mp3": {
+  "cardMovement2.mp3": {
     "text": [
       "Copyright 2023 University of Colorado Boulder"
     ],
@@ -31,7 +31,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
   },
-  "cvCardPickupSound.mp3": {
+  "cardMovement3.mp3": {
     "text": [
       "Copyright 2023 University of Colorado Boulder"
     ],
@@ -39,7 +39,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
   },
-  "cvCardMovementSoundsV2001.mp3": {
+  "cardMovement4.mp3": {
     "text": [
       "Copyright 2023 University of Colorado Boulder"
     ],
@@ -47,7 +47,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
   },
-  "cvCardMovementSoundsV2002.mp3": {
+  "cardMovement5.mp3": {
     "text": [
       "Copyright 2023 University of Colorado Boulder"
     ],
@@ -55,7 +55,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
   },
-  "cvCardMovementSoundsV2003.mp3": {
+  "cardMovement6.mp3": {
     "text": [
       "Copyright 2023 University of Colorado Boulder"
     ],
@@ -63,7 +63,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
   },
-  "cvCardMovementSoundsV2004.mp3": {
+  "kick.mp3": {
     "text": [
       "Copyright 2023 University of Colorado Boulder"
     ],
@@ -71,7 +71,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
   },
-  "cvCardMovementSoundsV2005.mp3": {
+  "erase.mp3": {
     "text": [
       "Copyright 2023 University of Colorado Boulder"
     ],
@@ -79,15 +79,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
   },
-  "cvCardMovementSoundsV2006.mp3": {
-    "text": [
-      "Copyright 2023 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris"
-  },
-  "cvIntervalToolLoopSoundV1.wav": {
+  "intervalToolLoop.wav": {
     "text": [
       "Copyright 2023 University of Colorado Boulder"
     ],
@@ -103,7 +95,15 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris, pitch altered by Sam Reid"
   },
-  "numberTone2.mp3": {
+  "numberTone.mp3": {
+    "text": [
+      "Copyright 2023 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris"
+  },
+  "sortCelebration.mp3": {
     "text": [
       "Copyright 2023 University of Colorado Boulder"
     ],

@@ -6,7 +6,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import numberTone2_mp3 from '../../../sounds/numberTone2_mp3.js';
+import numberTone_mp3 from '../../../sounds/numberTone_mp3.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soccerCommon from '../soccerCommon.js';
@@ -17,11 +17,11 @@ import CAVModel from '../../common/model/CAVModel.js';
 // eslint-disable-next-line soccer-common-cannot-reference-center-and-variability
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 
-// This is the dominant frequency of numberTone2_mp3. If the audio file is changed, this will need to be updated.
+// This is the dominant frequency of numberTone_mp3. If the audio file is changed, this will need to be updated.
 const E3 = 164.81; // Hz
 
 const INITIAL_OUTPUT_LEVEL = 0.1;
-const soundClip = new SoundClip( numberTone2_mp3, {
+const soundClip = new SoundClip( numberTone_mp3, {
   initialOutputLevel: INITIAL_OUTPUT_LEVEL
 } );
 soundManager.addSoundGenerator( soundClip );
@@ -38,12 +38,12 @@ const meanFilter = new BiquadFilterNode( phetAudioContext, {
   Q: 2
 } );
 
-const medianSoundClip = new SoundClip( numberTone2_mp3, {
+const medianSoundClip = new SoundClip( numberTone_mp3, {
   initialOutputLevel: INITIAL_OUTPUT_LEVEL,
   additionalAudioNodes: [ medianFilter ]
 } );
 
-const meanSoundClip = new SoundClip( numberTone2_mp3, {
+const meanSoundClip = new SoundClip( numberTone_mp3, {
   initialOutputLevel: INITIAL_OUTPUT_LEVEL,
   additionalAudioNodes: [ meanFilter ]
 } );
