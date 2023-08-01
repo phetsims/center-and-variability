@@ -110,8 +110,6 @@ export default class MeanAndMedianModel extends CAVModel {
 
     this.predictMeanValueProperty.lazyLink( ( predictMeanValue, oldPredictMeanValue ) => {
       if ( this.isPredictMeanKeyboardDraggingProperty.value ) {
-
-        // TODO: Make sure this is the value after the keyboard event, not before the keyboard event https://github.com/phetsims/center-and-variability/issues/302
         NumberTone.playMean( predictMeanValue );
       }
       else if ( this.crossedCheckpoint( predictMeanValue, oldPredictMeanValue ) ) {

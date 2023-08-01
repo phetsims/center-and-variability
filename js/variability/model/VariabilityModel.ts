@@ -120,8 +120,6 @@ export default class VariabilityModel extends CAVModel {
 
     this.pointerValueProperty.lazyLink( ( value, oldValue ) => {
       if ( this.isPointerKeyboardDraggingProperty.value ) {
-
-        // TODO: Make sure this is the value after the keyboard event, not before the keyboard event https://github.com/phetsims/center-and-variability/issues/302
         NumberTone.playMean( value );
       }
       else if ( this.crossedCheckpoint( value, oldValue ) ) {

@@ -36,7 +36,6 @@ export default class PredictionSlider extends AccessibleSlider( Node, 0 ) {
     const thumbNode = new PredictionThumbNode( providedOptions.predictionThumbNodeOptions );
 
     const options = optionize<PredictionSliderOptions, SelfOptions, ParentOptions>()( {
-
       children: [ thumbNode ],
       cursor: 'pointer',
 
@@ -50,6 +49,7 @@ export default class PredictionSlider extends AccessibleSlider( Node, 0 ) {
       // Only for keyboard
       startDrag: () => {
         isKeyboardDraggingProperty.value = true;
+        this.moveToFront();
       },
       endDrag: () => {
         isKeyboardDraggingProperty.value = false;
