@@ -76,8 +76,8 @@ export default class KickButtonGroup extends VBox {
     };
 
     // Create tandems so the labels can appear at the proper place in the tandem tree
-    const kick1ButtonTandem = options.tandem.createTandem( 'kickOneButton' );
-    const kick5ButtonTandem = options.tandem.createTandem( 'kickFiveButton' );
+    const kick1ButtonTandem = options.tandem.createTandem( 'kick1Button' );
+    const kick5ButtonTandem = options.tandem.createTandem( 'kick5Button' );
 
     // Create labels first so their sizes can be aligned
     const kick1PatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.kickValuePatternStringProperty, { value: 1 }, {
