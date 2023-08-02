@@ -8,7 +8,6 @@
  *
  */
 
-import CharacterSet from '../../../../joist/js/preferences/CharacterSet.js';
 import soccerCommon from '../soccerCommon.js';
 import kicker1_set1_headshot_TEMP_png from '../../../images/kicker1_set1_headshot_TEMP_png.js';
 import SoccerCommonStrings from '../SoccerCommonStrings.js';
@@ -57,38 +56,25 @@ import player14Kicking_png from '../../../images/player14Kicking_png.js';
 import player15Standing_png from '../../../images/player15Standing_png.js';
 import player15PoisedToKick_png from '../../../images/player15PoisedToKick_png.js';
 import player15Kicking_png from '../../../images/player15Kicking_png.js';
-import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
-import { Image } from '../../../../scenery/js/imports.js';
 import kicker1_set2_headshot_TEMP_png from '../../../images/kicker1_set2_headshot_TEMP_png.js';
 import kicker1_set3_headshot_TEMP_png from '../../../images/kicker1_set3_headshot_TEMP_png.js';
-
-export type KickerImageSet = {
-  standing: HTMLImageElement;
-  poisedToKick: HTMLImageElement;
-  kicking: HTMLImageElement;
-};
+import KickerCharacterSet from './KickerCharacterSet.js';
+import variabilityPlayer01Standing_png from '../../../images/variabilityPlayer01Standing_png.js';
+import variabilityPlayer01PoisedToKick_png from '../../../images/variabilityPlayer01PoisedToKick_png.js';
+import variabilityPlayer01Kicking_png from '../../../images/variabilityPlayer01Kicking_png.js';
+import variabilityPlayer02Standing_png from '../../../images/variabilityPlayer02Standing_png.js';
+import variabilityPlayer02Kicking_png from '../../../images/variabilityPlayer02Kicking_png.js';
+import variabilityPlayer02PoisedToKick_png from '../../../images/variabilityPlayer02PoisedToKick_png.js';
+import variabilityPlayer03Standing_png from '../../../images/variabilityPlayer03Standing_png.js';
+import variabilityPlayer03PoisedToKick_png from '../../../images/variabilityPlayer03PoisedToKick_png.js';
+import variabilityPlayer03Kicking_png from '../../../images/variabilityPlayer03Kicking_png.js';
+import variabilityPlayer04Kicking_png from '../../../images/variabilityPlayer04Kicking_png.js';
+import variabilityPlayer04Standing_png from '../../../images/variabilityPlayer04Standing_png.js';
+import variabilityPlayer04PoisedToKick_png from '../../../images/variabilityPlayer04PoisedToKick_png.js';
 
 const unitedStatesOfAmericaStringProperty = SoccerCommonStrings.characterSet.unitedStatesOfAmericaStringProperty;
 const africaStringProperty = SoccerCommonStrings.characterSet.africaStringProperty;
 const africaConservativeStringProperty = SoccerCommonStrings.characterSet.africaModestStringProperty;
-
-
-/**
- * A collection of KickerImageSets. One KickerCharacterSet is active at a time. A different KickerCharacterSet can be selected
- * from preferences.
- */
-class KickerCharacterSet extends CharacterSet {
-
-  public readonly imageCount: number;
-
-  public constructor( headshot: HTMLImageElement, labelString: LocalizedStringProperty, public readonly kickerImages: KickerImageSet[] ) {
-
-    const headshotIcon = new Image( headshot, { scale: 0.35 } );
-    super( headshotIcon, labelString );
-
-    this.imageCount = kickerImages.length;
-  }
-}
 
 const CHARACTER_SET_1 = new KickerCharacterSet(
   kicker1_set1_headshot_TEMP_png,
@@ -169,6 +155,28 @@ const CHARACTER_SET_1 = new KickerCharacterSet(
       poisedToKick: player15PoisedToKick_png,
       kicking: player15Kicking_png
     }
+  ],
+  [
+    {
+      standing: variabilityPlayer01Standing_png,
+      poisedToKick: variabilityPlayer01PoisedToKick_png,
+      kicking: variabilityPlayer01Kicking_png
+    },
+    {
+      standing: variabilityPlayer02Standing_png,
+      poisedToKick: variabilityPlayer02PoisedToKick_png,
+      kicking: variabilityPlayer02Kicking_png
+    },
+    {
+      standing: variabilityPlayer03Standing_png,
+      poisedToKick: variabilityPlayer03PoisedToKick_png,
+      kicking: variabilityPlayer03Kicking_png
+    },
+    {
+      standing: variabilityPlayer04Standing_png,
+      poisedToKick: variabilityPlayer04PoisedToKick_png,
+      kicking: variabilityPlayer04Kicking_png
+    }
   ]
 );
 
@@ -220,6 +228,28 @@ const CHARACTER_SET_2 = new KickerCharacterSet(
       standing: player09Standing_png,
       poisedToKick: player09PoisedToKick_png,
       kicking: player09Kicking_png
+    }
+  ],
+  [
+    {
+      standing: variabilityPlayer01Standing_png,
+      poisedToKick: variabilityPlayer01PoisedToKick_png,
+      kicking: variabilityPlayer01Kicking_png
+    },
+    {
+      standing: variabilityPlayer02Standing_png,
+      poisedToKick: variabilityPlayer02PoisedToKick_png,
+      kicking: variabilityPlayer02Kicking_png
+    },
+    {
+      standing: variabilityPlayer03Standing_png,
+      poisedToKick: variabilityPlayer03PoisedToKick_png,
+      kicking: variabilityPlayer03Kicking_png
+    },
+    {
+      standing: variabilityPlayer04Standing_png,
+      poisedToKick: variabilityPlayer04PoisedToKick_png,
+      kicking: variabilityPlayer04Kicking_png
     }
   ]
 );
@@ -278,16 +308,36 @@ const CHARACTER_SET_3 = new KickerCharacterSet(
       poisedToKick: player10PoisedToKick_png,
       kicking: player10Kicking_png
     }
+  ],
+  [
+    {
+      standing: variabilityPlayer01Standing_png,
+      poisedToKick: variabilityPlayer01PoisedToKick_png,
+      kicking: variabilityPlayer01Kicking_png
+    },
+    {
+      standing: variabilityPlayer02Standing_png,
+      poisedToKick: variabilityPlayer02PoisedToKick_png,
+      kicking: variabilityPlayer02Kicking_png
+    },
+    {
+      standing: variabilityPlayer03Standing_png,
+      poisedToKick: variabilityPlayer03PoisedToKick_png,
+      kicking: variabilityPlayer03Kicking_png
+    },
+    {
+      standing: variabilityPlayer04Standing_png,
+      poisedToKick: variabilityPlayer04PoisedToKick_png,
+      kicking: variabilityPlayer04Kicking_png
+    }
   ]
 );
-
 
 const KickerCharacterSets = {
   CHARACTER_SETS: [ CHARACTER_SET_1, CHARACTER_SET_2, CHARACTER_SET_3 ],
   CHARACTER_SET_1: CHARACTER_SET_1,
   CHARACTER_SET_2: CHARACTER_SET_2,
   CHARACTER_SET_3: CHARACTER_SET_3
-
 };
 
 soccerCommon.register( 'KickerCharacterSets', KickerCharacterSets );

@@ -16,7 +16,7 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Pose from '../model/Pose.js';
 import { KickerPhase } from '../model/KickerPhase.js';
-import { KickerImageSet } from './KickerCharacterSets.js';
+import { KickerImageSet } from './KickerCharacterSet.js';
 
 type SelfOptions = EmptySelfOptions;
 type KickerNodeOptions = SelfOptions & NodeOptions;

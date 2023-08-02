@@ -30,7 +30,7 @@ import CAVModel from '../model/CAVModel.js';
 import SoccerSceneView from '../../soccer-common/view/SoccerSceneView.js';
 import KickButtonGroup from './KickButtonGroup.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import { KickerImageSet } from '../../soccer-common/view/KickerCharacterSets.js';
+import { KickerImageSet } from '../../soccer-common/view/KickerCharacterSet.js';
 import Kicker from '../../soccer-common/model/Kicker.js';
 import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
 import CAVObjectType from '../model/CAVObjectType.js';

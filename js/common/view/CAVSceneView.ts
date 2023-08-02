@@ -15,7 +15,7 @@ import CAVModel from '../model/CAVModel.js';
 import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Kicker from '../../soccer-common/model/Kicker.js';
-import { KickerImageSet } from '../../soccer-common/view/KickerCharacterSets.js';
+import { KickerImageSet } from '../../soccer-common/view/KickerCharacterSet.js';
 import Range from '../../../../dot/js/Range.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
