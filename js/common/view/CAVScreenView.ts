@@ -93,10 +93,10 @@ export default class CAVScreenView extends ScreenView {
   protected readonly numberOfKicksProperty: DynamicProperty<number, number, CAVSoccerSceneModel>;
   protected readonly kickButtonGroup: KickButtonGroup;
 
+  protected readonly playAreaTandem: Tandem;
+
   public constructor( model: CAVModel, providedOptions: CAVScreenViewOptions ) {
     const options = optionize<CAVScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
-
-    const playAreaTandem = options.tandem.createTandem( 'playArea' );
 
     // View size of a soccer ball
     const objectHeight = 41;
@@ -108,6 +108,8 @@ export default class CAVScreenView extends ScreenView {
     );
 
     super( options );
+    this.playAreaTandem = options.tandem.createTandem( 'playArea' );
+
     this.numberOfKicksProperty = new DynamicProperty<number, number, CAVSoccerSceneModel>( model.selectedSceneModelProperty, { derive: 'numberOfDataPointsProperty' } );
 
 
@@ -142,7 +144,7 @@ export default class CAVScreenView extends ScreenView {
         // two screens have multiple kickers in the same scene.
         tandem: model.sceneModels.length === 1 ?
                 options.tandem.createTandem1Indexed( CAVConstants.SCENE_VIEW_TANDEM, index ) :
-                options.tandem.createTandem( `sceneView${index + 1}` )
+                options.tandem.createTandem( `sceneKicker${index + 1}View` )
       } ) );
 
     const backLayerToggleNode = new ToggleNode( model.selectedSceneModelProperty, this.sceneViews.map( sceneView => {
@@ -229,7 +231,7 @@ export default class CAVScreenView extends ScreenView {
       // Center between the ground and the bottom of the layout bounds.  Adjust because of the asymmetries:
       // the soccer player foot falls beneath the ground, and the shading of the buttons.
       centerY: ( GROUND_POSITION_Y + this.layoutBounds.maxY ) / 2 + 2,
-      tandem: playAreaTandem.createTandem( 'kickButtonGroup' )
+      tandem: this.playAreaTandem.createTandem( 'kickButtonGroup' )
     } );
 
     this.updateDragIndicatorNode = () => {

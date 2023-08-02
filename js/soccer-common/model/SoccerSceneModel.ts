@@ -76,7 +76,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
   public readonly objectValueBecameNonNullEmitter: TEmitter;
   public readonly resetEmitter: TEmitter = new Emitter();
   public readonly clearDataEmitter: TEmitter = new Emitter();
-  public readonly numberOfDataPointsProperty: NumberProperty;
+  public readonly numberOfDataPointsProperty: Property<number>;
 
   public readonly kickers: Kicker[];
 
@@ -219,13 +219,11 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
     } );
 
     this.numberOfDataPointsProperty = new NumberProperty( 0, {
-      tandem: options.tandem.createTandem( 'numberOfDataPointsProperty' )
-    } );
-
-    this.timeProperty = new NumberProperty( 0, {
-      tandem: options.tandem.createTandem( 'timeProperty' ),
+      tandem: options.tandem.createTandem( 'numberOfDataPointsProperty' ),
       phetioReadOnly: true
     } );
+
+    this.timeProperty = new NumberProperty( 0 );
 
     this.objectValueBecameNonNullEmitter = new Emitter();
 
@@ -233,9 +231,7 @@ export default class SoccerSceneModel<T extends SoccerBall = SoccerBall> extends
       tandem: options.tandem.createTandem( 'numberOfQueuedKicksProperty' ),
       phetioReadOnly: true
     } );
-    this.timeWhenLastBallWasKickedProperty = new NumberProperty( 0, {
-      tandem: options.tandem.createTandem( 'timeWhenLastBallWasKickedProperty' )
-    } );
+    this.timeWhenLastBallWasKickedProperty = new NumberProperty( 0 );
 
     this.kickers = _.range( 0, this.maxKicksLimit ).map( placeInLine => new Kicker( placeInLine,
       options.tandem.createTandem( 'kickers' ).createTandem1Indexed( 'kicker', placeInLine )

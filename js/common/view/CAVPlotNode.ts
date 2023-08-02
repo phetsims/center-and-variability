@@ -73,7 +73,7 @@ export default class CAVPlotNode extends Node {
     this.modelViewTransform = modelViewTransform;
 
     const includeRangeOnXAxis = !( model instanceof VariabilityModel ) && options.parentContext === 'accordion';
-    const visibleProperty = model instanceof MeanAndMedianModel && options.parentContext === 'accordion' ? model.isTopMeanVisibleProperty :
+    const visibleProperty = model instanceof MeanAndMedianModel && options.parentContext === 'accordion' ? model.meanVisibleProperty :
                             model instanceof VariabilityModel ? DerivedProperty.valueEqualsConstant( model.selectedVariabilityMeasureProperty, VariabilityMeasure.MAD ) :
                             new BooleanProperty( true );
 

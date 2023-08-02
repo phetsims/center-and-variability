@@ -32,13 +32,11 @@ export default class MedianModel extends CAVModel {
 
   public constructor( providedOptions: MedianModelOptions ) {
 
-    const playAreaTandem = providedOptions.tandem.createTandem( 'playArea' );
     const accordionBoxTandem = providedOptions.tandem.createTandem( 'distanceAccordionBox' );
 
     const options = optionize<MedianModelOptions, SelfOptions, CAVModelOptions>()( {
-      playAreaTandem: playAreaTandem,
       accordionBoxTandem: accordionBoxTandem,
-      instrumentPredictMeanProperty: false,
+      instrumentMeanProperty: false,
       instrumentDataPointVisibilityProperty: false
     }, providedOptions );
 

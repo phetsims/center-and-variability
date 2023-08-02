@@ -40,7 +40,6 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
 
     super( model, options );
 
-    const playAreaTandem = options.tandem.createTandem( 'playArea' );
     const accordionBoxTandem = options.tandem.createTandem( 'plotAccordionBox' );
 
     const meanAndMedianAccordionBox = new MeanAndMedianAccordionBox(
@@ -58,8 +57,8 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
       PlayAreaCheckboxFactory.getMedianCheckboxItem( model ),
       PlayAreaCheckboxFactory.getMeanCheckboxItem( model )
     ], {
-      tandem: playAreaTandem.createTandem( 'bottomCheckboxGroup' )
-    } ), playAreaTandem );
+      tandem: this.playAreaTandem.createTandem( 'bottomCheckboxGroup' )
+    } ), this.playAreaTandem );
 
 
     const predictMeanNode = new PredictionSlider( model.predictMeanValueProperty, this.modelViewTransform,
@@ -72,7 +71,7 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
         enabledRangeProperty: new Property<Range>( CAVConstants.PHYSICAL_RANGE ),
         roundToInterval: null, // continuous
         visibleProperty: model.isPredictMeanVisibleProperty,
-        tandem: playAreaTandem.createTandem( 'predictMeanNode' )
+        tandem: this.playAreaTandem.createTandem( 'predictMeanNode' )
       } );
 
     this.backScreenViewLayer.addChild( predictMeanNode );
@@ -80,7 +79,7 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
     const predictMedianNode = CAVScreenView.createPredictMedianNode(
       model,
       this.modelViewTransform,
-      playAreaTandem.createTandem( 'predictMedianNode' )
+      this.playAreaTandem.createTandem( 'predictMedianNode' )
     );
     this.backScreenViewLayer.addChild( predictMedianNode );
 

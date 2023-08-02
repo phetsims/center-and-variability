@@ -92,7 +92,7 @@ export default class MeanAndMedianPlotNode extends CAVPlotNode {
     };
 
     const updateOneKickTextVisibility = () => {
-      needAtLeastOneKickText.visible = sceneModel.numberOfDataPointsProperty.value === 0 && ( options.parentContext === 'info' || model.medianVisibleProperty.value || model.isTopMeanVisibleProperty.value );
+      needAtLeastOneKickText.visible = sceneModel.numberOfDataPointsProperty.value === 0 && ( options.parentContext === 'info' || model.medianVisibleProperty.value || model.meanVisibleProperty.value );
     };
 
     sceneModel.objectChangedEmitter.addListener( updateMedianBarNode );
@@ -101,7 +101,7 @@ export default class MeanAndMedianPlotNode extends CAVPlotNode {
     model.medianVisibleProperty.link( updateMedianBarNode );
     model.isMedianAnimationCompleteProperty.link( updateMedianBarNode );
     model.medianVisibleProperty.link( updateOneKickTextVisibility );
-    model.isTopMeanVisibleProperty.link( updateOneKickTextVisibility );
+    model.meanVisibleProperty.link( updateOneKickTextVisibility );
 
   }
 }

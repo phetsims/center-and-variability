@@ -22,7 +22,6 @@ import MedianInfoDialog from './MedianInfoDialog.js';
 
 type SelfOptions = EmptySelfOptions;
 type MedianScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
-// & Pick<CAVScreenViewOptions, 'tandem'>
 
 export default class MedianScreenView extends CAVScreenView {
   private readonly medianAccordionBox: MedianAccordionBox;
@@ -37,7 +36,6 @@ export default class MedianScreenView extends CAVScreenView {
 
     super( model, options );
 
-    const playAreaTandem = options.tandem.createTandem( 'playArea' );
     const accordionBoxTandem = options.tandem.createTandem( 'distanceAccordionBox' );
 
     this.medianAccordionBox = new MedianAccordionBox(
@@ -51,13 +49,13 @@ export default class MedianScreenView extends CAVScreenView {
       PlayAreaCheckboxFactory.getPredictMedianCheckboxItem( model ),
       PlayAreaCheckboxFactory.getMedianCheckboxItem( model )
     ], {
-      tandem: playAreaTandem.createTandem( 'bottomCheckboxGroup' )
-    } ), playAreaTandem );
+      tandem: this.playAreaTandem.createTandem( 'bottomCheckboxGroup' )
+    } ), this.playAreaTandem );
 
     const predictMedianNode = CAVScreenView.createPredictMedianNode(
       model,
       this.modelViewTransform,
-      playAreaTandem.createTandem( 'predictMedianNode' )
+      this.playAreaTandem.createTandem( 'predictMedianNode' )
     );
 
     this.backScreenViewLayer.addChild( predictMedianNode );
