@@ -56,7 +56,7 @@ export default class AccordionBoxCheckboxFactory {
     };
   }
 
-  public static getMedianCheckboxWithIconItem( isTopMedianVisibleProperty: Property<boolean> ): VerticalCheckboxGroupItem {
+  public static getMedianCheckboxWithIconItem( medianVisibleProperty: Property<boolean> ): VerticalCheckboxGroupItem {
     return {
       createNode: () => {
         return AccordionBoxCheckboxFactory.createGridBox(
@@ -68,7 +68,7 @@ export default class AccordionBoxCheckboxFactory {
             .setMedianBarShape( 0, 0, ICON_WIDTH / 2 - LINE_WIDTH / 2, ICON_WIDTH - LINE_WIDTH, true )
         );
       },
-      property: isTopMedianVisibleProperty,
+      property: medianVisibleProperty,
       tandemName: 'medianCheckbox',
 
       options: {
@@ -79,10 +79,10 @@ export default class AccordionBoxCheckboxFactory {
     };
   }
 
-  public static getMedianCheckboxWithoutIconItem( isTopMedianVisibleProperty: Property<boolean>, model: CAVModel ): VerticalCheckboxGroupItem {
+  public static getMedianCheckboxWithoutIconItem( medianVisibleProperty: Property<boolean>, model: CAVModel ): VerticalCheckboxGroupItem {
     return {
       createNode: () => CHECKBOX_GROUP.createBox( new Text( CenterAndVariabilityStrings.medianStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ), { xAlign: 'left' } ),
-      property: isTopMedianVisibleProperty,
+      property: medianVisibleProperty,
       tandemName: 'medianCheckbox',
       options: {
         checkedSoundPlayer: PlayAreaCheckboxFactory.getMedianCheckedSoundPlayer( model )

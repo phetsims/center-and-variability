@@ -65,6 +65,9 @@ export default class VariabilityScreenView extends CAVScreenView {
 
     super( model, options );
 
+    const playAreaTandem = options.tandem.createTandem( 'playArea' );
+    const accordionBoxTandem = options.tandem.createTandem( 'spreadAccordionBox' );
+
     const pointerSlider = new PredictionSlider( model.pointerValueProperty, this.modelViewTransform,
       CAVConstants.VARIABILITY_DRAG_RANGE, new BooleanProperty( false ), model.isPointerKeyboardDraggingProperty, {
         predictionThumbNodeOptions: {
@@ -75,7 +78,7 @@ export default class VariabilityScreenView extends CAVScreenView {
         enabledRangeProperty: new Property<Range>( CAVConstants.VARIABILITY_DRAG_RANGE ),
         roundToInterval: null, // continuous
         visibleProperty: model.isPointerVisibleProperty,
-        tandem: options.tandem.createTandem( 'pointerNode' )
+        tandem: playAreaTandem.createTandem( 'pointerNode' )
       } );
 
     const createPredictionSliderOptions = ( tandem: Tandem ) => {
@@ -97,7 +100,7 @@ export default class VariabilityScreenView extends CAVScreenView {
     const isIntervalHandle2BeingDraggedProperty = new BooleanProperty( false );
     const isIntervalAreaBeingDraggedProperty = new BooleanProperty( false );
 
-    const intervalToolNodeTandem = options.tandem.createTandem( 'intervalToolNode' );
+    const intervalToolNodeTandem = playAreaTandem.createTandem( 'intervalToolNode' );
     const toolHandle1Tandem = intervalToolNodeTandem.createTandem( 'handle1' );
     const toolHandle2Tandem = intervalToolNodeTandem.createTandem( 'handle2' );
 
@@ -116,7 +119,7 @@ export default class VariabilityScreenView extends CAVScreenView {
     const variabilityAccordionBox = new VariabilityAccordionBox(
       model,
       this.layoutBounds,
-      options.tandem.createTandem( 'accordionBox' ),
+      accordionBoxTandem,
       this.questionBar.bottom + CAVConstants.ACCORDION_BOX_TOP_MARGIN,
       this.playAreaNumberLineNode
     );
@@ -244,8 +247,8 @@ export default class VariabilityScreenView extends CAVScreenView {
         PlayAreaCheckboxFactory.getPointerCheckboxItem( model ),
         PlayAreaCheckboxFactory.getIntervalToolCheckboxItem( model )
       ], {
-        tandem: this.tandem.createTandem( 'bottomCheckboxGroup' )
-      } ), options.tandem );
+        tandem: playAreaTandem.createTandem( 'bottomCheckboxGroup' )
+      } ), playAreaTandem );
 
     model.variabilitySceneModels.forEach( ( sceneModel, index ) => {
 
@@ -253,7 +256,7 @@ export default class VariabilityScreenView extends CAVScreenView {
       // of CAVSceneView is overcomplicated and unnecessary. Instead, we create an equivalent tandem, so that it will appear
       // under the appropriate sceneView in the studio tree.
       const infoDialog = new VariabilityInfoDialog( model, sceneModel, this.playAreaNumberLineNode, {
-        tandem: options.tandem.createTandem( `sceneKicker${index + 1}View` ).createTandem( 'infoDialog' )
+        tandem: options.tandem.createTandem( `sceneView${index + 1}` ).createTandem( 'infoDialog' )
       } );
 
       model.infoButtonPressedEmitter.addListener( () => {

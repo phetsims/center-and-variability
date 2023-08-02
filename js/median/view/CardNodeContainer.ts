@@ -67,7 +67,7 @@ export default class CardNodeContainer extends Node {
   public constructor( model: CardContainerModel,
                       private readonly isSortingDataProperty: Property<boolean>,
                       private readonly sceneModel: CAVSoccerSceneModel,
-                      private readonly isTopMedianVisibleProperty: Property<boolean>,
+                      private readonly medianVisibleProperty: Property<boolean>,
                       providedOptions: CardNodeContainerOptions ) {
 
     const options = optionize<CardNodeContainerOptions, EmptySelfOptions, NodeOptions>()( {
@@ -259,7 +259,7 @@ export default class CardNodeContainer extends Node {
       const MARGIN_Y = PICK_UP_DELTA_Y - 3;
 
       // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card
-      if ( leftmostCard && ( ( this.isTopMedianVisibleProperty.value && model.isDataSorted() ) || model.parentContext === 'info' ) ) {
+      if ( leftmostCard && ( ( this.medianVisibleProperty.value && model.isDataSorted() ) || model.parentContext === 'info' ) ) {
         const barY = MARGIN_Y;
 
         // If the card model exists the cardNode must also exist
@@ -287,7 +287,7 @@ export default class CardNodeContainer extends Node {
         }
 
         medianReadoutText.bottom = MARGIN_Y - 5;
-        medianReadoutText.visible = this.isTopMedianVisibleProperty.value || model.parentContext === 'info';
+        medianReadoutText.visible = this.medianVisibleProperty.value || model.parentContext === 'info';
       }
       else {
         medianReadoutText.visible = false;
@@ -295,7 +295,7 @@ export default class CardNodeContainer extends Node {
     };
     model.cardCellsChangedEmitter.addListener( updateMedianNode );
     this.sceneModel.medianValueProperty.link( updateMedianNode );
-    this.isTopMedianVisibleProperty.link( updateMedianNode );
+    this.medianVisibleProperty.link( updateMedianNode );
     this.sceneModel.objectChangedEmitter.addListener( updateMedianNode );
     medianTextNode.boundsProperty.link( updateMedianNode );
 

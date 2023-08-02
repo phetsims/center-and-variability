@@ -21,15 +21,13 @@ import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 import MedianInfoDialog from './MedianInfoDialog.js';
 
 type SelfOptions = EmptySelfOptions;
-type MedianScreenViewOptions =
-  SelfOptions
-  & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
+type MedianScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
+// & Pick<CAVScreenViewOptions, 'tandem'>
 
 export default class MedianScreenView extends CAVScreenView {
   private readonly medianAccordionBox: MedianAccordionBox;
 
   public constructor( model: MedianModel, providedOptions: MedianScreenViewOptions ) {
-
     const options = optionize<MedianScreenViewOptions, SelfOptions, CAVScreenViewOptions>()( {
       questionBarOptions: {
         barFill: CAVColors.medianQuestionBarFillColorProperty,
@@ -39,10 +37,13 @@ export default class MedianScreenView extends CAVScreenView {
 
     super( model, options );
 
+    const playAreaTandem = options.tandem.createTandem( 'playArea' );
+    const accordionBoxTandem = options.tandem.createTandem( 'distanceAccordionBox' );
+
     this.medianAccordionBox = new MedianAccordionBox(
       model,
       this.layoutBounds,
-      options.tandem.createTandem( 'accordionBox' ),
+      accordionBoxTandem,
       this.questionBar.bottom + CAVConstants.ACCORDION_BOX_TOP_MARGIN );
     this.setAccordionBox( this.medianAccordionBox );
 
@@ -50,19 +51,19 @@ export default class MedianScreenView extends CAVScreenView {
       PlayAreaCheckboxFactory.getPredictMedianCheckboxItem( model ),
       PlayAreaCheckboxFactory.getMedianCheckboxItem( model )
     ], {
-      tandem: this.tandem.createTandem( 'bottomCheckboxGroup' )
-    } ), this.tandem );
+      tandem: playAreaTandem.createTandem( 'bottomCheckboxGroup' )
+    } ), playAreaTandem );
 
     const predictMedianNode = CAVScreenView.createPredictMedianNode(
       model,
       this.modelViewTransform,
-      options.tandem.createTandem( 'predictMedianNode' )
+      playAreaTandem.createTandem( 'predictMedianNode' )
     );
 
     this.backScreenViewLayer.addChild( predictMedianNode );
 
     const infoDialog = new MedianInfoDialog( model, model.sceneModels[ 0 ], {
-      tandem: options.tandem.createTandem( 'infoDialog' )
+      tandem: accordionBoxTandem.createTandem( 'infoDialog' )
     } );
 
     model.infoButtonPressedEmitter.addListener( () => infoDialog.show() );

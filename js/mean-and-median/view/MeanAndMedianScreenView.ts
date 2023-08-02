@@ -40,10 +40,13 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
 
     super( model, options );
 
+    const playAreaTandem = options.tandem.createTandem( 'playArea' );
+    const accordionBoxTandem = options.tandem.createTandem( 'plotAccordionBox' );
+
     const meanAndMedianAccordionBox = new MeanAndMedianAccordionBox(
       model,
       this.layoutBounds,
-      options.tandem.createTandem( 'accordionBox' ),
+      accordionBoxTandem,
       this.questionBar.bottom + CAVConstants.ACCORDION_BOX_TOP_MARGIN,
       this.playAreaNumberLineNode
     );
@@ -55,8 +58,8 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
       PlayAreaCheckboxFactory.getMedianCheckboxItem( model ),
       PlayAreaCheckboxFactory.getMeanCheckboxItem( model )
     ], {
-      tandem: this.tandem.createTandem( 'bottomCheckboxGroup' )
-    } ), options.tandem );
+      tandem: playAreaTandem.createTandem( 'bottomCheckboxGroup' )
+    } ), playAreaTandem );
 
 
     const predictMeanNode = new PredictionSlider( model.predictMeanValueProperty, this.modelViewTransform,
@@ -69,7 +72,7 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
         enabledRangeProperty: new Property<Range>( CAVConstants.PHYSICAL_RANGE ),
         roundToInterval: null, // continuous
         visibleProperty: model.isPredictMeanVisibleProperty,
-        tandem: options.tandem.createTandem( 'predictMeanNode' )
+        tandem: playAreaTandem.createTandem( 'predictMeanNode' )
       } );
 
     this.backScreenViewLayer.addChild( predictMeanNode );
@@ -77,12 +80,12 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
     const predictMedianNode = CAVScreenView.createPredictMedianNode(
       model,
       this.modelViewTransform,
-      options.tandem.createTandem( 'predictMedianNode' )
+      playAreaTandem.createTandem( 'predictMedianNode' )
     );
     this.backScreenViewLayer.addChild( predictMedianNode );
 
     const infoDialog = new MeanAndMedianInfoDialog( model, model.sceneModels[ 0 ], this.playAreaNumberLineNode, {
-      tandem: options.tandem.createTandem( 'infoDialog' )
+      tandem: accordionBoxTandem.createTandem( 'infoDialog' )
     } );
 
     model.infoButtonPressedEmitter.addListener( () => infoDialog.show() );

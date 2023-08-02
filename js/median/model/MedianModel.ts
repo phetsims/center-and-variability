@@ -27,12 +27,17 @@ export default class MedianModel extends CAVModel {
 
   public readonly cardContainerModel: CardContainerModel;
   public readonly isSortingDataProperty: BooleanProperty;
-  public readonly isTopMedianVisibleProperty: BooleanProperty;
+  public readonly medianVisibleProperty: BooleanProperty;
   public readonly areCardsSortedProperty: BooleanProperty;
 
   public constructor( providedOptions: MedianModelOptions ) {
 
+    const playAreaTandem = providedOptions.tandem.createTandem( 'playArea' );
+    const accordionBoxTandem = providedOptions.tandem.createTandem( 'distanceAccordionBox' );
+
     const options = optionize<MedianModelOptions, SelfOptions, CAVModelOptions>()( {
+      playAreaTandem: playAreaTandem,
+      accordionBoxTandem: accordionBoxTandem,
       instrumentPredictMeanProperty: false,
       instrumentDataPointVisibilityProperty: false
     }, providedOptions );
@@ -68,26 +73,28 @@ export default class MedianModel extends CAVModel {
     super( maxKicksProperty, [ sceneModel ], options );
 
     this.isSortingDataProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isSortingDataProperty' )
+      tandem: accordionBoxTandem.createTandem( 'isSortingDataProperty' )
     } );
 
-    this.isTopMedianVisibleProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isTopMedianVisibleProperty' )
+    this.medianVisibleProperty = new BooleanProperty( false, {
+      tandem: accordionBoxTandem.createTandem( 'medianVisibleProperty' )
     } );
 
     // For PhET-iO
     this.areCardsSortedProperty = new BooleanProperty( true, {
-      tandem: options.tandem.createTandem( 'areCardsSortedProperty' ),
+      tandem: accordionBoxTandem.createTandem( 'areCardsSortedProperty' ),
       phetioReadOnly: true
     } );
 
-    this.cardContainerModel = new CardContainerModel( this, { tandem: options.tandem.createTandem( 'cardContainerModel' ), parentContext: 'accordion' } );
+    this.cardContainerModel = new CardContainerModel( this, {
+      tandem: accordionBoxTandem.createTandem( 'cardContainerModel' ), parentContext: 'accordion'
+    } );
   }
 
   public override reset(): void {
     super.reset();
     this.isSortingDataProperty.reset();
-    this.isTopMedianVisibleProperty.reset();
+    this.medianVisibleProperty.reset();
   }
 
   public override step( dt: number ): void {

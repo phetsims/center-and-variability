@@ -10,7 +10,7 @@
 import centerAndVariability from '../../centerAndVariability.js';
 import Property from '../../../../axon/js/Property.js';
 import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import VariabilityMeasure from './VariabilityMeasure.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
@@ -23,7 +23,7 @@ import NumberTone from '../../soccer-common/model/NumberTone.js';
 import Utils from '../../../../dot/js/Utils.js';
 
 type SelfOptions = EmptySelfOptions;
-type VariabilityModelOptions = SelfOptions & CAVModelOptions;
+type VariabilityModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
 
 export default class VariabilityModel extends CAVModel {
   private readonly initialized: boolean = false;
@@ -50,13 +50,13 @@ export default class VariabilityModel extends CAVModel {
   public readonly resetEmitter = new Emitter();
   public readonly variabilitySceneModels: VariabilitySceneModel[];
 
-  public constructor( options: VariabilityModelOptions ) {
+  public constructor( providedOptions: VariabilityModelOptions ) {
 
     const sceneModels = [
-      new VariabilitySceneModel( MAX_KICKS_PROPERTY, new DistributionStrategy( [ 0, 0, 0, 1, 3, 12, 20, 32, 20, 12, 3, 1, 0, 0, 0 ] ), { tandem: options.tandem.createTandem( 'sceneKicker1Model' ) } ),
-      new VariabilitySceneModel( MAX_KICKS_PROPERTY, new DistributionStrategy( [ 3, 5, 10, 10, 25, 32, 45, 65, 45, 32, 25, 10, 10, 5, 3 ] ), { tandem: options.tandem.createTandem( 'sceneKicker2Model' ) } ),
-      new VariabilitySceneModel( MAX_KICKS_PROPERTY, new DistributionStrategy( [ ...CAVConstants.RIGHT_SKEWED_DATA ] ), { tandem: options.tandem.createTandem( 'sceneKicker3Model' ) } ),
-      new VariabilitySceneModel( MAX_KICKS_PROPERTY, new DistributionStrategy( [ ...CAVConstants.LEFT_SKEWED_DATA ] ), { tandem: options.tandem.createTandem( 'sceneKicker4Model' ) } )
+      new VariabilitySceneModel( MAX_KICKS_PROPERTY, new DistributionStrategy( [ 0, 0, 0, 1, 3, 12, 20, 32, 20, 12, 3, 1, 0, 0, 0 ] ), { tandem: providedOptions.tandem.createTandem( 'sceneModel1' ) } ),
+      new VariabilitySceneModel( MAX_KICKS_PROPERTY, new DistributionStrategy( [ 3, 5, 10, 10, 25, 32, 45, 65, 45, 32, 25, 10, 10, 5, 3 ] ), { tandem: providedOptions.tandem.createTandem( 'sceneModel2' ) } ),
+      new VariabilitySceneModel( MAX_KICKS_PROPERTY, new DistributionStrategy( [ ...CAVConstants.RIGHT_SKEWED_DATA ] ), { tandem: providedOptions.tandem.createTandem( 'sceneModel3' ) } ),
+      new VariabilitySceneModel( MAX_KICKS_PROPERTY, new DistributionStrategy( [ ...CAVConstants.LEFT_SKEWED_DATA ] ), { tandem: providedOptions.tandem.createTandem( 'sceneModel4' ) } )
     ];
 
     sceneModels.forEach( sceneModel => {
@@ -67,6 +67,16 @@ export default class VariabilityModel extends CAVModel {
       } );
     } );
 
+    const playAreaTandem = providedOptions.tandem.createTandem( 'playArea' );
+    const accordionBoxTandem = providedOptions.tandem.createTandem( 'spreadAccordionBox' );
+
+    const options = optionize<VariabilityModelOptions, SelfOptions, CAVModelOptions>()( {
+      playAreaTandem: playAreaTandem,
+      accordionBoxTandem: accordionBoxTandem,
+      instrumentPredictMeanProperty: true,
+      instrumentDataPointVisibilityProperty: true
+    }, providedOptions );
+
     super( MAX_KICKS_PROPERTY, sceneModels, options );
 
     this.initialized = true;
@@ -74,22 +84,22 @@ export default class VariabilityModel extends CAVModel {
     this.variabilitySceneModels = sceneModels;
 
     this.selectedVariabilityMeasureProperty = new EnumerationProperty( VariabilityMeasure.RANGE, {
-      tandem: options.tandem.createTandem( 'selectedVariabilityMeasureProperty' )
+      tandem: accordionBoxTandem.createTandem( 'selectedVariabilityMeasureProperty' )
     } );
 
     this.isRangeVisibleProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isRangeVisibleProperty' )
+      tandem: accordionBoxTandem.createTandem( 'isRangeVisibleProperty' )
     } );
 
     this.isIQRVisibleProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isIQRVisibleProperty' )
+      tandem: accordionBoxTandem.createTandem( 'isIQRVisibleProperty' )
     } );
 
     this.isMADVisibleProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isMADVisibleProperty' )
+      tandem: accordionBoxTandem.createTandem( 'isMADVisibleProperty' )
     } );
 
-    const pointerTandem = options.tandem.createTandem( 'pointer' );
+    const pointerTandem = playAreaTandem.createTandem( 'pointer' );
 
     this.isPointerVisibleProperty = new BooleanProperty( false, {
       tandem: pointerTandem.createTandem( 'isPointerVisibleProperty' )
@@ -101,7 +111,7 @@ export default class VariabilityModel extends CAVModel {
 
     this.isPointerKeyboardDraggingProperty = new BooleanProperty( false );
 
-    const intervalToolTandem = options.tandem.createTandem( 'intervalTool' );
+    const intervalToolTandem = playAreaTandem.createTandem( 'intervalTool' );
 
     this.isIntervalToolVisibleProperty = new BooleanProperty( false, {
       tandem: intervalToolTandem.createTandem( 'visibleProperty' )

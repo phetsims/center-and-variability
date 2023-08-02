@@ -37,7 +37,7 @@ export default class MeanAndMedianModel extends CAVModel {
 
   private lastHighlightAnimationStepTime = 0;
   public readonly isMedianAnimationCompleteProperty = new BooleanProperty( false );
-  public readonly isTopMedianVisibleProperty: BooleanProperty;
+  public readonly medianVisibleProperty: BooleanProperty;
   public readonly isTopMeanVisibleProperty: BooleanProperty;
   public readonly isPredictMeanVisibleProperty: BooleanProperty;
   public readonly predictMeanValueProperty: NumberProperty;
@@ -45,7 +45,12 @@ export default class MeanAndMedianModel extends CAVModel {
 
   public constructor( providedOptions: MeanAndMedianModelOptions ) {
 
+    const playAreaTandem = providedOptions.tandem.createTandem( 'playArea' );
+    const accordionBoxTandem = providedOptions.tandem.createTandem( 'plotAccordionBox' );
+
     const options = optionize<MeanAndMedianModelOptions, SelfOptions, CAVModelOptions>()( {
+      playAreaTandem: playAreaTandem,
+      accordionBoxTandem: accordionBoxTandem,
       instrumentPredictMeanProperty: true,
       instrumentDataPointVisibilityProperty: true
     }, providedOptions );
@@ -70,14 +75,14 @@ export default class MeanAndMedianModel extends CAVModel {
     super( MAX_KICKS_PROPERTY, [ sceneModel ], options );
 
     this.isTopMeanVisibleProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isTopMeanVisibleProperty' )
+      tandem: accordionBoxTandem.createTandem( 'isTopMeanVisibleProperty' )
     } );
-    this.isTopMedianVisibleProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isTopMedianVisibleProperty' )
+    this.medianVisibleProperty = new BooleanProperty( false, {
+      tandem: playAreaTandem.createTandem( 'medianVisibleProperty' )
     } );
 
     // Don't show animation on startup or when setting PhET-iO state
-    this.isTopMedianVisibleProperty.lazyLink( isTopMedianVisible => {
+    this.medianVisibleProperty.lazyLink( isTopMedianVisible => {
       if ( isTopMedianVisible && sceneModel.medianValueProperty.value !== null ) {
 
         if ( !isSettingPhetioStateProperty.value ) {
@@ -98,10 +103,10 @@ export default class MeanAndMedianModel extends CAVModel {
 
     this.predictMeanValueProperty = new NumberProperty( 1.5, {
       range: CAVConstants.PHYSICAL_RANGE,
-      tandem: options.tandem.createTandem( 'predictMeanValueProperty' )
+      tandem: playAreaTandem.createTandem( 'predictMeanValueProperty' )
     } );
     this.isPredictMeanVisibleProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isPredictMeanVisibleProperty' )
+      tandem: playAreaTandem.createTandem( 'isPredictMeanVisibleProperty' )
     } );
 
     sceneModel.objectValueBecameNonNullEmitter.addListener( () => this.updateAnimation() );
@@ -123,7 +128,7 @@ export default class MeanAndMedianModel extends CAVModel {
     this.setHighlightAnimationIndex( null );
     this.isMedianAnimationCompleteProperty.reset();
     this.isTopMeanVisibleProperty.reset();
-    this.isTopMedianVisibleProperty.reset();
+    this.medianVisibleProperty.reset();
     this.predictMeanValueProperty.reset();
     this.isPredictMeanVisibleProperty.reset();
   }
