@@ -16,14 +16,16 @@ import InfoTitleDescriptionRichText from '../../common/view/InfoTitleDescription
 import CAVConstants from '../../common/CAVConstants.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import CardContainerModel from '../model/CardContainerModel.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 
 export default class MedianInfoNode extends VBox {
-  public constructor( model: MedianModel, sceneModel: CAVSoccerSceneModel ) {
+  public constructor( model: MedianModel, sceneModel: CAVSoccerSceneModel, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
 
     const hasZeroKicksProperty = DerivedProperty.valueEqualsConstant( sceneModel.numberOfDataPointsProperty, 0 );
     const infoDataValuesNode = new InfoValuesNode( sceneModel );
 
-    const cardContainerModel = new CardContainerModel( model, { parentContext: 'info' } );
+    const cardContainerModel = new CardContainerModel( model, { parentContext: 'info', tandem: options.tandem } );
     const cardNodeContainer = new CardNodeContainer( cardContainerModel, model.isSortingDataProperty,
       model.selectedSceneModelProperty.value, model.isTopMedianVisibleProperty, {
 

@@ -11,7 +11,7 @@ import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 export default class MedianInfoDialog extends Dialog {
   public constructor( model: MedianModel, sceneModel: CAVSoccerSceneModel, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
 
-    const medianInfoNode = new MedianInfoNode( model, sceneModel );
+    const medianInfoNode = new MedianInfoNode( model, sceneModel, { tandem: options.tandem.createTandem( 'medianInfoNode' ) } );
 
     super( medianInfoNode, {
       tandem: options.tandem

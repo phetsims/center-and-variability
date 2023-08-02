@@ -25,6 +25,7 @@ import Property from '../../../../axon/js/Property.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 type SelfOptions = EmptySelfOptions;
 type CardModelOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'>;
@@ -66,7 +67,7 @@ export default class CardModel extends PhetioObject {
 
     this.indexProperty = new Property<number | null>( null, {
       phetioReadOnly: true,
-      tandem: options.tandem?.createTandem( 'indexProperty' ),
+      tandem: options.tandem.createTandem( 'indexProperty' ),
       phetioValueType: NullableIO( NumberIO ),
       phetioFeatured: false
     } );
@@ -75,13 +76,13 @@ export default class CardModel extends PhetioObject {
 
     this.isActiveProperty = new DerivedProperty( [ soccerBall.valueProperty ], value =>
       value !== null, {
-      tandem: options.tandem?.createTandem( 'isActiveProperty' ),
+      tandem: cardContainerModel.parentContext === 'accordion' ? options.tandem?.createTandem( 'isActiveProperty' ) : Tandem.OPT_OUT,
       phetioValueType: BooleanIO
     } );
 
     this.positionProperty = new Vector2Property( position, {
       phetioReadOnly: true,
-      tandem: options.tandem?.createTandem( 'positionProperty' ),
+      tandem: cardContainerModel.parentContext === 'accordion' ? options.tandem?.createTandem( 'positionProperty' ) : Tandem.OPT_OUT,
       valueComparisonStrategy: 'equalsFunction'
     } );
     this.addLinkedElement( this.soccerBall );

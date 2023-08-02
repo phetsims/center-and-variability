@@ -40,6 +40,8 @@ import Property from '../../../../axon/js/Property.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 const cardMovementSounds = [
   cardMovement1_mp3,
@@ -63,7 +65,7 @@ type SelfOptions = {
   parentContext: 'info' | 'accordion';
 };
 
-type CardContainerModelOptions = SelfOptions & PhetioObjectOptions &
+type CardContainerModelOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem' > &
   StrictOmit<PhetioObjectOptions, 'phetioType' | 'phetioState'>;
 
 export default class CardContainerModel extends PhetioObject {
@@ -108,7 +110,7 @@ export default class CardContainerModel extends PhetioObject {
     this.dragIndicationCardProperty = new Property<CardModel | null>( null, {
       phetioReadOnly: true,
       phetioValueType: NullableIO( ReferenceIO( IOType.ObjectIO ) ),
-      tandem: options.tandem?.createTandem( 'dragIndicationCardProperty' ),
+      tandem: this.parentContext === 'accordion' ? options.tandem.createTandem( 'dragIndicationCardProperty' ) : Tandem.OPT_OUT,
       phetioDocumentation: 'Tracks which card the drag indication icon is pointing to. This is for internal use only.'
     } );
 
@@ -117,7 +119,7 @@ export default class CardContainerModel extends PhetioObject {
     // Allocate all the card models at start-up.
     this.cards = medianModel.selectedSceneModelProperty.value.soccerBalls.map( ( soccerBall, index ) => {
       const card = new CardModel( this, soccerBall, new Vector2( 0, 0 ), {
-        tandem: options.tandem?.createTandem( 'cards' ).createTandem1Indexed( 'card', index )
+        tandem: options.tandem.createTandem( 'cards' ).createTandem1Indexed( 'card', index )
       } );
 
       const removeCardCell = ( card: CardModel ) => {
