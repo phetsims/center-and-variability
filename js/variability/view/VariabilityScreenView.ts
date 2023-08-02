@@ -23,7 +23,7 @@ import PlayAreaCheckboxFactory from '../../common/view/PlayAreaCheckboxFactory.j
 import CAVConstants from '../../common/CAVConstants.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 import Kicker from '../../soccer-common/model/Kicker.js';
-import { KickerImageSet } from '../../soccer-common/view/KickerNode.js';
+import { KickerImageSet } from '../../soccer-common/view/KickerCharacterSets.js';
 import VariabilityInfoDialog from './VariabilityInfoDialog.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import PredictionSlider, { PredictionSliderOptions } from '../../common/view/PredictionSlider.js';

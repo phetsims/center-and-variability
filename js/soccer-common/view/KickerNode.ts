@@ -16,16 +16,10 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Pose from '../model/Pose.js';
 import { KickerPhase } from '../model/KickerPhase.js';
+import { KickerImageSet } from './KickerCharacterSets.js';
 
 type SelfOptions = EmptySelfOptions;
 type KickerNodeOptions = SelfOptions & NodeOptions;
-
-
-export type KickerImageSet = {
-  standing: HTMLImageElement;
-  poisedToKick: HTMLImageElement;
-  kicking: HTMLImageElement;
-};
 
 const SCALE = 0.155;
 

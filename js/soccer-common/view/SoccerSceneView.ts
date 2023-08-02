@@ -12,7 +12,8 @@ import { FocusHighlightFromNode, FocusHighlightPath, KeyboardListener, Node } fr
 import SoccerBallNode from './SoccerBallNode.js';
 import { SoccerBallPhase } from '../model/SoccerBallPhase.js';
 import SoccerSceneModel from '../model/SoccerSceneModel.js';
-import KickerNode, { KickerImageSet } from './KickerNode.js';
+import KickerNode from './KickerNode.js';
+import { KickerImageSet } from './KickerCharacterSets.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import soccerCommon from '../soccerCommon.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
