@@ -76,13 +76,13 @@ export default class CardModel extends PhetioObject {
 
     this.isActiveProperty = new DerivedProperty( [ soccerBall.valueProperty ], value =>
       value !== null, {
-      tandem: cardContainerModel.parentContext === 'accordion' ? options.tandem?.createTandem( 'isActiveProperty' ) : Tandem.OPT_OUT,
+      tandem: cardContainerModel.parentContext === 'accordion' ? options.tandem.createTandem( 'isActiveProperty' ) : Tandem.OPT_OUT,
       phetioValueType: BooleanIO
     } );
 
     this.positionProperty = new Vector2Property( position, {
       phetioReadOnly: true,
-      tandem: cardContainerModel.parentContext === 'accordion' ? options.tandem?.createTandem( 'positionProperty' ) : Tandem.OPT_OUT,
+      tandem: options.tandem.createTandem( 'positionProperty' ),
       valueComparisonStrategy: 'equalsFunction'
     } );
     this.addLinkedElement( this.soccerBall );
