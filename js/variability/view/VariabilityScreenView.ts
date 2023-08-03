@@ -37,11 +37,11 @@ import soundManager from '../../../../tambo/js/soundManager.js';
 import intervalToolLoop_wav from '../../../sounds/intervalToolLoop_wav.js';
 import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
-import KickerGroupNumbered from '../../../../soccer-common/js/view/KickerGroupNumbered.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import { createGatedVisibleProperty } from '../../common/model/createGatedVisibleProperty.js';
+import KickerCharacterSets from '../../../../soccer-common/js/view/KickerCharacterSets.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
@@ -270,8 +270,12 @@ export default class VariabilityScreenView extends CAVScreenView {
   }
 
   public override getKickerImageSets( kicker: Kicker, sceneModel: CAVSoccerSceneModel ): KickerImageSet[] {
-    // const index = this.model.sceneModels.indexOf( sceneModel );
-    return KickerGroupNumbered;
+    const index = this.model.sceneModels.indexOf( sceneModel );
+    return [
+      KickerCharacterSets.CHARACTER_SET_1.numberedKickerImages[ index ],
+      KickerCharacterSets.CHARACTER_SET_2.numberedKickerImages[ index ],
+      KickerCharacterSets.CHARACTER_SET_3.numberedKickerImages[ index ]
+    ];
   }
 
   public override step( dt: number ): void {
