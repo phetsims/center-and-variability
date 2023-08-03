@@ -17,13 +17,14 @@ import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import CenterAndVariabilityStrings from '../CenterAndVariabilityStrings.js';
 import variabilityScreenIcon_png from '../../images/variabilityScreenIcon_png.js';
 import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
+import SoccerCommonPreferencesModel from '../../../soccer-common/js/model/SoccerCommonPreferencesModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityScreenOptions = SelfOptions & StrictOmit<CAVScreenOptions, 'name' | 'homeScreenIcon'>;
 
 export default class VariabilityScreen extends CAVScreen<VariabilityModel, VariabilityScreenView> {
 
-  public constructor( providedOptions: VariabilityScreenOptions ) {
+  public constructor( preferencesModel: SoccerCommonPreferencesModel, providedOptions: VariabilityScreenOptions ) {
 
     const options = optionize<VariabilityScreenOptions, SelfOptions, CAVScreenOptions>()( {
       name: CenterAndVariabilityStrings.screen.variabilityStringProperty,
@@ -34,7 +35,7 @@ export default class VariabilityScreen extends CAVScreen<VariabilityModel, Varia
     }, providedOptions );
 
     super(
-      () => new VariabilityModel( {
+      () => new VariabilityModel( preferencesModel, {
         tandem: options.tandem.createTandem( 'model' )
       } ),
       ( model: VariabilityModel ) => new VariabilityScreenView( model, { tandem: options.tandem.createTandem( 'view' ) } ),

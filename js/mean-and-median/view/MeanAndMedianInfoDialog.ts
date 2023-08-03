@@ -11,7 +11,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import Dialog from '../../../../sun/js/Dialog.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
-import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
+import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import MeanAndMedianInfoNode from './MeanAndMedianInfoNode.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';

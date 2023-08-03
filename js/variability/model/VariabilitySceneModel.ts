@@ -6,12 +6,12 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
+import SoccerSceneModel from '../../../../soccer-common/js/model/SoccerSceneModel.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CAVConstants from '../../common/CAVConstants.js';
-import { TKickDistanceStrategy } from '../../soccer-common/model/TKickDistanceStrategy.js';
+import { TKickDistanceStrategy } from '../../../../soccer-common/js/model/TKickDistanceStrategy.js';
 import Property from '../../../../axon/js/Property.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
@@ -21,6 +21,7 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import { kickDistanceStrategyFromStateObject } from '../../common/model/RandomSkewStrategy.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import VariabilitySoccerBall from './VariabilitySoccerBall.js';
+import CharacterSet from '../../../../joist/js/preferences/CharacterSet.js';
 
 export default class VariabilitySceneModel extends CAVSoccerSceneModel<VariabilitySoccerBall> {
 
@@ -35,7 +36,8 @@ export default class VariabilitySceneModel extends CAVSoccerSceneModel<Variabili
   private readonly initialized: boolean = false;
   public readonly variabilityDataMeasuresUpdatedEmitter: Emitter = new Emitter();
 
-  public constructor( maxKicksProperty: TReadOnlyProperty<number>, kickDistanceStrategy: TKickDistanceStrategy, options: { tandem: Tandem } ) {
+  public constructor( maxKicksProperty: TReadOnlyProperty<number>, kickDistanceStrategy: TKickDistanceStrategy, regionAndCultureProperty: Property<CharacterSet | null>, options: { tandem: Tandem;
+  } ) {
     super(
       maxKicksProperty,
       CAVConstants.MAX_KICKS_VALUES,
@@ -44,6 +46,7 @@ export default class VariabilitySceneModel extends CAVSoccerSceneModel<Variabili
       CAVConstants.PHYSICAL_RANGE,
       kickDistanceStrategyFromStateObject,
       VariabilitySoccerBall.createSoccerBall,
+      regionAndCultureProperty,
       options
     );
 

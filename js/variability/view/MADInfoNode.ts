@@ -13,7 +13,7 @@ import CAVConstants from '../../common/CAVConstants.js';
 import MADNode from './MADNode.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
-import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
+import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
 import { PLOT_NODE_TOP_MARGIN } from '../../common/view/CAVPlotNode.js';
 import InfoTitleDescriptionRichText from '../../common/view/InfoTitleDescriptionRichText.js';
 

@@ -7,11 +7,11 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import soccerCommon from '../../soccer-common/soccerCommon.js';
+import soccerCommon from '../../../../soccer-common/js/soccerCommon.js';
 import { ManualConstraint, MatrixBetweenProperty, Node, NodeOptions, TColor, Text } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
+import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVConstants from '../CAVConstants.js';

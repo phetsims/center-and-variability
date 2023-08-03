@@ -11,7 +11,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import { Color, DragListener, InteractiveHighlightingNode, Node, NodeOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import SoccerBall from '../../soccer-common/model/SoccerBall.js';
+import SoccerBall from '../../../../soccer-common/js/model/SoccerBall.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import CardModel from '../model/CardModel.js';
 import CardNodeContainer from './CardNodeContainer.js';

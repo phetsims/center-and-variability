@@ -11,7 +11,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import IQRNode from './IQRNode.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
-import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
+import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
 import IQRInfoValuesNode from './IQRInfoValuesNode.js';
 import { PLOT_NODE_TOP_MARGIN } from '../../common/view/CAVPlotNode.js';
 import InfoTitleDescriptionRichText from '../../common/view/InfoTitleDescriptionRichText.js';

@@ -21,7 +21,7 @@ import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import CAVPlotNode from '../../common/view/CAVPlotNode.js';
 import IntervalToolNode from './IntervalToolNode.js';
-import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
+import NumberLineNode from '.../../../../soccer-common/js/view/NumberLineNode.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 

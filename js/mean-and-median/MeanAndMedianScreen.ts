@@ -17,13 +17,14 @@ import CenterAndVariabilityStrings from '../CenterAndVariabilityStrings.js';
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import meanAndMedianScreenIcon_png from '../../images/meanAndMedianScreenIcon_png.js';
 import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
+import SoccerCommonPreferencesModel from '../../../soccer-common/js/model/SoccerCommonPreferencesModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeanAndMedianScreenOptions = SelfOptions & StrictOmit<CAVScreenOptions, 'name' | 'homeScreenIcon'>;
 
 export default class MeanAndMedianScreen extends CAVScreen<MeanAndMedianModel, MeanAndMedianScreenView> {
 
-  public constructor( providedOptions: MeanAndMedianScreenOptions ) {
+  public constructor( preferencesModel: SoccerCommonPreferencesModel, providedOptions: MeanAndMedianScreenOptions ) {
 
     const options = optionize<MeanAndMedianScreenOptions, SelfOptions, CAVScreenOptions>()( {
       name: CenterAndVariabilityStrings.screen.meanAndMedianStringProperty,
@@ -34,7 +35,7 @@ export default class MeanAndMedianScreen extends CAVScreen<MeanAndMedianModel, M
     }, providedOptions );
 
     super(
-      () => new MeanAndMedianModel( {
+      () => new MeanAndMedianModel( preferencesModel, {
         tandem: options.tandem.createTandem( 'model' )
       } ),
       model => new MeanAndMedianScreenView( model, {

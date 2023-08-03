@@ -16,12 +16,13 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 import { kickDistanceStrategyFromStateObject, RandomSkewStrategy } from '../../common/model/RandomSkewStrategy.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
-import NumberTone from '../../soccer-common/model/NumberTone.js';
+import NumberTone from '../../common/model/NumberTone.js';
 import Utils from '../../../../dot/js/Utils.js';
 import CAVSoccerBall from '../../common/model/CAVSoccerBall.js';
 // eslint-disable-next-line no-view-imported-from-model
 import MedianAnimationTone from '../../median/view/MedianAnimationTone.js';
 import Property from '../../../../axon/js/Property.js';
+import SoccerCommonPreferencesModel from '../../../../soccer-common/js/model/SoccerCommonPreferencesModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeanAndMedianModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
@@ -43,7 +44,7 @@ export default class MeanAndMedianModel extends CAVModel {
   public readonly predictMeanValueProperty: NumberProperty;
   public readonly isPredictMeanKeyboardDraggingProperty: Property<boolean>;
 
-  public constructor( providedOptions: MeanAndMedianModelOptions ) {
+  public constructor( preferencesModel: SoccerCommonPreferencesModel, providedOptions: MeanAndMedianModelOptions ) {
 
     const accordionBoxTandem = providedOptions.tandem.createTandem( 'plotAccordionBox' );
 
@@ -60,7 +61,9 @@ export default class MeanAndMedianModel extends CAVModel {
       false,
       CAVConstants.PHYSICAL_RANGE,
       kickDistanceStrategyFromStateObject,
-      CAVSoccerBall.createSoccerBall, {
+      CAVSoccerBall.createSoccerBall,
+      preferencesModel.kickerCharacterSetProperty,
+      {
         tandem: options.tandem.createTandem( 'sceneModel' )
       } );
 

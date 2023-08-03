@@ -11,7 +11,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import { Path } from '../../../../scenery/js/imports.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import CAVColors from '../CAVColors.js';
-import SoccerCommonColors from '../../soccer-common/SoccerCommonColors.js';
+import SoccerCommonColors from '../../../../soccer-common/js/SoccerCommonColors.js';
 import CAVConstants from '../CAVConstants.js';
 
 

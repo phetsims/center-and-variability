@@ -8,14 +8,14 @@
  *
  */
 
-import SoccerSceneView from '../../soccer-common/view/SoccerSceneView.js';
+import SoccerSceneView from '../../../../soccer-common/js/view/SoccerSceneView.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import MedianHighlightLayer from './MedianHighlightLayer.js';
 import CAVModel from '../model/CAVModel.js';
-import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
+import SoccerSceneModel from '../../../../soccer-common/js/model/SoccerSceneModel.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import Kicker from '../../soccer-common/model/Kicker.js';
-import { KickerImageSet } from '../../soccer-common/view/KickerCharacterSet.js';
+import Kicker from '../../../../soccer-common/js/model/Kicker.js';
+import { KickerImageSet } from '../../../../soccer-common/js/view/KickerCharacterSet.js';
 import Range from '../../../../dot/js/Range.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
@@ -25,7 +25,7 @@ export default class CAVSceneView extends SoccerSceneView {
 
   public constructor( model: CAVModel,
                       sceneModel: CAVSoccerSceneModel,
-                      getKickerImageSet: ( kicker: Kicker, sceneModel: SoccerSceneModel ) => KickerImageSet,
+                      getKickerImageSet: ( kicker: Kicker, sceneModel: SoccerSceneModel ) => KickerImageSet[],
                       modelViewTransform: ModelViewTransform2,
                       physicalRange: Range,
                       options: PickRequired<PhetioObjectOptions, 'tandem'> ) {

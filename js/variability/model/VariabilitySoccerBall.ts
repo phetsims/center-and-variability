@@ -7,7 +7,7 @@
  *
  */
 
-import { SoccerBallOptions } from '../../soccer-common/model/SoccerBall.js';
+import { SoccerBallOptions } from '../../../../soccer-common/js/model/SoccerBall.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';

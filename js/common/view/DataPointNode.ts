@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
-import SoccerObjectNode, { CAVObjectNodeOptions } from '../../soccer-common/view/SoccerObjectNode.js';
-import soccerCommon from '../../soccer-common/soccerCommon.js';
+import SoccerObjectNode, { CAVObjectNodeOptions } from '../../../../soccer-common/js/view/SoccerObjectNode.js';
+import soccerCommon from '../../../../soccer-common/js/soccerCommon.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import { Circle, Node, Path, TColor } from '../../../../scenery/js/imports.js';
@@ -12,7 +12,7 @@ import PlotType from '../model/PlotType.js';
 import CAVColors from '../CAVColors.js';
 import Property from '../../../../axon/js/Property.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import { SoccerBallPhase } from '../../soccer-common/model/SoccerBallPhase.js';
+import { SoccerBallPhase } from '../../../../soccer-common/js/model/SoccerBallPhase.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import CAVSoccerBall from '../model/CAVSoccerBall.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';

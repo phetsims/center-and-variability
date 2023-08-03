@@ -13,10 +13,10 @@ import centerAndVariability from '../../centerAndVariability.js';
 import CAVConstants from '../CAVConstants.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import { AlignBox, Node, Text, VBox, Image, ManualConstraint } from '../../../../scenery/js/imports.js';
+import { AlignBox, Image, ManualConstraint, Node, Text, VBox } from '../../../../scenery/js/imports.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import QuestionBar, { QuestionBarOptions } from '../../../../scenery-phet/js/QuestionBar.js';
-import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
+import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import BackgroundNode from './BackgroundNode.js';
 import CAVAccordionBox from './CAVAccordionBox.js';
@@ -27,23 +27,22 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CAVModel from '../model/CAVModel.js';
-import SoccerSceneView from '../../soccer-common/view/SoccerSceneView.js';
+import SoccerSceneView from '../../../../soccer-common/js/view/SoccerSceneView.js';
 import KickButtonGroup from './KickButtonGroup.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import { KickerImageSet } from '../../soccer-common/view/KickerCharacterSet.js';
-import Kicker from '../../soccer-common/model/Kicker.js';
-import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
+import { KickerImageSet } from '../../../../soccer-common/js/view/KickerCharacterSet.js';
+import Kicker from '../../../../soccer-common/js/model/Kicker.js';
+import SoccerSceneModel from '../../../../soccer-common/js/model/SoccerSceneModel.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import { SoccerBallPhase } from '../../soccer-common/model/SoccerBallPhase.js';
+import { SoccerBallPhase } from '../../../../soccer-common/js/model/SoccerBallPhase.js';
 import erase_mp3 from '../../../sounds/erase_mp3.js';
 import SoundClipPlayer from '../../../../tambo/js/sound-generators/SoundClipPlayer.js';
-import SoccerCommonConstants from '../../soccer-common/SoccerCommonConstants.js';
+import SoccerCommonConstants from '../../../../soccer-common/js/SoccerCommonConstants.js';
 import CAVSceneView from './CAVSceneView.js';
 import CAVNumberLineNode from './CAVNumberLineNode.js';
-import KickerGroupUnnumbered from '../../soccer-common/view/KickerGroupUnnumbered.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
@@ -51,6 +50,7 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import soccerBallDragIndicatorArrow_png from '../../../images/soccerBallDragIndicatorArrow_png.js';
 import soccerBallDragIndicatorHand_png from '../../../images/soccerBallDragIndicatorHand_png.js';
+import KickerCharacterSets from '../../../../soccer-common/js/view/KickerCharacterSets.js';
 
 type SelfOptions = {
   questionBarOptions: StrictOmit<QuestionBarOptions, 'tandem'>;
@@ -63,7 +63,21 @@ const GROUND_POSITION_Y = 515;
 const INDICATOR_MARGIN = 4;
 
 // There are 15 items in the KickerGroupUnnumbered, so we need 2x copies to cover 30 max kicks
-const MULTI_GROUP = [ ...KickerGroupUnnumbered, ...KickerGroupUnnumbered ];
+const KICKER_IMAGE_SETS: KickerImageSet[][] = [];
+for ( let i = 0; i < CAVConstants.MAX_KICKS_VALUES[ CAVConstants.MAX_KICKS_VALUES.length - 1 ]; i++ ) {
+  const locale1MaxNumberOfCharacters = KickerCharacterSets.CHARACTER_SET_1.unnumberedKickersCount;
+  const locale2MaxNumberOfCharacters = KickerCharacterSets.CHARACTER_SET_2.unnumberedKickersCount;
+  const locale3MaxNumberOfCharacters = KickerCharacterSets.CHARACTER_SET_3.unnumberedKickersCount;
+
+  const locale1CharacterIndex = i < locale1MaxNumberOfCharacters ? i : i % locale1MaxNumberOfCharacters;
+  const locale2CharacterIndex = i < locale2MaxNumberOfCharacters ? i : i % locale2MaxNumberOfCharacters;
+  const locale3CharacterIndex = i < locale3MaxNumberOfCharacters ? i : i % locale3MaxNumberOfCharacters;
+
+  KICKER_IMAGE_SETS.push( [ KickerCharacterSets.CHARACTER_SET_1.unnumberedKickerImages[ locale1CharacterIndex ],
+    KickerCharacterSets.CHARACTER_SET_2.unnumberedKickerImages[ locale2CharacterIndex ],
+    KickerCharacterSets.CHARACTER_SET_3.unnumberedKickerImages[ locale3CharacterIndex ]
+  ] );
+}
 
 export default class CAVScreenView extends ScreenView {
 
@@ -137,7 +151,7 @@ export default class CAVScreenView extends ScreenView {
     this.sceneViews = model.sceneModels.map( ( sceneModel, index ) => new CAVSceneView(
       model,
       sceneModel,
-      ( kicker, sceneModel ) => this.getKickerImageSet( kicker, sceneModel ),
+      ( kicker, sceneModel ) => this.getKickerImageSets( kicker, sceneModel ),
       modelViewTransform,
       CAVConstants.PHYSICAL_RANGE, {
         //The variability screen has multiple scenes, and we want to connect these to a specific kicker, while the first
@@ -430,8 +444,8 @@ export default class CAVScreenView extends ScreenView {
     ];
   }
 
-  public getKickerImageSet( kicker: Kicker, sceneModel: SoccerSceneModel ): KickerImageSet {
-    return MULTI_GROUP[ kicker.initialPlaceInLine ];
+  public getKickerImageSets( kicker: Kicker, sceneModel: SoccerSceneModel ): KickerImageSet[] {
+    return KICKER_IMAGE_SETS[ kicker.initialPlaceInLine ];
   }
 
   /**

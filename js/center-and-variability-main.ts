@@ -16,8 +16,10 @@ import SimulationPreferencesContentNode from './common/view/SimulationPreference
 import PreferencesModel from '../../joist/js/preferences/PreferencesModel.js';
 import MeanAndMedianScreen from './mean-and-median/MeanAndMedianScreen.js';
 import VariabilityScreen from './variability/VariabilityScreen.js';
+import SoccerCommonPreferencesModel from '../../soccer-common/js/model/SoccerCommonPreferencesModel.js';
 
 const centerAndVariabilityTitleStringProperty = CenterAndVariabilityStrings[ 'center-and-variability' ].titleStringProperty;
+const preferencesModel = new SoccerCommonPreferencesModel();
 
 const simOptions: SimOptions = {
   credits: {
@@ -38,9 +40,9 @@ const simOptions: SimOptions = {
 
 simLauncher.launch( () => {
   const sim = new Sim( centerAndVariabilityTitleStringProperty, [
-    new MedianScreen( { tandem: Tandem.ROOT.createTandem( 'medianScreen' ) } ),
-    new MeanAndMedianScreen( { tandem: Tandem.ROOT.createTandem( 'meanAndMedianScreen' ) } ),
-    new VariabilityScreen( { tandem: Tandem.ROOT.createTandem( 'variabilityScreen' ) } )
+    new MedianScreen( preferencesModel, { tandem: Tandem.ROOT.createTandem( 'medianScreen' ) } ),
+    new MeanAndMedianScreen( preferencesModel, { tandem: Tandem.ROOT.createTandem( 'meanAndMedianScreen' ) } ),
+    new VariabilityScreen( preferencesModel, { tandem: Tandem.ROOT.createTandem( 'variabilityScreen' ) } )
   ], simOptions );
   sim.start();
 } );

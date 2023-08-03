@@ -12,7 +12,7 @@ import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import CAVColors from '../../common/CAVColors.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
+import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
 import IntervalBarNode from '../../common/view/IntervalBarNode.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';

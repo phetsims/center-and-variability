@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import CAVConstants from '../CAVConstants.js';
-import { DistributionStrategy, ExactDistancesStrategy, TKickDistanceStrategy } from '../../soccer-common/model/TKickDistanceStrategy.js';
+import { DistributionStrategy, ExactDistancesStrategy, TKickDistanceStrategy } from '../../../../soccer-common/js/model/TKickDistanceStrategy.js';
 
 // These values are used in the state object, should be changed with caution, because changes to the state API
 // would require migration rules.

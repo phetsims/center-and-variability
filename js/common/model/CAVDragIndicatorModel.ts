@@ -8,7 +8,7 @@
  *
  */
 
-import DragIndicatorModel from '../../soccer-common/model/DragIndicatorModel.js';
+import DragIndicatorModel from '../../../../soccer-common/js/model/DragIndicatorModel.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVSoccerSceneModel from './CAVSoccerSceneModel.js';
 

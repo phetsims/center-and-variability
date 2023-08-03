@@ -8,7 +8,7 @@
  *
  */
 
-import NumberLineNode, { NumberLineNodeOptions } from '../../soccer-common/view/NumberLineNode.js';
+import NumberLineNode, { NumberLineNodeOptions } from '../../../../soccer-common/js/view/NumberLineNode.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import { Path } from '../../../../scenery/js/imports.js';
 import { Shape } from '../../../../kite/js/imports.js';

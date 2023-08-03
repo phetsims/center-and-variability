@@ -15,10 +15,11 @@ import CAVConstants, { MAX_KICKS_PROPERTY } from '../../common/CAVConstants.js';
 import { kickDistanceStrategyFromStateObject, RandomSkewStrategy } from '../../common/model/RandomSkewStrategy.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import CAVSoccerBall from '../../common/model/CAVSoccerBall.js';
-import NumberTone from '../../soccer-common/model/NumberTone.js';
+import NumberTone from '../../common/model/NumberTone.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import CardContainerModel from './CardContainerModel.js';
+import SoccerCommonPreferencesModel from '../../../../soccer-common/js/model/SoccerCommonPreferencesModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type MedianModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
@@ -30,7 +31,7 @@ export default class MedianModel extends CAVModel {
   public readonly medianVisibleProperty: BooleanProperty;
   public readonly areCardsSortedProperty: BooleanProperty;
 
-  public constructor( providedOptions: MedianModelOptions ) {
+  public constructor( preferencesModel: SoccerCommonPreferencesModel, providedOptions: MedianModelOptions ) {
 
     const accordionBoxTandem = providedOptions.tandem.createTandem( 'distanceAccordionBox' );
 
@@ -58,7 +59,9 @@ export default class MedianModel extends CAVModel {
       false,
       CAVConstants.PHYSICAL_RANGE,
       kickDistanceStrategyFromStateObject,
-      CAVSoccerBall.createSoccerBall, {
+      CAVSoccerBall.createSoccerBall,
+      preferencesModel.kickerCharacterSetProperty,
+      {
         tandem: options.tandem.createTandem( 'sceneModel' )
       } );
 

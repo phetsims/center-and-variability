@@ -6,7 +6,7 @@
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */
-import SoccerBall from '../../soccer-common/model/SoccerBall.js';
+import SoccerBall from '../../../../soccer-common/js/model/SoccerBall.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';

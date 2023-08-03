@@ -7,7 +7,7 @@
  */
 
 import { HBox, HSeparator, RichText, Text, VBox } from '../../../../scenery/js/imports.js';
-import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
+import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';

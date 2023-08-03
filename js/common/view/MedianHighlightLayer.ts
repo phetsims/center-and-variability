@@ -7,7 +7,7 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import CAVObjectType from '../model/CAVObjectType.js';
 import CAVColors from '../CAVColors.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import SoccerCommonConstants from '../../soccer-common/SoccerCommonConstants.js';
+import SoccerCommonConstants from '../../../../soccer-common/js/SoccerCommonConstants.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 
 type SelfOptions = EmptySelfOptions;

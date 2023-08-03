@@ -14,7 +14,7 @@ import CAVColors from '../CAVColors.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import SoccerCommonColors from '../../soccer-common/SoccerCommonColors.js';
+import SoccerCommonColors from '../../../../soccer-common/js/SoccerCommonColors.js';
 import CAVConstants from '../CAVConstants.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 

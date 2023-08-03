@@ -12,7 +12,7 @@ import MeanAndMedianPlotNode, { MeanAndMedianPlotNodeOptions } from './MeanAndMe
 import centerAndVariability from '../../centerAndVariability.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
-import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
+import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';

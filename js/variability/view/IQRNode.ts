@@ -13,7 +13,7 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import CAVConstants, { SHOW_OUTLIERS_PROPERTY } from '../../common/CAVConstants.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
+import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
 import IntervalBarNode from '../../common/view/IntervalBarNode.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 

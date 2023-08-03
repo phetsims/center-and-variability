@@ -17,8 +17,8 @@ import CAVConstants, { DATA_POINT_SCALE_PROPERTY } from '../../common/CAVConstan
 import CAVColors from '../../common/CAVColors.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import NumberLineNode from '../../soccer-common/view/NumberLineNode.js';
-import SoccerBall from '../../soccer-common/model/SoccerBall.js';
+import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
+import SoccerBall from '../../../../soccer-common/js/model/SoccerBall.js';
 import IntervalBarNode from '../../common/view/IntervalBarNode.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 

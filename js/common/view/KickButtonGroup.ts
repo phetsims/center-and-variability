@@ -20,7 +20,7 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import CAVModel from '../model/CAVModel.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import SoccerSceneModel from '../../soccer-common/model/SoccerSceneModel.js';
+import SoccerSceneModel from '../../../../soccer-common/js/model/SoccerSceneModel.js';
 import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
 import { createGatedVisibleProperty } from '../model/createGatedVisibleProperty.js';
 

@@ -17,7 +17,7 @@ import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
-import NumberTone from '../../soccer-common/model/NumberTone.js';
+import NumberTone from './NumberTone.js';
 import CAVSoccerSceneModel from './CAVSoccerSceneModel.js';
 import CAVDragIndicatorModel from './CAVDragIndicatorModel.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';

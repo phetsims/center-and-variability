@@ -22,8 +22,8 @@ import VariabilityAccordionBox from './VariabilityAccordionBox.js';
 import PlayAreaCheckboxFactory from '../../common/view/PlayAreaCheckboxFactory.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
-import Kicker from '../../soccer-common/model/Kicker.js';
-import { KickerImageSet } from '../../soccer-common/view/KickerCharacterSet.js';
+import Kicker from '../../../../soccer-common/js/model/Kicker.js';
+import { KickerImageSet } from '../../../../soccer-common/js/view/KickerCharacterSet.js';
 import VariabilityInfoDialog from './VariabilityInfoDialog.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import PredictionSlider, { PredictionSliderOptions } from '../../common/view/PredictionSlider.js';
@@ -37,7 +37,7 @@ import soundManager from '../../../../tambo/js/soundManager.js';
 import intervalToolLoop_wav from '../../../sounds/intervalToolLoop_wav.js';
 import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
-import KickerGroupNumbered from '../../soccer-common/view/KickerGroupNumbered.js';
+import KickerGroupNumbered from '../../../../soccer-common/js/view/KickerGroupNumbered.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
@@ -269,9 +269,9 @@ export default class VariabilityScreenView extends CAVScreenView {
       sceneKickerRadioButtonGroup, variabilityMeasureRadioButtonGroup );
   }
 
-  public override getKickerImageSet( kicker: Kicker, sceneModel: CAVSoccerSceneModel ): KickerImageSet {
-    const index = this.model.sceneModels.indexOf( sceneModel );
-    return KickerGroupNumbered[ index ];
+  public override getKickerImageSets( kicker: Kicker, sceneModel: CAVSoccerSceneModel ): KickerImageSet[] {
+    // const index = this.model.sceneModels.indexOf( sceneModel );
+    return KickerGroupNumbered;
   }
 
   public override step( dt: number ): void {
