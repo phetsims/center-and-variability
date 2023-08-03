@@ -21,7 +21,8 @@
     "phetLibs": [
       "bamboo",
       "twixt",
-      "vegas"
+      "vegas",
+      "soccer-common"
     ],
     "supportsOutputJS": true,
     "simFeatures": {
