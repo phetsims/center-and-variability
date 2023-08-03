@@ -17,6 +17,7 @@ import PreferencesModel from '../../joist/js/preferences/PreferencesModel.js';
 import MeanAndMedianScreen from './mean-and-median/MeanAndMedianScreen.js';
 import VariabilityScreen from './variability/VariabilityScreen.js';
 import SoccerCommonPreferencesModel from '../../soccer-common/js/model/SoccerCommonPreferencesModel.js';
+import KickerCharacterSets from '../../soccer-common/js/view/KickerCharacterSets.js';
 
 const centerAndVariabilityTitleStringProperty = CenterAndVariabilityStrings[ 'center-and-variability' ].titleStringProperty;
 const preferencesModel = new SoccerCommonPreferencesModel();
@@ -34,6 +35,9 @@ const simOptions: SimOptions = {
       customPreferences: [ {
         createContent: () => new SimulationPreferencesContentNode( phet.joist.sim.topLayer )
       } ]
+    },
+    localizationOptions: {
+      characterSets: KickerCharacterSets.CHARACTER_SETS
     }
   } )
 };
