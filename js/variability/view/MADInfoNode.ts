@@ -33,10 +33,10 @@ export default class MADInfoNode extends VBox {
       const deviations = sceneModel.getDeviationTenths();
       const denominator = sceneModel.getSortedStackedObjects().length;
 
-      numeratorText.string = deviations.join( ' + ' );
+      numeratorText.string = deviations.map( deviation => Utils.toFixed( deviation, 1 ) ).join( ' + ' );
       denominatorText.string = denominator.toString();
 
-      resultNumeratorText.string = sceneModel.getSumOfDeviationTenths();
+      resultNumeratorText.string = Utils.toFixed( sceneModel.getSumOfDeviationTenths(), 1 );
       resultDenominatorText.string = denominator.toString();
     } );
 
