@@ -62,7 +62,8 @@ export type CAVScreenViewOptions = SelfOptions & ScreenViewOptions;
 const GROUND_POSITION_Y = 515;
 const INDICATOR_MARGIN = 4;
 
-// There are 15 items in the KickerGroupUnnumbered, so we need 2x copies to cover 30 max kicks
+// Depending on how many characters a regionAndCulture CharacterSet has will determine how we loop over the characters.
+// 30 Kickers must be loaded per screen.
 const KICKER_IMAGE_SETS: KickerImageSet[][] = [];
 for ( let i = 0; i < CAVConstants.MAX_KICKS_VALUES[ CAVConstants.MAX_KICKS_VALUES.length - 1 ]; i++ ) {
   const locale1MaxNumberOfCharacters = KickerCharacterSets.CHARACTER_SET_1.unnumberedKickersCount;
