@@ -99,11 +99,14 @@ export default class VariabilitySceneModel extends CAVSoccerSceneModel<Variabili
     this.initialized = true;
   }
 
+  public getDeviationForBallValue( value: number ): number {
+    const deviation = Math.abs( value - this.meanValueProperty.value! );
+    return Utils.roundToInterval( deviation, 0.1 );
+  }
+
   public getDeviationTenths(): number[] {
     const values = this.getSortedStackedObjects().map( landedObject => landedObject.valueProperty.value! );
-    const deviations = values.map( value => Math.abs( value - this.meanValueProperty.value! ) );
-    const tenths = deviations.map( deviation => Utils.roundToInterval( deviation, 0.1 ) );
-    return tenths;
+    return values.map( value => this.getDeviationForBallValue( value ) );
   }
 
   public getSumOfDeviationTenths(): number {

@@ -144,7 +144,8 @@ export default class MADNode extends CAVPlotNode {
 
           if ( options.parentContext === 'info' ) {
             const deltaX = soccerBall.valueProperty.value! - sceneModel.meanValueProperty.value!;
-            const distanceToMean = Math.abs( deltaX );
+
+            const distanceToMean = sceneModel.getDeviationForBallValue( soccerBall.valueProperty.value! );
 
             // place the text a half-integer inward from the tip of the line so that it doesn't occlude any data points
             const textX = this.modelViewTransform.modelToViewX( soccerBall.valueProperty.value! - 0.5 * Math.sign( deltaX ) );
