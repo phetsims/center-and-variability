@@ -117,7 +117,7 @@ export default class CAVModel extends PhetioObject {
     // These DynamicProperties allow us to track all the necessary scenes Properties for dragIndicator update, and not
     // just the first selectedScene
     const selectedSceneStackedSoccerBallCountProperty = new DynamicProperty<number, number, CAVSoccerSceneModel>( this.selectedSceneModelProperty, {
-      derive: 'stackedSoccerBallCountProperty'
+      derive: 'numberOfDataPointsProperty'
     } );
     const selectedSceneMaxKicksProperty = new DynamicProperty<number, number, CAVSoccerSceneModel>( this.selectedSceneModelProperty, {
       derive: 'maxKicksProperty'
