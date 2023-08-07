@@ -49,8 +49,8 @@ import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import soccerBallDragIndicatorArrow_png from '../../../images/soccerBallDragIndicatorArrow_png.js';
-import soccerBallDragIndicatorHand_png from '../../../images/soccerBallDragIndicatorHand_png.js';
 import KickerCharacterSets from '../../../../soccer-common/js/view/KickerCharacterSets.js';
+import dragIndicatorHand_png from '../../../images/dragIndicatorHand_png.js';
 
 type SelfOptions = {
   questionBarOptions: StrictOmit<QuestionBarOptions, 'tandem'>;
@@ -172,16 +172,6 @@ export default class CAVScreenView extends ScreenView {
       alignChildren: ToggleNode.NONE
     } );
 
-    const dragIndicatorArrowImage = new Image( soccerBallDragIndicatorArrow_png, {
-      scale: 0.1,
-      visibleProperty: model.dragIndicatorModel.isDragIndicatorVisibleProperty
-    } );
-
-    const dragIndicatorHandImage = new Image( soccerBallDragIndicatorHand_png, {
-      scale: 0.08,
-      visibleProperty: model.dragIndicatorModel.isDragIndicatorVisibleProperty
-    } );
-
     this.backScreenViewLayer = new Node( {
       children: [
         new BackgroundNode( GROUND_POSITION_Y, this.visibleBoundsProperty ),
@@ -249,6 +239,17 @@ export default class CAVScreenView extends ScreenView {
       tandem: this.playAreaTandem.createTandem( 'kickButtonGroup' )
     } );
 
+    const dragIndicatorArrowImage = new Image( soccerBallDragIndicatorArrow_png, {
+      scale: 0.1,
+      visibleProperty: model.dragIndicatorModel.isDragIndicatorVisibleProperty
+    } );
+
+    const dragIndicatorHandImage = new Image( dragIndicatorHand_png, {
+      scale: 0.07,
+      visibleProperty: model.dragIndicatorModel.isDragIndicatorVisibleProperty,
+      rotation: Math.PI / 4
+    } );
+
     this.updateDragIndicatorNode = () => {
       const dragIndicatorVisible = model.dragIndicatorModel.isDragIndicatorVisibleProperty.value;
       const dragIndicatorValue = model.dragIndicatorModel.dragIndicatorValueProperty.value;
@@ -270,8 +271,10 @@ export default class CAVScreenView extends ScreenView {
     };
 
     ManualConstraint.create( this, [ dragIndicatorArrowImage ], dragIndicatorArrowImageProxy => {
-      dragIndicatorHandImage.right = dragIndicatorArrowImageProxy.left + 10;
-      dragIndicatorHandImage.top = dragIndicatorArrowImageProxy.bottom + Math.abs( this.modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) );
+
+      // Pixel adjustments needed with rotation option on dragIndicatorHandImage and empirically determined to match design
+      dragIndicatorHandImage.right = dragIndicatorArrowImageProxy.left + 19;
+      dragIndicatorHandImage.top = dragIndicatorArrowImageProxy.bottom + Math.abs( this.modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) ) - 5;
     } );
 
     dragIndicatorArrowImage.addLinkedElement( model.dragIndicatorModel.dragIndicatorValueProperty );
