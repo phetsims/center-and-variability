@@ -311,7 +311,8 @@ export default class IQRNode extends CAVPlotNode {
         iqrBar.bottom = options.parentContext === 'accordion' ? iqrRectangle.top + CAVConstants.VARIABILITY_PLOT_BAR_OFFSET_Y : Math.min( minLabelTextNode.y, q1LabelTextNode.y, q3LabelTextNode.y, maxLabelTextNode.y ) + 12;
         iqrBar.centerX = iqrRectangle.centerX;
 
-        iqrBarLabel.string = sceneModel.iqrValueProperty.value!;
+        // Gracefully handle transient intermediate states during phet-io set state
+        iqrBarLabel.string = sceneModel.iqrValueProperty.value === null ? '' : sceneModel.iqrValueProperty.value;
         iqrBarLabel.centerBottom = iqrBar.centerTop;
       }
 
