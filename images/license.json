@@ -1,12 +1,4 @@
 {
-  "handWithArrow.png": {
-    "text": [
-      "Copyright 2023 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry, modified by Cathy Carter"
-  },
   "dragIndicatorHand.png": {
     "text": [
       "Copyright 2023 University of Colorado Boulder"
@@ -38,21 +30,5 @@
     "projectURL": "https://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Amanda McGarry"
-  },
-  "soccerBallDragIndicatorArrow.png": {
-    "text": [
-      "Copyright 2023 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry, modified by Cathy Carter"
-  },
-  "soccerBallDragIndicatorHand.png": {
-    "text": [
-      "Copyright 2023 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry, modified by Cathy Carter"
   }
 }
