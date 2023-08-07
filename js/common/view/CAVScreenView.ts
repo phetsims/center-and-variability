@@ -48,9 +48,9 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import soccerBallDragIndicatorArrow_png from '../../../images/soccerBallDragIndicatorArrow_png.js';
 import KickerCharacterSets from '../../../../soccer-common/js/view/KickerCharacterSets.js';
 import dragIndicatorHand_png from '../../../images/dragIndicatorHand_png.js';
+import DragIndicatorArrowNode from './DragIndicatorArrowNode.js';
 
 type SelfOptions = {
   questionBarOptions: StrictOmit<QuestionBarOptions, 'tandem'>;
@@ -239,8 +239,9 @@ export default class CAVScreenView extends ScreenView {
       tandem: this.playAreaTandem.createTandem( 'kickButtonGroup' )
     } );
 
-    const dragIndicatorArrowImage = new Image( soccerBallDragIndicatorArrow_png, {
-      scale: 0.1,
+    const dragIndicatorArrowImage = new DragIndicatorArrowNode( {
+      doubleHead: true,
+      numberOfDashes: 2,
       visibleProperty: model.dragIndicatorModel.isDragIndicatorVisibleProperty
     } );
 
