@@ -9,7 +9,7 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import { Node, NodeOptions } from '../../../../scenery/js/imports.js';
+import { FocusHighlightFromNode, Node, NodeOptions } from '../../../../scenery/js/imports.js';
 import Property from '../../../../axon/js/Property.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import VariabilityModel from '../model/VariabilityModel.js';
@@ -28,7 +28,7 @@ import TProperty from '../../../../axon/js/TProperty.js';
 export type CAVPlotOptions = WithRequired<NodeOptions, 'tandem'>;
 
 export default class VariabilityPlotNode extends Node {
-  private toggleNode: ToggleNode<VariabilityMeasure, CAVPlotNode>;
+  private readonly intervalToolNode: IntervalToolNode;
 
   public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, isDataPointLayerVisibleProperty: TProperty<boolean>, providedOptions: CAVPlotOptions ) {
     super( providedOptions );
@@ -58,18 +58,22 @@ export default class VariabilityPlotNode extends Node {
     this.addChild( toggleNode );
     toggleNode.moveToBack();
 
-    this.toggleNode = toggleNode;
-
-    const intervalToolNode = new IntervalToolNode( model.intervalTool1ValueProperty,
+    this.intervalToolNode = new IntervalToolNode( model.intervalTool1ValueProperty,
       model.intervalTool2ValueProperty, toggleNode.nodes[ 0 ].modelViewTransform, new Property( -18 ),
       new BooleanProperty( false ), {
         focusable: false,
-        interactiveHighlightEnabled: false,
         visibleProperty: model.isIntervalToolVisibleProperty,
         tandem: providedOptions.tandem.createTandem( 'intervalToolNode' )
       } );
 
-    toggleNode.nodes.forEach( node => node.insertChild( 0, intervalToolNode ) );
+    toggleNode.nodes.forEach( node => node.insertChild( 0, this.intervalToolNode ) );
+  }
+
+  /**
+   * Match the highlighting for the accordion box section of the interval tool to be the same as the one in the play area.
+   */
+  public setFocusHighlightForIntervalTool( parentIntervalToolNode: IntervalToolNode ): void {
+    this.intervalToolNode.setFocusHighlight( new FocusHighlightFromNode( parentIntervalToolNode ) );
   }
 }
 

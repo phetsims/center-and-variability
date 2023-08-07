@@ -117,7 +117,6 @@ export default class VariabilityScreenView extends CAVScreenView {
 
     const variabilityAccordionBox = new VariabilityAccordionBox(
       model,
-      this.layoutBounds,
       accordionBoxTandem,
       this.questionBar.bottom + CAVConstants.ACCORDION_BOX_TOP_MARGIN,
       this.playAreaNumberLineNode
@@ -134,6 +133,10 @@ export default class VariabilityScreenView extends CAVScreenView {
         visibleProperty: model.isIntervalToolVisibleProperty,
         tandem: intervalToolNodeTandem
       } );
+
+    // To avoid a cycle during startup, we must create the AccordionBox and IntervalToolNode, then propagate the IntervalToolNode
+    // through so the one in the accordion box can share the same highlight region as the one in the play area.
+    variabilityAccordionBox.setFocusHighlightForIntervalTool( intervalToolNode );
 
     // Add play area tools to scene graph
     this.backScreenViewLayer.addChild( handle1 );

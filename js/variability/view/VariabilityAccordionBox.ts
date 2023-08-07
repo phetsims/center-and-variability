@@ -2,7 +2,6 @@
 
 import { AlignBox, VBox } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
@@ -15,7 +14,6 @@ import VariabilityReadoutText from './VariabilityReadoutText.js';
 import CAVColors from '../../common/CAVColors.js';
 import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
 import CAVConstants from '../../common/CAVConstants.js';
-import SoccerSceneModel from '../../../../soccer-common/js/model/SoccerSceneModel.js';
 import Utils from '../../../../dot/js/Utils.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
@@ -26,13 +24,14 @@ import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js'
 import CAVInfoButton from '../../common/view/CAVInfoButton.js';
 import ButtonNode from '../../../../sun/js/buttons/ButtonNode.js';
 import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
+import IntervalToolNode from './IntervalToolNode.js';
 
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 
-  private readonly plotToggleNode: ToggleNode<SoccerSceneModel, VariabilityPlotNode>;
   public readonly infoButton: ButtonNode;
+  private readonly plotNodes: VariabilityPlotNode[];
 
-  public constructor( model: VariabilityModel, layoutBounds: Bounds2, tandem: Tandem, top: number, playAreaNumberLineNode: NumberLineNode ) {
+  public constructor( model: VariabilityModel, tandem: Tandem, top: number, playAreaNumberLineNode: NumberLineNode ) {
 
     // Specify a "footprint" within which we do all the layout.
     const backgroundShape = CAVConstants.ACCORDION_BOX_CONTENTS_SHAPE_VARIABILITY;
@@ -47,14 +46,22 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
 
     const accordionBoxTitleProperty = new DynamicProperty<string, unknown, unknown>( currentProperty );
 
+    const plotNodes: VariabilityPlotNode[] = [];
+
     const contents = _.range( 4 ).map( i => {
       return {
         value: model.sceneModels[ i ],
-        createNode: () => new VariabilityPlotNode( model, model.variabilitySceneModels[ i ], playAreaNumberLineNode, model.isDataPointLayerVisibleProperty, {
-          tandem: tandem.createTandem( 'plotNodeKicker' + ( i + 1 ) ),
-          bottom: backgroundShape.bounds.height,
-          phetioVisiblePropertyInstrumented: false
-        } )
+        createNode: () => {
+          const plotNode = new VariabilityPlotNode( model, model.variabilitySceneModels[ i ], playAreaNumberLineNode, model.isDataPointLayerVisibleProperty, {
+            tandem: tandem.createTandem( 'plotNodeKicker' + ( i + 1 ) ),
+            bottom: backgroundShape.bounds.height,
+            phetioVisiblePropertyInstrumented: false
+          } );
+
+          // Keep track of the plot nodes so we can set the focus highlight on them once the IntervalToolNode has been created.
+          plotNodes.push( plotNode );
+          return plotNode;
+        }
       };
     } );
 
@@ -238,10 +245,17 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       fill: CAVColors.variabilityAccordionBoxFillProperty
     } );
 
-    this.plotToggleNode = plotToggleNode;
-
     // for pdom order
     this.infoButton = infoButton;
+
+    this.plotNodes = plotNodes;
+  }
+
+  /**
+   * Match the highlighting for the accordion box section of the interval tool to be the same as the one in the play area.
+   */
+  public setFocusHighlightForIntervalTool( intervalToolNode: IntervalToolNode ): void {
+    this.plotNodes.forEach( plotNode => plotNode.setFocusHighlightForIntervalTool( intervalToolNode ) );
   }
 }
 
