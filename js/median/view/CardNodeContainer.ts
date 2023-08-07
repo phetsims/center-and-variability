@@ -27,7 +27,6 @@ import Matrix3 from '../../../../dot/js/Matrix3.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
-import handWithArrow_png from '../../../images/handWithArrow_png.js';
 import sortCelebration_mp3 from '../../../sounds/sortCelebration_mp3.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
@@ -40,6 +39,8 @@ import Multilink from '../../../../axon/js/Multilink.js';
 import Utils from '../../../../dot/js/Utils.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import DragIndicatorArrowNode from '../../common/view/DragIndicatorArrowNode.js';
+import dragIndicatorHand_png from '../../../images/dragIndicatorHand_png.js';
 
 const successSoundClip = new SoundClip( sortCelebration_mp3, {
   initialOutputLevel: 0.3
@@ -171,9 +172,24 @@ export default class CardNodeContainer extends Node {
     this.addChild( this.cardLayer );
 
     if ( model.parentContext === 'accordion' ) {
-      const handWithArrowNode = new Image( handWithArrow_png, {
+      const arrowNode = new DragIndicatorArrowNode( {
+        doubleHead: false,
+        dashWidth: 1.2,
+        dashHeight: 1.1,
+        numberOfDashes: 3,
+        spacing: 1.1,
+        triangleNodeOptions: {
+          triangleWidth: 3.9,
+          triangleHeight: 3.5
+        }
+      } );
+
+      const handWithArrowNode = new Node( {
+        children: [
+          arrowNode,
+          new Image( dragIndicatorHand_png, { scale: 0.077, centerTop: arrowNode.leftTop.plusXY( -0.5, 0 ) } )
+        ],
         opacity: 0,
-        maxWidth: 25,
         pickable: false,
         centerTop: new Vector2( 0.5 * CAVConstants.CARD_DIMENSION, CAVConstants.CARD_DIMENSION - 8 ),
         visibleProperty: this.inputEnabledProperty

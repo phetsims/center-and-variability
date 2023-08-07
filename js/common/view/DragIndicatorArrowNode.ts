@@ -9,13 +9,16 @@
 
 import { HBox, HBoxOptions, Node, Rectangle } from '../../../../scenery/js/imports.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import TriangleNode from '../../../../scenery-phet/js/TriangleNode.js';
-import optionize from '../../../../phet-core/js/optionize.js';
+import TriangleNode, { TriangleNodeOptions } from '../../../../scenery-phet/js/TriangleNode.js';
+import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 
 type SelfOptions = {
   numberOfDashes: number;
   doubleHead: boolean;
+  dashHeight?: number;
+  dashWidth?: number;
+  triangleNodeOptions?: TriangleNodeOptions;
 };
 
 type DragIndicatorArrowNodeOptions = SelfOptions & StrictOmit<HBoxOptions, 'children'>;
@@ -24,31 +27,40 @@ export default class DragIndicatorArrowNode extends HBox {
 
   public constructor( providedOptions: DragIndicatorArrowNodeOptions ) {
 
+    const options = optionize<DragIndicatorArrowNodeOptions, SelfOptions, HBoxOptions>()( {
+      dashHeight: 2,
+      dashWidth: 2,
+      triangleNodeOptions: {}
+    }, providedOptions );
+
     const createArrowHead = ( pointDirection: 'right' | 'left' ) => {
-      return new TriangleNode( {
+
+      const triangleNodeOptions = combineOptions<TriangleNodeOptions>( {
         pointDirection: pointDirection,
         triangleWidth: 6,
         triangleHeight: 5,
         fill: 'black'
-      } );
+      }, options.triangleNodeOptions );
+
+      return new TriangleNode( triangleNodeOptions );
     };
 
     const dashes: Node[] = [];
 
-    _.times( providedOptions.numberOfDashes, () => {
-      dashes.push( new Rectangle( 0, 0, 2, 2, { fill: 'black' } ) );
+    _.times( options.numberOfDashes, () => {
+      dashes.push( new Rectangle( 0, 0, options.dashWidth, options.dashHeight, { fill: 'black' } ) );
     } );
 
-    const options = optionize<DragIndicatorArrowNodeOptions, SelfOptions, HBoxOptions>()( {
+    const superOptions = combineOptions<HBoxOptions>( {
       children: [
-        createArrowHead( 'left' ),
+        ...( options.doubleHead ? [ createArrowHead( 'left' ) ] : [] ),
         ...dashes,
         createArrowHead( 'right' )
       ],
       spacing: 2
     }, providedOptions );
 
-    super( options );
+    super( superOptions );
   }
 }
 

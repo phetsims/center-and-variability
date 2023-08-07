@@ -239,7 +239,7 @@ export default class CAVScreenView extends ScreenView {
       tandem: this.playAreaTandem.createTandem( 'kickButtonGroup' )
     } );
 
-    const dragIndicatorArrowImage = new DragIndicatorArrowNode( {
+    const dragIndicatorArrowNode = new DragIndicatorArrowNode( {
       doubleHead: true,
       numberOfDashes: 2,
       visibleProperty: model.dragIndicatorModel.isDragIndicatorVisibleProperty
@@ -257,28 +257,28 @@ export default class CAVScreenView extends ScreenView {
 
       if ( dragIndicatorVisible && dragIndicatorValue ) {
 
-        dragIndicatorArrowImage.center = new Vector2(
+        dragIndicatorArrowNode.center = new Vector2(
           modelViewTransform.modelToViewX( dragIndicatorValue ),
           this.getTopObjectPositionY( dragIndicatorValue ) - 5
         );
 
         // The arrow shouldn't overlap the accordion box
         if ( this.accordionBox ) {
-          if ( dragIndicatorArrowImage.top < this.accordionBox.bottom + INDICATOR_MARGIN ) {
-            dragIndicatorArrowImage.top = this.accordionBox.bottom + INDICATOR_MARGIN;
+          if ( dragIndicatorArrowNode.top < this.accordionBox.bottom + INDICATOR_MARGIN ) {
+            dragIndicatorArrowNode.top = this.accordionBox.bottom + INDICATOR_MARGIN;
           }
         }
       }
     };
 
-    ManualConstraint.create( this, [ dragIndicatorArrowImage ], dragIndicatorArrowImageProxy => {
+    ManualConstraint.create( this, [ dragIndicatorArrowNode ], dragIndicatorArrowNodeProxy => {
 
       // Pixel adjustments needed with rotation option on dragIndicatorHandImage and empirically determined to match design
-      dragIndicatorHandImage.right = dragIndicatorArrowImageProxy.left + 19;
-      dragIndicatorHandImage.top = dragIndicatorArrowImageProxy.bottom + Math.abs( this.modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) ) - 5;
+      dragIndicatorHandImage.right = dragIndicatorArrowNodeProxy.left + 19;
+      dragIndicatorHandImage.top = dragIndicatorArrowNodeProxy.bottom + Math.abs( this.modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) ) - 5;
     } );
 
-    dragIndicatorArrowImage.addLinkedElement( model.dragIndicatorModel.dragIndicatorValueProperty );
+    dragIndicatorArrowNode.addLinkedElement( model.dragIndicatorModel.dragIndicatorValueProperty );
 
     model.dragIndicatorModel.isDragIndicatorVisibleProperty.link( this.updateDragIndicatorNode );
     model.dragIndicatorModel.dragIndicatorValueProperty.link( this.updateDragIndicatorNode );
@@ -338,7 +338,7 @@ export default class CAVScreenView extends ScreenView {
     this.visibleBoundsProperty.link( this.updateMedianNode );
     model.isPlayAreaMedianVisibleProperty.link( this.updateMedianNode );
 
-    this.middleScreenViewLayer.addChild( dragIndicatorArrowImage );
+    this.middleScreenViewLayer.addChild( dragIndicatorArrowNode );
     this.middleScreenViewLayer.addChild( dragIndicatorHandImage );
 
     // Add to screenViewRootNode for alternativeInput
