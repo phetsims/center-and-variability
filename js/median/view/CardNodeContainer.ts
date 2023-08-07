@@ -42,7 +42,7 @@ import { Shape } from '../../../../kite/js/imports.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 const successSoundClip = new SoundClip( sortCelebration_mp3, {
-  initialOutputLevel: 0.2
+  initialOutputLevel: 0.3
 } );
 soundManager.addSoundGenerator( successSoundClip );
 

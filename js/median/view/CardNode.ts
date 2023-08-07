@@ -29,13 +29,13 @@ type ParentOptions = WithRequired<NodeOptions, 'tandem'>;
 export type CardNodeOptions = SelfOptions & ParentOptions;
 
 export const cardPickUpSoundClip = new SoundClip( cardPickup_mp3, {
-  initialOutputLevel: 0.3,
+  initialOutputLevel: 0.4,
   initialPlaybackRate: CAVQueryParameters.cardMovementSoundPlaybackRate
 } );
 soundManager.addSoundGenerator( cardPickUpSoundClip );
 
 export const cardDropClip = new SoundClip( cardDrop_mp3, {
-  initialOutputLevel: 0.1,
+  initialOutputLevel: 0.2,
   initialPlaybackRate: CAVQueryParameters.cardMovementSoundPlaybackRate * 1.3
 } );
 soundManager.addSoundGenerator( cardDropClip );

@@ -53,7 +53,7 @@ const cardMovementSounds = [
 ];
 
 export const cardMovementSoundClips = cardMovementSounds.map( sound => new SoundClip( sound, {
-  initialOutputLevel: 0.2,
+  initialOutputLevel: 0.3,
   additionalAudioNodes: []
 } ) );
 cardMovementSoundClips.forEach( soundClip => soundManager.addSoundGenerator( soundClip ) );

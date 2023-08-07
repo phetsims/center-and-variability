@@ -14,7 +14,7 @@ import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import NumberTone, { toStepDiscrete } from '../../common/model/NumberTone.js';
 
-const INITIAL_OUTPUT_LEVEL = 0.1;
+const INITIAL_OUTPUT_LEVEL = 0.2;
 
 // The higher pitched note in the pair
 const upperSoundClip = new SoundClip( marimbaToneE3_mp3, {

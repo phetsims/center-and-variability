@@ -210,7 +210,7 @@ export default class VariabilityScreenView extends CAVScreenView {
       intervalDistanceWithThresholdProperty,
       intervalToolLoop_wav,
       new Range( 1, 2 ), {
-        initialOutputLevel: 0.15,
+        initialOutputLevel: 0.25,
         playbackRateCenterOffset: 0,
 
         resetInProgressProperty: model.variabilityModelResetInProgressProperty,
