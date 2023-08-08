@@ -2,6 +2,7 @@
 
 /**
  * Shows the values in the iqr info dialog, with an arrow over the median and blue highlight over q1 and q3
+ *
  * @author Sam Reid (PhET Interactive Simulations)
  */
 

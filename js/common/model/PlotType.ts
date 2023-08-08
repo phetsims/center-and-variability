@@ -1,4 +1,5 @@
 // Copyright 2022-2023, University of Colorado Boulder
+
 /**
  * Whether to show dots or x's in the plot.
  *

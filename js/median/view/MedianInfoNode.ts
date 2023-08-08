@@ -1,8 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Shows the content for the median info dialog. A definition of median,
- * and sorted cards that are not interactive.
+ * Shows the content for the median info dialog. A definition of the median, and sorted cards that are not interactive.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

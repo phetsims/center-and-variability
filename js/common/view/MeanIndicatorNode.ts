@@ -1,10 +1,10 @@
 // Copyright 2023, University of Colorado Boulder
+
 /**
- * Creates a triangle shape that points upwards.
+ * Creates a triangle shape that points upwards to show the location of the mean.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
- *
  */
 
 import centerAndVariability from '../../centerAndVariability.js';

@@ -1,7 +1,8 @@
 // Copyright 2023, University of Colorado Boulder
+
 /**
- * Renders a circle or x depending on the plot type. Each dataPointNode is
- * connected to a soccerBall to keep track of it's value on the plot.
+ * Renders a circle or x depending on the plot type. Each dataPointNode is connected to a soccerBall to keep track of
+ * its value on the plot.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

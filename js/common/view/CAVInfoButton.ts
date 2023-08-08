@@ -2,6 +2,7 @@
 
 /**
  * Look and layout for the info button, shown in each accordion box.
+ *
  * @author Sam Reid (PhET Interactive Simulations)
  */
 

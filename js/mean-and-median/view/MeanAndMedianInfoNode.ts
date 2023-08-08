@@ -1,4 +1,5 @@
 // Copyright 2023, University of Colorado Boulder
+
 /**
  * Info Node for the Mean and Median screen. Shows mean and median calculation as well as results.
  *

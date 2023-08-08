@@ -1,8 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * A subclass of SoccerBall. Tracks whether the ball is a median object, q1 object, q3 object,
- * and whether the animation highlight is visible.
+ * A subclass of SoccerBall. Tracks whether the ball is a median object whether the animation highlight is visible.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
  *
