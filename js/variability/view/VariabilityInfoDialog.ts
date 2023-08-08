@@ -24,18 +24,14 @@ export default class VariabilityInfoDialog extends Dialog {
 
     const toggleNode = new ToggleNode( model.selectedVariabilityMeasureProperty, [ {
       value: VariabilityMeasure.RANGE,
-      createNode: tandem => new RangeInfoNode( model, sceneModel, playAreaNumberLineNode, { tandem: tandem } ),
-      tandemName: 'rangeInfoNode'
+      createNode: () => new RangeInfoNode( model, sceneModel, playAreaNumberLineNode, { tandem: options.tandem.createTandem( 'rangeInfoNode' ) } )
     }, {
       value: VariabilityMeasure.IQR,
-      createNode: tandem => new IQRInfoNode( model, sceneModel, playAreaNumberLineNode, { tandem: tandem } ),
-      tandemName: 'iqrInfoNode'
+      createNode: () => new IQRInfoNode( model, sceneModel, playAreaNumberLineNode, { tandem: options.tandem.createTandem( 'iqrInfoNode' ) } )
     }, {
       value: VariabilityMeasure.MAD,
-      createNode: tandem => new MADInfoNode( model, sceneModel, playAreaNumberLineNode, { tandem: tandem } ),
-      tandemName: 'madInfoNode'
+      createNode: () => new MADInfoNode( model, sceneModel, playAreaNumberLineNode, { tandem: options.tandem.createTandem( 'madInfoNode' ) } )
     } ], {
-      tandem: options.tandem.createTandem( 'toggleNode' ),
       excludeInvisibleChildrenFromBounds: true,
       alignChildren: ToggleNode.NONE
     } );
