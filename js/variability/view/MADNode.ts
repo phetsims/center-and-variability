@@ -132,7 +132,7 @@ export default class MADNode extends CAVPlotNode {
         // top margin is MAD_MARGIN_TOP, bottom margin is MAD_MARGIN_BOTTOM_MIN + MAD_MARGIN_BOTTOM_FACTOR * lineDeltaY
         const lineDeltaY = options.parentContext === 'info' ? -12 : ( CAVConstants.VARIABILITY_PLOT_RECT_HEIGHT - MAD_MARGIN_TOP - MAD_MARGIN_BOTTOM_MIN ) / ( MAX_KICKS_PROPERTY.value - 1 + MAD_MARGIN_BOTTOM_FACTOR );
 
-                         soccerBalls.forEach( soccerBall => {
+        soccerBalls.forEach( soccerBall => {
           const x1 = this.modelViewTransform.modelToViewX( soccerBall.valueProperty.value! );
           const x2 = this.modelViewTransform.modelToViewX( mean );
           const line = new Line( x1, y, x2, y, {
