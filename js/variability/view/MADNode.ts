@@ -125,12 +125,15 @@ export default class MADNode extends CAVPlotNode {
       if ( soccerBalls.length > 0 ) {
         const mean = _.mean( soccerBalls.map( dot => dot.valueProperty.value ) );
 
-        // In the accordion box, start the deviation lines below the top of the MAD rectangle and build downwards.
-        // In the info dialog, start the deviation lines above the number line and build upwards.
-        let y = options.parentContext === 'info' ? this.modelViewTransform.modelToViewY( 0 ) - 10 : madRectangle.top + MAD_MARGIN_TOP;
+        // in the accordion box, the top margin is MAD_MARGIN_TOP, bottom margin is MAD_MARGIN_BOTTOM_MIN + MAD_MARGIN_BOTTOM_FACTOR * lineDeltaY
+        const lineDeltaY = options.parentContext === 'info' ? 12 :
+                           ( CAVConstants.VARIABILITY_PLOT_RECT_HEIGHT - MAD_MARGIN_TOP - MAD_MARGIN_BOTTOM_MIN ) / ( MAX_KICKS_PROPERTY.value - 1 + MAD_MARGIN_BOTTOM_FACTOR );
 
-        // top margin is MAD_MARGIN_TOP, bottom margin is MAD_MARGIN_BOTTOM_MIN + MAD_MARGIN_BOTTOM_FACTOR * lineDeltaY
-        const lineDeltaY = options.parentContext === 'info' ? -12 : ( CAVConstants.VARIABILITY_PLOT_RECT_HEIGHT - MAD_MARGIN_TOP - MAD_MARGIN_BOTTOM_MIN ) / ( MAX_KICKS_PROPERTY.value - 1 + MAD_MARGIN_BOTTOM_FACTOR );
+        // Start the deviation lines below the top of the MAD rectangle and build downwards
+        // In the info dialog, ensure that there is a margin of 10 between the number line and the bottom deviation line
+        let y = options.parentContext === 'info' ?
+                  this.modelViewTransform.modelToViewY( 0 ) - 10 - ( soccerBalls.length - 1 ) * lineDeltaY :
+                  madRectangle.top + MAD_MARGIN_TOP;
 
         soccerBalls.forEach( soccerBall => {
           const x1 = this.modelViewTransform.modelToViewX( soccerBall.valueProperty.value! );
