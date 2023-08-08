@@ -20,6 +20,8 @@ import NumberProperty from '../../../axon/js/NumberProperty.js';
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 import { AlignGroup } from '../../../scenery/js/imports.js';
+import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
+import Bounds2 from '../../../dot/js/Bounds2.js';
 
 // Right skewed means most of the data is on the left, see https://github.com/phetsims/center-and-variability/issues/112
 const RIGHT_SKEWED_DATA = [
@@ -41,7 +43,21 @@ export const MAX_KICKS_CONFIG = [
   { kicks: 30, scale: 0.87 }
 ];
 
+const PHYSICAL_RANGE = new Range( 1, 15 );
+const CHART_VIEW_WIDTH = ScreenView.DEFAULT_LAYOUT_BOUNDS.width - NUMBER_LINE_MARGIN_X * 2;
+
+const NUMBER_LINE_POSITION_Y = 127;
+
+// View size of a data point in the chart for purposes of setting up the coordinate frame
+const DATA_POINT_HEIGHT = 17;
+
+const PLOT_NODE_TRANSFORM = ModelViewTransform2.createRectangleInvertedYMapping(
+  new Bounds2( PHYSICAL_RANGE.min, 0, PHYSICAL_RANGE.max, 1 ),
+  new Bounds2( 0, NUMBER_LINE_POSITION_Y - DATA_POINT_HEIGHT, CHART_VIEW_WIDTH, NUMBER_LINE_POSITION_Y )
+);
+
 const MAIN_FONT = new PhetFont( 16 );
+
 const CAVConstants = {
   SCREEN_VIEW_X_MARGIN: 15,
   SCREEN_VIEW_Y_MARGIN: 15,
@@ -62,7 +78,7 @@ const CAVConstants = {
   RIGHT_SKEWED_DATA: RIGHT_SKEWED_DATA,
   LEFT_SKEWED_DATA: RIGHT_SKEWED_DATA.slice().reverse(),
 
-  CHART_VIEW_WIDTH: ScreenView.DEFAULT_LAYOUT_BOUNDS.width - NUMBER_LINE_MARGIN_X * 2,
+  CHART_VIEW_WIDTH: CHART_VIEW_WIDTH,
   NUMBER_LINE_MARGIN_X: NUMBER_LINE_MARGIN_X,
 
   VARIABILITY_PLOT_RECT_HEIGHT: 118,
@@ -79,7 +95,7 @@ const CAVConstants = {
     maxWidth: 90
   },
 
-  PHYSICAL_RANGE: new Range( 1, 15 ),
+  PHYSICAL_RANGE: PHYSICAL_RANGE,
   VARIABILITY_DRAG_RANGE: new Range( 0, 16 ),
   MAX_KICKS_VALUES: [ 5, 10, 15, 20, 25, 30 ],
 
@@ -101,7 +117,13 @@ const CAVConstants = {
   // so we cannot throw an error if the value is null.
   STRING_VALUE_NULL_MAP: ( value: number | null ): number | string => value === null ? 'null' : value,
 
-  ARROW_LINE_WIDTH: 0.5
+  ARROW_LINE_WIDTH: 0.5,
+
+  // Coordinates here are somewhat unusual, since x dimension is based off of meters, and y dimension is based off of
+  // number of objects.
+  PLOT_NODE_TRANSFORM: PLOT_NODE_TRANSFORM,
+
+  NUMBER_LINE_POSITION_Y: NUMBER_LINE_POSITION_Y
 };
 
 // Global Properties

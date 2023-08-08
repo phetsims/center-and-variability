@@ -10,9 +10,7 @@
 import soccerCommon from '../../../../soccer-common/js/soccerCommon.js';
 import { ManualConstraint, MatrixBetweenProperty, Node, NodeOptions, TColor, Text } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
-import Bounds2 from '../../../../dot/js/Bounds2.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVConstants from '../CAVConstants.js';
 import DataPointNode from './DataPointNode.js';
@@ -39,7 +37,7 @@ export const PLOT_NODE_TOP_MARGIN = 25;
 export default class CAVPlotNode extends Node {
 
   private readonly dataPointLayer;
-  public readonly modelViewTransform: ModelViewTransform2;
+  public readonly modelViewTransform = CAVConstants.PLOT_NODE_TRANSFORM;
   private readonly numberLineNode: NumberLineNode;
 
   public constructor( model: CAVModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, isDataPointLayerVisibleProperty: TProperty<boolean>, providedOptions?: CAVPlotNodeOptions ) {
@@ -59,19 +57,6 @@ export default class CAVPlotNode extends Node {
     const backgroundNode = new Node();
     this.addChild( backgroundNode );
 
-    const numberLinePositionY = 127;
-
-    // View size of a data point in the chart
-    const dataPointHeight = 17;
-
-    // Coordinates here are somewhat unusual, since x dimension is based off of meters, and y dimension is based off of
-    // number of objects.
-    const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
-      new Bounds2( CAVConstants.PHYSICAL_RANGE.min, 0, CAVConstants.PHYSICAL_RANGE.max, 1 ),
-      new Bounds2( 0, numberLinePositionY - dataPointHeight, CAVConstants.CHART_VIEW_WIDTH, numberLinePositionY )
-    );
-    this.modelViewTransform = modelViewTransform;
-
     const includeRangeOnXAxis = !( model instanceof VariabilityModel ) && options.parentContext === 'accordion';
     const visibleProperty = model instanceof MeanAndMedianModel && options.parentContext === 'accordion' ? model.meanVisibleProperty :
                             model instanceof VariabilityModel ? DerivedProperty.valueEqualsConstant( model.selectedVariabilityMeasureProperty, VariabilityMeasure.MAD ) :
@@ -79,7 +64,7 @@ export default class CAVPlotNode extends Node {
 
     this.numberLineNode = new CAVNumberLineNode(
       sceneModel.meanValueProperty,
-      modelViewTransform,
+      this.modelViewTransform,
       visibleProperty,
       sceneModel.dataRangeProperty,
       CAVConstants.CHART_VIEW_WIDTH,
@@ -87,7 +72,7 @@ export default class CAVPlotNode extends Node {
         color: 'black',
         includeXAxis: true,
         includeMeanStroke: false,
-        y: numberLinePositionY,
+        y: CAVConstants.NUMBER_LINE_POSITION_Y,
         includeRangeOnXAxis: includeRangeOnXAxis
       } );
     backgroundNode.addChild( this.numberLineNode );
@@ -114,7 +99,7 @@ export default class CAVPlotNode extends Node {
     sceneModel.soccerBalls.forEach( ( soccerBall, index ) => {
 
       const dotNode = new DataPointNode( soccerBall,
-        modelViewTransform, {
+        this.modelViewTransform, {
           isMeanAndMedianInfoNode: options.isMeanAndMedianInfoPlot,
           fill: options.dataPointFill
         } );

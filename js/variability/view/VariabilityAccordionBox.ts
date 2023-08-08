@@ -1,6 +1,6 @@
 // Copyright 2023, University of Colorado Boulder
 
-import { AlignBox, VBox } from '../../../../scenery/js/imports.js';
+import { AlignBox, FocusHighlightFromNode, VBox } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
@@ -25,11 +25,14 @@ import CAVInfoButton from '../../common/view/CAVInfoButton.js';
 import ButtonNode from '../../../../sun/js/buttons/ButtonNode.js';
 import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
 import IntervalToolNode from './IntervalToolNode.js';
+import Property from '../../../../axon/js/Property.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 
   public readonly infoButton: ButtonNode;
   private readonly plotNodes: VariabilityPlotNode[];
+  private readonly intervalToolNode: IntervalToolNode;
 
   public constructor( model: VariabilityModel, tandem: Tandem, top: number, playAreaNumberLineNode: NumberLineNode ) {
 
@@ -48,14 +51,20 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
 
     const plotNodes: VariabilityPlotNode[] = [];
 
+    const intervalToolNode = new IntervalToolNode( model.intervalTool1ValueProperty,
+      model.intervalTool2ValueProperty, CAVConstants.PLOT_NODE_TRANSFORM, new Property( -18 ),
+      new BooleanProperty( false ), {
+        focusable: false,
+        visibleProperty: model.isIntervalToolVisibleProperty,
+        tandem: tandem.createTandem( 'intervalToolNode' )
+      } );
+
     const contents = _.range( 4 ).map( i => {
       return {
         value: model.sceneModels[ i ],
         createNode: () => {
-          const plotNode = new VariabilityPlotNode( model, model.variabilitySceneModels[ i ], playAreaNumberLineNode, model.isDataPointLayerVisibleProperty, {
-            tandem: tandem.createTandem( 'plotNodeKicker' + ( i + 1 ) ),
-            bottom: backgroundShape.bounds.height,
-            phetioVisiblePropertyInstrumented: false
+          const plotNode = new VariabilityPlotNode( model, model.variabilitySceneModels[ i ], playAreaNumberLineNode, model.isDataPointLayerVisibleProperty, intervalToolNode, {
+            bottom: backgroundShape.bounds.height
           } );
 
           // Keep track of the plot nodes so we can set the focus highlight on them once the IntervalToolNode has been created.
@@ -249,13 +258,15 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     this.infoButton = infoButton;
 
     this.plotNodes = plotNodes;
+
+    this.intervalToolNode = intervalToolNode;
   }
 
   /**
    * Match the highlighting for the accordion box section of the interval tool to be the same as the one in the play area.
    */
-  public setFocusHighlightForIntervalTool( intervalToolNode: IntervalToolNode ): void {
-    this.plotNodes.forEach( plotNode => plotNode.setFocusHighlightForIntervalTool( intervalToolNode ) );
+  public setFocusHighlightForIntervalTool( parentIntervalToolNode: IntervalToolNode ): void {
+    this.intervalToolNode.setFocusHighlight( new FocusHighlightFromNode( parentIntervalToolNode ) );
   }
 }
 
