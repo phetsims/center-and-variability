@@ -143,8 +143,7 @@ export default class MADNode extends CAVPlotNode {
           if ( soccerBall.valueProperty.value !== null && Math.abs( soccerBall.valueProperty.value - mean ) < 0.05 ) {
             children.push( new Circle( 1.5, {
               fill: 'black',
-              centerX: this.modelViewTransform.modelToViewX( mean ),
-              centerY: y
+              center: line.center
             } ) );
           }
 
