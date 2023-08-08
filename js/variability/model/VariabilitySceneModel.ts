@@ -92,7 +92,8 @@ export default class VariabilitySceneModel extends CAVSoccerSceneModel<Variabili
 
     this.madValueProperty = new Property<number | null>( null, {
       tandem: options.tandem.createTandem( 'madValueProperty' ),
-      phetioValueType: NullableIO( NumberIO )
+      phetioValueType: NullableIO( NumberIO ),
+      phetioReadOnly: true
     } );
 
     this.updateDataMeasures();
