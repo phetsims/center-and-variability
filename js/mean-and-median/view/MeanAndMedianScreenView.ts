@@ -51,15 +51,14 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
     );
     this.setAccordionBox( meanAndMedianAccordionBox );
 
-    const bottomControls = this.addPlayAreaControls( new VerticalCheckboxGroup( [
+    const controls = this.addPlayAreaControls( new VerticalCheckboxGroup( [
       PlayAreaCheckboxFactory.getPredictMedianCheckboxItem( model ),
       PlayAreaCheckboxFactory.getPredictMeanCheckboxItem( model ),
       PlayAreaCheckboxFactory.getMedianCheckboxItem( model ),
       PlayAreaCheckboxFactory.getMeanCheckboxItem( model )
     ], {
-      tandem: this.playAreaTandem.createTandem( 'bottomCheckboxGroup' )
+      tandem: this.playAreaTandem.createTandem( 'checkboxGroup' )
     } ), this.playAreaTandem );
-
 
     const predictMeanNode = new PredictionSlider( model.predictMeanValueProperty, this.modelViewTransform,
       CAVConstants.PHYSICAL_RANGE, new BooleanProperty( false ), model.isPredictMeanKeyboardDraggingProperty, {
@@ -89,7 +88,7 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
 
     model.infoButtonPressedEmitter.addListener( () => infoDialog.show() );
 
-    this.cavSetPDOMOrder( bottomControls, [ predictMedianNode, predictMeanNode ], meanAndMedianAccordionBox.infoButton );
+    this.cavSetPDOMOrder( controls, [ predictMedianNode, predictMeanNode ], meanAndMedianAccordionBox.infoButton );
   }
 }
 

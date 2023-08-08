@@ -45,11 +45,11 @@ export default class MedianScreenView extends CAVScreenView {
       this.questionBar.bottom + CAVConstants.ACCORDION_BOX_TOP_MARGIN );
     this.setAccordionBox( this.medianAccordionBox );
 
-    const bottomControls = this.addPlayAreaControls( new VerticalCheckboxGroup( [
+    const controls = this.addPlayAreaControls( new VerticalCheckboxGroup( [
       PlayAreaCheckboxFactory.getPredictMedianCheckboxItem( model ),
       PlayAreaCheckboxFactory.getMedianCheckboxItem( model )
     ], {
-      tandem: this.playAreaTandem.createTandem( 'bottomCheckboxGroup' )
+      tandem: this.playAreaTandem.createTandem( 'checkboxGroup' )
     } ), this.playAreaTandem );
 
     const predictMedianNode = CAVScreenView.createPredictMedianNode(
@@ -66,7 +66,7 @@ export default class MedianScreenView extends CAVScreenView {
 
     model.infoButtonPressedEmitter.addListener( () => infoDialog.show() );
 
-    this.cavSetPDOMOrder( bottomControls, [ predictMedianNode ], this.medianAccordionBox.infoButton );
+    this.cavSetPDOMOrder( controls, [ predictMedianNode ], this.medianAccordionBox.infoButton );
   }
 }
 

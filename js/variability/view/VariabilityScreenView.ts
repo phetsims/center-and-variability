@@ -242,14 +242,14 @@ export default class VariabilityScreenView extends CAVScreenView {
     this.frontScreenViewLayer.addChild( sceneKickerRadioButtonGroup );
     this.frontScreenViewLayer.addChild( variabilityMeasureRadioButtonGroup );
 
-    const bottomControls = this.addPlayAreaControls(
+    const controls = this.addPlayAreaControls(
       new VerticalCheckboxGroup( [
         PlayAreaCheckboxFactory.getMedianCheckboxItem( model ),
         PlayAreaCheckboxFactory.getMeanCheckboxItem( model ),
         PlayAreaCheckboxFactory.getPointerCheckboxItem( model ),
         PlayAreaCheckboxFactory.getIntervalToolCheckboxItem( model )
       ], {
-        tandem: this.playAreaTandem.createTandem( 'bottomCheckboxGroup' )
+        tandem: this.playAreaTandem.createTandem( 'checkboxGroup' )
       } ), this.playAreaTandem );
 
     model.variabilitySceneModels.forEach( ( sceneModel, index ) => {
@@ -268,7 +268,7 @@ export default class VariabilityScreenView extends CAVScreenView {
       } );
     } );
 
-    this.cavSetPDOMOrder( bottomControls, [ pointerSlider, handle1, handle2 ], variabilityAccordionBox.infoButton,
+    this.cavSetPDOMOrder( controls, [ pointerSlider, handle1, handle2 ], variabilityAccordionBox.infoButton,
       sceneKickerRadioButtonGroup, variabilityMeasureRadioButtonGroup );
   }
 
