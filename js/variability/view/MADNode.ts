@@ -86,10 +86,10 @@ export default class MADNode extends CAVPlotNode {
       font: CAVConstants.VARIABILITY_MEASURE_NUMBER_READOUT_FONT
     } );
 
-    const lineContainer = new Node();
+    const linesAndTextContainer = new Node();
     this.addChild( madRectangle );
     madRectangle.moveToBack();
-    this.addChild( lineContainer );
+    this.addChild( linesAndTextContainer );
 
     // this contains the top brackets and MAD labels so that their visibility can be controlled together
     const madAnnotationContainer = new Node();
@@ -112,7 +112,7 @@ export default class MADNode extends CAVPlotNode {
 
     const update = () => {
 
-      const children: Node[] = [];
+      const linesAndText: Node[] = [];
       const zeroDots: Node[] = [];
 
       const soccerBalls = sceneModel.getSortedLandedObjects();
@@ -139,7 +139,7 @@ export default class MADNode extends CAVPlotNode {
             stroke: 'black'
           } );
 
-          children.push( line );
+          linesAndText.push( line );
 
           // If the line is too short, show a dot to make it visible
           if ( Math.abs( x2 - x1 ) < 1E-4 ) {
@@ -174,18 +174,15 @@ export default class MADNode extends CAVPlotNode {
               text.left = Math.max( text.left, line.left + MARGIN );
             }
 
-            children.push( text );
+            linesAndText.push( text );
           }
 
           y += lineDeltaY;
         } );
       }
 
-      lineContainer.children = children;
-      lineContainer.visible = soccerBalls.length > 0;
-
+      linesAndTextContainer.children = linesAndText;
       zeroDotContainer.children = zeroDots;
-      zeroDotContainer.visible = soccerBalls.length > 0;
 
       const mad = sceneModel.madValueProperty.value;
 
@@ -196,7 +193,7 @@ export default class MADNode extends CAVPlotNode {
         const viewCenterX = this.modelViewTransform.modelToViewX( sceneModel.meanValueProperty.value! );
 
         if ( options.parentContext === 'info' ) {
-          madRectangle.rectHeight = children.length > 0 ? lineContainer.height + textNodes[ 0 ].height : 0;
+          madRectangle.rectHeight = linesAndText.length > 0 ? linesAndTextContainer.height + textNodes[ 0 ].height : 0;
         }
 
         madRectangle.centerX = viewCenterX;
