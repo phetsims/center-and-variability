@@ -78,7 +78,7 @@ export default class MedianModel extends CAVModel {
     } );
 
     this.medianVisibleProperty = new BooleanProperty( false, {
-      tandem: accordionBoxTandem.createTandem( 'medianVisibleProperty' )
+      tandem: accordionBoxTandem.createTandem( 'isMedianVisibleProperty' )
     } );
 
     // For PhET-iO

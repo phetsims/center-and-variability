@@ -130,7 +130,7 @@ export default class CAVModel extends PhetioObject {
       phetioDocumentation: 'Enable or disable input on the entire set of soccer balls.'
     } );
 
-    this.dragIndicatorModel = new CAVDragIndicatorModel( this.soccerBallsInputEnabledProperty, { tandem: this.playAreaTandem.createTandem( 'dragIndicatorModel' ) } );
+    this.dragIndicatorModel = new CAVDragIndicatorModel( this.soccerBallsInputEnabledProperty, { tandem: this.playAreaTandem.createTandem( 'soccerBallDragIndicatorModel' ) } );
 
     // It is important to link to the values of all the soccer balls in the screen, so that the dragIndicator can be
     // updated after all the balls have landed, and not just after they have been kicked.

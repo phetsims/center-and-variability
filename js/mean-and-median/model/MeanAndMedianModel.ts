@@ -79,7 +79,7 @@ export default class MeanAndMedianModel extends CAVModel {
       tandem: accordionBoxTandem.createTandem( 'meanVisibleProperty' )
     } );
     this.medianVisibleProperty = new BooleanProperty( false, {
-      tandem: accordionBoxTandem.createTandem( 'medianVisibleProperty' )
+      tandem: accordionBoxTandem.createTandem( 'isMedianVisibleProperty' )
     } );
 
     // Don't show animation on startup or when setting PhET-iO state
