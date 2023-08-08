@@ -108,7 +108,6 @@ export default class CardContainerModel extends PhetioObject {
     } );
 
     this.dragIndicationCardProperty = new Property<CardModel | null>( null, {
-      phetioReadOnly: true,
       phetioValueType: NullableIO( ReferenceIO( IOType.ObjectIO ) ),
       tandem: this.parentContext === 'accordion' ? options.tandem.createTandem( 'cardDragIndicatorProperty' ) : Tandem.OPT_OUT,
       phetioDocumentation: 'Tracks which card the drag indication icon is pointing to. This is for internal use only.'
