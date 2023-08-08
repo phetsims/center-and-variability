@@ -193,7 +193,7 @@ export default class MADNode extends CAVPlotNode {
         const viewCenterX = this.modelViewTransform.modelToViewX( sceneModel.meanValueProperty.value! );
 
         if ( options.parentContext === 'info' ) {
-          madRectangle.rectHeight = linesAndTextNodes.length > 0 ? linesAndTextContainer.height + textNodes[ 0 ].height : 0;
+          madRectangle.rectHeight = linesAndTextNodes.length > 0 ? ( linesAndTextContainer.height + textNodes[ 0 ].height ) : 0;
         }
 
         madRectangle.centerX = viewCenterX;
