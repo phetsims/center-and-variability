@@ -12,7 +12,8 @@ import centerAndVariability from '../../centerAndVariability.js';
 export default class PlotType extends EnumerationValue {
   public static readonly LINE_PLOT = new PlotType();
   public static readonly DOT_PLOT = new PlotType();
-  private static readonly enumeration = new Enumeration( PlotType );
+
+  public static readonly enumeration = new Enumeration( PlotType );
 }
 
 centerAndVariability.register( 'PlotType', PlotType );

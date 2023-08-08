@@ -14,7 +14,8 @@ export default class VariabilityMeasure extends EnumerationValue {
   public static readonly RANGE = new VariabilityMeasure();
   public static readonly IQR = new VariabilityMeasure();
   public static readonly MAD = new VariabilityMeasure();
-  private static readonly enumeration = new Enumeration( VariabilityMeasure );
+
+  public static readonly enumeration = new Enumeration( VariabilityMeasure );
 }
 
 centerAndVariability.register( 'VariabilityMeasure', VariabilityMeasure );

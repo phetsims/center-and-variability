@@ -16,7 +16,7 @@ export default class DistributionType extends EnumerationValue {
   public static readonly KICKER_3 = new DistributionType();
   public static readonly KICKER_4 = new DistributionType();
 
-  private static readonly enumeration = new Enumeration( DistributionType, {} );
+  public static readonly enumeration = new Enumeration( DistributionType, {} );
 }
 
 centerAndVariability.register( 'DistributionType', DistributionType );
