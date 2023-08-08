@@ -65,7 +65,7 @@ export default class VariabilityScreenView extends CAVScreenView {
 
     super( model, options );
 
-    const accordionBoxTandem = options.tandem.createTandem( 'spreadAccordionBox' );
+    const accordionBoxTandem = options.tandem.createTandem( 'variabilityMeasureAccordionBox' );
 
     const pointerSlider = new PredictionSlider( model.pointerValueProperty, this.modelViewTransform,
       CAVConstants.VARIABILITY_DRAG_RANGE, new BooleanProperty( false ), model.isPointerKeyboardDraggingProperty, {

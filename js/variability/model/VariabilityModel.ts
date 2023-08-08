@@ -68,7 +68,7 @@ export default class VariabilityModel extends CAVModel {
       } );
     } );
 
-    const accordionBoxTandem = providedOptions.tandem.createTandem( 'spreadAccordionBox' );
+    const accordionBoxTandem = providedOptions.tandem.createTandem( 'variabilityMeasureAccordionBox' );
 
     const options = optionize<VariabilityModelOptions, SelfOptions, CAVModelOptions>()( {
       accordionBoxTandem: accordionBoxTandem,
