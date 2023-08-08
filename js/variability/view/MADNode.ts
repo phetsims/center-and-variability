@@ -47,14 +47,13 @@ export default class MADNode extends CAVPlotNode {
       fill: CAVColors.madRectangleColorProperty
     } );
 
-    const meanLineWidth = 1;
     const meanLine = new Line( 0, 0, 0, madRectangle.height, {
       stroke: CAVColors.meanColorProperty,
-      lineWidth: meanLineWidth
+      lineWidth: 1
     } );
     const meanLabelLine = new Line( 0, 0, 0, 25, {
       stroke: CAVColors.meanColorProperty,
-      lineWidth: meanLineWidth
+      lineWidth: 1
     } );
 
     const meanEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.meanEqualsValueMPatternStringProperty,
@@ -90,11 +89,6 @@ export default class MADNode extends CAVPlotNode {
     const lineContainer = new Node();
     this.addChild( madRectangle );
     madRectangle.moveToBack();
-
-    this.addChild( meanLine );
-    if ( options.parentContext === 'info' ) {
-      this.addChild( meanLabelLine );
-    }
     this.addChild( lineContainer );
 
     // this contains the top brackets and MAD labels so that their visibility can be controlled together
@@ -106,6 +100,11 @@ export default class MADNode extends CAVPlotNode {
     madAnnotationContainer.addChild( rightReadout );
 
     this.addChild( madAnnotationContainer );
+
+    this.addChild( meanLine );
+    if ( options.parentContext === 'info' ) {
+      this.addChild( meanLabelLine );
+    }
 
     const update = () => {
 
@@ -127,12 +126,8 @@ export default class MADNode extends CAVPlotNode {
         // Underneath the top of the rectangle
         let y = 0;
         soccerBalls.forEach( soccerBall => {
-
-          // offset x2 of the deviation line by half of the mean line's stroke width so it doesn't overlap
-          const lineOffsetX = soccerBall.valueProperty.value !== null && soccerBall.valueProperty.value >= mean ? 0.5 * meanLineWidth : -0.5 * meanLineWidth;
-
           const x1 = this.modelViewTransform.modelToViewX( soccerBall.valueProperty.value! );
-          const x2 = this.modelViewTransform.modelToViewX( mean ) + lineOffsetX;
+          const x2 = this.modelViewTransform.modelToViewX( mean );
           const line = new Line( x1, y, x2, y, {
             stroke: 'black'
           } );
@@ -140,7 +135,7 @@ export default class MADNode extends CAVPlotNode {
           children.push( line );
 
           // If the line is too short, show a dot to make it visible
-          if ( soccerBall.valueProperty.value !== null && Math.abs( soccerBall.valueProperty.value - mean ) < 0.05 ) {
+          if ( Math.abs( x2 - x1 ) < 1E-4 ) {
             children.push( new Circle( 1.5, {
               fill: 'black',
               center: line.center
