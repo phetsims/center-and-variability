@@ -31,6 +31,7 @@ import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js'
 import PlotType from '../../common/model/PlotType.js';
 import ButtonNode from '../../../../sun/js/buttons/ButtonNode.js';
 import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
+import { createGatedVisibleProperty } from '../../common/model/createGatedVisibleProperty.js';
 
 export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
   private readonly medianPlotNode: MeanAndMedianPlotNode;
@@ -92,8 +93,8 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
         fill: fill,
         font: new PhetFont( 16 ),
         maxWidth: 170,
-        visibleProperty: visibleProperty,
-        tandem: readoutTextTandem
+        tandem: readoutTextTandem,
+        visibleProperty: createGatedVisibleProperty( visibleProperty, readoutTextTandem )
       } );
     };
 
