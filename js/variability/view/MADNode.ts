@@ -106,9 +106,14 @@ export default class MADNode extends CAVPlotNode {
       this.addChild( meanLabelLine );
     }
 
+    // this contains the dots for deviations of zero, which appear in front of the mean line
+    const zeroDotContainer = new Node();
+    this.addChild( zeroDotContainer );
+
     const update = () => {
 
       const children: Node[] = [];
+      const zeroDots: Node[] = [];
 
       const soccerBalls = sceneModel.getSortedLandedObjects();
 
@@ -120,12 +125,14 @@ export default class MADNode extends CAVPlotNode {
       if ( soccerBalls.length > 0 ) {
         const mean = _.mean( soccerBalls.map( dot => dot.valueProperty.value ) );
 
-        // top margin is MAD_MARGIN_TOP, bottom margin is MAD_MARGIN_BOTTOM_MIN + MAD_MARGIN_BOTTOM_FACTOR * lineDeltaY
-        const lineDeltaY = ( CAVConstants.VARIABILITY_PLOT_RECT_HEIGHT - MAD_MARGIN_TOP - MAD_MARGIN_BOTTOM_MIN ) / ( MAX_KICKS_PROPERTY.value - 1 + MAD_MARGIN_BOTTOM_FACTOR );
+        // In the accordion box, start the deviation lines below the top of the MAD rectangle and build downwards.
+        // In the info dialog, start the deviation lines above the number line and build upwards.
+        let y = options.parentContext === 'info' ? this.modelViewTransform.modelToViewY( 0 ) - 10 : madRectangle.top + MAD_MARGIN_TOP;
 
-        // Underneath the top of the rectangle
-        let y = 0;
-        soccerBalls.forEach( soccerBall => {
+        // top margin is MAD_MARGIN_TOP, bottom margin is MAD_MARGIN_BOTTOM_MIN + MAD_MARGIN_BOTTOM_FACTOR * lineDeltaY
+        const lineDeltaY = options.parentContext === 'info' ? -12 : ( CAVConstants.VARIABILITY_PLOT_RECT_HEIGHT - MAD_MARGIN_TOP - MAD_MARGIN_BOTTOM_MIN ) / ( MAX_KICKS_PROPERTY.value - 1 + MAD_MARGIN_BOTTOM_FACTOR );
+
+                         soccerBalls.forEach( soccerBall => {
           const x1 = this.modelViewTransform.modelToViewX( soccerBall.valueProperty.value! );
           const x2 = this.modelViewTransform.modelToViewX( mean );
           const line = new Line( x1, y, x2, y, {
@@ -136,7 +143,7 @@ export default class MADNode extends CAVPlotNode {
 
           // If the line is too short, show a dot to make it visible
           if ( Math.abs( x2 - x1 ) < 1E-4 ) {
-            children.push( new Circle( 1.5, {
+            zeroDots.push( new Circle( 1.5, {
               fill: 'black',
               center: line.center
             } ) );
@@ -170,12 +177,15 @@ export default class MADNode extends CAVPlotNode {
             children.push( text );
           }
 
-          y += options.parentContext === 'info' ? 12 : lineDeltaY;
+          y += lineDeltaY;
         } );
       }
 
       lineContainer.children = children;
       lineContainer.visible = soccerBalls.length > 0;
+
+      zeroDotContainer.children = zeroDots;
+      zeroDotContainer.visible = soccerBalls.length > 0;
 
       const mad = sceneModel.madValueProperty.value;
 
@@ -184,14 +194,9 @@ export default class MADNode extends CAVPlotNode {
 
       if ( mad !== null ) {
         const viewCenterX = this.modelViewTransform.modelToViewX( sceneModel.meanValueProperty.value! );
-        const viewFloorY = this.modelViewTransform.modelToViewY( 0 );
 
         if ( options.parentContext === 'info' ) {
-          lineContainer.bottom = viewFloorY - 10;
           madRectangle.rectHeight = children.length > 0 ? lineContainer.height + textNodes[ 0 ].height : 0;
-        }
-        else {
-          lineContainer.top = madRectangle.top + MAD_MARGIN_TOP;
         }
 
         madRectangle.centerX = viewCenterX;
