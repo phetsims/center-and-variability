@@ -112,8 +112,8 @@ export default class MADNode extends CAVPlotNode {
 
     const update = () => {
 
-      const linesAndText: Node[] = [];
-      const zeroDots: Node[] = [];
+      const linesAndTextNodes: Node[] = [];
+      const zeroDotNodes: Node[] = [];
 
       const soccerBalls = sceneModel.getSortedLandedObjects();
 
@@ -139,11 +139,11 @@ export default class MADNode extends CAVPlotNode {
             stroke: 'black'
           } );
 
-          linesAndText.push( line );
+          linesAndTextNodes.push( line );
 
           // If the line is too short, show a dot to make it visible
           if ( Math.abs( x2 - x1 ) < 1E-4 ) {
-            zeroDots.push( new Circle( 1.5, {
+            zeroDotNodes.push( new Circle( 1.5, {
               fill: 'black',
               center: line.center
             } ) );
@@ -174,15 +174,15 @@ export default class MADNode extends CAVPlotNode {
               text.left = Math.max( text.left, line.left + MARGIN );
             }
 
-            linesAndText.push( text );
+            linesAndTextNodes.push( text );
           }
 
           y += lineDeltaY;
         } );
       }
 
-      linesAndTextContainer.children = linesAndText;
-      zeroDotContainer.children = zeroDots;
+      linesAndTextContainer.children = linesAndTextNodes;
+      zeroDotContainer.children = zeroDotNodes;
 
       const mad = sceneModel.madValueProperty.value;
 
@@ -193,7 +193,7 @@ export default class MADNode extends CAVPlotNode {
         const viewCenterX = this.modelViewTransform.modelToViewX( sceneModel.meanValueProperty.value! );
 
         if ( options.parentContext === 'info' ) {
-          madRectangle.rectHeight = linesAndText.length > 0 ? linesAndTextContainer.height + textNodes[ 0 ].height : 0;
+          madRectangle.rectHeight = linesAndTextNodes.length > 0 ? linesAndTextContainer.height + textNodes[ 0 ].height : 0;
         }
 
         madRectangle.centerX = viewCenterX;
