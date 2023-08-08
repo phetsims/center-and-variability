@@ -155,7 +155,8 @@ export default class CAVScreenView extends ScreenView {
       ( kicker, sceneModel ) => this.getKickerImageSets( kicker, sceneModel ),
       modelViewTransform,
       CAVConstants.PHYSICAL_RANGE, {
-        //The variability screen has multiple scenes, and we want to connect these to a specific kicker, while the first
+
+        // The variability screen has multiple scenes, and we want to connect these to a specific kicker, while the first
         // two screens have multiple kickers in the same scene.
         tandem: model.sceneModels.length === 1 ?
                 options.tandem.createTandem1Indexed( CAVConstants.SCENE_VIEW_TANDEM, index ) :
@@ -388,6 +389,9 @@ export default class CAVScreenView extends ScreenView {
 
     this.accordionBox.boundsProperty.link( this.updateMedianNode );
     this.accordionBox.boundsProperty.link( this.updateDragIndicatorNode );
+    this.accordionBox.boundsProperty.link( () => {
+      this.sceneViews.forEach( sceneView => sceneView.setGroupFocusHighlightTop( this.accordionBox!.bounds.bottom ) );
+    } );
   }
 
   /**
