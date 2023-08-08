@@ -38,8 +38,8 @@ export default class MeanAndMedianModel extends CAVModel {
 
   private lastHighlightAnimationStepTime = 0;
   public readonly isMedianAnimationCompleteProperty = new BooleanProperty( false );
-  public readonly medianVisibleProperty: BooleanProperty;
-  public readonly meanVisibleProperty: BooleanProperty;
+  public readonly isMedianVisibleProperty: BooleanProperty;
+  public readonly isMeanVisibleProperty: BooleanProperty;
   public readonly isPredictMeanVisibleProperty: BooleanProperty;
   public readonly predictMeanValueProperty: NumberProperty;
   public readonly isPredictMeanKeyboardDraggingProperty: Property<boolean>;
@@ -75,15 +75,15 @@ export default class MeanAndMedianModel extends CAVModel {
 
     super( MAX_KICKS_PROPERTY, [ sceneModel ], options );
 
-    this.meanVisibleProperty = new BooleanProperty( false, {
-      tandem: accordionBoxTandem.createTandem( 'meanVisibleProperty' )
+    this.isMeanVisibleProperty = new BooleanProperty( false, {
+      tandem: accordionBoxTandem.createTandem( 'isMeanVisibleProperty' )
     } );
-    this.medianVisibleProperty = new BooleanProperty( false, {
+    this.isMedianVisibleProperty = new BooleanProperty( false, {
       tandem: accordionBoxTandem.createTandem( 'isMedianVisibleProperty' )
     } );
 
     // Don't show animation on startup or when setting PhET-iO state
-    this.medianVisibleProperty.lazyLink( isTopMedianVisible => {
+    this.isMedianVisibleProperty.lazyLink( isTopMedianVisible => {
       if ( isTopMedianVisible && sceneModel.medianValueProperty.value !== null ) {
 
         if ( !isSettingPhetioStateProperty.value ) {
@@ -128,8 +128,8 @@ export default class MeanAndMedianModel extends CAVModel {
     super.reset();
     this.setHighlightAnimationIndex( null );
     this.isMedianAnimationCompleteProperty.reset();
-    this.meanVisibleProperty.reset();
-    this.medianVisibleProperty.reset();
+    this.isMeanVisibleProperty.reset();
+    this.isMedianVisibleProperty.reset();
     this.predictMeanValueProperty.reset();
     this.isPredictMeanVisibleProperty.reset();
   }

@@ -46,8 +46,8 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
     } );
 
     const checkboxGroup = CAVConstants.ACCORDION_BOX_VERTICAL_CHECKBOX_GROUP.createBox( new VerticalCheckboxGroup( [
-      AccordionBoxCheckboxFactory.getMedianCheckboxWithIconItem( model.medianVisibleProperty ),
-      AccordionBoxCheckboxFactory.getMeanCheckboxWithIconItem( model.meanVisibleProperty, model )
+      AccordionBoxCheckboxFactory.getMedianCheckboxWithIconItem( model.isMedianVisibleProperty ),
+      AccordionBoxCheckboxFactory.getMeanCheckboxWithIconItem( model.isMeanVisibleProperty, model )
     ], {
       tandem: tandem.createTandem( 'checkboxGroup' )
     } ), { yAlign: 'top' } );
@@ -97,7 +97,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
       children: [
         createReadoutText(
           sceneModel.medianValueProperty,
-          model.medianVisibleProperty,
+          model.isMedianVisibleProperty,
           CenterAndVariabilityStrings.medianEqualsValueMPatternStringProperty,
           CenterAndVariabilityStrings.medianUnknownValueStringProperty,
           CAVColors.medianColorProperty,
@@ -106,7 +106,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
         ),
         createReadoutText(
           sceneModel.meanValueProperty,
-          model.meanVisibleProperty,
+          model.isMeanVisibleProperty,
           CenterAndVariabilityStrings.meanEqualsValueMPatternStringProperty,
           CenterAndVariabilityStrings.meanUnknownValueStringProperty,
           CAVColors.meanColorProperty,

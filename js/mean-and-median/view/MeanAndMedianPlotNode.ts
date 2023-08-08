@@ -65,7 +65,7 @@ export default class MeanAndMedianPlotNode extends CAVPlotNode {
       const MARGIN_Y = 10;
 
       // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card
-      if ( options.parentContext === 'accordion' && model.medianVisibleProperty.value && leftmostSoccerBall && medianValue !== null ) {
+      if ( options.parentContext === 'accordion' && model.isMedianVisibleProperty.value && leftmostSoccerBall && medianValue !== null ) {
 
         // No matter how high the stack of dots or x's is, we only want the median bar to go up to 5.
         // Assumes all the dots have the same radius. Also move up based on the notch height.
@@ -92,16 +92,16 @@ export default class MeanAndMedianPlotNode extends CAVPlotNode {
     };
 
     const updateOneKickTextVisibility = () => {
-      needAtLeastOneKickText.visible = sceneModel.numberOfDataPointsProperty.value === 0 && ( options.parentContext === 'info' || model.medianVisibleProperty.value || model.meanVisibleProperty.value );
+      needAtLeastOneKickText.visible = sceneModel.numberOfDataPointsProperty.value === 0 && ( options.parentContext === 'info' || model.isMedianVisibleProperty.value || model.isMeanVisibleProperty.value );
     };
 
     sceneModel.objectChangedEmitter.addListener( updateMedianBarNode );
     sceneModel.objectChangedEmitter.addListener( updateOneKickTextVisibility );
     sceneModel.medianValueProperty.link( updateMedianBarNode );
-    model.medianVisibleProperty.link( updateMedianBarNode );
+    model.isMedianVisibleProperty.link( updateMedianBarNode );
     model.isMedianAnimationCompleteProperty.link( updateMedianBarNode );
-    model.medianVisibleProperty.link( updateOneKickTextVisibility );
-    model.meanVisibleProperty.link( updateOneKickTextVisibility );
+    model.isMedianVisibleProperty.link( updateOneKickTextVisibility );
+    model.isMeanVisibleProperty.link( updateOneKickTextVisibility );
 
   }
 }
