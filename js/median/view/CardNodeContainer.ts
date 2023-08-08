@@ -356,9 +356,7 @@ export default class CardNodeContainer extends InteractiveHighlightingNode {
       },
       blur: () => {
         isCardGrabbedProperty.value = false;
-      },
-      over: () => console.log( 'over card node container' ),
-      out: () => console.log( 'out of card node container' )
+      }
     } );
 
     const hitRect = new Path( null, { fill: '#aaaa00', opacity: 0 } );
