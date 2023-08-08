@@ -8,7 +8,7 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import { FocusHighlightFromNode, FocusHighlightPath, Image, KeyboardListener, LinearGradient, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
+import { FocusHighlightFromNode, FocusHighlightPath, Image, InteractiveHighlightingNode, KeyboardListener, LinearGradient, Node, NodeOptions, Path, Text } from '../../../../scenery/js/imports.js';
 import CardNode, { cardDropClip, cardPickUpSoundClip, PICK_UP_DELTA_X, PICK_UP_DELTA_Y } from './CardNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Panel from '../../../../sun/js/Panel.js';
@@ -49,7 +49,7 @@ soundManager.addSoundGenerator( successSoundClip );
 
 export type CardNodeContainerOptions = EmptySelfOptions & NodeOptions;
 
-export default class CardNodeContainer extends Node {
+export default class CardNodeContainer extends InteractiveHighlightingNode {
   private readonly model: CardContainerModel;
   public readonly cardNodes: CardNode[];
   private readonly cardMap = new Map<CardModel, CardNode>();
@@ -356,8 +356,14 @@ export default class CardNodeContainer extends Node {
       },
       blur: () => {
         isCardGrabbedProperty.value = false;
-      }
+      },
+      over: () => console.log( 'over card node container' ),
+      out: () => console.log( 'out of card node container' )
     } );
+
+    const hitRect = new Path( null, { fill: '#aaaa00', opacity: 0 } );
+    this.addChild( hitRect );
+    hitRect.moveToBack();
 
     Multilink.multilink( [ focusedCardNodeProperty, isCardGrabbedProperty ], ( focusedCardNode, isCardGrabbed ) => {
         if ( focusedCardNode ) {
@@ -468,7 +474,9 @@ export default class CardNodeContainer extends Node {
     focusHighlightWidthProperty.link( focusHighlightWidth => {
       const marginX = 7;
       const marginY = CAVConstants.CARD_SPACING + 3;
-      focusHighlightFromNode.setShape( Shape.rect( -marginX, -marginY, focusHighlightWidth + 2 * marginX, CAVConstants.CARD_DIMENSION + 2 * marginY ) );
+      const focusRect = Shape.rect( -marginX, -marginY, focusHighlightWidth + 2 * marginX, CAVConstants.CARD_DIMENSION + 2 * marginY );
+      focusHighlightFromNode.setShape( focusRect );
+      hitRect.setShape( focusRect );
     } );
 
     this.setGroupFocusHighlight( focusHighlightFromNode );
