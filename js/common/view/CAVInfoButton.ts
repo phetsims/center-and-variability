@@ -15,7 +15,7 @@ import Emitter from '../../../../axon/js/Emitter.js';
 export default class CAVInfoButton extends InfoButton {
   public constructor( infoButtonPressedEmitter: Emitter, backgroundShape: Shape, tandem: Tandem ) {
     super( {
-      iconFill: 'cornflowerblue',
+      iconFill: '#2C60E2',
       scale: 0.5,
       touchAreaDilation: 5,
       tandem: tandem,
