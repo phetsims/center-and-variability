@@ -65,7 +65,7 @@ type SelfOptions = {
   parentContext: 'info' | 'accordion';
 };
 
-type CardContainerModelOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem' > &
+type CardContainerModelOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'> &
   StrictOmit<PhetioObjectOptions, 'phetioType' | 'phetioState'>;
 
 export default class CardContainerModel extends PhetioObject {

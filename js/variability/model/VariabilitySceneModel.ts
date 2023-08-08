@@ -36,7 +36,8 @@ export default class VariabilitySceneModel extends CAVSoccerSceneModel<Variabili
   private readonly initialized: boolean = false;
   public readonly variabilityDataMeasuresUpdatedEmitter: Emitter = new Emitter();
 
-  public constructor( maxKicksProperty: TReadOnlyProperty<number>, kickDistanceStrategy: TKickDistanceStrategy, regionAndCultureProperty: Property<CharacterSet | null>, options: { tandem: Tandem;
+  public constructor( maxKicksProperty: TReadOnlyProperty<number>, kickDistanceStrategy: TKickDistanceStrategy, regionAndCultureProperty: Property<CharacterSet | null>, options: {
+    tandem: Tandem;
   } ) {
     super(
       maxKicksProperty,

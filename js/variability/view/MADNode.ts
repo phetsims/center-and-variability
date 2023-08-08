@@ -132,8 +132,8 @@ export default class MADNode extends CAVPlotNode {
         // Start the deviation lines below the top of the MAD rectangle and build downwards
         // In the info dialog, ensure that there is a margin of 10 between the number line and the bottom deviation line
         let y = options.parentContext === 'info' ?
-                  this.modelViewTransform.modelToViewY( 0 ) - 10 - ( soccerBalls.length - 1 ) * lineDeltaY :
-                  madRectangle.top + MAD_MARGIN_TOP;
+                this.modelViewTransform.modelToViewY( 0 ) - 10 - ( soccerBalls.length - 1 ) * lineDeltaY :
+                madRectangle.top + MAD_MARGIN_TOP;
 
         soccerBalls.forEach( soccerBall => {
           const x1 = this.modelViewTransform.modelToViewX( soccerBall.valueProperty.value! );

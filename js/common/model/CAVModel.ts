@@ -112,7 +112,7 @@ export default class CAVModel extends PhetioObject {
       } );
     } );
 
-    this.infoButtonPressedEmitter = new Emitter( );
+    this.infoButtonPressedEmitter = new Emitter();
 
     // These DynamicProperties allow us to track all the necessary scenes Properties for dragIndicator update, and not
     // just the first selectedScene
