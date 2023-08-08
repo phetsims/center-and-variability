@@ -39,6 +39,7 @@ export default class VariabilityModel extends CAVModel {
   public readonly isPointerKeyboardDraggingProperty: Property<boolean>;
 
   public readonly isIntervalToolVisibleProperty: Property<boolean>;
+  public readonly isIntervalToolEnabledProperty: Property<boolean>;
   public readonly intervalTool1ValueProperty: NumberProperty;
   public readonly intervalTool2ValueProperty: NumberProperty;
 
@@ -113,7 +114,11 @@ export default class VariabilityModel extends CAVModel {
     const intervalToolTandem = this.playAreaTandem.createTandem( 'intervalTool' );
 
     this.isIntervalToolVisibleProperty = new BooleanProperty( false, {
-      tandem: intervalToolTandem.createTandem( 'visibleProperty' )
+      tandem: intervalToolTandem.createTandem( 'isVisibleProperty' )
+    } );
+
+    this.isIntervalToolEnabledProperty = new BooleanProperty( true, {
+      tandem: intervalToolTandem.createTandem( 'isEnabledProperty' )
     } );
 
     this.intervalTool1ValueProperty = new NumberProperty( 1.7, {
