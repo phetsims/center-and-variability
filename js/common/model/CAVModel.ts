@@ -80,7 +80,7 @@ export default class CAVModel extends PhetioObject {
       tandem: options.instrumentMeanProperty ? this.playAreaTandem.createTandem( 'isPlayAreaMeanVisibleProperty' ) : Tandem.OPT_OUT
     } );
     this.isPlayAreaMedianVisibleProperty = new BooleanProperty( false, {
-      tandem: this.playAreaTandem.createTandem( 'isPlayAreaMedianVisibleProperty' )
+      tandem: this.playAreaTandem.createTandem( 'isMedianVisibleProperty' )
     } );
 
     this.isPredictMedianVisibleProperty = new BooleanProperty( false, {
