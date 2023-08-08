@@ -1,4 +1,11 @@
 // Copyright 2023, University of Colorado Boulder
+/**
+ * Accordion Box in the Mean and Median Screen. Contains a plotNode
+ * and checkboxes that allow the user to see a visual indication of the mean
+ * and median in the plotNode.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
 
 import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
 import { AlignBox, Text, TPaint, VBox } from '../../../../scenery/js/imports.js';

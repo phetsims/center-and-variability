@@ -1,5 +1,11 @@
 // Copyright 2023, University of Colorado Boulder
 
+/**
+ * Shows the highlighted area for the interval tool in the play area.
+ *
+ * @author Sam Reid (PhET Interactive Simulations);
+ */
+
 import centerAndVariability from '../../centerAndVariability.js';
 import { DragListener, Line, Node, NodeOptions, Rectangle } from '../../../../scenery/js/imports.js';
 import CAVColors from '../../common/CAVColors.js';
@@ -17,12 +23,6 @@ import Range from '../../../../dot/js/Range.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-
-/**
- * Shows the highlighted area for the interval tool in the play area.
- *
- * @author Sam Reid (PhET Interactive Simulations);
- */
 
 type SelfOptions = EmptySelfOptions;
 type ParentOptions = NodeOptions & AccessibleSliderOptions;

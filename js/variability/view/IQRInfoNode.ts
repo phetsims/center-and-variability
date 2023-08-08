@@ -1,5 +1,12 @@
 // Copyright 2023, University of Colorado Boulder
 
+/**
+ * Contains the definition of IQR, shows the IQR calculation, and a plot node with
+ * quartile range.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ */
+
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import { Text, VBox } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';

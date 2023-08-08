@@ -1,4 +1,11 @@
 // Copyright 2023, University of Colorado Boulder
+/**
+ * Allows for randomly choosing between a left skewed and right skewed data distribution.
+ * Also provides support for PhET-iO usage and customization.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import CAVConstants from '../CAVConstants.js';
 import { DistributionStrategy, ExactDistancesStrategy, TKickDistanceStrategy } from '../../../../soccer-common/js/model/TKickDistanceStrategy.js';

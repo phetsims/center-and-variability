@@ -1,5 +1,11 @@
 // Copyright 2023, University of Colorado Boulder
 
+/**
+ * Must show one of three plot nodes according to the selectedVariabilityMeasureProperty.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import Dialog from '../../../../sun/js/Dialog.js';

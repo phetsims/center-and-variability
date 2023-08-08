@@ -2,6 +2,8 @@
 
 /**
  * ComboBox in PreferencesDialog that provides options on the maximum number of kicks allowed per scene.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
  */
 
 import ComboBox from '../../../../sun/js/ComboBox.js';

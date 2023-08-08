@@ -1,5 +1,12 @@
 // Copyright 2023, University of Colorado Boulder
 
+/**
+ * Accordion box for the Variability Screen. There are three possible plot nodes it can render:
+ * Range, IQR, and MAD. The accordion box creates four of each plot node, 1 per scene.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import { AlignBox, FocusHighlightFromNode, VBox } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import Tandem from '../../../../tandem/js/Tandem.js';

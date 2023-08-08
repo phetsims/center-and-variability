@@ -1,14 +1,15 @@
 // Copyright 2023, University of Colorado Boulder
 
-import centerAndVariability from '../../centerAndVariability.js';
-import { Line, Node, Rectangle, RectangleOptions } from '../../../../scenery/js/imports.js';
-import { combineOptions } from '../../../../phet-core/js/optionize.js';
-
 /**
  * Icon for the IQR radio button.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
+
+import centerAndVariability from '../../centerAndVariability.js';
+import { Line, Node, Rectangle, RectangleOptions } from '../../../../scenery/js/imports.js';
+import { combineOptions } from '../../../../phet-core/js/optionize.js';
+
 
 export default class IQRIconNode extends Node {
   public constructor() {

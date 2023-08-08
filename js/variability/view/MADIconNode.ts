@@ -1,14 +1,13 @@
 // Copyright 2023, University of Colorado Boulder
 
-import centerAndVariability from '../../centerAndVariability.js';
-import { Line, Node, Rectangle } from '../../../../scenery/js/imports.js';
-import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
-
 /**
  * Icon for the PurpleArrow radio button.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
+import centerAndVariability from '../../centerAndVariability.js';
+import { Line, Node, Rectangle } from '../../../../scenery/js/imports.js';
+import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 
 export default class MADIconNode extends Node {
   public constructor() {

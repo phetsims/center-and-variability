@@ -1,5 +1,12 @@
 // Copyright 2023, University of Colorado Boulder
 
+/**
+ * Show all the highlights for the median soccer balls in the front layer.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ * @author Matt Blackman (PhET Interactive Simulations)
+ */
+
 import { Circle, Node, NodeOptions } from '../../../../scenery/js/imports.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
@@ -13,12 +20,6 @@ import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 type SelfOptions = EmptySelfOptions;
 type MedianHighlightLayerOptions = SelfOptions & NodeOptions;
 
-/**
- * Show all the highlights for the median soccer balls in the front layer.
- *
- * @author Sam Reid (PhET Interactive Simulations)
- * @author Matt Blackman (PhET Interactive Simulations)
- */
 export default class MedianHighlightLayer extends Node {
   public constructor( sceneModel: CAVSoccerSceneModel, modelViewTransform: ModelViewTransform2, isPlayAreaMedianVisibleProperty: TReadOnlyProperty<boolean>, providedOptions: MedianHighlightLayerOptions ) {
 

@@ -1,5 +1,12 @@
 // Copyright 2023, University of Colorado Boulder
 
+/**
+ * Adds on MAD specific characteristics to the plot node including: deviation lines, a MAD interval rectangle,
+ * and labels.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import { Circle, Line, ManualConstraint, Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';

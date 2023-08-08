@@ -1,5 +1,12 @@
 // Copyright 2023, University of Colorado Boulder
 
+/**
+ * Contains the definition of MAD, the MAD calculation, and a plot node that renders
+ * the deviation lines and MAD interval.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import { HBox, HSeparator, Text, VBox } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';

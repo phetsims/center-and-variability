@@ -1,5 +1,12 @@
 // Copyright 2023, University of Colorado Boulder
 
+/**
+ * Adds on IQR specific visuals to the plot node including a boxWhisker, iqr label, and a
+ * rectangle that highlights the IQR interval
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ */
+
 import { Line, ManualConstraint, Node, Path, ProfileColorProperty, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';

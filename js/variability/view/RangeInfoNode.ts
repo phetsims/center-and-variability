@@ -1,5 +1,12 @@
 // Copyright 2023, University of Colorado Boulder
 
+/**
+ * Contains the definition of range, a plot node that showcases the range Interval, and
+ * a range calculation.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import { Text, VBox } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';

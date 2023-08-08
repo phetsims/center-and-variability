@@ -1,5 +1,11 @@
 // Copyright 2023, University of Colorado Boulder
 
+/**
+ * Radio Button group that allows use to choose between the different variability measures.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import RectangularRadioButtonGroup, { RectangularRadioButtonGroupOptions } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import centerAndVariability from '../../centerAndVariability.js';

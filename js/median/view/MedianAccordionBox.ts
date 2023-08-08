@@ -1,5 +1,12 @@
 // Copyright 2023, University of Colorado Boulder
 
+/**
+ * Accordion box in the Median screen. Renders cards that can be dragged and sorted.
+ * Has checkboxes that allows the user to visualize the median in a sorted set of cards.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
 import CardNodeContainer from './CardNodeContainer.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';

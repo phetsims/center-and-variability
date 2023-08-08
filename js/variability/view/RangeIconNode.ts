@@ -1,5 +1,11 @@
 // Copyright 2023, University of Colorado Boulder
 
+/**
+ * Icon for the range radio button. Dynamically changes between dot plot and line plot based on preferences.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import centerAndVariability from '../../centerAndVariability.js';
 import { Circle, Line, Node, Path, PathOptions, Rectangle } from '../../../../scenery/js/imports.js';
 import CAVColors from '../../common/CAVColors.js';

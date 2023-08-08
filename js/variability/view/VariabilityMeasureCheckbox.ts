@@ -1,5 +1,12 @@
 // Copyright 2023, University of Colorado Boulder
 
+/**
+ * A checkbox in the variability accordion box that controls whether a variability readout text
+ * is showing or not.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import Checkbox, { CheckboxOptions } from '../../../../sun/js/Checkbox.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import { TColor, Text } from '../../../../scenery/js/imports.js';

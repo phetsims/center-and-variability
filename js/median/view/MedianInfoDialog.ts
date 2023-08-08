@@ -1,5 +1,11 @@
 // Copyright 2023, University of Colorado Boulder
 
+/**
+ * Info dialog on the median screen. Contains the MedianInfoNode
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import centerAndVariability from '../../centerAndVariability.js';
 import Dialog from '../../../../sun/js/Dialog.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
