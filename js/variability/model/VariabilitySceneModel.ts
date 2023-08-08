@@ -9,7 +9,6 @@
 import SoccerSceneModel from '../../../../soccer-common/js/model/SoccerSceneModel.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import { TKickDistanceStrategy } from '../../../../soccer-common/js/model/TKickDistanceStrategy.js';
 import Property from '../../../../axon/js/Property.js';
@@ -22,6 +21,8 @@ import { kickDistanceStrategyFromStateObject } from '../../common/model/RandomSk
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import VariabilitySoccerBall from './VariabilitySoccerBall.js';
 import CharacterSet from '../../../../joist/js/preferences/CharacterSet.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 
 export default class VariabilitySceneModel extends CAVSoccerSceneModel<VariabilitySoccerBall> {
 
@@ -36,9 +37,8 @@ export default class VariabilitySceneModel extends CAVSoccerSceneModel<Variabili
   private readonly initialized: boolean = false;
   public readonly variabilityDataMeasuresUpdatedEmitter: Emitter = new Emitter();
 
-  public constructor( maxKicksProperty: TReadOnlyProperty<number>, kickDistanceStrategy: TKickDistanceStrategy, regionAndCultureProperty: Property<CharacterSet | null>, options: {
-    tandem: Tandem;
-  } ) {
+  public constructor( maxKicksProperty: TReadOnlyProperty<number>, kickDistanceStrategy: TKickDistanceStrategy,
+                      regionAndCultureProperty: Property<CharacterSet | null>, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
     super(
       maxKicksProperty,
       CAVConstants.MAX_KICKS_VALUES,
