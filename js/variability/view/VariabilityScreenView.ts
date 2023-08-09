@@ -81,7 +81,6 @@ export default class VariabilityScreenView extends CAVScreenView {
         visibleProperty: model.isPointerVisibleProperty,
         tandem: pointerTandem
       } );
-    pointerSlider.addDragListener( pointerTandem );
 
     const createPredictionSliderOptions = ( tandem: Tandem ) => {
 
@@ -111,14 +110,12 @@ export default class VariabilityScreenView extends CAVScreenView {
         valueProperty: model.intervalTool1ValueProperty,
         tandem: toolHandle1Tandem
       }, createPredictionSliderOptions( toolHandle1Tandem ) ) );
-    handle1.addDragListener( toolHandle1Tandem );
 
     const handle2 = new IntervalToolPredictionSlider( model.intervalTool2ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE,
       isIntervalHandle2BeingDraggedProperty, new BooleanProperty( false ), combineOptions<PredictionSliderOptions>( {
         valueProperty: model.intervalTool2ValueProperty,
         tandem: toolHandle2Tandem
       }, createPredictionSliderOptions( toolHandle2Tandem ) ) );
-    handle2.addDragListener( toolHandle2Tandem );
 
     const variabilityAccordionBox = new VariabilityAccordionBox(
       model,

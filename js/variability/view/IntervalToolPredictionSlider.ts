@@ -12,10 +12,8 @@ import PredictionSlider, { PredictionSliderOptions } from '../../common/view/Pre
 import centerAndVariability from '../../centerAndVariability.js';
 import Property from '../../../../axon/js/Property.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { DragListener } from '../../../../scenery/js/imports.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Range from '../../../../dot/js/Range.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 
 type IntervalToolPredictionSliderOptions = PredictionSliderOptions;
 
@@ -45,26 +43,11 @@ export default class IntervalToolPredictionSlider extends PredictionSlider {
       },
       endDrag: () => {
         isKeyboardDraggingProperty.value = false;
-      }
+      },
+      isMouseTouchDraggingProperty: isMouseTouchDraggingProperty
     }, providedOptions );
 
-
     super( predictionProperty, modelViewTransform, dragRange, options );
-  }
-
-  // TODO: we wanted to call this in the constructor, but ran into various roadblocks... see: https://github.com/phetsims/center-and-variability/issues/225;
-  public override addDragListener( tandem: Tandem ): void {
-    this.addInputListener( new DragListener( {
-      tandem: tandem.createTandem( 'dragListener' ),
-      positionProperty: this.dragPositionProperty,
-      start: () => {
-        this.isMouseTouchDraggingProperty.value = true;
-        this.moveToFront();
-      },
-      end: () => {
-        this.isMouseTouchDraggingProperty.value = false;
-      }
-    } ) );
   }
 }
 

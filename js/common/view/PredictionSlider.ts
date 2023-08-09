@@ -18,7 +18,6 @@ import Utils from '../../../../dot/js/Utils.js';
 import PredictionThumbNode, { PredictionThumbNodeOptions } from './PredictionThumbNode.js';
 import AccessibleSlider, { AccessibleSliderOptions } from '../../../../sun/js/accessibility/AccessibleSlider.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 
 type SelfOptions = {
@@ -26,6 +25,8 @@ type SelfOptions = {
 
   // Round to the nearest specified number, or, if null, there is no rounding. Mean is continuous, median is rounded to 0.5
   roundToInterval: number | null;
+
+  isMouseTouchDraggingProperty?: Property<boolean> | null;
 };
 type ParentOptions = AccessibleSliderOptions & NodeOptions;
 export type PredictionSliderOptions = SelfOptions & WithRequired<ParentOptions, 'tandem'>;
@@ -56,7 +57,8 @@ export default class PredictionSlider extends AccessibleSlider( Node, 0 ) {
       startDrag: () => {
         this.moveToFront();
       },
-      disabledOpacity: SceneryConstants.DISABLED_OPACITY
+      disabledOpacity: SceneryConstants.DISABLED_OPACITY,
+      isMouseTouchDraggingProperty: null
     }, providedOptions );
 
     super( options );
@@ -82,14 +84,20 @@ export default class PredictionSlider extends AccessibleSlider( Node, 0 ) {
     } );
 
     this.dragPositionProperty = dragPositionProperty;
-  }
 
-  public addDragListener( tandem:Tandem ): void {
     this.addInputListener( new DragListener( {
-      tandem: tandem.createTandem( 'dragListener' ),
+      tandem: options.tandem.createTandem( 'dragListener' ),
       positionProperty: this.dragPositionProperty,
       start: () => {
+        if ( options.isMouseTouchDraggingProperty ) {
+          options.isMouseTouchDraggingProperty.value = true;
+        }
         this.moveToFront();
+      },
+      end: () => {
+        if ( options.isMouseTouchDraggingProperty ) {
+          options.isMouseTouchDraggingProperty.value = false;
+        }
       }
     } ) );
   }

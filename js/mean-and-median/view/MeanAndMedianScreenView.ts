@@ -73,8 +73,6 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
         tandem: predictMeanTandem
       } );
 
-    predictMeanNode.addDragListener( predictMeanTandem );
-
     this.backScreenViewLayer.addChild( predictMeanNode );
 
     const predictMedianNode = CAVScreenView.createPredictMedianNode(

@@ -475,8 +475,6 @@ export default class CAVScreenView extends ScreenView {
       tandem: tandem
     } );
 
-    predictionSlider.addDragListener( tandem );
-
     return predictionSlider;
   }
 }
