@@ -133,8 +133,16 @@ export default class VariabilitySceneModel extends CAVSoccerSceneModel<Variabili
         const q3Objects = SoccerSceneModel.getMedianObjectsFromSortedArray( upperHalf );
 
         // take the average to account for cases where there is more than one object contributing to the median
-        this.q1ValueProperty.value = _.mean( q1Objects.map( obj => obj.valueProperty.value! ) );
-        this.q3ValueProperty.value = _.mean( q3Objects.map( obj => obj.valueProperty.value! ) );
+        const q1Values = q1Objects.map( obj => obj.valueProperty.value! );
+        const q3Values = q3Objects.map( obj => obj.valueProperty.value! );
+
+        const q1 = _.mean( q1Values );
+        const q3 = _.mean( q3Values );
+
+        assert && assert( q1 <= q3, 'q1 must be less than q3' );
+
+        this.q1ValueProperty.value = q1;
+        this.q3ValueProperty.value = q3;
 
         this.soccerBalls.forEach( object => {
           object.isQ1ObjectProperty.value = q1Objects.includes( object );
