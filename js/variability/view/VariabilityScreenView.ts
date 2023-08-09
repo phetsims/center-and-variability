@@ -42,6 +42,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import { createGatedVisibleProperty } from '../../common/model/createGatedVisibleProperty.js';
 import KickerCharacterSets from '../../../../soccer-common/js/view/KickerCharacterSets.js';
+import IntervalToolPredictionSlider from './IntervalToolPredictionSlider.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
@@ -67,8 +68,9 @@ export default class VariabilityScreenView extends CAVScreenView {
 
     const accordionBoxTandem = options.tandem.createTandem( 'variabilityMeasureAccordionBox' );
 
+    const pointerTandem = this.playAreaTandem.createTandem( 'pointerNode' );
     const pointerSlider = new PredictionSlider( model.pointerValueProperty, this.modelViewTransform,
-      CAVConstants.VARIABILITY_DRAG_RANGE, new BooleanProperty( false ), model.isPointerKeyboardDraggingProperty, {
+      CAVConstants.VARIABILITY_DRAG_RANGE, {
         predictionThumbNodeOptions: {
           color: CAVColors.pointerColorProperty,
           style: 'arrow'
@@ -77,8 +79,9 @@ export default class VariabilityScreenView extends CAVScreenView {
         enabledRangeProperty: new Property<Range>( CAVConstants.VARIABILITY_DRAG_RANGE ),
         roundToInterval: null, // continuous
         visibleProperty: model.isPointerVisibleProperty,
-        tandem: this.playAreaTandem.createTandem( 'pointerNode' )
+        tandem: pointerTandem
       } );
+    pointerSlider.addDragListener( pointerTandem );
 
     const createPredictionSliderOptions = ( tandem: Tandem ) => {
 
@@ -103,17 +106,19 @@ export default class VariabilityScreenView extends CAVScreenView {
     const toolHandle1Tandem = intervalToolNodeTandem.createTandem( 'handle1' );
     const toolHandle2Tandem = intervalToolNodeTandem.createTandem( 'handle2' );
 
-    const handle1 = new PredictionSlider( model.intervalTool1ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE,
+    const handle1 = new IntervalToolPredictionSlider( model.intervalTool1ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE,
       isIntervalHandle1BeingDraggedProperty, new BooleanProperty( false ), combineOptions<PredictionSliderOptions>( {
         valueProperty: model.intervalTool1ValueProperty,
         tandem: toolHandle1Tandem
       }, createPredictionSliderOptions( toolHandle1Tandem ) ) );
+    handle1.addDragListener( toolHandle1Tandem );
 
-    const handle2 = new PredictionSlider( model.intervalTool2ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE,
+    const handle2 = new IntervalToolPredictionSlider( model.intervalTool2ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE,
       isIntervalHandle2BeingDraggedProperty, new BooleanProperty( false ), combineOptions<PredictionSliderOptions>( {
         valueProperty: model.intervalTool2ValueProperty,
         tandem: toolHandle2Tandem
       }, createPredictionSliderOptions( toolHandle2Tandem ) ) );
+    handle2.addDragListener( toolHandle2Tandem );
 
     const variabilityAccordionBox = new VariabilityAccordionBox(
       model,

@@ -18,6 +18,8 @@ import Utils from '../../../../dot/js/Utils.js';
 import PredictionThumbNode, { PredictionThumbNodeOptions } from './PredictionThumbNode.js';
 import AccessibleSlider, { AccessibleSliderOptions } from '../../../../sun/js/accessibility/AccessibleSlider.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
 
 type SelfOptions = {
   predictionThumbNodeOptions: PredictionThumbNodeOptions;
@@ -30,8 +32,12 @@ export type PredictionSliderOptions = SelfOptions & WithRequired<ParentOptions, 
 
 export default class PredictionSlider extends AccessibleSlider( Node, 0 ) {
 
-  public constructor( predictionProperty: Property<number>, modelViewTransform: ModelViewTransform2, dragRange: Range,
-                      public readonly isMouseTouchDraggingProperty: Property<boolean>, public readonly isKeyboardDraggingProperty: Property<boolean>, providedOptions: PredictionSliderOptions ) {
+  protected readonly dragPositionProperty: Property<Vector2>;
+
+  public constructor( predictionProperty: Property<number>,
+                      modelViewTransform: ModelViewTransform2,
+                      dragRange: Range,
+                      providedOptions: PredictionSliderOptions ) {
 
     const thumbNode = new PredictionThumbNode( providedOptions.predictionThumbNodeOptions );
 
@@ -48,11 +54,7 @@ export default class PredictionSlider extends AccessibleSlider( Node, 0 ) {
 
       // Only for keyboard
       startDrag: () => {
-        isKeyboardDraggingProperty.value = true;
         this.moveToFront();
-      },
-      endDrag: () => {
-        isKeyboardDraggingProperty.value = false;
       },
       disabledOpacity: SceneryConstants.DISABLED_OPACITY
     }, providedOptions );
@@ -79,15 +81,15 @@ export default class PredictionSlider extends AccessibleSlider( Node, 0 ) {
       this.centerTop = modelViewTransform.modelToViewXY( prediction, 0 ).plusXY( 0, offsetY );
     } );
 
+    this.dragPositionProperty = dragPositionProperty;
+  }
+
+  public addDragListener( tandem:Tandem ): void {
     this.addInputListener( new DragListener( {
-      tandem: options.tandem.createTandem( 'dragListener' ),
-      positionProperty: dragPositionProperty,
+      tandem: tandem.createTandem( 'dragListener' ),
+      positionProperty: this.dragPositionProperty,
       start: () => {
-        isMouseTouchDraggingProperty.value = true;
         this.moveToFront();
-      },
-      end: () => {
-        isMouseTouchDraggingProperty.value = false;
       }
     } ) );
   }

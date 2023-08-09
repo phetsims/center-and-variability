@@ -20,7 +20,6 @@ import PlayAreaCheckboxFactory from '../../common/view/PlayAreaCheckboxFactory.j
 import CAVConstants from '../../common/CAVConstants.js';
 import PredictionSlider from '../../common/view/PredictionSlider.js';
 import Property from '../../../../axon/js/Property.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 import MeanAndMedianInfoDialog from './MeanAndMedianInfoDialog.js';
 
@@ -60,8 +59,9 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
       tandem: this.playAreaTandem.createTandem( 'checkboxGroup' )
     } ), this.playAreaTandem );
 
+    const predictMeanTandem = this.playAreaTandem.createTandem( 'predictMeanNode' );
     const predictMeanNode = new PredictionSlider( model.predictMeanValueProperty, this.modelViewTransform,
-      CAVConstants.PHYSICAL_RANGE, new BooleanProperty( false ), model.isPredictMeanKeyboardDraggingProperty, {
+      CAVConstants.PHYSICAL_RANGE, {
         predictionThumbNodeOptions: {
           color: CAVColors.meanColorProperty,
           style: 'arrow'
@@ -70,8 +70,10 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
         enabledRangeProperty: new Property<Range>( CAVConstants.PHYSICAL_RANGE ),
         roundToInterval: null, // continuous
         visibleProperty: model.isPredictMeanVisibleProperty,
-        tandem: this.playAreaTandem.createTandem( 'predictMeanNode' )
+        tandem: predictMeanTandem
       } );
+
+    predictMeanNode.addDragListener( predictMeanTandem );
 
     this.backScreenViewLayer.addChild( predictMeanNode );
 

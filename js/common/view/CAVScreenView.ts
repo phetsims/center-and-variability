@@ -23,7 +23,6 @@ import CAVAccordionBox from './CAVAccordionBox.js';
 import PredictionSlider from './PredictionSlider.js';
 import CAVColors from '../CAVColors.js';
 import Property from '../../../../axon/js/Property.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CAVModel from '../model/CAVModel.js';
@@ -461,7 +460,7 @@ export default class CAVScreenView extends ScreenView {
    * The predictMedianNode is shared in the Median screen and MeanAndMedianScreen, so factored out here.
    */
   public static createPredictMedianNode( model: CAVModel, modelViewTransform: ModelViewTransform2, tandem: Tandem ): PredictionSlider {
-    return new PredictionSlider( model.predictMedianValueProperty, modelViewTransform, CAVConstants.PHYSICAL_RANGE, new BooleanProperty( false ), new BooleanProperty( false ), {
+    const predictionSlider = new PredictionSlider( model.predictMedianValueProperty, modelViewTransform, CAVConstants.PHYSICAL_RANGE, {
       predictionThumbNodeOptions: {
         color: CAVColors.medianColorProperty,
         style: 'arrow'
@@ -475,6 +474,10 @@ export default class CAVScreenView extends ScreenView {
       visibleProperty: model.isPredictMedianVisibleProperty,
       tandem: tandem
     } );
+
+    predictionSlider.addDragListener( tandem );
+
+    return predictionSlider;
   }
 }
 
