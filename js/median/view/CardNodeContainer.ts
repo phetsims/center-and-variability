@@ -259,8 +259,7 @@ export default class CardNodeContainer extends InteractiveHighlightingNode {
     const medianReadoutText = new Panel( medianTextNode, {
       stroke: 'lightgray',
       lineWidth: 0.6,
-      cornerRadius: 4,
-      tandem: options.tandem?.createTandem( 'medianReadoutText' )
+      cornerRadius: 4
     } );
     this.addChild( medianReadoutText );
 
