@@ -10,7 +10,6 @@
 import SoccerSceneModel, { SoccerSceneModelOptions } from '../../../../soccer-common/js/model/SoccerSceneModel.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import { TKickDistanceStrategy } from '../../../../soccer-common/js/model/TKickDistanceStrategy.js';
 import Range from '../../../../dot/js/Range.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Property from '../../../../axon/js/Property.js';
@@ -18,6 +17,7 @@ import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import CAVSoccerBall, { CAVSoccerBallOptions } from './CAVSoccerBall.js';
 import CharacterSet from '../../../../joist/js/preferences/CharacterSet.js';
+import { KickDistanceStrategySpecification } from '../../../../soccer-common/js/model/KickDistanceStrategy.js';
 
 type CAVSoccerSceneModelOptions = EmptySelfOptions & SoccerSceneModelOptions;
 
@@ -29,17 +29,16 @@ export default class CAVSoccerSceneModel<T extends CAVSoccerBall = CAVSoccerBall
 
   public constructor( maxKicksProperty: TReadOnlyProperty<number>,
                       maxKicksChoices: number[],
-                      kickDistanceStrategy: TKickDistanceStrategy,
+                      kickDistanceStrategy: KickDistanceStrategySpecification,
                       showPlayersWhenDoneKicking: boolean,
                       physicalRange: Range,
-                      kickDistanceStrategyFromStateObject: ( string: string ) => TKickDistanceStrategy,
                       soccerBallFactory: ( isFirstSoccerBall: boolean, options: CAVSoccerBallOptions ) => T,
                       regionAndCultureProperty: Property<CharacterSet | null>,
                       providedOptions: CAVSoccerSceneModelOptions ) {
 
     const options = providedOptions;
     super( maxKicksProperty, maxKicksChoices, kickDistanceStrategy, showPlayersWhenDoneKicking, physicalRange,
-      kickDistanceStrategyFromStateObject, soccerBallFactory, regionAndCultureProperty, options );
+      soccerBallFactory, regionAndCultureProperty, options );
 
     this.medianValueProperty = new Property<number | null>( null, {
       tandem: options.tandem.createTandem( 'medianValueProperty' ),

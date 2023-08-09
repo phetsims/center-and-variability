@@ -18,7 +18,6 @@ import VariabilitySceneModel from './VariabilitySceneModel.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import CAVConstants, { MAX_KICKS_PROPERTY } from '../../common/CAVConstants.js';
-import { DistributionStrategy } from '../../../../soccer-common/js/model/TKickDistanceStrategy.js';
 import NumberTone from '../../common/model/NumberTone.js';
 import Utils from '../../../../dot/js/Utils.js';
 import SoccerCommonPreferencesModel from '../../../../soccer-common/js/model/SoccerCommonPreferencesModel.js';
@@ -55,10 +54,10 @@ export default class VariabilityModel extends CAVModel {
   public constructor( preferencesModel: SoccerCommonPreferencesModel, providedOptions: VariabilityModelOptions ) {
 
     const sceneModels = [
-      new VariabilitySceneModel( MAX_KICKS_PROPERTY, new DistributionStrategy( [ 0, 0, 0, 1, 3, 12, 20, 32, 20, 12, 3, 1, 0, 0, 0 ] ), preferencesModel.kickerCharacterSetProperty, { tandem: providedOptions.tandem.createTandem( 'sceneKicker1Model' ) } ),
-      new VariabilitySceneModel( MAX_KICKS_PROPERTY, new DistributionStrategy( [ 3, 5, 10, 10, 25, 32, 45, 65, 45, 32, 25, 10, 10, 5, 3 ] ), preferencesModel.kickerCharacterSetProperty, { tandem: providedOptions.tandem.createTandem( 'sceneKicker2Model' ) } ),
-      new VariabilitySceneModel( MAX_KICKS_PROPERTY, new DistributionStrategy( [ ...CAVConstants.RIGHT_SKEWED_DATA ] ), preferencesModel.kickerCharacterSetProperty, { tandem: providedOptions.tandem.createTandem( 'sceneKicker3Model' ) } ),
-      new VariabilitySceneModel( MAX_KICKS_PROPERTY, new DistributionStrategy( [ ...CAVConstants.LEFT_SKEWED_DATA ] ), preferencesModel.kickerCharacterSetProperty, { tandem: providedOptions.tandem.createTandem( 'sceneKicker4Model' ) } )
+      new VariabilitySceneModel( MAX_KICKS_PROPERTY, { type: 'probabilityByDistance', values: [ 0, 0, 0, 1, 3, 12, 20, 32, 20, 12, 3, 1, 0, 0, 0 ], skewType: null }, preferencesModel.kickerCharacterSetProperty, { tandem: providedOptions.tandem.createTandem( 'sceneKicker1Model' ) } ),
+      new VariabilitySceneModel( MAX_KICKS_PROPERTY, { type: 'probabilityByDistance', values: [ 3, 5, 10, 10, 25, 32, 45, 65, 45, 32, 25, 10, 10, 5, 3 ], skewType: null }, preferencesModel.kickerCharacterSetProperty, { tandem: providedOptions.tandem.createTandem( 'sceneKicker2Model' ) } ),
+      new VariabilitySceneModel( MAX_KICKS_PROPERTY, { type: 'randomSkew', skewType: 'right', values: null }, preferencesModel.kickerCharacterSetProperty, { tandem: providedOptions.tandem.createTandem( 'sceneKicker3Model' ) } ),
+      new VariabilitySceneModel( MAX_KICKS_PROPERTY, { type: 'randomSkew', skewType: 'left', values: null }, preferencesModel.kickerCharacterSetProperty, { tandem: providedOptions.tandem.createTandem( 'sceneKicker4Model' ) } )
     ];
 
     sceneModels.forEach( sceneModel => {

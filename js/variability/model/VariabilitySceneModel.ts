@@ -10,19 +10,19 @@ import SoccerSceneModel from '../../../../soccer-common/js/model/SoccerSceneMode
 import centerAndVariability from '../../centerAndVariability.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import CAVConstants from '../../common/CAVConstants.js';
-import { TKickDistanceStrategy } from '../../../../soccer-common/js/model/TKickDistanceStrategy.js';
 import Property from '../../../../axon/js/Property.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Emitter from '../../../../axon/js/Emitter.js';
-import { kickDistanceStrategyFromStateObject } from '../../common/model/RandomSkewStrategy.js';
+// import { kickDistanceStrategyFromStateObject } from '../../common/model/RandomSkewStrategy.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import VariabilitySoccerBall from './VariabilitySoccerBall.js';
 import CharacterSet from '../../../../joist/js/preferences/CharacterSet.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import { KickDistanceStrategySpecification } from '../../../../soccer-common/js/model/KickDistanceStrategy.js';
 
 export default class VariabilitySceneModel extends CAVSoccerSceneModel<VariabilitySoccerBall> {
 
@@ -37,7 +37,7 @@ export default class VariabilitySceneModel extends CAVSoccerSceneModel<Variabili
   private readonly initialized: boolean = false;
   public readonly variabilityDataMeasuresUpdatedEmitter: Emitter = new Emitter();
 
-  public constructor( maxKicksProperty: TReadOnlyProperty<number>, kickDistanceStrategy: TKickDistanceStrategy,
+  public constructor( maxKicksProperty: TReadOnlyProperty<number>, kickDistanceStrategy: KickDistanceStrategySpecification,
                       regionAndCultureProperty: Property<CharacterSet | null>, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
     super(
       maxKicksProperty,
@@ -45,7 +45,6 @@ export default class VariabilitySceneModel extends CAVSoccerSceneModel<Variabili
       kickDistanceStrategy,
       true,
       CAVConstants.PHYSICAL_RANGE,
-      kickDistanceStrategyFromStateObject,
       VariabilitySoccerBall.createSoccerBall,
       regionAndCultureProperty,
       options

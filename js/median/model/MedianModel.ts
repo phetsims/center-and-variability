@@ -12,7 +12,6 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import CAVConstants, { MAX_KICKS_PROPERTY } from '../../common/CAVConstants.js';
-import { kickDistanceStrategyFromStateObject, RandomSkewStrategy } from '../../common/model/RandomSkewStrategy.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import CAVSoccerBall from '../../common/model/CAVSoccerBall.js';
 import NumberTone from '../../common/model/NumberTone.js';
@@ -20,6 +19,7 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import CardContainerModel from './CardContainerModel.js';
 import SoccerCommonPreferencesModel from '../../../../soccer-common/js/model/SoccerCommonPreferencesModel.js';
+import KickDistanceStrategy from '../../../../soccer-common/js/model/KickDistanceStrategy.js';
 
 type SelfOptions = EmptySelfOptions;
 type MedianModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
@@ -55,13 +55,11 @@ export default class MedianModel extends CAVModel {
     const sceneModel = new CAVSoccerSceneModel(
       maxKicksProperty,
       maxKicksAllowed,
-      new RandomSkewStrategy(),
+      { type: 'randomSkew', skewType: KickDistanceStrategy.chooseSkewDirection(), values: null },
       false,
       CAVConstants.PHYSICAL_RANGE,
-      kickDistanceStrategyFromStateObject,
       CAVSoccerBall.createSoccerBall,
-      preferencesModel.kickerCharacterSetProperty,
-      {
+      preferencesModel.kickerCharacterSetProperty, {
         tandem: options.tandem.createTandem( 'sceneModel' )
       } );
 
