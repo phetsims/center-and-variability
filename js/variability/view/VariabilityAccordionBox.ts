@@ -164,11 +164,9 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         const rangeEqualsValueStringProperty = deriveStringProperty( vsm => vsm.rangeValueProperty,
           CenterAndVariabilityStrings.rangeUnknownValueStringProperty, rangePatternStringProperty );
 
-        const rangeReadoutTextTandem = readoutsTandem.createTandem( 'rangeReadoutText' );
         const rangeReadoutText = new VariabilityReadoutText( rangeEqualsValueStringProperty, {
           fill: CAVColors.rangeReadoutColorProperty,
-          visibleProperty: model.isRangeVisibleProperty,
-          tandem: rangeReadoutTextTandem
+          visibleProperty: model.isRangeVisibleProperty
         } );
 
         // Nest in a new Node so that ToggleNode has independent control over the visibility
@@ -194,11 +192,9 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         const iqrEqualsValueStringProperty = deriveStringProperty( vsm => vsm.iqrValueProperty,
           CenterAndVariabilityStrings.iqrUnknownValueStringProperty, iqrPatternStringProperty );
 
-        const iqrReadoutTextTandem = readoutsTandem.createTandem( 'iqrReadoutText' );
         const iqrReadoutText = new VariabilityReadoutText( iqrEqualsValueStringProperty, {
           fill: CAVColors.iqrLabelColorProperty,
-          visibleProperty: model.isIQRVisibleProperty,
-          tandem: iqrReadoutTextTandem
+          visibleProperty: model.isIQRVisibleProperty
         } );
 
         // Nest in a new Node so that ToggleNode has independent control over the visibility
@@ -228,11 +224,9 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
           phetioVisiblePropertyInstrumented: true
         } );
 
-        const madReadoutTextTandem = readoutsTandem.createTandem( 'madReadoutText' );
         const madReadoutText = new VariabilityReadoutText( madEqualsValueStringProperty, {
           fill: CAVColors.madColorProperty,
-          visibleProperty: model.isMADVisibleProperty,
-          tandem: madReadoutTextTandem
+          visibleProperty: model.isMADVisibleProperty
         } );
 
         // Nest in a new Node so that ToggleNode has independent control over the visibility

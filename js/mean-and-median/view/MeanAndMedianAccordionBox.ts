@@ -86,13 +86,10 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
         return result === null ? unknownStringProperty.value : valuePatternStringProperty.value;
       } );
 
-      const readoutTextTandem = readoutTandem.createTandem( 'readoutText' );
-
       return new Text( readoutPatternStringProperty, {
         fill: fill,
         font: new PhetFont( 16 ),
         maxWidth: 170,
-        tandem: readoutTextTandem,
         visibleProperty: visibleProperty
       } );
     };
