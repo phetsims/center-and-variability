@@ -39,8 +39,10 @@ export default class CardModel extends PhetioObject {
   // Where the card is in the line-up. If a card is not active it's index will be null.
   public readonly indexProperty: Property<number | null>;
 
-  // Track whether the card is being dragged, for purposes of hiding the drag indicator arrow when the user
-  // has dragged a sufficient amount and to play sound effects for the dragged card
+  // Track whether the card is being dragged either through keyboard, mouse or touch input.
+  // Triggers tracking for how far a card has been dragged in order to hide drag indicator,
+  // plays sound effects for the dragged card, moves card to front when it is dragging, and animates
+  // card up and to the left when it is grabbed.
   public readonly isDraggingProperty = new BooleanProperty( false );
 
   // Avoid sound effects for cards that landed recently, since cards sometimes swap when a new soccer ball lands and "sort data" is checked.
