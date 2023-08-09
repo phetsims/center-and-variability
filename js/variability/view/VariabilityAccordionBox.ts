@@ -34,7 +34,6 @@ import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringPrope
 import IntervalToolNode from './IntervalToolNode.js';
 import Property from '../../../../axon/js/Property.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import { createGatedVisibleProperty } from '../../common/model/createGatedVisibleProperty.js';
 
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 
@@ -168,7 +167,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         const rangeReadoutTextTandem = readoutsTandem.createTandem( 'rangeReadoutText' );
         const rangeReadoutText = new VariabilityReadoutText( rangeEqualsValueStringProperty, {
           fill: CAVColors.rangeReadoutColorProperty,
-          visibleProperty: createGatedVisibleProperty( model.isRangeVisibleProperty, rangeReadoutTextTandem ),
+          visibleProperty: model.isRangeVisibleProperty,
           tandem: rangeReadoutTextTandem
         } );
 
@@ -198,7 +197,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         const iqrReadoutTextTandem = readoutsTandem.createTandem( 'iqrReadoutText' );
         const iqrReadoutText = new VariabilityReadoutText( iqrEqualsValueStringProperty, {
           fill: CAVColors.iqrLabelColorProperty,
-          visibleProperty: createGatedVisibleProperty( model.isIQRVisibleProperty, iqrReadoutTextTandem ),
+          visibleProperty: model.isIQRVisibleProperty,
           tandem: iqrReadoutTextTandem
         } );
 
@@ -232,7 +231,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         const madReadoutTextTandem = readoutsTandem.createTandem( 'madReadoutText' );
         const madReadoutText = new VariabilityReadoutText( madEqualsValueStringProperty, {
           fill: CAVColors.madColorProperty,
-          visibleProperty: createGatedVisibleProperty( model.isMADVisibleProperty, madReadoutTextTandem ),
+          visibleProperty: model.isMADVisibleProperty,
           tandem: madReadoutTextTandem
         } );
 
