@@ -17,7 +17,7 @@ import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import CAVSoccerBall, { CAVSoccerBallOptions } from './CAVSoccerBall.js';
 import CharacterSet from '../../../../joist/js/preferences/CharacterSet.js';
-import { KickDistanceStrategySpecification } from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
+import { KickDistributionStrategySpecification } from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
 
 type CAVSoccerSceneModelOptions = EmptySelfOptions & SoccerSceneModelOptions;
 
@@ -29,7 +29,7 @@ export default class CAVSoccerSceneModel<T extends CAVSoccerBall = CAVSoccerBall
 
   public constructor( maxKicksProperty: TReadOnlyProperty<number>,
                       maxKicksChoices: number[],
-                      kickDistanceStrategy: KickDistanceStrategySpecification,
+                      kickDistanceStrategy: KickDistributionStrategySpecification,
                       showPlayersWhenDoneKicking: boolean,
                       physicalRange: Range,
                       soccerBallFactory: ( isFirstSoccerBall: boolean, options: CAVSoccerBallOptions ) => T,

@@ -11,7 +11,7 @@ Everything is statically allocated and we use `isActiveProperty` flags or other 
 
 ### Kick Distances
 
-The CAVSceneModel has a TKickDistanceStrategy which determines where the kicks will fall. Each kick location is determined
+The CAVSceneModel has a KickDistributionStrategy which determines where the kicks will fall. Each kick location is determined
 at the time of the kick (not predetermined). For the random skew strategy, it re-randomizes to left/right skew on reset.
 
 ### The Variability Measurements (range, mad, iqr)
