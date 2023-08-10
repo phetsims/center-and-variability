@@ -17,7 +17,7 @@ import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import CAVSoccerBall, { CAVSoccerBallOptions } from './CAVSoccerBall.js';
 import CharacterSet from '../../../../joist/js/preferences/CharacterSet.js';
-import { KickDistanceStrategySpecification } from '../../../../soccer-common/js/model/KickDistanceStrategy.js';
+import { KickDistanceStrategySpecification } from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
 
 type CAVSoccerSceneModelOptions = EmptySelfOptions & SoccerSceneModelOptions;
 

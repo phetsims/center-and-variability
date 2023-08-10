@@ -22,7 +22,7 @@ import VariabilitySoccerBall from './VariabilitySoccerBall.js';
 import CharacterSet from '../../../../joist/js/preferences/CharacterSet.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
-import { KickDistanceStrategySpecification } from '../../../../soccer-common/js/model/KickDistanceStrategy.js';
+import { KickDistanceStrategySpecification } from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
 
 export default class VariabilitySceneModel extends CAVSoccerSceneModel<VariabilitySoccerBall> {
 

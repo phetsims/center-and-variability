@@ -22,7 +22,7 @@ import CAVSoccerBall from '../../common/model/CAVSoccerBall.js';
 import MedianAnimationTone from '../../median/view/MedianAnimationTone.js';
 import Property from '../../../../axon/js/Property.js';
 import SoccerCommonPreferencesModel from '../../../../soccer-common/js/model/SoccerCommonPreferencesModel.js';
-import KickDistanceStrategy from '../../../../soccer-common/js/model/KickDistanceStrategy.js';
+import KickDistributionStrategy from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeanAndMedianModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
@@ -57,7 +57,7 @@ export default class MeanAndMedianModel extends CAVModel {
     const sceneModel = new CAVSoccerSceneModel(
       MAX_KICKS_PROPERTY,
       CAVConstants.MAX_KICKS_VALUES,
-      { type: 'randomSkew', skewType: KickDistanceStrategy.chooseSkewDirection(), values: null },
+      { type: 'randomSkew', skewType: KickDistributionStrategy.chooseSkewDirection(), values: null },
       false,
       CAVConstants.PHYSICAL_RANGE,
       CAVSoccerBall.createSoccerBall,
