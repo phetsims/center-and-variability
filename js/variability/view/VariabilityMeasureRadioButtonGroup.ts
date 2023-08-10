@@ -35,15 +35,15 @@ export default class VariabilityMeasureRadioButtonGroup extends RectangularRadio
 
     super( property, [ {
         value: VariabilityMeasure.RANGE,
-        createNode: tandem => new RangeIconNode(),
+        createNode: () => new RangeIconNode(),
         tandemName: 'rangeRadioButton'
       }, {
         value: VariabilityMeasure.IQR,
-        createNode: tandem => new IQRIconNode(),
+        createNode: () => new IQRIconNode(),
         tandemName: 'iqrRadioButton'
       }, {
         value: VariabilityMeasure.MAD,
-        createNode: tandem => new MADIconNode(),
+        createNode: () => new MADIconNode(),
         tandemName: 'madRadioButton'
       } ],
       options

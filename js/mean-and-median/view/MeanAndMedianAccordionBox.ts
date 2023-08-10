@@ -33,7 +33,6 @@ import ButtonNode from '../../../../sun/js/buttons/ButtonNode.js';
 import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
 
 export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
-  private readonly medianPlotNode: MeanAndMedianPlotNode;
   public readonly infoButton: ButtonNode;
 
   public constructor( model: MeanAndMedianModel, layoutBounds: Bounds2, tandem: Tandem, top: number, playAreaNumberLineNode: NumberLineNode ) {
@@ -139,8 +138,6 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
         fill: CAVColors.meanAndMedianAccordionBoxFillProperty
       }
     );
-
-    this.medianPlotNode = meanAndMedianPlotNode;
 
     // for pdom order
     this.infoButton = infoButton;

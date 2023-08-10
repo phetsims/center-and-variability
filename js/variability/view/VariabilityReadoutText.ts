@@ -18,9 +18,7 @@ export type ValueReadoutTextOptions = SelfOptions & TextOptions;
 
 export default class VariabilityReadoutText extends Text {
 
-
   public constructor( stringProperty: TReadOnlyProperty<string>, providedOptions: ValueReadoutTextOptions ) {
-
 
     const options = optionize<ValueReadoutTextOptions, SelfOptions, TextOptions>()( {
       font: new PhetFont( 16 ),

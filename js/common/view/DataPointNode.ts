@@ -40,7 +40,6 @@ export default class DataPointNode extends SoccerObjectNode {
                       modelViewTransform: ModelViewTransform2,
                       providedOptions: DataPointNodeOptions ) {
 
-
     const translationProperty = new Property( new Vector2( 1, 0 ), {
       reentrant: true
     } );
@@ -64,7 +63,7 @@ export default class DataPointNode extends SoccerObjectNode {
         phase === SoccerBallPhase.STACKED || phase === SoccerBallPhase.STACKING )
     }, providedOptions );
 
-    super( soccerBall, modelViewTransform, CAVObjectType.DATA_POINT.radius, options );
+    super( soccerBall, modelViewTransform, options );
 
     DATA_POINT_SCALE_PROPERTY.link( scale => {
       this.setScaleMagnitude( scale );

@@ -78,7 +78,6 @@ export default class RangeNode extends CAVPlotNode {
         const highestYValue = this.modelViewTransform.modelToViewY(
           _.maxBy( sortedDots, dot => dot.positionProperty.value.y )!.positionProperty.value.y );
 
-
         const floor = this.modelViewTransform.modelToViewY( 0 );
 
         if ( options.parentContext === 'info' ) {
