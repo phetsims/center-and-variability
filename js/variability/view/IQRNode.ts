@@ -42,7 +42,7 @@ export default class IQRNode extends CAVPlotNode {
       fontSize: 18,
       maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH
     } );
-    ManualConstraint.create( this, [ needAtLeastFiveKicksText ], textProxy => {
+    ManualConstraint.create( this, [ needAtLeastFiveKicksText ], () => {
       needAtLeastFiveKicksText.center = this.modelViewTransform.modelToViewXY( CAVConstants.PHYSICAL_RANGE.getCenter(),
         MIN_KICKS_TEXT_OFFSET );
     } );

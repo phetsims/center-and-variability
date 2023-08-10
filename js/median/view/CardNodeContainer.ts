@@ -87,7 +87,7 @@ export default class CardNodeContainer extends InteractiveHighlightingNode {
       // Synthetic property for use in keyboard input
       // const indexProperty = new NumberProperty( 0 );
 
-      const cardNode = new CardNode( this, cardModel, {
+      const cardNode = new CardNode( cardModel, {
         tandem: options.tandem?.createTandem( 'cardNodes' ).createTandem1Indexed( 'cardNode', index )
       } );
 
@@ -614,7 +614,7 @@ export default class CardNodeContainer extends InteractiveHighlightingNode {
       const cardNode = this.cardMap.get( card )!;
 
       const scaleProperty = new NumberProperty( 1 );
-      scaleProperty.lazyLink( ( scale, oldScale ) => {
+      scaleProperty.lazyLink( scale => {
         const center = cardNode.center.copy();
         cardNode.setScaleMagnitude( scale );
         if ( animateFromCenter ) {

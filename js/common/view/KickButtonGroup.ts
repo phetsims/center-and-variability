@@ -40,7 +40,7 @@ export default class KickButtonGroup extends VBox {
 
     const alignGroup = new AlignGroup();
 
-    const createLabel = ( label: PatternStringProperty<{ value: number }>, tandem: Tandem ) => {
+    const createLabel = ( label: PatternStringProperty<{ value: number }> ) => {
       const text = new Text( label, {
         maxWidth: TEXT_MAX_WIDTH,
         font: CAVConstants.MAIN_FONT
@@ -83,7 +83,7 @@ export default class KickButtonGroup extends VBox {
     const kick1PatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.kickValuePatternStringProperty, { value: 1 }, {
       tandem: kick1ButtonTandem.createTandem( 'kick1PatternStringProperty' )
     } );
-    const kick1Label = createLabel( kick1PatternStringProperty, kick1ButtonTandem.createTandem( 'labelText' ) );
+    const kick1Label = createLabel( kick1PatternStringProperty );
 
     const multiKickProperty = new NumberProperty( 5 );
     const kick5PatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.kickValuePatternStringProperty, { value: multiKickProperty }, {
@@ -97,7 +97,7 @@ export default class KickButtonGroup extends VBox {
       const value = Math.max( Math.min( numberOfRemainingKickableObjects, 5 ), 1 );
       multiKickProperty.value = value;
     } );
-    const kick5Label = createLabel( kick5PatternStringProperty, kick5ButtonTandem.createTandem( 'labelText' ) );
+    const kick5Label = createLabel( kick5PatternStringProperty );
 
     options.children = [
       createKickButton( kick1Label, kick1ButtonTandem, 1, false ),

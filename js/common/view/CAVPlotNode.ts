@@ -96,7 +96,7 @@ export default class CAVPlotNode extends Node {
     } );
 
     // Create the data points for that sceneModel
-    sceneModel.soccerBalls.forEach( ( soccerBall, index ) => {
+    sceneModel.soccerBalls.forEach( soccerBall => {
 
       const dotNode = new DataPointNode( soccerBall,
         this.modelViewTransform, {

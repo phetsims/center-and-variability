@@ -38,10 +38,9 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 
   public readonly infoButton: ButtonNode;
-  private readonly plotNodes: VariabilityPlotNode[];
   private readonly intervalToolNode: IntervalToolNode;
 
-  public constructor( model: VariabilityModel, tandem: Tandem, top: number, playAreaNumberLineNode: NumberLineNode ) {
+  public constructor( model: VariabilityModel, tandem: Tandem, playAreaNumberLineNode: NumberLineNode ) {
 
     // Specify a "footprint" within which we do all the layout.
     const backgroundShape = CAVConstants.ACCORDION_BOX_CONTENTS_SHAPE_VARIABILITY;
@@ -56,8 +55,6 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
 
     const accordionBoxTitleProperty = new DynamicProperty<string, unknown, unknown>( currentProperty );
 
-    const plotNodes: VariabilityPlotNode[] = [];
-
     const intervalToolNode = new IntervalToolNode( model.intervalTool1ValueProperty,
       model.intervalTool2ValueProperty, CAVConstants.PLOT_NODE_TRANSFORM, new Property( -18 ),
       new BooleanProperty( false ), {
@@ -71,13 +68,9 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       return {
         value: model.sceneModels[ i ],
         createNode: () => {
-          const plotNode = new VariabilityPlotNode( model, model.variabilitySceneModels[ i ], playAreaNumberLineNode, model.isDataPointLayerVisibleProperty, intervalToolNode, {
+          return new VariabilityPlotNode( model, model.variabilitySceneModels[ i ], playAreaNumberLineNode, model.isDataPointLayerVisibleProperty, intervalToolNode, {
             bottom: backgroundShape.bounds.height
           } );
-
-          // Keep track of the plot nodes so we can set the focus highlight on them once the IntervalToolNode has been created.
-          plotNodes.push( plotNode );
-          return plotNode;
         }
       };
     } );
@@ -258,9 +251,6 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
 
     // for pdom order
     this.infoButton = infoButton;
-
-    this.plotNodes = plotNodes;
-
     this.intervalToolNode = intervalToolNode;
   }
 

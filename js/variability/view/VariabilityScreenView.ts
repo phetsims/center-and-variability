@@ -120,7 +120,6 @@ export default class VariabilityScreenView extends CAVScreenView {
     const variabilityAccordionBox = new VariabilityAccordionBox(
       model,
       accordionBoxTandem,
-      this.questionBar.bottom + CAVConstants.ACCORDION_BOX_TOP_MARGIN,
       this.playAreaNumberLineNode
     );
     this.setAccordionBox( variabilityAccordionBox );

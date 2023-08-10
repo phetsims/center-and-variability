@@ -14,7 +14,6 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import SoccerBall from '../../../../soccer-common/js/model/SoccerBall.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import CardModel from '../model/CardModel.js';
-import CardNodeContainer from './CardNodeContainer.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import cardPickup_mp3 from '../../../sounds/cardPickup_mp3.js';
@@ -53,7 +52,7 @@ export default class CardNode extends Node {
   // We want to access the cardNode without the offset container for focusHighlight
   public readonly cardNode: Node;
 
-  public constructor( public readonly cardNodeContainer: CardNodeContainer, public readonly model: CardModel, providedOptions: CardNodeOptions ) {
+  public constructor( public readonly model: CardModel, providedOptions: CardNodeOptions ) {
 
     const cornerRadius = 10;
     const rectangle = new Rectangle( 0, 0, CAVConstants.CARD_DIMENSION, CAVConstants.CARD_DIMENSION, cornerRadius, cornerRadius, {

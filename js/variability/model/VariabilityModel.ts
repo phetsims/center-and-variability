@@ -26,8 +26,6 @@ type SelfOptions = EmptySelfOptions;
 type VariabilityModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
 
 export default class VariabilityModel extends CAVModel {
-  private readonly initialized: boolean = false;
-
   public readonly selectedVariabilityMeasureProperty: Property<VariabilityMeasure>;
   public readonly isRangeVisibleProperty: Property<boolean>;
   public readonly isIQRVisibleProperty: Property<boolean>;
@@ -77,8 +75,6 @@ export default class VariabilityModel extends CAVModel {
     }, providedOptions );
 
     super( MAX_KICKS_PROPERTY, sceneModels, options );
-
-    this.initialized = true;
 
     this.variabilitySceneModels = sceneModels;
 

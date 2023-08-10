@@ -28,12 +28,12 @@ export default class BackgroundNode extends Rectangle {
       const gradient = new LinearGradient( visibleBounds.centerX, visibleBounds.top, visibleBounds.centerX, bottomY );
 
       // sky gradient, sampled from a screenshot
-      gradient.addColorStop( 0.0, CAVColors.skyGradientTopColorProperty.value );
-      gradient.addColorStop( 0.5, CAVColors.skyGradientMiddleColorProperty.value );
-      gradient.addColorStop( 0.9999, CAVColors.skyGradientBottomColorProperty.value );
+      gradient.addColorStop( 0.0, skyGradientTopColor );
+      gradient.addColorStop( 0.5, skyGradientMiddleColor );
+      gradient.addColorStop( 0.9999, skyGradientBottomColor );
 
       // The ground
-      gradient.addColorStop( 1.0, CAVColors.groundColorProperty.value );
+      gradient.addColorStop( 1.0, groundColor );
 
       this.setRect( visibleBounds.left, visibleBounds.top, visibleBounds.width, visibleBounds.height );
       this.fill = gradient;

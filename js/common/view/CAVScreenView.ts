@@ -31,7 +31,6 @@ import KickButtonGroup from './KickButtonGroup.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import { KickerImageSet } from '../../../../soccer-common/js/view/KickerCharacterSet.js';
 import Kicker from '../../../../soccer-common/js/model/Kicker.js';
-import SoccerSceneModel from '../../../../soccer-common/js/model/SoccerSceneModel.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';
@@ -50,6 +49,7 @@ import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import KickerCharacterSets from '../../../../soccer-common/js/view/KickerCharacterSets.js';
 import dragIndicatorHand_png from '../../../images/dragIndicatorHand_png.js';
 import DragIndicatorArrowNode from './DragIndicatorArrowNode.js';
+import SoccerSceneModel from '../../../../soccer-common/js/model/SoccerSceneModel.js';
 
 type SelfOptions = {
   questionBarOptions: StrictOmit<QuestionBarOptions, 'tandem'>;

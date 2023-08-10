@@ -41,7 +41,7 @@ export default class RangeNode extends CAVPlotNode {
       maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH
     } );
 
-    ManualConstraint.create( this, [ needAtLeastOneKickText ], textProxy => {
+    ManualConstraint.create( this, [ needAtLeastOneKickText ], () => {
       needAtLeastOneKickText.center = this.modelViewTransform.modelToViewXY( CAVConstants.PHYSICAL_RANGE.getCenter(), MIN_KICKS_TEXT_OFFSET );
     } );
     this.addChild( needAtLeastOneKickText );
