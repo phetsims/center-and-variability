@@ -16,7 +16,6 @@ import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Emitter from '../../../../axon/js/Emitter.js';
-// import { kickDistanceStrategyFromStateObject } from '../../common/model/RandomSkewStrategy.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import VariabilitySoccerBall from './VariabilitySoccerBall.js';
 import CharacterSet from '../../../../joist/js/preferences/CharacterSet.js';
@@ -37,12 +36,12 @@ export default class VariabilitySceneModel extends CAVSoccerSceneModel<Variabili
   private readonly initialized: boolean = false;
   public readonly variabilityDataMeasuresUpdatedEmitter: Emitter = new Emitter();
 
-  public constructor( maxKicksProperty: TReadOnlyProperty<number>, kickDistanceStrategy: KickDistributionStrategySpecification,
+  public constructor( maxKicksProperty: TReadOnlyProperty<number>, kickDistributionStrategySpecification: KickDistributionStrategySpecification,
                       regionAndCultureProperty: Property<CharacterSet | null>, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
     super(
       maxKicksProperty,
       CAVConstants.MAX_KICKS_VALUES,
-      kickDistanceStrategy,
+      kickDistributionStrategySpecification,
       true,
       CAVConstants.PHYSICAL_RANGE,
       VariabilitySoccerBall.createSoccerBall,
