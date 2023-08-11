@@ -35,7 +35,10 @@
       "CENTER_AND_VARIABILITY/screen.meanAndMedian",
       "CENTER_AND_VARIABILITY/screen.variability"
     ],
-    "published": true
+    "published": true,
+    "phet-io": {
+      "compareDesignedAPIChanges": true
+    }
   },
   "eslintConfig": {
     "extends": "../chipper/eslint/sim_eslintrc.js",
