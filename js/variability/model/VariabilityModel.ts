@@ -120,7 +120,7 @@ export default class VariabilityModel extends CAVModel {
     } );
 
     this.isIntervalToolEnabledProperty = new BooleanProperty( true, {
-      tandem: intervalToolTandem.createTandem( 'isEnabledProperty' ),
+      tandem: intervalToolTandem.createTandem( 'isInputEnabledProperty' ),
       phetioFeatured: true
     } );
 
