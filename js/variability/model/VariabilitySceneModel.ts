@@ -53,32 +53,37 @@ export default class VariabilitySceneModel extends CAVSoccerSceneModel<Variabili
       return dataRange === null ? null : dataRange.max;
     }, {
       tandem: options.tandem.createTandem( 'maxValueProperty' ),
-      phetioValueType: NullableIO( NumberIO )
+      phetioValueType: NullableIO( NumberIO ),
+      phetioFeatured: true
     } );
 
     this.minValueProperty = new DerivedProperty( [ this.dataRangeProperty ], dataRange => {
       return dataRange === null ? null : dataRange.min;
     }, {
       tandem: options.tandem.createTandem( 'minValueProperty' ),
-      phetioValueType: NullableIO( NumberIO )
+      phetioValueType: NullableIO( NumberIO ),
+      phetioFeatured: true
     } );
 
     this.rangeValueProperty = new DerivedProperty( [ this.maxValueProperty, this.minValueProperty ], ( max, min ) => {
       return ( max === null || min === null ) ? null : max - min;
     }, {
       tandem: options.tandem.createTandem( 'rangeValueProperty' ),
-      phetioValueType: NullableIO( NumberIO )
+      phetioValueType: NullableIO( NumberIO ),
+      phetioFeatured: true
     } );
 
     this.q1ValueProperty = new Property<number | null>( null, {
       tandem: options.tandem.createTandem( 'q1ValueProperty' ),
       phetioValueType: NullableIO( NumberIO ),
-      phetioReadOnly: true
+      phetioReadOnly: true,
+      phetioFeatured: true
     } );
     this.q3ValueProperty = new Property<number | null>( null, {
       tandem: options.tandem.createTandem( 'q3ValueProperty' ),
       phetioValueType: NullableIO( NumberIO ),
-      phetioReadOnly: true
+      phetioReadOnly: true,
+      phetioFeatured: true
     } );
     this.iqrValueProperty = new DerivedProperty( [ this.q1ValueProperty, this.q3ValueProperty ], ( q1, q3 ) => {
       if ( q1 === null || q3 === null ) {
@@ -92,7 +97,8 @@ export default class VariabilitySceneModel extends CAVSoccerSceneModel<Variabili
     this.madValueProperty = new Property<number | null>( null, {
       tandem: options.tandem.createTandem( 'madValueProperty' ),
       phetioValueType: NullableIO( NumberIO ),
-      phetioReadOnly: true
+      phetioReadOnly: true,
+      phetioFeatured: true
     } );
 
     this.updateDataMeasures();

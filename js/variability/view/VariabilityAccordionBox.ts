@@ -179,7 +179,10 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         const medianReadoutText = new VariabilityReadoutText( medianEqualsValueStringProperty, {
           fill: CAVColors.medianColorProperty,
           tandem: readoutsTandem.createTandem( 'medianReadoutText' ),
-          phetioVisiblePropertyInstrumented: true
+          phetioVisiblePropertyInstrumented: true,
+          visiblePropertyOptions: {
+            phetioFeatured: true
+          }
         } );
 
         const iqrEqualsValueStringProperty = deriveStringProperty( vsm => vsm.iqrValueProperty,
@@ -214,7 +217,10 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         const meanReadoutText = new VariabilityReadoutText( meanEqualsValueStringProperty, {
           fill: CAVColors.meanColorProperty,
           tandem: readoutsTandem.createTandem( 'meanReadoutText' ),
-          phetioVisiblePropertyInstrumented: true
+          phetioVisiblePropertyInstrumented: true,
+          visiblePropertyOptions: {
+            phetioFeatured: true
+          }
         } );
 
         const madReadoutText = new VariabilityReadoutText( madEqualsValueStringProperty, {

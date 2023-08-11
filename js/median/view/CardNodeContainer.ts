@@ -74,7 +74,10 @@ export default class CardNodeContainer extends InteractiveHighlightingNode {
     const options = optionize<CardNodeContainerOptions, EmptySelfOptions, NodeOptions>()( {
       phetioInputEnabledPropertyInstrumented: true,
       focusable: true,
-      tagName: 'div'
+      tagName: 'div',
+      visiblePropertyOptions: {
+        phetioFeatured: true
+      }
     }, providedOptions );
 
     super( options );

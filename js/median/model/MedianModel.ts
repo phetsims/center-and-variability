@@ -49,7 +49,8 @@ export default class MedianModel extends CAVModel {
       validValues: maxKicksAllowed,
       phetioValueType: NumberIO,
       tandem: options.tandem.createTandem( 'maxKicksProperty' ),
-      phetioDocumentation: 'The Median screen is restricted to a maximum of 15 kicks.'
+      phetioDocumentation: 'The Median screen is restricted to a maximum of 15 kicks.',
+      phetioFeatured: true // TODO: https://github.com/phetsims/center-and-variability/issues/445 double check on this
     } );
 
     const sceneModel = new CAVSoccerSceneModel(
@@ -72,17 +73,20 @@ export default class MedianModel extends CAVModel {
     super( maxKicksProperty, [ sceneModel ], options );
 
     this.isSortingDataProperty = new BooleanProperty( false, {
-      tandem: accordionBoxTandem.createTandem( 'isSortingDataProperty' )
+      tandem: accordionBoxTandem.createTandem( 'isSortingDataProperty' ),
+      phetioFeatured: true
     } );
 
     this.medianVisibleProperty = new BooleanProperty( false, {
-      tandem: accordionBoxTandem.createTandem( 'isMedianVisibleProperty' )
+      tandem: accordionBoxTandem.createTandem( 'isMedianVisibleProperty' ),
+      phetioFeatured: true
     } );
 
     // For PhET-iO
     this.areCardsSortedProperty = new BooleanProperty( true, {
       tandem: accordionBoxTandem.createTandem( 'areCardsSortedProperty' ),
-      phetioReadOnly: true
+      phetioReadOnly: true,
+      phetioFeatured: true
     } );
 
     this.cardContainerModel = new CardContainerModel( this, {

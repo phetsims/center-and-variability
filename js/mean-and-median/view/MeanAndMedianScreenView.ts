@@ -56,7 +56,10 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
       PlayAreaCheckboxFactory.getMedianCheckboxItem( model ),
       PlayAreaCheckboxFactory.getMeanCheckboxItem( model )
     ], {
-      tandem: this.playAreaTandem.createTandem( 'checkboxGroup' )
+      tandem: this.playAreaTandem.createTandem( 'checkboxGroup' ),
+      visiblePropertyOptions: {
+        phetioFeatured: true
+      }
     } ), this.playAreaTandem );
 
     const predictMeanTandem = this.playAreaTandem.createTandem( 'predictMeanNode' );
@@ -70,7 +73,11 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
         enabledRangeProperty: new Property<Range>( CAVConstants.PHYSICAL_RANGE ),
         roundToInterval: null, // continuous
         visibleProperty: model.isPredictMeanVisibleProperty,
-        tandem: predictMeanTandem
+        tandem: predictMeanTandem,
+
+        // TODO: It seemed unusual to feature a node? https://github.com/phetsims/center-and-variability/issues/445
+        // this was done here and one other place I can't remember
+        phetioFeatured: true
       } );
 
     this.backScreenViewLayer.addChild( predictMeanNode );

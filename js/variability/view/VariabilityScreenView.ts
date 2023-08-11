@@ -79,7 +79,8 @@ export default class VariabilityScreenView extends CAVScreenView {
         enabledRangeProperty: new Property<Range>( CAVConstants.VARIABILITY_DRAG_RANGE ),
         roundToInterval: null, // continuous
         visibleProperty: model.isPointerVisibleProperty,
-        tandem: pointerTandem
+        tandem: pointerTandem,
+        phetioFeatured: true // TODO https://github.com/phetsims/center-and-variability/issues/445 feature a node?
       } );
 
     const createPredictionSliderOptions = ( tandem: Tandem ) => {
@@ -251,7 +252,10 @@ export default class VariabilityScreenView extends CAVScreenView {
         PlayAreaCheckboxFactory.getPointerCheckboxItem( model ),
         PlayAreaCheckboxFactory.getIntervalToolCheckboxItem( model )
       ], {
-        tandem: this.playAreaTandem.createTandem( 'checkboxGroup' )
+        tandem: this.playAreaTandem.createTandem( 'checkboxGroup' ),
+        visiblePropertyOptions: {
+          phetioFeatured: true
+        }
       } ), this.playAreaTandem );
 
     model.variabilitySceneModels.forEach( ( sceneModel, index ) => {

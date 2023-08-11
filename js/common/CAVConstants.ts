@@ -73,7 +73,8 @@ const CAVConstants = {
   // the top checkboxes are left aligned with the play area checkboxes, so their max width is smaller to accommodate
   // for the accordion box margin
   PLOT_TYPE_PROPERTY: new EnumerationProperty( CAVQueryParameters.plotType === 'dotPlot' ? PlotType.DOT_PLOT : PlotType.LINE_PLOT, {
-    tandem: Tandem.PREFERENCES.createTandem( 'plotTypeProperty' )
+    tandem: Tandem.PREFERENCES.createTandem( 'plotTypeProperty' ),
+    phetioFeatured: true
   } ),
   RIGHT_SKEWED_DATA: RIGHT_SKEWED_DATA,
   LEFT_SKEWED_DATA: RIGHT_SKEWED_DATA.slice().reverse(),
@@ -131,11 +132,13 @@ const CAVConstants = {
 export const MAX_KICKS_PROPERTY = new NumberProperty( CAVQueryParameters.maxKicks, {
   validValues: MAX_KICKS_CONFIG.map( config => config.kicks ),
   tandem: Tandem.PREFERENCES.createTandem( 'maxKicksProperty' ),
-  phetioDocumentation: 'This property is a global property that affects all screens. However, the Median screen is restricted to a maximum of 15 kicks.'
+  phetioDocumentation: 'This property is a global property that affects all screens. However, the Median screen is restricted to a maximum of 15 kicks.',
+  phetioFeatured: true
 } );
 
 export const SHOW_OUTLIERS_PROPERTY = new BooleanProperty( false, {
-  tandem: Tandem.PREFERENCES.createTandem( 'showOutliersProperty' )
+  tandem: Tandem.PREFERENCES.createTandem( 'showOutliersProperty' ),
+  phetioFeatured: true
 } );
 
 // The scaling for the data points depends on the max kicks selected, and applies across the entire sim

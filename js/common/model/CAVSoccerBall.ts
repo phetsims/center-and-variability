@@ -26,7 +26,8 @@ export default class CAVSoccerBall extends SoccerBall {
 
     this.isMedianObjectProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'isMedianObjectProperty' ),
-      phetioReadOnly: true
+      phetioReadOnly: true,
+      phetioFeatured: true
     } );
     this.isAnimationHighlightVisibleProperty = new BooleanProperty( false );
   }

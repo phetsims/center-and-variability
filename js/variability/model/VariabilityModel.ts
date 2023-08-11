@@ -79,29 +79,35 @@ export default class VariabilityModel extends CAVModel {
     this.variabilitySceneModels = sceneModels;
 
     this.selectedVariabilityMeasureProperty = new EnumerationProperty( VariabilityMeasure.RANGE, {
-      tandem: accordionBoxTandem.createTandem( 'selectedVariabilityMeasureProperty' )
+      tandem: accordionBoxTandem.createTandem( 'selectedVariabilityMeasureProperty' ),
+        phetioFeatured: true
     } );
 
     this.isRangeVisibleProperty = new BooleanProperty( false, {
-      tandem: accordionBoxTandem.createTandem( 'isRangeVisibleProperty' )
+      tandem: accordionBoxTandem.createTandem( 'isRangeVisibleProperty' ),
+      phetioFeatured: true
     } );
 
     this.isIQRVisibleProperty = new BooleanProperty( false, {
-      tandem: accordionBoxTandem.createTandem( 'isIQRVisibleProperty' )
+      tandem: accordionBoxTandem.createTandem( 'isIQRVisibleProperty' ),
+      phetioFeatured: true
     } );
 
     this.isMADVisibleProperty = new BooleanProperty( false, {
-      tandem: accordionBoxTandem.createTandem( 'isMADVisibleProperty' )
+      tandem: accordionBoxTandem.createTandem( 'isMADVisibleProperty' ),
+      phetioFeatured: true
     } );
 
     const pointerTandem = this.playAreaTandem.createTandem( 'pointer' );
 
     this.isPointerVisibleProperty = new BooleanProperty( false, {
-      tandem: pointerTandem.createTandem( 'isPointerVisibleProperty' )
+      tandem: pointerTandem.createTandem( 'isPointerVisibleProperty' ),
+      phetioFeatured: true
     } );
 
     this.pointerValueProperty = new NumberProperty( 5, {
-      tandem: pointerTandem.createTandem( 'pointerValueProperty' )
+      tandem: pointerTandem.createTandem( 'pointerValueProperty' ),
+      phetioFeatured: true
     } );
 
     this.isPointerKeyboardDraggingProperty = new BooleanProperty( false );
@@ -109,20 +115,24 @@ export default class VariabilityModel extends CAVModel {
     const intervalToolTandem = this.playAreaTandem.createTandem( 'intervalTool' );
 
     this.isIntervalToolVisibleProperty = new BooleanProperty( false, {
-      tandem: intervalToolTandem.createTandem( 'isVisibleProperty' )
+      tandem: intervalToolTandem.createTandem( 'isVisibleProperty' ),
+      phetioFeatured: true
     } );
 
     this.isIntervalToolEnabledProperty = new BooleanProperty( true, {
-      tandem: intervalToolTandem.createTandem( 'isEnabledProperty' )
+      tandem: intervalToolTandem.createTandem( 'isEnabledProperty' ),
+      phetioFeatured: true
     } );
 
     this.intervalTool1ValueProperty = new NumberProperty( 1.7, {
       range: CAVConstants.VARIABILITY_DRAG_RANGE,
-      tandem: intervalToolTandem.createTandem( 'handle1ValueProperty' )
+      tandem: intervalToolTandem.createTandem( 'handle1ValueProperty' ),
+      phetioFeatured: true
     } );
     this.intervalTool2ValueProperty = new NumberProperty( 3.4, {
       range: CAVConstants.VARIABILITY_DRAG_RANGE,
-      tandem: intervalToolTandem.createTandem( 'handle2ValueProperty' )
+      tandem: intervalToolTandem.createTandem( 'handle2ValueProperty' ),
+      phetioFeatured: true
     } );
 
     this.intervalToolDeltaStableProperty = new NumberProperty( Math.abs( this.intervalTool2ValueProperty.value - this.intervalTool1ValueProperty.value ), {} );

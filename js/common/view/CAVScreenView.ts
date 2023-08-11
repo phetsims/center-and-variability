@@ -222,6 +222,9 @@ export default class CAVScreenView extends ScreenView {
           weight: 'bold',
           size: '20px'
         } )
+      },
+      visiblePropertyOptions: {
+        phetioFeatured: true
       }
     }, options.questionBarOptions ) );
 
@@ -236,7 +239,11 @@ export default class CAVScreenView extends ScreenView {
       // Center between the ground and the bottom of the layout bounds.  Adjust because of the asymmetries:
       // the soccer player foot falls beneath the ground, and the shading of the buttons.
       centerY: ( GROUND_POSITION_Y + this.layoutBounds.maxY ) / 2 + 2,
-      tandem: this.playAreaTandem.createTandem( 'kickButtonGroup' )
+      tandem: this.playAreaTandem.createTandem( 'kickButtonGroup' ),
+
+      visiblePropertyOptions: {
+        phetioFeatured: true
+      }
     } );
 
     const dragIndicatorArrowNode = new DragIndicatorArrowNode( {
@@ -415,7 +422,10 @@ export default class CAVScreenView extends ScreenView {
           font: CAVConstants.MAIN_FONT,
           maxWidth: CAVConstants.CHECKBOX_TEXT_MAX_WIDTH + 50,
           tandem: tandem.createTandem( 'numberOfKicksText' ),
-          phetioVisiblePropertyInstrumented: true
+          phetioVisiblePropertyInstrumented: true,
+          visiblePropertyOptions: {
+            phetioFeatured: true
+          }
         } )
       ]
     } );
@@ -472,7 +482,9 @@ export default class CAVScreenView extends ScreenView {
       // always step 0.5 even if holding shift (median is always integer or half-integer)
       shiftKeyboardStep: 0.5,
       visibleProperty: model.isPredictMedianVisibleProperty,
-      tandem: tandem
+      tandem: tandem,
+
+      phetioFeatured: true
     } );
 
     return predictionSlider;

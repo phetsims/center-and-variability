@@ -69,32 +69,37 @@ export default class CAVModel extends PhetioObject {
     this.playAreaTandem = options.tandem.createTandem( 'playArea' );
 
     this.isAccordionBoxExpandedProperty = new BooleanProperty( true, {
-      tandem: options.accordionBoxTandem.createTandem( 'isAccordionBoxExpandedProperty' )
+      tandem: options.accordionBoxTandem.createTandem( 'isAccordionBoxExpandedProperty' ),
+      phetioFeatured: true
     } );
 
     this.isDataPointLayerVisibleProperty = new BooleanProperty( true, {
-      tandem: options.instrumentDataPointVisibilityProperty ? options.accordionBoxTandem.createTandem( 'isDataPointLayerVisibleProperty' ) : Tandem.OPT_OUT
+      tandem: options.instrumentDataPointVisibilityProperty ? options.accordionBoxTandem.createTandem( 'isDataPointLayerVisibleProperty' ) : Tandem.OPT_OUT,
+      phetioFeatured: true
     } );
 
-    this.isPlayAreaMeanVisibleProperty = new BooleanProperty( false, {
-      tandem: options.instrumentMeanProperty ? this.playAreaTandem.createTandem( 'isMeanVisibleProperty' ) : Tandem.OPT_OUT
-    } );
+    this.isPlayAreaMeanVisibleProperty = new BooleanProperty( false, options.instrumentMeanProperty ? {
+      tandem: this.playAreaTandem.createTandem( 'isMeanVisibleProperty' ),
+      phetioFeatured: true
+    } : {} );
     this.isPlayAreaMedianVisibleProperty = new BooleanProperty( false, {
-      tandem: this.playAreaTandem.createTandem( 'isMedianVisibleProperty' )
+      tandem: this.playAreaTandem.createTandem( 'isMedianVisibleProperty' ),
+      phetioFeatured: true
     } );
 
-    this.isPredictMedianVisibleProperty = new BooleanProperty( false, {
+    this.isPredictMedianVisibleProperty = new BooleanProperty( false, sceneModels.length === 1 ? {
 
       // Only the Median and Mean & Median screens have a predictMedian tool. They only have one scene model each.
-      tandem: sceneModels.length === 1 ? this.playAreaTandem.createTandem( 'isPredictMedianVisibleProperty' ) : Tandem.OPT_OUT
-    } );
+      tandem: this.playAreaTandem.createTandem( 'isPredictMedianVisibleProperty' ),
+      phetioFeatured: true
+    } : {} );
 
-    this.predictMedianValueProperty = new NumberProperty( 1, {
-
-      // Assumes all physical ranges are the same
-      range: CAVConstants.PHYSICAL_RANGE,
-      tandem: sceneModels.length === 1 ? this.playAreaTandem.createTandem( 'predictMedianValueProperty' ) : Tandem.OPT_OUT
-    } );
+    this.predictMedianValueProperty = new NumberProperty( 1, _.assignIn( {
+      range: CAVConstants.PHYSICAL_RANGE
+    }, sceneModels.length === 1 ? {
+      tandem: this.playAreaTandem.createTandem( 'predictMedianValueProperty' ),
+      phetioFeatured: true
+    } : {} ) );
 
     this.predictMedianValueProperty.lazyLink( median => {
       NumberTone.playMedian( median );
@@ -103,7 +108,8 @@ export default class CAVModel extends PhetioObject {
     this.selectedSceneModelProperty = new Property( sceneModels[ 0 ], {
       validValues: sceneModels,
       tandem: sceneModels.length === 1 ? Tandem.OPT_OUT : options.tandem.createTandem( 'selectedSceneModelProperty' ),
-      phetioValueType: ReferenceIO( IOType.ObjectIO )
+      phetioValueType: ReferenceIO( IOType.ObjectIO ),
+      phetioFeatured: true // TODO: https://github.com/phetsims/center-and-variability/issues/445 can we specify this for the opt out case?
     } );
 
     this.selectedSceneModelProperty.link( selectedScene => {
@@ -127,10 +133,13 @@ export default class CAVModel extends PhetioObject {
 
     this.soccerBallsInputEnabledProperty = new BooleanProperty( true, {
       tandem: this.playAreaTandem.createTandem( 'soccerBallsInputEnabledProperty' ),
-      phetioDocumentation: 'Enable or disable input on the entire set of soccer balls.'
+      phetioDocumentation: 'Enable or disable input on the entire set of soccer balls.',
+      phetioFeatured: true
     } );
 
-    this.dragIndicatorModel = new CAVDragIndicatorModel( this.soccerBallsInputEnabledProperty, { tandem: this.playAreaTandem.createTandem( 'soccerBallDragIndicatorModel' ) } );
+    this.dragIndicatorModel = new CAVDragIndicatorModel( this.soccerBallsInputEnabledProperty, {
+      tandem: this.playAreaTandem.createTandem( 'soccerBallDragIndicatorModel' )
+    } );
 
     // It is important to link to the values of all the soccer balls in the screen, so that the dragIndicator can be
     // updated after all the balls have landed, and not just after they have been kicked.
