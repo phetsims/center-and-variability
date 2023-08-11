@@ -39,7 +39,8 @@ const simOptions: SimOptions = {
     localizationOptions: {
       characterSets: KickerCharacterSets.CHARACTER_SETS
     }
-  } )
+  } ),
+  phetioDesigned: true
 };
 
 simLauncher.launch( () => {
