@@ -393,8 +393,39 @@ export default class CardNodeContainer extends InteractiveHighlightingNode {
       }
     } );
 
+    const swapCards = ( activeCards: CardNode[], focusedCard: CardNode, delta: number ) => {
+      const currentIndex = activeCards.indexOf( focusedCard );
+
+      // We are deciding not to wrap the value around the ends of the range because the sort order is important and does not wrap
+      const targetIndex = Utils.clamp( currentIndex + delta, 0, activeCards.length - 1 );
+
+      if ( targetIndex !== currentIndex ) {
+
+        // Which way the displacement is going.
+        const indexSign = Math.sign( targetIndex - currentIndex );
+
+        // An array of indices affected by the focusedCardNodes movement.
+        const displacedIndexes = _.range( currentIndex, targetIndex );
+        const displacedCards = displacedIndexes.map( index => {
+          return activeCards[ index + indexSign ];
+        } );
+
+        focusedCard.model.indexProperty.value = targetIndex;
+        displacedCards.forEach( ( card, index ) => {
+          card.model.indexProperty.value = displacedIndexes[ index ];
+          model.animateToHomeCell( card.model, 0.3 );
+        } );
+        model.animateToHomeCell( focusedCard.model, 0.3 );
+
+        model.cardCellsChangedEmitter.emit();
+
+        // Gets rid of the hand icon
+        model.hasKeyboardMovedCardProperty.value = true;
+      }
+    };
+
     const keyboardListener = new KeyboardListener( {
-      keys: [ 'arrowRight', 'arrowLeft', 'enter', 'space', 'escape' ],
+      keys: [ 'arrowRight', 'arrowLeft', 'enter', 'space', 'home', 'end', 'escape', 'pageUp', 'pageDown' ],
       callback: ( event, listener ) => {
 
         const keysPressed = listener.keysPressed;
@@ -402,7 +433,6 @@ export default class CardNodeContainer extends InteractiveHighlightingNode {
         // Select a card
         const focusedCardNode = focusedCardNodeProperty.value;
         const activeCardNodes = this.getActiveCardNodesInOrder();
-        const numberOfActiveCards = activeCardNodes.length;
 
         if ( focusedCardNode ) {
           if ( ( keysPressed === 'arrowRight' || keysPressed === 'arrowLeft' ) ) {
@@ -412,32 +442,21 @@ export default class CardNodeContainer extends InteractiveHighlightingNode {
 
               // We are deciding not to wrap the value around the ends of the range because the sort order is important and does not wrap
               const currentIndex = activeCardNodes.indexOf( focusedCardNode );
-              const nextIndex = Utils.clamp( currentIndex + delta, 0, numberOfActiveCards - 1 );
+              const nextIndex = Utils.clamp( currentIndex + delta, 0, activeCardNodes.length - 1 );
               focusedCardNodeProperty.value = activeCardNodes[ nextIndex ];
             }
             else {
 
               // Move a selected card
               const delta = listener.keysPressed === 'arrowLeft' ? -1 : 1;
+              swapCards( activeCardNodes, focusedCardNode, delta );
+            }
+          }
+          else if ( keysPressed === 'pageUp' || keysPressed === 'pageDown' ) {
+            if ( isCardGrabbedProperty.value ) {
+              const delta = listener.keysPressed === 'pageUp' ? 3 : -3;
 
-              const currentIndex = activeCardNodes.indexOf( focusedCardNode );
-
-              // swap cards
-              const targetIndex = Utils.clamp( currentIndex + delta, 0, numberOfActiveCards - 1 );
-              if ( targetIndex !== currentIndex ) {
-                const displacedCardNode = activeCardNodes[ targetIndex ];
-
-                focusedCardNode.model.indexProperty.value = targetIndex;
-                displacedCardNode.model.indexProperty.value = currentIndex;
-
-                model.animateToHomeCell( focusedCardNode.model, 0.3 );
-                model.animateToHomeCell( displacedCardNode.model, 0.3 );
-
-                model.cardCellsChangedEmitter.emit();
-
-                // Gets rid of the hand icon
-                model.hasKeyboardMovedCardProperty.value = true;
-              }
+              swapCards( activeCardNodes, focusedCardNode, delta );
             }
           }
           else if ( keysPressed === 'enter' || keysPressed === 'space' ) {
