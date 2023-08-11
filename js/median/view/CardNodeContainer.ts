@@ -393,10 +393,10 @@ export default class CardNodeContainer extends InteractiveHighlightingNode {
       }
     } );
 
+
+    // Move and swap cards according to the focused card's target index. Used for alternative input.
     const swapCards = ( activeCards: CardNode[], focusedCard: CardNode, delta: number ) => {
       const currentIndex = activeCards.indexOf( focusedCard );
-
-      // We are deciding not to wrap the value around the ends of the range because the sort order is important and does not wrap
       const targetIndex = Utils.clamp( currentIndex + delta, 0, activeCards.length - 1 );
 
       if ( targetIndex !== currentIndex ) {
@@ -404,7 +404,7 @@ export default class CardNodeContainer extends InteractiveHighlightingNode {
         // Which way the displacement is going.
         const indexSign = Math.sign( targetIndex - currentIndex );
 
-        // An array of indices affected by the focusedCardNodes movement.
+        // An array of indices affected by the focusedCardNode's movement.
         const displacedIndexes = _.range( currentIndex, targetIndex );
         const displacedCards = displacedIndexes.map( index => {
           return activeCards[ index + indexSign ];
@@ -433,21 +433,23 @@ export default class CardNodeContainer extends InteractiveHighlightingNode {
         // Select a card
         const focusedCardNode = focusedCardNodeProperty.value;
         const activeCardNodes = this.getActiveCardNodesInOrder();
+        const numberOfActiveCards = activeCardNodes.length;
 
         if ( focusedCardNode ) {
           if ( ( keysPressed === 'arrowRight' || keysPressed === 'arrowLeft' ) ) {
 
+            // Arrow keys will shift the card focus when a card is not grabbed.
             if ( !isCardGrabbedProperty.value ) {
               const delta = listener.keysPressed === 'arrowRight' ? 1 : -1;
 
               // We are deciding not to wrap the value around the ends of the range because the sort order is important and does not wrap
               const currentIndex = activeCardNodes.indexOf( focusedCardNode );
-              const nextIndex = Utils.clamp( currentIndex + delta, 0, activeCardNodes.length - 1 );
+              const nextIndex = Utils.clamp( currentIndex + delta, 0, numberOfActiveCards - 1 );
               focusedCardNodeProperty.value = activeCardNodes[ nextIndex ];
             }
-            else {
 
-              // Move a selected card
+            // Arrow keys will move the card when it is grabbed.
+            else {
               const delta = listener.keysPressed === 'arrowLeft' ? -1 : 1;
               swapCards( activeCardNodes, focusedCardNode, delta );
             }
@@ -455,7 +457,12 @@ export default class CardNodeContainer extends InteractiveHighlightingNode {
           else if ( keysPressed === 'pageUp' || keysPressed === 'pageDown' ) {
             if ( isCardGrabbedProperty.value ) {
               const delta = listener.keysPressed === 'pageUp' ? 3 : -3;
-
+              swapCards( activeCardNodes, focusedCardNode, delta );
+            }
+          }
+          else if ( keysPressed === 'home' || keysPressed === 'end' ) {
+            if ( isCardGrabbedProperty.value ) {
+              const delta = listener.keysPressed === 'end' ? numberOfActiveCards : -numberOfActiveCards;
               swapCards( activeCardNodes, focusedCardNode, delta );
             }
           }
