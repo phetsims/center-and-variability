@@ -109,7 +109,7 @@ export default class CAVModel extends PhetioObject {
       validValues: sceneModels,
       tandem: sceneModels.length === 1 ? Tandem.OPT_OUT : options.tandem.createTandem( 'selectedSceneModelProperty' ),
       phetioValueType: ReferenceIO( IOType.ObjectIO ),
-      phetioFeatured: true // TODO: https://github.com/phetsims/center-and-variability/issues/445 can we specify this for the opt out case?
+      phetioFeatured: true
     } );
 
     this.selectedSceneModelProperty.link( selectedScene => {
