@@ -13,7 +13,7 @@ import InteractiveCardContainerModel from '../model/InteractiveCardContainerMode
 import Property from '../../../../axon/js/Property.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import DragIndicatorArrowNode from '../../common/view/DragIndicatorArrowNode.js';
-import { FocusHighlightFromNode, FocusHighlightPath, Image, KeyboardListener, LinearGradient, Node, Path, Text } from '../../../../scenery/js/imports.js';
+import { FocusHighlightFromNode, FocusHighlightPath, Image, KeyboardListener, Node, Path } from '../../../../scenery/js/imports.js';
 import dragIndicatorHand_png from '../../../images/dragIndicatorHand_png.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import CAVConstants from '../../common/CAVConstants.js';
@@ -24,38 +24,19 @@ import CardNode, { cardDropClip, cardPickUpSoundClip } from './CardNode.js';
 import Utils from '../../../../dot/js/Utils.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import { Shape } from '../../../../kite/js/imports.js';
-import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import Panel from '../../../../sun/js/Panel.js';
-import Matrix3 from '../../../../dot/js/Matrix3.js';
 import Multilink from '../../../../axon/js/Multilink.js';
-import AsyncCounter from '../../common/model/AsyncCounter.js';
-import dotRandom from '../../../../dot/js/dotRandom.js';
-import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import stepTimer from '../../../../axon/js/stepTimer.js';
-import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
-import soundManager from '../../../../tambo/js/soundManager.js';
-import sortCelebration_mp3 from '../../../sounds/sortCelebration_mp3.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 import GrabReleaseCueNode from '../../../../scenery-phet/js/accessibility/nodes/GrabReleaseCueNode.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import CelebrationNode from './CelebrationNode.js';
 
-const successSoundClip = new SoundClip( sortCelebration_mp3, {
-  initialOutputLevel: 0.3
-} );
-soundManager.addSoundGenerator( successSoundClip );
 
 const FOCUS_HIGHLIGHT_Y_MARGIN = CAVConstants.CARD_SPACING + 3;
 
 export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
-  private isReadyForCelebration = false;
-  private remainingCelebrationAnimations: ( () => void )[] = [];
-  private dataSortedNodeAnimation: Animation | null = null;
   private wasSortedBefore = true;
-
-  private readonly dataSortedNode: Panel;
+  private readonly celebrationNode: CelebrationNode;
 
   public constructor( model: InteractiveCardContainerModel,
                       private readonly isSortingDataProperty: Property<boolean>,
@@ -64,6 +45,9 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
                       providedOptions: CardNodeContainerOptions
   ) {
     super( model, sceneModel, medianVisibleProperty, providedOptions );
+
+    this.celebrationNode = new CelebrationNode( model, this.cardMap, this.sceneModel.resetEmitter );
+    this.addChild( this.celebrationNode );
 
     this.cardMap.forEach( ( cardNode, cardModel ) => {
       // Update the position of all cards (via animation) whenever any card is dragged
@@ -81,7 +65,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
           // Animate the dropped card home
           model.animateToHomeCell( cardNode.model, 0.2 );
 
-          this.isReadyForCelebration && this.celebrate();
+          this.celebrationNode.isReadyForCelebration && this.celebrationNode.celebrate();
         }
       } );
 
@@ -180,44 +164,9 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
           if ( model.parentContext === 'accordion' ) {
             cardPickUpSoundClip.play();
-            this.animateCelebration1( () => cardDropClip.play(), false );
+            this.celebrationNode.animateCelebration1( () => cardDropClip.play(), false );
           }
         }
-      }
-    } );
-
-    const dataSortedTextNode = new Text( CenterAndVariabilityStrings.youSortedTheDataStringProperty, {
-      font: new PhetFont( 15 ),
-      maxWidth: CAVConstants.CARD_DIMENSION * 10
-    } );
-    this.dataSortedNode = new Panel( dataSortedTextNode, {
-      stroke: null,
-      cornerRadius: 4,
-      lineWidth: 2,
-      visible: false
-    } );
-
-    // create a rotated linear gradient
-    const gradientMargin = 20;
-    const startPoint = new Vector2( this.dataSortedNode.left + gradientMargin, this.dataSortedNode.top + gradientMargin );
-    const endPoint = new Vector2( this.dataSortedNode.right - gradientMargin, this.dataSortedNode.bottom - gradientMargin );
-    const gradient = new LinearGradient( startPoint.x, startPoint.y, endPoint.x, endPoint.y );
-    gradient.addColorStop( 0, '#fa9696' );
-    gradient.addColorStop( 0.2, '#ffa659' );
-    gradient.addColorStop( 0.4, '#ebd75e' );
-    gradient.addColorStop( 0.6, '#8ce685' );
-    gradient.addColorStop( 0.8, '#7fd7f0' );
-    gradient.addColorStop( 1, '#927feb' );
-    gradient.setTransformMatrix( Matrix3.rotationAroundPoint( Math.PI / 4 * 1.2, this.dataSortedNode.center ) );
-    this.dataSortedNode.stroke = gradient;
-
-    this.addChild( this.dataSortedNode );
-
-    this.sceneModel.resetEmitter.addListener( () => {
-      this.dataSortedNode.visible = false;
-      if ( this.dataSortedNodeAnimation ) {
-        this.dataSortedNodeAnimation.stop();
-        this.dataSortedNodeAnimation = null;
       }
     } );
 
@@ -280,9 +229,9 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       else {
 
         // celebrate after the card was dropped and gets to its home
-        this.isReadyForCelebration = this.model.isDataSorted() && !this.wasSortedBefore;
+        this.celebrationNode.isReadyForCelebration = this.model.isDataSorted() && !this.wasSortedBefore;
 
-        this.isReadyForCelebration && this.celebrate();
+        this.celebrationNode.isReadyForCelebration && this.celebrationNode.celebrate();
         this.wasSortedBefore = this.model.isDataSorted();
       }
     } );
@@ -449,7 +398,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
           }
 
           // celebrate after the card was dropped and gets to its home
-          this.isReadyForCelebration = this.model.isDataSorted() && !this.wasSortedBefore;
+          this.celebrationNode.isReadyForCelebration = this.model.isDataSorted() && !this.wasSortedBefore;
 
           this.model.cardCellsChangedEmitter.emit();
         }
@@ -457,202 +406,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
     };
   }
 
-  private celebrate(): void {
-    const cardCells = this.model.getCardsInCellOrder();
-    const inProgressAnimations = cardCells.filter( card => card.animation ).map( card => card.animation! );
 
-    // Setup a callback for animation when all current animations finish
-    const asyncCounter = new AsyncCounter( inProgressAnimations.length, () => {
-
-      const leftmostCard = this.cardMap.get( cardCells[ 0 ] )!;
-      assert && assert( leftmostCard, 'leftmostCard should be defined' );
-
-      this.dataSortedNode.centerX = this.model.getCardPositionX( ( cardCells.length - 1 ) / 2 ) + CAVConstants.CARD_DIMENSION / 2;
-      this.dataSortedNode.top = leftmostCard.bottom + 7;
-
-      if ( this.dataSortedNode.left < 0 ) {
-        this.dataSortedNode.left = 0;
-      }
-      this.dataSortedNode.opacity = 1;
-      this.dataSortedNode.visible = true;
-
-      // If the user sorted the data again before the data sorted message was hidden, clear out the timer.
-      if ( this.dataSortedNodeAnimation ) {
-        this.dataSortedNodeAnimation.stop();
-      }
-
-      // start a timer to hide the data sorted node
-      this.dataSortedNodeAnimation = new Animation( {
-        duration: 0.6,
-        delay: 2,
-        targets: [ {
-          property: this.dataSortedNode.opacityProperty,
-          to: 0,
-          easing: Easing.QUADRATIC_IN_OUT
-        } ]
-      } );
-      this.dataSortedNodeAnimation.finishEmitter.addListener( () => {
-        this.dataSortedNode.visible = false;
-        this.dataSortedNodeAnimation = null;
-      } );
-      this.dataSortedNodeAnimation.start();
-
-      successSoundClip.play();
-
-      const cardBeingDragged = this.cardNodes.filter( cardNode => cardNode.dragListener.isPressed ).length;
-      const cardsAnimating = cardCells.filter( card => card.animation ).length;
-      if ( cardBeingDragged === 0 && cardsAnimating === 0 ) {
-        this.pickable = false;
-
-        this.animateRandomCelebration( () => {
-
-          this.isReadyForCelebration = false;
-          this.pickable = true;
-          this.interruptSubtreeInput();
-        } );
-      }
-    } );
-
-    // Notify the asyncCounter when any in-progress animation finishes
-    inProgressAnimations.forEach( animation => {
-      animation.endedEmitter.addListener( () => asyncCounter.increment() );
-    } );
-  }
-
-
-  private animateRandomCelebration( callback: () => void ): void {
-    if ( this.remainingCelebrationAnimations.length === 0 ) {
-      const animations = [
-        () => this.animateCelebration1( callback, true ),
-        () => this.animateCelebration2( callback ),
-        () => this.animateCelebration3( callback )
-      ];
-
-      this.remainingCelebrationAnimations.push( ...animations );
-    }
-
-    const animation = dotRandom.sample( this.remainingCelebrationAnimations );
-    arrayRemove( this.remainingCelebrationAnimations, animation );
-    animation();
-  }
-
-  /**
-   * The cards grow and then shrink back to normal size.
-   */
-  private animateCelebration1( callback: () => void, animateFromCenter: boolean ): void {
-    const cardCells = this.model.getCardsInCellOrder();
-    const asyncCounter = new AsyncCounter( cardCells.length, callback );
-
-    cardCells.forEach( card => {
-      const cardNode = this.cardMap.get( card )!;
-
-      const scaleProperty = new NumberProperty( 1 );
-      scaleProperty.lazyLink( scale => {
-        const center = cardNode.center.copy();
-        cardNode.setScaleMagnitude( scale );
-        if ( animateFromCenter ) {
-          cardNode.center = center;
-        }
-      } );
-
-      const scaleUpAnimation = new Animation( {
-        duration: animateFromCenter ? 0.2 : 0.15,
-        targets: [ {
-          property: scaleProperty,
-          to: animateFromCenter ? 1.2 : 1.15,
-          easing: Easing.QUADRATIC_IN_OUT
-        } ]
-      } );
-
-      const scaleDownAnimation = new Animation( {
-        duration: animateFromCenter ? 0.2 : 0.15,
-        targets: [ {
-          property: scaleProperty,
-          to: 1,
-          easing: Easing.QUADRATIC_IN_OUT
-        } ]
-      } );
-      scaleDownAnimation.endedEmitter.addListener( () => asyncCounter.increment() );
-      scaleUpAnimation.then( scaleDownAnimation );
-      scaleUpAnimation.start();
-    } );
-  }
-
-  /**
-   * The cards do one clockwise rotation.
-   */
-  private animateCelebration2( callback: () => void ): void {
-    const cardCells = this.model.getCardsInCellOrder();
-    const asyncCounter = new AsyncCounter( cardCells.length, callback );
-
-    cardCells.forEach( card => {
-      const cardNode = this.cardMap.get( card )!;
-
-      const center = cardNode.center.copy();
-
-      const rotationProperty = new NumberProperty( 0 );
-      rotationProperty.link( rotation => cardNode.setRotation( rotation ) );
-
-      const animation = new Animation( {
-        duration: 0.6,
-        targets: [ {
-          property: rotationProperty,
-          to: 2 * Math.PI,
-          easing: Easing.QUADRATIC_IN_OUT
-        } ]
-      } );
-      const updatePosition = () => {
-        cardNode.center = center;
-      };
-      animation.updateEmitter.addListener( updatePosition );
-      animation.endedEmitter.addListener( () => asyncCounter.increment() );
-      animation.start();
-    } );
-  }
-
-  /**
-   * The cards do the "wave" from left to right.
-   */
-  private animateCelebration3( callback: () => void ): void {
-    const cardCells = this.model.getCardsInCellOrder();
-    const asyncCounter = new AsyncCounter( cardCells.length, callback );
-
-    cardCells.forEach( ( card, index ) => {
-      const cardNode = this.cardMap.get( card )!;
-
-      const initialPositionY = cardNode.y;
-      const jumpHeight = 30;
-      const positionYProperty = new NumberProperty( initialPositionY );
-      positionYProperty.link( positionY => { cardNode.y = positionY; } );
-
-      const goUpAnimation = new Animation( {
-        duration: 0.2,
-        targets: [ {
-          property: positionYProperty,
-          to: initialPositionY - jumpHeight,
-          easing: Easing.QUADRATIC_IN_OUT
-        } ]
-      } );
-
-      goUpAnimation.endedEmitter.addListener( () => {
-        const goDownAnimation = new Animation( {
-          duration: 0.2,
-          targets: [ {
-            property: positionYProperty,
-            to: initialPositionY,
-            easing: Easing.QUADRATIC_IN_OUT
-          } ]
-        } );
-        goDownAnimation.endedEmitter.addListener( () => asyncCounter.increment() );
-        goDownAnimation.start();
-      } );
-
-      // offset starting the animation for each card
-      stepTimer.setTimeout( () => {
-        goUpAnimation.start();
-      }, index * 60 );
-    } );
-  }
 }
 
 centerAndVariability.register( 'InteractiveCardNodeContainer', InteractiveCardNodeContainer );
