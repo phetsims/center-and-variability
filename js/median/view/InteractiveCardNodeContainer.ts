@@ -358,6 +358,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
           }
           else if ( keysPressed === 'enter' || keysPressed === 'space' ) {
             model.isCardGrabbedProperty.value = !model.isCardGrabbedProperty.value;
+            model.hasGrabbedCardProperty.value = true;
 
             if ( !model.isCardGrabbedProperty.value ) {
 

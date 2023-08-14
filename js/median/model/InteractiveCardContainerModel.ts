@@ -60,6 +60,7 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
   public readonly dragIndicationCardProperty: Property<CardModel | null>;
   public readonly totalDragDistanceProperty: Property<number>;
   public readonly hasKeyboardMovedCardProperty = new BooleanProperty( false );
+  public readonly hasGrabbedCardProperty = new BooleanProperty( false );
 
   // Keyboard Input properties:
   public readonly focusedCardProperty: Property<CardModel | null> = new Property<CardModel | null>( null );
@@ -83,9 +84,9 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
       phetioDocumentation: 'This is for PhET-iO internal use only.'
     } );
 
-    this.isGrabReleaseCueVisibleProperty = new DerivedProperty( [ this.focusedCardProperty, this.hasKeyboardMovedCardProperty, this.isCardGrabbedProperty ],
-      ( focusedCard, hasKeyboardMovedCard, isCardGrabbed ) => {
-        return focusedCard !== null && !hasKeyboardMovedCard && !isCardGrabbed;
+    this.isGrabReleaseCueVisibleProperty = new DerivedProperty( [ this.focusedCardProperty, this.hasKeyboardMovedCardProperty, this.hasGrabbedCardProperty ],
+      ( focusedCard, hasKeyboardMovedCard, hasGrabbedCard ) => {
+        return focusedCard !== null && !hasKeyboardMovedCard && !hasGrabbedCard;
       } );
 
     this.cardCellsChangedEmitter.addListener( () => {
@@ -117,6 +118,7 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
       this.hasKeyboardMovedCardProperty.reset();
       this.focusedCardProperty.reset();
       this.isCardGrabbedProperty.reset();
+      this.hasGrabbedCardProperty.reset();
     } );
   }
 
