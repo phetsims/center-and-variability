@@ -391,22 +391,25 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       innerLineWidth: FocusHighlightPath.GROUP_INNER_LINE_WIDTH
     } );
 
-    focusHighlightWidthProperty.link( focusHighlightWidth => {
-      const marginX = 7;
-      const focusRect = Shape.rect( -marginX, -FOCUS_HIGHLIGHT_Y_MARGIN, focusHighlightWidth + 2 * marginX, CAVConstants.CARD_DIMENSION + 2 * FOCUS_HIGHLIGHT_Y_MARGIN );
-      focusHighlightFromNode.setShape( focusRect );
-      hitRect.setShape( focusRect );
-    } );
-
-    this.setGroupFocusHighlight( focusHighlightFromNode );
-    this.addInputListener( keyboardListener );
-
     const grabReleaseCueNode = new GrabReleaseCueNode( {
       visibleProperty: model.isGrabReleaseCueVisibleProperty,
       top: CAVConstants.CARD_DIMENSION + FOCUS_HIGHLIGHT_Y_MARGIN
     } );
 
+
     this.addChild( grabReleaseCueNode );
+
+    focusHighlightWidthProperty.link( focusHighlightWidth => {
+      const marginX = 7;
+      const focusRect = Shape.rect( -marginX, -FOCUS_HIGHLIGHT_Y_MARGIN, focusHighlightWidth + 2 * marginX, CAVConstants.CARD_DIMENSION + 2 * FOCUS_HIGHLIGHT_Y_MARGIN );
+      focusHighlightFromNode.setShape( focusRect );
+      hitRect.setShape( focusRect );
+      const cueNodeWidth = grabReleaseCueNode.width;
+      grabReleaseCueNode.centerX = Utils.clamp( focusRect.bounds.centerX, cueNodeWidth / 2, this.width - cueNodeWidth / 2 );
+    } );
+
+    this.setGroupFocusHighlight( focusHighlightFromNode );
+    this.addInputListener( keyboardListener );
   }
 
   // The listener which is linked to the cardNode.positionProperty
