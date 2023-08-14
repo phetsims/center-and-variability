@@ -38,11 +38,15 @@ import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import sortCelebration_mp3 from '../../../sounds/sortCelebration_mp3.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
+import GrabReleaseCueNode from '../../../../scenery-phet/js/accessibility/nodes/GrabReleaseCueNode.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 const successSoundClip = new SoundClip( sortCelebration_mp3, {
   initialOutputLevel: 0.3
 } );
 soundManager.addSoundGenerator( successSoundClip );
+
+const FOCUS_HIGHLIGHT_Y_MARGIN = CAVConstants.CARD_SPACING + 3;
 
 export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
@@ -217,12 +221,8 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
     // Needs to be pickable in accordion box.
     this.pickable = true;
 
-    const focusedCardNodeProperty = new Property<CardNode | null>( null );
-    const isCardGrabbedProperty = new Property( false );
-
-    sceneModel.clearDataEmitter.addListener( () => {
-      focusedCardNodeProperty.reset();
-      isCardGrabbedProperty.reset();
+    const focusedCardNodeProperty: TReadOnlyProperty<CardNode | null> = new DerivedProperty( [ model.focusedCardProperty ], focusedCard => {
+      return focusedCard === null ? focusedCard : this.cardMap.get( focusedCard )!;
     } );
 
     // Update focused card when cards are created.
@@ -232,20 +232,23 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
       // When a user is focused on the card container but there are no cards yet, we want to ensure that a card gets focused
       // once there is a card.
-      if ( focusedCardNodeProperty.value === null && this.focused && this.cardNodes[ 0 ].model.isActiveProperty.value ) {
-        focusedCardNodeProperty.value = activeCardNodes[ 0 ];
+      if ( model.focusedCardProperty.value === null && this.focused && this.cardNodes[ 0 ].model.isActiveProperty.value ) {
+        model.focusedCardProperty.value = activeCardNodes[ 0 ].model;
       }
     } );
 
     this.addInputListener( {
       focus: () => {
         const activeCardNodes = this.getActiveCardNodesInOrder();
-        if ( focusedCardNodeProperty.value === null && activeCardNodes.length > 0 ) {
-          focusedCardNodeProperty.value = activeCardNodes[ 0 ];
+        if ( model.focusedCardProperty.value === null && activeCardNodes.length > 0 ) {
+          model.focusedCardProperty.value = activeCardNodes[ 0 ].model;
         }
       },
       blur: () => {
-        isCardGrabbedProperty.value = false;
+        model.isCardGrabbedProperty.value = false;
+      },
+      focusout: () => {
+        model.focusedCardProperty.value = null;
       }
     } );
 
@@ -253,7 +256,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
     this.addChild( hitRect );
     hitRect.moveToBack();
 
-    Multilink.multilink( [ focusedCardNodeProperty, isCardGrabbedProperty ], ( focusedCardNode, isCardGrabbed ) => {
+    Multilink.multilink( [ focusedCardNodeProperty, model.isCardGrabbedProperty ], ( focusedCardNode, isCardGrabbed ) => {
         if ( focusedCardNode ) {
 
           const focusForSelectedCard = new FocusHighlightFromNode( focusedCardNode.cardNode, { dashed: isCardGrabbed } );
@@ -267,7 +270,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       }
     );
 
-    isCardGrabbedProperty.link( isCardGrabbed => {
+    model.isCardGrabbedProperty.link( isCardGrabbed => {
       if ( isCardGrabbed ) {
         this.wasSortedBefore = model.isDataSorted();
       }
@@ -326,13 +329,13 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
           if ( ( keysPressed === 'arrowRight' || keysPressed === 'arrowLeft' ) ) {
 
             // Arrow keys will shift the card focus when a card is not grabbed.
-            if ( !isCardGrabbedProperty.value ) {
+            if ( !model.isCardGrabbedProperty.value ) {
               const delta = listener.keysPressed === 'arrowRight' ? 1 : -1;
 
               // We are deciding not to wrap the value around the ends of the range because the sort order is important and does not wrap
               const currentIndex = activeCardNodes.indexOf( focusedCardNode );
               const nextIndex = Utils.clamp( currentIndex + delta, 0, numberOfActiveCards - 1 );
-              focusedCardNodeProperty.value = activeCardNodes[ nextIndex ];
+              model.focusedCardProperty.value = activeCardNodes[ nextIndex ].model;
             }
 
             // Arrow keys will move the card when it is grabbed.
@@ -342,21 +345,21 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
             }
           }
           else if ( keysPressed === 'pageUp' || keysPressed === 'pageDown' ) {
-            if ( isCardGrabbedProperty.value ) {
+            if ( model.isCardGrabbedProperty.value ) {
               const delta = listener.keysPressed === 'pageUp' ? 3 : -3;
               swapCards( activeCardNodes, focusedCardNode, delta );
             }
           }
           else if ( keysPressed === 'home' || keysPressed === 'end' ) {
-            if ( isCardGrabbedProperty.value ) {
+            if ( model.isCardGrabbedProperty.value ) {
               const delta = listener.keysPressed === 'end' ? numberOfActiveCards : -numberOfActiveCards;
               swapCards( activeCardNodes, focusedCardNode, delta );
             }
           }
           else if ( keysPressed === 'enter' || keysPressed === 'space' ) {
-            isCardGrabbedProperty.value = !isCardGrabbedProperty.value;
+            model.isCardGrabbedProperty.value = !model.isCardGrabbedProperty.value;
 
-            if ( !isCardGrabbedProperty.value ) {
+            if ( !model.isCardGrabbedProperty.value ) {
 
               // See if the user unsorted the data.  If so, uncheck the "Sort Data" checkbox
               if ( this.isSortingDataProperty.value && !this.model.isDataSorted() ) {
@@ -364,15 +367,14 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
               }
             }
           }
-          else if ( isCardGrabbedProperty.value ) {
+          else if ( model.isCardGrabbedProperty.value ) {
             if ( keysPressed === 'escape' ) {
-              isCardGrabbedProperty.value = false;
+              model.isCardGrabbedProperty.value = false;
             }
           }
         }
       }
     } );
-
 
     const focusHighlightWidthProperty = new DerivedProperty( [ model.numActiveCardsProperty ], numActiveCards => {
       return model.getCardPositionX( numActiveCards === 0 ? 1 : numActiveCards + 1 );
@@ -387,14 +389,20 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
     focusHighlightWidthProperty.link( focusHighlightWidth => {
       const marginX = 7;
-      const marginY = CAVConstants.CARD_SPACING + 3;
-      const focusRect = Shape.rect( -marginX, -marginY, focusHighlightWidth + 2 * marginX, CAVConstants.CARD_DIMENSION + 2 * marginY );
+      const focusRect = Shape.rect( -marginX, -FOCUS_HIGHLIGHT_Y_MARGIN, focusHighlightWidth + 2 * marginX, CAVConstants.CARD_DIMENSION + 2 * FOCUS_HIGHLIGHT_Y_MARGIN );
       focusHighlightFromNode.setShape( focusRect );
       hitRect.setShape( focusRect );
     } );
 
     this.setGroupFocusHighlight( focusHighlightFromNode );
     this.addInputListener( keyboardListener );
+
+    const grabReleaseCueNode = new GrabReleaseCueNode( {
+      visibleProperty: model.isGrabReleaseCueVisibleProperty,
+      top: CAVConstants.CARD_DIMENSION + FOCUS_HIGHLIGHT_Y_MARGIN
+    } );
+
+    this.addChild( grabReleaseCueNode );
   }
 
   // The listener which is linked to the cardNode.positionProperty

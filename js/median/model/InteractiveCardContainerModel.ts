@@ -61,6 +61,11 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
   public readonly totalDragDistanceProperty: Property<number>;
   public readonly hasKeyboardMovedCardProperty = new BooleanProperty( false );
 
+  // Keyboard Input properties:
+  public readonly focusedCardProperty: Property<CardModel | null> = new Property<CardModel | null>( null );
+  public readonly isCardGrabbedProperty = new BooleanProperty( false );
+  public readonly isGrabReleaseCueVisibleProperty: TReadOnlyProperty<boolean>;
+
   public constructor( medianModel: MedianModel, providedOptions: InteractiveCardContainerModelOptions ) {
     super( medianModel, providedOptions );
 
@@ -77,6 +82,11 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
       tandem: this.parentContext === 'accordion' ? providedOptions.tandem.createTandem( 'cardDragIndicatorProperty' ) : Tandem.OPT_OUT,
       phetioDocumentation: 'This is for PhET-iO internal use only.'
     } );
+
+    this.isGrabReleaseCueVisibleProperty = new DerivedProperty( [ this.focusedCardProperty, this.hasKeyboardMovedCardProperty, this.isCardGrabbedProperty ],
+      ( focusedCard, hasKeyboardMovedCard, isCardGrabbed ) => {
+        return focusedCard !== null && !hasKeyboardMovedCard && !isCardGrabbed;
+      } );
 
     this.cardCellsChangedEmitter.addListener( () => {
       medianModel.areCardsSortedProperty.value = this.isDataSorted();
@@ -105,6 +115,8 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
     medianModel.selectedSceneModelProperty.value.resetEmitter.addListener( () => {
       this.totalDragDistanceProperty.reset();
       this.hasKeyboardMovedCardProperty.reset();
+      this.focusedCardProperty.reset();
+      this.isCardGrabbedProperty.reset();
     } );
   }
 
