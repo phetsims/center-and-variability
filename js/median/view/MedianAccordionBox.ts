@@ -8,7 +8,6 @@
  */
 
 import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
-import CardNodeContainer from './CardNodeContainer.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import MedianModel from '../model/MedianModel.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
@@ -22,6 +21,7 @@ import CAVColors from '../../common/CAVColors.js';
 import CAVInfoButton from '../../common/view/CAVInfoButton.js';
 import { AlignBox } from '../../../../scenery/js/imports.js';
 import ButtonNode from '../../../../sun/js/buttons/ButtonNode.js';
+import InteractiveCardNodeContainer from './InteractiveCardNodeContainer.js';
 
 export default class MedianAccordionBox extends CAVAccordionBox {
   public readonly infoButton: ButtonNode;
@@ -32,7 +32,7 @@ export default class MedianAccordionBox extends CAVAccordionBox {
     const backgroundShape = CAVConstants.ACCORDION_BOX_CONTENTS_SHAPE_MEDIAN;
     const backgroundNode = CAVAccordionBox.createBackgroundNode( backgroundShape, CAVColors.meanAndMedianAccordionBoxFillProperty );
 
-    const cardNodeContainer = new CardNodeContainer( model.cardContainerModel, model.isSortingDataProperty,
+    const cardNodeContainer = new InteractiveCardNodeContainer( model.interactiveCardContainerModel, model.isSortingDataProperty,
       model.selectedSceneModelProperty.value, model.medianVisibleProperty, {
 
         // Expose this intermediate layer to make it so that clients can hide the number cards with one call

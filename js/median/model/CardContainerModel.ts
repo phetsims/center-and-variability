@@ -9,20 +9,10 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import dotRandom from '../../../../dot/js/dotRandom.js';
-import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 import CardModel from './CardModel.js';
-import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
-import soundManager from '../../../../tambo/js/soundManager.js';
-import cardMovement1_mp3 from '../../../sounds/cardMovement1_mp3.js';
-import cardMovement2_mp3 from '../../../sounds/cardMovement2_mp3.js';
-import cardMovement3_mp3 from '../../../sounds/cardMovement3_mp3.js';
-import cardMovement4_mp3 from '../../../sounds/cardMovement4_mp3.js';
-import cardMovement5_mp3 from '../../../sounds/cardMovement5_mp3.js';
-import cardMovement6_mp3 from '../../../sounds/cardMovement6_mp3.js';
+
 import MedianModel from './MedianModel.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import Range from '../../../../dot/js/Range.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import TEmitter from '../../../../axon/js/TEmitter.js';
 import Emitter from '../../../../axon/js/Emitter.js';
@@ -33,30 +23,9 @@ import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
-import NullableIO from '../../../../tandem/js/types/NullableIO.js';
-import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
-
-const cardMovementSounds = [
-  cardMovement1_mp3,
-  cardMovement2_mp3,
-  cardMovement3_mp3,
-  cardMovement4_mp3,
-  cardMovement5_mp3,
-  cardMovement6_mp3
-];
-
-export const cardMovementSoundClips = cardMovementSounds.map( sound => new SoundClip( sound, {
-  initialOutputLevel: 0.3,
-  additionalAudioNodes: []
-} ) );
-cardMovementSoundClips.forEach( soundClip => soundManager.addSoundGenerator( soundClip ) );
+import Range from '../../../../dot/js/Range.js';
 
 type SelfOptions = {
 
@@ -65,7 +34,7 @@ type SelfOptions = {
   parentContext: 'info' | 'accordion';
 };
 
-type CardContainerModelOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'> &
+export type CardContainerModelOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'> &
   StrictOmit<PhetioObjectOptions, 'phetioType' | 'phetioState'>;
 
 export default class CardContainerModel extends PhetioObject {
@@ -76,17 +45,9 @@ export default class CardContainerModel extends PhetioObject {
   // All cards are created on start-up
   public readonly cards: CardModel[];
 
-  // For sonification, order the active, non-displaced cards appeared in the last step
-  private lastStepOrder: CardModel[] = [];
-
   public readonly parentContext: 'info' | 'accordion';
 
-  // Indicates whether the user has ever dragged a card. It's used to hide the drag indicator arrow after
-  // the user dragged a card
-  public readonly hasDraggedCardProperty: TReadOnlyProperty<boolean>;
-  public readonly dragIndicationCardProperty: Property<CardModel | null>;
-  public readonly totalDragDistanceProperty: Property<number>;
-  public readonly hasKeyboardMovedCardProperty = new BooleanProperty( false );
+
   public readonly numActiveCardsProperty: Property<number>;
 
   public constructor( medianModel: MedianModel, providedOptions: CardContainerModelOptions ) {
@@ -99,21 +60,6 @@ export default class CardContainerModel extends PhetioObject {
     super( options );
 
     this.parentContext = options.parentContext;
-
-    // Accumulated card drag distance, for purposes of hiding the drag indicator node
-    this.totalDragDistanceProperty = new NumberProperty( 0 );
-
-    this.hasDraggedCardProperty = new DerivedProperty( [ this.totalDragDistanceProperty, this.hasKeyboardMovedCardProperty ], ( totalDragDistance, hasKeyboardMovedCard ) => {
-      return totalDragDistance > 15 || hasKeyboardMovedCard;
-    } );
-
-    this.dragIndicationCardProperty = new Property<CardModel | null>( null, {
-      phetioReadOnly: true,
-      phetioValueType: NullableIO( ReferenceIO( IOType.ObjectIO ) ),
-      tandem: this.parentContext === 'accordion' ? options.tandem.createTandem( 'cardDragIndicatorProperty' ) : Tandem.OPT_OUT,
-      phetioDocumentation: 'This is for PhET-iO internal use only.'
-    } );
-
     this.numActiveCardsProperty = new Property<number>( 0 );
 
     // Allocate all the card models at start-up.
@@ -190,119 +136,10 @@ export default class CardContainerModel extends PhetioObject {
 
       return card;
     } );
-
-    if ( options.parentContext === 'accordion' ) {
-      this.cardCellsChangedEmitter.addListener( () => {
-        medianModel.areCardsSortedProperty.value = this.isDataSorted();
-      } );
-
-      const updateDragIndicationCardProperty = () => {
-
-        const leftCard = this.getCardsInCellOrder()[ 0 ];
-        const rightCard = this.getCardsInCellOrder()[ 1 ];
-
-        // if the user has not yet dragged a card and there are multiple cards showing, fade in the drag indicator
-        if ( !this.hasDraggedCardProperty.value && leftCard && rightCard ) {
-          this.dragIndicationCardProperty.value = leftCard;
-        }
-
-        // if the user has dragged a card and the hand indicator is showing, fade the hand indicator out
-        if ( this.hasDraggedCardProperty.value || !leftCard || !rightCard ) {
-          this.dragIndicationCardProperty.value = null;
-        }
-      };
-
-      this.cardCellsChangedEmitter.addListener( updateDragIndicationCardProperty );
-      this.hasDraggedCardProperty.link( updateDragIndicationCardProperty );
-      this.cards.forEach( card => card.soccerBall.valueProperty.lazyLink( updateDragIndicationCardProperty ) );
-    }
-
-    medianModel.selectedSceneModelProperty.value.resetEmitter.addListener( () => {
-      this.totalDragDistanceProperty.reset();
-      this.hasKeyboardMovedCardProperty.reset();
-    } );
-  }
-
-  public getDragRange( this: CardContainerModel ): Range {
-    const cardCells = this.getCardsInCellOrder();
-    const maxX = cardCells.length > 0 ? this.getCardPositionX( cardCells.length - 1 ) : 0;
-    return new Range( 0, maxX );
   }
 
   public getCardPositionX( index: number ): number {
     return index * ( CAVConstants.CARD_DIMENSION + CAVConstants.CARD_SPACING );
-  }
-
-  /**
-   * Play sound effects whenever two cards pass each other. If the user is dragging it, that card gets precedence for choosing the pitch.
-   * Moving to the right is a higher pitch. If one card animates past another, that movement direction chooses the pitch.
-   * If both cards are animating, use an in-between pitch.
-   */
-  public step( dt: number ): void {
-
-    // Only consider cards that landed more than 0.1 seconds ago, to avoid an edge case that was mistakenly playing audio when soccer balls land
-    const activeCards = this.cards.filter( card => card.isActiveProperty.value && card.timeSinceLanded > 0.1 && card.animationReason !== 'valueChanged' );
-
-    // Determine the sort order to see which cards have swapped
-    const newOrder = _.sortBy( activeCards, card => card.positionProperty.value.x );
-
-    // Consider only cards which are both in the old and new lists
-    const oldList = this.lastStepOrder.filter( cardNode => newOrder.includes( cardNode ) );
-    const newList = newOrder.filter( cardNode => this.lastStepOrder.includes( cardNode ) );
-
-    const swappedPairs: Array<{ first: CardModel; second: CardModel; direction: string }> = [];
-
-    // Compare the old list and the new list
-    for ( let i = 0; i < oldList.length; i++ ) {
-      if ( oldList[ i ] !== newList[ i ] ) {
-        // If the items at the same index in both lists are different, then they have swapped places.
-        const direction = newList.indexOf( oldList[ i ] ) > i ? 'right' : 'left';
-        const pairExists = swappedPairs.some( pair => pair.first === newList[ i ] && pair.second === oldList[ i ] );
-
-        if ( !pairExists ) {
-          swappedPairs.push( { first: oldList[ i ], second: newList[ i ], direction: direction } );
-        }
-      }
-    }
-
-    const opposite = ( direction: string ) => direction === 'left' ? 'right' : 'left';
-
-    // You now have a list of pairs of CardNodes that swapped places and their directions
-    swappedPairs.forEach( pair => {
-
-      // If the user dragged a card, that takes precedence for choosing the pitch
-      const directionToPlayFromInteraction = pair.first.isDraggingProperty.value && !pair.second.isDraggingProperty.value ? pair.direction :
-                                             pair.second.isDraggingProperty.value && !pair.first.isDraggingProperty.value ? opposite( pair.direction ) :
-                                             'none';
-
-      // If one card animated past a stationary card, the moving card chooses the pitch.
-      // If both cards are animating, use an in-between pitch.
-      const directionToPlayFromAnimation = pair.first.animation && !pair.second.animation ? pair.direction :
-                                           pair.second.animation && !pair.first.animation ? opposite( pair.direction ) :
-                                           'both';
-
-      const directionToPlay = directionToPlayFromInteraction !== 'none' ? directionToPlayFromInteraction : directionToPlayFromAnimation;
-
-      const availableSoundClips = cardMovementSoundClips.filter( clip => !clip.isPlayingProperty.value );
-
-      if ( ( directionToPlay === 'left' || directionToPlay === 'right' || directionToPlay === 'both' ) && availableSoundClips.length > 0 ) {
-
-        const randomClip = availableSoundClips[ dotRandom.nextInt( availableSoundClips.length ) ];
-
-        // Moving to the right, go up in pitch by 4 semitones
-        randomClip.setPlaybackRate( CAVQueryParameters.cardMovementSoundPlaybackRate *
-                                    ( directionToPlay === 'left' ? 1 :
-                                      directionToPlay === 'right' ? Math.pow( 2, 4 / 12 ) :
-                                      directionToPlay === 'both' ? Math.pow( 2, 2 / 12 ) : 0 ) );
-        randomClip.play();
-      }
-    } );
-
-    this.lastStepOrder = newOrder;
-
-    this.getCardsInCellOrder().forEach( card => {
-      card.timeSinceLanded += dt;
-    } );
   }
 
   private getHomePosition( card: CardModel ): Vector2 {
@@ -373,6 +210,13 @@ export default class CardContainerModel extends PhetioObject {
       }
     }
     return true;
+  }
+
+// TODO: Should this get factored out as well? see: https://github.com/phetsims/center-and-variability/issues/449
+  public getDragRange( this: CardContainerModel ): Range {
+    const cardCells = this.getCardsInCellOrder();
+    const maxX = cardCells.length > 0 ? this.getCardPositionX( cardCells.length - 1 ) : 0;
+    return new Range( 0, maxX );
   }
 
   private static CardContainerModelIO = new IOType( 'CardContainerModelIO', {

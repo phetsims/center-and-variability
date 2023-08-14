@@ -17,16 +17,16 @@ import CAVSoccerBall from '../../common/model/CAVSoccerBall.js';
 import NumberTone from '../../common/model/NumberTone.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import CardContainerModel from './CardContainerModel.js';
 import SoccerCommonPreferencesModel from '../../../../soccer-common/js/model/SoccerCommonPreferencesModel.js';
 import KickDistributionStrategy from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
+import InteractiveCardContainerModel from './InteractiveCardContainerModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type MedianModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
 
 export default class MedianModel extends CAVModel {
 
-  public readonly cardContainerModel: CardContainerModel;
+  public readonly interactiveCardContainerModel: InteractiveCardContainerModel;
   public readonly isSortingDataProperty: BooleanProperty;
   public readonly medianVisibleProperty: BooleanProperty;
   public readonly areCardsSortedProperty: BooleanProperty;
@@ -89,7 +89,7 @@ export default class MedianModel extends CAVModel {
       phetioFeatured: true
     } );
 
-    this.cardContainerModel = new CardContainerModel( this, {
+    this.interactiveCardContainerModel = new InteractiveCardContainerModel( this, {
       tandem: accordionBoxTandem.createTandem( 'cardContainerModel' ), parentContext: 'accordion'
     } );
   }
@@ -102,7 +102,7 @@ export default class MedianModel extends CAVModel {
 
   public override step( dt: number ): void {
     super.step( dt );
-    this.cardContainerModel.step( dt );
+    this.interactiveCardContainerModel.step( dt );
   }
 }
 
