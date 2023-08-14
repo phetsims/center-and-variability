@@ -103,6 +103,9 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       }
     } );
 
+    const isDragIndicatorVisibleProperty = new DerivedProperty( [ this.inputEnabledProperty, model.isGrabReleaseCueVisibleProperty ],
+      ( inputEnabled, isGrabReleaseVisible ) => inputEnabled && !isGrabReleaseVisible );
+
     const handWithArrowNode = new Node( {
       children: [
         arrowNode,
@@ -111,7 +114,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       opacity: 0,
       pickable: false,
       centerTop: new Vector2( 0.5 * CAVConstants.CARD_DIMENSION, CAVConstants.CARD_DIMENSION - 8 ),
-      visibleProperty: this.inputEnabledProperty
+      visibleProperty: isDragIndicatorVisibleProperty
     } );
 
     this.addChild( handWithArrowNode );
