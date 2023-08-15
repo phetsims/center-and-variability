@@ -133,7 +133,8 @@ export default class VariabilityScreenView extends CAVScreenView {
     const intervalToolNode = new IntervalToolNode( model.intervalTool1ValueProperty, model.intervalTool2ValueProperty, this.modelViewTransform,
       new DerivedProperty( [ variabilityAccordionBox.boundsProperty ], bounds => bounds.top ), isIntervalAreaBeingDraggedProperty, {
         visibleProperty: model.isIntervalToolVisibleProperty,
-        enabledProperty: model.isIntervalToolEnabledProperty,
+        inputEnabledProperty: model.isIntervalToolEnabledProperty,
+        phetioEnabledPropertyInstrumented: false,
         tandem: intervalToolNodeTandem
       } );
 
