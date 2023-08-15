@@ -75,7 +75,8 @@ export default class CAVModel extends PhetioObject {
 
     this.isDataPointLayerVisibleProperty = new BooleanProperty( true, {
       tandem: options.instrumentDataPointVisibilityProperty ? options.accordionBoxTandem.createTandem( 'isDataPointLayerVisibleProperty' ) : Tandem.OPT_OUT,
-      phetioFeatured: true
+      phetioFeatured: true,
+      phetioDocumentation: 'Sets the visibility of the entire set of data points in the accordion box.'
     } );
 
     this.isPlayAreaMeanVisibleProperty = new BooleanProperty( false, options.instrumentMeanProperty ? {
@@ -109,7 +110,8 @@ export default class CAVModel extends PhetioObject {
       validValues: sceneModels,
       tandem: sceneModels.length === 1 ? Tandem.OPT_OUT : options.tandem.createTandem( 'selectedSceneModelProperty' ),
       phetioValueType: ReferenceIO( IOType.ObjectIO ),
-      phetioFeatured: true
+      phetioFeatured: true,
+      phetioDocumentation: 'Indicates which kicker is active by jersey number.'
     } );
 
     this.selectedSceneModelProperty.link( selectedScene => {

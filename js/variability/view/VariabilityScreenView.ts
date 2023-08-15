@@ -88,7 +88,9 @@ export default class VariabilityScreenView extends CAVScreenView {
 
     const createPredictionSliderOptions = ( tandem: Tandem ) => {
 
-      const visibleProperty = createGatedVisibleProperty( model.isIntervalToolVisibleProperty, tandem );
+      const visibleProperty = createGatedVisibleProperty( model.isIntervalToolVisibleProperty, tandem, {
+        phetioDocumentation: 'Sets the visibility of the interval tool handle. When false, the corresponding side of the interval tool cannot be used to change the range.'
+      } );
       return {
         predictionThumbNodeOptions: {
           color: CAVColors.intervalToolIconShadedSphereMainColorProperty,
