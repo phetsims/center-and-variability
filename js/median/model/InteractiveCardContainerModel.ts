@@ -66,6 +66,7 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
   public readonly focusedCardProperty: Property<CardModel | null> = new Property<CardModel | null>( null );
   public readonly isCardGrabbedProperty = new BooleanProperty( false );
   public readonly isGrabReleaseCueVisibleProperty: TReadOnlyProperty<boolean>;
+  public readonly isKeyboardArrowVisibleProperty: TReadOnlyProperty<boolean>;
 
   public constructor( medianModel: MedianModel, providedOptions: InteractiveCardContainerModelOptions ) {
     super( medianModel, providedOptions );
@@ -87,6 +88,11 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
     this.isGrabReleaseCueVisibleProperty = new DerivedProperty( [ this.focusedCardProperty, this.hasKeyboardMovedCardProperty, this.hasGrabbedCardProperty ],
       ( focusedCard, hasKeyboardMovedCard, hasGrabbedCard ) => {
         return focusedCard !== null && !hasKeyboardMovedCard && !hasGrabbedCard;
+      } );
+
+    this.isKeyboardArrowVisibleProperty = new DerivedProperty( [ this.focusedCardProperty, this.hasKeyboardMovedCardProperty, this.hasGrabbedCardProperty, this.isCardGrabbedProperty ],
+      ( focusedCard, hasKeyboardMovedCard, hasGrabbedCard, isCardGrabbed ) => {
+        return focusedCard !== null && !hasKeyboardMovedCard && hasGrabbedCard && isCardGrabbed;
       } );
 
     this.cardCellsChangedEmitter.addListener( () => {

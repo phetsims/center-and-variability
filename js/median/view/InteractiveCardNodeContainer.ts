@@ -75,7 +75,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       } );
     } );
 
-    const arrowNode = new DragIndicatorArrowNode( {
+    const mouseArrowNode = new DragIndicatorArrowNode( {
       doubleHead: false,
       dashWidth: 1.2,
       dashHeight: 1.1,
@@ -92,8 +92,8 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
     const handWithArrowNode = new Node( {
       children: [
-        arrowNode,
-        new Image( dragIndicatorHand_png, { scale: 0.077, centerTop: arrowNode.leftTop.plusXY( -0.5, 0 ) } )
+        mouseArrowNode,
+        new Image( dragIndicatorHand_png, { scale: 0.077, centerTop: mouseArrowNode.leftTop.plusXY( -0.5, 0 ) } )
       ],
       opacity: 0,
       pickable: false,
@@ -208,6 +208,28 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
     this.addChild( hitRect );
     hitRect.moveToBack();
 
+    const grabReleaseCueNode = new GrabReleaseCueNode( {
+      visibleProperty: model.isGrabReleaseCueVisibleProperty,
+      top: CAVConstants.CARD_DIMENSION + FOCUS_HIGHLIGHT_Y_MARGIN
+    } );
+
+    const keyboardArrowNode = new DragIndicatorArrowNode( {
+        doubleHead: true,
+        dashWidth: 3.5,
+        dashHeight: 2.8,
+        numberOfDashes: 2,
+        spacing: 2,
+        triangleNodeOptions: {
+          triangleWidth: 9,
+          triangleHeight: 8
+        },
+        visibleProperty: model.isKeyboardArrowVisibleProperty
+      }
+    );
+
+    this.addChild( keyboardArrowNode );
+    this.addChild( grabReleaseCueNode );
+
     Multilink.multilink( [ focusedCardNodeProperty, model.isCardGrabbedProperty ], ( focusedCardNode, isCardGrabbed ) => {
         if ( focusedCardNode ) {
 
@@ -215,6 +237,8 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
           this.setFocusHighlight( focusForSelectedCard );
 
           focusedCardNode.model.isDraggingProperty.value = isCardGrabbed;
+          const leftEdgeOfFocusedCard = model.getCardPositionX( focusedCardNode.model.indexProperty.value! );
+          keyboardArrowNode.centerBottom = new Vector2( leftEdgeOfFocusedCard + CAVConstants.CARD_DIMENSION / 2, focusForSelectedCard.top - FOCUS_HIGHLIGHT_Y_MARGIN );
         }
         else {
           this.setFocusHighlight( 'invisible' );
@@ -340,13 +364,6 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       innerLineWidth: FocusHighlightPath.GROUP_INNER_LINE_WIDTH
     } );
 
-    const grabReleaseCueNode = new GrabReleaseCueNode( {
-      visibleProperty: model.isGrabReleaseCueVisibleProperty,
-      top: CAVConstants.CARD_DIMENSION + FOCUS_HIGHLIGHT_Y_MARGIN
-    } );
-
-
-    this.addChild( grabReleaseCueNode );
 
     focusHighlightWidthProperty.link( focusHighlightWidth => {
       const marginX = 7;
