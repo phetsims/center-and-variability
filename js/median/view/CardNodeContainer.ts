@@ -68,7 +68,6 @@ export default class CardNodeContainer extends InteractiveHighlightingNode {
     this.addChild( this.cardLayer );
 
     const medianTextNode = new Text( new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty, { value: this.sceneModel.medianValueProperty }, {
-      tandem: options.tandem?.createTandem( 'medianStringProperty' ),
       maps: {
         value: CAVConstants.STRING_VALUE_NULL_MAP
       }
