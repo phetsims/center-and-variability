@@ -87,7 +87,37 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       }
     } );
 
-    const isDragIndicatorVisibleProperty = new DerivedProperty( [ this.inputEnabledProperty, model.isGrabReleaseCueVisibleProperty ],
+    const focusHighlightFromNode = new FocusHighlightPath( null, {
+      outerStroke: FocusHighlightPath.OUTER_LIGHT_GROUP_FOCUS_COLOR,
+      innerStroke: FocusHighlightPath.INNER_LIGHT_GROUP_FOCUS_COLOR,
+      outerLineWidth: FocusHighlightPath.GROUP_OUTER_LINE_WIDTH,
+      innerLineWidth: FocusHighlightPath.GROUP_INNER_LINE_WIDTH
+    } );
+
+    const isGrabReleaseVisibleProperty = DerivedProperty.not( model.hasGrabbedCardProperty );
+
+    const grabReleaseCueNode = new GrabReleaseCueNode( {
+      top: CAVConstants.CARD_DIMENSION + FOCUS_HIGHLIGHT_Y_MARGIN,
+      visibleProperty: isGrabReleaseVisibleProperty
+    } );
+
+    const keyboardArrowNode = new DragIndicatorArrowNode( {
+        doubleHead: true,
+        dashWidth: 3.5,
+        dashHeight: 2.8,
+        numberOfDashes: 2,
+        spacing: 2,
+        triangleNodeOptions: {
+          triangleWidth: 9,
+          triangleHeight: 8
+        },
+        visibleProperty: model.isKeyboardArrowVisibleProperty
+      }
+    );
+
+    this.addChild( keyboardArrowNode );
+
+    const isDragIndicatorVisibleProperty = new DerivedProperty( [ this.inputEnabledProperty, focusHighlightFromNode.visibleProperty ],
       ( inputEnabled, isGrabReleaseVisible ) => inputEnabled && !isGrabReleaseVisible );
 
     const handWithArrowNode = new Node( {
@@ -197,9 +227,10 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
         }
       },
       blur: () => {
+        // TODO: grabbedProperty is not triggering a card drop the way we expect when switching between keyboard and mouse, see: https://github.com/phetsims/center-and-variability/issues/433
         model.isCardGrabbedProperty.value = false;
       },
-      focusout: () => {
+      out: () => {
         model.focusedCardProperty.value = null;
       }
     } );
@@ -208,27 +239,6 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
     this.addChild( hitRect );
     hitRect.moveToBack();
 
-    const grabReleaseCueNode = new GrabReleaseCueNode( {
-      visibleProperty: model.isGrabReleaseCueVisibleProperty,
-      top: CAVConstants.CARD_DIMENSION + FOCUS_HIGHLIGHT_Y_MARGIN
-    } );
-
-    const keyboardArrowNode = new DragIndicatorArrowNode( {
-        doubleHead: true,
-        dashWidth: 3.5,
-        dashHeight: 2.8,
-        numberOfDashes: 2,
-        spacing: 2,
-        triangleNodeOptions: {
-          triangleWidth: 9,
-          triangleHeight: 8
-        },
-        visibleProperty: model.isKeyboardArrowVisibleProperty
-      }
-    );
-
-    this.addChild( keyboardArrowNode );
-    this.addChild( grabReleaseCueNode );
 
     Multilink.multilink( [ focusedCardNodeProperty, model.isCardGrabbedProperty ], ( focusedCardNode, isCardGrabbed ) => {
         if ( focusedCardNode ) {
@@ -357,13 +367,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       return model.getCardPositionX( numActiveCards === 0 ? 1 : numActiveCards + 1 );
     } );
 
-    const focusHighlightFromNode = new FocusHighlightPath( null, {
-      outerStroke: FocusHighlightPath.OUTER_LIGHT_GROUP_FOCUS_COLOR,
-      innerStroke: FocusHighlightPath.INNER_LIGHT_GROUP_FOCUS_COLOR,
-      outerLineWidth: FocusHighlightPath.GROUP_OUTER_LINE_WIDTH,
-      innerLineWidth: FocusHighlightPath.GROUP_INNER_LINE_WIDTH
-    } );
-
+    focusHighlightFromNode.addChild( grabReleaseCueNode );
 
     focusHighlightWidthProperty.link( focusHighlightWidth => {
       const marginX = 7;
