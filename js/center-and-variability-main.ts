@@ -27,7 +27,7 @@ const simOptions: SimOptions = {
     leadDesign: 'Cathy Carter, Amanda McGarry',
     softwareDevelopment: 'Matthew Blackman, Chris Klusendorf, Sam Reid, Marla Schulz',
     team: 'Kelly Findley, Marilyn Hartzell, Ariel Paul, Kathy Perkins, David Webb',
-    qualityAssurance: 'Jaron Droder,  Clifford Hardin, Emily Miller, Devon Quispe, Nancy Salpepi, Kathryn Woessner',
+    qualityAssurance: 'Jaron Droder, Clifford Hardin, Emily Miller, Devon Quispe, Nancy Salpepi, Kathryn Woessner',
     graphicArts: 'Mariah Hermsmeyer'
   },
   preferencesModel: new PreferencesModel( {
