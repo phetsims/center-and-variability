@@ -54,7 +54,8 @@ export default class VariabilitySceneModel extends CAVSoccerSceneModel<Variabili
     }, {
       tandem: options.tandem.createTandem( 'maxValueProperty' ),
       phetioValueType: NullableIO( NumberIO ),
-      phetioFeatured: true
+      phetioFeatured: true,
+      hasListenerOrderDependencies: true
     } );
 
     this.minValueProperty = new DerivedProperty( [ this.dataRangeProperty ], dataRange => {
@@ -62,7 +63,8 @@ export default class VariabilitySceneModel extends CAVSoccerSceneModel<Variabili
     }, {
       tandem: options.tandem.createTandem( 'minValueProperty' ),
       phetioValueType: NullableIO( NumberIO ),
-      phetioFeatured: true
+      phetioFeatured: true,
+      hasListenerOrderDependencies: true
     } );
 
     this.rangeValueProperty = new DerivedProperty( [ this.maxValueProperty, this.minValueProperty ], ( max, min ) => {
@@ -70,20 +72,23 @@ export default class VariabilitySceneModel extends CAVSoccerSceneModel<Variabili
     }, {
       tandem: options.tandem.createTandem( 'rangeValueProperty' ),
       phetioValueType: NullableIO( NumberIO ),
-      phetioFeatured: true
+      phetioFeatured: true,
+      hasListenerOrderDependencies: true
     } );
 
     this.q1ValueProperty = new Property<number | null>( null, {
       tandem: options.tandem.createTandem( 'q1ValueProperty' ),
       phetioValueType: NullableIO( NumberIO ),
       phetioReadOnly: true,
-      phetioFeatured: true
+      phetioFeatured: true,
+      hasListenerOrderDependencies: true
     } );
     this.q3ValueProperty = new Property<number | null>( null, {
       tandem: options.tandem.createTandem( 'q3ValueProperty' ),
       phetioValueType: NullableIO( NumberIO ),
       phetioReadOnly: true,
-      phetioFeatured: true
+      phetioFeatured: true,
+      hasListenerOrderDependencies: true
     } );
     this.iqrValueProperty = new DerivedProperty( [ this.q1ValueProperty, this.q3ValueProperty ], ( q1, q3 ) => {
       if ( q1 === null || q3 === null ) {
@@ -92,13 +97,16 @@ export default class VariabilitySceneModel extends CAVSoccerSceneModel<Variabili
       else {
         return q3 - q1;
       }
+    }, {
+      hasListenerOrderDependencies: true
     } );
 
     this.madValueProperty = new Property<number | null>( null, {
       tandem: options.tandem.createTandem( 'madValueProperty' ),
       phetioValueType: NullableIO( NumberIO ),
       phetioReadOnly: true,
-      phetioFeatured: true
+      phetioFeatured: true,
+      hasListenerOrderDependencies: true
     } );
 
     this.updateDataMeasures();
