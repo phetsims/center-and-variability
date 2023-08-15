@@ -65,7 +65,6 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
   // Keyboard Input properties:
   public readonly focusedCardProperty: Property<CardModel | null> = new Property<CardModel | null>( null );
   public readonly isCardGrabbedProperty = new BooleanProperty( false );
-  public readonly isGrabReleaseCueVisibleProperty: TReadOnlyProperty<boolean>;
   public readonly isKeyboardArrowVisibleProperty: TReadOnlyProperty<boolean>;
 
   public constructor( medianModel: MedianModel, providedOptions: InteractiveCardContainerModelOptions ) {
@@ -84,11 +83,6 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
       tandem: this.parentContext === 'accordion' ? providedOptions.tandem.createTandem( 'cardDragIndicatorProperty' ) : Tandem.OPT_OUT,
       phetioDocumentation: 'This is for PhET-iO internal use only.'
     } );
-
-    this.isGrabReleaseCueVisibleProperty = new DerivedProperty( [ this.focusedCardProperty, this.hasKeyboardMovedCardProperty, this.hasGrabbedCardProperty ],
-      ( focusedCard, hasKeyboardMovedCard, hasGrabbedCard ) => {
-        return focusedCard !== null && !hasKeyboardMovedCard && !hasGrabbedCard;
-      } );
 
     this.isKeyboardArrowVisibleProperty = new DerivedProperty( [ this.focusedCardProperty, this.hasKeyboardMovedCardProperty, this.hasGrabbedCardProperty, this.isCardGrabbedProperty ],
       ( focusedCard, hasKeyboardMovedCard, hasGrabbedCard, isCardGrabbed ) => {
