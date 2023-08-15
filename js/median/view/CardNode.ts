@@ -8,7 +8,7 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import { Color, DragListener, InteractiveHighlightingNode, Node, NodeOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { Color, DragListener, FocusHighlightFromNode, InteractiveHighlightingNode, Node, NodeOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import SoccerBall from '../../../../soccer-common/js/model/SoccerBall.js';
@@ -68,6 +68,11 @@ export default class CardNode extends Node {
       children: [ rectangle, text ],
       cursor: 'pointer'
     } );
+
+    const interactiveHighlight = new FocusHighlightFromNode( cardNode );
+    cardNode.setInteractiveHighlight( interactiveHighlight );
+
+    model.isDraggingProperty.link( isDragging => interactiveHighlight.makeDashed( isDragging ) );
 
     // For layout only, a bounding box that the card animates within for the "pick up" and "drop" effects.
     const offsetContainer = new Rectangle( PICK_UP_DELTA_X, PICK_UP_DELTA_Y, CAVConstants.CARD_DIMENSION - PICK_UP_DELTA_X, CAVConstants.CARD_DIMENSION - PICK_UP_DELTA_Y, {
