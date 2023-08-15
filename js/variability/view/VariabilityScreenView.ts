@@ -80,12 +80,17 @@ export default class VariabilityScreenView extends CAVScreenView {
         roundToInterval: null, // continuous
         visibleProperty: model.isPointerVisibleProperty,
         tandem: pointerTandem,
-        phetioFeatured: true // TODO https://github.com/phetsims/center-and-variability/issues/445 feature a node?
+
+        // It is rare to feature a NodeIO, but in this case it is important since the only other featured children
+        // are LinkedElementIO, so this makes it appear in the featured tree.
+        phetioFeatured: true
       } );
 
     const createPredictionSliderOptions = ( tandem: Tandem ) => {
 
-      const visibleProperty = createGatedVisibleProperty( model.isIntervalToolVisibleProperty, tandem );
+      const visibleProperty = createGatedVisibleProperty( model.isIntervalToolVisibleProperty, tandem, {
+        phetioDocumentation: 'Sets the visibility of the interval tool handle. When false, the corresponding side of the interval tool cannot be used to change the range.'
+      } );
       return {
         predictionThumbNodeOptions: {
           color: CAVColors.intervalToolIconShadedSphereMainColorProperty,
@@ -133,7 +138,8 @@ export default class VariabilityScreenView extends CAVScreenView {
     const intervalToolNode = new IntervalToolNode( model.intervalTool1ValueProperty, model.intervalTool2ValueProperty, this.modelViewTransform,
       new DerivedProperty( [ variabilityAccordionBox.boundsProperty ], bounds => bounds.top ), isIntervalAreaBeingDraggedProperty, {
         visibleProperty: model.isIntervalToolVisibleProperty,
-        enabledProperty: model.isIntervalToolEnabledProperty,
+        inputEnabledProperty: model.isIntervalToolEnabledProperty,
+        phetioEnabledPropertyInstrumented: false,
         tandem: intervalToolNodeTandem
       } );
 

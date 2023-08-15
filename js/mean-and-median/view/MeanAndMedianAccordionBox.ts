@@ -73,7 +73,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
     backgroundNode.addChild( meanAndMedianPlotNode );
 
     const createReadoutText = ( valueProperty: TReadOnlyProperty<number | null>, visibleProperty: TReadOnlyProperty<boolean>,
-                                patternStringProperty: TReadOnlyProperty<string>, unknownStringProperty: LocalizedStringProperty, fill: TPaint, readoutTandem: Tandem, decimalPlaces: number | null ) => {
+                                patternStringProperty: TReadOnlyProperty<string>, unknownStringProperty: LocalizedStringProperty, fill: TPaint, decimalPlaces: number | null ) => {
 
       const readoutProperty = new DerivedProperty( [ valueProperty, CenterAndVariabilityStrings.valueUnknownStringProperty ],
         ( value, valueUnknownString ) => {
@@ -82,7 +82,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
 
       const valuePatternStringProperty = new PatternStringProperty( patternStringProperty, {
         value: readoutProperty
-      }, { tandem: readoutTandem } );
+      } );
       const readoutPatternStringProperty = DerivedProperty.deriveAny( [ unknownStringProperty, model.selectedSceneModelProperty, valueProperty ], () => {
         const result = valueProperty.value;
         return result === null ? unknownStringProperty.value : valuePatternStringProperty.value;
@@ -107,7 +107,6 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
           CenterAndVariabilityStrings.medianEqualsValueMPatternStringProperty,
           CenterAndVariabilityStrings.medianUnknownValueStringProperty,
           CAVColors.medianColorProperty,
-          tandem.createTandem( 'medianReadoutStringProperty' ),
           null
         ),
         createReadoutText(
@@ -116,7 +115,6 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
           CenterAndVariabilityStrings.meanEqualsValueMPatternStringProperty,
           CenterAndVariabilityStrings.meanUnknownValueStringProperty,
           CAVColors.meanColorProperty,
-          tandem.createTandem( 'meanReadoutStringProperty' ),
           1
         )
       ],

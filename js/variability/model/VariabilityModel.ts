@@ -54,8 +54,8 @@ export default class VariabilityModel extends CAVModel {
     const sceneModels = [
       new VariabilitySceneModel( MAX_KICKS_PROPERTY, { type: 'probabilityByDistance', values: [ 0, 0, 0, 1, 3, 12, 20, 32, 20, 12, 3, 1, 0, 0, 0 ], skewType: null }, preferencesModel.kickerCharacterSetProperty, { tandem: providedOptions.tandem.createTandem( 'sceneKicker1Model' ) } ),
       new VariabilitySceneModel( MAX_KICKS_PROPERTY, { type: 'probabilityByDistance', values: [ 3, 5, 10, 10, 25, 32, 45, 65, 45, 32, 25, 10, 10, 5, 3 ], skewType: null }, preferencesModel.kickerCharacterSetProperty, { tandem: providedOptions.tandem.createTandem( 'sceneKicker2Model' ) } ),
-      new VariabilitySceneModel( MAX_KICKS_PROPERTY, { type: 'randomSkew', skewType: 'right', values: null }, preferencesModel.kickerCharacterSetProperty, { tandem: providedOptions.tandem.createTandem( 'sceneKicker3Model' ) } ),
-      new VariabilitySceneModel( MAX_KICKS_PROPERTY, { type: 'randomSkew', skewType: 'left', values: null }, preferencesModel.kickerCharacterSetProperty, { tandem: providedOptions.tandem.createTandem( 'sceneKicker4Model' ) } )
+      new VariabilitySceneModel( MAX_KICKS_PROPERTY, { type: 'skew', values: null, skewType: 'right' }, preferencesModel.kickerCharacterSetProperty, { tandem: providedOptions.tandem.createTandem( 'sceneKicker3Model' ) } ),
+      new VariabilitySceneModel( MAX_KICKS_PROPERTY, { type: 'skew', values: null, skewType: 'left' }, preferencesModel.kickerCharacterSetProperty, { tandem: providedOptions.tandem.createTandem( 'sceneKicker4Model' ) } )
     ];
 
     sceneModels.forEach( sceneModel => {
@@ -80,22 +80,25 @@ export default class VariabilityModel extends CAVModel {
 
     this.selectedVariabilityMeasureProperty = new EnumerationProperty( VariabilityMeasure.RANGE, {
       tandem: accordionBoxTandem.createTandem( 'selectedVariabilityMeasureProperty' ),
-        phetioFeatured: true
+      phetioFeatured: true
     } );
 
     this.isRangeVisibleProperty = new BooleanProperty( false, {
       tandem: accordionBoxTandem.createTandem( 'isRangeVisibleProperty' ),
-      phetioFeatured: true
+      phetioFeatured: true,
+      phetioDocumentation: 'Sets the visibility of the range. Only relevant when the range radio button is active.'
     } );
 
     this.isIQRVisibleProperty = new BooleanProperty( false, {
       tandem: accordionBoxTandem.createTandem( 'isIQRVisibleProperty' ),
-      phetioFeatured: true
+      phetioFeatured: true,
+      phetioDocumentation: 'Sets the visibility of the IQR. Only relevant when the IQR radio button is active.'
     } );
 
     this.isMADVisibleProperty = new BooleanProperty( false, {
       tandem: accordionBoxTandem.createTandem( 'isMADVisibleProperty' ),
-      phetioFeatured: true
+      phetioFeatured: true,
+      phetioDocumentation: 'Sets the visibility of the MAD. Only relevant when the MAD radio button is active.'
     } );
 
     const pointerTandem = this.playAreaTandem.createTandem( 'pointer' );
@@ -121,7 +124,8 @@ export default class VariabilityModel extends CAVModel {
 
     this.isIntervalToolEnabledProperty = new BooleanProperty( true, {
       tandem: intervalToolTandem.createTandem( 'isInputEnabledProperty' ),
-      phetioFeatured: true
+      phetioFeatured: true,
+      phetioDocumentation: 'When false, the interval cannot be translated left/right, but the handles are still moveable/interactive.'
     } );
 
     this.intervalTool1ValueProperty = new NumberProperty( 1.7, {

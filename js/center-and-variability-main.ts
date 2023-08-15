@@ -24,10 +24,10 @@ const preferencesModel = new SoccerCommonPreferencesModel();
 
 const simOptions: SimOptions = {
   credits: {
-    leadDesign: 'Amanda McGarry',
-    softwareDevelopment: 'Chris Klusendorf, Sam Reid',
+    leadDesign: 'Cathy Carter, Amanda McGarry',
+    softwareDevelopment: 'Matthew Blackman, Chris Klusendorf, Sam Reid, Marla Schulz',
     team: 'Kelly Findley, Marilyn Hartzell, Ariel Paul, Kathy Perkins, David Webb',
-    qualityAssurance: 'Clifford Hardin, Emily Miller, Devon Quispe, Nancy Salpepi, Kathryn Woessner',
+    qualityAssurance: 'Jaron Droder, Clifford Hardin, Emily Miller, Devon Quispe, Nancy Salpepi, Kathryn Woessner',
     graphicArts: 'Mariah Hermsmeyer'
   },
   preferencesModel: new PreferencesModel( {

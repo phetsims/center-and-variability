@@ -44,7 +44,8 @@ export default class CAVSoccerSceneModel<T extends CAVSoccerBall = CAVSoccerBall
       tandem: options.tandem.createTandem( 'medianValueProperty' ),
       phetioValueType: NullableIO( NumberIO ),
       phetioReadOnly: true,
-      phetioFeatured: true
+      phetioFeatured: true,
+      hasListenerOrderDependencies: true
     } );
 
     this.dataRangeProperty = new Property<Range | null>( null );
