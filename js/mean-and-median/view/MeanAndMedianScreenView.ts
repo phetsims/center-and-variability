@@ -75,8 +75,8 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
         visibleProperty: model.isPredictMeanVisibleProperty,
         tandem: predictMeanTandem,
 
-        // TODO: It seemed unusual to feature a node? https://github.com/phetsims/center-and-variability/issues/445
-        // this was done here and one other place I can't remember
+        // It is rare to feature a NodeIO, but in this case it is important since the only other featured children
+        // are LinkedElementIO, so this makes it appear in the featured tree.
         phetioFeatured: true
       } );
 

@@ -80,7 +80,10 @@ export default class VariabilityScreenView extends CAVScreenView {
         roundToInterval: null, // continuous
         visibleProperty: model.isPointerVisibleProperty,
         tandem: pointerTandem,
-        phetioFeatured: true // TODO https://github.com/phetsims/center-and-variability/issues/445 feature a node?
+
+        // It is rare to feature a NodeIO, but in this case it is important since the only other featured children
+        // are LinkedElementIO, so this makes it appear in the featured tree.
+        phetioFeatured: true
       } );
 
     const createPredictionSliderOptions = ( tandem: Tandem ) => {
