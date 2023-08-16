@@ -86,14 +86,14 @@ export default class MeanAndMedianModel extends CAVModel {
     this.isMedianVisibleProperty.lazyLink( isTopMedianVisible => {
       if ( isTopMedianVisible && sceneModel.medianValueProperty.value !== null ) {
 
-        if ( !isSettingPhetioStateProperty.value ) {
-          this.setHighlightAnimationIndex( 0 );
-          this.lastHighlightAnimationStepTime = sceneModel.timeProperty.value;
-        }
-        else {
+        if ( isSettingPhetioStateProperty.value ) {
 
           // When setting PhET-iO state, show the arrow right away.
           this.isMedianAnimationCompleteProperty.value = true;
+        }
+        else {
+          this.setHighlightAnimationIndex( 0 );
+          this.lastHighlightAnimationStepTime = sceneModel.timeProperty.value;
         }
       }
       else {
