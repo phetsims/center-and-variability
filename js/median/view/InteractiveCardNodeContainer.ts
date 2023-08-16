@@ -13,7 +13,7 @@ import InteractiveCardContainerModel from '../model/InteractiveCardContainerMode
 import Property from '../../../../axon/js/Property.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import DragIndicatorArrowNode from '../../common/view/DragIndicatorArrowNode.js';
-import { FocusHighlightFromNode, HighlightPath, Image, KeyboardListener, Node, Path } from '../../../../scenery/js/imports.js';
+import { HighlightFromNode, HighlightPath, Image, KeyboardListener, Node, Path } from '../../../../scenery/js/imports.js';
 import dragIndicatorHand_png from '../../../images/dragIndicatorHand_png.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import CAVConstants from '../../common/CAVConstants.js';
@@ -243,7 +243,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
     Multilink.multilink( [ focusedCardNodeProperty, model.isCardGrabbedProperty ], ( focusedCardNode, isCardGrabbed ) => {
         if ( focusedCardNode ) {
 
-          const focusForSelectedCard = new FocusHighlightFromNode( focusedCardNode.cardNode, { dashed: isCardGrabbed } );
+          const focusForSelectedCard = new HighlightFromNode( focusedCardNode.cardNode, { dashed: isCardGrabbed } );
           this.setFocusHighlight( focusForSelectedCard );
 
           focusedCardNode.model.isDraggingProperty.value = isCardGrabbed;

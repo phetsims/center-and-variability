@@ -8,7 +8,7 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import { Color, DragListener, FocusHighlightFromNode, InteractiveHighlightingNode, Node, NodeOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { Color, DragListener, HighlightFromNode, InteractiveHighlightingNode, Node, NodeOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import SoccerBall from '../../../../soccer-common/js/model/SoccerBall.js';
@@ -69,7 +69,7 @@ export default class CardNode extends Node {
       cursor: 'pointer'
     } );
 
-    const interactiveHighlight = new FocusHighlightFromNode( cardNode );
+    const interactiveHighlight = new HighlightFromNode( cardNode );
     cardNode.setInteractiveHighlight( interactiveHighlight );
 
     model.isDraggingProperty.link( isDragging => interactiveHighlight.makeDashed( isDragging ) );

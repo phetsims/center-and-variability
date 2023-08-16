@@ -7,7 +7,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { AlignBox, FocusHighlightFromNode, VBox } from '../../../../scenery/js/imports.js';
+import { AlignBox, HighlightFromNode, VBox } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
@@ -264,7 +264,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
    * Match the highlighting for the accordion box section of the interval tool to be the same as the one in the play area.
    */
   public setFocusHighlightForIntervalTool( parentIntervalToolNode: IntervalToolNode ): void {
-    this.intervalToolNode.setFocusHighlight( new FocusHighlightFromNode( parentIntervalToolNode ) );
+    this.intervalToolNode.setFocusHighlight( new HighlightFromNode( parentIntervalToolNode ) );
   }
 }
 
