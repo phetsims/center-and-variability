@@ -23,11 +23,9 @@ export default class IntervalToolPredictionSlider extends PredictionSlider {
     predictionProperty: Property<number>,
     modelViewTransform: ModelViewTransform2,
     dragRange: Range,
-
     // Tracks whether a slider handle is being dragged through mouse input. This allows us to control
     // input enabling between the two different handles on the interval tool to disable multitouch appropriately.
     public readonly isMouseTouchDraggingProperty: Property<boolean>,
-
     // Tracks whether a slider handle is being dragged through keyboard input. This allows us to control
     // input enabling between the two different handles on the interval tool to disable multitouch appropriately.
     public readonly isKeyboardDraggingProperty: Property<boolean>,

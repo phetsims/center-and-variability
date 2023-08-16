@@ -44,18 +44,18 @@ export default class CelebrationNode extends Panel {
   public constructor( private readonly cardContainerModel: InteractiveCardContainerModel,
                       private readonly cardMap: Map<CardModel, CardNode>,
                       resetEmitter: TEmitter
-                      ) {
+  ) {
     const dataSortedTextNode = new Text( CenterAndVariabilityStrings.youSortedTheDataStringProperty, {
       font: new PhetFont( 15 ),
       maxWidth: CAVConstants.CARD_DIMENSION * 10
     } );
 
-   super( dataSortedTextNode, {
-     stroke: null,
-     cornerRadius: 4,
-     lineWidth: 2,
-     visible: false
-   } );
+    super( dataSortedTextNode, {
+      stroke: null,
+      cornerRadius: 4,
+      lineWidth: 2,
+      visible: false
+    } );
 
     // create a rotated linear gradient
     const gradientMargin = 20;

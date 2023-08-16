@@ -64,8 +64,7 @@ export default class AccordionBoxCheckboxFactory {
           new MedianBarNode( {
             barStyle: 'continuous',
             arrowScale: 0.75
-          } )
-            .setMedianBarShape( 0, 0, ICON_WIDTH / 2 - LINE_WIDTH / 2, ICON_WIDTH - LINE_WIDTH, true )
+          } ).setMedianBarShape( 0, 0, ICON_WIDTH / 2 - LINE_WIDTH / 2, ICON_WIDTH - LINE_WIDTH, true )
         );
       },
       property: medianVisibleProperty,
