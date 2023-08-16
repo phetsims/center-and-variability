@@ -260,7 +260,7 @@ export default class CAVScreenView extends ScreenView {
 
     this.updateDragIndicatorNode = () => {
       const dragIndicatorVisible = model.dragIndicatorModel.isDragIndicatorVisibleProperty.value;
-      const dragIndicatorValue = model.dragIndicatorModel.dragIndicatorValueProperty.value;
+      const dragIndicatorValue = model.dragIndicatorModel.valueProperty.value;
 
       if ( dragIndicatorVisible && dragIndicatorValue ) {
 
@@ -285,10 +285,10 @@ export default class CAVScreenView extends ScreenView {
       dragIndicatorHandImage.top = dragIndicatorArrowNodeProxy.bottom + Math.abs( this.modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) ) - 5;
     } );
 
-    dragIndicatorArrowNode.addLinkedElement( model.dragIndicatorModel.dragIndicatorValueProperty );
+    dragIndicatorArrowNode.addLinkedElement( model.dragIndicatorModel.valueProperty );
 
     model.dragIndicatorModel.isDragIndicatorVisibleProperty.link( this.updateDragIndicatorNode );
-    model.dragIndicatorModel.dragIndicatorValueProperty.link( this.updateDragIndicatorNode );
+    model.dragIndicatorModel.valueProperty.link( this.updateDragIndicatorNode );
     this.visibleBoundsProperty.link( this.updateDragIndicatorNode );
     this.model.selectedSceneModelProperty.link( this.updateDragIndicatorNode );
     this.model.sceneModels.forEach( sceneModel => {

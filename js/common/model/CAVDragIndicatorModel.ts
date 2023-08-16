@@ -20,9 +20,9 @@ export default class CAVDragIndicatorModel extends DragIndicatorModel {
     // Empirically determined based on height of AccordionBox and play area. This may need to be adjusted if those change.
     const maxHeight = 8;
 
-    if ( this.dragIndicatorValueProperty.value !== null ) {
-      const stackHeight = sceneModel.getStackAtLocation( this.dragIndicatorValueProperty.value ).length;
-      if ( this.isDragIndicatorVisibleProperty.value && ( this.dragIndicatorValueProperty.value === sceneModel.medianValueProperty.value || stackHeight > maxHeight ) ) {
+    if ( this.valueProperty.value !== null ) {
+      const stackHeight = sceneModel.getStackAtLocation( this.valueProperty.value ).length;
+      if ( this.isDragIndicatorVisibleProperty.value && ( this.valueProperty.value === sceneModel.medianValueProperty.value || stackHeight > maxHeight ) ) {
         const reversedBalls = sceneModel.getActiveSoccerBalls().reverse();
 
         const topBallsInReversedLandingOrder = reversedBalls.filter( ball => {
@@ -39,7 +39,7 @@ export default class CAVDragIndicatorModel extends DragIndicatorModel {
         if ( !allEqualToMedian ) {
 
           // Show it over a recently landed ball that is not in the median stack
-          this.dragIndicatorValueProperty.value = topBallsInReversedLandingOrder
+          this.valueProperty.value = topBallsInReversedLandingOrder
             .find( soccerBall => soccerBall.valueProperty.value !== sceneModel.medianValueProperty.value &&
                                  sceneModel.getStackAtLocation( soccerBall.valueProperty.value! ).length <= maxHeight )!
             .valueProperty.value!;
