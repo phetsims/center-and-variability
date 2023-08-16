@@ -305,64 +305,50 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       callback: ( event, listener ) => {
 
         const keysPressed = listener.keysPressed;
+        if ( keysPressed !== null ) {
+          const focusedCardNode = focusedCardNodeProperty.value;
+          const activeCardNodes = this.getActiveCardNodesInOrder();
+          const numberOfActiveCards = activeCardNodes.length;
+          const isCardGrabbed = model.isCardGrabbedProperty.value;
 
-        // Select a card
-        const focusedCardNode = focusedCardNodeProperty.value;
-        const activeCardNodes = this.getActiveCardNodesInOrder();
-        const numberOfActiveCards = activeCardNodes.length;
+          if ( focusedCardNode ) {
 
-        if ( focusedCardNode ) {
-          if ( ( keysPressed === 'arrowRight' || keysPressed === 'arrowLeft' ) ) {
+            if ( [ 'arrowRight', 'arrowLeft' ].includes( keysPressed ) ) {
+              const delta = keysPressed === 'arrowRight' ? 1 : -1;
+              if ( isCardGrabbed ) {
+                swapCards( activeCardNodes, focusedCardNode, delta );
+              }
+              else {
 
-            // Arrow keys will shift the card focus when a card is not grabbed.
-            if ( !model.isCardGrabbedProperty.value ) {
-              const delta = listener.keysPressed === 'arrowRight' ? 1 : -1;
-
-              // We are deciding not to wrap the value around the ends of the range because the sort order is important and does not wrap
-              const currentIndex = activeCardNodes.indexOf( focusedCardNode );
-              const nextIndex = Utils.clamp( currentIndex + delta, 0, numberOfActiveCards - 1 );
-              model.focusedCardProperty.value = activeCardNodes[ nextIndex ].model;
+                // Arrow keys will shift the card focus when a card is not grabbed.
+                const currentIndex = activeCardNodes.indexOf( focusedCardNode );
+                const nextIndex = Utils.clamp( currentIndex + delta, 0, numberOfActiveCards - 1 );
+                model.focusedCardProperty.value = activeCardNodes[ nextIndex ].model;
+              }
             }
-
-            // Arrow keys will move the card when it is grabbed.
-            else {
-              const delta = listener.keysPressed === 'arrowLeft' ? -1 : 1;
+            else if ( [ 'pageUp', 'pageDown' ].includes( keysPressed ) && isCardGrabbed ) {
+              const delta = keysPressed === 'pageUp' ? 3 : -3;
               swapCards( activeCardNodes, focusedCardNode, delta );
             }
-          }
-          else if ( keysPressed === 'pageUp' || keysPressed === 'pageDown' ) {
-            if ( model.isCardGrabbedProperty.value ) {
-              const delta = listener.keysPressed === 'pageUp' ? 3 : -3;
+            else if ( [ 'home', 'end' ].includes( keysPressed ) && isCardGrabbed ) {
+              const delta = keysPressed === 'end' ? numberOfActiveCards : -numberOfActiveCards;
               swapCards( activeCardNodes, focusedCardNode, delta );
             }
-          }
-          else if ( keysPressed === 'home' || keysPressed === 'end' ) {
-            if ( model.isCardGrabbedProperty.value ) {
-              const delta = listener.keysPressed === 'end' ? numberOfActiveCards : -numberOfActiveCards;
-              swapCards( activeCardNodes, focusedCardNode, delta );
-            }
-          }
-          else if ( keysPressed === 'enter' || keysPressed === 'space' ) {
-            model.isCardGrabbedProperty.value = !model.isCardGrabbedProperty.value;
-            model.hasGrabbedCardProperty.value = true;
-
-            if ( !model.isCardGrabbedProperty.value ) {
+            else if ( [ 'enter', 'space' ].includes( keysPressed ) ) {
+              model.isCardGrabbedProperty.value = !model.isCardGrabbedProperty.value;
 
               // See if the user unsorted the data.  If so, uncheck the "Sort Data" checkbox
-              if ( this.isSortingDataProperty.value && !this.model.isDataSorted() ) {
+              if ( !model.isCardGrabbedProperty.value && this.isSortingDataProperty.value && !this.model.isDataSorted() ) {
                 this.isSortingDataProperty.value = false;
               }
             }
-          }
-          else if ( model.isCardGrabbedProperty.value ) {
-            if ( keysPressed === 'escape' ) {
+            else if ( keysPressed === 'escape' && isCardGrabbed ) {
               model.isCardGrabbedProperty.value = false;
             }
           }
         }
       }
     } );
-
     const focusHighlightWidthProperty = new DerivedProperty( [ model.numActiveCardsProperty ], numActiveCards => {
       return model.getCardPositionX( numActiveCards === 0 ? 1 : numActiveCards + 1 );
     } );
