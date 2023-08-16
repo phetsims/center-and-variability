@@ -20,7 +20,7 @@ import CAVConstants from '../../common/CAVConstants.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import CardNode, { cardDropClip, cardPickUpSoundClip, PICK_UP_DELTA_X } from './CardNode.js';
+import CardNode, { cardDropClip, cardPickUpSoundClip } from './CardNode.js';
 import Utils from '../../../../dot/js/Utils.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import { Shape } from '../../../../kite/js/imports.js';
@@ -87,7 +87,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       }
     } );
 
-    const focusHighlightFromNode = new HighlightPath( null, {
+    const focusHighlightPath = new HighlightPath( null, {
       outerStroke: HighlightPath.OUTER_LIGHT_GROUP_FOCUS_COLOR,
       innerStroke: HighlightPath.INNER_LIGHT_GROUP_FOCUS_COLOR,
       outerLineWidth: HighlightPath.GROUP_OUTER_LINE_WIDTH,
@@ -117,8 +117,8 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
     this.addChild( keyboardArrowNode );
 
-    const isDragIndicatorVisibleProperty = new DerivedProperty( [ this.inputEnabledProperty, focusHighlightFromNode.visibleProperty ],
-      ( inputEnabled, isGrabReleaseVisible ) => inputEnabled && !isGrabReleaseVisible );
+    const isDragIndicatorVisibleProperty = new DerivedProperty( [ this.inputEnabledProperty, model.areKeyboardHintsVisibleProperty ],
+      ( inputEnabled, areKeyboardHintsVisible ) => inputEnabled && !areKeyboardHintsVisible );
 
     const handWithArrowNode = new Node( {
       children: [
@@ -225,10 +225,14 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
         if ( model.focusedCardProperty.value === null && activeCardNodes.length > 0 ) {
           model.focusedCardProperty.value = activeCardNodes[ 0 ].model;
         }
+        if ( activeCardNodes.length > 1 ) {
+          model.areKeyboardHintsVisibleProperty.value = true;
+        }
       },
       blur: () => {
         // TODO: grabbedProperty is not triggering a card drop the way we expect when switching between keyboard and mouse, see: https://github.com/phetsims/center-and-variability/issues/433
         model.isCardGrabbedProperty.value = false;
+        model.areKeyboardHintsVisibleProperty.value = false;
       },
       out: () => {
         model.focusedCardProperty.value = null;
@@ -248,7 +252,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
           focusedCardNode.model.isDraggingProperty.value = isCardGrabbed;
           const leftEdgeOfFocusedCard = model.getCardPositionX( focusedCardNode.model.indexProperty.value! );
-           //TODO: Check the plus 1 magic number, see: https://github.com/phetsims/center-and-variability/issues/433
+          //TODO: Check the plus 1 magic number, see: https://github.com/phetsims/center-and-variability/issues/433
           keyboardArrowNode.centerBottom = new Vector2( leftEdgeOfFocusedCard + CAVConstants.CARD_DIMENSION / 2 + 1, focusForSelectedCard.bottom + 6 );
         }
         else {
@@ -355,18 +359,18 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       return model.getCardPositionX( numActiveCards === 0 ? 1 : numActiveCards + 1 );
     } );
 
-    focusHighlightFromNode.addChild( grabReleaseCueNode );
+    focusHighlightPath.addChild( grabReleaseCueNode );
 
     focusHighlightWidthProperty.link( focusHighlightWidth => {
       const marginX = 7;
       const focusRect = Shape.rect( -marginX, -FOCUS_HIGHLIGHT_Y_MARGIN, focusHighlightWidth + 2 * marginX, CAVConstants.CARD_DIMENSION + 2 * FOCUS_HIGHLIGHT_Y_MARGIN );
-      focusHighlightFromNode.setShape( focusRect );
+      focusHighlightPath.setShape( focusRect );
       hitRect.setShape( focusRect );
       const cueNodeWidth = grabReleaseCueNode.width;
       grabReleaseCueNode.centerX = Utils.clamp( focusRect.bounds.centerX, cueNodeWidth / 2, this.width - cueNodeWidth / 2 );
     } );
 
-    this.setGroupFocusHighlight( focusHighlightFromNode );
+    this.setGroupFocusHighlight( focusHighlightPath );
     this.addInputListener( keyboardListener );
   }
 
