@@ -37,7 +37,7 @@ export default class MeanAndMedianModel extends CAVModel {
   private highlightAnimationIndex: number | null = null;
 
   private lastHighlightAnimationStepTime = 0;
-  public readonly isMedianAnimationCompleteProperty = new BooleanProperty( false );
+  public readonly showMedianBarArrowProperty = new BooleanProperty( true );
   public readonly isMedianVisibleProperty: BooleanProperty;
   public readonly isMeanVisibleProperty: BooleanProperty;
   public readonly isPredictMeanVisibleProperty: BooleanProperty;
@@ -83,8 +83,8 @@ export default class MeanAndMedianModel extends CAVModel {
     } );
 
     // Don't show animation on startup or when setting PhET-iO state
-    this.isMedianVisibleProperty.lazyLink( isTopMedianVisible => {
-      if ( isTopMedianVisible && sceneModel.medianValueProperty.value !== null ) {
+    this.isMedianVisibleProperty.lazyLink( isMedianVisible => {
+      if ( isMedianVisible && sceneModel.medianValueProperty.value !== null ) {
 
         if ( !isSettingPhetioStateProperty.value ) {
           this.setHighlightAnimationIndex( 0 );
@@ -93,12 +93,14 @@ export default class MeanAndMedianModel extends CAVModel {
         else {
 
           // When setting PhET-iO state, show the arrow right away.
-          this.isMedianAnimationCompleteProperty.value = true;
+          this.showMedianBarArrowProperty.value = true;
         }
       }
       else {
         this.clearAnimation();
-        this.isMedianAnimationCompleteProperty.value = false;
+        if ( sceneModel.getSortedLandedObjects().length > 0 ) {
+          this.showMedianBarArrowProperty.value = false;
+        }
       }
     } );
 
@@ -129,7 +131,7 @@ export default class MeanAndMedianModel extends CAVModel {
   public override reset(): void {
     super.reset();
     this.setHighlightAnimationIndex( null );
-    this.isMedianAnimationCompleteProperty.reset();
+    this.showMedianBarArrowProperty.reset();
     this.isMeanVisibleProperty.reset();
     this.isMedianVisibleProperty.reset();
     this.predictMeanValueProperty.reset();
@@ -163,7 +165,7 @@ export default class MeanAndMedianModel extends CAVModel {
 
     if ( isAnimationFinished ) {
       this.clearAnimation();
-      this.isMedianAnimationCompleteProperty.value = true;
+      this.showMedianBarArrowProperty.value = true;
     }
     else if ( this.highlightAnimationIndex !== null &&
               this.selectedSceneModelProperty.value.timeProperty.value > this.lastHighlightAnimationStepTime + HIGHLIGHT_ANIMATION_TIME_STEP ) {

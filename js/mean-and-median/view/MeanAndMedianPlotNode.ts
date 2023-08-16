@@ -80,7 +80,7 @@ export default class MeanAndMedianPlotNode extends CAVPlotNode {
 
         const medianPositionX = modelViewTransform.modelToViewX( medianValue );
 
-        this.medianBarNode.setMedianBarShape( 0, left, medianPositionX, right, model.isMedianAnimationCompleteProperty.value );
+        this.medianBarNode.setMedianBarShape( 0, left, medianPositionX, right, model.showMedianBarArrowProperty.value );
 
         const topDotToIndicate = tallestStack[ Math.min( tallestStack.length - 1, 4 ) ];
         this.medianBarNode.top = modelViewTransform.modelToViewY( topDotToIndicate.positionProperty.value.y ) - MARGIN_Y - MedianBarNode.NOTCH_HEIGHT;
@@ -88,7 +88,6 @@ export default class MeanAndMedianPlotNode extends CAVPlotNode {
       else {
         this.medianBarNode.clear();
       }
-
     };
 
     const updateOneKickTextVisibility = () => {
@@ -99,10 +98,9 @@ export default class MeanAndMedianPlotNode extends CAVPlotNode {
     sceneModel.objectChangedEmitter.addListener( updateOneKickTextVisibility );
     sceneModel.medianValueProperty.link( updateMedianBarNode );
     model.isMedianVisibleProperty.link( updateMedianBarNode );
-    model.isMedianAnimationCompleteProperty.link( updateMedianBarNode );
+    model.showMedianBarArrowProperty.link( updateMedianBarNode );
     model.isMedianVisibleProperty.link( updateOneKickTextVisibility );
     model.isMeanVisibleProperty.link( updateOneKickTextVisibility );
-
   }
 }
 
