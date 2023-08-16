@@ -336,6 +336,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
             }
             else if ( [ 'enter', 'space' ].includes( keysPressed ) ) {
               model.isCardGrabbedProperty.value = !model.isCardGrabbedProperty.value;
+              model.hasGrabbedCardProperty.value = true;
 
               // See if the user unsorted the data.  If so, uncheck the "Sort Data" checkbox
               if ( !model.isCardGrabbedProperty.value && this.isSortingDataProperty.value && !this.model.isDataSorted() ) {
