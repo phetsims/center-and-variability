@@ -13,7 +13,7 @@ import InteractiveCardContainerModel from '../model/InteractiveCardContainerMode
 import Property from '../../../../axon/js/Property.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import DragIndicatorArrowNode from '../../common/view/DragIndicatorArrowNode.js';
-import { FocusHighlightFromNode, FocusHighlightPath, Image, KeyboardListener, Node, Path } from '../../../../scenery/js/imports.js';
+import { FocusHighlightFromNode, HighlightPath, Image, KeyboardListener, Node, Path } from '../../../../scenery/js/imports.js';
 import dragIndicatorHand_png from '../../../images/dragIndicatorHand_png.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import CAVConstants from '../../common/CAVConstants.js';
@@ -87,11 +87,11 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       }
     } );
 
-    const focusHighlightFromNode = new FocusHighlightPath( null, {
-      outerStroke: FocusHighlightPath.OUTER_LIGHT_GROUP_FOCUS_COLOR,
-      innerStroke: FocusHighlightPath.INNER_LIGHT_GROUP_FOCUS_COLOR,
-      outerLineWidth: FocusHighlightPath.GROUP_OUTER_LINE_WIDTH,
-      innerLineWidth: FocusHighlightPath.GROUP_INNER_LINE_WIDTH
+    const focusHighlightFromNode = new HighlightPath( null, {
+      outerStroke: HighlightPath.OUTER_LIGHT_GROUP_FOCUS_COLOR,
+      innerStroke: HighlightPath.INNER_LIGHT_GROUP_FOCUS_COLOR,
+      outerLineWidth: HighlightPath.GROUP_OUTER_LINE_WIDTH,
+      innerLineWidth: HighlightPath.GROUP_INNER_LINE_WIDTH
     } );
 
     const isGrabReleaseVisibleProperty = DerivedProperty.not( model.hasGrabbedCardProperty );
