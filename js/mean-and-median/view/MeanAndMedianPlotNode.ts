@@ -82,7 +82,7 @@ export default class MeanAndMedianPlotNode extends CAVPlotNode {
 
         this.medianBarNode.setMedianBarShape( 0, left, medianPositionX, right, model.showMedianBarArrowProperty.value );
 
-        const topDotToIndicate = tallestStack[ Math.min( tallestStack.length - 1, 4 ) ];
+        const topDotToIndicate = tallestStack[ Math.min( tallestStack.length - 1, 11 ) ];
         this.medianBarNode.top = modelViewTransform.modelToViewY( topDotToIndicate.positionProperty.value.y ) - MARGIN_Y - MedianBarNode.NOTCH_HEIGHT;
       }
       else {
