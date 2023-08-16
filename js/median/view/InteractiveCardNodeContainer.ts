@@ -20,7 +20,7 @@ import CAVConstants from '../../common/CAVConstants.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import CardNode, { cardDropClip, cardPickUpSoundClip } from './CardNode.js';
+import CardNode, { cardDropClip, cardPickUpSoundClip, PICK_UP_DELTA_X } from './CardNode.js';
 import Utils from '../../../../dot/js/Utils.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import { Shape } from '../../../../kite/js/imports.js';
@@ -108,8 +108,8 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
         numberOfDashes: 2,
         spacing: 2,
         triangleNodeOptions: {
-          triangleWidth: 9,
-          triangleHeight: 8
+          triangleWidth: 12,
+          triangleHeight: 11
         },
         visibleProperty: model.isKeyboardArrowVisibleProperty
       }
@@ -248,7 +248,8 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
           focusedCardNode.model.isDraggingProperty.value = isCardGrabbed;
           const leftEdgeOfFocusedCard = model.getCardPositionX( focusedCardNode.model.indexProperty.value! );
-          keyboardArrowNode.centerBottom = new Vector2( leftEdgeOfFocusedCard + CAVConstants.CARD_DIMENSION / 2, focusForSelectedCard.top - FOCUS_HIGHLIGHT_Y_MARGIN );
+           //TODO: Check the plus 1 magic number, see: https://github.com/phetsims/center-and-variability/issues/433
+          keyboardArrowNode.centerBottom = new Vector2( leftEdgeOfFocusedCard + CAVConstants.CARD_DIMENSION / 2 + 1, focusForSelectedCard.bottom + 6 );
         }
         else {
           this.setFocusHighlight( 'invisible' );
