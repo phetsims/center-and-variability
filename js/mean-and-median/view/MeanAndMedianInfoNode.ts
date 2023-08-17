@@ -67,7 +67,7 @@ export default class MeanAndMedianInfoNode extends VBox {
       children: [
         new InfoTitleDescriptionRichText( CenterAndVariabilityStrings.medianDescriptionStringProperty ),
         medianInfoValuesNode,
-        new Text( new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValueMetersPatternStringProperty, {
+        new Text( new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValueUnitsPatternStringProperty, {
           value: sceneModel.medianValueProperty,
 
           // Show "1 meter" but "1.5 meters"

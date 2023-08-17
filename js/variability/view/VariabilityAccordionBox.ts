@@ -155,7 +155,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       value: VariabilityMeasure.RANGE,
       createNode: () => {
         const rangeEqualsValueStringProperty = deriveStringProperty( vsm => vsm.rangeValueProperty,
-          CenterAndVariabilityStrings.rangeUnknownValueStringProperty, rangePatternStringProperty );
+          CenterAndVariabilityStrings.rangeEqualsUnknownStringProperty, rangePatternStringProperty );
 
         const rangeReadoutText = new VariabilityReadoutText( rangeEqualsValueStringProperty, {
           fill: CAVColors.rangeReadoutColorProperty,
@@ -174,7 +174,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       createNode: () => {
 
         const medianEqualsValueStringProperty = deriveStringProperty( vsm => vsm.medianValueProperty,
-          CenterAndVariabilityStrings.medianUnknownValueStringProperty, medianPatternStringProperty );
+          CenterAndVariabilityStrings.medianEqualsUnknownStringProperty, medianPatternStringProperty );
 
         const medianReadoutText = new VariabilityReadoutText( medianEqualsValueStringProperty, {
           fill: CAVColors.medianColorProperty,
@@ -186,7 +186,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         } );
 
         const iqrEqualsValueStringProperty = deriveStringProperty( vsm => vsm.iqrValueProperty,
-          CenterAndVariabilityStrings.iqrUnknownValueStringProperty, iqrPatternStringProperty );
+          CenterAndVariabilityStrings.iqrEqualsUnknownStringProperty, iqrPatternStringProperty );
 
         const iqrReadoutText = new VariabilityReadoutText( iqrEqualsValueStringProperty, {
           fill: CAVColors.iqrLabelColorProperty,
@@ -209,10 +209,10 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       createNode: () => {
 
         const meanEqualsValueStringProperty = deriveStringProperty( vsm => vsm.meanValueProperty,
-          CenterAndVariabilityStrings.meanUnknownValueStringProperty, meanPatternStringProperty );
+          CenterAndVariabilityStrings.meanEqualsUnknownStringProperty, meanPatternStringProperty );
 
         const madEqualsValueStringProperty = deriveStringProperty( vsm => vsm.madValueProperty,
-          CenterAndVariabilityStrings.madUnknownValueStringProperty, madPatternStringProperty );
+          CenterAndVariabilityStrings.madEqualsUnknownStringProperty, madPatternStringProperty );
 
         const meanReadoutText = new VariabilityReadoutText( meanEqualsValueStringProperty, {
           fill: CAVColors.meanColorProperty,

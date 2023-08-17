@@ -415,9 +415,9 @@ export default class CAVScreenView extends ScreenView {
       align: 'left',
       children: [
         controlNode,
-        new Text( new PatternStringProperty( CenterAndVariabilityStrings.kicksPatternStringProperty,
+        new Text( new PatternStringProperty( CenterAndVariabilityStrings.valueKicksPatternStringProperty,
           { value: this.numberOfKicksProperty }, {
-            tandem: tandem.createTandem( 'kicksPatternStringProperty' )
+            tandem: tandem.createTandem( 'valueKicksPatternStringProperty' )
           } ), {
           font: CAVConstants.MAIN_FONT,
           maxWidth: CAVConstants.CHECKBOX_TEXT_MAX_WIDTH + 50,

@@ -36,7 +36,7 @@ export default class IQRInfoNode extends VBox {
         new InfoTitleDescriptionRichText( CenterAndVariabilityStrings.iqrDescriptionStringProperty ),
         iqrInfoValuesNode,
 
-        new Text( new PatternStringProperty( CenterAndVariabilityStrings.iqrCalculationPattern1StringProperty, {
+        new Text( new PatternStringProperty( CenterAndVariabilityStrings.iqrEqualsQ3MinusQ3PatternStringProperty, {
           q1: sceneModel.q1ValueProperty,
           q3: sceneModel.q3ValueProperty
         }, {
@@ -52,7 +52,7 @@ export default class IQRInfoNode extends VBox {
           layoutOptions: { topMargin: 5 }
         } ),
 
-        new Text( new PatternStringProperty( CenterAndVariabilityStrings.iqrCalculationPattern2StringProperty, {
+        new Text( new PatternStringProperty( CenterAndVariabilityStrings.iqrEqualsIQRUnitsPatternStringProperty, {
           iqr: sceneModel.iqrValueProperty,
 
           // Show "1 meter" but "1.5 meters"

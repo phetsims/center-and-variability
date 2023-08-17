@@ -105,7 +105,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
           sceneModel.medianValueProperty,
           model.isMedianVisibleProperty,
           CenterAndVariabilityStrings.medianEqualsValueMPatternStringProperty,
-          CenterAndVariabilityStrings.medianUnknownValueStringProperty,
+          CenterAndVariabilityStrings.medianEqualsUnknownStringProperty,
           CAVColors.medianColorProperty,
           null
         ),
@@ -113,7 +113,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
           sceneModel.meanValueProperty,
           model.isMeanVisibleProperty,
           CenterAndVariabilityStrings.meanEqualsValueMPatternStringProperty,
-          CenterAndVariabilityStrings.meanUnknownValueStringProperty,
+          CenterAndVariabilityStrings.meanEqualsUnknownStringProperty,
           CAVColors.meanColorProperty,
           1
         )

@@ -81,7 +81,7 @@ export default class MADInfoNode extends VBox {
           layoutOptions: { topMargin: 5 }
         } ),
 
-        new Text( new PatternStringProperty( CenterAndVariabilityStrings.madCalculationResultPatternStringProperty, {
+        new Text( new PatternStringProperty( CenterAndVariabilityStrings.madEqualsMADMetersPatternStringProperty, {
 
           // See CAVConstants.STRING_VALUE_NULL_MAP
           mad: new DerivedProperty( [ sceneModel.madValueProperty ], madValue => madValue === null ? 'null' : Utils.toFixed( madValue, 1 ) )

@@ -30,7 +30,7 @@ export default class RangeInfoNode extends VBox {
       spacing: 5,
       children: [
         new InfoTitleDescriptionRichText( CenterAndVariabilityStrings.rangeDescriptionStringProperty ),
-        new Text( new PatternStringProperty( CenterAndVariabilityStrings.rangeCalculationPatternStringProperty, {
+        new Text( new PatternStringProperty( CenterAndVariabilityStrings.rangeEqualsMaxMinusMinPatternStringProperty, {
           max: sceneModel.maxValueProperty,
           min: sceneModel.minValueProperty
         }, {
@@ -47,7 +47,7 @@ export default class RangeInfoNode extends VBox {
         } ),
 
 
-        new Text( new PatternStringProperty( CenterAndVariabilityStrings.rangeCalculationResultPatternStringProperty, {
+        new Text( new PatternStringProperty( CenterAndVariabilityStrings.rangeEqualsRangeUnitsPatternStringProperty, {
           range: sceneModel.rangeValueProperty,
 
           // Show "1 meter" but "1.5 meters"
