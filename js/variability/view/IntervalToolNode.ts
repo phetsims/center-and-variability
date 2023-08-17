@@ -43,7 +43,6 @@ export default class IntervalToolNode extends AccessibleSlider( Node, 0 ) {
       stroke: CAVColors.intervalToolStrokeProperty
     } );
 
-    // TODO: https://github.com/phetsims/center-and-variability/issues/225 support or exclude multi-touch
     const getDragBounds = () => {
       const dist = intervalToolValue2Property.value - intervalToolValue1Property.value;
 
