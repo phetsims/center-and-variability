@@ -214,7 +214,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
       // When a user is focused on the card container but there are no cards yet, we want to ensure that a card gets focused
       // once there is a card.
-      if ( model.focusedCardProperty.value === null && this.focused && this.cardNodes[ 0 ].model.isActiveProperty.value ) {
+      if ( model.focusedCardProperty.value === null && this.focused && model.getActiveCards().length === 1 ) {
         model.focusedCardProperty.value = activeCardNodes[ 0 ].model;
       }
     } );
@@ -230,12 +230,24 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
         }
       },
       blur: () => {
-        // TODO: grabbedProperty is not triggering a card drop the way we expect when switching between keyboard and mouse, see: https://github.com/phetsims/center-and-variability/issues/433
         model.isCardGrabbedProperty.value = false;
         model.areKeyboardHintsVisibleProperty.value = false;
       },
       out: () => {
-        model.focusedCardProperty.value = null;
+
+        if ( model.focusedCardProperty.value !== null ) {
+
+          // Before clearing out the focusedCardProperty the CardModel must be cleared out of it's
+          // dragging state.
+          model.focusedCardProperty.value.isDraggingProperty.set( false );
+
+          // Clear the 'focused' card so that there isn't a flicker to a highlight around that card when
+          // moving between the CardNode interactive highlight and the container group highlight (which has
+          // a custom highlight around the focused card).
+          model.focusedCardProperty.set( null );
+        }
+
+        model.isCardGrabbedProperty.value = false;
       }
     } );
 
@@ -252,6 +264,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
           focusedCardNode.model.isDraggingProperty.value = isCardGrabbed;
           const leftEdgeOfFocusedCard = model.getCardPositionX( focusedCardNode.model.indexProperty.value! );
+
           //TODO: Check the plus 1 magic number, see: https://github.com/phetsims/center-and-variability/issues/433
           keyboardArrowNode.centerBottom = new Vector2( leftEdgeOfFocusedCard + CAVConstants.CARD_DIMENSION / 2 + 1, focusForSelectedCard.bottom + 6 );
         }
@@ -348,6 +361,18 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
           }
           else if ( keysPressed === 'escape' && isCardGrabbed ) {
             model.isCardGrabbedProperty.value = false;
+          }
+          else {
+
+            // We cleared the 'focused' card because we were using mouse input - start over with
+            // keyboard interaction and focus the first card
+            // TODO: Only do this for certain keys?, see: https://github.com/phetsims/center-and-variability/issues/460
+            this.cardNodes.forEach( cardNode => {
+              cardNode.model.isDraggingProperty.value = false;
+            } );
+            model.isCardGrabbedProperty.value = false;
+
+            model.focusedCardProperty.value = this.model.getCardsInCellOrder()[ 0 ];
           }
         }
       }
