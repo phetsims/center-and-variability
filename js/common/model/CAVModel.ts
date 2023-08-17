@@ -67,6 +67,14 @@ export default class CAVModel extends PhetioObject {
 
     super( options );
 
+    this.sceneModels.forEach( sceneModel => {
+      sceneModel.soccerBalls.forEach( soccerBall => {
+        soccerBall.toneEmitter.addListener( value => {
+          NumberTone.play( this, sceneModel, value );
+        } );
+      } );
+    } );
+
     this.playAreaTandem = options.tandem.createTandem( 'playArea' );
 
     this.isAccordionBoxExpandedProperty = new BooleanProperty( true, {

@@ -65,12 +65,6 @@ export default class MeanAndMedianModel extends CAVModel {
         tandem: options.tandem.createTandem( 'sceneModel' )
       } );
 
-    sceneModel.soccerBalls.forEach( soccerBall => {
-      soccerBall.toneEmitter.addListener( value => {
-        NumberTone.play( this, sceneModel, value );
-      } );
-    } );
-
     super( MAX_KICKS_PROPERTY, [ sceneModel ], options );
 
     this.isMeanVisibleProperty = new BooleanProperty( false, {

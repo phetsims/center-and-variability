@@ -64,12 +64,6 @@ export default class MedianModel extends CAVModel {
         tandem: options.tandem.createTandem( 'sceneModel' )
       } );
 
-    sceneModel.soccerBalls.forEach( soccerBall => {
-      soccerBall.toneEmitter.addListener( value => {
-        NumberTone.play( this, sceneModel, value );
-      } );
-    } );
-
     super( maxKicksProperty, [ sceneModel ], options );
 
     this.isSortingDataProperty = new BooleanProperty( false, {

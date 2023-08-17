@@ -58,14 +58,6 @@ export default class VariabilityModel extends CAVModel {
       new VariabilitySceneModel( MAX_KICKS_PROPERTY, { type: 'skew', values: null, skewType: 'left' }, preferencesModel.kickerCharacterSetProperty, { tandem: providedOptions.tandem.createTandem( 'sceneKicker4Model' ) } )
     ];
 
-    sceneModels.forEach( sceneModel => {
-      sceneModel.soccerBalls.forEach( soccerBall => {
-        soccerBall.toneEmitter.addListener( value => {
-          NumberTone.play( this, sceneModel, value );
-        } );
-      } );
-    } );
-
     const accordionBoxTandem = providedOptions.tandem.createTandem( 'variabilityMeasureAccordionBox' );
 
     const options = optionize<VariabilityModelOptions, SelfOptions, CAVModelOptions>()( {
