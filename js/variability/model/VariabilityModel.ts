@@ -36,7 +36,7 @@ export default class VariabilityModel extends CAVModel {
   public readonly isPointerKeyboardDraggingProperty: Property<boolean>;
 
   public readonly isIntervalToolVisibleProperty: Property<boolean>;
-  public readonly isIntervalToolEnabledProperty: Property<boolean>;
+  public readonly isIntervalToolInputEnabledProperty: Property<boolean>;
   public readonly intervalTool1ValueProperty: NumberProperty;
   public readonly intervalTool2ValueProperty: NumberProperty;
 
@@ -122,7 +122,7 @@ export default class VariabilityModel extends CAVModel {
       phetioFeatured: true
     } );
 
-    this.isIntervalToolEnabledProperty = new BooleanProperty( true, {
+    this.isIntervalToolInputEnabledProperty = new BooleanProperty( true, {
       tandem: intervalToolTandem.createTandem( 'isInputEnabledProperty' ),
       phetioFeatured: true,
       phetioDocumentation: 'When false, the interval cannot be translated left/right, but the handles are still moveable/interactive.'

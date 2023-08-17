@@ -60,7 +60,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       new BooleanProperty( false ), {
         focusable: false,
         visibleProperty: model.isIntervalToolVisibleProperty,
-        enabledProperty: model.isIntervalToolEnabledProperty,
+        enabledProperty: model.isIntervalToolInputEnabledProperty,
         tandem: tandem.createTandem( 'intervalToolNode' )
       } );
 

@@ -29,6 +29,7 @@ import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import ObjectLiteralIO from '../../../../tandem/js/types/ObjectLiteralIO.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
+import EnabledProperty from '../../../../axon/js/EnabledProperty.js';
 
 type SelfOptions = {
   instrumentMeanProperty: boolean;
@@ -49,7 +50,7 @@ export default class CAVModel extends PhetioObject {
   public readonly selectedSceneModelProperty: Property<CAVSoccerSceneModel>;
 
   public readonly isAccordionBoxExpandedProperty: Property<boolean>;
-  public readonly soccerBallsInputEnabledProperty: Property<boolean>;
+  public readonly soccerBallsEnabledProperty: Property<boolean>;
   public readonly isDataPointLayerVisibleProperty: Property<boolean>;
 
   public readonly infoButtonPressedEmitter: Emitter;
@@ -133,13 +134,14 @@ export default class CAVModel extends PhetioObject {
 
     const allValueProperties = sceneModels.flatMap( sceneModel => sceneModel.soccerBalls.map( soccerBall => soccerBall.valueProperty ) );
 
-    this.soccerBallsInputEnabledProperty = new BooleanProperty( true, {
-      tandem: this.playAreaTandem.createTandem( 'soccerBallsInputEnabledProperty' ),
+    this.soccerBallsEnabledProperty = new EnabledProperty( true, {
+      tandem: this.playAreaTandem.createTandem( 'soccerBallsEnabledProperty' ),
       phetioDocumentation: 'Enable or disable input on the entire set of soccer balls.',
-      phetioFeatured: true
+      phetioFeatured: true,
+      checkTandemName: false
     } );
 
-    this.dragIndicatorModel = new CAVDragIndicatorModel( this.soccerBallsInputEnabledProperty, {
+    this.dragIndicatorModel = new CAVDragIndicatorModel( this.soccerBallsEnabledProperty, {
       tandem: this.playAreaTandem.createTandem( 'soccerBallDragIndicatorModel' )
     } );
 
