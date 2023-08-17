@@ -307,50 +307,47 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
     const keyboardListener = new KeyboardListener( {
       keys: [ 'arrowRight', 'arrowLeft', 'enter', 'space', 'home', 'end', 'escape', 'pageUp', 'pageDown' ],
-      callback: ( event, listener ) => {
+      callback: ( event, keysPressed ) => {
 
-        const keysPressed = listener.keysPressed;
-        if ( keysPressed !== null ) {
-          const focusedCardNode = focusedCardNodeProperty.value;
-          const activeCardNodes = this.getActiveCardNodesInOrder();
-          const numberOfActiveCards = activeCardNodes.length;
-          const isCardGrabbed = model.isCardGrabbedProperty.value;
+        const focusedCardNode = focusedCardNodeProperty.value;
+        const activeCardNodes = this.getActiveCardNodesInOrder();
+        const numberOfActiveCards = activeCardNodes.length;
+        const isCardGrabbed = model.isCardGrabbedProperty.value;
 
-          if ( focusedCardNode ) {
+        if ( focusedCardNode ) {
 
-            if ( [ 'arrowRight', 'arrowLeft' ].includes( keysPressed ) ) {
-              const delta = keysPressed === 'arrowRight' ? 1 : -1;
-              if ( isCardGrabbed ) {
-                swapCards( activeCardNodes, focusedCardNode, delta );
-              }
-              else {
-
-                // Arrow keys will shift the card focus when a card is not grabbed.
-                const currentIndex = activeCardNodes.indexOf( focusedCardNode );
-                const nextIndex = Utils.clamp( currentIndex + delta, 0, numberOfActiveCards - 1 );
-                model.focusedCardProperty.value = activeCardNodes[ nextIndex ].model;
-              }
-            }
-            else if ( [ 'pageUp', 'pageDown' ].includes( keysPressed ) && isCardGrabbed ) {
-              const delta = keysPressed === 'pageUp' ? 3 : -3;
+          if ( [ 'arrowRight', 'arrowLeft' ].includes( keysPressed ) ) {
+            const delta = keysPressed === 'arrowRight' ? 1 : -1;
+            if ( isCardGrabbed ) {
               swapCards( activeCardNodes, focusedCardNode, delta );
             }
-            else if ( [ 'home', 'end' ].includes( keysPressed ) && isCardGrabbed ) {
-              const delta = keysPressed === 'end' ? numberOfActiveCards : -numberOfActiveCards;
-              swapCards( activeCardNodes, focusedCardNode, delta );
-            }
-            else if ( [ 'enter', 'space' ].includes( keysPressed ) ) {
-              model.isCardGrabbedProperty.value = !model.isCardGrabbedProperty.value;
-              model.hasGrabbedCardProperty.value = true;
+            else {
 
-              // See if the user unsorted the data.  If so, uncheck the "Sort Data" checkbox
-              if ( !model.isCardGrabbedProperty.value && this.isSortingDataProperty.value && !this.model.isDataSorted() ) {
-                this.isSortingDataProperty.value = false;
-              }
+              // Arrow keys will shift the card focus when a card is not grabbed.
+              const currentIndex = activeCardNodes.indexOf( focusedCardNode );
+              const nextIndex = Utils.clamp( currentIndex + delta, 0, numberOfActiveCards - 1 );
+              model.focusedCardProperty.value = activeCardNodes[ nextIndex ].model;
             }
-            else if ( keysPressed === 'escape' && isCardGrabbed ) {
-              model.isCardGrabbedProperty.value = false;
+          }
+          else if ( [ 'pageUp', 'pageDown' ].includes( keysPressed ) && isCardGrabbed ) {
+            const delta = keysPressed === 'pageUp' ? 3 : -3;
+            swapCards( activeCardNodes, focusedCardNode, delta );
+          }
+          else if ( [ 'home', 'end' ].includes( keysPressed ) && isCardGrabbed ) {
+            const delta = keysPressed === 'end' ? numberOfActiveCards : -numberOfActiveCards;
+            swapCards( activeCardNodes, focusedCardNode, delta );
+          }
+          else if ( [ 'enter', 'space' ].includes( keysPressed ) ) {
+            model.isCardGrabbedProperty.value = !model.isCardGrabbedProperty.value;
+            model.hasGrabbedCardProperty.value = true;
+
+            // See if the user unsorted the data.  If so, uncheck the "Sort Data" checkbox
+            if ( !model.isCardGrabbedProperty.value && this.isSortingDataProperty.value && !this.model.isDataSorted() ) {
+              this.isSortingDataProperty.value = false;
             }
+          }
+          else if ( keysPressed === 'escape' && isCardGrabbed ) {
+            model.isCardGrabbedProperty.value = false;
           }
         }
       }
