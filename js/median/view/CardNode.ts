@@ -22,6 +22,7 @@ import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import Range from '../../../../dot/js/Range.js';
 
 type SelfOptions = EmptySelfOptions;
 type ParentOptions = WithRequired<NodeOptions, 'tandem'>;
@@ -115,7 +116,10 @@ export default class CardNode extends Node {
     this.soccerBall = model.soccerBall;
 
     model.positionProperty.link( position => {
-      const range = model.cardContainerModel.getDragRange();
+      const cardCells = model.cardContainerModel.getCardsInCellOrder();
+      const maxX = cardCells.length > 0 ? model.cardContainerModel.getCardPositionX( cardCells.length - 1 ) : 0;
+      const range = new Range( 0, maxX );
+
       const before = this.translation.copy();
       this.translation = new Vector2( range.constrainValue( position.x ), 0 );
 

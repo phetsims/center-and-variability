@@ -25,7 +25,6 @@ import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Property from '../../../../axon/js/Property.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import Range from '../../../../dot/js/Range.js';
 
 type SelfOptions = {
 
@@ -210,13 +209,6 @@ export default class CardContainerModel extends PhetioObject {
       }
     }
     return true;
-  }
-
-// TODO: Should this get factored out as well? see: https://github.com/phetsims/center-and-variability/issues/449
-  public getDragRange( this: CardContainerModel ): Range {
-    const cardCells = this.getCardsInCellOrder();
-    const maxX = cardCells.length > 0 ? this.getCardPositionX( cardCells.length - 1 ) : 0;
-    return new Range( 0, maxX );
   }
 
   private static CardContainerModelIO = new IOType( 'CardContainerModelIO', {
