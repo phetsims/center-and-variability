@@ -36,12 +36,12 @@ export default class IntervalToolNode extends AccessibleSlider( Node, 0 ) {
       fill: CAVColors.intervalToolFillProperty,
       cursor: 'pointer'
     } );
-    const leftEdge = new Line( 0, 0, 0, 400, {
+
+    const createEdge = () => new Line( 0, 0, 0, 400, {
       stroke: CAVColors.intervalToolStrokeProperty
     } );
-    const rightEdge = new Line( 0, 0, 0, 400, {
-      stroke: CAVColors.intervalToolStrokeProperty
-    } );
+    const leftEdge = createEdge();
+    const rightEdge = createEdge();
 
     const getDragBounds = () => {
       const dist = intervalToolValue2Property.value - intervalToolValue1Property.value;

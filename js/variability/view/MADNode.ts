@@ -198,7 +198,10 @@ export default class MADNode extends CAVPlotNode {
       const mad = sceneModel.madValueProperty.value;
 
       madRectangle.rectWidth = this.modelViewTransform.modelToViewDeltaX( mad === null ? 0 : mad * 2 );
-      madRectangle.visible = ( options.parentContext === 'info' || model.isMADVisibleProperty.value ) && mad !== null;
+
+      const isMADVisible = ( options.parentContext === 'info' || model.isMADVisibleProperty.value ) && mad !== null;
+      madRectangle.visible = isMADVisible;
+      madAnnotationContainer.visible = isMADVisible && soccerBalls.length > 1;
 
       if ( mad !== null ) {
         const viewCenterX = this.modelViewTransform.modelToViewX( sceneModel.meanValueProperty.value! );
@@ -223,7 +226,6 @@ export default class MADNode extends CAVPlotNode {
         leftReadout.centerBottom = leftBar.centerTop;
         rightReadout.centerBottom = rightBar.centerTop;
       }
-      madAnnotationContainer.visible = ( options.parentContext === 'info' || model.isMADVisibleProperty.value ) && mad !== null && soccerBalls.length > 1;
 
       meanLine.visible = sceneModel.meanValueProperty.value !== null;
 

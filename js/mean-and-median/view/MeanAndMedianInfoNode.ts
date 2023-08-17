@@ -7,13 +7,12 @@
  *
  */
 
-import { HBox, HSeparator, RichText, Text, VBox } from '../../../../scenery/js/imports.js';
+import { HBox, HSeparator, Text, VBox } from '../../../../scenery/js/imports.js';
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import { PLOT_NODE_TOP_MARGIN } from '../../common/view/CAVPlotNode.js';
@@ -88,11 +87,7 @@ export default class MeanAndMedianInfoNode extends VBox {
           maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
           layoutOptions: { topMargin: 5 }
         } ),
-        new RichText( CenterAndVariabilityStrings.meanDescriptionStringProperty, {
-          font: new PhetFont( CAVConstants.INFO_DIALOG_TITLE_FONT_SIZE ),
-          maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
-          layoutOptions: { bottomMargin: CAVConstants.INFO_DIALOG_SUBHEADING_BOTTOM_MARGIN, topMargin: 20 }
-        } ),
+        new InfoTitleDescriptionRichText( CenterAndVariabilityStrings.meanDescriptionStringProperty ),
         new HBox( {
           spacing: 10,
           children: [

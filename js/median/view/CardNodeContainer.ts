@@ -109,15 +109,16 @@ export default class CardNodeContainer extends InteractiveHighlightingNode {
       }
 
       if ( leftmostCard ) {
+        const centerX = model.getCardPositionX( ( cardCells.length - 1 ) / 2 ) + leftmostCard.width / 2;
 
         if ( model.parentContext === 'accordion' ) {
-          medianReadoutText.centerX = model.getCardPositionX( ( cardCells.length - 1 ) / 2 ) + leftmostCard.width / 2 + PICK_UP_DELTA_X;
+          medianReadoutText.centerX = centerX + PICK_UP_DELTA_X;
           if ( medianReadoutText.left < 0 ) {
             medianReadoutText.left = 0;
           }
         }
         else {
-          medianReadoutText.centerX = model.getCardPositionX( ( cardCells.length - 1 ) / 2 ) + leftmostCard.width / 2;
+          medianReadoutText.centerX = centerX;
         }
 
         medianReadoutText.bottom = MARGIN_Y - 5;

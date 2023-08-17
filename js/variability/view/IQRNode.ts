@@ -114,25 +114,21 @@ export default class IQRNode extends CAVPlotNode {
       lineWidth: BOX_STROKE_WIDTH
     } );
 
-    const boxWhiskerLineLeft = new Line( 0, 0, 0, 0, {
+    const createBoxWhiskerLine = () => new Line( 0, 0, 0, 0, {
       stroke: CAVColors.boxWhiskerStrokeColorProperty,
       lineWidth: BOX_STROKE_WIDTH
     } );
 
-    const boxWhiskerLineRight = new Line( 0, 0, 0, 0, {
+    const boxWhiskerLineLeft = createBoxWhiskerLine();
+    const boxWhiskerLineRight = createBoxWhiskerLine();
+
+    const createBoxWhiskerEndCap = () => new Line( 0, -END_CAP_HEIGHT / 2, 0, END_CAP_HEIGHT / 2, {
       stroke: CAVColors.boxWhiskerStrokeColorProperty,
       lineWidth: BOX_STROKE_WIDTH
     } );
 
-    const boxWhiskerEndCapLeft = new Line( 0, -END_CAP_HEIGHT / 2, 0, END_CAP_HEIGHT / 2, {
-      stroke: CAVColors.boxWhiskerStrokeColorProperty,
-      lineWidth: BOX_STROKE_WIDTH
-    } );
-
-    const boxWhiskerEndCapRight = new Line( 0, -END_CAP_HEIGHT / 2, 0, END_CAP_HEIGHT / 2, {
-      stroke: CAVColors.boxWhiskerStrokeColorProperty,
-      lineWidth: BOX_STROKE_WIDTH
-    } );
+    const boxWhiskerEndCapLeft = createBoxWhiskerEndCap();
+    const boxWhiskerEndCapRight = createBoxWhiskerEndCap();
 
     const medianArrowNode = boxWhiskerLabelArrow( CAVColors.medianColorProperty );
 

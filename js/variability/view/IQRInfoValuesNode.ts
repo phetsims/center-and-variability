@@ -24,16 +24,14 @@ export default class IQRInfoValuesNode extends InfoValuesNode<VariabilitySoccerB
   public constructor( sceneModel: VariabilitySceneModel, hasEnoughDataForIQRProperty: TReadOnlyProperty<boolean> ) {
     super( sceneModel );
 
-    this.dataValuesQ1Rect = new Rectangle( 0, 0, 0, 0, {
+    const createDataValuesRect = () => new Rectangle( 0, 0, 0, 0, {
       visibleProperty: hasEnoughDataForIQRProperty,
       fill: CAVColors.iqrColorProperty,
       cornerRadius: 3
     } );
-    this.dataValuesQ3Rect = new Rectangle( 0, 0, 0, 0, {
-      visibleProperty: hasEnoughDataForIQRProperty,
-      fill: CAVColors.iqrColorProperty,
-      cornerRadius: 3
-    } );
+
+    this.dataValuesQ1Rect = createDataValuesRect();
+    this.dataValuesQ3Rect = createDataValuesRect();
 
     this.addChild( this.dataValuesQ1Rect );
     this.addChild( this.dataValuesQ3Rect );
