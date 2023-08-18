@@ -66,8 +66,12 @@ const CAVColors = {
   intervalToolFillProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolFill', { default: Color.toColor( '#fefccf' ).withAlpha( 0.6 ) } ),
   intervalToolStrokeProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolStroke', { default: '#ffed29' } ),
 
+  // On the Variability screen, there is a prediction tool labeled "Pointer". It is an arrow that the user can use to predict
+  // any statistical measure or boundary of an interval.
   pointerColorProperty: new ProfileColorProperty( centerAndVariability, 'pointerColor', { default: '#ffdd00' } ),
 
+  // On the Variability screen, one of the measures of variability depicted is the Range, which is the difference between
+  // the maximum and minimum values in the data set. The range is depicted as a rectangle with a fill color.
   rangeFillProperty: new ProfileColorProperty( centerAndVariability, 'rangeFill', { default: new Color( '#c3fdb9' ).withAlpha( 0.7 ) } ),
 
   meanAndMedianAccordionBoxFillProperty: new ProfileColorProperty( centerAndVariability, 'meanAndMedianAccordionBoxFill', { default: 'rgb( 238, 238, 238 )' } ),
