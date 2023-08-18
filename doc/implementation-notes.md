@@ -1,13 +1,94 @@
+# Center and Variability - Implementation Notes
+
+## Table of Contents
+* [Introduction](https://github.com/phetsims/geometric-optics/blob/main/doc/implementation-notes.md#introduction)
+* [General Considerations](https://github.com/phetsims/geometric-optics/blob/main/doc/implementation-notes.md#general-considerations)
+    * [Model-View Transforms](https://github.com/phetsims/geometric-optics/blob/main/doc/implementation-notes.md#model-view-transforms)
+    * [Query Parameters](https://github.com/phetsims/geometric-optics/blob/main/doc/implementation-notes.md#query-parameters)
+    * [Memory Management](https://github.com/phetsims/geometric-optics/blob/main/doc/implementation-notes.md#memory-management)
+* [Optics](https://github.com/phetsims/geometric-optics/blob/main/doc/implementation-notes.md#optics)
+* [Optical Objects](https://github.com/phetsims/geometric-optics/blob/main/doc/implementation-notes.md#optical-objects)
+* [Optical Images](https://github.com/phetsims/geometric-optics/blob/main/doc/implementation-notes.md#optical-images)
+* [Projection Screen](https://github.com/phetsims/geometric-optics/blob/main/doc/implementation-notes.md#projection-screen)
+* [Rays](https://github.com/phetsims/geometric-optics/blob/main/doc/implementation-notes.md#rays)
+* [Guides](https://github.com/phetsims/geometric-optics/blob/main/doc/implementation-notes.md#guides)
+* [3D Perspective](https://github.com/phetsims/geometric-optics/blob/main/doc/implementation-notes.md#3d-perspective)
+* [Scenes](https://github.com/phetsims/geometric-optics/blob/main/doc/implementation-notes.md#scenes)
+* [Tools](https://github.com/phetsims/geometric-optics/blob/main/doc/implementation-notes.md#tools)
+* [Labels](https://github.com/phetsims/geometric-optics/blob/main/doc/implementation-notes.md#labels)
+* [Controls](https://github.com/phetsims/geometric-optics/blob/main/doc/implementation-notes.md#controls)
+* [Hollywood!](https://github.com/phetsims/geometric-optics/blob/main/doc/implementation-notes.md#hollywood)
+* [Sound](https://github.com/phetsims/geometric-optics/blob/main/doc/implementation-notes.md#sound)
+* [Alternative Input](https://github.com/phetsims/geometric-optics/blob/main/doc/implementation-notes.md#alternative-input)
+* [PhET-iO](https://github.com/phetsims/geometric-optics/blob/main/doc/implementation-notes.md#phet-io)
+
+## Introduction
+
+This document contains notes related to the implementation of _Center and Variability_.
+This is not an exhaustive description of the implementation.  The intention is
+to provide a concise high-level overview, and to supplement the internal documentation
+(source code comments) and external documentation (design documents).
+
+Before reading this document, please read:
+* [model.md](https://github.com/phetsims/center-and-variability/blob/main/doc/model.md), a high-level description of the simulation model
+
+In addition to this document, you are encouraged to read:
+
+* [PhET Development Overview](https://github.com/phetsims/phet-info/blob/main/doc/phet-development-overview.md)
+* [PhET Software Design Patterns](https://github.com/phetsims/phet-info/blob/main/doc/phet-software-design-patterns.md)
+* [Center and Variability HTML5 design document](https://docs.google.com/document/d/19OG6qtThtkH89zCQmkIckM6ZKV8W1zkCT0ZghXKcL9U/edit#) (definitely incomplete and out of date, but worth a look)
+
+## General Considerations
+
+### Scenes
+
+### Model-View Transforms
+
+This simulation makes use of 2 model-view transforms to map model coordinates (horizontally: meters, vertically: number of data points) to view coordinates.
+
+The first transform is a static mapping, see `modelViewTransform` in `SoccerSceneView`. The model has +x to the left, and +y up, and scaling is isometric in both directions. In the _Lens_ screen, the origin (0,0) in the model coordinate frame is near the center of the ScreenView. In the _Mirror_ screen, the origin is shifted to the right, to accommodate the behavior of mirrors.
+
+The second transform is a dynamic mapping, based on zoom level, see `zoomTransformProperty` in `GOScreenView`. This transform is applied to all elements within a "scene" (optic, objects, images, rays, projection screen).
+
+Rulers change their tick marks to match the zoom level, but otherwise do not change their position or size.
+
+Labels change their position to match the zoom level, but do not change their size.
+
+### Query Parameters
+
+Query parameters are used to enable sim-specific features. Sim-specific query parameters are documented in `GOQueryParameters.ts`.
+Running with `?log` will print the complete set of query parameters (common-code, PhET-iO, and sim-specific)
+to the browser console.
+
+### Memory Management
+
+* **Dynamic allocation:** Most objects in this sim are allocated at startup, and exist for the lifetime of the
+  simulation. The exception is `GOPreferencesNode` and its children, which must all implement `dispose`. This is the
+  content for the Simulations tab of the Preferences dialog, whose instantiation is deferred until the user presses
+  the Preferences button in the navigation bar.
+
+* **Listeners**: Unless otherwise noted in the code, all uses of `link`, `addListener`, etc. do NOT need a
+  corresponding `unlink`, `removeListener`, etc.
+
+* **dispose**: All classes have a `dispose` method, possibly inherited from a super class. Sim-specific classes whose instances exist for the lifetime of the sim are not intended to be disposed. They are created with `isDisposable: false`, or have a `dispose` method that looks like this:
+
+```ts
+public dispose(): void {
+  Disposable.assertNotDisposable();
+}
+```
+## Measures of Center
+
+## Measures of Spread
+
+## Plot Nodes
+
 ### Main Architecture
 
 Each CAVModel has 1 or more CAVSceneModel. The scene defines the soccer ball data and the soccer players. Other settings such
 as whether checkboxes are selected are stored in the CAVModel.  There is a similar pattern for the views.
 
 The simulation depends on soccer-common, so that the soccer context can be reused in other sims (including Mean Share and Balance)
-
-### PhET-iO
-
-Everything is statically allocated and we use `isActiveProperty` flags or other enumeration states to indicate whether an object is active or in the pool.
 
 ### The Variability Measurements (range, mad, iqr)
 
@@ -19,3 +100,23 @@ vs in the info dialog, so that is managed with a context option.
 * This sim uses ToggleNode in many places to switch between scenes and variability measures.
 
 See also soccer-common/implementation-notes.md
+
+## Sound
+
+All sounds are provided by common-code UI components. There are currently no sounds associated with sim-specific UI components and interactions.
+
+## Alternative Input
+
+To identify focus traversal order, search for `pdomOrder`.
+
+To identify sim-specific support for keyboard input, search for `tagName`. These classes have custom input listeners that handle keyboard events (e.g. `KeyboardDragListener`).
+
+To identify hotkeys, search for `addHotkey`.
+
+Setting focus for tools is done via tab traversal. This sim does not use `GrabDragInteraction`.
+
+## PhET-iO
+
+Everything is statically allocated and we use `isActiveProperty` flags or other enumeration states to indicate whether an object is active or in the pool.
+
+The PhET-iO instrumentation of this sim is relatively straightforward. As described in [Memory Management](https://github.com/phetsims/geometric-optics/blob/main/doc/implementation-notes.md#memory-management), everything in this sim is created at startup, and exists for the lifetime of the sim. So there is no sim-specific use of PhetioGroup or PhetioCapsule.  
