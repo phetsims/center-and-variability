@@ -34,8 +34,10 @@ In addition to this document, you are encouraged to read:
 
 ### Model-View Transforms
 
-This simulation makes use of 2 model-view transforms to map model coordinates (horizontally: meters, vertically: number
-of data points) to view coordinates.
+This simulation makes use of a model-view transforms to map model coordinates (horizontally: meters, vertically: number
+of data points) to view coordinates in the soccer area [CAVScreenView.ts](../js/common/view/CAVScreenView.ts), and in
+the
+charts which are shown in the accordion box and info dialogs [CAVConstants.ts](../js/common/CAVConstants.ts).
 
 ### Query Parameters
 
@@ -91,8 +93,15 @@ See also soccer-common/implementation-notes.md
 
 ## Sound
 
-All sounds are provided by common-code UI components. There are currently no sounds associated with sim-specific UI
-components and interactions.
+Each position on the number line is associated with a sound, see [NumberTone.ts](../js/common/model/NumberTone.ts).
+There are variation based on whether the user is focusing on values, means, or medians.
+
+On the median screen, the cards play sounds based on movement. The median animation in the accordion box plays a sound
+while animating, see [MedianAnimationTone.ts](../js/median/view/MedianAnimationTone.ts).
+
+The interval tool generates a continuous sound while the user is dragging the interval or its handles.
+
+Other sounds are provided by common-code UI components.
 
 ## Alternative Input
 
