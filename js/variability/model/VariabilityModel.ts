@@ -131,7 +131,7 @@ export default class VariabilityModel extends CAVModel {
       phetioFeatured: true
     } );
 
-    this.intervalToolDeltaStableProperty = new NumberProperty( Math.abs( this.intervalTool2ValueProperty.value - this.intervalTool1ValueProperty.value ), {} );
+    this.intervalToolDeltaStableProperty = new NumberProperty( this.getIntervalToolWidth() );
 
     this.pointerValueProperty.lazyLink( ( value, oldValue ) => {
       if ( this.isPointerKeyboardDraggingProperty.value ) {
@@ -143,10 +143,17 @@ export default class VariabilityModel extends CAVModel {
     } );
   }
 
+  /**
+   * Gets the distance (a non-negative number) between the interval tool handles
+   */
+  private getIntervalToolWidth(): number {
+    return Math.abs( this.intervalTool2ValueProperty.value - this.intervalTool1ValueProperty.value );
+  }
+
   public override step( dt: number ): void {
     super.step( dt );
 
-    this.intervalToolDeltaStableProperty.value = Math.abs( this.intervalTool2ValueProperty.value - this.intervalTool1ValueProperty.value );
+    this.intervalToolDeltaStableProperty.value = this.getIntervalToolWidth();
   }
 
   public override reset(): void {
