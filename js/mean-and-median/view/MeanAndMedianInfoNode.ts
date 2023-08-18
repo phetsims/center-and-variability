@@ -7,7 +7,7 @@
  *
  */
 
-import { HBox, HSeparator, Text, VBox } from '../../../../scenery/js/imports.js';
+import { HBox, Text, VBox } from '../../../../scenery/js/imports.js';
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
@@ -24,6 +24,7 @@ import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import InfoTitleDescriptionRichText from '../../common/view/InfoTitleDescriptionRichText.js';
 import MeanAndMedianInfoPlotNode from './MeanAndMedianInfoPlotNode.js';
 import Utils from '../../../../dot/js/Utils.js';
+import FractionNode from '../../common/view/FractionNode.js';
 
 export default class MeanAndMedianInfoNode extends VBox {
   public constructor( model: MeanAndMedianModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
@@ -49,16 +50,6 @@ export default class MeanAndMedianInfoNode extends VBox {
         resultNumeratorText.string = _.sum( sceneModel.getDataValues() );
         resultDenominatorText.string = denominator.toString();
       }
-    } );
-
-    const calculationFraction = new VBox( {
-      children: [ numeratorText, new HSeparator(), denominatorText ],
-      align: 'center'
-    } );
-
-    const resultFraction = new VBox( {
-      children: [ resultNumeratorText, new HSeparator(), resultDenominatorText ],
-      align: 'center'
     } );
 
     super( {
@@ -92,9 +83,9 @@ export default class MeanAndMedianInfoNode extends VBox {
           spacing: 10,
           children: [
             new Text( CenterAndVariabilityStrings.meanEqualsStringProperty, { fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE } ),
-            calculationFraction,
+            new FractionNode( numeratorText, denominatorText ),
             new Text( MathSymbols.EQUAL_TO, { fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE } ),
-            resultFraction
+            new FractionNode( resultNumeratorText, resultDenominatorText )
           ],
           visibleProperty: hasEnoughDataProperty
         } ),
