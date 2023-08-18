@@ -47,7 +47,6 @@ export default class CAVDragIndicatorModel extends DragIndicatorModel {
       }
     }
   }
-
 }
 
 centerAndVariability.register( 'CAVDragIndicatorModel', CAVDragIndicatorModel );
