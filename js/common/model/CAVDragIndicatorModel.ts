@@ -5,7 +5,6 @@
  * is not the median. This is to minimize occurrence of drag indicator and median indicator overlap.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
- *
  */
 
 import DragIndicatorModel from '../../../../soccer-common/js/model/DragIndicatorModel.js';
