@@ -21,9 +21,16 @@ export default class AsyncCounter {
     this.callback = callback;
 
     if ( count === 0 ) {
-      this.complete = true;
-      this.callback();
+      this.finish();
     }
+  }
+
+  /**
+   * Mark as completed and fire the callback after all events have completed.
+   */
+  private finish(): void {
+    this.complete = true;
+    this.callback();
   }
 
   public increment(): void {
@@ -32,8 +39,7 @@ export default class AsyncCounter {
     if ( this.index >= this.count ) {
       assert && assert( !this.complete, 'Too many completions' );
 
-      this.complete = true;
-      this.callback();
+      this.finish();
     }
   }
 }
