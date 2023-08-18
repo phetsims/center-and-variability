@@ -195,7 +195,7 @@ export default class CardContainerModel extends PhetioObject {
   }
 
   /**
-   * Check if all of the data is in order, by using the cells associated with the card node.  Note that means
+   * Check if all the data is in order, by using the cells associated with the card node.  Note that means
    * it is using the cell the card may be animating to.
    */
   public isDataSorted(): boolean {
