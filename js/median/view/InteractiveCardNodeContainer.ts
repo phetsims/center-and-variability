@@ -94,7 +94,8 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       innerLineWidth: HighlightPath.GROUP_INNER_LINE_WIDTH
     } );
 
-    const isGrabReleaseVisibleProperty = DerivedProperty.not( model.hasGrabbedCardProperty );
+    const isGrabReleaseVisibleProperty = new DerivedProperty( [ model.hasGrabbedCardProperty, model.hasKeyboardFocusProperty ],
+      ( hasGrabbedCard, hasKeyboardFocus ) => !hasGrabbedCard && hasKeyboardFocus );
 
     const grabReleaseCueNode = new GrabReleaseCueNode( {
       top: CAVConstants.CARD_DIMENSION + FOCUS_HIGHLIGHT_Y_MARGIN,
@@ -117,8 +118,8 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
     this.addChild( keyboardArrowNode );
 
-    const isDragIndicatorVisibleProperty = new DerivedProperty( [ this.inputEnabledProperty, model.areKeyboardHintsVisibleProperty ],
-      ( inputEnabled, areKeyboardHintsVisible ) => inputEnabled && !areKeyboardHintsVisible );
+    const isDragIndicatorVisibleProperty = new DerivedProperty( [ this.inputEnabledProperty, model.hasKeyboardFocusProperty ],
+      ( inputEnabled, hasKeyboardFocus ) => inputEnabled && !hasKeyboardFocus );
 
     const handWithArrowNode = new Node( {
       children: [
@@ -226,12 +227,12 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
           model.focusedCardProperty.value = activeCardNodes[ 0 ].model;
         }
         if ( activeCardNodes.length > 1 ) {
-          model.areKeyboardHintsVisibleProperty.value = true;
+          model.hasKeyboardFocusProperty.value = true;
         }
       },
       blur: () => {
         model.isCardGrabbedProperty.value = false;
-        model.areKeyboardHintsVisibleProperty.value = false;
+        model.hasKeyboardFocusProperty.value = false;
       },
       out: () => {
 
@@ -248,6 +249,9 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
         }
 
         model.isCardGrabbedProperty.value = false;
+      },
+      over: () => {
+        model.hasKeyboardFocusProperty.value = false;
       }
     } );
 

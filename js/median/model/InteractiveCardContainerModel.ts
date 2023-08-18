@@ -66,7 +66,7 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
   public readonly focusedCardProperty: Property<CardModel | null> = new Property<CardModel | null>( null );
   public readonly isCardGrabbedProperty = new BooleanProperty( false );
   public readonly isKeyboardArrowVisibleProperty: TReadOnlyProperty<boolean>;
-  public readonly areKeyboardHintsVisibleProperty = new BooleanProperty( false );
+  public readonly hasKeyboardFocusProperty = new BooleanProperty( false );
 
   public constructor( medianModel: MedianModel, providedOptions: InteractiveCardContainerModelOptions ) {
     super( medianModel, providedOptions );
