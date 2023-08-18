@@ -7,7 +7,6 @@
     * [Model-View Transforms](#model-view-transforms)
     * [Query Parameters](#query-parameters)
     * [Memory Management](#memory-management)
-* [Scenes](#scenes)
 * [Sound](#sound)
 * [Alternative Input](#alternative-input)
 * [PhET-iO](#phet-io)
@@ -32,8 +31,6 @@ In addition to this document, you are encouraged to read:
   definitely incomplete and out of date, but worth a look)
 
 ## General Considerations
-
-### Scenes
 
 ### Model-View Transforms
 
@@ -72,7 +69,7 @@ void {
 
 ## Plot Nodes
 
-### Main Architecture
+### Main Architecture & Scenes
 
 Each CAVModel has 1 or more CAVSceneModel. The scene defines the soccer ball data and the soccer players. Other settings
 such
@@ -104,11 +101,10 @@ To identify focus traversal order, search for `pdomOrder`.
 To identify sim-specific support for keyboard input, search for `tagName`. These classes have custom input listeners
 that handle keyboard events (e.g. `KeyboardDragListener`).
 
-To identify hotkeys, search for `addHotkey`.
+This simulation does not use hotkeys.
 
 Setting focus for tools is done via tab traversal. This sim does not use `GrabDragInteraction` since at the time of
-writing
-that did not support the "group" interaction design.
+writing that did not support the "group" interaction design.
 
 ## PhET-iO
 
