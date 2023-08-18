@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Contains the definition of IQR, shows the IQR calculation, and a plot node with
+ * Contains the definition of IQR (interquartile), shows the IQR calculation, and a plot node with
  * quartile range.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)

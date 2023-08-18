@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Icon for the IQR radio button.
+ * Icon for the IQR (interquartile) radio button.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

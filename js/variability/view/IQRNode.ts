@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Adds on IQR specific visuals to the plot node including a boxWhisker, iqr label, and a
+ * Adds on IQR (interquartile) specific visuals to the plot node including a boxWhisker, iqr label, and a
  * rectangle that highlights the IQR interval
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
