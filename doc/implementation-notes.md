@@ -40,22 +40,10 @@ In addition to this document, you are encouraged to read:
 This simulation makes use of 2 model-view transforms to map model coordinates (horizontally: meters, vertically: number
 of data points) to view coordinates.
 
-The first transform is a static mapping, see `modelViewTransform` in `SoccerSceneView`. The model has +x to the left,
-and +y up, and scaling is isometric in both directions. 
-
-The second transform is a dynamic mapping, based on zoom level, see `zoomTransformProperty` in `GOScreenView`. This
-transform is applied to all elements within a "scene" (optic, objects, images, rays, projection screen).
-
-Rulers change their tick marks to match the zoom level, but otherwise do not change their position or size.
-
-Labels change their position to match the zoom level, but do not change their size.
-
 ### Query Parameters
 
 Query parameters are used to enable sim-specific features. Sim-specific query parameters are documented
-in `GOQueryParameters.ts`.
-Running with `?log` will print the complete set of query parameters (common-code, PhET-iO, and sim-specific)
-to the browser console.
+in `CAVQueryParameters.ts`.
 
 ### Memory Management
 
@@ -126,4 +114,5 @@ that did not support the "group" interaction design.
 
 The PhET-iO instrumentation of this sim is relatively straightforward. As described
 in [Memory Management](#memory-management), everything in this sim is created at startup, and exists for the lifetime of
-the sim. So there is no sim-specific use of PhetioGroup or PhetioCapsule.  
+the sim. So there is no sim-specific use of PhetioGroup or PhetioCapsule. See examples.md for examples of how to
+use the PhET-iO API.
