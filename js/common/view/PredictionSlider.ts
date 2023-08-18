@@ -1,7 +1,7 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * Shows a shaded sphere and arrow pointing up, to show where the user predicts a median value.
+ * Shows a shaded sphere and arrow pointing up, to show where the user predicts a value or boundary of an interval.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
