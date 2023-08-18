@@ -38,9 +38,9 @@ const CAVColors = {
   } ),
 
   // sky gradient, sampled from a screenshot
-  skyGradientTopColorProperty: new ProfileColorProperty( centerAndVariability, 'skyGradientTop', { default: '#365b9b' } ),
-  skyGradientMiddleColorProperty: new ProfileColorProperty( centerAndVariability, 'skyGradientMiddle', { default: '#81b5ea' } ),
-  skyGradientBottomColorProperty: new ProfileColorProperty( centerAndVariability, 'skyGradientBottom', { default: '#c9d9ef' } ),
+  skyGradientTopColorProperty: new ProfileColorProperty( centerAndVariability, 'skyGradientTopColor', { default: '#365b9b' } ),
+  skyGradientMiddleColorProperty: new ProfileColorProperty( centerAndVariability, 'skyGradientMiddleColor', { default: '#81b5ea' } ),
+  skyGradientBottomColorProperty: new ProfileColorProperty( centerAndVariability, 'skyGradientBottomColor', { default: '#c9d9ef' } ),
 
   // the ground
   groundColorProperty: new ProfileColorProperty( centerAndVariability, 'groundColor', { default: '#009245' } ),
