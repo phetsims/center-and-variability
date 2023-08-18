@@ -181,13 +181,14 @@ export default class CardContainerModel extends PhetioObject {
 
   public getCardsInCellOrder(): CardModel[] {
     const cardsInCells = this.getCardsInCells();
-    return _.sortBy( cardsInCells, ( card => card.indexProperty.value ) );
+    return _.sortBy( cardsInCells, card => card.indexProperty.value );
   }
 
   public sortData( animationReason: 'valueChanged' | null = null ): void {
+
     // If the card is visible, the value property should be non-null
-    const sorted = _.sortBy( this.getCardsInCells(), card => card.soccerBall.valueProperty.value );
-    sorted.forEach( ( card, index ) => {
+    const cardsSortedByValue = _.sortBy( this.getCardsInCells(), card => card.soccerBall.valueProperty.value );
+    cardsSortedByValue.forEach( ( card, index ) => {
       card.indexProperty.value = index;
       this.animateToHomeCell( card, 0.5, animationReason );
     } );
@@ -218,8 +219,7 @@ export default class CardContainerModel extends PhetioObject {
         returnType: ArrayIO( NumberIO ),
         parameterTypes: [],
         implementation: function( this: CardContainerModel ) {
-          const sorted = _.sortBy( this.getCardsInCells(), ( card => card.indexProperty.value ) );
-          return sorted.map( card => card.soccerBall.valueProperty.value );
+          return this.getCardsInCellOrder().map( card => card.soccerBall.valueProperty.value );
         },
         documentation: 'Gets the values of the cards in the order they appear.'
       }
