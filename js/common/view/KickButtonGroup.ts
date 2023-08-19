@@ -35,7 +35,8 @@ export default class KickButtonGroup extends VBox {
   public constructor( model: CAVModel, providedOptions?: KickButtonGroupOptions ) {
 
     const options = optionize<KickButtonGroupOptions, SelfOptions, VBoxOptions>()( {
-      spacing: 2
+      spacing: 2,
+      isDisposable: false
     }, providedOptions );
 
     const alignGroup = new AlignGroup();

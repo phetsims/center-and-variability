@@ -24,7 +24,8 @@ export default class CAVInfoButton extends InfoButton {
         infoButtonPressedEmitter.emit();
       },
       top: backgroundShape.bounds.top + BUTTON_AND_TITLE_MARGIN,
-      right: backgroundShape.bounds.right
+      right: backgroundShape.bounds.right,
+      isDisposable: false
     } );
   }
 }

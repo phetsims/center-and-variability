@@ -33,7 +33,8 @@ export default class MeanIndicatorNode extends Path {
     super( TRIANGLE_SHAPE, {
       fill: CAVColors.meanColorProperty,
       stroke: includeStroke ? SoccerCommonColors.arrowStrokeProperty : null,
-      lineWidth: 0.5
+      lineWidth: 0.5,
+      isDisposable: false
     } );
   }
 }

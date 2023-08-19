@@ -19,7 +19,8 @@ export default class PlayAreaMedianIndicatorNode extends ArrowNode {
       stroke: SoccerCommonColors.arrowStrokeProperty,
       lineWidth: CAVConstants.ARROW_LINE_WIDTH,
       headHeight: 12,
-      headWidth: 18
+      headWidth: 18,
+      isDisposable: false
     } );
   }
 }

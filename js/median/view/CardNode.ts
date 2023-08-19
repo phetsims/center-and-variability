@@ -100,7 +100,8 @@ export default class CardNode extends Node {
 
     const options = optionize<CardNodeOptions, SelfOptions, ParentOptions>()( {
       children: [ offsetContainer ],
-      phetioVisiblePropertyInstrumented: false
+      phetioVisiblePropertyInstrumented: false,
+      isDisposable: false
     }, providedOptions );
 
     super( options );

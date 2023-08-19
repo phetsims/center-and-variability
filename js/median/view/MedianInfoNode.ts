@@ -57,7 +57,8 @@ export default class MedianInfoNode extends VBox {
         textVBox,
         cardNodeContainer,
         needAtLeastOneKickText
-      ]
+      ],
+      isDisposable: false
     } );
 
     const updateDataValuesDisplay = () => {

@@ -20,7 +20,8 @@ export default class IconArrowNode extends ArrowNode {
       doubleHead: true,
       tailWidth: 2,
       headWidth: 7,
-      headHeight: 5
+      headHeight: 5,
+      isDisposable: false
     } );
   }
 }

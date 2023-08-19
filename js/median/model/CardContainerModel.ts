@@ -46,14 +46,14 @@ export default class CardContainerModel extends PhetioObject {
 
   public readonly parentContext: 'info' | 'accordion';
 
-
   public readonly numActiveCardsProperty: Property<number>;
 
   public constructor( medianModel: MedianModel, providedOptions: CardContainerModelOptions ) {
 
     const options = optionize<CardContainerModelOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioType: CardContainerModel.CardContainerModelIO,
-      phetioState: false
+      phetioState: false,
+      isDisposable: false
     }, providedOptions );
 
     super( options );

@@ -107,7 +107,8 @@ export default class RangeIconNode extends Node {
       children: [
         outerRectangle,
         contentNode
-      ]
+      ],
+      isDisposable: false
     } );
   }
 }

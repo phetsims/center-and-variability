@@ -29,7 +29,9 @@ export default class IntervalBarNode extends Path {
       lineWidth: 1,
 
       intervalBarNodeWidth: 0,
-      dropLineLength: 6
+      dropLineLength: 6,
+
+      isDisposable: false
     }, providedOptions );
 
     super( null, options );

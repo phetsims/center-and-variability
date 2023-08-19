@@ -62,7 +62,8 @@ export default class CardModel extends PhetioObject {
   public constructor( public readonly cardContainerModel: CardContainerModel, soccerBall: SoccerBall, position: Vector2, providedOptions: CardModelOptions ) {
 
     const options = optionize<CardModelOptions, SelfOptions, PhetioObjectOptions>()( {
-      phetioState: false
+      phetioState: false,
+      isDisposable: false
     }, providedOptions );
 
     super( options );

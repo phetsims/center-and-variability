@@ -43,7 +43,9 @@ export default class SimulationPreferencesContentNode extends PreferencesPanelCo
       orientation: 'horizontal',
 
       // We don't want to instrument components for preferences, https://github.com/phetsims/joist/issues/744#issuecomment-1196028362
-      tandem: Tandem.OPT_OUT
+      tandem: Tandem.OPT_OUT,
+
+      isDisposable: false
     } );
 
     const maxKicksTitle = new Text( CenterAndVariabilityStrings.maxKicksStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS );

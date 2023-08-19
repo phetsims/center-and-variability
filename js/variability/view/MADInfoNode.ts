@@ -90,7 +90,8 @@ export default class MADInfoNode extends VBox {
           layoutOptions: { topMargin: PLOT_NODE_TOP_MARGIN },
           tandem: options.tandem.createTandem( 'madNode' )
         } )
-      ]
+      ],
+      isDisposable: false
     } );
   }
 }

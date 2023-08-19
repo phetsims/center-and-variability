@@ -16,7 +16,9 @@ import Multilink from '../../../../axon/js/Multilink.js';
 
 export default class BackgroundNode extends Rectangle {
   public constructor( bottomY: number, visibleBoundsProperty: Property<Bounds2> ) {
-    super( visibleBoundsProperty.value.centerX, visibleBoundsProperty.value.top, visibleBoundsProperty.value.centerX, bottomY );
+    super( visibleBoundsProperty.value.centerX, visibleBoundsProperty.value.top, visibleBoundsProperty.value.centerX, bottomY, {
+      isDisposable: false
+    } );
 
     Multilink.multilink( [
       CAVColors.skyGradientTopColorProperty,

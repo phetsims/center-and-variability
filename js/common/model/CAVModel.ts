@@ -62,7 +62,8 @@ export default class CAVModel extends PhetioObject {
     const options = optionize<CAVModelOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioType: CAVModelIO,
       phetioState: false,
-      phetioDocumentation: 'The model for the "Center and Variability" simulation. Contains 1+ sceneModels which contains the data itself. Also includes settings, like selections for checkboxes.'
+      phetioDocumentation: 'The model for the "Center and Variability" simulation. Contains 1+ sceneModels which contains the data itself. Also includes settings, like selections for checkboxes.',
+      isDisposable: false
     }, providedOptions );
 
     super( options );

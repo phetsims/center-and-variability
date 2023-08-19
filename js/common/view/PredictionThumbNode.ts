@@ -64,7 +64,8 @@ export default class PredictionThumbNode extends Node {
       } );
 
     const options = optionize<PredictionThumbNodeOptions, SelfOptions, NodeOptions>()( {
-      children: [ indicatorNode, shadedSphereNode ]
+      children: [ indicatorNode, shadedSphereNode ],
+      isDisposable: false
     }, providedOptions );
 
     super( options );

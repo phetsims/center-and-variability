@@ -20,7 +20,8 @@ export default class MedianInfoDialog extends Dialog {
     const medianInfoNode = new MedianInfoNode( model, sceneModel, { tandem: options.tandem.createTandem( 'medianInfoNode' ) } );
 
     super( medianInfoNode, {
-      tandem: options.tandem
+      tandem: options.tandem,
+      isDisposable: false
     } );
   }
 }

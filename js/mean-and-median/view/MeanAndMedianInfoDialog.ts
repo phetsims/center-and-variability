@@ -22,7 +22,8 @@ export default class MeanAndMedianInfoDialog extends Dialog {
     const meanAndMedianInfoNode = new MeanAndMedianInfoNode( model, sceneModel, playAreaNumberLineNode, { tandem: options.tandem.createTandem( 'meanAndMedianInfoNode' ) } );
 
     super( meanAndMedianInfoNode, {
-      tandem: options.tandem
+      tandem: options.tandem,
+      isDisposable: false
     } );
   }
 }

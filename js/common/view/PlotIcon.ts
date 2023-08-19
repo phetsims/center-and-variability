@@ -65,7 +65,8 @@ export default class PlotIcon extends Node {
           centerX: rectangle.centerX,
           bottom: rectangle.bottom - 1
         } )
-      ]
+      ],
+      isDisposable: false
     } );
   }
 }

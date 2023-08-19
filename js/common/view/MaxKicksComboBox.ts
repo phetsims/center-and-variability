@@ -17,15 +17,18 @@ export default class MaxKicksComboBox extends ComboBox<number> {
 
   public constructor( maxKicksProperty: Property<number>, listParent: Node ) {
     super( maxKicksProperty, CAVConstants.MAX_KICKS_VALUES.map( value => {
-        return {
-          value: value,
-          createNode: () => new Text( '' + value, {
-            font: CAVConstants.MAIN_FONT
-          } )
-        };
-      } ), listParent,
+      return {
+        value: value,
+        createNode: () => new Text( '' + value, {
+          font: CAVConstants.MAIN_FONT
+        } )
+      };
+    } ), listParent, {
       // We don't want to instrument components for preferences, https://github.com/phetsims/joist/issues/744#issuecomment-1196028362
-      { tandem: Tandem.OPT_OUT } );
+      tandem: Tandem.OPT_OUT,
+
+      isDisposable: false
+    } );
   }
 }
 

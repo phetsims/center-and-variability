@@ -56,7 +56,8 @@ export default class InfoValuesNode<T extends CAVSoccerBall> extends Node {
           visibleProperty: hasAtLeastOneDataPointProperty,
           children: [ dataValuesLabel, dataValuesContainer ]
         } )
-      ]
+      ],
+      isDisposable: false
     } );
 
     this.dataValuesMedianArrow = dataValuesMedianArrow;

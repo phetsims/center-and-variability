@@ -86,7 +86,8 @@ export default class IntervalToolNode extends AccessibleSlider( Node, 0 ) {
       valueProperty: intervalToolValue1Property,
       startDrag: startDrag,
       endDrag: endDrag,
-      phetioEnabledPropertyInstrumented: true
+      phetioEnabledPropertyInstrumented: true,
+      isDisposable: false
     }, providedOptions );
 
     super( options );

@@ -15,6 +15,7 @@ import AccordionBoxCheckboxFactory from '../../common/view/AccordionBoxCheckboxF
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import VariabilityMeasureIconNode from './VariabilityMeasureIconNode.js';
+import { combineOptions } from '../../../../phet-core/js/optionize.js';
 
 export default class VariabilityMeasureCheckbox extends Checkbox {
   public constructor( property: Property<boolean>, stringProperty: TReadOnlyProperty<string>, color: TColor, options: CheckboxOptions ) {
@@ -24,7 +25,9 @@ export default class VariabilityMeasureCheckbox extends Checkbox {
       new VariabilityMeasureIconNode( color )
     );
 
-    super( property, content, options );
+    super( property, content, combineOptions<CheckboxOptions>( {
+      isDisposable: false
+    }, options ) );
   }
 }
 

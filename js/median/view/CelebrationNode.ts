@@ -54,7 +54,8 @@ export default class CelebrationNode extends Panel {
       stroke: null,
       cornerRadius: 4,
       lineWidth: 2,
-      visible: false
+      visible: false,
+      isDisposable: false
     } );
 
     // create a rotated linear gradient

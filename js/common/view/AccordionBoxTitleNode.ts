@@ -33,7 +33,8 @@ export default class AccordionBoxTitleNode extends Node {
 
     super( {
       children: [ titleBackground, titleText ],
-      layoutOptions: { grow: 1, stretch: true }
+      layoutOptions: { grow: 1, stretch: true },
+      isDisposable: false
     } );
 
     ManualConstraint.create( this, [ titleText ], titleTextProxy => {

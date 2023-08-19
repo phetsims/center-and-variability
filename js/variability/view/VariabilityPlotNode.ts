@@ -21,6 +21,7 @@ import CAVPlotNode from '../../common/view/CAVPlotNode.js';
 import IntervalToolNode from './IntervalToolNode.js';
 import NumberLineNode from '.../../../../soccer-common/js/view/NumberLineNode.js';
 import TProperty from '../../../../axon/js/TProperty.js';
+import { combineOptions } from '../../../../phet-core/js/optionize.js';
 
 export type CAVPlotOptions = NodeOptions;
 
@@ -28,7 +29,7 @@ export default class VariabilityPlotNode extends Node {
 
   public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode,
                       isDataPointLayerVisibleProperty: TProperty<boolean>, intervalToolNode: IntervalToolNode, providedOptions: CAVPlotOptions ) {
-    super( providedOptions );
+    super( combineOptions<CAVPlotOptions>( { isDisposable: false }, providedOptions ) );
 
     // We need to specify CAVPlotNode manually because otherwise TypeScript will infer all Nodes as the first element (RangeNode), see https://github.com/phetsims/sun/issues/846
     const toggleNode = new ToggleNode<VariabilityMeasure, CAVPlotNode>( model.selectedVariabilityMeasureProperty, [ {

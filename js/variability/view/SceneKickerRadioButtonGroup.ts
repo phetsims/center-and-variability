@@ -24,7 +24,8 @@ export default class SceneKickerRadioButtonGroup extends RectangularRadioButtonG
     const options = optionize<SceneKickerRadioButtonGroupOptions, SelfOptions, RectangularRadioButtonGroupOptions>()( {
       radioButtonOptions: {
         baseColor: 'white'
-      }
+      },
+      isDisposable: false
     }, providedOptions );
 
     const createTShirtIcon = ( label: string, fill: string ) => {

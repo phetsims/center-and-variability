@@ -43,7 +43,8 @@ export default class MADIconNode extends Node {
         verticalLine,
         arrowLeft,
         arrowRight
-      ]
+      ],
+      isDisposable: false
     } );
   }
 }

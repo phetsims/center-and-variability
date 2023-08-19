@@ -37,7 +37,8 @@ export default class VariabilityInfoDialog extends Dialog {
     } );
 
     super( toggleNode, {
-      tandem: options.tandem
+      tandem: options.tandem,
+      isDisposable: false
     } );
   }
 }

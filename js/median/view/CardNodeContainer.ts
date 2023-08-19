@@ -45,7 +45,8 @@ export default class CardNodeContainer extends InteractiveHighlightingNode {
       tagName: 'div',
       visiblePropertyOptions: {
         phetioFeatured: true
-      }
+      },
+      isDisposable: false
     }, providedOptions );
 
     super( options );

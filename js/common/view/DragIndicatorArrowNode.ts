@@ -30,7 +30,9 @@ export default class DragIndicatorArrowNode extends HBox {
     const options = optionize<DragIndicatorArrowNodeOptions, SelfOptions, HBoxOptions>()( {
       dashHeight: 2,
       dashWidth: 2,
-      triangleNodeOptions: {}
+      triangleNodeOptions: {},
+
+      isDisposable: false
     }, providedOptions );
 
     const createArrowHead = ( pointDirection: 'right' | 'left' ) => {

@@ -36,7 +36,8 @@ export default class MedianHighlightLayer extends Node {
     const circle2 = createCircle();
 
     const options = optionize<MedianHighlightLayerOptions, SelfOptions, NodeOptions>()( {
-      children: [ circle1, circle2 ]
+      children: [ circle1, circle2 ],
+      isDisposable: false
     }, providedOptions );
     super( options );
 

@@ -110,7 +110,9 @@ export default class CAVScreenView extends ScreenView {
   protected readonly playAreaTandem: Tandem;
 
   public constructor( model: CAVModel, providedOptions: CAVScreenViewOptions ) {
-    const options = optionize<CAVScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
+    const options = optionize<CAVScreenViewOptions, SelfOptions, ScreenViewOptions>()( {
+      isDisposable: false
+    }, providedOptions );
 
     // View size of a soccer ball
     const objectHeight = 41;

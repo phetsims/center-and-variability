@@ -72,7 +72,8 @@ export default class RangeInfoNode extends VBox {
           parentContext: 'info',
           layoutOptions: { topMargin: PLOT_NODE_TOP_MARGIN }
         } )
-      ]
+      ],
+      isDisposable: false
     } );
   }
 }

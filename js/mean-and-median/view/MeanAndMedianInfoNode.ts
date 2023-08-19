@@ -108,7 +108,9 @@ export default class MeanAndMedianInfoNode extends VBox {
         new MeanAndMedianInfoPlotNode( model, sceneModel, playAreaNumberLineNode, {
           layoutOptions: { topMargin: PLOT_NODE_TOP_MARGIN }
         } )
-      ]
+      ],
+
+      isDisposable: false
     } );
 
     sceneModel.objectChangedEmitter.addListener( () => medianInfoValuesNode.update() );

@@ -44,7 +44,8 @@ export default class CAVPlotNode extends Node {
 
     const options = optionize<CAVPlotNodeOptions, SelfOptions, NodeOptions>()( {
       excludeInvisibleChildrenFromBounds: true,
-      isMeanAndMedianInfoPlot: false
+      isMeanAndMedianInfoPlot: false,
+      isDisposable: false
     }, providedOptions );
 
     super( options );

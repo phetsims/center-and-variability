@@ -77,7 +77,8 @@ export default class IQRInfoNode extends VBox {
           parentContext: 'info',
           layoutOptions: { topMargin: PLOT_NODE_TOP_MARGIN }
         } )
-      ]
+      ],
+      isDisposable: false
     } );
 
     sceneModel.objectChangedEmitter.addListener( () => iqrInfoValuesNode.update() );

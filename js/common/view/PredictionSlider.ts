@@ -58,7 +58,9 @@ export default class PredictionSlider extends AccessibleSlider( Node, 0 ) {
         this.moveToFront();
       },
       disabledOpacity: SceneryConstants.DISABLED_OPACITY,
-      isMouseTouchDraggingProperty: null
+      isMouseTouchDraggingProperty: null,
+
+      isDisposable: false
     }, providedOptions );
 
     super( options );

@@ -13,7 +13,8 @@ export default class FractionNode extends VBox {
   public constructor( numerator: Node, denominator: Node ) {
     super( {
       children: [ numerator, new HSeparator(), denominator ],
-      align: 'center'
+      align: 'center',
+      isDisposable: false
     } );
   }
 }

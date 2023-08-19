@@ -44,7 +44,8 @@ export default class IQRIconNode extends Node {
         verticalLine,
         stubLineLeft,
         stubLineRight
-      ]
+      ],
+      isDisposable: false
     } );
   }
 }

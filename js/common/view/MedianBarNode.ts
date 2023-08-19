@@ -37,7 +37,8 @@ export default class MedianBarNode extends Path {
       lineWidth: MedianBarNode.LINE_WIDTH,
       stroke: CAVColors.medianColorProperty,
       arrowScale: 1,
-      excludeInvisibleChildrenFromBounds: true
+      excludeInvisibleChildrenFromBounds: true,
+      isDisposable: false
     }, providedOptions );
 
     super( null, options );

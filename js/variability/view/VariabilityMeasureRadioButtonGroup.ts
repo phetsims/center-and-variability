@@ -30,7 +30,8 @@ export default class VariabilityMeasureRadioButtonGroup extends RectangularRadio
         buttonAppearanceStrategyOptions: {
           selectedLineWidth: 3
         }
-      }
+      },
+      isDisposable: false
     }, providedOptions );
 
     super( property, [ {

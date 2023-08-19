@@ -48,7 +48,9 @@ export default class CAVAccordionBox extends AccordionBox {
       useExpandedBoundsWhenCollapsed: false,
       expandCollapseButtonOptions: {
         sideLength: BUTTON_SIDE_LENGTH
-      }
+      },
+
+      isDisposable: false
     }, providedOptions );
 
     super( contentNode, options );

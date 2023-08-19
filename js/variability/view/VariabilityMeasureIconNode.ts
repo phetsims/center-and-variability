@@ -19,7 +19,10 @@ export default class VariabilityMeasureIconNode extends Node {
       fill: color,
       stroke: Color.toColor( color ).colorUtilsDarker( 0.1 )
     } );
-    super( { children: [ rectangle, new IconArrowNode( rectangle ) ] } );
+    super( {
+      children: [ rectangle, new IconArrowNode( rectangle ) ],
+      isDisposable: false
+    } );
   }
 }
 
