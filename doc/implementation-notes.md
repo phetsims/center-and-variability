@@ -7,6 +7,8 @@
     * [Model-View Transforms](#model-view-transforms)
     * [Query Parameters](#query-parameters)
     * [Memory Management](#memory-management)
+    * [Measures of Center & Spread](#measures-of-center--spread)
+        * [Workarounds for Abundant and Inconsistent Intermediate Values in Axon Callbacks](#workarounds-for-abundant-and-inconsistent-intermediate-values-in-axon-callbacks)
 * [Sound](#sound)
 * [Alternative Input](#alternative-input)
 * [PhET-iO](#phet-io)
@@ -52,44 +54,37 @@ in `CAVQueryParameters.ts`.
 
 * **Listeners**: All uses of `link`, `addListener`, etc. do NOT need a corresponding `unlink`, `removeListener`, etc.
 
-* **dispose**: All classes have a `dispose` method, possibly inherited from a super class. Sim-specific classes whose
-  instances exist for the lifetime of the sim are not intended to be disposed. They are created
-  with `isDisposable: false`, or have a `dispose` method that looks like this:
+* **dispose**: A lint rule prevents the usage of the term dispose in this repo, disposal is not supported and should not
+  be used.
 
-```ts
-public
-dispose()
-:
-void {
-  Disposable.assertNotDisposable();
-}
-```
+## Measures of Center & Spread
 
-## Measures of Center
+The mathematical definitions of the statistical measures of center and spread are identified in [model.md](./model.md).
 
-## Measures of Spread
+### Workarounds for Abundant and Inconsistent Intermediate Values in Axon Callbacks
+In order to avoid performance problems and spurious intermediate values in the variability screen, measures are computed
+as a batch
+then signified via `updateDataMeasures` and `variabilityDataMeasuresUpdatedEmitter`. Likewise, `intervalToolDeltaStableProperty` works
+around an inconsistent intermediate values. 
 
 ## Plot Nodes
 
 ### Main Architecture & Scenes
 
-Each CAVModel has 1 or more CAVSceneModel. The scene defines the soccer ball data and the soccer players. Other settings
-such
-as whether checkboxes are selected are stored in the CAVModel. There is a similar pattern for the views.
-
-The simulation depends on soccer-common, so that the soccer context can be reused in other sims (including Mean Share
-and Balance)
+* Each CAVModel has 1 or more CAVSceneModel. The scene defines the soccer ball data and the soccer players. Other
+  settings
+  such
+  as whether checkboxes are selected are stored in the CAVModel. There is a similar pattern for the views.
+* The simulation depends on soccer-common, so that the soccer context can be reused in other sims (including Mean Share
+  and Balance)
+* This sim uses ToggleNode in many places to switch between scenes and variability measures.
+* The code that renders the representations (charts/cards) in the accordion box also renders the charts in the info
+  dialogs.
 
 ### The Variability Measurements (range, mad, iqr)
 
 The Variability Measurements (range, mad, iqr) have subtle variations when shown in the accordion box
 vs in the info dialog, so that is managed with a context option.
-
-### Miscellaneous Notes
-
-* This sim uses ToggleNode in many places to switch between scenes and variability measures.
-
-See also soccer-common/implementation-notes.md
 
 ## Sound
 
@@ -115,9 +110,17 @@ This simulation does not use hotkeys.
 Setting focus for tools is done via tab traversal. This sim does not use `GrabDragInteraction` since at the time of
 writing that did not support the "group" interaction design.
 
+This sim uses "group" interaction for the cards and for the soccer balls, where the user first selects an object via the
+arrow
+keys, then presses enter/spacebar to grab the object.
+
+1-d draggable items such as the prediction arrows, and interval tool handles are implemented as AccessibleSlider.
+
 ## PhET-iO
 
 The PhET-iO instrumentation of this sim is relatively straightforward. As described
 in [Memory Management](#memory-management), everything in this sim is created at startup, and exists for the lifetime of
 the sim. So there is no sim-specific use of PhetioGroup or PhetioCapsule. See examples.md for examples of how to
 use the PhET-iO API.
+
+See also soccer-common/implementation-notes.md
