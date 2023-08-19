@@ -59,7 +59,15 @@
             }
           ],
           "no-object-spread-on-non-literals": "error",
-          "soccer-common-cannot-reference-center-and-variability": "error"
+          "soccer-common-cannot-reference-center-and-variability": "error",
+          "additional-bad-text": [
+            "error",
+            {
+              "forbiddenTextObjects": [
+                "dispose"
+              ]
+            }
+          ]
         }
       }
     ]
