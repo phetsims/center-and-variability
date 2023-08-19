@@ -9,9 +9,8 @@
   - [Memory Management](#memory-management)
   - [Measures of Center & Spread](#measures-of-center--spread)
     - [Workarounds for Abundant and Inconsistent Intermediate Values in Axon Callbacks](#workarounds-for-abundant-and-inconsistent-intermediate-values-in-axon-callbacks)
-- [Plot Nodes](#plot-nodes)
-  - [Main Architecture & Scenes](#main-architecture--scenes)
-  - [The Variability Measurements (range, mad, iqr)](#the-variability-measurements-range-mad-iqr)
+- [Main Architecture & Scenes](#main-architecture--scenes)
+- [The Variability Measurements (range, mad, iqr)](#the-variability-measurements-range-mad-iqr)
 - [Sound](#sound)
 - [Alternative Input](#alternative-input)
 - [PhET-iO](#phet-io)
@@ -54,16 +53,14 @@ The mathematical definitions of the statistical measures of center and spread ar
 
 In order to avoid performance problems and spurious intermediate values in the variability screen, measures are computed as a batch then signified via `updateDataMeasures` and `variabilityDataMeasuresUpdatedEmitter`. Likewise, `intervalToolDeltaStableProperty` works around an inconsistent intermediate values.
 
-## Plot Nodes
-
-### Main Architecture & Scenes
+## Main Architecture & Scenes
 
 - Each CAVModel has 1 or more CAVSceneModel. The scene defines the soccer ball data and the soccer players. Other settings such as whether checkboxes are selected are stored in the CAVModel. There is a similar pattern for the views.
 - The simulation depends on soccer-common, so that the soccer context can be reused in other sims (including Mean Share and Balance)
 - This sim uses ToggleNode in many places to switch between scenes and variability measures.
 - The code that renders the representations (charts/cards) in the accordion box also renders the charts in the info dialogs.
 
-### The Variability Measurements (range, mad, iqr)
+## The Variability Measurements (range, mad, iqr)
 
 The Variability Measurements (range, mad, iqr) have subtle variations when shown in the accordion box vs in the info dialog, so that is managed with a context option.
 
