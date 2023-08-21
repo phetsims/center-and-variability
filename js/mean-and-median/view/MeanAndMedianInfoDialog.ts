@@ -9,20 +9,24 @@
 
 import centerAndVariability from '../../centerAndVariability.js';
 import Dialog from '../../../../sun/js/Dialog.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import MeanAndMedianInfoNode from './MeanAndMedianInfoNode.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class MeanAndMedianInfoDialog extends Dialog {
-  public constructor( model: MeanAndMedianModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
+  public constructor( model: MeanAndMedianModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, tandem: Tandem ) {
 
-    const meanAndMedianInfoNode = new MeanAndMedianInfoNode( model, sceneModel, playAreaNumberLineNode, { tandem: options.tandem.createTandem( 'meanAndMedianInfoNode' ) } );
+    const meanAndMedianInfoNode = new MeanAndMedianInfoNode(
+      model,
+      sceneModel,
+      playAreaNumberLineNode,
+      tandem.createTandem( 'meanAndMedianInfoNode' )
+    );
 
     super( meanAndMedianInfoNode, {
-      tandem: options.tandem,
+      tandem: tandem,
       isDisposable: false
     } );
   }

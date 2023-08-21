@@ -7,19 +7,17 @@
  *
  */
 
-import SoccerSceneModel, { SoccerSceneModelOptions } from '../../../../soccer-common/js/model/SoccerSceneModel.js';
+import SoccerSceneModel from '../../../../soccer-common/js/model/SoccerSceneModel.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Range from '../../../../dot/js/Range.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Property from '../../../../axon/js/Property.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import CAVSoccerBall, { CAVSoccerBallOptions } from './CAVSoccerBall.js';
+import CAVSoccerBall from './CAVSoccerBall.js';
 import CharacterSet from '../../../../joist/js/preferences/CharacterSet.js';
 import { KickDistributionStrategySpecification } from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
-
-type CAVSoccerSceneModelOptions = EmptySelfOptions & SoccerSceneModelOptions;
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class CAVSoccerSceneModel<T extends CAVSoccerBall = CAVSoccerBall> extends SoccerSceneModel<T> {
 
@@ -32,16 +30,15 @@ export default class CAVSoccerSceneModel<T extends CAVSoccerBall = CAVSoccerBall
                       kickDistributionStrategySpecification: KickDistributionStrategySpecification,
                       showPlayersWhenDoneKicking: boolean,
                       physicalRange: Range,
-                      soccerBallFactory: ( isFirstSoccerBall: boolean, options: CAVSoccerBallOptions ) => T,
+                      soccerBallFactory: ( isFirstSoccerBall: boolean, tandem: Tandem ) => T,
                       regionAndCultureProperty: Property<CharacterSet | null>,
-                      providedOptions: CAVSoccerSceneModelOptions ) {
+                      tandem: Tandem ) {
 
-    const options = providedOptions;
     super( maxKicksProperty, maxKicksChoices, kickDistributionStrategySpecification, showPlayersWhenDoneKicking, physicalRange,
-      soccerBallFactory, regionAndCultureProperty, options );
+      soccerBallFactory, regionAndCultureProperty, tandem );
 
     this.medianValueProperty = new Property<number | null>( null, {
-      tandem: options.tandem.createTandem( 'medianValueProperty' ),
+      tandem: tandem.createTandem( 'medianValueProperty' ),
       phetioValueType: NullableIO( NumberIO ),
       phetioReadOnly: true,
       phetioFeatured: true,

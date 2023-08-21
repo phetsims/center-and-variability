@@ -14,30 +14,29 @@ import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import RangeInfoNode from './RangeInfoNode.js';
 import IQRInfoNode from './IQRInfoNode.js';
 import MADInfoNode from './MADInfoNode.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class VariabilityInfoDialog extends Dialog {
-  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
+  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, tandem: Tandem ) {
 
     const toggleNode = new ToggleNode( model.selectedVariabilityMeasureProperty, [ {
       value: VariabilityMeasure.RANGE,
-      createNode: () => new RangeInfoNode( model, sceneModel, playAreaNumberLineNode, { tandem: options.tandem.createTandem( 'rangeInfoNode' ) } )
+      createNode: () => new RangeInfoNode( model, sceneModel, playAreaNumberLineNode, tandem.createTandem( 'rangeInfoNode' ) )
     }, {
       value: VariabilityMeasure.IQR,
-      createNode: () => new IQRInfoNode( model, sceneModel, playAreaNumberLineNode, { tandem: options.tandem.createTandem( 'iqrInfoNode' ) } )
+      createNode: () => new IQRInfoNode( model, sceneModel, playAreaNumberLineNode, tandem.createTandem( 'iqrInfoNode' ) )
     }, {
       value: VariabilityMeasure.MAD,
-      createNode: () => new MADInfoNode( model, sceneModel, playAreaNumberLineNode, { tandem: options.tandem.createTandem( 'madInfoNode' ) } )
+      createNode: () => new MADInfoNode( model, sceneModel, playAreaNumberLineNode, tandem.createTandem( 'madInfoNode' ) )
     } ], {
       excludeInvisibleChildrenFromBounds: true,
       alignChildren: ToggleNode.NONE
     } );
 
     super( toggleNode, {
-      tandem: options.tandem,
+      tandem: tandem,
       isDisposable: false
     } );
   }

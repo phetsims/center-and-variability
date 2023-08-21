@@ -15,17 +15,16 @@ import CardNodeContainer from './CardNodeContainer.js';
 import InfoTitleDescriptionRichText from '../../common/view/InfoTitleDescriptionRichText.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import CardContainerModel from '../model/CardContainerModel.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import NeedAtLeastNKicksText from '../../common/view/NeedAtLeastNKicksText.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class MedianInfoNode extends VBox {
-  public constructor( model: MedianModel, sceneModel: CAVSoccerSceneModel, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
+  public constructor( model: MedianModel, sceneModel: CAVSoccerSceneModel, tandem: Tandem ) {
 
     const hasZeroKicksProperty = DerivedProperty.valueEqualsConstant( sceneModel.numberOfDataPointsProperty, 0 );
     const infoDataValuesNode = new InfoValuesNode( sceneModel );
 
-    const cardContainerModel = new CardContainerModel( model, { parentContext: 'info', tandem: options.tandem } );
+    const cardContainerModel = new CardContainerModel( model, { parentContext: 'info', tandem: tandem } );
     const cardNodeContainer = new CardNodeContainer( cardContainerModel, model.selectedSceneModelProperty.value,
       model.medianVisibleProperty, {
 

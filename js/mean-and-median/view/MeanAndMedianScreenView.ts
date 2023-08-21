@@ -89,9 +89,12 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
     );
     this.backScreenViewLayer.addChild( predictMedianNode );
 
-    const infoDialog = new MeanAndMedianInfoDialog( model, model.sceneModels[ 0 ], this.playAreaNumberLineNode, {
-      tandem: accordionBoxTandem.createTandem( 'infoDialog' )
-    } );
+    const infoDialog = new MeanAndMedianInfoDialog(
+      model,
+      model.sceneModels[ 0 ],
+      this.playAreaNumberLineNode,
+      accordionBoxTandem.createTandem( 'infoDialog' )
+    );
 
     model.infoButtonPressedEmitter.addListener( () => infoDialog.show() );
 

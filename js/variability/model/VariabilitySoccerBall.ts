@@ -7,13 +7,10 @@
  *
  */
 
-import { SoccerBallOptions } from '../../../../soccer-common/js/model/SoccerBall.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import CAVSoccerBall from '../../common/model/CAVSoccerBall.js';
-
-type CAVSoccerBallOptions = EmptySelfOptions & SoccerBallOptions;
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class VariabilitySoccerBall extends CAVSoccerBall {
 
@@ -21,24 +18,24 @@ export default class VariabilitySoccerBall extends CAVSoccerBall {
   public readonly isQ1ObjectProperty: BooleanProperty;
   public readonly isQ3ObjectProperty: BooleanProperty;
 
-  public constructor( isFirstSoccerBall: boolean, options: CAVSoccerBallOptions ) {
+  public constructor( isFirstSoccerBall: boolean, tandem: Tandem ) {
 
-    super( isFirstSoccerBall, options );
+    super( isFirstSoccerBall, tandem );
 
     this.isQ1ObjectProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isQ1ObjectProperty' ),
+      tandem: tandem.createTandem( 'isQ1ObjectProperty' ),
       phetioReadOnly: true,
       phetioFeatured: true
     } );
     this.isQ3ObjectProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isQ3ObjectProperty' ),
+      tandem: tandem.createTandem( 'isQ3ObjectProperty' ),
       phetioReadOnly: true,
       phetioFeatured: true
     } );
   }
 
-  public static override createSoccerBall( isFirstSoccerBall: boolean, options: CAVSoccerBallOptions ): VariabilitySoccerBall {
-    return new VariabilitySoccerBall( isFirstSoccerBall, options );
+  public static override createSoccerBall( isFirstSoccerBall: boolean, tandem: Tandem ): VariabilitySoccerBall {
+    return new VariabilitySoccerBall( isFirstSoccerBall, tandem );
   }
 
   public override reset(): void {

@@ -63,9 +63,7 @@ export default class MedianScreenView extends CAVScreenView {
 
     this.backScreenViewLayer.addChild( predictMedianNode );
 
-    const infoDialog = new MedianInfoDialog( model, model.sceneModels[ 0 ], {
-      tandem: accordionBoxTandem.createTandem( 'infoDialog' )
-    } );
+    const infoDialog = new MedianInfoDialog( model, model.sceneModels[ 0 ], accordionBoxTandem.createTandem( 'infoDialog' ) );
 
     model.infoButtonPressedEmitter.addListener( () => infoDialog.show() );
 

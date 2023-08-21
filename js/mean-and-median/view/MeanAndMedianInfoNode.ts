@@ -9,8 +9,6 @@
 
 import { HBox, Text, VBox } from '../../../../scenery/js/imports.js';
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVConstants from '../../common/CAVConstants.js';
@@ -25,9 +23,10 @@ import InfoTitleDescriptionRichText from '../../common/view/InfoTitleDescription
 import MeanAndMedianInfoPlotNode from './MeanAndMedianInfoPlotNode.js';
 import Utils from '../../../../dot/js/Utils.js';
 import FractionNode from '../../common/view/FractionNode.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class MeanAndMedianInfoNode extends VBox {
-  public constructor( model: MeanAndMedianModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
+  public constructor( model: MeanAndMedianModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, tandem: Tandem ) {
 
     const hasEnoughDataProperty = new DerivedProperty( [ sceneModel.numberOfDataPointsProperty ], numberOfDataPoints => numberOfDataPoints >= 1 );
     const medianInfoValuesNode = new InfoValuesNode( sceneModel );
@@ -71,7 +70,7 @@ export default class MeanAndMedianInfoNode extends VBox {
           maps: {
             value: CAVConstants.STRING_VALUE_NULL_MAP
           },
-          tandem: options.tandem.createTandem( 'medianEqualsValueStringProperty' )
+          tandem: tandem.createTandem( 'medianEqualsValueStringProperty' )
         } ), {
           fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE,
           visibleProperty: hasEnoughDataProperty,
@@ -95,7 +94,7 @@ export default class MeanAndMedianInfoNode extends VBox {
           maps: {
             value: value => value === null ? 'null' : Utils.toFixed( value, 1 )
           },
-          tandem: options.tandem.createTandem( 'meanEqualsValueStringProperty' )
+          tandem: tandem.createTandem( 'meanEqualsValueStringProperty' )
         } ), {
           fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE,
           visibleProperty: hasEnoughDataProperty,

@@ -12,8 +12,6 @@ import { Text, VBox } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import VariabilityModel from '../model/VariabilityModel.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import IQRNode from './IQRNode.js';
@@ -22,9 +20,10 @@ import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js'
 import IQRInfoValuesNode from './IQRInfoValuesNode.js';
 import { PLOT_NODE_TOP_MARGIN } from '../../common/view/CAVPlotNode.js';
 import InfoTitleDescriptionRichText from '../../common/view/InfoTitleDescriptionRichText.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class IQRInfoNode extends VBox {
-  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
+  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, tandem: Tandem ) {
 
     const hasEnoughDataForIQRProperty = new DerivedProperty( [ sceneModel.numberOfDataPointsProperty ], numberOfDataPoints => numberOfDataPoints >= 5 );
 
@@ -44,7 +43,7 @@ export default class IQRInfoNode extends VBox {
             q1: CAVConstants.STRING_VALUE_NULL_MAP,
             q3: CAVConstants.STRING_VALUE_NULL_MAP
           },
-          tandem: options.tandem.createTandem( 'iqrCalculation1StringProperty' )
+          tandem: tandem.createTandem( 'iqrCalculation1StringProperty' )
         } ), {
           fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE,
           visibleProperty: hasEnoughDataForIQRProperty,
@@ -65,7 +64,7 @@ export default class IQRInfoNode extends VBox {
           maps: {
             iqr: CAVConstants.STRING_VALUE_NULL_MAP
           },
-          tandem: options.tandem.createTandem( 'iqrCalculation2StringProperty' )
+          tandem: tandem.createTandem( 'iqrCalculation2StringProperty' )
         } ), {
           fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE,
           visibleProperty: hasEnoughDataForIQRProperty,

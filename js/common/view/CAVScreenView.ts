@@ -156,14 +156,14 @@ export default class CAVScreenView extends ScreenView {
       sceneModel,
       ( kicker, sceneModel ) => this.getKickerImageSets( kicker, sceneModel ),
       modelViewTransform,
-      CAVConstants.PHYSICAL_RANGE, {
+      CAVConstants.PHYSICAL_RANGE,
 
-        // The variability screen has multiple scenes, and we want to connect these to a specific kicker, while the first
-        // two screens have multiple kickers in the same scene.
-        tandem: model.sceneModels.length === 1 ?
-                options.tandem.createTandem1Indexed( CAVConstants.SCENE_VIEW_TANDEM, index ) :
-                options.tandem.createTandem( `sceneKicker${index + 1}View` )
-      } ) );
+      // The variability screen has multiple scenes, and we want to connect these to a specific kicker, while the first
+      // two screens have multiple kickers in the same scene.
+      model.sceneModels.length === 1 ?
+      options.tandem.createTandem1Indexed( CAVConstants.SCENE_VIEW_TANDEM, index ) :
+      options.tandem.createTandem( `sceneKicker${index + 1}View` )
+    ) );
 
     const backLayerToggleNode = new ToggleNode( model.selectedSceneModelProperty, this.sceneViews.map( sceneView => {
         return {

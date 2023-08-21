@@ -7,33 +7,29 @@
  *
  */
 
-import SoccerBall, { SoccerBallOptions } from '../../../../soccer-common/js/model/SoccerBall.js';
+import SoccerBall from '../../../../soccer-common/js/model/SoccerBall.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-
-export type CAVSoccerBallOptions = EmptySelfOptions & SoccerBallOptions;
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class CAVSoccerBall extends SoccerBall {
   public readonly isMedianObjectProperty: BooleanProperty; //REVIEW document
   public readonly isAnimationHighlightVisibleProperty: BooleanProperty;
 
-  public constructor( isFirstSoccerBall: boolean, providedOptions: CAVSoccerBallOptions ) {
+  public constructor( isFirstSoccerBall: boolean, tandem: Tandem ) {
 
-    const options = providedOptions;
-
-    super( isFirstSoccerBall, options );
+    super( isFirstSoccerBall, tandem );
 
     this.isMedianObjectProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'isMedianObjectProperty' ),
+      tandem: tandem.createTandem( 'isMedianObjectProperty' ),
       phetioReadOnly: true,
       phetioFeatured: true
     } );
     this.isAnimationHighlightVisibleProperty = new BooleanProperty( false );
   }
 
-  public static createSoccerBall( isFirstSoccerBall: boolean, options: CAVSoccerBallOptions ): CAVSoccerBall {
-    return new CAVSoccerBall( isFirstSoccerBall, options );
+  public static createSoccerBall( isFirstSoccerBall: boolean, tandem: Tandem ): CAVSoccerBall {
+    return new CAVSoccerBall( isFirstSoccerBall, tandem );
   }
 
   public override reset(): void {

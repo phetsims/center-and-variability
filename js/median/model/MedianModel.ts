@@ -59,9 +59,9 @@ export default class MedianModel extends CAVModel {
       false,
       CAVConstants.PHYSICAL_RANGE,
       CAVSoccerBall.createSoccerBall,
-      preferencesModel.kickerCharacterSetProperty, {
-        tandem: options.tandem.createTandem( 'sceneModel' )
-      } );
+      preferencesModel.kickerCharacterSetProperty,
+      options.tandem.createTandem( 'sceneModel' )
+    );
 
     super( maxKicksProperty, [ sceneModel ], options );
 

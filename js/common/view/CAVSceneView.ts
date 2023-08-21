@@ -18,8 +18,7 @@ import Kicker from '../../../../soccer-common/js/model/Kicker.js';
 import { KickerImageSet } from '../../../../soccer-common/js/view/KickerCharacterSet.js';
 import Range from '../../../../dot/js/Range.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class CAVSceneView extends SoccerSceneView {
 
@@ -28,9 +27,9 @@ export default class CAVSceneView extends SoccerSceneView {
                       getKickerImageSet: ( kicker: Kicker, sceneModel: SoccerSceneModel ) => KickerImageSet[],
                       modelViewTransform: ModelViewTransform2,
                       physicalRange: Range,
-                      options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
+                      tandem: Tandem ) {
 
-    super( model.dragIndicatorModel, model.soccerBallsEnabledProperty, sceneModel, getKickerImageSet, modelViewTransform, physicalRange, options );
+    super( model.dragIndicatorModel, model.soccerBallsEnabledProperty, sceneModel, getKickerImageSet, modelViewTransform, physicalRange, tandem );
 
     const medianHighlightLayer = new MedianHighlightLayer( sceneModel, modelViewTransform, model.isPlayAreaMedianVisibleProperty, {
       visibleProperty: model.isPlayAreaMedianVisibleProperty

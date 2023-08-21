@@ -19,9 +19,8 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import VariabilitySoccerBall from './VariabilitySoccerBall.js';
 import CharacterSet from '../../../../joist/js/preferences/CharacterSet.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import { KickDistributionStrategySpecification } from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class VariabilitySceneModel extends CAVSoccerSceneModel<VariabilitySoccerBall> {
 
@@ -38,7 +37,7 @@ export default class VariabilitySceneModel extends CAVSoccerSceneModel<Variabili
   public readonly variabilityDataMeasuresUpdatedEmitter: Emitter = new Emitter();
 
   public constructor( maxKicksProperty: TReadOnlyProperty<number>, kickDistributionStrategySpecification: KickDistributionStrategySpecification,
-                      regionAndCultureProperty: Property<CharacterSet | null>, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
+                      regionAndCultureProperty: Property<CharacterSet | null>, tandem: Tandem ) {
     super(
       maxKicksProperty,
       CAVConstants.MAX_KICKS_VALUES,
@@ -47,13 +46,13 @@ export default class VariabilitySceneModel extends CAVSoccerSceneModel<Variabili
       CAVConstants.PHYSICAL_RANGE,
       VariabilitySoccerBall.createSoccerBall,
       regionAndCultureProperty,
-      options
+      tandem
     );
 
     this.maxValueProperty = new DerivedProperty( [ this.dataRangeProperty ], dataRange => {
       return dataRange === null ? null : dataRange.max;
     }, {
-      tandem: options.tandem.createTandem( 'maxValueProperty' ),
+      tandem: tandem.createTandem( 'maxValueProperty' ),
       phetioValueType: NullableIO( NumberIO ),
       phetioFeatured: true,
       hasListenerOrderDependencies: true
@@ -62,7 +61,7 @@ export default class VariabilitySceneModel extends CAVSoccerSceneModel<Variabili
     this.minValueProperty = new DerivedProperty( [ this.dataRangeProperty ], dataRange => {
       return dataRange === null ? null : dataRange.min;
     }, {
-      tandem: options.tandem.createTandem( 'minValueProperty' ),
+      tandem: tandem.createTandem( 'minValueProperty' ),
       phetioValueType: NullableIO( NumberIO ),
       phetioFeatured: true,
       hasListenerOrderDependencies: true
@@ -71,21 +70,21 @@ export default class VariabilitySceneModel extends CAVSoccerSceneModel<Variabili
     this.rangeValueProperty = new DerivedProperty( [ this.maxValueProperty, this.minValueProperty ], ( max, min ) => {
       return ( max === null || min === null ) ? null : max - min;
     }, {
-      tandem: options.tandem.createTandem( 'rangeValueProperty' ),
+      tandem: tandem.createTandem( 'rangeValueProperty' ),
       phetioValueType: NullableIO( NumberIO ),
       phetioFeatured: true,
       hasListenerOrderDependencies: true
     } );
 
     this.q1ValueProperty = new Property<number | null>( null, {
-      tandem: options.tandem.createTandem( 'q1ValueProperty' ),
+      tandem: tandem.createTandem( 'q1ValueProperty' ),
       phetioValueType: NullableIO( NumberIO ),
       phetioReadOnly: true,
       phetioFeatured: true,
       hasListenerOrderDependencies: true
     } );
     this.q3ValueProperty = new Property<number | null>( null, {
-      tandem: options.tandem.createTandem( 'q3ValueProperty' ),
+      tandem: tandem.createTandem( 'q3ValueProperty' ),
       phetioValueType: NullableIO( NumberIO ),
       phetioReadOnly: true,
       phetioFeatured: true,
@@ -103,7 +102,7 @@ export default class VariabilitySceneModel extends CAVSoccerSceneModel<Variabili
     } );
 
     this.madValueProperty = new Property<number | null>( null, {
-      tandem: options.tandem.createTandem( 'madValueProperty' ),
+      tandem: tandem.createTandem( 'madValueProperty' ),
       phetioValueType: NullableIO( NumberIO ),
       phetioReadOnly: true,
       phetioFeatured: true,

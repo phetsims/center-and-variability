@@ -12,8 +12,6 @@ import { HBox, Text, VBox } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import VariabilityModel from '../model/VariabilityModel.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import Utils from '../../../../dot/js/Utils.js';
 import CAVConstants from '../../common/CAVConstants.js';
@@ -24,9 +22,10 @@ import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js'
 import { PLOT_NODE_TOP_MARGIN } from '../../common/view/CAVPlotNode.js';
 import InfoTitleDescriptionRichText from '../../common/view/InfoTitleDescriptionRichText.js';
 import FractionNode from '../../common/view/FractionNode.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class MADInfoNode extends VBox {
-  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
+  public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, tandem: Tandem ) {
 
     const hasEnoughDataProperty = new DerivedProperty( [ sceneModel.numberOfDataPointsProperty ], numberOfDataPoints => numberOfDataPoints >= 1 );
 
@@ -77,7 +76,7 @@ export default class MADInfoNode extends VBox {
           // See CAVConstants.STRING_VALUE_NULL_MAP
           mad: new DerivedProperty( [ sceneModel.madValueProperty ], madValue => madValue === null ? 'null' : Utils.toFixed( madValue, 1 ) )
         }, {
-          tandem: options.tandem.createTandem( 'madCalculationStringProperty' )
+          tandem: tandem.createTandem( 'madCalculationStringProperty' )
         } ), {
           fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE,
           visibleProperty: hasEnoughDataProperty,
@@ -88,7 +87,7 @@ export default class MADInfoNode extends VBox {
         new MADNode( model, sceneModel, playAreaNumberLineNode, model.isDataPointLayerVisibleProperty, {
           parentContext: 'info',
           layoutOptions: { topMargin: PLOT_NODE_TOP_MARGIN },
-          tandem: options.tandem.createTandem( 'madNode' )
+          tandem: tandem.createTandem( 'madNode' )
         } )
       ],
       isDisposable: false
