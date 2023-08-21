@@ -20,7 +20,7 @@ import CAVConstants from '../../common/CAVConstants.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import CardNode, { cardDropClip, cardPickUpSoundClip } from './CardNode.js';
+import CardNode, { cardDropClip, cardPickUpSoundClip, PICK_UP_DELTA_X, PICK_UP_DELTA_Y } from './CardNode.js';
 import Utils from '../../../../dot/js/Utils.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import { Shape } from '../../../../kite/js/imports.js';
@@ -156,18 +156,18 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
     model.dragIndicationCardProperty.lazyLink( ( newCard, oldCard ) => {
 
-
       if ( oldCard ) {
         const oldCardNode = this.cardMap.get( oldCard )!;
-        oldCardNode.mouseArea = oldCardNode.localBounds;
-        oldCardNode.touchArea = oldCardNode.localBounds;
+        oldCardNode.restorePointerAreas();
       }
 
       if ( newCard ) {
         const newCardNode = this.cardMap.get( newCard )!;
 
+        const bounds = newCardNode.getLocalPointerAreaShape();
+
         // Expand the card's touch + mouse area to cover the hand. Much simpler than adding a DragListener.createForwardingListener
-        const newArea = new Bounds2( newCardNode.localBounds.minX, newCardNode.localBounds.minY, newCardNode.localBounds.maxX, newCardNode.localBounds.maxY + 30 );
+        const newArea = new Bounds2( bounds.minX, bounds.minY, bounds.maxX, bounds.maxY + 30 );
         newCardNode.mouseArea = newArea;
         newCardNode.touchArea = newArea;
       }

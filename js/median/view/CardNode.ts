@@ -23,6 +23,8 @@ import CAVConstants from '../../common/CAVConstants.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import Range from '../../../../dot/js/Range.js';
+import Matrix3 from '../../../../dot/js/Matrix3.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 
 type SelfOptions = EmptySelfOptions;
 type ParentOptions = WithRequired<NodeOptions, 'tandem'>;
@@ -144,6 +146,17 @@ export default class CardNode extends Node {
     this.soccerBall.dragStartedEmitter.addListener( () => this.moveToFront() );
 
     this.addLinkedElement( model );
+
+    this.restorePointerAreas();
+  }
+
+  public getLocalPointerAreaShape(): Bounds2 {
+    return this.localBounds.transformed( Matrix3.translation( -PICK_UP_DELTA_X / 2, -PICK_UP_DELTA_Y / 2 ) ).dilated( 3 );
+  }
+
+  public restorePointerAreas(): void {
+    this.mouseArea = this.getLocalPointerAreaShape();
+    this.touchArea = this.mouseArea;
   }
 }
 
