@@ -62,7 +62,7 @@ In order to avoid performance problems and spurious intermediate values in the V
 
 ## The Variability Measurements (range, MAD, IQR)
 
-The Variability Measurements (range, MAD, IQR) have subtle variations when shown in the accordion box vs in the info dialog, so that is managed with a context option.
+The Variability Measurements (range, MAD, IQR) have subtle variations when shown in the accordion box vs in the info dialog. This is managed with a context option.
 
 ## Sound
 
