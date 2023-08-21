@@ -65,7 +65,9 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
   // Keyboard Input properties:
   public readonly focusedCardProperty: Property<CardModel | null> = new Property<CardModel | null>( null );
   public readonly isCardGrabbedProperty = new BooleanProperty( false );
-  public readonly isKeyboardArrowVisibleProperty: TReadOnlyProperty<boolean>;
+  public readonly isKeyboardDragArrowVisibleProperty: TReadOnlyProperty<boolean>;
+  public readonly isKeyboardSelectArrowVisibleProperty: TReadOnlyProperty<boolean>;
+  public readonly hasSelectedDifferentCardProperty = new BooleanProperty( false );
   public readonly hasKeyboardFocusProperty = new BooleanProperty( false );
 
   public constructor( medianModel: MedianModel, providedOptions: InteractiveCardContainerModelOptions ) {
@@ -85,9 +87,16 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
       phetioDocumentation: 'This is for PhET-iO internal use only.'
     } );
 
-    this.isKeyboardArrowVisibleProperty = new DerivedProperty( [ this.focusedCardProperty, this.hasKeyboardMovedCardProperty, this.hasGrabbedCardProperty, this.isCardGrabbedProperty ],
-      ( focusedCard, hasKeyboardMovedCard, hasGrabbedCard, isCardGrabbed ) => {
-        return focusedCard !== null && !hasKeyboardMovedCard && hasGrabbedCard && isCardGrabbed;
+    this.isKeyboardDragArrowVisibleProperty = new DerivedProperty( [ this.focusedCardProperty, this.hasKeyboardMovedCardProperty, this.hasGrabbedCardProperty,
+        this.isCardGrabbedProperty, this.hasKeyboardFocusProperty ],
+      ( focusedCard, hasKeyboardMovedCard, hasGrabbedCard, isCardGrabbed, hasKeyboardFocus ) => {
+        return focusedCard !== null && !hasKeyboardMovedCard && hasGrabbedCard && isCardGrabbed && hasKeyboardFocus;
+      } );
+
+    this.isKeyboardSelectArrowVisibleProperty = new DerivedProperty( [ this.focusedCardProperty, this.isCardGrabbedProperty,
+        this.hasSelectedDifferentCardProperty, this.hasKeyboardFocusProperty ],
+      ( focusedCard, isCardGrabbed, hasSelectedDifferentCard, hasKeyboardFocus ) => {
+        return focusedCard !== null && !isCardGrabbed && !hasSelectedDifferentCard && hasKeyboardFocus;
       } );
 
     this.cardCellsChangedEmitter.addListener( () => {
@@ -120,6 +129,7 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
       this.focusedCardProperty.reset();
       this.isCardGrabbedProperty.reset();
       this.hasGrabbedCardProperty.reset();
+      this.hasSelectedDifferentCardProperty.reset();
     } );
   }
 

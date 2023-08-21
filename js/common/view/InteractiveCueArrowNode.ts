@@ -23,7 +23,7 @@ type SelfOptions = {
 
 type DragIndicatorArrowNodeOptions = SelfOptions & StrictOmit<HBoxOptions, 'children'>;
 
-export default class DragIndicatorArrowNode extends HBox {
+export default class InteractiveCueArrowNode extends HBox {
 
   public constructor( providedOptions: DragIndicatorArrowNodeOptions ) {
 
@@ -66,4 +66,4 @@ export default class DragIndicatorArrowNode extends HBox {
   }
 }
 
-centerAndVariability.register( 'DragIndicatorArrowNode', DragIndicatorArrowNode );
+centerAndVariability.register( 'InteractiveCueArrowNode', InteractiveCueArrowNode );

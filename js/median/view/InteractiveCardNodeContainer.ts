@@ -12,7 +12,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import InteractiveCardContainerModel from '../model/InteractiveCardContainerModel.js';
 import Property from '../../../../axon/js/Property.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
-import DragIndicatorArrowNode from '../../common/view/DragIndicatorArrowNode.js';
+import InteractiveCueArrowNode from '../../common/view/InteractiveCueArrowNode.js';
 import { HighlightFromNode, HighlightPath, Image, KeyboardListener, Node, Path } from '../../../../scenery/js/imports.js';
 import dragIndicatorHand_png from '../../../images/dragIndicatorHand_png.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -20,7 +20,7 @@ import CAVConstants from '../../common/CAVConstants.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import CardNode, { cardDropClip, cardPickUpSoundClip } from './CardNode.js';
+import CardNode, { cardDropClip, cardPickUpSoundClip, PICK_UP_DELTA_X } from './CardNode.js';
 import Utils from '../../../../dot/js/Utils.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import { Shape } from '../../../../kite/js/imports.js';
@@ -75,7 +75,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       } );
     } );
 
-    const mouseArrowNode = new DragIndicatorArrowNode( {
+    const mouseArrowNode = new InteractiveCueArrowNode( {
       doubleHead: false,
       dashWidth: 2,
       dashHeight: 1.8,
@@ -98,11 +98,11 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       ( hasGrabbedCard, hasKeyboardFocus ) => !hasGrabbedCard && hasKeyboardFocus );
 
     const grabReleaseCueNode = new GrabReleaseCueNode( {
-      top: CAVConstants.CARD_DIMENSION + FOCUS_HIGHLIGHT_Y_MARGIN,
+      top: CAVConstants.CARD_DIMENSION + FOCUS_HIGHLIGHT_Y_MARGIN + 4,
       visibleProperty: isGrabReleaseVisibleProperty
     } );
 
-    const keyboardArrowNode = new DragIndicatorArrowNode( {
+    const createKeyboardArrowNode = ( visibleProperty: TReadOnlyProperty<boolean> ) => new InteractiveCueArrowNode( {
         doubleHead: true,
         dashWidth: 3.5,
         dashHeight: 2.8,
@@ -112,11 +112,16 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
           triangleWidth: 12,
           triangleHeight: 11
         },
-        visibleProperty: model.isKeyboardArrowVisibleProperty
+        visibleProperty: visibleProperty
       }
     );
 
-    this.addChild( keyboardArrowNode );
+    const keyboardDragArrowNode = createKeyboardArrowNode( model.isKeyboardDragArrowVisibleProperty );
+    const keyboardSelectArrowNode = createKeyboardArrowNode( model.isKeyboardSelectArrowVisibleProperty );
+
+    this.addChild( keyboardDragArrowNode );
+    this.addChild( keyboardSelectArrowNode );
+
 
     const isDragIndicatorVisibleProperty = new DerivedProperty( [ this.inputEnabledProperty, model.hasKeyboardFocusProperty ],
       ( inputEnabled, hasKeyboardFocus ) => inputEnabled && !hasKeyboardFocus );
@@ -265,7 +270,8 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
           const leftEdgeOfFocusedCard = model.getCardPositionX( focusedCardNode.model.indexProperty.value! );
 
           //TODO: Check the plus 1 magic number, see: https://github.com/phetsims/center-and-variability/issues/433
-          keyboardArrowNode.centerBottom = new Vector2( leftEdgeOfFocusedCard + CAVConstants.CARD_DIMENSION / 2 + 1, focusForSelectedCard.bottom + 6 );
+          keyboardDragArrowNode.centerBottom = new Vector2( leftEdgeOfFocusedCard + CAVConstants.CARD_DIMENSION / 2 + 1, focusForSelectedCard.bottom + 6 );
+          keyboardSelectArrowNode.centerBottom = new Vector2( leftEdgeOfFocusedCard + CAVConstants.CARD_DIMENSION / 2 - PICK_UP_DELTA_X + 1, focusForSelectedCard.bottom + 10 );
         }
         else {
           this.setFocusHighlight( 'invisible' );
@@ -339,6 +345,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
               const currentIndex = activeCardNodes.indexOf( focusedCardNode );
               const nextIndex = Utils.clamp( currentIndex + delta, 0, numberOfActiveCards - 1 );
               model.focusedCardProperty.value = activeCardNodes[ nextIndex ].model;
+              model.hasSelectedDifferentCardProperty.value = true;
             }
           }
           else if ( [ 'pageUp', 'pageDown' ].includes( keysPressed ) && isCardGrabbed ) {

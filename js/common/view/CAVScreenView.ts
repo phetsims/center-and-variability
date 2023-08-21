@@ -48,7 +48,7 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import KickerCharacterSets from '../../../../soccer-common/js/view/KickerCharacterSets.js';
 import dragIndicatorHand_png from '../../../images/dragIndicatorHand_png.js';
-import DragIndicatorArrowNode from './DragIndicatorArrowNode.js';
+import InteractiveCueArrowNode from './InteractiveCueArrowNode.js';
 import SoccerSceneModel from '../../../../soccer-common/js/model/SoccerSceneModel.js';
 
 type SelfOptions = {
@@ -249,7 +249,7 @@ export default class CAVScreenView extends ScreenView {
       }
     } );
 
-    const dragIndicatorArrowNode = new DragIndicatorArrowNode( {
+    const dragIndicatorArrowNode = new InteractiveCueArrowNode( {
       doubleHead: true,
       numberOfDashes: 2,
       visibleProperty: model.dragIndicatorModel.isDragIndicatorVisibleProperty
