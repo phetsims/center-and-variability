@@ -10,7 +10,7 @@
   - [Measures of Center & Spread](#measures-of-center--spread)
     - [Workarounds for Abundant and Inconsistent Intermediate Values in Axon Callbacks](#workarounds-for-abundant-and-inconsistent-intermediate-values-in-axon-callbacks)
 - [Main Architecture & Scenes](#main-architecture--scenes)
-- [The Variability Measurements (range, mad, iqr)](#the-variability-measurements-range-mad-iqr)
+- [The Variability Measurements (range, MAD, IQR)](#the-variability-measurements-range-mad-iqr)
 - [Sound](#sound)
 - [Alternative Input](#alternative-input)
 - [PhET-iO](#phet-io)
@@ -33,11 +33,11 @@ In addition to this document, you are encouraged to read:
 
 ### Model-View Transforms
 
-This simulation makes use of a model-view transforms to map model coordinates (horizontally: meters, vertically: number of data points) to view coordinates in the soccer area [CAVScreenView.ts](../js/common/view/CAVScreenView.ts), and in the charts which are shown in the accordion box and info dialogs [CAVConstants.ts](../js/common/CAVConstants.ts).
+This simulation makes use of a model-view transform to map model coordinates (horizontally: meters, vertically: number of data points) to view coordinates in the soccer area [CAVScreenView.ts](https://github.com/phetsims/center-and-variability/blob/main/js/common/view/CAVScreenView.ts), and in the charts which are shown in the accordion box and info dialogs [CAVConstants.ts](../js/common/CAVConstants.ts).
 
 ### Query Parameters
 
-Query parameters are used to enable sim-specific features. Sim-specific query parameters are documented in `CAVQueryParameters.ts`.
+Query parameters are used to enable sim-specific features. Sim-specific query parameters are documented in [CAVQueryParameters.ts](https://github.com/phetsims/center-and-variability/blob/main/js/common/view/CAVQueryParameters.ts.
 
 ### Memory Management
 
@@ -51,24 +51,24 @@ The mathematical definitions of the statistical measures of center and spread ar
 
 ### Workarounds for Abundant and Inconsistent Intermediate Values in Axon Callbacks
 
-In order to avoid performance problems and spurious intermediate values in the variability screen, measures are computed as a batch then signified via `updateDataMeasures` and `variabilityDataMeasuresUpdatedEmitter`. Likewise, `intervalToolDeltaStableProperty` works around an inconsistent intermediate values.
+In order to avoid performance problems and spurious intermediate values in the Variability screen, measures are computed as a batch, then signified via `updateDataMeasures` and `variabilityDataMeasuresUpdatedEmitter`. Likewise, `intervalToolDeltaStableProperty` works around an inconsistent intermediate values.
 
 ## Main Architecture & Scenes
 
 - Each CAVModel has 1 or more CAVSceneModel. The scene defines the soccer ball data and the soccer players. Other settings such as whether checkboxes are selected are stored in the CAVModel. There is a similar pattern for the views.
-- The simulation depends on soccer-common, so that the soccer context can be reused in other sims (including Mean Share and Balance)
+- The simulation depends on soccer-common, so that the soccer context can be reused in other sims (including _Mean Share and Balance_).
 - This sim uses ToggleNode in many places to switch between scenes and variability measures.
 - The code that renders the representations (charts/cards) in the accordion box also renders the charts in the info dialogs.
 
-## The Variability Measurements (range, mad, iqr)
+## The Variability Measurements (range, MAD, IQR)
 
-The Variability Measurements (range, mad, iqr) have subtle variations when shown in the accordion box vs in the info dialog, so that is managed with a context option.
+The Variability Measurements (range, MAD, IQR) have subtle variations when shown in the accordion box vs in the info dialog, so that is managed with a context option.
 
 ## Sound
 
-Each position on the number line is associated with a sound, see [NumberTone.ts](../js/common/model/NumberTone.ts). There are variation based on whether the user is focusing on values, means, or medians.
+Each position on the number line is associated with a sound, see [NumberTone.ts](../js/common/model/NumberTone.ts). There are variations based on whether the user is focusing on values, means, or medians.
 
-On the median screen, the cards play sounds based on movement. The median animation in the accordion box plays a sound while animating, see [MedianAnimationTone.ts](../js/median/view/MedianAnimationTone.ts).
+On the Median screen, the cards play sounds based on movement. The median animation in the accordion box plays a sound while animating, see [MedianAnimationTone.ts](../js/median/view/MedianAnimationTone.ts).
 
 The interval tool generates a continuous sound while the user is dragging the interval or its handles.
 
@@ -86,10 +86,10 @@ Setting focus for tools is done via tab traversal. This sim does not use `GrabDr
 
 This sim uses "group" interaction for the cards and for the soccer balls, where the user first selects an object via the arrow keys, then presses enter/spacebar to grab the object.
 
-1-d draggable items such as the prediction arrows, and interval tool handles are implemented as AccessibleSlider.
+1-D draggable items, such as the prediction arrows and interval tool handles, are implemented as `AccessibleSlider`.
 
 ## PhET-iO
 
 The PhET-iO instrumentation of this sim is relatively straightforward. As described in [Memory Management](#memory-management), everything in this sim is created at startup, and exists for the lifetime of the sim. So there is no sim-specific use of PhetioGroup or PhetioCapsule. See examples.md for examples of how to use the PhET-iO API.
 
-See also soccer-common/implementation-notes.md
+See also [soccer-common/implementation-notes.md](https://github.com/phetsims/soccer-common/blob/main/doc/implementation-notes.md).
