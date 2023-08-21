@@ -17,6 +17,7 @@
 
 import { Color, ProfileColorProperty } from '../../../scenery/js/imports.js';
 import centerAndVariability from '../centerAndVariability.js';
+import PhetColorScheme from '../../../scenery-phet/js/PhetColorScheme.js';
 
 const CAVColors = {
 
@@ -64,7 +65,7 @@ const CAVColors = {
   intervalToolIconRectangleFillColorProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolIconRectangleFill', { default: '#fef8ab' } ),
   intervalToolIconShadedSphereMainColorProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolIconShadedSphereMainColor', { default: '#fdf47c' } ),
   intervalToolFillProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolFill', { default: Color.toColor( '#fefccf' ).withAlpha( 0.6 ) } ),
-  intervalToolStrokeProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolStroke', { default: '#ffed29' } ),
+  intervalToolStrokeProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolStroke', { default: PhetColorScheme.PHET_LOGO_YELLOW } ),
 
   // On the Variability screen, there is a prediction tool labeled "Pointer". It is an arrow that the user can use to predict
   // any statistical measure or boundary of an interval.
