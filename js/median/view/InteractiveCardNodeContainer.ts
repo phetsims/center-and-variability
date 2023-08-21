@@ -77,13 +77,13 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
     const mouseArrowNode = new DragIndicatorArrowNode( {
       doubleHead: false,
-      dashWidth: 1.2,
-      dashHeight: 1.1,
+      dashWidth: 2,
+      dashHeight: 1.8,
       numberOfDashes: 3,
-      spacing: 1.1,
+      spacing: 1.5,
       triangleNodeOptions: {
-        triangleWidth: 3.9,
-        triangleHeight: 3.5
+        triangleWidth: 5,
+        triangleHeight: 4.7
       }
     } );
 
@@ -128,7 +128,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       ],
       opacity: 0,
       pickable: false,
-      centerTop: new Vector2( 0.5 * CAVConstants.CARD_DIMENSION, CAVConstants.CARD_DIMENSION - 8 ),
+      centerTop: new Vector2( 0.5 * CAVConstants.CARD_DIMENSION, CAVConstants.CARD_DIMENSION - 9 ),
       visibleProperty: isDragIndicatorVisibleProperty
     } );
 
