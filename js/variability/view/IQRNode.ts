@@ -23,6 +23,7 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
 import IntervalBarNode from '../../common/view/IntervalBarNode.js';
 import TProperty from '../../../../axon/js/TProperty.js';
+import NeedAtLeastNKicksText from '../../common/view/NeedAtLeastNKicksText.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
@@ -38,18 +39,12 @@ export default class IQRNode extends CAVPlotNode {
 
     super( model, sceneModel, playAreaNumberLineNode, isDataPointLayerVisibleProperty, options );
 
-    const needAtLeastFiveKicksText = new Text( CenterAndVariabilityStrings.needAtLeastFiveKicksStringProperty, {
-      fontSize: 18,
-      maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH
-    } );
+    const needAtLeastFiveKicksText = new NeedAtLeastNKicksText( CenterAndVariabilityStrings.needAtLeastFiveKicksStringProperty );
     ManualConstraint.create( this, [ needAtLeastFiveKicksText ], () => {
       needAtLeastFiveKicksText.center = this.modelViewTransform.modelToViewXY( CAVConstants.PHYSICAL_RANGE.getCenter(),
         MIN_KICKS_TEXT_OFFSET );
     } );
     this.addChild( needAtLeastFiveKicksText );
-
-    // This adds a top margin to the text, separating it from the info dialog subheading
-    // needAtLeastFiveKicksText.localBounds = needAtLeastFiveKicksText.localBounds.dilatedY( MIN_KICKS_TEXT_TOP_MARGIN );
 
     const BOX_WHISKER_OFFSET_Y = 4;
     const BOX_HEIGHT = 25;

@@ -15,12 +15,13 @@ import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
 import { SoccerBallPhase } from '../../../../soccer-common/js/model/SoccerBallPhase.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
-import { ManualConstraint, Text } from '../../../../scenery/js/imports.js';
+import { ManualConstraint } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import TProperty from '../../../../axon/js/TProperty.js';
+import NeedAtLeastNKicksText from '../../common/view/NeedAtLeastNKicksText.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
@@ -38,10 +39,7 @@ export default class MeanAndMedianPlotNode extends CAVPlotNode {
     const options = optionize<MeanAndMedianPlotNodeOptions, SelfOptions, CAVPlotNodeOptions>()( {}, providedOptions );
     super( model, sceneModel, playAreaNumberLineNode, isDataPointLayerVisibleProperty, options );
 
-    const needAtLeastOneKickText = new Text( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {
-      fontSize: 18,
-      maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH
-    } );
+    const needAtLeastOneKickText = new NeedAtLeastNKicksText( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty );
     ManualConstraint.create( this, [ needAtLeastOneKickText ], textProxy => {
       textProxy.center = this.modelViewTransform.modelToViewXY( CAVConstants.PHYSICAL_RANGE.getCenter(), MIN_KICKS_TEXT_OFFSET );
     } );

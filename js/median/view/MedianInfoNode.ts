@@ -5,7 +5,7 @@
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-import { Text, VBox } from '../../../../scenery/js/imports.js';
+import { VBox } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import MedianModel from '../model/MedianModel.js';
@@ -13,11 +13,11 @@ import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import InfoValuesNode from '../../common/view/InfoValuesNode.js';
 import CardNodeContainer from './CardNodeContainer.js';
 import InfoTitleDescriptionRichText from '../../common/view/InfoTitleDescriptionRichText.js';
-import CAVConstants from '../../common/CAVConstants.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import CardContainerModel from '../model/CardContainerModel.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import NeedAtLeastNKicksText from '../../common/view/NeedAtLeastNKicksText.js';
 
 export default class MedianInfoNode extends VBox {
   public constructor( model: MedianModel, sceneModel: CAVSoccerSceneModel, options: PickRequired<PhetioObjectOptions, 'tandem'> ) {
@@ -44,9 +44,7 @@ export default class MedianInfoNode extends VBox {
       excludeInvisibleChildrenFromBounds: true
     } );
 
-    const needAtLeastOneKickText = new Text( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {
-      fontSize: 18,
-      maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
+    const needAtLeastOneKickText = new NeedAtLeastNKicksText( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {
       visibleProperty: hasZeroKicksProperty
     } );
 

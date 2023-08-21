@@ -21,6 +21,7 @@ import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js'
 import SoccerBall from '../../../../soccer-common/js/model/SoccerBall.js';
 import IntervalBarNode from '../../common/view/IntervalBarNode.js';
 import TProperty from '../../../../axon/js/TProperty.js';
+import NeedAtLeastNKicksText from '../../common/view/NeedAtLeastNKicksText.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
@@ -36,10 +37,7 @@ export default class RangeNode extends CAVPlotNode {
 
     super( model, sceneModel, playAreaNumberLineNode, isDataPointLayerVisibleProperty, options );
 
-    const needAtLeastOneKickText = new Text( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {
-      fontSize: 18,
-      maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH
-    } );
+    const needAtLeastOneKickText = new NeedAtLeastNKicksText( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty );
 
     ManualConstraint.create( this, [ needAtLeastOneKickText ], () => {
       needAtLeastOneKickText.center = this.modelViewTransform.modelToViewXY( CAVConstants.PHYSICAL_RANGE.getCenter(), MIN_KICKS_TEXT_OFFSET );

@@ -24,6 +24,7 @@ import IntervalBarNode from '../../common/view/IntervalBarNode.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import TProperty from '../../../../axon/js/TProperty.js';
+import NeedAtLeastNKicksText from '../../common/view/NeedAtLeastNKicksText.js';
 
 type SelfOptions = {
   parentContext: 'accordion' | 'info';
@@ -39,10 +40,7 @@ export default class MADNode extends CAVPlotNode {
     }, providedOptions );
     super( model, sceneModel, playAreaNumberLineNode, isDataPointLayerVisibleProperty, options );
 
-    const needAtLeastOneKickText = new Text( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {
-      fontSize: 18,
-      maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH
-    } );
+    const needAtLeastOneKickText = new NeedAtLeastNKicksText( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty );
     ManualConstraint.create( this, [ needAtLeastOneKickText ], textProxy => {
       textProxy.center = this.modelViewTransform.modelToViewXY( CAVConstants.PHYSICAL_RANGE.getCenter(), MIN_KICKS_TEXT_OFFSET );
     } );
