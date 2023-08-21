@@ -65,6 +65,7 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
   // Keyboard Input properties:
   public readonly focusedCardProperty: Property<CardModel | null> = new Property<CardModel | null>( null );
   public readonly isCardGrabbedProperty = new BooleanProperty( false );
+  public readonly isGrabReleaseVisibleProperty: TReadOnlyProperty<boolean>;
   public readonly isKeyboardDragArrowVisibleProperty: TReadOnlyProperty<boolean>;
   public readonly isKeyboardSelectArrowVisibleProperty: TReadOnlyProperty<boolean>;
   public readonly hasSelectedDifferentCardProperty = new BooleanProperty( false );
@@ -97,6 +98,11 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
         this.hasSelectedDifferentCardProperty, this.hasKeyboardFocusProperty ],
       ( focusedCard, isCardGrabbed, hasSelectedDifferentCard, hasKeyboardFocus ) => {
         return focusedCard !== null && !isCardGrabbed && !hasSelectedDifferentCard && hasKeyboardFocus;
+      } );
+
+    this.isGrabReleaseVisibleProperty = new DerivedProperty( [ this.focusedCardProperty, this.hasGrabbedCardProperty, this.hasKeyboardFocusProperty ],
+      ( focusedCard, hasGrabbedCard, hasKeyboardFocus ) => {
+        return focusedCard !== null && !hasGrabbedCard && hasKeyboardFocus;
       } );
 
     this.cardCellsChangedEmitter.addListener( () => {

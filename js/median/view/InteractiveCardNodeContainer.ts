@@ -94,12 +94,9 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       innerLineWidth: HighlightPath.GROUP_INNER_LINE_WIDTH
     } );
 
-    const isGrabReleaseVisibleProperty = new DerivedProperty( [ model.hasGrabbedCardProperty, model.hasKeyboardFocusProperty ],
-      ( hasGrabbedCard, hasKeyboardFocus ) => !hasGrabbedCard && hasKeyboardFocus );
-
     const grabReleaseCueNode = new GrabReleaseCueNode( {
       top: CAVConstants.CARD_DIMENSION + FOCUS_HIGHLIGHT_Y_MARGIN + 4,
-      visibleProperty: isGrabReleaseVisibleProperty
+      visibleProperty: model.isGrabReleaseVisibleProperty
     } );
 
     const createKeyboardArrowNode = ( visibleProperty: TReadOnlyProperty<boolean> ) => new InteractiveCueArrowNode( {
@@ -231,9 +228,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
         if ( model.focusedCardProperty.value === null && activeCardNodes.length > 0 ) {
           model.focusedCardProperty.value = activeCardNodes[ 0 ].model;
         }
-        if ( activeCardNodes.length > 1 ) {
-          model.hasKeyboardFocusProperty.value = true;
-        }
+        model.hasKeyboardFocusProperty.value = true;
       },
       blur: () => {
         model.isCardGrabbedProperty.value = false;
