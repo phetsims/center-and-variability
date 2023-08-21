@@ -1,7 +1,8 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Shows the values in the IQR (interquartile) info dialog, with an arrow over the median and blue highlight over q1 and q3.
+ * Shows the values in the IQR (interquartile range) info dialog, with an arrow over the median and blue highlight
+ * over q1 and q3.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
