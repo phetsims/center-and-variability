@@ -7,7 +7,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import SoccerObjectNode, { CAVObjectNodeOptions } from '../../../../soccer-common/js/view/SoccerObjectNode.js';
+import SoccerObjectNode, { SoccerObjectNodeOptions } from '../../../../soccer-common/js/view/SoccerObjectNode.js';
 import soccerCommon from '../../../../soccer-common/js/soccerCommon.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import CAVObjectType from '../model/CAVObjectType.js';
@@ -30,7 +30,7 @@ type SelfOptions = {
   isMeanAndMedianInfoNode?: boolean;
 };
 
-type DataPointNodeOptions = StrictOmit<CAVObjectNodeOptions, 'tandem'> & SelfOptions;
+type DataPointNodeOptions = StrictOmit<SoccerObjectNodeOptions, 'tandem'> & SelfOptions;
 
 export default class DataPointNode extends SoccerObjectNode {
 
@@ -49,7 +49,7 @@ export default class DataPointNode extends SoccerObjectNode {
       translationProperty.value = modelViewTransform.modelToViewPosition( scaledPosition );
     };
 
-    const options = optionize<DataPointNodeOptions, SelfOptions, CAVObjectNodeOptions>()( {
+    const options = optionize<DataPointNodeOptions, SelfOptions, SoccerObjectNodeOptions>()( {
       translationStrategy: translationStrategy,
       isMeanAndMedianInfoNode: false,
 
