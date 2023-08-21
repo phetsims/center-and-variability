@@ -37,7 +37,7 @@ This simulation makes use of a model-view transform to map model coordinates (ho
 
 ### Query Parameters
 
-Query parameters are used to enable sim-specific features. Sim-specific query parameters are documented in [CAVQueryParameters.ts](https://github.com/phetsims/center-and-variability/blob/main/js/common/view/CAVQueryParameters.ts.
+Query parameters are used to enable sim-specific features. Sim-specific query parameters are documented in [CAVQueryParameters.ts](https://github.com/phetsims/center-and-variability/blob/main/js/common/view/CAVQueryParameters.ts).
 
 ### Memory Management
 
