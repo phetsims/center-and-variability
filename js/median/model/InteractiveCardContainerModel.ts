@@ -59,16 +59,26 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
   public readonly hasDraggedCardProperty: TReadOnlyProperty<boolean>;
   public readonly dragIndicationCardProperty: Property<CardModel | null>;
   public readonly totalDragDistanceProperty: Property<number>;
-  public readonly hasKeyboardMovedCardProperty = new BooleanProperty( false );
-  public readonly hasGrabbedCardProperty = new BooleanProperty( false );
 
-  // Keyboard Input properties:
+
+  // KEYBOARD INPUT PROPERTIES:
+  // The card which currently has focus. Is part of what controls highlight visibility among other things.
   public readonly focusedCardProperty: Property<CardModel | null> = new Property<CardModel | null>( null );
+
+  // Tracks when a card is currently grabbed via keyboard input.
   public readonly isCardGrabbedProperty = new BooleanProperty( false );
+
+  // Visible properties for keyboard hints
   public readonly isGrabReleaseVisibleProperty: TReadOnlyProperty<boolean>;
   public readonly isKeyboardDragArrowVisibleProperty: TReadOnlyProperty<boolean>;
   public readonly isKeyboardSelectArrowVisibleProperty: TReadOnlyProperty<boolean>;
+
+  // Properties that track if a certain action have ever been performed vai keyboard input.
+  public readonly hasKeyboardMovedCardProperty = new BooleanProperty( false );
+  public readonly hasGrabbedCardProperty = new BooleanProperty( false );
   public readonly hasSelectedDifferentCardProperty = new BooleanProperty( false );
+
+  // Property that is triggered via focus and blur events in the InteractiveCardNodeContainer
   public readonly hasKeyboardFocusProperty = new BooleanProperty( false );
 
   public constructor( medianModel: MedianModel, providedOptions: InteractiveCardContainerModelOptions ) {
