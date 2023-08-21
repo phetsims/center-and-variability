@@ -30,7 +30,6 @@ import GrabReleaseCueNode from '../../../../scenery-phet/js/accessibility/nodes/
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import CelebrationNode from './CelebrationNode.js';
 
-
 const FOCUS_HIGHLIGHT_Y_MARGIN = CAVConstants.CARD_SPACING + 3;
 
 export default class InteractiveCardNodeContainer extends CardNodeContainer {
