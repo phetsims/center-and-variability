@@ -255,11 +255,6 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       }
     } );
 
-    const hitRect = new Path( null, { fill: '#aaaa00', opacity: 0 } );
-    this.addChild( hitRect );
-    hitRect.moveToBack();
-
-
     Multilink.multilink( [ focusedCardNodeProperty, model.isCardGrabbedProperty ], ( focusedCardNode, isCardGrabbed ) => {
         if ( focusedCardNode ) {
 
@@ -369,8 +364,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
           else {
 
             // We cleared the 'focused' card because we were using mouse input - start over with
-            // keyboard interaction and focus the first card
-            // TODO: Only do this for certain keys?, see: https://github.com/phetsims/center-and-variability/issues/460
+            // keyboard interaction and focus the first card.
             this.cardNodes.forEach( cardNode => {
               cardNode.model.isDraggingProperty.value = false;
             } );
@@ -387,11 +381,15 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
     focusHighlightPath.addChild( grabReleaseCueNode );
 
+    const highlightRectangle = new Path( null );
+    this.addChild( highlightRectangle );
+    highlightRectangle.moveToBack();
+
     focusHighlightWidthProperty.link( focusHighlightWidth => {
       const marginX = 7;
       const focusRect = Shape.rect( -marginX, -FOCUS_HIGHLIGHT_Y_MARGIN, focusHighlightWidth + 2 * marginX, CAVConstants.CARD_DIMENSION + 2 * FOCUS_HIGHLIGHT_Y_MARGIN );
       focusHighlightPath.setShape( focusRect );
-      hitRect.setShape( focusRect );
+      highlightRectangle.setShape( focusRect );
       const cueNodeWidth = grabReleaseCueNode.width;
       grabReleaseCueNode.centerX = Utils.clamp( focusRect.bounds.centerX, cueNodeWidth / 2, this.width - cueNodeWidth / 2 );
     } );
