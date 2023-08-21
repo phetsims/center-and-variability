@@ -23,6 +23,10 @@ const CAVQueryParameters = QueryStringMachine.getAll( {
     defaultValue: 'linePlot',
     public: true
   },
+  showOutliers: {
+    type: 'flag',
+    public: true
+  },
   cardMovementSoundPlaybackRate: {
     type: 'number',
     defaultValue: 1.5

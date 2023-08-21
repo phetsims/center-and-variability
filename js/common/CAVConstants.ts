@@ -136,7 +136,7 @@ export const MAX_KICKS_PROPERTY = new NumberProperty( CAVQueryParameters.maxKick
   phetioFeatured: true
 } );
 
-export const SHOW_OUTLIERS_PROPERTY = new BooleanProperty( false, {
+export const SHOW_OUTLIERS_PROPERTY = new BooleanProperty( CAVQueryParameters.showOutliers, {
   tandem: Tandem.PREFERENCES.createTandem( 'showOutliersProperty' ),
   phetioFeatured: true
 } );
