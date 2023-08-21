@@ -20,6 +20,7 @@ import AccessibleSlider, { AccessibleSliderOptions } from '../../../../sun/js/ac
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 
+//REVIEW document options
 type SelfOptions = {
   predictionThumbNodeOptions: PredictionThumbNodeOptions;
 

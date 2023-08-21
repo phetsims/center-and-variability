@@ -9,6 +9,8 @@
 import centerAndVariability from '../../centerAndVariability.js';
 
 export default class AsyncCounter {
+
+  //REVIEW document fields
   private index: number;
   private complete: boolean;
   private readonly count: number;

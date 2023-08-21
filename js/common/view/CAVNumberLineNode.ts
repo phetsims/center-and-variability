@@ -21,6 +21,7 @@ import Range from '../../../../dot/js/Range.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 
+//REVIEW document options
 type SelfOptions = {
   includeRangeOnXAxis: boolean;
   includeMeanStroke: boolean;

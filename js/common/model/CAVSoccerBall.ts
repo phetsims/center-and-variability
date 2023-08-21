@@ -15,7 +15,7 @@ import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 export type CAVSoccerBallOptions = EmptySelfOptions & SoccerBallOptions;
 
 export default class CAVSoccerBall extends SoccerBall {
-  public readonly isMedianObjectProperty: BooleanProperty;
+  public readonly isMedianObjectProperty: BooleanProperty; //REVIEW document
   public readonly isAnimationHighlightVisibleProperty: BooleanProperty;
 
   public constructor( isFirstSoccerBall: boolean, providedOptions: CAVSoccerBallOptions ) {

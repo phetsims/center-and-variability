@@ -17,6 +17,8 @@ import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import VariabilitySoccerBall from '../model/VariabilitySoccerBall.js';
 
 export default class IQRInfoValuesNode extends InfoValuesNode<VariabilitySoccerBall> {
+
+  //REVIEW document fields
   private readonly dataValuesQ1Rect: Rectangle;
   private readonly dataValuesQ3Rect: Rectangle;
   private q1TextNodes: Node[] = [];

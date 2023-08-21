@@ -25,6 +25,7 @@ import CAVSoccerBall from '../model/CAVSoccerBall.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 
+//REVIEW document options
 type SelfOptions = {
   fill: TColor;
   isMeanAndMedianInfoNode?: boolean;

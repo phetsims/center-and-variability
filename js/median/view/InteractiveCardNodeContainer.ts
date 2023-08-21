@@ -35,6 +35,7 @@ const FOCUS_HIGHLIGHT_Y_MARGIN = CAVConstants.CARD_SPACING + 3;
 
 export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
+  //REVIEW document fields
   private wasSortedBefore = true;
   private readonly celebrationNode: CelebrationNode;
 

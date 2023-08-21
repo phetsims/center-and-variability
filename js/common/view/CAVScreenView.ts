@@ -96,7 +96,7 @@ export default class CAVScreenView extends ScreenView {
 
   protected readonly eraserButton: EraserButton;
 
-  protected accordionBox: CAVAccordionBox | null = null;
+  protected accordionBox: CAVAccordionBox | null = null; //REVIEW document when/why this would be null
 
   protected readonly questionBar: QuestionBar;
   protected readonly playAreaNumberLineNode: NumberLineNode;
@@ -109,6 +109,7 @@ export default class CAVScreenView extends ScreenView {
 
   protected readonly playAreaTandem: Tandem;
 
+  //REVIEW This is a base class. Should the constructor be protected?
   public constructor( model: CAVModel, providedOptions: CAVScreenViewOptions ) {
     const options = optionize<CAVScreenViewOptions, SelfOptions, ScreenViewOptions>()( {
       isDisposable: false

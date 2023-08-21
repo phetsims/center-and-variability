@@ -26,6 +26,8 @@ type SelfOptions = EmptySelfOptions;
 type VariabilityModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
 
 export default class VariabilityModel extends CAVModel {
+
+  //REVIEW document fields
   public readonly selectedVariabilityMeasureProperty: Property<VariabilityMeasure>;
   public readonly isRangeVisibleProperty: Property<boolean>;
   public readonly isIQRVisibleProperty: Property<boolean>;

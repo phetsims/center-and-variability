@@ -16,6 +16,8 @@ import CAVSoccerBall from '../../common/model/CAVSoccerBall.js';
 type CAVSoccerBallOptions = EmptySelfOptions & SoccerBallOptions;
 
 export default class VariabilitySoccerBall extends CAVSoccerBall {
+
+  //REVIEW document fields
   public readonly isQ1ObjectProperty: BooleanProperty;
   public readonly isQ3ObjectProperty: BooleanProperty;
 

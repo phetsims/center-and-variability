@@ -37,6 +37,7 @@ soundManager.addSoundGenerator( successSoundClip );
 
 export default class CelebrationNode extends Panel {
 
+  //REVIEW document fields
   public isReadyForCelebration = false;
   private dataSortedNodeAnimation: Animation | null = null;
   private remainingCelebrationAnimations: ( () => void )[] = [];

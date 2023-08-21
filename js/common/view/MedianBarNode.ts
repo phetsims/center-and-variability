@@ -17,6 +17,8 @@ import CAVColors from '../CAVColors.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 
 export type BarStyle = 'continuous' | 'split';
+
+//REVIEW document options
 type SelfOptions = {
   barStyle: BarStyle;
   arrowScale?: number;

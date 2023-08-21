@@ -24,6 +24,7 @@ import CAVNumberLineNode from './CAVNumberLineNode.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 
+//REVIEW document options
 type SelfOptions = {
   dataPointFill: TColor;
   parentContext: 'accordion' | 'info';
@@ -36,7 +37,7 @@ export const PLOT_NODE_TOP_MARGIN = 25;
 
 export default class CAVPlotNode extends Node {
 
-  private readonly dataPointLayer;
+  private readonly dataPointLayer; //REVIEW document
   public readonly modelViewTransform = CAVConstants.PLOT_NODE_TRANSFORM;
   private readonly numberLineNode: NumberLineNode;
 

@@ -25,6 +25,7 @@ import { KickDistributionStrategySpecification } from '../../../../soccer-common
 
 export default class VariabilitySceneModel extends CAVSoccerSceneModel<VariabilitySoccerBall> {
 
+  //REVIEW document fields
   public readonly maxValueProperty: TReadOnlyProperty<number | null>;
   public readonly minValueProperty: TReadOnlyProperty<number | null>;
   public readonly rangeValueProperty: TReadOnlyProperty<number | null>;

@@ -12,6 +12,7 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 
+//REVIEW document options
 type SelfOptions = {
   intervalBarNodeWidth?: number;
   dropLineLength?: number;
