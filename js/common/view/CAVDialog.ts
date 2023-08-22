@@ -1,0 +1,24 @@
+// Copyright 2023, University of Colorado Boulder
+
+/**
+ * Look and layout for the info button, shown in each accordion box.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
+import centerAndVariability from '../../centerAndVariability.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
+import Dialog from '../../../../sun/js/Dialog.js';
+import { Node } from '../../../../scenery/js/imports.js';
+
+export default class CAVDialog extends Dialog {
+  public constructor( node: Node, tandem: Tandem ) {
+    super( node, {
+      isDisposable: false,
+      closeButtonTouchAreaXDilation: 10,
+      closeButtonTouchAreaYDilation: 10,
+      tandem: tandem
+    } );
+  }
+}
+centerAndVariability.register( 'CAVDialog', CAVDialog );

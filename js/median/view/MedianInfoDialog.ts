@@ -7,24 +7,16 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import Dialog from '../../../../sun/js/Dialog.js';
 import MedianInfoNode from './MedianInfoNode.js';
 import MedianModel from '../model/MedianModel.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import CAVDialog from '../../common/view/CAVDialog.js';
 
-export default class MedianInfoDialog extends Dialog {
+export default class MedianInfoDialog extends CAVDialog {
   public constructor( model: MedianModel, sceneModel: CAVSoccerSceneModel, tandem: Tandem ) {
-
     const medianInfoNode = new MedianInfoNode( model, sceneModel, tandem.createTandem( 'medianInfoNode' ) );
-
-    super( medianInfoNode, {
-      tandem: tandem,
-      isDisposable: false,
-
-      closeButtonTouchAreaXDilation: 10,
-      closeButtonTouchAreaYDilation: 10
-    } );
+    super( medianInfoNode, tandem );
   }
 }
 

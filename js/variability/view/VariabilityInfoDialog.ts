@@ -8,7 +8,6 @@
 
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
-import Dialog from '../../../../sun/js/Dialog.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import RangeInfoNode from './RangeInfoNode.js';
@@ -17,9 +16,9 @@ import MADInfoNode from './MADInfoNode.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import CAVDialog from '../../common/view/CAVDialog.js';
 
-// TODO: Factor out https://github.com/phetsims/center-and-variability/issues/462
-export default class VariabilityInfoDialog extends Dialog {
+export default class VariabilityInfoDialog extends CAVDialog {
   public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, tandem: Tandem ) {
 
     const toggleNode = new ToggleNode( model.selectedVariabilityMeasureProperty, [ {
@@ -36,12 +35,7 @@ export default class VariabilityInfoDialog extends Dialog {
       alignChildren: ToggleNode.NONE
     } );
 
-    super( toggleNode, {
-      tandem: tandem,
-      isDisposable: false,
-      closeButtonTouchAreaXDilation: 10,
-      closeButtonTouchAreaYDilation: 10
-    } );
+    super( toggleNode, tandem );
   }
 }
 
