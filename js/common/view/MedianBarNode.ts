@@ -18,9 +18,12 @@ import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 
 export type BarStyle = 'continuous' | 'split';
 
-//REVIEW document options
 type SelfOptions = {
+
+  // Determines if the bar used to show the median is split into two brackets with a gap the middle, or if it is a single bracket
   barStyle: BarStyle;
+
+  // Scaling factor for the arrow coming out from the median bracket
   arrowScale?: number;
 };
 export type MedianBarNodeOptions = SelfOptions & PathOptions;

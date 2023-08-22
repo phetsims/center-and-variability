@@ -10,10 +10,16 @@ import centerAndVariability from '../../centerAndVariability.js';
 
 export default class AsyncCounter {
 
-  //REVIEW document fields
+  // The index of the object that is currently being animated
   private index: number;
+
+  // Whether all card animations have finished
   private complete: boolean;
+
+  // The total number of cards that are being animated in the current sequence
   private readonly count: number;
+
+  // A callback that is fired when all animations in the sequence have completed
   private readonly callback: () => void;
 
   public constructor( count: number, callback: () => void ) {

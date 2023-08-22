@@ -11,7 +11,7 @@ import centerAndVariability from '../centerAndVariability.js';
 
 const CAVQueryParameters = QueryStringMachine.getAll( {
 
-  //REVIEW document
+  // The maximum number of soccer balls that can be kicked within a scene on the 'Mean and Median' and 'Variability' screens
   maxKicks: {
     type: 'number',
     defaultValue: 15,
@@ -19,7 +19,8 @@ const CAVQueryParameters = QueryStringMachine.getAll( {
     public: true
   },
 
-  //REVIEW document
+  // The type of plot shown in the accordion box on the 'Mean & Median' and 'Variability' screens
+  // Data points appear as circles for 'dotPlot', and as X's for 'linePlot'
   plotType: {
     type: 'string',
     validValues: [ 'dotPlot', 'linePlot' ],
@@ -27,13 +28,13 @@ const CAVQueryParameters = QueryStringMachine.getAll( {
     public: true
   },
 
-  //REVIEW document
+  // Whether to show outliers separately from the box-and-whisker plot in the IQR accordion box of the 'Variability' screen
   showOutliers: {
     type: 'flag',
     public: true
   },
 
-  //REVIEW document
+  // Affects the pitch of sounds played when picking up, moving, or dropping a card in the accordion box of the 'Median' screen
   cardMovementSoundPlaybackRate: {
     type: 'number',
     defaultValue: 1.5
