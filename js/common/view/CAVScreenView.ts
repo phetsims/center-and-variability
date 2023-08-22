@@ -96,7 +96,8 @@ export default class CAVScreenView extends ScreenView {
 
   protected readonly eraserButton: EraserButton;
 
-  protected accordionBox: CAVAccordionBox | null = null; //REVIEW document when/why this would be null
+  // The accordion box in the top portion of the screen. Initializes as null and is set by setAccordionBox.
+  protected accordionBox: CAVAccordionBox | null = null;
 
   protected readonly questionBar: QuestionBar;
   protected readonly playAreaNumberLineNode: NumberLineNode;

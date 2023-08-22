@@ -24,16 +24,31 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class VariabilitySceneModel extends CAVSoccerSceneModel<VariabilitySoccerBall> {
 
-  //REVIEW document fields
+  // The maximum value of the stacked soccer balls
   public readonly maxValueProperty: TReadOnlyProperty<number | null>;
+
+  // The minimum value of the stacked soccer balls
   public readonly minValueProperty: TReadOnlyProperty<number | null>;
+
+  // The range of the stacked soccer ball data (max - min)
   public readonly rangeValueProperty: TReadOnlyProperty<number | null>;
+
+  // The value of the first quartile boundary for the stacked soccer balls
   public readonly q1ValueProperty: Property<number | null>;
+
+  // The value of the third quartile boundary for the stacked soccer balls
   public readonly q3ValueProperty: Property<number | null>;
+
+  // The value of the interquartile range (IQR) for the stacked soccer balls
   public readonly iqrValueProperty: TReadOnlyProperty<number | null>;
+
+  // The value of the mean absolute deviation (MAD) for the stacked soccer balls
   public readonly madValueProperty: Property<number | null>;
 
+  // Whether the constructor has completed for this scene
   private readonly initialized: boolean = false;
+
+  // Fired when the data measures should be updated for the current set of stacked soccer balls
   public readonly variabilityDataMeasuresUpdatedEmitter: Emitter = new Emitter();
 
   public constructor( maxKicksProperty: TReadOnlyProperty<number>, kickDistributionStrategySpecification: KickDistributionStrategySpecification,

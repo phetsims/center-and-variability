@@ -20,13 +20,15 @@ import AccessibleSlider, { AccessibleSliderOptions } from '../../../../sun/js/ac
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 
-//REVIEW document options
 type SelfOptions = {
+
+  // The options being passed into the PredictionThumbNode
   predictionThumbNodeOptions: PredictionThumbNodeOptions;
 
   // Round to the nearest specified number, or, if null, there is no rounding. Mean is continuous, median is rounded to 0.5
   roundToInterval: number | null;
 
+  // Whether the PredictionSlider is currently being dragged by mouse/touch. Used to avoid conflicts between keyboard and mouse interactions.
   isMouseTouchDraggingProperty?: Property<boolean> | null;
 };
 type ParentOptions = AccessibleSliderOptions & NodeOptions;

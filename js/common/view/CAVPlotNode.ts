@@ -25,10 +25,15 @@ import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import RepresentationContext from '../model/RepresentationContext.js';
 
-//REVIEW document options
 type SelfOptions = {
+
+  // The fill color of the data points
   dataPointFill: TColor;
+
+  // Whether the plot is part of the accordion box or the info display
   parentContext: RepresentationContext;
+
+  // Whether the plot is being shown in the info display of the 'Mean and Median' screen. Used for highlighting data points.
   isMeanAndMedianInfoPlot?: boolean;
 };
 
@@ -38,8 +43,13 @@ export const PLOT_NODE_TOP_MARGIN = 25;
 
 export default class CAVPlotNode extends Node {
 
-  private readonly dataPointLayer; //REVIEW document
+  // The layer that contains the data points of the plot
+  private readonly dataPointLayer;
+
+  // The model view transform of the CAVPlotNode
   public readonly modelViewTransform = CAVConstants.PLOT_NODE_TRANSFORM;
+
+  // The number line at the bottom of the plot
   private readonly numberLineNode: NumberLineNode;
 
   public constructor( model: CAVModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, isDataPointLayerVisibleProperty: TProperty<boolean>, providedOptions?: CAVPlotNodeOptions ) {

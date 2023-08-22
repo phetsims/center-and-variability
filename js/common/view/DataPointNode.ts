@@ -25,9 +25,12 @@ import CAVSoccerBall from '../model/CAVSoccerBall.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 
-//REVIEW document options
 type SelfOptions = {
+
+  // The fill color of the data point
   fill: TColor;
+
+  // Whether the data point is part of the info display of the 'Mean and Median' screen. Used for showing the median highlight.
   isMeanAndMedianInfoNode?: boolean;
 };
 

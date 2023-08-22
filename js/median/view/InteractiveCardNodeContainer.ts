@@ -34,8 +34,10 @@ const FOCUS_HIGHLIGHT_Y_MARGIN = CAVConstants.CARD_SPACING + 3;
 
 export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
-  //REVIEW document fields
+  // Whether or not the cards were already sorted when a particular action was taken
   private wasSortedBefore = true;
+
+  // The message that appears when the cards are sorted
   private readonly celebrationNode: CelebrationNode;
 
   public constructor( model: InteractiveCardContainerModel,

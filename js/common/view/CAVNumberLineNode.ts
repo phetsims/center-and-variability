@@ -21,9 +21,12 @@ import Range from '../../../../dot/js/Range.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 
-//REVIEW document options
 type SelfOptions = {
+
+  // Whether to display a horizontal line on the number line that shows the range of the data
   includeRangeOnXAxis: boolean;
+
+  // Whether to include a stroke on the mean indicator
   includeMeanStroke: boolean;
 };
 type CAVNumberLineNodeOptions = SelfOptions & NumberLineNodeOptions;

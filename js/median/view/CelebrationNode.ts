@@ -37,9 +37,13 @@ soundManager.addSoundGenerator( successSoundClip );
 
 export default class CelebrationNode extends Panel {
 
-  //REVIEW document fields
+  // Whether the celebration ready to be shown when the cards are sorted
   public isReadyForCelebration = false;
+
+  // The fade out animation that is played when the CelebrationNode disappears
   private dataSortedNodeAnimation: Animation | null = null;
+
+  // The remaining card animations that have yet to be played when the data becomes sorted
   private remainingCelebrationAnimations: ( () => void )[] = [];
 
   public constructor( private readonly cardContainerModel: InteractiveCardContainerModel,

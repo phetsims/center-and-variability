@@ -14,8 +14,10 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class VariabilitySoccerBall extends CAVSoccerBall {
 
-  //REVIEW document fields
+  // Is the soccer ball part of the first quartile boundary for its data set
   public readonly isQ1ObjectProperty: BooleanProperty;
+
+  // Is the soccer ball part of the third quartile boundary for its data set
   public readonly isQ3ObjectProperty: BooleanProperty;
 
   public constructor( isFirstSoccerBall: boolean, tandem: Tandem ) {

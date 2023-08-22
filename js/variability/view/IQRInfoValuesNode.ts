@@ -18,10 +18,16 @@ import VariabilitySoccerBall from '../model/VariabilitySoccerBall.js';
 
 export default class IQRInfoValuesNode extends InfoValuesNode<VariabilitySoccerBall> {
 
-  //REVIEW document fields
+  // The data values that make up the Q1 boundary
   private readonly dataValuesQ1Rect: Rectangle;
+
+  // The data values that make up the Q3 boundary
   private readonly dataValuesQ3Rect: Rectangle;
+
+  // The text nodes being highlighted as part of the Q1 boundary
   private q1TextNodes: Node[] = [];
+
+  // The text nodes being highlighted as part of the Q3 boundary
   private q3TextNodes: Node[] = [];
 
   public constructor( sceneModel: VariabilitySceneModel, hasEnoughDataForIQRProperty: TReadOnlyProperty<boolean> ) {

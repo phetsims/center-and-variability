@@ -27,19 +27,37 @@ type VariabilityModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
 
 export default class VariabilityModel extends CAVModel {
 
-  //REVIEW document fields
+  // The variability measure that is currently selected to display in the accordion box
   public readonly selectedVariabilityMeasureProperty: Property<VariabilityMeasure>;
+
+  // Whether the range is being shown in the accordion box
   public readonly isRangeVisibleProperty: Property<boolean>;
+
+  // Whether the IQR is being shown in the accordion box
   public readonly isIQRVisibleProperty: Property<boolean>;
+
+  // Whether the MAD is being shown in the accordion box
   public readonly isMADVisibleProperty: Property<boolean>;
 
+  // Whether the pointer arrow is being shown under the number line on the soccer field
   public readonly isPointerVisibleProperty: Property<boolean>;
+
+  // The location on the number line that the pointer is currently set
   public readonly pointerValueProperty: Property<number>;
+
+  // Whether the pointer is currently being dragged by the keyboard. Used to avoid conflicts between keyboard and mouse/touch interaction.
   public readonly isPointerKeyboardDraggingProperty: Property<boolean>;
 
+  // Is the interval tool currently being shown?
   public readonly isIntervalToolVisibleProperty: Property<boolean>;
+
+  // Whether input is enabled on the interval tool
   public readonly isIntervalToolInputEnabledProperty: Property<boolean>;
+
+  // The value of the interval tool's handle that starts out on the left
   public readonly intervalTool1ValueProperty: NumberProperty;
+
+  // The value of the interval tool's handle that starts out on the right
   public readonly intervalTool2ValueProperty: NumberProperty;
 
   // The absolute value of the distance between the interval tool handles in meters. To work around inconsistent
@@ -47,8 +65,13 @@ export default class VariabilityModel extends CAVModel {
   // Used in sonification.
   public readonly intervalToolDeltaStableProperty: Property<number>;
 
+  // Whether the variability model is currently in the process of resetting. Used to handle intermediate states.
   public readonly variabilityModelResetInProgressProperty = new BooleanProperty( false );
+
+  // Emitter that is fired on reset
   public readonly resetEmitter = new Emitter();
+
+  // The scenes for individual players on the 'Variability' screen
   public readonly variabilitySceneModels: VariabilitySceneModel[];
 
   public constructor( preferencesModel: SoccerCommonPreferencesModel, providedOptions: VariabilityModelOptions ) {

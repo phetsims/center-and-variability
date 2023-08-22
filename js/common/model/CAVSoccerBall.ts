@@ -13,7 +13,11 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class CAVSoccerBall extends SoccerBall {
-  public readonly isMedianObjectProperty: BooleanProperty; //REVIEW document
+
+  // Is the soccer ball a median value for the data set?
+  public readonly isMedianObjectProperty: BooleanProperty;
+
+  // Is the soccer ball being highlighted as part of the median animation?
   public readonly isAnimationHighlightVisibleProperty: BooleanProperty;
 
   public constructor( isFirstSoccerBall: boolean, tandem: Tandem ) {
