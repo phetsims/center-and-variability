@@ -39,7 +39,6 @@ export default class VariabilityInfoDialog extends Dialog {
     super( toggleNode, {
       tandem: tandem,
       isDisposable: false,
-
       closeButtonTouchAreaXDilation: 10,
       closeButtonTouchAreaYDilation: 10
     } );

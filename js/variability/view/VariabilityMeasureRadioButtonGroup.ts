@@ -32,8 +32,8 @@ export default class VariabilityMeasureRadioButtonGroup extends RectangularRadio
         }
       },
       isDisposable: false,
-      touchAreaXDilation: 10,
-      touchAreaYDilation: 10
+      touchAreaXDilation: 5,
+      touchAreaYDilation: 2.5
     }, providedOptions );
 
     super( property, [ {
