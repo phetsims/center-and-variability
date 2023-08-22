@@ -13,14 +13,14 @@ import { Shape } from '../../../../kite/js/imports.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 
 type SelfOptions = EmptySelfOptions;
-export type MedianBarNodeOptions = SelfOptions & PathOptions;
+export type IntervalBarNodeOptions = SelfOptions & PathOptions;
 
 export default class IntervalBarNode extends Path {
   private intervalBarNodeWidth: number;
 
-  public constructor( providedOptions?: MedianBarNodeOptions ) {
+  public constructor( providedOptions?: IntervalBarNodeOptions ) {
 
-    const options = optionize<MedianBarNodeOptions, SelfOptions, PathOptions>()( {
+    const options = optionize<IntervalBarNodeOptions, SelfOptions, PathOptions>()( {
       stroke: 'black',
       lineWidth: 1,
       isDisposable: false
