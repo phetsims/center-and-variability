@@ -109,8 +109,7 @@ export default class CAVScreenView extends ScreenView {
 
   protected readonly playAreaTandem: Tandem;
 
-  //REVIEW This is a base class. Should the constructor be protected?
-  public constructor( model: CAVModel, providedOptions: CAVScreenViewOptions ) {
+  protected constructor( model: CAVModel, providedOptions: CAVScreenViewOptions ) {
     const options = optionize<CAVScreenViewOptions, SelfOptions, ScreenViewOptions>()( {
       isDisposable: false
     }, providedOptions );
