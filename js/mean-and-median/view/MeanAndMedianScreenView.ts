@@ -56,13 +56,13 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
       PlayAreaCheckboxFactory.getMedianCheckboxItem( model ),
       PlayAreaCheckboxFactory.getMeanCheckboxItem( model )
     ], {
-      tandem: this.playAreaTandem.createTandem( 'checkboxGroup' ),
+      tandem: this.soccerAreaTandem.createTandem( 'checkboxGroup' ),
       visiblePropertyOptions: {
         phetioFeatured: true
       }
-    } ), this.playAreaTandem );
+    } ), this.soccerAreaTandem );
 
-    const predictMeanTandem = this.playAreaTandem.createTandem( 'predictMeanNode' );
+    const predictMeanTandem = this.soccerAreaTandem.createTandem( 'predictMeanNode' );
     const predictMeanNode = new PredictionSlider( model.predictMeanValueProperty, this.modelViewTransform,
       CAVConstants.PHYSICAL_RANGE, {
         predictionThumbNodeOptions: {
@@ -85,7 +85,7 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
     const predictMedianNode = CAVScreenView.createPredictMedianNode(
       model,
       this.modelViewTransform,
-      this.playAreaTandem.createTandem( 'predictMedianNode' )
+      this.soccerAreaTandem.createTandem( 'predictMedianNode' )
     );
     this.backScreenViewLayer.addChild( predictMedianNode );
 

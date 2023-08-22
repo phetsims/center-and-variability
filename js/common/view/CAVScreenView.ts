@@ -108,7 +108,7 @@ export default class CAVScreenView extends ScreenView {
   protected readonly numberOfKicksProperty: DynamicProperty<number, number, CAVSoccerSceneModel>;
   protected readonly kickButtonGroup: KickButtonGroup;
 
-  protected readonly playAreaTandem: Tandem;
+  protected readonly soccerAreaTandem: Tandem;
 
   protected constructor( model: CAVModel, providedOptions: CAVScreenViewOptions ) {
     const options = optionize<CAVScreenViewOptions, SelfOptions, ScreenViewOptions>()( {
@@ -125,10 +125,9 @@ export default class CAVScreenView extends ScreenView {
     );
 
     super( options );
-    this.playAreaTandem = options.tandem.createTandem( 'playArea' );
+    this.soccerAreaTandem = options.tandem.createTandem( 'soccerArea' );
 
     this.numberOfKicksProperty = new DynamicProperty<number, number, CAVSoccerSceneModel>( model.selectedSceneModelProperty, { derive: 'numberOfDataPointsProperty' } );
-
 
     this.modelViewTransform = modelViewTransform;
     this.model = model;
@@ -244,7 +243,7 @@ export default class CAVScreenView extends ScreenView {
       // Center between the ground and the bottom of the layout bounds.  Adjust because of the asymmetries:
       // the soccer player foot falls beneath the ground, and the shading of the buttons.
       centerY: ( GROUND_POSITION_Y + this.layoutBounds.maxY ) / 2 + 2,
-      tandem: this.playAreaTandem.createTandem( 'kickButtonGroup' ),
+      tandem: this.soccerAreaTandem.createTandem( 'kickButtonGroup' ),
 
       visiblePropertyOptions: {
         phetioFeatured: true

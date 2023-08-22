@@ -118,7 +118,7 @@ export default class VariabilityModel extends CAVModel {
       phetioDocumentation: 'Sets the visibility of the MAD. Only relevant when the MAD radio button is active.'
     } );
 
-    const pointerTandem = this.playAreaTandem.createTandem( 'pointer' );
+    const pointerTandem = this.soccerAreaTandem.createTandem( 'pointer' );
 
     this.isPointerVisibleProperty = new BooleanProperty( false, {
       tandem: pointerTandem.createTandem( 'isPointerVisibleProperty' ),
@@ -132,7 +132,7 @@ export default class VariabilityModel extends CAVModel {
 
     this.isPointerKeyboardDraggingProperty = new BooleanProperty( false );
 
-    const intervalToolTandem = this.playAreaTandem.createTandem( 'intervalTool' );
+    const intervalToolTandem = this.soccerAreaTandem.createTandem( 'intervalTool' );
 
     this.isIntervalToolVisibleProperty = new BooleanProperty( false, {
       tandem: intervalToolTandem.createTandem( 'isVisibleProperty' ),

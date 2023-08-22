@@ -99,11 +99,11 @@ export default class MeanAndMedianModel extends CAVModel {
 
     this.predictMeanValueProperty = new NumberProperty( 1.5, {
       range: CAVConstants.PHYSICAL_RANGE,
-      tandem: this.playAreaTandem.createTandem( 'predictMeanValueProperty' ),
+      tandem: this.soccerAreaTandem.createTandem( 'predictMeanValueProperty' ),
       phetioFeatured: true
     } );
     this.isPredictMeanVisibleProperty = new BooleanProperty( false, {
-      tandem: this.playAreaTandem.createTandem( 'isPredictMeanVisibleProperty' ),
+      tandem: this.soccerAreaTandem.createTandem( 'isPredictMeanVisibleProperty' ),
       phetioFeatured: true
     } );
 

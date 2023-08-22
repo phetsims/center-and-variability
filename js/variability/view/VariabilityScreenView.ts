@@ -68,7 +68,7 @@ export default class VariabilityScreenView extends CAVScreenView {
 
     const accordionBoxTandem = options.tandem.createTandem( 'variabilityMeasureAccordionBox' );
 
-    const pointerTandem = this.playAreaTandem.createTandem( 'pointerNode' );
+    const pointerTandem = this.soccerAreaTandem.createTandem( 'pointerNode' );
     const pointerSlider = new PredictionSlider( model.pointerValueProperty, this.modelViewTransform,
       CAVConstants.VARIABILITY_DRAG_RANGE, {
         predictionThumbNodeOptions: {
@@ -107,7 +107,7 @@ export default class VariabilityScreenView extends CAVScreenView {
     const isIntervalHandle2BeingDraggedProperty = new BooleanProperty( false );
     const isIntervalAreaBeingDraggedProperty = new BooleanProperty( false );
 
-    const intervalToolNodeTandem = this.playAreaTandem.createTandem( 'intervalToolNode' );
+    const intervalToolNodeTandem = this.soccerAreaTandem.createTandem( 'intervalToolNode' );
     const toolHandle1Tandem = intervalToolNodeTandem.createTandem( 'handle1' );
     const toolHandle2Tandem = intervalToolNodeTandem.createTandem( 'handle2' );
 
@@ -258,11 +258,11 @@ export default class VariabilityScreenView extends CAVScreenView {
         PlayAreaCheckboxFactory.getPointerCheckboxItem( model ),
         PlayAreaCheckboxFactory.getIntervalToolCheckboxItem( model )
       ], {
-        tandem: this.playAreaTandem.createTandem( 'checkboxGroup' ),
+        tandem: this.soccerAreaTandem.createTandem( 'checkboxGroup' ),
         visiblePropertyOptions: {
           phetioFeatured: true
         }
-      } ), this.playAreaTandem );
+      } ), this.soccerAreaTandem );
 
     model.variabilitySceneModels.forEach( ( sceneModel, index ) => {
 
