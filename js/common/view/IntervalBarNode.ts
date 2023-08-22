@@ -8,15 +8,11 @@
 
 import centerAndVariability from '../../centerAndVariability.js';
 import { Path, PathOptions } from '../../../../scenery/js/imports.js';
-import optionize from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 
-//REVIEW document options
-type SelfOptions = {
-  intervalBarNodeWidth?: number;
-  dropLineLength?: number;
-};
+type SelfOptions = EmptySelfOptions;
 export type MedianBarNodeOptions = SelfOptions & PathOptions;
 
 export default class IntervalBarNode extends Path {
@@ -28,17 +24,12 @@ export default class IntervalBarNode extends Path {
     const options = optionize<MedianBarNodeOptions, SelfOptions, PathOptions>()( {
       stroke: 'black',
       lineWidth: 1,
-
-      intervalBarNodeWidth: 0,
-      dropLineLength: 6,
-
       isDisposable: false
     }, providedOptions );
 
     super( null, options );
-    this.intervalBarNodeWidth = options.intervalBarNodeWidth;
-    this.dropLineLength = options.dropLineLength;
-
+    this.intervalBarNodeWidth = 0;
+    this.dropLineLength = 6;
     this.updateShape();
   }
 
