@@ -21,13 +21,13 @@ type SelfOptions = {
   triangleNodeOptions?: TriangleNodeOptions;
 };
 
-type DragIndicatorArrowNodeOptions = SelfOptions & StrictOmit<HBoxOptions, 'children'>;
+type InteractiveCueArrowNodeOptions = SelfOptions & StrictOmit<HBoxOptions, 'children'>;
 
 export default class InteractiveCueArrowNode extends HBox {
 
-  public constructor( providedOptions: DragIndicatorArrowNodeOptions ) {
+  public constructor( providedOptions: InteractiveCueArrowNodeOptions ) {
 
-    const options = optionize<DragIndicatorArrowNodeOptions, SelfOptions, HBoxOptions>()( {
+    const options = optionize<InteractiveCueArrowNodeOptions, SelfOptions, HBoxOptions>()( {
       dashHeight: 2,
       dashWidth: 2,
       triangleNodeOptions: {},
