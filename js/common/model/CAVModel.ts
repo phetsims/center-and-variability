@@ -13,15 +13,13 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CAVConstants from '../CAVConstants.js';
 import Property from '../../../../axon/js/Property.js';
-import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
-import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import NumberTone from './NumberTone.js';
 import CAVSoccerSceneModel from './CAVSoccerSceneModel.js';
 import CAVDragIndicatorModel from './CAVDragIndicatorModel.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import VoidIO from '../../../../tandem/js/types/VoidIO.js';
 import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
@@ -29,7 +27,7 @@ import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import ObjectLiteralIO from '../../../../tandem/js/types/ObjectLiteralIO.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
-import EnabledProperty from '../../../../axon/js/EnabledProperty.js';
+import SoccerModel from '../../../../soccer-common/js/model/SoccerModel.js';
 
 type SelfOptions = {
   instrumentMeanProperty: boolean;
@@ -38,37 +36,31 @@ type SelfOptions = {
 } & PickRequired<PhetioObjectOptions, 'tandem'>;
 export type CAVModelOptions = SelfOptions;
 
-export default class CAVModel extends PhetioObject {
+export default class CAVModel extends SoccerModel<CAVSoccerSceneModel> {
 
-  public readonly dragIndicatorModel: CAVDragIndicatorModel;
+  public override readonly dragIndicatorModel: CAVDragIndicatorModel;
 
   public readonly isPlayAreaMedianVisibleProperty: BooleanProperty; // Screens 1-3
   public readonly isPlayAreaMeanVisibleProperty: BooleanProperty;  // Screens 2-3
   public readonly isPredictMedianVisibleProperty: BooleanProperty; // Screens 1-2
   public readonly predictMedianValueProperty: NumberProperty; // Screens 1-2
 
-  public readonly selectedSceneModelProperty: Property<CAVSoccerSceneModel>;
-
   public readonly isAccordionBoxExpandedProperty: Property<boolean>;
-  public readonly soccerBallsEnabledProperty: Property<boolean>;
   public readonly isDataPointLayerVisibleProperty: Property<boolean>;
 
   public readonly infoButtonPressedEmitter: Emitter;
 
-  protected readonly soccerAreaTandem: Tandem;
-
-  public constructor( public readonly maxKicksProperty: TReadOnlyProperty<number>, public readonly sceneModels: CAVSoccerSceneModel[], providedOptions: CAVModelOptions ) {
+  public constructor( public readonly maxKicksProperty: TReadOnlyProperty<number>, sceneModels: CAVSoccerSceneModel[], providedOptions: CAVModelOptions ) {
 
     const options = optionize<CAVModelOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioType: CAVModelIO,
       phetioState: false,
-      phetioDocumentation: 'The model for the "Center and Variability" simulation. Contains 1+ sceneModels which contains the data itself. Also includes settings, like selections for checkboxes.',
-      isDisposable: false
+      phetioDocumentation: 'The model for the "Center and Variability" simulation. Contains 1+ sceneModels which contains the data itself. Also includes settings, like selections for checkboxes.'
     }, providedOptions );
 
-    super( options );
+    super( sceneModels, options );
 
-    this.sceneModels.forEach( sceneModel => {
+    sceneModels.forEach( sceneModel => {
       sceneModel.soccerBalls.forEach( soccerBall => {
         soccerBall.toneEmitter.addListener( value => {
           NumberTone.play(
@@ -80,8 +72,6 @@ export default class CAVModel extends PhetioObject {
         } );
       } );
     } );
-
-    this.soccerAreaTandem = options.tandem.createTandem( 'soccerArea' );
 
     this.isAccordionBoxExpandedProperty = new BooleanProperty( true, {
       tandem: options.accordionBoxTandem.createTandem( 'isAccordionBoxExpandedProperty' ),
@@ -121,39 +111,9 @@ export default class CAVModel extends PhetioObject {
       NumberTone.playMedian( median );
     } );
 
-    this.selectedSceneModelProperty = new Property( sceneModels[ 0 ], {
-      validValues: sceneModels,
-      tandem: sceneModels.length === 1 ? Tandem.OPT_OUT : options.tandem.createTandem( 'selectedSceneModelProperty' ),
-      phetioValueType: ReferenceIO( IOType.ObjectIO ),
-      phetioFeatured: true,
-      phetioDocumentation: 'Indicates which kicker is active by jersey number.'
-    } );
-
-    this.selectedSceneModelProperty.link( selectedScene => {
-      this.sceneModels.forEach( sceneModel => {
-        sceneModel.isVisibleProperty.value = sceneModel === selectedScene;
-      } );
-    } );
-
     this.infoButtonPressedEmitter = new Emitter();
 
-    // These DynamicProperties allow us to track all the necessary scenes Properties for dragIndicator update, and not
-    // just the first selectedScene
-    const selectedSceneStackedSoccerBallCountProperty = new DynamicProperty<number, number, CAVSoccerSceneModel>( this.selectedSceneModelProperty, {
-      derive: 'numberOfDataPointsProperty'
-    } );
-    const selectedSceneMaxKicksProperty = new DynamicProperty<number, number, CAVSoccerSceneModel>( this.selectedSceneModelProperty, {
-      derive: 'maxKicksProperty'
-    } );
-
     const allValueProperties = sceneModels.flatMap( sceneModel => sceneModel.soccerBalls.map( soccerBall => soccerBall.valueProperty ) );
-
-    this.soccerBallsEnabledProperty = new EnabledProperty( true, {
-      tandem: this.soccerAreaTandem.createTandem( 'soccerBallsEnabledProperty' ),
-      phetioDocumentation: 'Enable or disable input on the entire set of soccer balls.',
-      phetioFeatured: true,
-      checkTandemName: false
-    } );
 
     this.dragIndicatorModel = new CAVDragIndicatorModel(
       this.soccerBallsEnabledProperty,
@@ -163,11 +123,11 @@ export default class CAVModel extends PhetioObject {
     // It is important to link to the values of all the soccer balls in the screen, so that the dragIndicator can be
     // updated after all the balls have landed, and not just after they have been kicked.
     Multilink.multilinkAny( [ ...allValueProperties, this.selectedSceneModelProperty,
-      this.dragIndicatorModel.soccerBallHasBeenDraggedProperty, selectedSceneStackedSoccerBallCountProperty,
-      selectedSceneMaxKicksProperty
+      this.dragIndicatorModel.soccerBallHasBeenDraggedProperty, this.selectedSceneStackedSoccerBallCountProperty,
+      this.selectedSceneMaxKicksProperty
     ], () => {
       this.dragIndicatorModel.updateDragIndicator( this.selectedSceneModelProperty.value, this.dragIndicatorModel.soccerBallHasBeenDraggedProperty.value,
-        selectedSceneStackedSoccerBallCountProperty.value, selectedSceneMaxKicksProperty.value );
+        this.selectedSceneStackedSoccerBallCountProperty.value, this.selectedSceneMaxKicksProperty.value );
     } );
   }
 
@@ -185,14 +145,7 @@ export default class CAVModel extends PhetioObject {
     return integerCheck || halfIntegerCheck;
   }
 
-
-  public step( dt: number ): void {
-    // Override in subclasses
-
-    this.selectedSceneModelProperty.value.step( dt );
-  }
-
-  public reset(): void {
+  public override reset(): void {
     this.predictMedianValueProperty.reset();
 
     this.isPlayAreaMeanVisibleProperty.reset();
@@ -200,8 +153,9 @@ export default class CAVModel extends PhetioObject {
 
     this.isPredictMedianVisibleProperty.reset();
 
-    this.sceneModels.forEach( sceneModel => sceneModel.reset() );
-    this.selectedSceneModelProperty.reset();
+    // TODO: double check if order matters here, see: https://github.com/phetsims/center-and-variability/issues/500
+    super.reset();
+
     this.dragIndicatorModel.reset();
     this.isAccordionBoxExpandedProperty.reset();
   }
