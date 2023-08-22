@@ -113,7 +113,10 @@ export default class VariabilitySceneModel extends CAVSoccerSceneModel<Variabili
         return q3 - q1;
       }
     }, {
-      hasListenerOrderDependencies: true
+      hasListenerOrderDependencies: true,
+      tandem: tandem.createTandem( 'iqrValueProperty' ),
+      phetioValueType: NullableIO( NumberIO ),
+      phetioFeatured: true
     } );
 
     this.madValueProperty = new Property<number | null>( null, {
