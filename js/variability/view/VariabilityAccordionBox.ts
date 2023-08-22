@@ -144,7 +144,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
                                    valueUnknownStringProperty: LocalizedStringProperty, valuePatternStringProperty: PatternStringProperty<{
         value: UnknownDerivedProperty<number | string>;
       }> ) => {
-      return DerivedProperty.deriveAny( [ model.selectedSceneModelProperty, ...model.variabilitySceneModels.map( accessor ) ], () => {
+      return DerivedProperty.deriveAny( [ model.selectedSceneModelProperty, ...model.variabilitySceneModels.map( accessor ), valuePatternStringProperty, valueUnknownStringProperty ], () => {
         const result = accessor( model.selectedSceneModelProperty.value as VariabilitySceneModel ).value;
         return result === null ? valueUnknownStringProperty.value : valuePatternStringProperty.value;
       } );
