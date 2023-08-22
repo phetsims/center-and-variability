@@ -214,7 +214,9 @@ export default class CAVScreenView extends ScreenView {
       centerY: this.resetAllButton.centerY,
       soundPlayer: new SoundClipPlayer( erase_mp3, {
         soundClipOptions: { initialOutputLevel: 0.072 }
-      } )
+      } ),
+      touchAreaXDilation: 10,
+      touchAreaYDilation: 10
     } );
 
     this.questionBar = new QuestionBar( this.layoutBounds, this.visibleBoundsProperty, combineOptions<QuestionBarOptions>( {

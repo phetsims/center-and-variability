@@ -55,6 +55,9 @@ export default class KickButtonGroup extends VBox {
         derive: 'hasKickableSoccerBallsStableProperty'
       } );
 
+      const touchAreaXDilation = 5;
+      const touchAreaYDilation = 4;
+
       return new RectangularPushButton( {
         visibleProperty: createGatedVisibleProperty( hasKickableSoccerBallsProperty, tandem ),
         content: content,
@@ -72,7 +75,10 @@ export default class KickButtonGroup extends VBox {
         // https://github.com/phetsims/center-and-variability/issues/102
         fireOnHoldInterval: 650,
 
-        soundPlayer: nullSoundPlayer
+        soundPlayer: nullSoundPlayer,
+        touchAreaXDilation: touchAreaXDilation,
+        touchAreaYDilation: touchAreaYDilation,
+        touchAreaYShift: multikick ? touchAreaYDilation : -touchAreaYDilation
       } );
     };
 

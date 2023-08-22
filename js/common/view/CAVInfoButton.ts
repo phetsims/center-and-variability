@@ -18,7 +18,7 @@ export default class CAVInfoButton extends InfoButton {
     super( {
       iconFill: '#2C60E2',
       scale: 0.5,
-      touchAreaDilation: 5,
+      touchAreaDilation: 20,
       tandem: tandem,
       listener: () => {
         infoButtonPressedEmitter.emit();

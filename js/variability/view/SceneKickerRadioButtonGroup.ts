@@ -25,7 +25,9 @@ export default class SceneKickerRadioButtonGroup extends RectangularRadioButtonG
       radioButtonOptions: {
         baseColor: 'white'
       },
-      isDisposable: false
+      isDisposable: false,
+      touchAreaYDilation: 10,
+      touchAreaXDilation: 10
     }, providedOptions );
 
     const createTShirtIcon = ( label: string, fill: string ) => {
