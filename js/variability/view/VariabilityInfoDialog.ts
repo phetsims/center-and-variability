@@ -18,6 +18,7 @@ import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 
+// TODO: Factor out https://github.com/phetsims/center-and-variability/issues/462
 export default class VariabilityInfoDialog extends Dialog {
   public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, tandem: Tandem ) {
 
@@ -37,7 +38,10 @@ export default class VariabilityInfoDialog extends Dialog {
 
     super( toggleNode, {
       tandem: tandem,
-      isDisposable: false
+      isDisposable: false,
+
+      closeButtonTouchAreaXDilation: 10,
+      closeButtonTouchAreaYDilation: 10
     } );
   }
 }

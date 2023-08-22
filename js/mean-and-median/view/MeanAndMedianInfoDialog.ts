@@ -27,7 +27,10 @@ export default class MeanAndMedianInfoDialog extends Dialog {
 
     super( meanAndMedianInfoNode, {
       tandem: tandem,
-      isDisposable: false
+      isDisposable: false,
+
+      closeButtonTouchAreaXDilation: 10,
+      closeButtonTouchAreaYDilation: 10
     } );
   }
 }

@@ -20,7 +20,10 @@ export default class MedianInfoDialog extends Dialog {
 
     super( medianInfoNode, {
       tandem: tandem,
-      isDisposable: false
+      isDisposable: false,
+
+      closeButtonTouchAreaXDilation: 10,
+      closeButtonTouchAreaYDilation: 10
     } );
   }
 }
