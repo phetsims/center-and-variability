@@ -17,7 +17,6 @@ export type MedianBarNodeOptions = SelfOptions & PathOptions;
 
 export default class IntervalBarNode extends Path {
   private intervalBarNodeWidth: number;
-  private dropLineLength: number;
 
   public constructor( providedOptions?: MedianBarNodeOptions ) {
 
@@ -29,7 +28,6 @@ export default class IntervalBarNode extends Path {
 
     super( null, options );
     this.intervalBarNodeWidth = 0;
-    this.dropLineLength = 6;
     this.updateShape();
   }
 
@@ -41,10 +39,13 @@ export default class IntervalBarNode extends Path {
   public updateShape(): void {
     const shape = new Shape();
 
+    // The length of the lines that extend perpendicularly from the ends of the bar
+    const DROP_LINE_LENGTH = 6;
+
     const leftCorner = new Vector2( 0, 0 );
     const rightCorner = new Vector2( this.intervalBarNodeWidth, 0 );
-    const leftDropPoint = new Vector2( 0, this.dropLineLength );
-    const rightDropPoint = new Vector2( this.intervalBarNodeWidth, this.dropLineLength );
+    const leftDropPoint = new Vector2( 0, DROP_LINE_LENGTH );
+    const rightDropPoint = new Vector2( this.intervalBarNodeWidth, DROP_LINE_LENGTH );
 
     shape.moveToPoint( leftDropPoint );
     shape.lineToPoint( leftCorner );
