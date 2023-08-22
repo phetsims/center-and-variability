@@ -362,9 +362,9 @@ export default class CAVScreenView extends ScreenView {
   // calculate where the top object is at a given value
   private getTopObjectPositionY( value: number ): number {
     const sceneModel = this.model.selectedSceneModelProperty.value;
-    const ballsAtLocation = sceneModel.soccerBalls.filter( soccerBall =>
+    const ballsAtValue = sceneModel.soccerBalls.filter( soccerBall =>
       soccerBall.valueProperty.value === value && soccerBall.soccerBallPhaseProperty.value === SoccerBallPhase.STACKED );
-    const modelHeight = ballsAtLocation.length * CAVObjectType.SOCCER_BALL.radius * 2 * ( 1 - SoccerCommonConstants.SOCCER_BALL_OVERLAP );
+    const modelHeight = ballsAtValue.length * CAVObjectType.SOCCER_BALL.radius * 2 * ( 1 - SoccerCommonConstants.SOCCER_BALL_OVERLAP );
     const viewHeight = this.modelViewTransform.modelToViewDeltaY( modelHeight );
     return this.modelViewTransform.modelToViewY( 0 ) + viewHeight;
   }

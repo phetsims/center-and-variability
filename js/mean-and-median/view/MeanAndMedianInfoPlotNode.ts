@@ -53,7 +53,7 @@ export default class MeanAndMedianInfoPlotNode extends MeanAndMedianPlotNode {
       if ( medianValue !== null ) {
 
         const medianArrowYPosition = sceneModel.getDataValues().includes( medianValue )
-                                     ? sceneModel.getStackAtLocation( medianValue )[ sceneModel.getStackAtLocation( medianValue ).length - 1 ].positionProperty.value.y : 0;
+                                     ? sceneModel.getStackAtValue( medianValue )[ sceneModel.getStackAtValue( medianValue ).length - 1 ].positionProperty.value.y : 0;
         const x = modelViewTransfrom.modelToViewX( medianValue );
         const scale = DATA_POINT_SCALE_PROPERTY.value;
         const y = modelViewTransfrom.modelToViewY( medianArrowYPosition * scale );

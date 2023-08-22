@@ -19,7 +19,7 @@ export default class CAVDragIndicatorModel extends DragIndicatorModel {
     const maxHeight = 8;
 
     if ( this.valueProperty.value !== null ) {
-      const stackHeight = sceneModel.getStackAtLocation( this.valueProperty.value ).length;
+      const stackHeight = sceneModel.getStackAtValue( this.valueProperty.value ).length;
       if ( this.isDragIndicatorVisibleProperty.value && ( this.valueProperty.value === sceneModel.medianValueProperty.value || stackHeight > maxHeight ) ) {
         const reversedBalls = sceneModel.getActiveSoccerBalls().reverse();
 
@@ -39,7 +39,7 @@ export default class CAVDragIndicatorModel extends DragIndicatorModel {
           // Show it over a recently landed ball that is not in the median stack
           this.valueProperty.value = topBallsInReversedLandingOrder
             .find( soccerBall => soccerBall.valueProperty.value !== sceneModel.medianValueProperty.value &&
-                                 sceneModel.getStackAtLocation( soccerBall.valueProperty.value! ).length <= maxHeight )!
+                                 sceneModel.getStackAtValue( soccerBall.valueProperty.value! ).length <= maxHeight )!
             .valueProperty.value!;
         }
       }

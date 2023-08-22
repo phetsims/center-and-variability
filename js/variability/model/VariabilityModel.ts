@@ -42,7 +42,7 @@ export default class VariabilityModel extends CAVModel {
   // Whether the pointer arrow is being shown under the number line on the soccer field
   public readonly isPointerVisibleProperty: Property<boolean>;
 
-  // The location on the number line that the pointer is currently set
+  // The value on the number line that the pointer is currently set
   public readonly pointerValueProperty: Property<number>;
 
   // Whether the pointer is currently being dragged by the keyboard. Used to avoid conflicts between keyboard and mouse/touch interaction.

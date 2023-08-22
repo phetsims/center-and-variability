@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Creates a triangle shape that points upwards to show the location of the mean.
+ * Creates a triangle shape that points upwards to show the value of the mean.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

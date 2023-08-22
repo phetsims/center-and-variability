@@ -122,7 +122,7 @@ export default class CAVPlotNode extends Node {
 
     this.dataPointLayer.addChild( dataPointLayer );
 
-    // Align with the play are number line node, based on the tick mark locations
+    // Align with the play are number line node, based on the tick mark values
     const matrixBetweenProperty = new MatrixBetweenProperty( playAreaNumberLineNode.tickMarkSet, this.numberLineNode.tickMarkSet );
 
     matrixBetweenProperty.link( matrix => {
