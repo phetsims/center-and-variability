@@ -23,6 +23,8 @@ import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 
 export type CardNodeContainerOptions = EmptySelfOptions & NodeOptions;
 
+export const CARD_LAYER_OFFSET = CAVConstants.CARD_SPACING / 2 - MedianBarNode.HALF_SPLIT_WIDTH + MedianBarNode.LINE_WIDTH;
+
 export default class CardNodeContainer extends InteractiveHighlightingNode {
   protected readonly model: CardContainerModel;
   public readonly cardNodes: CardNode[];
@@ -32,7 +34,7 @@ export default class CardNodeContainer extends InteractiveHighlightingNode {
   } );
 
   // Add padding to the card layer to give space for the medianBarNode
-  protected readonly cardLayer = new Node( { x: CAVConstants.CARD_SPACING / 2 - MedianBarNode.HALF_SPLIT_WIDTH + MedianBarNode.LINE_WIDTH } );
+  protected readonly cardLayer = new Node( { x: CARD_LAYER_OFFSET } );
 
   public constructor( model: CardContainerModel,
                       protected readonly sceneModel: CAVSoccerSceneModel,

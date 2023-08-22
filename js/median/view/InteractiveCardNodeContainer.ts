@@ -7,7 +7,7 @@
  *
  */
 
-import CardNodeContainer, { CardNodeContainerOptions } from './CardNodeContainer.js';
+import CardNodeContainer, { CARD_LAYER_OFFSET, CardNodeContainerOptions } from './CardNodeContainer.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import InteractiveCardContainerModel from '../model/InteractiveCardContainerModel.js';
 import Property from '../../../../axon/js/Property.js';
@@ -98,7 +98,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
     const grabReleaseCueNode = new GrabReleaseCueNode( {
       top: CAVConstants.CARD_DIMENSION + FOCUS_HIGHLIGHT_Y_MARGIN + 4,
-      visibleProperty: model.isGrabReleaseVisibleProperty
+      visibleProperty: model.isGrabReleaseVisibleProperty // TODO rename? https://github.com/phetsims/center-and-variability/issues/433
     } );
 
     const createKeyboardArrowNode = ( visibleProperty: TReadOnlyProperty<boolean> ) => new InteractiveCueArrowNode( {
@@ -120,7 +120,6 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
     this.addChild( keyboardDragArrowNode );
     this.addChild( keyboardSelectArrowNode );
-
 
     const isDragIndicatorVisibleProperty = new DerivedProperty( [ this.inputEnabledProperty, model.hasKeyboardFocusProperty ],
       ( inputEnabled, hasKeyboardFocus ) => inputEnabled && !hasKeyboardFocus );
@@ -264,11 +263,9 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
           this.setFocusHighlight( focusForSelectedCard );
 
           focusedCardNode.model.isDraggingProperty.value = isCardGrabbed;
-          const leftEdgeOfFocusedCard = model.getCardPositionX( focusedCardNode.model.indexProperty.value! );
 
-          //TODO: Check the plus 1 magic number, see: https://github.com/phetsims/center-and-variability/issues/433
-          keyboardDragArrowNode.centerBottom = new Vector2( leftEdgeOfFocusedCard + CAVConstants.CARD_DIMENSION / 2 + 1, focusForSelectedCard.bottom + 6 );
-          keyboardSelectArrowNode.centerBottom = new Vector2( leftEdgeOfFocusedCard + CAVConstants.CARD_DIMENSION / 2 - PICK_UP_DELTA_X + 1, focusForSelectedCard.bottom + 10 );
+          keyboardDragArrowNode.centerBottom = new Vector2( focusedCardNode.centerX + CARD_LAYER_OFFSET + PICK_UP_DELTA_X / 2 + 1, focusForSelectedCard.bottom + 6 );
+          keyboardSelectArrowNode.centerBottom = new Vector2( focusedCardNode.centerX + CARD_LAYER_OFFSET - PICK_UP_DELTA_X / 2, focusForSelectedCard.bottom + 10 );
         }
         else {
           this.setFocusHighlight( 'invisible' );
