@@ -11,9 +11,7 @@ import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soccerCommon from '../../../../soccer-common/js/soccerCommon.js';
 import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 import Utils from '../../../../dot/js/Utils.js';
-import CAVSoccerSceneModel from './CAVSoccerSceneModel.js';
 import numberTone_mp3 from '../../../sounds/numberTone_mp3.js';
-import CAVModel from './CAVModel.js';
 
 // This is the dominant frequency of numberTone_mp3. If the audio file is changed, this will need to be updated.
 const E3 = 164.81; // Hz
@@ -124,12 +122,12 @@ const toPlaybackRate = ( value: number ): number => Math.pow( 2, toStep( value )
 
 export default class NumberTone {
 
-  public static play( model: CAVModel, sceneModel: CAVSoccerSceneModel, value: number ): void {
-    if ( model.isPlayAreaMedianVisibleProperty.value && !model.isPlayAreaMeanVisibleProperty.value && sceneModel.medianValueProperty.value !== null ) {
-      NumberTone.playMedian( sceneModel.medianValueProperty.value );
+  public static play( isPlayAreaMedianVisible: boolean, isPlayAreaMeanVisible: boolean, medianValue: number | null, meanValue: number | null, value: number ): void {
+    if ( isPlayAreaMedianVisible && !isPlayAreaMeanVisible && medianValue !== null ) {
+      NumberTone.playMedian( medianValue );
     }
-    else if ( !model.isPlayAreaMedianVisibleProperty.value && model.isPlayAreaMeanVisibleProperty.value && sceneModel.meanValueProperty.value !== null ) {
-      NumberTone.playMedian( sceneModel.meanValueProperty.value );
+    else if ( !isPlayAreaMedianVisible && isPlayAreaMeanVisible && meanValue !== null ) {
+      NumberTone.playMean( meanValue );
     }
     else {
       NumberTone.playValue( value );

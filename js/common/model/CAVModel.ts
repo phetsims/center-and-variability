@@ -71,7 +71,12 @@ export default class CAVModel extends PhetioObject {
     this.sceneModels.forEach( sceneModel => {
       sceneModel.soccerBalls.forEach( soccerBall => {
         soccerBall.toneEmitter.addListener( value => {
-          NumberTone.play( this, sceneModel, value );
+          NumberTone.play(
+            this.isPlayAreaMedianVisibleProperty.value,
+            this.isPlayAreaMeanVisibleProperty.value,
+            sceneModel.medianValueProperty.value,
+            sceneModel.meanValueProperty.value,
+            value );
         } );
       } );
     } );
