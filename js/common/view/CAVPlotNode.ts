@@ -23,11 +23,12 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import CAVNumberLineNode from './CAVNumberLineNode.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 import TProperty from '../../../../axon/js/TProperty.js';
+import RepresentationContext from '../model/RepresentationContext.js';
 
 //REVIEW document options
 type SelfOptions = {
   dataPointFill: TColor;
-  parentContext: 'accordion' | 'info';
+  parentContext: RepresentationContext;
   isMeanAndMedianInfoPlot?: boolean;
 };
 

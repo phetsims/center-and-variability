@@ -25,9 +25,10 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import NeedAtLeastNKicksText from '../../common/view/NeedAtLeastNKicksText.js';
+import RepresentationContext from '../../common/model/RepresentationContext.js';
 
 type SelfOptions = {
-  parentContext: 'accordion' | 'info';
+  parentContext: RepresentationContext;
 };
 type MADNodeOptions = SelfOptions & StrictOmit<CAVPlotNodeOptions, 'dataPointFill'> & PickRequired<CAVPlotNodeOptions, 'tandem'>;
 

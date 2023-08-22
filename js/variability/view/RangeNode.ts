@@ -21,9 +21,10 @@ import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js'
 import IntervalBarNode from '../../common/view/IntervalBarNode.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import NeedAtLeastNKicksText from '../../common/view/NeedAtLeastNKicksText.js';
+import RepresentationContext from '../../common/model/RepresentationContext.js';
 
 type SelfOptions = {
-  parentContext: 'accordion' | 'info';
+  parentContext: RepresentationContext;
 };
 type RangeNodeOptions = SelfOptions & StrictOmit<CAVPlotNodeOptions, 'dataPointFill'>;
 

@@ -25,12 +25,13 @@ import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Property from '../../../../axon/js/Property.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import RepresentationContext from '../../common/model/RepresentationContext.js';
 
 type SelfOptions = {
 
-  // accordionBox is the full-featured interactive version with drag input and sound effects
-  // info is the non-interactive version used in the info dialog
-  parentContext: 'info' | 'accordion';
+  // 'accordionBox': the full-featured interactive version with drag input and sound effects
+  // 'info': the non-interactive version used in the info dialog
+  parentContext: RepresentationContext;
 };
 
 export type CardContainerModelOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'> &
