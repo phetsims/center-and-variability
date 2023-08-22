@@ -12,6 +12,9 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import { Shape } from '../../../../kite/js/imports.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 
+// The length of the lines that extend perpendicularly from the ends of the bar
+const DROP_LINE_LENGTH = 6;
+
 type SelfOptions = EmptySelfOptions;
 export type IntervalBarNodeOptions = SelfOptions & PathOptions;
 
@@ -38,9 +41,6 @@ export default class IntervalBarNode extends Path {
 
   public updateShape(): void {
     const shape = new Shape();
-
-    // The length of the lines that extend perpendicularly from the ends of the bar
-    const DROP_LINE_LENGTH = 6;
 
     const leftCorner = new Vector2( 0, 0 );
     const rightCorner = new Vector2( this.intervalBarNodeWidth, 0 );
