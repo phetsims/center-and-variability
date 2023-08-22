@@ -18,7 +18,6 @@ import CAVColors from '../../common/CAVColors.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
-import SoccerBall from '../../../../soccer-common/js/model/SoccerBall.js';
 import IntervalBarNode from '../../common/view/IntervalBarNode.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import NeedAtLeastNKicksText from '../../common/view/NeedAtLeastNKicksText.js';
@@ -63,12 +62,12 @@ export default class RangeNode extends CAVPlotNode {
 
       const sortedDots = sceneModel.getSortedLandedObjects();
 
-      const leftmostDot = sortedDots[ 0 ] as SoccerBall | undefined;
-      const rightmostDot = sortedDots[ sortedDots.length - 1 ] as SoccerBall | undefined;
+      const leftmostDot = sortedDots[ 0 ];
+      const rightmostDot = sortedDots[ sortedDots.length - 1 ];
 
       // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card
-      const hasNonZeroRange = !!leftmostDot &&
-                              !!rightmostDot &&
+      const hasNonZeroRange = leftmostDot &&
+                              rightmostDot &&
                               leftmostDot.valueProperty.value !== rightmostDot.valueProperty.value;
       if ( hasNonZeroRange ) {
         const left = this.modelViewTransform.modelToViewX( leftmostDot.valueProperty.value! );
