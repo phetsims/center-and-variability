@@ -1,4 +1,4 @@
-// Copyright 2022-2023, University of Colorado Boulder
+// Copyright 2023, University of Colorado Boulder
 
 /**
  * Shows text in the accordion box and info dialogs when more data is needed to compute a particular statistic.
