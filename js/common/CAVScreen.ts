@@ -25,7 +25,11 @@ export default class CAVScreen<M extends CAVModel, V extends CAVScreenView> exte
 
     const options = optionize<CAVScreenOptions, SelfOptions, ScreenOptions>()( {
       backgroundColorProperty: CAVColors.screenBackgroundColorProperty,
-      createKeyboardHelpNode: () => new SliderControlsAndBasicActionsKeyboardHelpContent(),
+      createKeyboardHelpNode: () => new SliderControlsAndBasicActionsKeyboardHelpContent( {
+        generalSectionOptions: {
+          withCheckboxContent: true
+        }
+      } ),
       isDisposable: false
     }, providedOptions );
 
