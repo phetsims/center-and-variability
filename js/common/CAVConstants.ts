@@ -23,13 +23,6 @@ import { AlignGroup } from '../../../scenery/js/imports.js';
 import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
 import Bounds2 from '../../../dot/js/Bounds2.js';
 
-// Right skewed means most of the data is on the left, see https://github.com/phetsims/center-and-variability/issues/112
-const RIGHT_SKEWED_DATA = [
-  10, 25, 45, 30, 18,
-  12, 10, 5, 4, 4,
-  4, 4, 4, 4, 4
-];
-
 const NUMBER_LINE_MARGIN_X = 207;
 
 // scales are empirically determined so that data points cut off when outside of
@@ -76,8 +69,6 @@ const CAVConstants = {
     tandem: Tandem.PREFERENCES.createTandem( 'plotTypeProperty' ),
     phetioFeatured: true
   } ),
-  RIGHT_SKEWED_DATA: RIGHT_SKEWED_DATA,
-  LEFT_SKEWED_DATA: RIGHT_SKEWED_DATA.slice().reverse(),
 
   CHART_VIEW_WIDTH: CHART_VIEW_WIDTH,
   NUMBER_LINE_MARGIN_X: NUMBER_LINE_MARGIN_X,

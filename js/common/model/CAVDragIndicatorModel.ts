@@ -7,12 +7,13 @@
  * @author Marla Schulz (PhET Interactive Simulations)
  */
 
-import DragIndicatorModel, { UpdateDragIndicatorSceneModel } from '../../../../soccer-common/js/model/DragIndicatorModel.js';
+import DragIndicatorModel from '../../../../soccer-common/js/model/DragIndicatorModel.js';
 import centerAndVariability from '../../centerAndVariability.js';
+import CAVSoccerSceneModel from './CAVSoccerSceneModel.js';
 
 export default class CAVDragIndicatorModel extends DragIndicatorModel {
 
-  public override updateDragIndicator( sceneModel: UpdateDragIndicatorSceneModel, soccerBallHasBeenDragged: boolean, soccerBallCount: number, maxKicks: number ): void {
+  public override updateDragIndicator( sceneModel: Pick<CAVSoccerSceneModel, 'getStackAtValue' | 'medianValueProperty' | 'getTopSoccerBalls' | 'getActiveSoccerBalls'>, soccerBallHasBeenDragged: boolean, soccerBallCount: number, maxKicks: number ): void {
     super.updateDragIndicator( sceneModel, soccerBallHasBeenDragged, soccerBallCount, maxKicks );
 
     // Empirically determined based on height of AccordionBox and play area. This may need to be adjusted if those change.
