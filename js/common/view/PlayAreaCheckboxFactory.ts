@@ -61,7 +61,7 @@ export default class PlayAreaCheckboxFactory {
         );
       },
       property: model.isIntervalToolVisibleProperty,
-      tandemName: 'variabilityCheckbox'
+      tandemName: 'intervalToolCheckbox'
     };
   }
 

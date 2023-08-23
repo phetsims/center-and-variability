@@ -86,17 +86,17 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     const checkboxToggleNode = new AlignBox( new ToggleNode( model.selectedVariabilityMeasureProperty, [ {
       createNode: () => CAVConstants.ACCORDION_BOX_VERTICAL_CHECKBOX_GROUP.createBox( new VariabilityMeasureCheckbox( model.isRangeVisibleProperty,
         CenterAndVariabilityStrings.rangeStringProperty, CAVColors.rangeFillProperty,
-        { tandem: checkboxesTandem.createTandem( 'rangeAccordionCheckbox' ) } ), { yAlign: 'top' } ),
+        { tandem: checkboxesTandem.createTandem( 'rangeCheckbox' ) } ), { yAlign: 'top' } ),
       value: VariabilityMeasure.RANGE
     }, {
       createNode: () => CAVConstants.ACCORDION_BOX_VERTICAL_CHECKBOX_GROUP.createBox( new VariabilityMeasureCheckbox( model.isIQRVisibleProperty,
         CenterAndVariabilityStrings.iqrStringProperty, CAVColors.iqrColorProperty,
-        { tandem: checkboxesTandem.createTandem( 'iqrAccordionCheckbox' ) } ), { yAlign: 'top' } ),
+        { tandem: checkboxesTandem.createTandem( 'iqrCheckbox' ) } ), { yAlign: 'top' } ),
       value: VariabilityMeasure.IQR
     }, {
       createNode: () => CAVConstants.ACCORDION_BOX_VERTICAL_CHECKBOX_GROUP.createBox( new VariabilityMeasureCheckbox( model.isMADVisibleProperty,
         CenterAndVariabilityStrings.madStringProperty, CAVColors.madRectangleColorProperty,
-        { tandem: checkboxesTandem.createTandem( 'madAccordionCheckbox' ) } ), { yAlign: 'top' } ),
+        { tandem: checkboxesTandem.createTandem( 'madCheckbox' ) } ), { yAlign: 'top' } ),
       value: VariabilityMeasure.MAD
     } ], {
       alignChildren: ToggleNode.RIGHT

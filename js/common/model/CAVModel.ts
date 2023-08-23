@@ -74,7 +74,7 @@ export default class CAVModel extends SoccerModel<CAVSoccerSceneModel> {
     } );
 
     this.isAccordionBoxExpandedProperty = new BooleanProperty( true, {
-      tandem: options.accordionBoxTandem.createTandem( 'isAccordionBoxExpandedProperty' ),
+      tandem: options.accordionBoxTandem.createTandem( 'expandedProperty' ),
       phetioFeatured: true
     } );
 
