@@ -184,8 +184,8 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       soundPlayer: new SoundClipPlayer( erase_mp3, {
         soundClipOptions: { initialOutputLevel: 0.072 }
       } ),
-      touchAreaXDilation: 10,
-      touchAreaYDilation: 10
+      touchAreaXDilation: 6,
+      touchAreaYDilation: 6
     } );
 
     this.questionBar.visibleProperty.link( () => this.updateAccordionBoxPosition() );
