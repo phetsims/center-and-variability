@@ -43,10 +43,10 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import KickerCharacterSets from '../../../../soccer-common/js/view/KickerCharacterSets.js';
 import dragIndicatorHand_png from '../../../images/dragIndicatorHand_png.js';
-import InteractiveCueArrowNode from './InteractiveCueArrowNode.js';
 import SoccerSceneModel from '../../../../soccer-common/js/model/SoccerSceneModel.js';
 import SoccerScreenView, { SoccerScreenViewOptions } from '../../../../soccer-common/js/view/SoccerScreenView.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import InteractiveCueArrowNode from '../../../../soccer-common/js/view/InteractiveCueArrowNode.js';
 
 type SelfOptions = EmptySelfOptions;
 

@@ -12,7 +12,6 @@ import centerAndVariability from '../../centerAndVariability.js';
 import InteractiveCardContainerModel from '../model/InteractiveCardContainerModel.js';
 import Property from '../../../../axon/js/Property.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
-import InteractiveCueArrowNode from '../../common/view/InteractiveCueArrowNode.js';
 import { HighlightFromNode, HighlightPath, Image, KeyboardListener, Node, Path } from '../../../../scenery/js/imports.js';
 import dragIndicatorHand_png from '../../../images/dragIndicatorHand_png.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -30,6 +29,7 @@ import GrabReleaseCueNode from '../../../../scenery-phet/js/accessibility/nodes/
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import CelebrationNode from './CelebrationNode.js';
 import SoccerCommonConstants from '../../../../soccer-common/js/SoccerCommonConstants.js';
+import InteractiveCueArrowNode from '../../../../soccer-common/js/view/InteractiveCueArrowNode.js';
 
 const FOCUS_HIGHLIGHT_Y_MARGIN = CAVConstants.CARD_SPACING + 3;
 
