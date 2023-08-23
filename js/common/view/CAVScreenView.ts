@@ -7,15 +7,12 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
-import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVConstants from '../CAVConstants.js';
-import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import { AlignBox, Image, ManualConstraint, Node, Text, VBox } from '../../../../scenery/js/imports.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
-import QuestionBar, { QuestionBarOptions } from '../../../../scenery-phet/js/QuestionBar.js';
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import BackgroundNode from './BackgroundNode.js';
@@ -34,7 +31,6 @@ import Kicker from '../../../../soccer-common/js/model/Kicker.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import { SoccerBallPhase } from '../../../../soccer-common/js/model/SoccerBallPhase.js';
 import erase_mp3 from '../../../sounds/erase_mp3.js';
 import SoundClipPlayer from '../../../../tambo/js/sound-generators/SoundClipPlayer.js';
@@ -42,7 +38,6 @@ import SoccerCommonConstants from '../../../../soccer-common/js/SoccerCommonCons
 import CAVSceneView from './CAVSceneView.js';
 import CAVNumberLineNode from './CAVNumberLineNode.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
@@ -50,12 +45,12 @@ import KickerCharacterSets from '../../../../soccer-common/js/view/KickerCharact
 import dragIndicatorHand_png from '../../../images/dragIndicatorHand_png.js';
 import InteractiveCueArrowNode from './InteractiveCueArrowNode.js';
 import SoccerSceneModel from '../../../../soccer-common/js/model/SoccerSceneModel.js';
+import SoccerScreenView, { SoccerScreenViewOptions } from '../../../../soccer-common/js/view/SoccerScreenView.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 
-type SelfOptions = {
-  questionBarOptions: StrictOmit<QuestionBarOptions, 'tandem'>;
-};
+type SelfOptions = EmptySelfOptions;
 
-export type CAVScreenViewOptions = SelfOptions & ScreenViewOptions;
+export type CAVScreenViewOptions = SelfOptions & StrictOmit<SoccerScreenViewOptions, 'physicalRange' | 'chartViewWidth' | 'numberLineXMargin'>;
 
 // constants
 const GROUND_POSITION_Y = 515;
@@ -79,11 +74,7 @@ for ( let i = 0; i < CAVConstants.MAX_KICKS_VALUES[ CAVConstants.MAX_KICKS_VALUE
   ] );
 }
 
-export default class CAVScreenView extends ScreenView {
-
-  protected readonly resetAllButton: ResetAllButton;
-  protected readonly modelViewTransform: ModelViewTransform2;
-  protected readonly model: CAVModel;
+export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel, CAVModel> {
 
   // Subclasses add to the backScreenViewLayer for correct z-ordering and correct tab navigation order
   // Soccer balls go behind the accordion box after they land
@@ -99,44 +90,33 @@ export default class CAVScreenView extends ScreenView {
   // The accordion box in the top portion of the screen. Initializes as null and is set by setAccordionBox.
   protected accordionBox: CAVAccordionBox | null = null;
 
-  protected readonly questionBar: QuestionBar;
-  protected readonly playAreaNumberLineNode: NumberLineNode;
+  protected override readonly playAreaNumberLineNode: NumberLineNode;
   private readonly sceneViews: SoccerSceneView[];
 
   private readonly updateMedianNode: () => void;
   private readonly updateDragIndicatorNode: () => void;
-  protected readonly numberOfKicksProperty: DynamicProperty<number, number, CAVSoccerSceneModel>;
+
   protected readonly kickButtonGroup: KickButtonGroup;
 
   protected readonly soccerAreaTandem: Tandem;
 
   protected constructor( model: CAVModel, providedOptions: CAVScreenViewOptions ) {
-    const options = optionize<CAVScreenViewOptions, SelfOptions, ScreenViewOptions>()( {
-      isDisposable: false
+
+    const options = optionize<CAVScreenViewOptions, SelfOptions, SoccerScreenViewOptions>()( {
+      physicalRange: CAVConstants.PHYSICAL_RANGE,
+      chartViewWidth: CAVConstants.CHART_VIEW_WIDTH,
+      numberLineXMargin: CAVConstants.NUMBER_LINE_MARGIN_X
     }, providedOptions );
 
-    // View size of a soccer ball
-    const objectHeight = 41;
+    super( model, options );
 
-    // The ground is at y=0
-    const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping(
-      new Bounds2( CAVConstants.PHYSICAL_RANGE.min, 0, CAVConstants.PHYSICAL_RANGE.max, 1 ),
-      new Bounds2( CAVConstants.NUMBER_LINE_MARGIN_X, GROUND_POSITION_Y - objectHeight, CAVConstants.NUMBER_LINE_MARGIN_X + CAVConstants.CHART_VIEW_WIDTH, GROUND_POSITION_Y )
-    );
-
-    super( options );
     this.soccerAreaTandem = options.tandem.createTandem( 'soccerArea' );
-
-    this.numberOfKicksProperty = new DynamicProperty<number, number, CAVSoccerSceneModel>( model.selectedSceneModelProperty, { derive: 'numberOfDataPointsProperty' } );
-
-    this.modelViewTransform = modelViewTransform;
-    this.model = model;
 
     this.playAreaNumberLineNode = new CAVNumberLineNode(
       new DynamicProperty( model.selectedSceneModelProperty, {
         derive: 'meanValueProperty'
       } ),
-      modelViewTransform,
+      this.modelViewTransform,
       model.isPlayAreaMeanVisibleProperty,
       new DynamicProperty( model.selectedSceneModelProperty, {
         derive: 'dataRangeProperty'
@@ -154,7 +134,7 @@ export default class CAVScreenView extends ScreenView {
       model,
       sceneModel,
       ( kicker, sceneModel ) => this.getKickerImageSets( kicker, sceneModel ),
-      modelViewTransform,
+      this.modelViewTransform,
       CAVConstants.PHYSICAL_RANGE,
 
       // The variability screen has multiple scenes, and we want to connect these to a specific kicker, while the first
@@ -189,16 +169,6 @@ export default class CAVScreenView extends ScreenView {
       backLayerToggleNode
     ];
 
-    this.resetAllButton = new ResetAllButton( {
-      listener: () => {
-        this.interruptSubtreeInput(); // cancel interactions that may be in progress
-        model.reset();
-      },
-      right: this.layoutBounds.maxX - CAVConstants.SCREEN_VIEW_X_MARGIN,
-      bottom: this.layoutBounds.maxY - CAVConstants.SCREEN_VIEW_Y_MARGIN,
-      tandem: options.tandem.createTandem( 'resetAllButton' )
-    } );
-
     this.eraserButton = new EraserButton( {
       tandem: options.tandem.createTandem( 'eraserButton' ),
       listener: () => {
@@ -209,7 +179,7 @@ export default class CAVScreenView extends ScreenView {
         model.selectedSceneModelProperty.value.clearData();
       },
       iconWidth: 26,
-      right: this.resetAllButton.left - CAVConstants.SCREEN_VIEW_X_MARGIN,
+      right: this.resetAllButton.left - SoccerCommonConstants.SCREEN_VIEW_X_MARGIN,
       centerY: this.resetAllButton.centerY,
       soundPlayer: new SoundClipPlayer( erase_mp3, {
         soundClipOptions: { initialOutputLevel: 0.072 }
@@ -218,27 +188,13 @@ export default class CAVScreenView extends ScreenView {
       touchAreaYDilation: 10
     } );
 
-    this.questionBar = new QuestionBar( this.layoutBounds, this.visibleBoundsProperty, combineOptions<QuestionBarOptions>( {
-      barHeight: 50,
-      tandem: options.tandem.createTandem( 'questionBar' ),
-      textOptions: {
-        font: new PhetFont( {
-          weight: 'bold',
-          size: '20px'
-        } )
-      },
-      visiblePropertyOptions: {
-        phetioFeatured: true
-      }
-    }, options.questionBarOptions ) );
-
     this.questionBar.visibleProperty.link( () => this.updateAccordionBoxPosition() );
 
     this.kickButtonGroup = new KickButtonGroup( model, {
 
       // Center under where the soccer player nodes will be. Since the KickerNode are positioned in the
       // SceneView, we can't use those node bounds to position the kick buttons, so this is a manually tuned magic number.
-      centerX: modelViewTransform.modelToViewX( 0 ) - 63,
+      centerX: this.modelViewTransform.modelToViewX( 0 ) - 63,
 
       // Center between the ground and the bottom of the layout bounds.  Adjust because of the asymmetries:
       // the soccer player foot falls beneath the ground, and the shading of the buttons.
@@ -269,7 +225,7 @@ export default class CAVScreenView extends ScreenView {
       if ( dragIndicatorVisible && dragIndicatorValue ) {
 
         dragIndicatorArrowNode.center = new Vector2(
-          modelViewTransform.modelToViewX( dragIndicatorValue ),
+          this.modelViewTransform.modelToViewX( dragIndicatorValue ),
           this.getTopObjectPositionY( dragIndicatorValue ) - 5
         );
 
@@ -329,7 +285,7 @@ export default class CAVScreenView extends ScreenView {
       const visible = medianValue !== null && model.isPlayAreaMedianVisibleProperty.value;
 
       if ( visible ) {
-        playAreaMedianIndicatorNode.centerX = modelViewTransform.modelToViewX( medianValue );
+        playAreaMedianIndicatorNode.centerX = this.modelViewTransform.modelToViewX( medianValue );
         playAreaMedianIndicatorNode.bottom = this.getTopObjectPositionY( medianValue );
 
         // The arrow shouldn't overlap the accordion box
@@ -358,6 +314,7 @@ export default class CAVScreenView extends ScreenView {
     this.screenViewRootNode.addChild( this.frontScreenViewLayer );
 
     this.addChild( this.screenViewRootNode );
+    this.addGrabReleaseCue();
   }
 
   // calculate where the top object is at a given value

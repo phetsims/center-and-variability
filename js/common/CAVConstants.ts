@@ -52,8 +52,6 @@ const PLOT_NODE_TRANSFORM = ModelViewTransform2.createRectangleInvertedYMapping(
 const MAIN_FONT = new PhetFont( 16 );
 
 const CAVConstants = {
-  SCREEN_VIEW_X_MARGIN: 15,
-  SCREEN_VIEW_Y_MARGIN: 15,
   ACCORDION_BOX_TOP_MARGIN: 5,
   MAIN_FONT: MAIN_FONT,
   MAX_NUMBER_OF_CARDS: 15,
