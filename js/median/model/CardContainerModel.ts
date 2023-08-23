@@ -91,9 +91,12 @@ export default class CardContainerModel extends PhetioObject {
       } );
 
       card.isActiveProperty.link( isActive => {
+        if ( this.cards && !isSettingPhetioStateProperty.value ) {
+          this.numActiveCardsProperty.value = this.getCardsInCellOrder().length;
+        }
+
         if ( isActive && !isSettingPhetioStateProperty.value ) {
           const cardCells = this.getCardsInCellOrder();
-          this.numActiveCardsProperty.value = cardCells.length;
           let targetIndex = cardCells.length;
 
           // We want to auto-sort cards in the infoDialog no matter what the value for isSortingDataProperty is.
