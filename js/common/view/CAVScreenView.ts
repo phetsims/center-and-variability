@@ -177,7 +177,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
         // Interrupt dragging of existing objects
         this.interruptSubtreeInput();
 
-        model.selectedSceneModelProperty.value.clearData();
+        model.clearData();
       },
       iconWidth: 26,
       right: this.resetAllButton.left - SoccerCommonConstants.SCREEN_VIEW_X_MARGIN,
