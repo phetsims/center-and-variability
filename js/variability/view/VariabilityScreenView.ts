@@ -97,7 +97,7 @@ export default class VariabilityScreenView extends CAVScreenView {
           style: 'line' as const
         },
 
-        enabledRangeProperty: new Property<Range>( CAVConstants.PHYSICAL_RANGE ),
+        enabledRangeProperty: new Property<Range>( CAVConstants.VARIABILITY_DRAG_RANGE ),
         roundToInterval: null, // continuous
         visibleProperty: visibleProperty
       };
