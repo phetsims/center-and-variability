@@ -133,6 +133,8 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
     this.sceneViews = model.sceneModels.map( ( sceneModel, index ) => new CAVSceneView(
       model,
       sceneModel,
+      this.keyboardDragArrowNode,
+      this.keyboardSelectArrowNode,
       ( kicker, sceneModel ) => this.getKickerImageSets( kicker, sceneModel ),
       this.modelViewTransform,
       CAVConstants.PHYSICAL_RANGE,

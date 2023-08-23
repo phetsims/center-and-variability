@@ -29,6 +29,7 @@ import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioS
 import GrabReleaseCueNode from '../../../../scenery-phet/js/accessibility/nodes/GrabReleaseCueNode.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import CelebrationNode from './CelebrationNode.js';
+import SoccerCommonConstants from '../../../../soccer-common/js/SoccerCommonConstants.js';
 
 const FOCUS_HIGHLIGHT_Y_MARGIN = CAVConstants.CARD_SPACING + 3;
 
@@ -101,22 +102,8 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       visibleProperty: model.isGrabReleaseVisibleProperty // TODO rename? https://github.com/phetsims/center-and-variability/issues/433
     } );
 
-    const createKeyboardArrowNode = ( visibleProperty: TReadOnlyProperty<boolean> ) => new InteractiveCueArrowNode( {
-        doubleHead: true,
-        dashWidth: 3.5,
-        dashHeight: 2.8,
-        numberOfDashes: 2,
-        spacing: 2,
-        triangleNodeOptions: {
-          triangleWidth: 12,
-          triangleHeight: 11
-        },
-        visibleProperty: visibleProperty
-      }
-    );
-
-    const keyboardDragArrowNode = createKeyboardArrowNode( model.isKeyboardDragArrowVisibleProperty );
-    const keyboardSelectArrowNode = createKeyboardArrowNode( model.isKeyboardSelectArrowVisibleProperty );
+    const keyboardDragArrowNode = SoccerCommonConstants.CREATE_KEYBOARD_ARROW_NODE( model.isKeyboardDragArrowVisibleProperty );
+    const keyboardSelectArrowNode = SoccerCommonConstants.CREATE_KEYBOARD_ARROW_NODE( model.isKeyboardSelectArrowVisibleProperty );
 
     this.addChild( keyboardDragArrowNode );
     this.addChild( keyboardSelectArrowNode );

@@ -19,17 +19,20 @@ import { KickerImageSet } from '../../../../soccer-common/js/view/KickerCharacte
 import Range from '../../../../dot/js/Range.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import { Node } from '../../../../scenery/js/imports.js';
 
 export default class CAVSceneView extends SoccerSceneView {
 
   public constructor( model: CAVModel,
                       sceneModel: CAVSoccerSceneModel,
+                      keyboardDragArrowNode: Node,
+                      keyboardSelectArrowNode: Node,
                       getKickerImageSet: ( kicker: Kicker, sceneModel: SoccerSceneModel ) => KickerImageSet[],
                       modelViewTransform: ModelViewTransform2,
                       physicalRange: Range,
                       tandem: Tandem ) {
 
-    super( model, sceneModel, model.dragIndicatorModel.soccerBallHasBeenDraggedProperty, getKickerImageSet, modelViewTransform, physicalRange, tandem );
+    super( model, sceneModel, keyboardDragArrowNode, keyboardSelectArrowNode, model.dragIndicatorModel.soccerBallHasBeenDraggedProperty, getKickerImageSet, modelViewTransform, physicalRange, tandem );
 
     const medianHighlightLayer = new MedianHighlightLayer( sceneModel, modelViewTransform, model.isPlayAreaMedianVisibleProperty, {
       visibleProperty: model.isPlayAreaMedianVisibleProperty
