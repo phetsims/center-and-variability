@@ -1,7 +1,8 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * A subclass of the SoccerScene Model. Tracks the median, and data range for the scene.
+ * Tracks the median, and data range for the scene. The Median and Mean & Median screens have one scene model.
+ * The Variability screen has four scene models.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
  *
