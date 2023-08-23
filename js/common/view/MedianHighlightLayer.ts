@@ -15,13 +15,13 @@ import CAVObjectType from '../model/CAVObjectType.js';
 import CAVColors from '../CAVColors.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import SoccerCommonConstants from '../../../../soccer-common/js/SoccerCommonConstants.js';
-import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
+import SoccerBall from '../../../../soccer-common/js/model/SoccerBall.js';
 
 type SelfOptions = EmptySelfOptions;
 type MedianHighlightLayerOptions = SelfOptions & NodeOptions;
 
 export default class MedianHighlightLayer extends Node {
-  public constructor( sceneModel: CAVSoccerSceneModel, modelViewTransform: ModelViewTransform2, isPlayAreaMedianVisibleProperty: TReadOnlyProperty<boolean>, providedOptions: MedianHighlightLayerOptions ) {
+  public constructor( soccerBalls: SoccerBall[], modelViewTransform: ModelViewTransform2, isPlayAreaMedianVisibleProperty: TReadOnlyProperty<boolean>, providedOptions: MedianHighlightLayerOptions ) {
 
     const LINE_WIDTH = 2;
     const viewRadius = modelViewTransform.modelToViewDeltaX( CAVObjectType.SOCCER_BALL.radius * ( 1 - SoccerCommonConstants.SOCCER_BALL_OVERLAP ) );
@@ -45,7 +45,7 @@ export default class MedianHighlightLayer extends Node {
 
       // Lots of guards to make sure we don't waste performance
       if ( isPlayAreaMedianVisibleProperty.value ) {
-        const medianObjects = sceneModel.soccerBalls.filter( soccerBall => soccerBall.isMedianObjectProperty.value );
+        const medianObjects = soccerBalls.filter( soccerBall => soccerBall.isMedianObjectProperty.value );
 
         circle1.visible = medianObjects.length > 0;
         circle2.visible = medianObjects.length > 1;
@@ -59,7 +59,7 @@ export default class MedianHighlightLayer extends Node {
       }
     };
 
-    sceneModel.soccerBalls.forEach( soccerBall => {
+    soccerBalls.forEach( soccerBall => {
       soccerBall.isMedianObjectProperty.link( update );
       soccerBall.valueProperty.link( update );
     } );
