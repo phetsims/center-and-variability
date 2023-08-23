@@ -44,9 +44,8 @@ import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import KickerCharacterSets from '../../../../soccer-common/js/view/KickerCharacterSets.js';
 import dragIndicatorHand_png from '../../../images/dragIndicatorHand_png.js';
 import SoccerSceneModel from '../../../../soccer-common/js/model/SoccerSceneModel.js';
-import SoccerScreenView, { SoccerScreenViewOptions } from '../../../../soccer-common/js/view/SoccerScreenView.js';
+import SoccerScreenView, { DRAG_CUE_SCALE, SoccerScreenViewOptions } from '../../../../soccer-common/js/view/SoccerScreenView.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import InteractiveCueArrowNode from '../../../../soccer-common/js/view/InteractiveCueArrowNode.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -208,11 +207,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       }
     } );
 
-    const dragIndicatorArrowNode = new InteractiveCueArrowNode( {
-      doubleHead: true,
-      numberOfDashes: 2,
-      visibleProperty: model.dragIndicatorModel.isDragIndicatorVisibleProperty
-    } );
+    const dragIndicatorArrowNode = SoccerCommonConstants.CREATE_KEYBOARD_ARROW_NODE( model.dragIndicatorModel.isDragIndicatorVisibleProperty, DRAG_CUE_SCALE );
 
     const dragIndicatorHandImage = new Image( dragIndicatorHand_png, {
       scale: 0.07,
@@ -228,7 +223,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
 
         dragIndicatorArrowNode.center = new Vector2(
           this.modelViewTransform.modelToViewX( dragIndicatorValue ),
-          this.getTopObjectPositionY( dragIndicatorValue ) - 5
+          this.getTopObjectPositionY( dragIndicatorValue ) - 8
         );
 
         // The arrow shouldn't overlap the accordion box
@@ -243,7 +238,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
     ManualConstraint.create( this, [ dragIndicatorArrowNode ], dragIndicatorArrowNodeProxy => {
 
       // Pixel adjustments needed with rotation option on dragIndicatorHandImage and empirically determined to match design
-      dragIndicatorHandImage.right = dragIndicatorArrowNodeProxy.left + 19;
+      dragIndicatorHandImage.right = dragIndicatorArrowNodeProxy.left + 22;
       dragIndicatorHandImage.top = dragIndicatorArrowNodeProxy.bottom + Math.abs( this.modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) ) - 5;
     } );
 

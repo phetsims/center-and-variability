@@ -116,6 +116,7 @@ export default class CAVModel extends SoccerModel<CAVSoccerSceneModel> {
     const allValueProperties = sceneModels.flatMap( sceneModel => sceneModel.soccerBalls.map( soccerBall => soccerBall.valueProperty ) );
 
     this.dragIndicatorModel = new CAVDragIndicatorModel(
+      this.isKeyboardFocusedProperty,
       this.soccerBallsEnabledProperty,
       this.soccerAreaTandem.createTandem( 'soccerBallDragIndicatorModel' )
     );

@@ -15,13 +15,13 @@ import CAVObjectType from '../model/CAVObjectType.js';
 import CAVColors from '../CAVColors.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import SoccerCommonConstants from '../../../../soccer-common/js/SoccerCommonConstants.js';
-import SoccerBall from '../../../../soccer-common/js/model/SoccerBall.js';
+import CAVSoccerBall from '../model/CAVSoccerBall.js';
 
 type SelfOptions = EmptySelfOptions;
 type MedianHighlightLayerOptions = SelfOptions & NodeOptions;
 
 export default class MedianHighlightLayer extends Node {
-  public constructor( soccerBalls: SoccerBall[], modelViewTransform: ModelViewTransform2, isPlayAreaMedianVisibleProperty: TReadOnlyProperty<boolean>, providedOptions: MedianHighlightLayerOptions ) {
+  public constructor( soccerBalls: CAVSoccerBall[], modelViewTransform: ModelViewTransform2, isPlayAreaMedianVisibleProperty: TReadOnlyProperty<boolean>, providedOptions: MedianHighlightLayerOptions ) {
 
     const LINE_WIDTH = 2;
     const viewRadius = modelViewTransform.modelToViewDeltaX( CAVObjectType.SOCCER_BALL.radius * ( 1 - SoccerCommonConstants.SOCCER_BALL_OVERLAP ) );
