@@ -19,7 +19,9 @@ export default class VariabilityKeyboardHelpPredictSection extends KeyboardHelpS
       KeyboardHelpSectionRow.labelWithIcon( 'Move in smaller steps', KeyboardHelpIconFactory.shiftPlusIcon( KeyboardHelpIconFactory.leftRightArrowKeysRowIcon() ) ),
       KeyboardHelpSectionRow.labelWithIcon( 'Move in larger steps', KeyboardHelpIconFactory.pageUpPageDownRowIcon() ),
       KeyboardHelpSectionRow.labelWithIcon( 'Jump to start of number line', TextKeyNode.home() ),
-      KeyboardHelpSectionRow.labelWithIcon( 'Jump to end of number line', TextKeyNode.end() ) ] );
+      KeyboardHelpSectionRow.labelWithIcon( 'Jump to end of number line', TextKeyNode.end() ) ], {
+      headingOptions: { lineWrap: 300 }
+    } );
   }
 }
 
