@@ -15,7 +15,7 @@ import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 
 const variabilityStrings = CenterAndVariabilityStrings.a11y.keyboardHelpDialog.variabilityScreen;
 
-export default class VariabilityKeyboardHelpPredictSection extends KeyboardHelpSection {
+export default class VariabilityKeyboardHelpSection extends KeyboardHelpSection {
   public constructor() {
 
     super( variabilityStrings.movePointerIntervalHandleOrIntervalBlockStringProperty, [
@@ -29,4 +29,4 @@ export default class VariabilityKeyboardHelpPredictSection extends KeyboardHelpS
   }
 }
 
-centerAndVariability.register( 'VariabilityKeyboardHelpPredictSection', VariabilityKeyboardHelpPredictSection );
+centerAndVariability.register( 'VariabilityKeyboardHelpSection', VariabilityKeyboardHelpSection );
