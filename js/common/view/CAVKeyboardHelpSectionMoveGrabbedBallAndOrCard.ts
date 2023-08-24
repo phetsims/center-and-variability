@@ -22,7 +22,7 @@ import TextKeyNode from '../../../../scenery-phet/js/keyboard/TextKeyNode.js';
 import NumberKeyNode from '../../../../scenery-phet/js/keyboard/NumberKeyNode.js';
 
 export default class CAVKeyboardHelpSectionMoveGrabbedBallAndOrCard extends KeyboardHelpSection {
-  public constructor( title: string, moveMessage: string ) {
+  public constructor( title: string, moveMessage: string, jumpStartMessage: string, jumpEndMessage: string ) {
     super( title, [ KeyboardHelpSectionRow.labelWithIcon( moveMessage, KeyboardHelpIconFactory.iconOrIcon(
       KeyboardHelpIconFactory.leftRightArrowKeysRowIcon(),
       KeyboardHelpIconFactory.iconRow( [ LetterKeyNode.a(), LetterKeyNode.d() ], { spacing: 1.3 } )
@@ -30,10 +30,10 @@ export default class CAVKeyboardHelpSectionMoveGrabbedBallAndOrCard extends Keyb
       'Move in larger steps',
       KeyboardHelpIconFactory.pageUpPageDownRowIcon()
     ), KeyboardHelpSectionRow.labelWithIcon(
-      'Jump to start of cards or number line',
+      jumpStartMessage,
       TextKeyNode.home(), { labelOptions: { lineWrap: 200 } }
     ), KeyboardHelpSectionRow.labelWithIcon(
-      'Jump to end of cards or number line',
+      jumpEndMessage,
       TextKeyNode.end(), { labelOptions: { lineWrap: 200 } }
     ), KeyboardHelpSectionRow.labelWithIcon(
       'Jump ball to tick mark',

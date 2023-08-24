@@ -17,7 +17,7 @@ export default class MedianKeyboardHelpNode extends CAVKeyboardHelpNode {
   public constructor() {
     super( [
       new CAVKeyboardHelpSectionGrabOrRelease( 'Grab or Release Ball or Card' ),
-      new CAVKeyboardHelpSectionMoveGrabbedBallAndOrCard( 'Move Grabbed Ball or Card', 'Move grabbed ball or card' ),
+      new CAVKeyboardHelpSectionMoveGrabbedBallAndOrCard( 'Move Grabbed Ball or Card', 'Move grabbed ball or card', 'Jump to start of cards or number line', 'Jump to end of cards or number line' ),
       new MedianKeyboardHelpPredictMedianSection()
     ] );
   }

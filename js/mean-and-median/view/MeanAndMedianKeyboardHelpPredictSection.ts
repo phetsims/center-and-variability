@@ -14,7 +14,7 @@ import TextKeyNode from '../../../../scenery-phet/js/keyboard/TextKeyNode.js';
 
 export default class MeanAndMedianKeyboardHelpPredictSection extends KeyboardHelpSection {
   public constructor() {
-    super( 'Predict Median or Mean', [
+    super( 'Predict Mean or Median', [
       KeyboardHelpSectionRow.labelWithIcon( 'Move prediction pointer',
         KeyboardHelpIconFactory.leftRightArrowKeysRowIcon() ),
       KeyboardHelpSectionRow.labelWithIcon(
