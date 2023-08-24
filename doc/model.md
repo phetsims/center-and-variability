@@ -14,9 +14,9 @@ Creating distributions of kicked soccer balls: The simulation allows students to
 creating a
 distribution of distances. On the "Median" and "Mean and Median" screens, the kicker changes after each kick, creating a
 distribution
-of kicks by different people. On the 'Variability' screen, the student can choose between four kickers, creating and
+of kicks by different players. On the 'Variability' screen, the student can choose between four kickers, creating and
 comparing distributions
-of repeated kicks by each person.
+of repeated kicks by each player.
 
 Adjusting distributions of kicked soccer balls: The simulation allows students to change the position of landed soccer
 balls by dragging.
