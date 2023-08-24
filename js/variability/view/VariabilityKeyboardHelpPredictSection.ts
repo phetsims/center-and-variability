@@ -11,15 +11,19 @@ import KeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/Keybo
 import KeyboardHelpSectionRow from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpSectionRow.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import TextKeyNode from '../../../../scenery-phet/js/keyboard/TextKeyNode.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
+
+const variabilityStrings = CenterAndVariabilityStrings.a11y.keyboardHelpDialog.variabilityScreen;
 
 export default class VariabilityKeyboardHelpPredictSection extends KeyboardHelpSection {
   public constructor() {
-    super( 'Move Pointer, Interval Handles, or Interval Block', [
-      KeyboardHelpSectionRow.labelWithIcon( 'Move', KeyboardHelpIconFactory.leftRightArrowKeysRowIcon() ),
-      KeyboardHelpSectionRow.labelWithIcon( 'Move in smaller steps', KeyboardHelpIconFactory.shiftPlusIcon( KeyboardHelpIconFactory.leftRightArrowKeysRowIcon() ) ),
-      KeyboardHelpSectionRow.labelWithIcon( 'Move in larger steps', KeyboardHelpIconFactory.pageUpPageDownRowIcon() ),
-      KeyboardHelpSectionRow.labelWithIcon( 'Jump to start of number line', TextKeyNode.home() ),
-      KeyboardHelpSectionRow.labelWithIcon( 'Jump to end of number line', TextKeyNode.end() ) ], {
+
+    super( variabilityStrings.movePointerIntervalHandleOrIntervalBlockStringProperty, [
+      KeyboardHelpSectionRow.labelWithIcon( variabilityStrings.moveStringProperty, KeyboardHelpIconFactory.leftRightArrowKeysRowIcon() ),
+      KeyboardHelpSectionRow.labelWithIcon( variabilityStrings.moveInSmallerStepsStringProperty, KeyboardHelpIconFactory.shiftPlusIcon( KeyboardHelpIconFactory.leftRightArrowKeysRowIcon() ) ),
+      KeyboardHelpSectionRow.labelWithIcon( variabilityStrings.moveInLargerStepsStringProperty, KeyboardHelpIconFactory.pageUpPageDownRowIcon() ),
+      KeyboardHelpSectionRow.labelWithIcon( variabilityStrings.jumpToStartOfNumberLineStringProperty, TextKeyNode.home() ),
+      KeyboardHelpSectionRow.labelWithIcon( variabilityStrings.jumpToEndOfNumberLineStringProperty, TextKeyNode.end() ) ], {
       headingOptions: { lineWrap: 300 }
     } );
   }

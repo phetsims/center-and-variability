@@ -79,6 +79,18 @@ type StringsType = {
   'outliersDescriptionStringProperty': LocalizedStringProperty;
   'valueKicksPatternStringProperty': LocalizedStringProperty;
   'pointerStringProperty': LocalizedStringProperty;
+  'a11y': {
+    'keyboardHelpDialog': {
+      'variabilityScreen': {
+        'movePointerIntervalHandleOrIntervalBlockStringProperty': LocalizedStringProperty;
+        'moveStringProperty': LocalizedStringProperty;
+        'moveInSmallerStepsStringProperty': LocalizedStringProperty;
+        'moveInLargerStepsStringProperty': LocalizedStringProperty;
+        'jumpToStartOfNumberLineStringProperty': LocalizedStringProperty;
+        'jumpToEndOfNumberLineStringProperty': LocalizedStringProperty;
+      }
+    }
+  }
 };
 
 const CenterAndVariabilityStrings = getStringModule( 'CENTER_AND_VARIABILITY' ) as StringsType;

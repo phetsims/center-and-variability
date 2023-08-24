@@ -196,5 +196,29 @@
   },
   "pointer": {
     "value": "Pointer"
+  },
+  "a11y": {
+    "keyboardHelpDialog": {
+      "variabilityScreen": {
+        "movePointerIntervalHandleOrIntervalBlock": {
+          "value": "Move Pointer, Interval Handles, or Interval Block"
+        },
+        "move": {
+          "value": "Move"
+        },
+        "moveInSmallerSteps": {
+          "value": "Move in smaller steps"
+        },
+        "moveInLargerSteps": {
+          "value": "Move in larger steps"
+        },
+        "jumpToStartOfNumberLine": {
+          "value": "Jump to start of number line"
+        },
+        "jumpToEndOfNumberLine": {
+          "value": "Jump to end of number line"
+        }
+      }
+    }
   }
 }
