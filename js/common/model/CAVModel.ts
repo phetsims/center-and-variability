@@ -147,15 +147,14 @@ export default class CAVModel extends SoccerModel<CAVSoccerSceneModel> {
   }
 
   public override reset(): void {
+    super.reset();
+
     this.predictMedianValueProperty.reset();
 
     this.isPlayAreaMeanVisibleProperty.reset();
     this.isPlayAreaMedianVisibleProperty.reset();
 
     this.isPredictMedianVisibleProperty.reset();
-
-    // TODO: double check if order matters here, see: https://github.com/phetsims/center-and-variability/issues/500
-    super.reset();
 
     this.dragIndicatorModel.reset();
     this.isAccordionBoxExpandedProperty.reset();
