@@ -82,17 +82,32 @@ type StringsType = {
   'a11y': {
     'keyboardHelpDialog': {
       'grabOrReleaseBallStringProperty': LocalizedStringProperty;
+      'moveGrabbedBallTitleStringProperty': LocalizedStringProperty;
+      'moveGrabbedBallStringProperty': LocalizedStringProperty;
       'grabOrReleaseStringProperty': LocalizedStringProperty;
+      'jumpToStartOfNumberLineStringProperty': LocalizedStringProperty;
+      'jumpToEndOfNumberLineStringProperty': LocalizedStringProperty;
+      'jumpBallToTickMarkStringProperty': LocalizedStringProperty;
+      'moveInLargerStepsStringProperty': LocalizedStringProperty;
       'medianScreen': {
         'grabOrReleaseBallOrCardStringProperty': LocalizedStringProperty;
+        'moveGrabbedBallOrCardTitleStringProperty': LocalizedStringProperty;
+        'moveGrabbedBallOrCardStringProperty': LocalizedStringProperty;
+        'jumpToStartOfCardsOrNumberLineStringProperty': LocalizedStringProperty;
+        'jumpToEndOfCardsOrNumberLineStringProperty': LocalizedStringProperty;
+        'movePredictMedianStringProperty': LocalizedStringProperty;
+      };
+      'meanAndMedianScreen': {
+        'predictMeanOrMedianStringProperty': LocalizedStringProperty;
+        'movePredictionPointerStringProperty': LocalizedStringProperty;
+        'movePredictionPointerInLargerStepsStringProperty': LocalizedStringProperty;
+        'movePredictionPointerInSmallerStepsStringProperty': LocalizedStringProperty;
       };
       'variabilityScreen': {
         'movePointerIntervalHandleOrIntervalBlockStringProperty': LocalizedStringProperty;
         'moveStringProperty': LocalizedStringProperty;
         'moveInSmallerStepsStringProperty': LocalizedStringProperty;
         'moveInLargerStepsStringProperty': LocalizedStringProperty;
-        'jumpToStartOfNumberLineStringProperty': LocalizedStringProperty;
-        'jumpToEndOfNumberLineStringProperty': LocalizedStringProperty;
       }
     }
   }

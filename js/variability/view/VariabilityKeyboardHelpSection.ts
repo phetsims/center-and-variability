@@ -13,17 +13,15 @@ import centerAndVariability from '../../centerAndVariability.js';
 import TextKeyNode from '../../../../scenery-phet/js/keyboard/TextKeyNode.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 
-const variabilityStrings = CenterAndVariabilityStrings.a11y.keyboardHelpDialog.variabilityScreen;
-
 export default class VariabilityKeyboardHelpSection extends KeyboardHelpSection {
   public constructor() {
 
-    super( variabilityStrings.movePointerIntervalHandleOrIntervalBlockStringProperty, [
-      KeyboardHelpSectionRow.labelWithIcon( variabilityStrings.moveStringProperty, KeyboardHelpIconFactory.leftRightArrowKeysRowIcon() ),
-      KeyboardHelpSectionRow.labelWithIcon( variabilityStrings.moveInSmallerStepsStringProperty, KeyboardHelpIconFactory.shiftPlusIcon( KeyboardHelpIconFactory.leftRightArrowKeysRowIcon() ) ),
-      KeyboardHelpSectionRow.labelWithIcon( variabilityStrings.moveInLargerStepsStringProperty, KeyboardHelpIconFactory.pageUpPageDownRowIcon() ),
-      KeyboardHelpSectionRow.labelWithIcon( variabilityStrings.jumpToStartOfNumberLineStringProperty, TextKeyNode.home() ),
-      KeyboardHelpSectionRow.labelWithIcon( variabilityStrings.jumpToEndOfNumberLineStringProperty, TextKeyNode.end() ) ], {
+    super( CenterAndVariabilityStrings.a11y.keyboardHelpDialog.variabilityScreen.movePointerIntervalHandleOrIntervalBlockStringProperty, [
+      KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.a11y.keyboardHelpDialog.variabilityScreen.moveStringProperty, KeyboardHelpIconFactory.leftRightArrowKeysRowIcon() ),
+      KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.a11y.keyboardHelpDialog.variabilityScreen.moveInSmallerStepsStringProperty, KeyboardHelpIconFactory.shiftPlusIcon( KeyboardHelpIconFactory.leftRightArrowKeysRowIcon() ) ),
+      KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.a11y.keyboardHelpDialog.moveInLargerStepsStringProperty, KeyboardHelpIconFactory.pageUpPageDownRowIcon() ),
+      KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.a11y.keyboardHelpDialog.jumpToStartOfNumberLineStringProperty, TextKeyNode.home() ),
+      KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.a11y.keyboardHelpDialog.jumpToEndOfNumberLineStringProperty, TextKeyNode.end() ) ], {
       headingOptions: { lineWrap: 300 }
     } );
   }

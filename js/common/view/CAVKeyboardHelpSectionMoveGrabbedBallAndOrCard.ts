@@ -20,14 +20,21 @@ import centerAndVariability from '../../centerAndVariability.js';
 import LetterKeyNode from '../../../../scenery-phet/js/keyboard/LetterKeyNode.js';
 import TextKeyNode from '../../../../scenery-phet/js/keyboard/TextKeyNode.js';
 import NumberKeyNode from '../../../../scenery-phet/js/keyboard/NumberKeyNode.js';
+import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 
 export default class CAVKeyboardHelpSectionMoveGrabbedBallAndOrCard extends KeyboardHelpSection {
-  public constructor( title: string, moveMessage: string, jumpStartMessage: string, jumpEndMessage: string ) {
+  public constructor(
+    title: LocalizedStringProperty,
+    moveMessage: LocalizedStringProperty,
+    jumpStartMessage: LocalizedStringProperty,
+    jumpEndMessage: LocalizedStringProperty
+  ) {
     super( title, [ KeyboardHelpSectionRow.labelWithIcon( moveMessage, KeyboardHelpIconFactory.iconOrIcon(
       KeyboardHelpIconFactory.leftRightArrowKeysRowIcon(),
       KeyboardHelpIconFactory.iconRow( [ LetterKeyNode.a(), LetterKeyNode.d() ], { spacing: 1.3 } )
     ) ), KeyboardHelpSectionRow.labelWithIcon(
-      'Move in larger steps',
+      CenterAndVariabilityStrings.a11y.keyboardHelpDialog.moveInLargerStepsStringProperty,
       KeyboardHelpIconFactory.pageUpPageDownRowIcon()
     ), KeyboardHelpSectionRow.labelWithIcon(
       jumpStartMessage,
@@ -36,7 +43,7 @@ export default class CAVKeyboardHelpSectionMoveGrabbedBallAndOrCard extends Keyb
       jumpEndMessage,
       TextKeyNode.end(), { labelOptions: { lineWrap: 200 } }
     ), KeyboardHelpSectionRow.labelWithIcon(
-      'Jump ball to tick mark',
+      CenterAndVariabilityStrings.a11y.keyboardHelpDialog.jumpBallToTickMarkStringProperty,
       KeyboardHelpIconFactory.iconToIcon( new NumberKeyNode( 0 ), new NumberKeyNode( 9 ) )
     ) ] );
   }

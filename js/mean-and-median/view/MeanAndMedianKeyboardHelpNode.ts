@@ -18,7 +18,12 @@ export default class MeanAndMedianKeyboardHelpNode extends CAVKeyboardHelpNode {
   public constructor() {
     super( [
       new CAVKeyboardHelpSectionGrabOrRelease( CenterAndVariabilityStrings.a11y.keyboardHelpDialog.grabOrReleaseBallStringProperty ),
-      new CAVKeyboardHelpSectionMoveGrabbedBallAndOrCard( 'Move Grabbed Ball', 'Move grabbed ball', 'Jump to start of number line', 'Jump to end of number line' ),
+      new CAVKeyboardHelpSectionMoveGrabbedBallAndOrCard(
+        CenterAndVariabilityStrings.a11y.keyboardHelpDialog.moveGrabbedBallTitleStringProperty,
+        CenterAndVariabilityStrings.a11y.keyboardHelpDialog.moveGrabbedBallStringProperty,
+        CenterAndVariabilityStrings.a11y.keyboardHelpDialog.jumpToStartOfNumberLineStringProperty,
+        CenterAndVariabilityStrings.a11y.keyboardHelpDialog.jumpToEndOfNumberLineStringProperty
+      ),
       new MeanAndMedianKeyboardHelpPredictSection()
     ] );
   }

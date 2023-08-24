@@ -11,22 +11,23 @@ import KeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/Keybo
 import KeyboardHelpSectionRow from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpSectionRow.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import TextKeyNode from '../../../../scenery-phet/js/keyboard/TextKeyNode.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 
 export default class MedianKeyboardHelpPredictMedianSection extends KeyboardHelpSection {
   public constructor() {
     super( 'Predict Median', [
-      KeyboardHelpSectionRow.labelWithIcon( 'Move predict median',
+      KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.a11y.keyboardHelpDialog.medianScreen.movePredictMedianStringProperty,
         KeyboardHelpIconFactory.iconOrIcon(
           KeyboardHelpIconFactory.leftRightArrowKeysRowIcon(),
           KeyboardHelpIconFactory.upDownArrowKeysRowIcon()
         ) ), KeyboardHelpSectionRow.labelWithIcon(
-        'Move in larger steps',
+        CenterAndVariabilityStrings.a11y.keyboardHelpDialog.moveInLargerStepsStringProperty,
         KeyboardHelpIconFactory.pageUpPageDownRowIcon()
       ), KeyboardHelpSectionRow.labelWithIcon(
-        'Jump to start of number line',
+        CenterAndVariabilityStrings.a11y.keyboardHelpDialog.jumpToStartOfNumberLineStringProperty,
         TextKeyNode.home(), { labelOptions: { lineWrap: 200 } }
       ), KeyboardHelpSectionRow.labelWithIcon(
-        'Jump to end of number line',
+        CenterAndVariabilityStrings.a11y.keyboardHelpDialog.jumpToEndOfNumberLineStringProperty,
         TextKeyNode.end(), { labelOptions: { lineWrap: 200 } }
       ) ] );
   }
