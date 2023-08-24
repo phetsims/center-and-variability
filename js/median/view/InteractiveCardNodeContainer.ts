@@ -99,7 +99,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
     const grabReleaseCueNode = new GrabReleaseCueNode( {
       top: CAVConstants.CARD_DIMENSION + FOCUS_HIGHLIGHT_Y_MARGIN + 4,
-      visibleProperty: model.isGrabReleaseVisibleProperty // TODO rename? https://github.com/phetsims/center-and-variability/issues/433
+      visibleProperty: model.isGrabReleaseCueVisibleProperty
     } );
 
     const keyboardDragArrowNode = SoccerCommonConstants.CREATE_KEYBOARD_ARROW_NODE( model.isKeyboardDragArrowVisibleProperty );
@@ -108,7 +108,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
     this.addChild( keyboardDragArrowNode );
     this.addChild( keyboardSelectArrowNode );
 
-    const isDragIndicatorVisibleProperty = new DerivedProperty( [ this.inputEnabledProperty, model.hasKeyboardFocusProperty ],
+    const isDragIndicatorVisibleProperty = new DerivedProperty( [ this.inputEnabledProperty, model.isKeyboardFocusedProperty ],
       ( inputEnabled, hasKeyboardFocus ) => inputEnabled && !hasKeyboardFocus );
 
     const handWithArrowNode = new Node( {
@@ -216,11 +216,11 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
         if ( model.focusedCardProperty.value === null && activeCardNodes.length > 0 ) {
           model.focusedCardProperty.value = activeCardNodes[ 0 ].model;
         }
-        model.hasKeyboardFocusProperty.value = true;
+        model.isKeyboardFocusedProperty.value = true;
       },
       blur: () => {
         model.isCardGrabbedProperty.value = false;
-        model.hasKeyboardFocusProperty.value = false;
+        model.isKeyboardFocusedProperty.value = false;
       },
       out: () => {
 
@@ -239,7 +239,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
         model.isCardGrabbedProperty.value = false;
       },
       over: () => {
-        model.hasKeyboardFocusProperty.value = false;
+        model.isKeyboardFocusedProperty.value = false;
       }
     } );
 
@@ -326,7 +326,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
               const currentIndex = activeCardNodes.indexOf( focusedCardNode );
               const nextIndex = Utils.clamp( currentIndex + delta, 0, numberOfActiveCards - 1 );
               model.focusedCardProperty.value = activeCardNodes[ nextIndex ].model;
-              model.hasSelectedDifferentCardProperty.value = true;
+              model.hasKeyboardSelectedDifferentCardProperty.value = true;
             }
           }
           else if ( [ 'pageUp', 'pageDown' ].includes( keysPressed ) && isCardGrabbed ) {
@@ -339,7 +339,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
           }
           else if ( [ 'enter', 'space' ].includes( keysPressed ) ) {
             model.isCardGrabbedProperty.value = !model.isCardGrabbedProperty.value;
-            model.hasGrabbedCardProperty.value = true;
+            model.hasKeyboardGrabbedCardProperty.value = true;
 
             // See if the user unsorted the data.  If so, uncheck the "Sort Data" checkbox
             if ( !model.isCardGrabbedProperty.value && this.isSortingDataProperty.value && !this.model.isDataSorted() ) {
