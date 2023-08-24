@@ -12,53 +12,55 @@ relating to mean, median, and measures of spread. The main functionalities of th
 
 Creating distributions of kicked soccer balls: The simulation allows students to kick soccer balls onto the field,
 creating a
-distribution of distances. On the "Median" and "Mean and Median" screens, the kicker changes after each kick, creating a
+distribution of distances. On the "Median" and "Mean & Median" screens, the kicker changes after each kick, creating a
 distribution
-of kicks by different players. On the 'Variability' screen, the student can choose between four kickers, creating and
-comparing distributions
-of repeated kicks by each player.
+of kicks by different players. On the "Variability" screen, the student can choose between four kickers, creating the opportunity to
+compare distributions of kicks per player.
 
-Adjusting distributions of kicked soccer balls: The simulation allows students to change the position of landed soccer
-balls by dragging.
+Customizing distributions of kicked soccer balls: The simulation allows students to change the kicked distance of a landed soccer
+ball by dragging the soccer ball to a new location.
 
-Sorting data with cards: TODO https://github.com/phetsims/center-and-variability/issues/443
+Sorting data with cards: On the Median screen, students are encouraged to manually sort the cards in the Accordion Box into numerical 
+order. Checking the Sort Data checkbox auto-sorts existing cards and any new cards created when additional soccer balls are kicked.
 
-Analyzing data with plots: TODO https://github.com/phetsims/center-and-variability/issues/443
+Analyzing data with plots: On the "Mean & Median" and "Variability" screens, an abstract representation of the soccer ball data is 
+plotted using an 'x' or a '●' as the data point. The mean, median, and measures of variability can be visually displayed on 
+the abstract representation to help students find meaning in these measures.
 
-Overall, the Center and Variability simulation is a powerful tool for students to explore and visualize concepts in
-statistics,
-and to gain a deeper understanding of the ways in which distributions can be described, analyzed, and used to draw
-conclusions.
+Overall, the Center and Variability simulation provides a powerful tool for students as they explore, visualize, 
+and compare measures of center and spread.
+Students gain a deeper understanding of mean and median, how they compare, and learn ways in which 
+distributions can be created, described, analyzed, and used to draw conclusions about distributions based on 
+the center and spread.
 
 ## Common Controls
 
-* The simulation comprises a field in which soccer balls can be kicked or moved, and an Accordion Box in which the data
-  is displayed with visual representations for student analysis.
-* Measures of center and spread are explained in the info dialogs shown by clicking the button in the top-right corner
-  of the accordion box.
-* Soccer Balls have a null value until they land, at which time they take a numerical value.
+* The simulation comprises a field in which soccer balls can be kicked or moved, and an Accordion Box in which an
+  abstract representation of the soccer ball data is displayed for student analysis.
+* Measures of center and variability are explained in the info dialogs, shown by clicking the button in the top-right corner
+  of each accordion box.
+* A soccer ball is considered a data point that has a null value until it lands, at which point the ball takes the numerical
+  value of its location on the number line.
 * Values that do not have enough data to compute are depicted with "?"
 
 ### Measures of Center
 
 * The mean is computed as the sum of the data points divided by the number of data points.
-* The median is the middle data point when the data points are sorted. If there is an even number of data points, the
-  median is the average of the two middle data points.
+* The median is the value of the middle data point when the data is sorted. If there are an even number of data points, the
+  median is the average of the two middle data values.
 
 ### Measures of Spread
 
-* Range: the maximum data point minus the minimum data point. At least one data point is needed to compute the range.
-* IQR (interquartile range): the range of the middle 50% of the data. We compute the 1st and 3rd quartile, and find the
-  difference.
-  To compute the IQR, there must be at least 5 data points.
-* The MAD (mean absolute deviation) is the median of the absolute value of the difference between each data point and
-  the median.
-  Note that the deviations from the mean are rounded to the nearest 0.1 in order to demonstrate the calculation.
-  However,
-  this means the final result may differ slightly from the actual MAD. At least one data point is needed to compute MAD.
+* Range: the maximum data value minus the minimum data value. At least one data point is needed to compute the range.
+* IQR (interquartile range): the range of the middle 50% of the data. The IQR is computed by taking the difference between 
+  the 1st and 3rd quartile values. At least 5 data points are needed to construct the boxplot and calculate the IQR.
+* The MAD (mean absolute deviation): the average of the absolute values of all deviations. This is calculated by finding 
+  the distance between the mean and each data point, then finding the mean of these distances. 
+  Note that the absolute deviations from the mean are rounded to the nearest 0.1. This means the final MAD value may differ
+  slightly from the actual (non-rounded) MAD. At least one data point is needed to compute the MAD.
 
 ### Kick Distribution Strategies
 
-* Random Skew: The kicks are randomly skewed to the left or right. The skew is randomly chosen on startup and on reset (
-  but not on clear).
+* Random Skew: The kick distributions are randomly chosen to be skewed left or right. The skew is randomly chosen on startup and on reset-all (
+  but not upon clearing the field with the eraser button).
 * Random: The kicks are randomly distributed.
