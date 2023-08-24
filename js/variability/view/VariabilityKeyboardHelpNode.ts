@@ -8,13 +8,13 @@
 
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVKeyboardHelpNode from '../../common/view/CAVKeyboardHelpNode.js';
-import CAVKeyboardHelpSection from '../../common/view/CAVKeyboardHelpSection.js';
 import CAVKeyboardHelpSectionGrabOrRelease from '../../common/view/CAVKeyboardHelpSectionGrabOrRelease.js';
+import CAVKeyboardHelpSectionMoveGrabbedBallAndOrCard from '../../common/view/CAVKeyboardHelpSectionMoveGrabbedBallAndOrCard.js';
 
 export default class VariabilityKeyboardHelpNode extends CAVKeyboardHelpNode {
 
   public constructor() {
-    const shapeShortcutsHelpSection = new CAVKeyboardHelpSection();
+    const shapeShortcutsHelpSection = new CAVKeyboardHelpSectionMoveGrabbedBallAndOrCard();
     super( [ new CAVKeyboardHelpSectionGrabOrRelease( 'Grab or Release Ball' ), shapeShortcutsHelpSection ] );
   }
 }

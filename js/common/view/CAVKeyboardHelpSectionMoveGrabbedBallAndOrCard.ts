@@ -20,7 +20,7 @@ const moveInSmallerStepsStringProperty = 'hello there';
 const mouseStringProperty = 'hello there';
 const moveCornersOrSidesStringProperty = 'hello there';
 
-export default class CAVKeyboardHelpSection extends KeyboardHelpSection {
+export default class CAVKeyboardHelpSectionMoveGrabbedBallAndOrCard extends KeyboardHelpSection {
   public constructor() {
 
     // basic movement
@@ -55,4 +55,4 @@ export default class CAVKeyboardHelpSection extends KeyboardHelpSection {
   }
 }
 
-centerAndVariability.register( 'CAVKeyboardHelpSection', CAVKeyboardHelpSection );
+centerAndVariability.register( 'CAVKeyboardHelpSectionMoveGrabbedBallAndOrCard', CAVKeyboardHelpSectionMoveGrabbedBallAndOrCard );
