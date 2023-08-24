@@ -13,11 +13,10 @@ import CAVColors from '../common/CAVColors.js';
 import centerAndVariability from '../centerAndVariability.js';
 import CAVScreenView from './view/CAVScreenView.js';
 import PickRequired from '../../../phet-core/js/types/PickRequired.js';
-import SliderControlsAndBasicActionsKeyboardHelpContent from '../../../scenery-phet/js/keyboard/help/SliderControlsAndBasicActionsKeyboardHelpContent.js';
 import CAVModel from './model/CAVModel.js';
 
 type SelfOptions = EmptySelfOptions;
-export type CAVScreenOptions = SelfOptions & PickRequired<ScreenOptions, 'tandem' | 'name' | 'homeScreenIcon'>;
+export type CAVScreenOptions = SelfOptions & PickRequired<ScreenOptions, 'tandem' | 'name' | 'homeScreenIcon' | 'createKeyboardHelpNode'>;
 
 export default class CAVScreen<M extends CAVModel, V extends CAVScreenView> extends Screen<M, V> {
 
@@ -25,11 +24,6 @@ export default class CAVScreen<M extends CAVModel, V extends CAVScreenView> exte
 
     const options = optionize<CAVScreenOptions, SelfOptions, ScreenOptions>()( {
       backgroundColorProperty: CAVColors.screenBackgroundColorProperty,
-      createKeyboardHelpNode: () => new SliderControlsAndBasicActionsKeyboardHelpContent( {
-        generalSectionOptions: {
-          withCheckboxContent: true
-        }
-      } ),
       isDisposable: false
     }, providedOptions );
 

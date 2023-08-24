@@ -18,9 +18,10 @@ import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import medianScreenIcon_png from '../../images/medianScreenIcon_png.js';
 import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
 import SoccerCommonPreferencesModel from '../../../soccer-common/js/model/SoccerCommonPreferencesModel.js';
+import MedianKeyboardHelpNode from './view/MedianKeyboardHelpNode.js';
 
 type SelfOptions = EmptySelfOptions;
-type MedianScreenOptions = SelfOptions & StrictOmit<CAVScreenOptions, 'name' | 'homeScreenIcon'>;
+type MedianScreenOptions = SelfOptions & StrictOmit<CAVScreenOptions, 'name' | 'homeScreenIcon' | 'createKeyboardHelpNode'>;
 
 export default class MedianScreen extends CAVScreen<MedianModel, MedianScreenView> {
 
@@ -31,7 +32,8 @@ export default class MedianScreen extends CAVScreen<MedianModel, MedianScreenVie
       homeScreenIcon: new ScreenIcon( new Image( medianScreenIcon_png ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1
-      } )
+      } ),
+      createKeyboardHelpNode: () => new MedianKeyboardHelpNode()
     }, providedOptions );
 
     super(

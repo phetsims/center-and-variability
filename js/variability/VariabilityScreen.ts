@@ -18,9 +18,10 @@ import CenterAndVariabilityStrings from '../CenterAndVariabilityStrings.js';
 import variabilityScreenIcon_png from '../../images/variabilityScreenIcon_png.js';
 import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
 import SoccerCommonPreferencesModel from '../../../soccer-common/js/model/SoccerCommonPreferencesModel.js';
+import VariabilityKeyboardHelpNode from './view/VariabilityKeyboardHelpNode.js';
 
 type SelfOptions = EmptySelfOptions;
-type VariabilityScreenOptions = SelfOptions & StrictOmit<CAVScreenOptions, 'name' | 'homeScreenIcon'>;
+type VariabilityScreenOptions = SelfOptions & StrictOmit<CAVScreenOptions, 'name' | 'homeScreenIcon' | 'createKeyboardHelpNode'>;
 
 export default class VariabilityScreen extends CAVScreen<VariabilityModel, VariabilityScreenView> {
 
@@ -31,7 +32,8 @@ export default class VariabilityScreen extends CAVScreen<VariabilityModel, Varia
       homeScreenIcon: new ScreenIcon( new Image( variabilityScreenIcon_png ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1
-      } )
+      } ),
+      createKeyboardHelpNode: () => new VariabilityKeyboardHelpNode()
     }, providedOptions );
 
     super(
