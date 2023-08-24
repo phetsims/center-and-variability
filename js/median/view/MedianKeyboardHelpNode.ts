@@ -9,7 +9,7 @@
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVKeyboardHelpNode from '../../common/view/CAVKeyboardHelpNode.js';
 import CAVKeyboardHelpSectionGrabOrRelease from '../../common/view/CAVKeyboardHelpSectionGrabOrRelease.js';
-import CAVKeyboardHelpSectionMoveGrabbedBallAndOrCard from '../../common/view/CAVKeyboardHelpSectionMoveGrabbedBallAndOrCard.js';
+import CAVKeyboardHelpSectionMoveGrabbedBallAndOrCardSection from '../../common/view/CAVKeyboardHelpSectionMoveGrabbedBallAndOrCardSection.js';
 import MedianKeyboardHelpPredictMedianSection from './MedianKeyboardHelpPredictMedianSection.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 
@@ -18,7 +18,7 @@ export default class MedianKeyboardHelpNode extends CAVKeyboardHelpNode {
   public constructor() {
     super( [
       new CAVKeyboardHelpSectionGrabOrRelease( CenterAndVariabilityStrings.a11y.keyboardHelpDialog.medianScreen.grabOrReleaseBallOrCardStringProperty ),
-      new CAVKeyboardHelpSectionMoveGrabbedBallAndOrCard(
+      new CAVKeyboardHelpSectionMoveGrabbedBallAndOrCardSection(
         CenterAndVariabilityStrings.a11y.keyboardHelpDialog.medianScreen.moveGrabbedBallOrCardTitleStringProperty,
         CenterAndVariabilityStrings.a11y.keyboardHelpDialog.medianScreen.moveGrabbedBallOrCardStringProperty,
         CenterAndVariabilityStrings.a11y.keyboardHelpDialog.medianScreen.jumpToStartOfCardsOrNumberLineStringProperty,

@@ -1,14 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Help content for the KeyboardHelpDialog describing how to change the shape by moving sides and vertices.
- *
- * Move Grabbed Ball or Card
- * - Move grabbed ball or card: <- -> or AD
- * - Move in larger steps: PgUp PgDn
- * - Jump to start of cards or number line: Home
- * - Jump to end of cards or number line: End
- * - Jump ball to tick mark: 0-9
+ * Help content for the KeyboardHelpDialog describing how to move a grabbed ball and/or card.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
@@ -23,7 +16,7 @@ import NumberKeyNode from '../../../../scenery-phet/js/keyboard/NumberKeyNode.js
 import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 
-export default class CAVKeyboardHelpSectionMoveGrabbedBallAndOrCard extends KeyboardHelpSection {
+export default class CAVKeyboardHelpSectionMoveGrabbedBallAndOrCardSection extends KeyboardHelpSection {
   public constructor(
     title: LocalizedStringProperty,
     moveMessage: LocalizedStringProperty,
@@ -49,4 +42,4 @@ export default class CAVKeyboardHelpSectionMoveGrabbedBallAndOrCard extends Keyb
   }
 }
 
-centerAndVariability.register( 'CAVKeyboardHelpSectionMoveGrabbedBallAndOrCard', CAVKeyboardHelpSectionMoveGrabbedBallAndOrCard );
+centerAndVariability.register( 'CAVKeyboardHelpSectionMoveGrabbedBallAndOrCardSection', CAVKeyboardHelpSectionMoveGrabbedBallAndOrCardSection );
