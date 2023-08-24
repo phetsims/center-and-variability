@@ -13,8 +13,8 @@ import CAVSoccerSceneModel from './CAVSoccerSceneModel.js';
 
 export default class CAVDragIndicatorModel extends DragIndicatorModel {
 
-  public override updateDragIndicator( sceneModel: Pick<CAVSoccerSceneModel, 'getStackAtValue' | 'medianValueProperty' | 'getTopSoccerBalls' | 'getActiveSoccerBalls'>, soccerBallHasBeenDragged: boolean, soccerBallCount: number, maxKicks: number ): void {
-    super.updateDragIndicator( sceneModel, soccerBallHasBeenDragged, soccerBallCount, maxKicks );
+  public override updateDragIndicator( sceneModel: Pick<CAVSoccerSceneModel, 'getStackAtValue' | 'medianValueProperty' | 'getTopSoccerBalls' | 'getActiveSoccerBalls'>, soccerBallCount: number, maxKicks: number ): void {
+    super.updateDragIndicator( sceneModel, soccerBallCount, maxKicks );
 
     // Empirically determined based on height of AccordionBox and play area. This may need to be adjusted if those change.
     const maxHeight = 8;

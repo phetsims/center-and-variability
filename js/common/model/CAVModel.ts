@@ -125,10 +125,13 @@ export default class CAVModel extends SoccerModel<CAVSoccerSceneModel> {
     // updated after all the balls have landed, and not just after they have been kicked.
     Multilink.multilinkAny( [ ...allValueProperties, this.selectedSceneModelProperty,
       this.dragIndicatorModel.soccerBallHasBeenDraggedProperty, this.selectedSceneStackedSoccerBallCountProperty,
-      this.selectedSceneMaxKicksProperty
+      this.selectedSceneMaxKicksProperty, this.isKeyboardFocusedProperty
     ], () => {
-      this.dragIndicatorModel.updateDragIndicator( this.selectedSceneModelProperty.value, this.dragIndicatorModel.soccerBallHasBeenDraggedProperty.value,
-        this.selectedSceneStackedSoccerBallCountProperty.value, this.selectedSceneMaxKicksProperty.value );
+      this.dragIndicatorModel.updateDragIndicator(
+        this.selectedSceneModelProperty.value,
+        this.selectedSceneStackedSoccerBallCountProperty.value,
+        this.selectedSceneMaxKicksProperty.value
+      );
     } );
   }
 
