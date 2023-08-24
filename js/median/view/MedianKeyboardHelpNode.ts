@@ -10,12 +10,16 @@ import centerAndVariability from '../../centerAndVariability.js';
 import CAVKeyboardHelpNode from '../../common/view/CAVKeyboardHelpNode.js';
 import CAVKeyboardHelpSectionGrabOrRelease from '../../common/view/CAVKeyboardHelpSectionGrabOrRelease.js';
 import CAVKeyboardHelpSectionMoveGrabbedBallAndOrCard from '../../common/view/CAVKeyboardHelpSectionMoveGrabbedBallAndOrCard.js';
+import MedianKeyboardHelpPredictMedianSection from './MedianKeyboardHelpPredictMedianSection.js';
 
 export default class MedianKeyboardHelpNode extends CAVKeyboardHelpNode {
 
   public constructor() {
-    const shapeShortcutsHelpSection = new CAVKeyboardHelpSectionMoveGrabbedBallAndOrCard( 'Move Grabbed Ball or Card', 'Move grabbed ball or card' );
-    super( [ new CAVKeyboardHelpSectionGrabOrRelease( 'Grab or Release Ball or Card' ), shapeShortcutsHelpSection ] );
+    super( [
+      new CAVKeyboardHelpSectionGrabOrRelease( 'Grab or Release Ball or Card' ),
+      new CAVKeyboardHelpSectionMoveGrabbedBallAndOrCard( 'Move Grabbed Ball or Card', 'Move grabbed ball or card' ),
+      new MedianKeyboardHelpPredictMedianSection()
+    ] );
   }
 }
 

@@ -14,7 +14,7 @@ import CAVKeyboardHelpSectionMoveGrabbedBallAndOrCard from '../../common/view/CA
 export default class MeanAndMedianKeyboardHelpNode extends CAVKeyboardHelpNode {
 
   public constructor() {
-    const shapeShortcutsHelpSection = new CAVKeyboardHelpSectionMoveGrabbedBallAndOrCard( 'Move Grabbed Ball','Move grabbed ball' );
+    const shapeShortcutsHelpSection = new CAVKeyboardHelpSectionMoveGrabbedBallAndOrCard( 'Move Grabbed Ball', 'Move grabbed ball' );
     super( [ new CAVKeyboardHelpSectionGrabOrRelease( 'Grab or Release Ball' ), shapeShortcutsHelpSection ] );
   }
 }
