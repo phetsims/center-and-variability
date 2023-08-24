@@ -11,12 +11,13 @@ import CAVKeyboardHelpNode from '../../common/view/CAVKeyboardHelpNode.js';
 import CAVKeyboardHelpSectionGrabOrRelease from '../../common/view/CAVKeyboardHelpSectionGrabOrRelease.js';
 import CAVKeyboardHelpSectionMoveGrabbedBallAndOrCard from '../../common/view/CAVKeyboardHelpSectionMoveGrabbedBallAndOrCard.js';
 import MeanAndMedianKeyboardHelpPredictSection from './MeanAndMedianKeyboardHelpPredictSection.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 
 export default class MeanAndMedianKeyboardHelpNode extends CAVKeyboardHelpNode {
 
   public constructor() {
     super( [
-      new CAVKeyboardHelpSectionGrabOrRelease( 'Grab or Release Ball' ),
+      new CAVKeyboardHelpSectionGrabOrRelease( CenterAndVariabilityStrings.a11y.keyboardHelpDialog.grabOrReleaseBallStringProperty ),
       new CAVKeyboardHelpSectionMoveGrabbedBallAndOrCard( 'Move Grabbed Ball', 'Move grabbed ball', 'Jump to start of number line', 'Jump to end of number line' ),
       new MeanAndMedianKeyboardHelpPredictSection()
     ] );

@@ -199,6 +199,17 @@
   },
   "a11y": {
     "keyboardHelpDialog": {
+      "grabOrReleaseBall": {
+        "value": "Grab or Release Ball"
+      },
+      "grabOrRelease": {
+        "value": "Grab or release"
+      },
+      "medianScreen": {
+        "grabOrReleaseBallOrCard": {
+          "value": "Grab or Release Ball or Card"
+        }
+      },
       "variabilityScreen": {
         "movePointerIntervalHandleOrIntervalBlock": {
           "value": "Move Pointer, Interval Handles, or Interval Block"

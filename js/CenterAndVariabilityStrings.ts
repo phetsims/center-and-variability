@@ -81,6 +81,11 @@ type StringsType = {
   'pointerStringProperty': LocalizedStringProperty;
   'a11y': {
     'keyboardHelpDialog': {
+      'grabOrReleaseBallStringProperty': LocalizedStringProperty;
+      'grabOrReleaseStringProperty': LocalizedStringProperty;
+      'medianScreen': {
+        'grabOrReleaseBallOrCardStringProperty': LocalizedStringProperty;
+      };
       'variabilityScreen': {
         'movePointerIntervalHandleOrIntervalBlockStringProperty': LocalizedStringProperty;
         'moveStringProperty': LocalizedStringProperty;
