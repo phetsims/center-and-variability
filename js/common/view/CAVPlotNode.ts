@@ -70,6 +70,7 @@ export default class CAVPlotNode extends Node {
     const backgroundNode = new Node();
     this.addChild( backgroundNode );
 
+    // TODO https://github.com/phetsims/center-and-variability/issues/492 improve this
     const includeRangeOnXAxis = !( model instanceof VariabilityModel ) && options.parentContext === 'accordion';
     const visibleProperty = model instanceof MeanAndMedianModel && options.parentContext === 'accordion' ? model.isMeanVisibleProperty :
                             model instanceof VariabilityModel ? DerivedProperty.valueEqualsConstant( model.selectedVariabilityMeasureProperty, VariabilityMeasure.MAD ) :

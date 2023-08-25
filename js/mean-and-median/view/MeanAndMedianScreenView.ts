@@ -51,10 +51,10 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
     this.setAccordionBox( meanAndMedianAccordionBox );
 
     const controls = this.addPlayAreaControls( new VerticalCheckboxGroup( [
-      PlayAreaCheckboxFactory.getPredictMedianCheckboxItem( model ),
+      PlayAreaCheckboxFactory.getPredictMedianCheckboxItem( model.isPredictMedianVisibleProperty ),
       PlayAreaCheckboxFactory.getPredictMeanCheckboxItem( model ),
-      PlayAreaCheckboxFactory.getMedianCheckboxItem( model ),
-      PlayAreaCheckboxFactory.getMeanCheckboxItem( model )
+      PlayAreaCheckboxFactory.getMedianCheckboxItem( model.isPlayAreaMedianVisibleProperty, model.selectedSceneModelProperty ),
+      PlayAreaCheckboxFactory.getMeanCheckboxItem( model.isPlayAreaMeanVisibleProperty, model.selectedSceneModelProperty )
     ], {
       tandem: this.soccerAreaTandem.createTandem( 'checkboxGroup' ),
       visiblePropertyOptions: {
@@ -83,7 +83,8 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
     this.backScreenViewLayer.addChild( predictMeanNode );
 
     const predictMedianNode = CAVScreenView.createPredictMedianNode(
-      model,
+      model.predictMedianValueProperty,
+      model.isPredictMedianVisibleProperty,
       this.modelViewTransform,
       this.soccerAreaTandem.createTandem( 'predictMedianNode' )
     );

@@ -17,7 +17,6 @@ import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVColors from '../CAVColors.js';
 import PredictionThumbNode from './PredictionThumbNode.js';
 import VariabilityModel from '../../variability/model/VariabilityModel.js';
-import CAVModel from '../model/CAVModel.js';
 import MeanAndMedianModel from '../../mean-and-median/model/MeanAndMedianModel.js';
 import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-players/checkboxCheckedSoundPlayer.js';
 import TSoundPlayer from '../../../../tambo/js/TSoundPlayer.js';
@@ -26,6 +25,8 @@ import SoccerCommonColors from '../../../../soccer-common/js/SoccerCommonColors.
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import VariabilityMeasureIconNode from '../../variability/view/VariabilityMeasureIconNode.js';
 import NumberTone from '../../../../soccer-common/js/model/NumberTone.js';
+import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 // constants
 const TEXT_OPTIONS = {
@@ -65,10 +66,10 @@ export default class PlayAreaCheckboxFactory {
     };
   }
 
-  public static getMedianCheckedSoundPlayer( model: CAVModel ): TSoundPlayer {
+  public static getMedianCheckedSoundPlayer( selectedSceneModelProperty: TReadOnlyProperty<CAVSoccerSceneModel> ): TSoundPlayer {
     return {
       play: () => {
-        const median = model.selectedSceneModelProperty.value.medianValueProperty.value;
+        const median = selectedSceneModelProperty.value.medianValueProperty.value;
         if ( median !== null ) {
           NumberTone.playMedian( median );
         }
@@ -82,10 +83,10 @@ export default class PlayAreaCheckboxFactory {
     };
   }
 
-  public static getMeanCheckedSoundPlayer( model: CAVModel ): TSoundPlayer {
+  public static getMeanCheckedSoundPlayer( selectedSceneModelProperty: TReadOnlyProperty<CAVSoccerSceneModel> ): TSoundPlayer {
     return {
       play: () => {
-        const mean = model.selectedSceneModelProperty.value.meanValueProperty.value;
+        const mean = selectedSceneModelProperty.value.meanValueProperty.value;
         if ( mean !== null ) {
           NumberTone.playMean( mean );
         }
@@ -99,7 +100,7 @@ export default class PlayAreaCheckboxFactory {
     };
   }
 
-  public static getMedianCheckboxItem( model: CAVModel ): VerticalCheckboxGroupItem {
+  public static getMedianCheckboxItem( isPlayAreaMedianVisibleProperty: Property<boolean>, selectedSceneModelProperty: TReadOnlyProperty<CAVSoccerSceneModel> ): VerticalCheckboxGroupItem {
 
     return {
       createNode: () => {
@@ -114,28 +115,28 @@ export default class PlayAreaCheckboxFactory {
             maxHeight: CAVConstants.CHECKBOX_ICON_DIMENSION - 4
           } ) );
       },
-      property: model.isPlayAreaMedianVisibleProperty,
+      property: isPlayAreaMedianVisibleProperty,
       tandemName: 'medianCheckbox',
 
       options: {
-        checkedSoundPlayer: PlayAreaCheckboxFactory.getMedianCheckedSoundPlayer( model )
+        checkedSoundPlayer: PlayAreaCheckboxFactory.getMedianCheckedSoundPlayer( selectedSceneModelProperty )
       }
     };
   }
 
-  public static getMeanCheckboxItem( model: CAVModel ): VerticalCheckboxGroupItem {
+  public static getMeanCheckboxItem( isPlayAreaMeanVisibleProperty: Property<boolean>, selectedSceneModelProperty: TReadOnlyProperty<CAVSoccerSceneModel> ): VerticalCheckboxGroupItem {
     return {
       createNode: () => PlayAreaCheckboxFactory.createGridBox( new Text( CenterAndVariabilityStrings.meanStringProperty, TEXT_OPTIONS ),
         new MeanIndicatorNode( true, true ) ),
-      property: model.isPlayAreaMeanVisibleProperty,
+      property: isPlayAreaMeanVisibleProperty,
       tandemName: 'meanCheckbox',
       options: {
-        checkedSoundPlayer: PlayAreaCheckboxFactory.getMeanCheckedSoundPlayer( model )
+        checkedSoundPlayer: PlayAreaCheckboxFactory.getMeanCheckedSoundPlayer( selectedSceneModelProperty )
       }
     };
   }
 
-  private static createPredictionItem( property: Property<boolean>, stringProperty: PhetioProperty<string>, color: TColor,
+  private static createPredictionItem( selectedProperty: Property<boolean>, stringProperty: PhetioProperty<string>, color: TColor,
                                        tandemName: string ): VerticalCheckboxGroupItem {
     return {
       createNode: () => {
@@ -143,14 +144,14 @@ export default class PlayAreaCheckboxFactory {
           new Text( stringProperty, TEXT_OPTIONS ),
           new PredictionThumbNode( { color: color, maxHeight: 24, pickable: false, style: 'arrow' } ) );
       },
-      property: property,
+      property: selectedProperty,
       tandemName: tandemName
     };
   }
 
-  public static getPredictMedianCheckboxItem( model: CAVModel ): VerticalCheckboxGroupItem {
+  public static getPredictMedianCheckboxItem( isPredictMedianVisibleProperty: Property<boolean> ): VerticalCheckboxGroupItem {
     return PlayAreaCheckboxFactory.createPredictionItem(
-      model.isPredictMedianVisibleProperty,
+      isPredictMedianVisibleProperty,
       CenterAndVariabilityStrings.predictMedianStringProperty,
       CAVColors.medianColorProperty,
       'predictMedianCheckbox'

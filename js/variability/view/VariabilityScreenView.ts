@@ -253,8 +253,8 @@ export default class VariabilityScreenView extends CAVScreenView {
 
     const controls = this.addPlayAreaControls(
       new VerticalCheckboxGroup( [
-        PlayAreaCheckboxFactory.getMedianCheckboxItem( model ),
-        PlayAreaCheckboxFactory.getMeanCheckboxItem( model ),
+        PlayAreaCheckboxFactory.getMedianCheckboxItem( model.isPlayAreaMedianVisibleProperty, model.selectedSceneModelProperty ),
+        PlayAreaCheckboxFactory.getMeanCheckboxItem( model.isPlayAreaMeanVisibleProperty, model.selectedSceneModelProperty ),
         PlayAreaCheckboxFactory.getPointerCheckboxItem( model ),
         PlayAreaCheckboxFactory.getIntervalToolCheckboxItem( model )
       ], {

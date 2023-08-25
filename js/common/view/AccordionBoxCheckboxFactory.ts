@@ -16,9 +16,10 @@ import MedianBarNode from './MedianBarNode.js';
 import CAVColors from '../CAVColors.js';
 import Property from '../../../../axon/js/Property.js';
 import PlayAreaCheckboxFactory from './PlayAreaCheckboxFactory.js';
-import CAVModel from '../model/CAVModel.js';
 import MeanIndicatorNode from './MeanIndicatorNode.js';
 import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
+import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 // constants
 const ICON_WIDTH = CAVConstants.CHECKBOX_ICON_DIMENSION;
@@ -78,18 +79,18 @@ export default class AccordionBoxCheckboxFactory {
     };
   }
 
-  public static getMedianCheckboxWithoutIconItem( medianVisibleProperty: Property<boolean>, model: CAVModel ): VerticalCheckboxGroupItem {
+  public static getMedianCheckboxWithoutIconItem( medianVisibleProperty: Property<boolean>, selectedSceneModelProperty: TReadOnlyProperty<CAVSoccerSceneModel> ): VerticalCheckboxGroupItem {
     return {
       createNode: () => CHECKBOX_GROUP.createBox( new Text( CenterAndVariabilityStrings.medianStringProperty, CAVConstants.CHECKBOX_TEXT_OPTIONS ), { xAlign: 'left' } ),
       property: medianVisibleProperty,
       tandemName: 'medianCheckbox',
       options: {
-        checkedSoundPlayer: PlayAreaCheckboxFactory.getMedianCheckedSoundPlayer( model )
+        checkedSoundPlayer: PlayAreaCheckboxFactory.getMedianCheckedSoundPlayer( selectedSceneModelProperty )
       }
     };
   }
 
-  public static getMeanCheckboxWithIconItem( isTopMeanVisibleProperty: Property<boolean>, model: CAVModel ): VerticalCheckboxGroupItem {
+  public static getMeanCheckboxWithIconItem( isTopMeanVisibleProperty: Property<boolean>, selectedSceneModelProperty: TReadOnlyProperty<CAVSoccerSceneModel> ): VerticalCheckboxGroupItem {
     return {
       createNode: () => {
         return AccordionBoxCheckboxFactory.createGridBox(
@@ -112,7 +113,7 @@ export default class AccordionBoxCheckboxFactory {
       property: isTopMeanVisibleProperty,
       tandemName: 'meanCheckbox',
       options: {
-        checkedSoundPlayer: PlayAreaCheckboxFactory.getMeanCheckedSoundPlayer( model )
+        checkedSoundPlayer: PlayAreaCheckboxFactory.getMeanCheckedSoundPlayer( selectedSceneModelProperty )
       }
     };
   }

@@ -42,7 +42,7 @@ export default class MedianAccordionBox extends CAVAccordionBox {
 
     const checkboxGroup = new VerticalCheckboxGroup( [
       AccordionBoxCheckboxFactory.getSortDataCheckboxItem( model.isSortingDataProperty ),
-      AccordionBoxCheckboxFactory.getMedianCheckboxWithoutIconItem( model.medianVisibleProperty, model )
+      AccordionBoxCheckboxFactory.getMedianCheckboxWithoutIconItem( model.medianVisibleProperty, model.selectedSceneModelProperty )
     ], {
       tandem: tandem.createTandem( 'checkboxGroup' ),
       visiblePropertyOptions: {

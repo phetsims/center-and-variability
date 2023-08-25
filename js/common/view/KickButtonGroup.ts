@@ -18,11 +18,12 @@ import CAVConstants from '../CAVConstants.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import CAVModel from '../model/CAVModel.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import SoccerSceneModel from '../../../../soccer-common/js/model/SoccerSceneModel.js';
 import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
 import { createGatedVisibleProperty } from '../model/createGatedVisibleProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 
 type SelfOptions = EmptySelfOptions;
 export type KickButtonGroupOptions = SelfOptions & VBoxOptions & PickRequired<VBoxOptions, 'tandem'>;
@@ -32,7 +33,7 @@ const TEXT_MAX_WIDTH = 80;
 
 export default class KickButtonGroup extends VBox {
 
-  public constructor( model: CAVModel, providedOptions?: KickButtonGroupOptions ) {
+  public constructor( selectedSceneModelProperty: TReadOnlyProperty<CAVSoccerSceneModel>, providedOptions?: KickButtonGroupOptions ) {
 
     const options = optionize<KickButtonGroupOptions, SelfOptions, VBoxOptions>()( {
       spacing: 2,
@@ -51,7 +52,7 @@ export default class KickButtonGroup extends VBox {
 
     const createKickButton = ( content: Node, tandem: Tandem, numberToKick: number, multikick: boolean ) => {
 
-      const hasKickableSoccerBallsProperty = new DynamicProperty<boolean, unknown, SoccerSceneModel>( model.selectedSceneModelProperty, {
+      const hasKickableSoccerBallsProperty = new DynamicProperty<boolean, unknown, SoccerSceneModel>( selectedSceneModelProperty, {
         derive: 'hasKickableSoccerBallsStableProperty'
       } );
 
@@ -65,7 +66,7 @@ export default class KickButtonGroup extends VBox {
         xMargin: 12,
         yMargin: 12,
         tandem: tandem,
-        listener: () => model.selectedSceneModelProperty.value.scheduleKicks( numberToKick ),
+        listener: () => selectedSceneModelProperty.value.scheduleKicks( numberToKick ),
 
         // The Kick 1 button can be held down for repeat kicks, but the Kick 5 cannot.
         fireOnHold: !multikick,
@@ -97,7 +98,7 @@ export default class KickButtonGroup extends VBox {
       tandem: kick5ButtonTandem.createTandem( 'kick5PatternStringProperty' )
     } );
 
-    const numberOfUnkickedBallsProperty = new DynamicProperty<number, unknown, SoccerSceneModel>( model.selectedSceneModelProperty, {
+    const numberOfUnkickedBallsProperty = new DynamicProperty<number, unknown, SoccerSceneModel>( selectedSceneModelProperty, {
       derive: 'numberOfUnkickedBallsProperty'
     } );
     numberOfUnkickedBallsProperty.link( numberOfRemainingKickableObjects => {

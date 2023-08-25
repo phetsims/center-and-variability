@@ -46,6 +46,7 @@ import dragIndicatorHand_png from '../../../images/dragIndicatorHand_png.js';
 import SoccerSceneModel from '../../../../soccer-common/js/model/SoccerSceneModel.js';
 import SoccerScreenView, { DRAG_CUE_SCALE, SoccerScreenViewOptions } from '../../../../soccer-common/js/view/SoccerScreenView.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -191,7 +192,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
 
     this.questionBar.visibleProperty.link( () => this.updateAccordionBoxPosition() );
 
-    this.kickButtonGroup = new KickButtonGroup( model, {
+    this.kickButtonGroup = new KickButtonGroup( model.selectedSceneModelProperty, {
 
       // Center under where the soccer player nodes will be. Since the KickerNode are positioned in the
       // SceneView, we can't use those node bounds to position the kick buttons, so this is a manually tuned magic number.
@@ -427,19 +428,19 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
   /**
    * The predictMedianNode is shared in the Median screen and MeanAndMedianScreen, so factored out here.
    */
-  public static createPredictMedianNode( model: CAVModel, modelViewTransform: ModelViewTransform2, tandem: Tandem ): PredictionSlider {
-    const predictionSlider = new PredictionSlider( model.predictMedianValueProperty, modelViewTransform, CAVConstants.PHYSICAL_RANGE, {
+  public static createPredictMedianNode( predictMedianValueProperty: Property<number>, isPredictMedianVisibleProperty: TReadOnlyProperty<boolean>, modelViewTransform: ModelViewTransform2, tandem: Tandem ): PredictionSlider {
+    const predictionSlider = new PredictionSlider( predictMedianValueProperty, modelViewTransform, CAVConstants.PHYSICAL_RANGE, {
       predictionThumbNodeOptions: {
         color: CAVColors.medianColorProperty,
         style: 'arrow'
       },
-      valueProperty: model.predictMedianValueProperty,
+      valueProperty: predictMedianValueProperty,
       enabledRangeProperty: new Property<Range>( CAVConstants.PHYSICAL_RANGE ),
       roundToInterval: 0.5,
 
       // always step 0.5 even if holding shift (median is always integer or half-integer)
       shiftKeyboardStep: 0.5,
-      visibleProperty: model.isPredictMedianVisibleProperty,
+      visibleProperty: isPredictMedianVisibleProperty,
       tandem: tandem,
 
       phetioFeatured: true
