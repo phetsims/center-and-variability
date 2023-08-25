@@ -15,15 +15,12 @@ import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVConstants from '../CAVConstants.js';
 import DataPointNode from './DataPointNode.js';
 import CAVModel from '../model/CAVModel.js';
-import MeanAndMedianModel from '../../mean-and-median/model/MeanAndMedianModel.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import VariabilityModel from '../../variability/model/VariabilityModel.js';
-import VariabilityMeasure from '../../variability/model/VariabilityMeasure.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import CAVNumberLineNode from './CAVNumberLineNode.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import RepresentationContext from '../model/RepresentationContext.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 type SelfOptions = {
 
@@ -52,7 +49,12 @@ export default class CAVPlotNode extends Node {
   // The number line at the bottom of the plot
   private readonly numberLineNode: NumberLineNode;
 
-  public constructor( model: CAVModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, isDataPointLayerVisibleProperty: TProperty<boolean>, providedOptions?: CAVPlotNodeOptions ) {
+  public constructor( model: CAVModel,
+                      sceneModel: CAVSoccerSceneModel,
+                      playAreaNumberLineNode: NumberLineNode,
+                      isDataPointLayerVisibleProperty: TProperty<boolean>,
+                      isMeanIndictatorVisibleProperty: TReadOnlyProperty<boolean>,
+                      providedOptions?: CAVPlotNodeOptions ) {
 
     const options = optionize<CAVPlotNodeOptions, SelfOptions, NodeOptions>()( {
       excludeInvisibleChildrenFromBounds: true,
@@ -70,16 +72,12 @@ export default class CAVPlotNode extends Node {
     const backgroundNode = new Node();
     this.addChild( backgroundNode );
 
-    // TODO https://github.com/phetsims/center-and-variability/issues/492 improve this
     const includeRangeOnXAxis = !( model instanceof VariabilityModel ) && options.parentContext === 'accordion';
-    const visibleProperty = model instanceof MeanAndMedianModel && options.parentContext === 'accordion' ? model.isMeanVisibleProperty :
-                            model instanceof VariabilityModel ? DerivedProperty.valueEqualsConstant( model.selectedVariabilityMeasureProperty, VariabilityMeasure.MAD ) :
-                            new BooleanProperty( true );
 
     this.numberLineNode = new CAVNumberLineNode(
       sceneModel.meanValueProperty,
       this.modelViewTransform,
-      visibleProperty,
+      isMeanIndictatorVisibleProperty,
       sceneModel.dataRangeProperty,
       CAVConstants.CHART_VIEW_WIDTH,
       CAVConstants.PHYSICAL_RANGE, {

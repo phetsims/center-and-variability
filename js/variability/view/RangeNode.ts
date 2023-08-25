@@ -22,6 +22,8 @@ import IntervalBarNode from '../../common/view/IntervalBarNode.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import NeedAtLeastNKicksText from '../../common/view/NeedAtLeastNKicksText.js';
 import RepresentationContext from '../../common/model/RepresentationContext.js';
+import VariabilityMeasure from '../model/VariabilityMeasure.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 type SelfOptions = {
   parentContext: RepresentationContext;
@@ -35,7 +37,7 @@ export default class RangeNode extends CAVPlotNode {
       dataPointFill: CAVColors.variabilityDataPointFill
     }, providedOptions );
 
-    super( model, sceneModel, playAreaNumberLineNode, isDataPointLayerVisibleProperty, options );
+    super( model, sceneModel, playAreaNumberLineNode, isDataPointLayerVisibleProperty, DerivedProperty.valueEqualsConstant( model.selectedVariabilityMeasureProperty, VariabilityMeasure.MAD ), options );
 
     const needAtLeastOneKickText = new NeedAtLeastNKicksText( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty );
 

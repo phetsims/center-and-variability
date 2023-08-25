@@ -23,6 +23,7 @@ import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import NeedAtLeastNKicksText from '../../common/view/NeedAtLeastNKicksText.js';
 import RepresentationContext from '../../common/model/RepresentationContext.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 
 type SelfOptions = {
   parentContext: RepresentationContext;
@@ -38,7 +39,7 @@ export default class MeanAndMedianPlotNode extends CAVPlotNode {
   public constructor( model: MeanAndMedianModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, isDataPointLayerVisibleProperty: TProperty<boolean>, providedOptions: MeanAndMedianPlotNodeOptions ) {
 
     const options = optionize<MeanAndMedianPlotNodeOptions, SelfOptions, CAVPlotNodeOptions>()( {}, providedOptions );
-    super( model, sceneModel, playAreaNumberLineNode, isDataPointLayerVisibleProperty, options );
+    super( model, sceneModel, playAreaNumberLineNode, isDataPointLayerVisibleProperty, options.parentContext === 'accordion' ? model.isMeanVisibleProperty : new BooleanProperty( true ), options );
 
     const needAtLeastOneKickText = new NeedAtLeastNKicksText( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty );
     ManualConstraint.create( this, [ needAtLeastOneKickText ], textProxy => {
