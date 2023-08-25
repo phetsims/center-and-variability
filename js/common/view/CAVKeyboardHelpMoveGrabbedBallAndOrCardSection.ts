@@ -15,6 +15,7 @@ import TextKeyNode from '../../../../scenery-phet/js/keyboard/TextKeyNode.js';
 import NumberKeyNode from '../../../../scenery-phet/js/keyboard/NumberKeyNode.js';
 import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
+import { SECTION_LABEL_OPTIONS } from './CAVKeyboardHelpNode.js';
 
 export default class CAVKeyboardHelpMoveGrabbedBallAndOrCardSection extends KeyboardHelpSection {
   public constructor(
@@ -23,22 +24,19 @@ export default class CAVKeyboardHelpMoveGrabbedBallAndOrCardSection extends Keyb
     jumpStartMessage: LocalizedStringProperty,
     jumpEndMessage: LocalizedStringProperty
   ) {
-    super( title, [ KeyboardHelpSectionRow.labelWithIcon( moveMessage, KeyboardHelpIconFactory.iconOrIcon(
-      KeyboardHelpIconFactory.leftRightArrowKeysRowIcon(),
-      KeyboardHelpIconFactory.iconRow( [ LetterKeyNode.a(), LetterKeyNode.d() ], { spacing: 1.3 } )
-    ) ), KeyboardHelpSectionRow.labelWithIcon(
-      CenterAndVariabilityStrings.a11y.keyboardHelpDialog.moveInLargerStepsStringProperty,
-      KeyboardHelpIconFactory.pageUpPageDownRowIcon()
-    ), KeyboardHelpSectionRow.labelWithIcon(
-      jumpStartMessage,
-      TextKeyNode.home(), { labelOptions: { lineWrap: 200 } }
-    ), KeyboardHelpSectionRow.labelWithIcon(
-      jumpEndMessage,
-      TextKeyNode.end(), { labelOptions: { lineWrap: 200 } }
-    ), KeyboardHelpSectionRow.labelWithIcon(
-      CenterAndVariabilityStrings.a11y.keyboardHelpDialog.jumpBallToTickMarkStringProperty,
-      KeyboardHelpIconFactory.iconToIcon( new NumberKeyNode( 0 ), new NumberKeyNode( 9 ) )
-    ) ] );
+    super( title, [
+      KeyboardHelpSectionRow.labelWithIcon( moveMessage, KeyboardHelpIconFactory.iconOrIcon(
+        KeyboardHelpIconFactory.leftRightArrowKeysRowIcon(),
+        KeyboardHelpIconFactory.iconRow( [ LetterKeyNode.a(), LetterKeyNode.d() ], { spacing: 1.3 } )
+      ) ),
+      KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.a11y.keyboardHelpDialog.moveInLargerStepsStringProperty,
+        KeyboardHelpIconFactory.pageUpPageDownRowIcon()
+      ),
+      KeyboardHelpSectionRow.labelWithIcon( jumpStartMessage, TextKeyNode.home(), SECTION_LABEL_OPTIONS ),
+      KeyboardHelpSectionRow.labelWithIcon( jumpEndMessage, TextKeyNode.end(), SECTION_LABEL_OPTIONS ),
+      KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.a11y.keyboardHelpDialog.jumpBallToTickMarkStringProperty,
+        KeyboardHelpIconFactory.iconToIcon( new NumberKeyNode( 0 ), new NumberKeyNode( 9 ) )
+      ) ] );
   }
 }
 

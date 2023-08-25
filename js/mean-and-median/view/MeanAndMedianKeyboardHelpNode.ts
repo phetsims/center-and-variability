@@ -1,7 +1,7 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * The keyboard help content for the Quadrilateral sim. This has yet to be designed and is just ready for more content.
+ * The keyboard help content for the Mean and Median screen.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

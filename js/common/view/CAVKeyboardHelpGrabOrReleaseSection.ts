@@ -15,10 +15,11 @@ import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 
 export default class CAVKeyboardHelpGrabOrReleaseSection extends KeyboardHelpSection {
   public constructor( title: LocalizedStringProperty ) {
-    super( title, [ KeyboardHelpSectionRow.labelWithIcon(
-      CenterAndVariabilityStrings.a11y.keyboardHelpDialog.grabOrReleaseStringProperty,
-      KeyboardHelpIconFactory.spaceOrEnter()
-    ) ] );
+    super( title, [
+      KeyboardHelpSectionRow.labelWithIcon(
+        CenterAndVariabilityStrings.a11y.keyboardHelpDialog.grabOrReleaseStringProperty,
+        KeyboardHelpIconFactory.spaceOrEnter()
+      ) ] );
   }
 }
 

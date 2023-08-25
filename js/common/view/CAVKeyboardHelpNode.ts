@@ -11,17 +11,14 @@ import TwoColumnKeyboardHelpContent from '../../../../scenery-phet/js/keyboard/h
 import KeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpSection.js';
 import centerAndVariability from '../../centerAndVariability.js';
 
+export const SECTION_LABEL_OPTIONS = { labelOptions: { lineWrap: 200 } };
+
 export default class CAVKeyboardHelpNode extends TwoColumnKeyboardHelpContent {
-
   public constructor( leftContent: KeyboardHelpSection[] ) {
-
     KeyboardHelpSection.alignHelpSectionIcons( leftContent );
-
-    const rightContent = [ new BasicActionsKeyboardHelpSection( {
+    super( leftContent, [ new BasicActionsKeyboardHelpSection( {
       withCheckboxContent: true
-    } ) ];
-
-    super( leftContent, rightContent );
+    } ) ] );
   }
 }
 
