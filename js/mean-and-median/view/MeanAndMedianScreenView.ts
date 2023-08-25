@@ -52,7 +52,7 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
 
     const controls = this.addPlayAreaControls( new VerticalCheckboxGroup( [
       PlayAreaCheckboxFactory.getPredictMedianCheckboxItem( model.isPredictMedianVisibleProperty ),
-      PlayAreaCheckboxFactory.getPredictMeanCheckboxItem( model ),
+      PlayAreaCheckboxFactory.getPredictMeanCheckboxItem( model.isPredictMeanVisibleProperty ),
       PlayAreaCheckboxFactory.getMedianCheckboxItem( model.isPlayAreaMedianVisibleProperty, model.selectedSceneModelProperty ),
       PlayAreaCheckboxFactory.getMeanCheckboxItem( model.isPlayAreaMeanVisibleProperty, model.selectedSceneModelProperty )
     ], {

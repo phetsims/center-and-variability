@@ -17,7 +17,6 @@ import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVColors from '../CAVColors.js';
 import PredictionThumbNode from './PredictionThumbNode.js';
 import VariabilityModel from '../../variability/model/VariabilityModel.js';
-import MeanAndMedianModel from '../../mean-and-median/model/MeanAndMedianModel.js';
 import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-players/checkboxCheckedSoundPlayer.js';
 import TSoundPlayer from '../../../../tambo/js/TSoundPlayer.js';
 import MeanIndicatorNode from './MeanIndicatorNode.js';
@@ -158,9 +157,9 @@ export default class PlayAreaCheckboxFactory {
     );
   }
 
-  public static getPredictMeanCheckboxItem( model: MeanAndMedianModel ): VerticalCheckboxGroupItem {
+  public static getPredictMeanCheckboxItem( isPredictMeanVisibleProperty: Property<boolean> ): VerticalCheckboxGroupItem {
     return PlayAreaCheckboxFactory.createPredictionItem(
-      model.isPredictMeanVisibleProperty,
+      isPredictMeanVisibleProperty,
       CenterAndVariabilityStrings.predictMeanStringProperty,
       CAVColors.meanColorProperty,
       'predictMeanCheckbox'
