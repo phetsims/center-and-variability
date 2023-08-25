@@ -15,7 +15,6 @@ import CAVConstants from '../CAVConstants.js';
 import Property from '../../../../axon/js/Property.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import Multilink from '../../../../axon/js/Multilink.js';
-import NumberTone from './NumberTone.js';
 import CAVSoccerSceneModel from './CAVSoccerSceneModel.js';
 import CAVDragIndicatorModel from './CAVDragIndicatorModel.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
@@ -28,6 +27,7 @@ import ObjectLiteralIO from '../../../../tandem/js/types/ObjectLiteralIO.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import SoccerModel from '../../../../soccer-common/js/model/SoccerModel.js';
+import NumberTone from '../../../../soccer-common/js/model/NumberTone.js';
 
 type SelfOptions = {
   instrumentMeanProperty: boolean;

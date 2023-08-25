@@ -15,7 +15,6 @@ import CAVConstants, { MAX_KICKS_PROPERTY } from '../../common/CAVConstants.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
-import NumberTone from '../../common/model/NumberTone.js';
 import Utils from '../../../../dot/js/Utils.js';
 import CAVSoccerBall from '../../common/model/CAVSoccerBall.js';
 // eslint-disable-next-line no-view-imported-from-model
@@ -23,6 +22,7 @@ import MedianAnimationTone from '../../median/view/MedianAnimationTone.js';
 import Property from '../../../../axon/js/Property.js';
 import SoccerCommonPreferencesModel from '../../../../soccer-common/js/model/SoccerCommonPreferencesModel.js';
 import KickDistributionStrategy from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
+import NumberTone from '../../../../soccer-common/js/model/NumberTone.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeanAndMedianModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;

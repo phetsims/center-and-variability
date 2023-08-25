@@ -19,13 +19,13 @@ import PredictionThumbNode from './PredictionThumbNode.js';
 import VariabilityModel from '../../variability/model/VariabilityModel.js';
 import CAVModel from '../model/CAVModel.js';
 import MeanAndMedianModel from '../../mean-and-median/model/MeanAndMedianModel.js';
-import NumberTone from '../model/NumberTone.js';
 import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-players/checkboxCheckedSoundPlayer.js';
 import TSoundPlayer from '../../../../tambo/js/TSoundPlayer.js';
 import MeanIndicatorNode from './MeanIndicatorNode.js';
 import SoccerCommonColors from '../../../../soccer-common/js/SoccerCommonColors.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import VariabilityMeasureIconNode from '../../variability/view/VariabilityMeasureIconNode.js';
+import NumberTone from '../../../../soccer-common/js/model/NumberTone.js';
 
 // constants
 const TEXT_OPTIONS = {

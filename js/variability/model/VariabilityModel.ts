@@ -18,9 +18,9 @@ import VariabilitySceneModel from './VariabilitySceneModel.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import CAVConstants, { MAX_KICKS_PROPERTY } from '../../common/CAVConstants.js';
-import NumberTone from '../../common/model/NumberTone.js';
 import Utils from '../../../../dot/js/Utils.js';
 import SoccerCommonPreferencesModel from '../../../../soccer-common/js/model/SoccerCommonPreferencesModel.js';
+import NumberTone from '../../../../soccer-common/js/model/NumberTone.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
