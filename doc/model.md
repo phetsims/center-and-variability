@@ -60,7 +60,13 @@ the center and spread.
   slightly from the actual (non-rounded) MAD. At least one data point is needed to compute the MAD.
 
 ### Kick Distribution Strategies
-
+Median and Mean & Median Screens
 * Random Skew: The kick distributions are randomly chosen to be skewed left or right. The skew is randomly chosen on startup and on reset-all (
   but not upon clearing the field with the eraser button).
 * Random: The kicks are randomly distributed.
+
+Variability Screen
+* Kicker 1 is unimodal and symmetric with a small standard deviation
+* Kicker 2 is unimodal and symmetric with a larger standard deviation
+* Kicker 3 will kick a skewed right distribution
+* Kicker 4 will kick a skewed left distribution.
