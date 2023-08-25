@@ -23,7 +23,7 @@ export default class InfoValuesNode<T extends CAVSoccerBall> extends Node {
   private readonly dataValuesContainer: HBox;
   private medianTextNodes: Node[] = [];
 
-  public constructor( public readonly sceneModel: CAVSoccerSceneModel<T> ) {
+  public constructor( private readonly sceneModel: Pick<CAVSoccerSceneModel<T>, 'numberOfDataPointsProperty' | 'getSortedStackedObjects'> ) {
 
     const hasAtLeastOneDataPointProperty = new DerivedProperty( [ sceneModel.numberOfDataPointsProperty ], numberOfDataPoints => numberOfDataPoints >= 1 );
 
