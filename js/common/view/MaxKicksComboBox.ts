@@ -15,7 +15,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class MaxKicksComboBox extends ComboBox<number> {
 
-  public constructor( maxKicksProperty: Property<number>, listParent: Node ) {
+  public constructor( maxKicksProperty: Property<number>, listParent: Node, tandem: Tandem ) {
     super( maxKicksProperty, CAVConstants.MAX_KICKS_VALUES.map( value => {
       return {
         value: value,
@@ -24,10 +24,11 @@ export default class MaxKicksComboBox extends ComboBox<number> {
         } )
       };
     } ), listParent, {
-      // We don't want to instrument components for preferences, https://github.com/phetsims/joist/issues/744#issuecomment-1196028362
-      tandem: Tandem.OPT_OUT,
+      tandem: tandem,
+      isDisposable: false,
 
-      isDisposable: false
+      // Show or hide the entire row, not just the combo box
+      phetioVisiblePropertyInstrumented: false
     } );
   }
 }
