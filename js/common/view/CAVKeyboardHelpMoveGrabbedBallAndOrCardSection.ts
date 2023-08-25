@@ -16,7 +16,7 @@ import NumberKeyNode from '../../../../scenery-phet/js/keyboard/NumberKeyNode.js
 import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 
-export default class CAVKeyboardHelpSectionMoveGrabbedBallAndOrCardSection extends KeyboardHelpSection {
+export default class CAVKeyboardHelpMoveGrabbedBallAndOrCardSection extends KeyboardHelpSection {
   public constructor(
     title: LocalizedStringProperty,
     moveMessage: LocalizedStringProperty,
@@ -42,4 +42,4 @@ export default class CAVKeyboardHelpSectionMoveGrabbedBallAndOrCardSection exten
   }
 }
 
-centerAndVariability.register( 'CAVKeyboardHelpSectionMoveGrabbedBallAndOrCardSection', CAVKeyboardHelpSectionMoveGrabbedBallAndOrCardSection );
+centerAndVariability.register( 'CAVKeyboardHelpMoveGrabbedBallAndOrCardSection', CAVKeyboardHelpMoveGrabbedBallAndOrCardSection );

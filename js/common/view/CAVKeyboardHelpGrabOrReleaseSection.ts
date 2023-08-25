@@ -13,7 +13,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 
-export default class CAVKeyboardHelpSectionGrabOrRelease extends KeyboardHelpSection {
+export default class CAVKeyboardHelpGrabOrReleaseSection extends KeyboardHelpSection {
   public constructor( title: LocalizedStringProperty ) {
     super( title, [ KeyboardHelpSectionRow.labelWithIcon(
       CenterAndVariabilityStrings.a11y.keyboardHelpDialog.grabOrReleaseStringProperty,
@@ -22,4 +22,4 @@ export default class CAVKeyboardHelpSectionGrabOrRelease extends KeyboardHelpSec
   }
 }
 
-centerAndVariability.register( 'CAVKeyboardHelpSectionGrabOrRelease', CAVKeyboardHelpSectionGrabOrRelease );
+centerAndVariability.register( 'CAVKeyboardHelpGrabOrReleaseSection', CAVKeyboardHelpGrabOrReleaseSection );
