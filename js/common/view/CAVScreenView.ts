@@ -7,7 +7,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVConstants from '../CAVConstants.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
@@ -47,6 +47,9 @@ import SoccerSceneModel from '../../../../soccer-common/js/model/SoccerSceneMode
 import SoccerScreenView, { DRAG_CUE_SCALE, SoccerScreenViewOptions } from '../../../../soccer-common/js/view/SoccerScreenView.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import QuestionBar, { QuestionBarOptions } from '../../../../scenery-phet/js/QuestionBar.js';
+import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -100,6 +103,11 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
 
   protected readonly soccerAreaTandem: Tandem;
 
+  // These Nodes are created here but added in the subclasses, since the subclass specifies how and where (what layer)
+  // they are added.
+  protected readonly questionBar: QuestionBar;
+  protected readonly resetAllButton: ResetAllButton;
+
   protected constructor( model: CAVModel, providedOptions: CAVScreenViewOptions ) {
 
     const options = optionize<CAVScreenViewOptions, SelfOptions, SoccerScreenViewOptions>()( {
@@ -109,6 +117,30 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
     }, providedOptions );
 
     super( model, options );
+
+    this.resetAllButton = new ResetAllButton( {
+      listener: () => {
+        this.interruptSubtreeInput(); // cancel interactions that may be in progress
+        model.reset();
+      },
+      right: this.layoutBounds.maxX - SoccerCommonConstants.SCREEN_VIEW_X_MARGIN,
+      bottom: this.layoutBounds.maxY - SoccerCommonConstants.SCREEN_VIEW_Y_MARGIN,
+      tandem: options.tandem.createTandem( 'resetAllButton' )
+    } );
+
+    this.questionBar = new QuestionBar( this.layoutBounds, this.visibleBoundsProperty, combineOptions<QuestionBarOptions>( {
+      barHeight: 50,
+      tandem: options.tandem.createTandem( 'questionBar' ),
+      textOptions: {
+        font: new PhetFont( {
+          weight: 'bold',
+          size: '20px'
+        } )
+      },
+      visiblePropertyOptions: {
+        phetioFeatured: true
+      }
+    }, options.questionBarOptions ) );
 
     this.soccerAreaTandem = options.tandem.createTandem( 'soccerArea' );
 
@@ -429,7 +461,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
    * The predictMedianNode is shared in the Median screen and MeanAndMedianScreen, so factored out here.
    */
   public static createPredictMedianNode( predictMedianValueProperty: Property<number>, isPredictMedianVisibleProperty: TReadOnlyProperty<boolean>, modelViewTransform: ModelViewTransform2, tandem: Tandem ): PredictionSlider {
-    const predictionSlider = new PredictionSlider( predictMedianValueProperty, modelViewTransform, CAVConstants.PHYSICAL_RANGE, {
+    return new PredictionSlider( predictMedianValueProperty, modelViewTransform, CAVConstants.PHYSICAL_RANGE, {
       predictionThumbNodeOptions: {
         color: CAVColors.medianColorProperty,
         style: 'arrow'
@@ -445,8 +477,6 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
 
       phetioFeatured: true
     } );
-
-    return predictionSlider;
   }
 }
 
