@@ -16,7 +16,6 @@ import CAVConstants from '../CAVConstants.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVColors from '../CAVColors.js';
 import PredictionThumbNode from './PredictionThumbNode.js';
-import VariabilityModel from '../../variability/model/VariabilityModel.js';
 import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-players/checkboxCheckedSoundPlayer.js';
 import TSoundPlayer from '../../../../tambo/js/TSoundPlayer.js';
 import MeanIndicatorNode from './MeanIndicatorNode.js';
@@ -50,7 +49,7 @@ export default class PlayAreaCheckboxFactory {
     } );
   }
 
-  public static getIntervalToolCheckboxItem( model: VariabilityModel ): VerticalCheckboxGroupItem {
+  public static getIntervalToolCheckboxItem( isIntervalToolVisibleProperty: Property<boolean> ): VerticalCheckboxGroupItem {
     return {
       createNode: () => {
         return PlayAreaCheckboxFactory.createGridBox(
@@ -60,7 +59,7 @@ export default class PlayAreaCheckboxFactory {
           new VariabilityMeasureIconNode( CAVColors.intervalToolIconRectangleFillColorProperty, CAVConstants.CHECKBOX_ICON_DIMENSION - 5 )
         );
       },
-      property: model.isIntervalToolVisibleProperty,
+      property: isIntervalToolVisibleProperty,
       tandemName: 'intervalToolCheckbox'
     };
   }
@@ -166,9 +165,9 @@ export default class PlayAreaCheckboxFactory {
     );
   }
 
-  public static getPointerCheckboxItem( model: VariabilityModel ): VerticalCheckboxGroupItem {
+  public static getPointerCheckboxItem( isPointerVisibleProperty: Property<boolean> ): VerticalCheckboxGroupItem {
     return PlayAreaCheckboxFactory.createPredictionItem(
-      model.isPointerVisibleProperty,
+      isPointerVisibleProperty,
       CenterAndVariabilityStrings.pointerStringProperty,
       CAVColors.pointerColorProperty,
       'pointerCheckbox'

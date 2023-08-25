@@ -255,8 +255,8 @@ export default class VariabilityScreenView extends CAVScreenView {
       new VerticalCheckboxGroup( [
         PlayAreaCheckboxFactory.getMedianCheckboxItem( model.isPlayAreaMedianVisibleProperty, model.selectedSceneModelProperty ),
         PlayAreaCheckboxFactory.getMeanCheckboxItem( model.isPlayAreaMeanVisibleProperty, model.selectedSceneModelProperty ),
-        PlayAreaCheckboxFactory.getPointerCheckboxItem( model ),
-        PlayAreaCheckboxFactory.getIntervalToolCheckboxItem( model )
+        PlayAreaCheckboxFactory.getPointerCheckboxItem( model.isPointerVisibleProperty ),
+        PlayAreaCheckboxFactory.getIntervalToolCheckboxItem( model.isIntervalToolVisibleProperty )
       ], {
         tandem: this.soccerAreaTandem.createTandem( 'checkboxGroup' ),
         visiblePropertyOptions: {
