@@ -256,7 +256,9 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
 
         dragIndicatorArrowNode.center = new Vector2(
           this.modelViewTransform.modelToViewX( dragIndicatorValue ),
-          this.getTopObjectPositionY( dragIndicatorValue ) - 8
+
+          // This value must be kept in sync with the other occurrences of CREATE_KEYBOARD_ARROW_NODE that are shown for the keyboard
+          this.getTopObjectPositionY( dragIndicatorValue ) - 11.5
         );
 
         // The arrow shouldn't overlap the accordion box
