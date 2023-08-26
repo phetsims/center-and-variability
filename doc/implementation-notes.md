@@ -40,7 +40,7 @@ In addition to this document, you are encouraged to read:
 This simulation makes use of a model-view transform to map model coordinates (horizontally: meters, vertically: number
 of data points) to view coordinates in the soccer
 area [CAVScreenView.ts](https://github.com/phetsims/center-and-variability/blob/main/js/common/view/CAVScreenView.ts),
-and in the charts which are shown in the accordion box and info dialogs [CAVConstants.ts](../js/common/CAVConstants.ts).
+and in the charts which are shown in the accordion box and info dialogs. The plotNode model-view transform can be found in [CAVConstants.ts](../js/common/CAVConstants.ts).
 
 ### Query Parameters
 
@@ -53,8 +53,7 @@ in [CAVQueryParameters.ts](https://github.com/phetsims/center-and-variability/bl
   simulation. We use `isActiveProperty` flags or other phase Property flags to indicate whether they appear in the sim
   and participate in the model.
 - **Listeners**: All uses of `link`, `addListener`, etc. do NOT need a corresponding `unlink`, `removeListener`, etc.
-- **dispose**: A lint rule prevents the usage of the term dispose in this repo, disposal is not supported and should not
-  be used.
+- **dispose**: A lint rule prevents the usage of the term dispose in this repo, and classes are marked as `isDisposable: false`. Disposal is not supported and should not be used.
 
 ## Measures of Center & Spread
 
