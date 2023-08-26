@@ -64,7 +64,7 @@ The mathematical definitions of the statistical measures of center and spread ar
 
 In order to avoid performance problems and spurious intermediate values in the Variability screen, measures are computed
 as a batch, then signified via `updateDataMeasures` and `variabilityDataMeasuresUpdatedEmitter`.
-Likewise, `intervalToolDeltaStableProperty` works around an inconsistent intermediate values.
+Likewise, `intervalToolDeltaStableProperty` works around inconsistent intermediate values.
 
 ## Main Architecture & Scenes
 
@@ -78,8 +78,8 @@ Likewise, `intervalToolDeltaStableProperty` works around an inconsistent interme
 
 ## The Variability Measurements (range, MAD, IQR)
 
-The Variability Measurements (range, MAD, IQR) have subtle variations when shown in the accordion box vs in the info
-dialog. This is managed with a context option.
+The Variability Measurements (range, MAD, IQR) have subtle variations when shown in the accordion box vs the info
+dialog. This is managed with a `parentContext` option.
 
 ## Sound
 
@@ -89,7 +89,7 @@ There are variations based on whether the user is focusing on values, means, or 
 On the Median screen, the cards play sounds based on movement. The median animation in the accordion box plays a sound
 while animating, see [MedianAnimationTone.ts](../js/median/view/MedianAnimationTone.ts).
 
-The interval tool generates a continuous sound while the user is dragging the interval or its handles.
+The interval tool generates a continuous sound while the user is dragging the interval or its handles.This continuous sound represents the width, or interval the tool is currently set to.
 
 Other sounds are provided by common-code UI components.
 
@@ -108,7 +108,7 @@ writing that did not support the "group" interaction design.
 This sim uses "group" interaction for the cards and for the soccer balls, where the user first selects an object via the
 arrow keys, then presses enter/spacebar to grab the object.
 
-1-D draggable items, such as the prediction arrows and interval tool handles, are implemented as `AccessibleSlider`.
+1-D draggable items that are not in a group, such as the prediction arrows and interval tool handles, are implemented as `AccessibleSlider`.
 
 ## PhET-iO
 
