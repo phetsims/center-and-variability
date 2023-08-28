@@ -21,7 +21,7 @@ export default class CAVDragIndicatorModel extends DragIndicatorModel {
 
     if ( this.valueProperty.value !== null ) {
       const stackHeight = sceneModel.getStackAtValue( this.valueProperty.value ).length;
-      if ( this.isDragIndicatorVisibleProperty.value && ( this.valueProperty.value === sceneModel.medianValueProperty.value || stackHeight > maxHeight ) ) {
+      if ( this.valueProperty.value === sceneModel.medianValueProperty.value || stackHeight > maxHeight ) {
         const reversedBalls = sceneModel.getActiveSoccerBalls().reverse();
 
         const topBallsInReversedLandingOrder = reversedBalls.filter( ball => {
