@@ -40,7 +40,7 @@ export default class IQRNode extends CAVPlotNode {
       dataPointFill: CAVColors.variabilityDataPointFill
     }, providedOptions );
 
-    super( model, sceneModel, playAreaNumberLineNode, isDataPointLayerVisibleProperty, DerivedProperty.valueEqualsConstant( model.selectedVariabilityMeasureProperty, VariabilityMeasure.MAD ), options );
+    super( false, sceneModel, playAreaNumberLineNode, isDataPointLayerVisibleProperty, DerivedProperty.valueEqualsConstant( model.selectedVariabilityMeasureProperty, VariabilityMeasure.MAD ), options );
 
     const needAtLeastFiveKicksText = new NeedAtLeastNKicksText( CenterAndVariabilityStrings.needAtLeastFiveKicksStringProperty );
     ManualConstraint.create( this, [ needAtLeastFiveKicksText ], () => {

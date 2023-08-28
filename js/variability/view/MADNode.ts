@@ -41,7 +41,7 @@ export default class MADNode extends CAVPlotNode {
       dataPointFill: CAVColors.variabilityDataPointFill,
       phetioVisiblePropertyInstrumented: false
     }, providedOptions );
-    super( model, sceneModel, playAreaNumberLineNode, isDataPointLayerVisibleProperty, DerivedProperty.valueEqualsConstant( model.selectedVariabilityMeasureProperty, VariabilityMeasure.MAD ), options );
+    super( false, sceneModel, playAreaNumberLineNode, isDataPointLayerVisibleProperty, DerivedProperty.valueEqualsConstant( model.selectedVariabilityMeasureProperty, VariabilityMeasure.MAD ), options );
 
     const needAtLeastOneKickText = new NeedAtLeastNKicksText( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty );
     ManualConstraint.create( this, [ needAtLeastOneKickText ], textProxy => {

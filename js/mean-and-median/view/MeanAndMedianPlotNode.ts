@@ -39,7 +39,7 @@ export default class MeanAndMedianPlotNode extends CAVPlotNode {
   public constructor( model: MeanAndMedianModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, isDataPointLayerVisibleProperty: TProperty<boolean>, providedOptions: MeanAndMedianPlotNodeOptions ) {
 
     const options = optionize<MeanAndMedianPlotNodeOptions, SelfOptions, CAVPlotNodeOptions>()( {}, providedOptions );
-    super( model, sceneModel, playAreaNumberLineNode, isDataPointLayerVisibleProperty, options.parentContext === 'accordion' ? model.isMeanVisibleProperty : new BooleanProperty( true ), options );
+    super( true, sceneModel, playAreaNumberLineNode, isDataPointLayerVisibleProperty, options.parentContext === 'accordion' ? model.isMeanVisibleProperty : new BooleanProperty( true ), options );
 
     const needAtLeastOneKickText = new NeedAtLeastNKicksText( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty );
     ManualConstraint.create( this, [ needAtLeastOneKickText ], textProxy => {

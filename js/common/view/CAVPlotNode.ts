@@ -14,8 +14,6 @@ import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js'
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVConstants from '../CAVConstants.js';
 import DataPointNode from './DataPointNode.js';
-import CAVModel from '../model/CAVModel.js';
-import VariabilityModel from '../../variability/model/VariabilityModel.js';
 import CAVNumberLineNode from './CAVNumberLineNode.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 import TProperty from '../../../../axon/js/TProperty.js';
@@ -49,11 +47,11 @@ export default class CAVPlotNode extends Node {
   // The number line at the bottom of the plot
   private readonly numberLineNode: NumberLineNode;
 
-  public constructor( model: CAVModel,
+  public constructor( includeRangeOnXAxisInAccordionBox: boolean,
                       sceneModel: CAVSoccerSceneModel,
                       playAreaNumberLineNode: NumberLineNode,
                       isDataPointLayerVisibleProperty: TProperty<boolean>,
-                      isMeanIndictatorVisibleProperty: TReadOnlyProperty<boolean>,
+                      isMeanIndicatorVisibleProperty: TReadOnlyProperty<boolean>,
                       providedOptions?: CAVPlotNodeOptions ) {
 
     const options = optionize<CAVPlotNodeOptions, SelfOptions, NodeOptions>()( {
@@ -72,12 +70,10 @@ export default class CAVPlotNode extends Node {
     const backgroundNode = new Node();
     this.addChild( backgroundNode );
 
-    const includeRangeOnXAxis = !( model instanceof VariabilityModel ) && options.parentContext === 'accordion';
-
     this.numberLineNode = new CAVNumberLineNode(
       sceneModel.meanValueProperty,
       this.modelViewTransform,
-      isMeanIndictatorVisibleProperty,
+      isMeanIndicatorVisibleProperty,
       sceneModel.dataRangeProperty,
       CAVConstants.CHART_VIEW_WIDTH,
       CAVConstants.PHYSICAL_RANGE, {
@@ -85,7 +81,7 @@ export default class CAVPlotNode extends Node {
         includeXAxis: true,
         includeMeanStroke: false,
         y: CAVConstants.NUMBER_LINE_POSITION_Y,
-        includeRangeOnXAxis: includeRangeOnXAxis
+        includeRangeOnXAxis: includeRangeOnXAxisInAccordionBox && options.parentContext === 'accordion'
       } );
     backgroundNode.addChild( this.numberLineNode );
 
