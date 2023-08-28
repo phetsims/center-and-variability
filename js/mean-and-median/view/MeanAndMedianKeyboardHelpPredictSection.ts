@@ -17,19 +17,19 @@ import { SECTION_LABEL_OPTIONS } from '../../common/view/CAVKeyboardHelpNode.js'
 export default class MeanAndMedianKeyboardHelpPredictSection extends KeyboardHelpSection {
   public constructor() {
 
-    super( CenterAndVariabilityStrings.a11y.keyboardHelpDialog.meanAndMedianScreen.predictMeanOrMedianStringProperty, [
-      KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.a11y.keyboardHelpDialog.meanAndMedianScreen.movePredictionPointerStringProperty,
+    super( CenterAndVariabilityStrings.keyboardHelpDialog.meanAndMedianScreen.predictMeanOrMedianStringProperty, [
+      KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.keyboardHelpDialog.meanAndMedianScreen.movePredictionPointerStringProperty,
         KeyboardHelpIconFactory.leftRightArrowKeysRowIcon() ),
-      KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.a11y.keyboardHelpDialog.meanAndMedianScreen.movePredictionPointerInLargerStepsStringProperty,
+      KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.keyboardHelpDialog.meanAndMedianScreen.movePredictionPointerInLargerStepsStringProperty,
         KeyboardHelpIconFactory.pageUpPageDownRowIcon(), SECTION_LABEL_OPTIONS
       ),
-      KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.a11y.keyboardHelpDialog.meanAndMedianScreen.movePredictionPointerInSmallerStepsStringProperty,
+      KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.keyboardHelpDialog.meanAndMedianScreen.movePredictionPointerInSmallerStepsStringProperty,
         KeyboardHelpIconFactory.shiftPlusIcon( KeyboardHelpIconFactory.leftRightArrowKeysRowIcon() ), SECTION_LABEL_OPTIONS
       ),
-      KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.a11y.keyboardHelpDialog.jumpToStartOfNumberLineStringProperty,
+      KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.keyboardHelpDialog.jumpToStartOfNumberLineStringProperty,
         TextKeyNode.home(), SECTION_LABEL_OPTIONS
       ),
-      KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.a11y.keyboardHelpDialog.jumpToEndOfNumberLineStringProperty,
+      KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.keyboardHelpDialog.jumpToEndOfNumberLineStringProperty,
         TextKeyNode.end(), SECTION_LABEL_OPTIONS
       ) ] );
   }

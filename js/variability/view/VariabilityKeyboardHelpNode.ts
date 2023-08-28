@@ -17,12 +17,12 @@ export default class VariabilityKeyboardHelpNode extends CAVKeyboardHelpNode {
 
   public constructor() {
     super( [
-      new CAVKeyboardHelpGrabOrReleaseSection( CenterAndVariabilityStrings.a11y.keyboardHelpDialog.grabOrReleaseBallStringProperty ),
+      new CAVKeyboardHelpGrabOrReleaseSection( CenterAndVariabilityStrings.keyboardHelpDialog.grabOrReleaseBallStringProperty ),
       new CAVKeyboardHelpMoveGrabbedBallAndOrCardSection(
-        CenterAndVariabilityStrings.a11y.keyboardHelpDialog.moveGrabbedBallTitleStringProperty,
-        CenterAndVariabilityStrings.a11y.keyboardHelpDialog.moveGrabbedBallStringProperty,
-        CenterAndVariabilityStrings.a11y.keyboardHelpDialog.jumpToStartOfNumberLineStringProperty,
-        CenterAndVariabilityStrings.a11y.keyboardHelpDialog.jumpToEndOfNumberLineStringProperty
+        CenterAndVariabilityStrings.keyboardHelpDialog.moveGrabbedBallTitleStringProperty,
+        CenterAndVariabilityStrings.keyboardHelpDialog.moveGrabbedBallStringProperty,
+        CenterAndVariabilityStrings.keyboardHelpDialog.jumpToStartOfNumberLineStringProperty,
+        CenterAndVariabilityStrings.keyboardHelpDialog.jumpToEndOfNumberLineStringProperty
       ),
       new VariabilityKeyboardHelpSection()
     ] );

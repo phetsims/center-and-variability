@@ -17,7 +17,7 @@ export default class CAVKeyboardHelpGrabOrReleaseSection extends KeyboardHelpSec
   public constructor( title: LocalizedStringProperty ) {
     super( title, [
       KeyboardHelpSectionRow.labelWithIcon(
-        CenterAndVariabilityStrings.a11y.keyboardHelpDialog.grabOrReleaseStringProperty,
+        CenterAndVariabilityStrings.keyboardHelpDialog.grabOrReleaseStringProperty,
         KeyboardHelpIconFactory.spaceOrEnter()
       ) ] );
   }

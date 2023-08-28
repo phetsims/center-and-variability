@@ -16,18 +16,18 @@ import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 export default class MedianKeyboardHelpPredictMedianSection extends KeyboardHelpSection {
   public constructor() {
     super( 'Predict Median', [
-      KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.a11y.keyboardHelpDialog.medianScreen.movePredictMedianStringProperty,
+      KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.keyboardHelpDialog.medianScreen.movePredictMedianStringProperty,
         KeyboardHelpIconFactory.iconOrIcon(
           KeyboardHelpIconFactory.leftRightArrowKeysRowIcon(),
           KeyboardHelpIconFactory.upDownArrowKeysRowIcon()
         ) ), KeyboardHelpSectionRow.labelWithIcon(
-        CenterAndVariabilityStrings.a11y.keyboardHelpDialog.moveInLargerStepsStringProperty,
+        CenterAndVariabilityStrings.keyboardHelpDialog.moveInLargerStepsStringProperty,
         KeyboardHelpIconFactory.pageUpPageDownRowIcon()
       ), KeyboardHelpSectionRow.labelWithIcon(
-        CenterAndVariabilityStrings.a11y.keyboardHelpDialog.jumpToStartOfNumberLineStringProperty,
+        CenterAndVariabilityStrings.keyboardHelpDialog.jumpToStartOfNumberLineStringProperty,
         TextKeyNode.home(), { labelOptions: { lineWrap: 200 } }
       ), KeyboardHelpSectionRow.labelWithIcon(
-        CenterAndVariabilityStrings.a11y.keyboardHelpDialog.jumpToEndOfNumberLineStringProperty,
+        CenterAndVariabilityStrings.keyboardHelpDialog.jumpToEndOfNumberLineStringProperty,
         TextKeyNode.end(), { labelOptions: { lineWrap: 200 } }
       ) ] );
   }
