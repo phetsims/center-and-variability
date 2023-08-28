@@ -10,27 +10,31 @@ The Center and Variability simulation is designed to help students visualize and
 specifically
 relating to mean, median, and measures of spread. The main functionalities of the simulation include:
 
-Creating distributions of kicked soccer balls: The simulation allows students to kick soccer balls onto the field,
+#### Creating distributions of kicked soccer balls
+The simulation allows students to kick soccer balls onto the field,
 creating a
 distribution of distances. On the "Median" and "Mean & Median" screens, the kicker changes after each kick, creating a
 distribution
 of kicks by different players. On the "Variability" screen, the student can choose between four kickers, creating the opportunity to
 compare distributions of kicks per player.
 
-Customizing distributions of kicked soccer balls: The simulation allows students to change the kicked distance of a landed soccer
+#### Customizing distributions of kicked soccer balls 
+The simulation allows students to change the kicked distance of a landed soccer
 ball by dragging the soccer ball to a new location.
 
-Sorting data with cards: On the Median screen, students are encouraged to manually sort the cards in the Accordion Box into numerical 
+#### Sorting data with cards
+On the Median screen, students are encouraged to manually sort the cards in the Accordion Box into numerical 
 order. Checking the Sort Data checkbox auto-sorts existing cards and any new cards created when additional soccer balls are kicked.
 
-Analyzing data with plots: On the "Mean & Median" and "Variability" screens, an abstract representation of the soccer ball data is 
+#### Analyzing data with plots
+On the "Mean & Median" and "Variability" screens, an abstract representation of the soccer ball data is 
 plotted using an 'x' or a '●' as the data point. The mean, median, and measures of variability can be visually displayed on 
 the abstract representation to help students find meaning in these measures.
 
-Overall, the Center and Variability simulation provides a powerful tool for students as they explore, visualize, 
+Overall, the Center and Variability simulation is a powerful tool for students as they explore, visualize, 
 and compare measures of center and spread.
 Students gain a deeper understanding of mean and median, how they compare, and learn ways in which 
-distributions can be created, described, analyzed, and used to draw conclusions about distributions based on 
+distributions can be created, described, analyzed, and used to draw conclusions based on 
 the center and spread.
 
 ## Common Controls
