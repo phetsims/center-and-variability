@@ -68,7 +68,10 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
           // Animate the dropped card home
           model.animateToHomeCell( cardNode.model, 0.2 );
 
-          this.celebrationNode.isReadyForCelebration && this.celebrationNode.celebrate();
+          if ( this.celebrationNode.isReadyForCelebration ) {
+            this.celebrationNode.celebrate();
+            model.manuallySortedEmitter.emit();
+          }
         }
       } );
 
@@ -269,7 +272,11 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
         // celebrate after the card was dropped and gets to its home
         this.celebrationNode.isReadyForCelebration = this.model.isDataSorted() && !this.wasSortedBefore;
 
-        this.celebrationNode.isReadyForCelebration && this.celebrationNode.celebrate();
+        if ( this.celebrationNode.isReadyForCelebration ) {
+          this.celebrationNode.celebrate();
+          model.manuallySortedEmitter.emit();
+        }
+
         this.wasSortedBefore = this.model.isDataSorted();
       }
     } );

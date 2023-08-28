@@ -31,6 +31,7 @@ import IOType from '../../../../tandem/js/types/IOType.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import CAVQueryParameters from '../../common/CAVQueryParameters.js';
+import Emitter from '../../../../axon/js/Emitter.js';
 
 const cardMovementSounds = [
   cardMovement1_mp3,
@@ -60,7 +61,6 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
   public readonly dragIndicationCardProperty: Property<CardModel | null>;
   public readonly totalDragDistanceProperty: Property<number>;
 
-
   // KEYBOARD INPUT PROPERTIES:
   // The card which currently has focus. Is part of what controls highlight visibility among other things.
   public readonly focusedCardProperty: Property<CardModel | null> = new Property<CardModel | null>( null );
@@ -80,6 +80,7 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
 
   // Property that is triggered via focus and blur events in the InteractiveCardNodeContainer
   public readonly isKeyboardFocusedProperty = new BooleanProperty( false );
+  public readonly manuallySortedEmitter: Emitter;
 
   public constructor( medianModel: MedianModel, providedOptions: InteractiveCardContainerModelOptions ) {
     super( medianModel, providedOptions );
@@ -146,6 +147,11 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
       this.isCardGrabbedProperty.reset();
       this.hasKeyboardGrabbedCardProperty.reset();
       this.hasKeyboardSelectedDifferentCardProperty.reset();
+    } );
+
+    this.manuallySortedEmitter = new Emitter( {
+      tandem: providedOptions.tandem.createTandem( 'manuallySortedEmitter' ),
+      phetioFeatured: true
     } );
   }
 
