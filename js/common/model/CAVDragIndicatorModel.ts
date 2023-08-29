@@ -13,7 +13,7 @@ import CAVSoccerSceneModel from './CAVSoccerSceneModel.js';
 
 export default class CAVDragIndicatorModel extends DragIndicatorModel {
 
-  public override updateDragIndicator( sceneModel: Pick<CAVSoccerSceneModel, 'getStackAtValue' | 'medianValueProperty' | 'getTopSoccerBalls' | 'getActiveSoccerBalls'>, soccerBallCount: number, maxKicks: number ): void {
+  public override updateDragIndicator( sceneModel: Pick<CAVSoccerSceneModel, 'getSortedStackedObjects' | 'getStackAtValue' | 'medianValueProperty' | 'getTopSoccerBalls' | 'getActiveSoccerBalls'>, soccerBallCount: number, maxKicks: number ): void {
     super.updateDragIndicator( sceneModel, soccerBallCount, maxKicks );
 
     // Empirically determined based on height of AccordionBox and play area. This may need to be adjusted if those change.
@@ -22,23 +22,22 @@ export default class CAVDragIndicatorModel extends DragIndicatorModel {
     if ( this.valueProperty.value !== null ) {
       const stackHeight = sceneModel.getStackAtValue( this.valueProperty.value ).length;
       if ( this.valueProperty.value === sceneModel.medianValueProperty.value || stackHeight > maxHeight ) {
-        const reversedBalls = sceneModel.getActiveSoccerBalls().reverse();
 
-        const topBallsInReversedLandingOrder = reversedBalls.filter( ball => {
-          const topBalls = sceneModel.getTopSoccerBalls();
-          return topBalls.includes( ball );
-        } );
+        // Order kicked, not order landed
+        const topBallsInReversedOrder = sceneModel.getActiveSoccerBalls().reverse().filter(
+          ball => sceneModel.getTopSoccerBalls().includes( ball )
+        );
 
         // add the dragIndicatorArrowNode above the last object when it is added to the play area.
         // However, we also want to make sure that the dragIndicator is not in the same position as the Median Indicator, if possible
         // Note the drag indicator only shows up after 15 soccer balls have landed, and it would be impossibly likely for
         // all 15 to be the same value unless using the ?sameSpot query parameter, which is not a public query parameter.
-        const allEqualToMedian = topBallsInReversedLandingOrder.every( soccerBall => soccerBall.valueProperty.value === sceneModel.medianValueProperty.value );
+        const allEqualToMedian = topBallsInReversedOrder.every( soccerBall => soccerBall.valueProperty.value === sceneModel.medianValueProperty.value );
 
         if ( !allEqualToMedian ) {
 
           // Show it over a recently landed ball that is not in the median stack
-          this.valueProperty.value = topBallsInReversedLandingOrder
+          this.valueProperty.value = topBallsInReversedOrder
             .find( soccerBall => soccerBall.valueProperty.value !== sceneModel.medianValueProperty.value &&
                                  sceneModel.getStackAtValue( soccerBall.valueProperty.value! ).length <= maxHeight )!
             .valueProperty.value!;
