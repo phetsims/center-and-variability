@@ -32,7 +32,6 @@ import CAVObjectType from '../model/CAVObjectType.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';
 import { SoccerBallPhase } from '../../../../soccer-common/js/model/SoccerBallPhase.js';
-import erase_mp3 from '../../../sounds/erase_mp3.js';
 import SoundClipPlayer from '../../../../tambo/js/sound-generators/SoundClipPlayer.js';
 import SoccerCommonConstants from '../../../../soccer-common/js/SoccerCommonConstants.js';
 import CAVSceneView from './CAVSceneView.js';
@@ -50,6 +49,7 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import QuestionBar, { QuestionBarOptions } from '../../../../scenery-phet/js/QuestionBar.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import erase_mp3 from '../../../../scenery-phet/sounds/erase_mp3.js';
 
 type SelfOptions = EmptySelfOptions;
 
