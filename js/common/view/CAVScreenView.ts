@@ -217,7 +217,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       right: this.resetAllButton.left - SoccerCommonConstants.SCREEN_VIEW_X_MARGIN,
       centerY: this.resetAllButton.centerY,
       soundPlayer: new SoundClipPlayer( erase_mp3, {
-        soundClipOptions: { initialOutputLevel: 0.2 }
+        soundClipOptions: { initialOutputLevel: 0.22 }
       } ),
       touchAreaXDilation: 6,
       touchAreaYDilation: 6
