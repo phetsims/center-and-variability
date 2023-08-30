@@ -252,14 +252,19 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
     this.updateDragIndicatorNode = () => {
       const dragIndicatorVisible = model.dragIndicatorModel.isDragIndicatorVisibleProperty.value;
       const dragIndicatorValue = model.dragIndicatorModel.valueProperty.value;
+      const focusedSoccerBall = model.focusedSoccerBallProperty.value;
 
-      if ( dragIndicatorVisible && dragIndicatorValue ) {
+      // If there is a focused soccer ball, i.e. a soccer ball that has been selected or tabbed to via the keyboard,
+      // that takes precedence for indication.
+      const valueToIndicate = focusedSoccerBall ? focusedSoccerBall.valueProperty.value : dragIndicatorValue;
+
+      if ( dragIndicatorVisible && valueToIndicate ) {
 
         dragIndicatorArrowNode.center = new Vector2(
-          this.modelViewTransform.modelToViewX( dragIndicatorValue ),
+          this.modelViewTransform.modelToViewX( valueToIndicate ),
 
           // This value must be kept in sync with the other occurrences of CREATE_KEYBOARD_ARROW_NODE that are shown for the keyboard
-          this.getTopObjectPositionY( dragIndicatorValue ) - 11.5
+          this.getTopObjectPositionY( valueToIndicate ) - 11.5
         );
 
         // The arrow shouldn't overlap the accordion box
@@ -288,6 +293,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       sceneModel.medianValueProperty.link( this.updateDragIndicatorNode );
       sceneModel.objectChangedEmitter.addListener( this.updateDragIndicatorNode );
     } );
+    this.model.focusedSoccerBallProperty.link( this.updateDragIndicatorNode );
 
     const playAreaMedianIndicatorNode = new PlayAreaMedianIndicatorNode();
 
