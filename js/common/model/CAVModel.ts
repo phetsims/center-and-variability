@@ -125,7 +125,10 @@ export default class CAVModel extends SoccerModel<CAVSoccerSceneModel> {
     // updated after all the balls have landed, and not just after they have been kicked.
     Multilink.multilinkAny( [ ...allValueProperties, this.selectedSceneModelProperty,
       this.dragIndicatorModel.soccerBallHasBeenDraggedProperty, this.selectedSceneStackedSoccerBallCountProperty,
-      this.selectedSceneMaxKicksProperty, this.isKeyboardFocusedProperty
+      this.selectedSceneMaxKicksProperty, this.isKeyboardFocusedProperty,
+
+      // The median is queried in the subclass implementation, so needs to trigger an update
+      ...this.sceneModels.map( sceneModel => sceneModel.medianValueProperty )
     ], () => {
       this.dragIndicatorModel.updateDragIndicator(
         this.selectedSceneModelProperty.value,
