@@ -30,6 +30,7 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import CelebrationNode from './CelebrationNode.js';
 import SoccerCommonConstants from '../../../../soccer-common/js/SoccerCommonConstants.js';
 import InteractiveCueArrowNode from '../../../../soccer-common/js/view/InteractiveCueArrowNode.js';
+import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-players/checkboxCheckedSoundPlayer.js';
 
 const FOCUS_HIGHLIGHT_Y_MARGIN = CAVConstants.CARD_SPACING + 3;
 
@@ -187,8 +188,13 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
         else {
 
           if ( model.parentContext === 'accordion' ) {
-            cardPickUpSoundClip.play();
-            this.celebrationNode.animateCelebration1( () => cardDropClip.play(), false );
+            if ( this.model.getActiveCards().length === 0 ) {
+              checkboxCheckedSoundPlayer.play();
+            }
+            else {
+              cardPickUpSoundClip.play();
+              this.celebrationNode.animateCelebration1( () => cardDropClip.play(), false );
+            }
           }
         }
       }
