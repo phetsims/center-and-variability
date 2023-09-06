@@ -23,6 +23,7 @@ import Property from '../../../../axon/js/Property.js';
 import SoccerCommonPreferencesModel from '../../../../soccer-common/js/model/SoccerCommonPreferencesModel.js';
 import KickDistributionStrategy from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
 import NumberTone from '../../../../soccer-common/js/model/NumberTone.js';
+import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-players/checkboxCheckedSoundPlayer.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeanAndMedianModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
@@ -88,6 +89,9 @@ export default class MeanAndMedianModel extends CAVModel {
           // When setting PhET-iO state, show the arrow right away.
           this.showMedianBarArrowProperty.value = true;
         }
+      }
+      else if ( isMedianVisible && !isSettingPhetioStateProperty.value ) {
+        checkboxCheckedSoundPlayer.play();
       }
       else {
         this.clearAnimation();
