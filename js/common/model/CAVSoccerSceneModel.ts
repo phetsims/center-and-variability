@@ -16,7 +16,7 @@ import Property from '../../../../axon/js/Property.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import CAVSoccerBall from './CAVSoccerBall.js';
-import CharacterSet from '../../../../joist/js/preferences/CharacterSet.js';
+import RegionAndCulturePortrayal from '../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
 import { KickDistributionStrategySpecification } from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 
@@ -32,7 +32,7 @@ export default class CAVSoccerSceneModel<T extends CAVSoccerBall = CAVSoccerBall
                       showPlayersWhenDoneKicking: boolean,
                       physicalRange: Range,
                       soccerBallFactory: ( isFirstSoccerBall: boolean, tandem: Tandem ) => T,
-                      regionAndCultureProperty: Property<CharacterSet | null>,
+                      regionAndCultureProperty: Property<RegionAndCulturePortrayal | null>,
                       tandem: Tandem ) {
 
     super( maxKicksProperty, maxKicksChoices, kickDistributionStrategySpecification, showPlayersWhenDoneKicking, physicalRange,

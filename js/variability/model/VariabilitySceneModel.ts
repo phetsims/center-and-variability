@@ -18,7 +18,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import VariabilitySoccerBall from './VariabilitySoccerBall.js';
-import CharacterSet from '../../../../joist/js/preferences/CharacterSet.js';
+import RegionAndCulturePortrayal from '../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
 import { KickDistributionStrategySpecification } from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 
@@ -52,7 +52,7 @@ export default class VariabilitySceneModel extends CAVSoccerSceneModel<Variabili
   public readonly variabilityDataMeasuresUpdatedEmitter: Emitter = new Emitter();
 
   public constructor( maxKicksProperty: TReadOnlyProperty<number>, kickDistributionStrategySpecification: KickDistributionStrategySpecification,
-                      regionAndCultureProperty: Property<CharacterSet | null>, tandem: Tandem ) {
+                      regionAndCultureProperty: Property<RegionAndCulturePortrayal | null>, tandem: Tandem ) {
     super(
       maxKicksProperty,
       CAVConstants.MAX_KICKS_VALUES,

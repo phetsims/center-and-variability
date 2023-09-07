@@ -59,7 +59,7 @@ export type CAVScreenViewOptions = SelfOptions & StrictOmit<SoccerScreenViewOpti
 const GROUND_POSITION_Y = 515;
 const INDICATOR_MARGIN = 4;
 
-// Depending on how many characters a regionAndCulture CharacterSet has will determine how we loop over the characters.
+// Depending on how many characters a regionAndCulture RegionAndCulturePortrayal has will determine how we loop over the characters.
 // 30 Kickers must be loaded per screen.
 const KICKER_IMAGE_SETS: KickerImageSet[][] = [];
 
