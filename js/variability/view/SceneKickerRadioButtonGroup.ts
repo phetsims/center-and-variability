@@ -10,7 +10,7 @@ import RectangularRadioButtonGroup, { RectangularRadioButtonGroupOptions } from 
 import centerAndVariability from '../../centerAndVariability.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Property from '../../../../axon/js/Property.js';
-import { Node, Path, Text } from '../../../../scenery/js/imports.js';
+import { Node, Path, TColor, Text } from '../../../../scenery/js/imports.js';
 import tshirtSolidShape from '../../../../sherpa/js/fontawesome-5/tshirtSolidShape.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
@@ -30,7 +30,7 @@ export default class SceneKickerRadioButtonGroup extends RectangularRadioButtonG
       touchAreaYDilation: 4
     }, providedOptions );
 
-    const createTShirtIcon = ( label: string, fill: string ) => {
+    const createTShirtIcon = ( label: string, fill: TColor ) => {
 
       const path = new Path( tshirtSolidShape, {
         fill: fill,
@@ -54,23 +54,14 @@ export default class SceneKickerRadioButtonGroup extends RectangularRadioButtonG
       } );
     };
 
-    super( property, [ {
-      value: sceneModels[ 0 ],
-      createNode: tandem => createTShirtIcon( '1', '#7bb772' ),
-      tandemName: 'kicker1RadioButton'
-    }, {
-      value: sceneModels[ 1 ],
-      createNode: tandem => createTShirtIcon( '2', '#4f61b4' ),
-      tandemName: 'kicker2RadioButton'
-    }, {
-      value: sceneModels[ 2 ],
-      createNode: tandem => createTShirtIcon( '3', '#c15156' ),
-      tandemName: 'kicker3RadioButton'
-    }, {
-      value: sceneModels[ 3 ],
-      createNode: tandem => createTShirtIcon( '4', '#eeda63' ),
-      tandemName: 'kicker4RadioButton'
-    } ], options );
+    super( property,
+      sceneModels.map( ( sceneModel, i ) => {
+        return {
+          value: sceneModel,
+          createNode: () => createTShirtIcon( `${i + 1}`, sceneModel.kickerSceneColor ),
+          tandemName: `kicker${i + 1}RadioButton`
+        };
+      } ), options );
   }
 }
 

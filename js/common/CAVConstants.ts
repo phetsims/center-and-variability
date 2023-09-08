@@ -22,6 +22,7 @@ import DerivedProperty from '../../../axon/js/DerivedProperty.js';
 import { AlignGroup } from '../../../scenery/js/imports.js';
 import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
 import Bounds2 from '../../../dot/js/Bounds2.js';
+import CAVColors from './CAVColors.js';
 
 const NUMBER_LINE_MARGIN_X = 207;
 
@@ -101,6 +102,11 @@ const CAVConstants = {
 
   // How many decimal places to include the variability measure displays
   VARIABILITY_MEASURE_DECIMAL_POINTS: 1,
+
+  VARIABILITY_KICKER_COLORS: [ CAVColors.kicker1RadioButtonFillColorProperty,
+    CAVColors.kicker2RadioButtonFillColorProperty,
+    CAVColors.kicker3RadioButtonFillColorProperty,
+    CAVColors.kicker4RadioButtonFillColorProperty ],
 
   // There are numerous displays for values that could take a null value. We should never see the word null in the sim.
   // The corresponding texts should be invisible when the value is null. However, the strings are created during startup

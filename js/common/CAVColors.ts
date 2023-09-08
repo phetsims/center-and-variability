@@ -79,7 +79,12 @@ const CAVColors = {
   variabilityAccordionBoxFillProperty: new ProfileColorProperty( centerAndVariability, 'variabilityAccordionBoxFill', { default: 'white' } ),
 
   radioButtonBackgroundColorProperty: new ProfileColorProperty( centerAndVariability, 'radioButtonBackgroundColor', { default: 'rgb( 238, 238, 238 )' } ),
-  radioButtonDataPointColorProperty: new ProfileColorProperty( centerAndVariability, 'radioButtonDataPointColor', { default: 'black' } )
+  radioButtonDataPointColorProperty: new ProfileColorProperty( centerAndVariability, 'radioButtonDataPointColor', { default: 'black' } ),
+
+  kicker1RadioButtonFillColorProperty: new ProfileColorProperty( centerAndVariability, 'kicker1RadioButtonFillColorProperty', { default: '#7bb772' } ),
+  kicker2RadioButtonFillColorProperty: new ProfileColorProperty( centerAndVariability, 'kicker2RadioButtonFillColorProperty', { default: '#4f61b4' } ),
+  kicker3RadioButtonFillColorProperty: new ProfileColorProperty( centerAndVariability, 'kicker3RadioButtonFillColorProperty', { default: '#c15156' } ),
+  kicker4RadioButtonFillColorProperty: new ProfileColorProperty( centerAndVariability, 'kicker4RadioButtonFillColorProperty', { default: '#eeda63' } )
 };
 
 centerAndVariability.register( 'CAVColors', CAVColors );

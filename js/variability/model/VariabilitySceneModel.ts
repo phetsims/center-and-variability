@@ -21,6 +21,7 @@ import VariabilitySoccerBall from './VariabilitySoccerBall.js';
 import RegionAndCulturePortrayal from '../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
 import { KickDistributionStrategySpecification } from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import { TColor } from '../../../../scenery/js/imports.js';
 
 export default class VariabilitySceneModel extends CAVSoccerSceneModel<VariabilitySoccerBall> {
 
@@ -52,7 +53,7 @@ export default class VariabilitySceneModel extends CAVSoccerSceneModel<Variabili
   public readonly variabilityDataMeasuresUpdatedEmitter: Emitter = new Emitter();
 
   public constructor( maxKicksProperty: TReadOnlyProperty<number>, kickDistributionStrategySpecification: KickDistributionStrategySpecification,
-                      regionAndCultureProperty: Property<RegionAndCulturePortrayal | null>, tandem: Tandem ) {
+                      regionAndCultureProperty: Property<RegionAndCulturePortrayal | null>, public readonly kickerSceneColor: TColor, tandem: Tandem ) {
     super(
       maxKicksProperty,
       CAVConstants.MAX_KICKS_VALUES,
