@@ -64,7 +64,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         tandem: tandem.createTandem( 'intervalToolNode' )
       } );
 
-    const contents = _.range( 4 ).map( i => {
+    const contents = _.range( model.variabilitySceneModels.length ).map( i => {
       return {
         value: model.sceneModels[ i ],
         createNode: () => {
