@@ -17,11 +17,12 @@ import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import CAVDialog from '../../common/view/CAVDialog.js';
+import CAVToggleNode from '../../common/view/CAVToggleNode.js';
 
 export default class VariabilityInfoDialog extends CAVDialog {
   public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, tandem: Tandem ) {
 
-    const toggleNode = new ToggleNode( model.selectedVariabilityMeasureProperty, [ {
+    const toggleNode = new CAVToggleNode( model.selectedVariabilityMeasureProperty, [ {
       value: VariabilityMeasure.RANGE,
       createNode: () => new RangeInfoNode( model, sceneModel, playAreaNumberLineNode, tandem.createTandem( 'rangeInfoNode' ) )
     }, {

@@ -34,6 +34,7 @@ import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringPrope
 import IntervalToolNode from './IntervalToolNode.js';
 import Property from '../../../../axon/js/Property.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import CAVToggleNode from '../../common/view/CAVToggleNode.js';
 
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 
@@ -75,7 +76,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       };
     } );
 
-    const plotToggleNode = new ToggleNode( model.selectedSceneModelProperty, contents, {
+    const plotToggleNode = new CAVToggleNode( model.selectedSceneModelProperty, contents, {
       bottom: backgroundShape.bounds.height
     } );
 
@@ -83,7 +84,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     backgroundNode.addChild( infoButton );
 
     const checkboxesTandem = tandem.createTandem( 'checkboxes' );
-    const checkboxToggleNode = new AlignBox( new ToggleNode( model.selectedVariabilityMeasureProperty, [ {
+    const checkboxToggleNode = new AlignBox( new CAVToggleNode( model.selectedVariabilityMeasureProperty, [ {
       createNode: () => CAVConstants.ACCORDION_BOX_VERTICAL_CHECKBOX_GROUP.createBox( new VariabilityMeasureCheckbox( model.isRangeVisibleProperty,
         CenterAndVariabilityStrings.rangeStringProperty, CAVColors.rangeFillProperty,
         { tandem: checkboxesTandem.createTandem( 'rangeCheckbox' ) } ), { yAlign: 'top' } ),
@@ -151,7 +152,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     };
 
     const readoutsTandem = tandem.createTandem( 'valueReadouts' );
-    const readoutsToggleNode = new AlignBox( new ToggleNode( model.selectedVariabilityMeasureProperty, [ {
+    const readoutsToggleNode = new AlignBox( new CAVToggleNode( model.selectedVariabilityMeasureProperty, [ {
       value: VariabilityMeasure.RANGE,
       createNode: () => {
         const rangeEqualsValueStringProperty = deriveStringProperty( vsm => vsm.rangeValueProperty,

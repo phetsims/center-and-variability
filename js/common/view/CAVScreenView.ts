@@ -50,6 +50,7 @@ import QuestionBar, { QuestionBarOptions } from '../../../../scenery-phet/js/Que
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import erase_mp3 from '../../../../scenery-phet/sounds/erase_mp3.js';
+import CAVToggleNode from './CAVToggleNode.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -179,7 +180,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       options.tandem.createTandem( `sceneKicker${index + 1}View` )
     ) );
 
-    const backLayerToggleNode = new ToggleNode( model.selectedSceneModelProperty, this.sceneViews.map( sceneView => {
+    const backLayerToggleNode = new CAVToggleNode( model.selectedSceneModelProperty, this.sceneViews.map( sceneView => {
         return {
           value: sceneView.sceneModel,
           createNode: () => sceneView.backSceneViewLayer
@@ -297,7 +298,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
 
     const playAreaMedianIndicatorNode = new PlayAreaMedianIndicatorNode();
 
-    const frontLayerToggleNode = new ToggleNode( model.selectedSceneModelProperty, this.sceneViews.map( sceneView => {
+    const frontLayerToggleNode = new CAVToggleNode( model.selectedSceneModelProperty, this.sceneViews.map( sceneView => {
         return {
           value: sceneView.sceneModel,
           createNode: () => sceneView.frontSceneViewLayer

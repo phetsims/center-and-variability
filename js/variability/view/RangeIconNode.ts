@@ -13,8 +13,8 @@ import timesSolidShape from '../../../../sherpa/js/fontawesome-5/timesSolidShape
 import CAVConstants from '../../common/CAVConstants.js';
 import PlotType from '../../common/model/PlotType.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
-import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
+import CAVToggleNode from '../../common/view/CAVToggleNode.js';
 
 /**
  * Icon for the range radio button. Dynamically changes between dot plot and line plot based on preferences.
@@ -48,7 +48,7 @@ export default class RangeIconNode extends Node {
         centerY: 22 - j * viewRadius * 2
       };
 
-      return new ToggleNode<PlotType>( CAVConstants.PLOT_TYPE_PROPERTY, [ {
+      return new CAVToggleNode<PlotType>( CAVConstants.PLOT_TYPE_PROPERTY, [ {
         value: PlotType.DOT_PLOT,
 
         // Allow spacing
