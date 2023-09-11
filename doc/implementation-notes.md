@@ -40,7 +40,8 @@ In addition to this document, you are encouraged to read:
 This simulation makes use of a model-view transform to map model coordinates (horizontally: meters, vertically: number
 of data points) to view coordinates in the soccer
 area [CAVScreenView.ts](https://github.com/phetsims/center-and-variability/blob/main/js/common/view/CAVScreenView.ts),
-and in the charts which are shown in the accordion box and info dialogs. The plotNode model-view transform can be found in [CAVConstants.ts](../js/common/CAVConstants.ts).
+and in the charts which are shown in the accordion box and info dialogs. The plotNode model-view transform can be found
+in [CAVConstants.ts](../js/common/CAVConstants.ts).
 
 ### Query Parameters
 
@@ -53,7 +54,8 @@ in [CAVQueryParameters.ts](https://github.com/phetsims/center-and-variability/bl
   simulation. We use `isActiveProperty` flags or other phase Property flags to indicate whether they appear in the sim
   and participate in the model.
 - **Listeners**: All uses of `link`, `addListener`, etc. do NOT need a corresponding `unlink`, `removeListener`, etc.
-- **dispose**: A lint rule prevents the usage of the term dispose in this repo, and classes are marked as `isDisposable: false`. Disposal is not supported and should not be used.
+- **dispose**: A lint rule prevents the usage of the term dispose in this repo, and classes are marked
+  as `isDisposable: false`. Disposal is not supported and should not be used.
 
 ## Measures of Center & Spread
 
@@ -88,7 +90,8 @@ There are variations based on whether the user is focusing on values, means, or 
 On the Median screen, the cards play sounds based on movement. The median animation in the accordion box plays a sound
 while animating, see [MedianAnimationTone.ts](../js/median/view/MedianAnimationTone.ts).
 
-The interval tool generates a continuous sound while the user is dragging the interval or its handles.This continuous sound represents the width, or interval the tool is currently set to.
+The interval tool generates a continuous sound while the user is dragging the interval or its handles.This continuous
+sound represents the width, or interval the tool is currently set to.
 
 Other sounds are provided by common-code UI components.
 
@@ -107,7 +110,8 @@ writing that did not support the "group" interaction design.
 This sim uses "group" interaction for the cards and for the soccer balls, where the user first selects an object via the
 arrow keys, then presses enter/spacebar to grab the object.
 
-1-D draggable items that are not in a group, such as the prediction arrows and interval tool handles, are implemented as `AccessibleSlider`.
+1-D draggable items that are not in a group, such as the prediction arrows and interval tool handles, are implemented
+as `AccessibleSlider`.
 
 ## PhET-iO
 
