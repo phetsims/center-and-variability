@@ -49,6 +49,7 @@ const CAVColors = {
   medianColorProperty: new ProfileColorProperty( centerAndVariability, 'medianColor', { default: '#f03000' } ),
   meanColorProperty: new ProfileColorProperty( centerAndVariability, 'meanColor', { default: '#8500bd' } ),
 
+  // The following color properties are used for elements in the plot nodes.
   rangeReadoutColorProperty: new ProfileColorProperty( centerAndVariability, 'rangeReadoutColor', { default: new Color( '#215E2B' ) } ),
   iqrLabelColorProperty: new ProfileColorProperty( centerAndVariability, 'iqrLabelColor', { default: 'black' } ),
   madColorProperty: new ProfileColorProperty( centerAndVariability, 'madColor', { default: 'black' } ),
@@ -62,6 +63,8 @@ const CAVColors = {
   // Darker gray than the ones in the plot area, to show up better in the radio button
   rangeMarkerColorProperty: new ProfileColorProperty( centerAndVariability, 'rangeMarkerColor', { default: new Color( '#717171' ) } ),
 
+  // The interval tool can be found in the Variability Screen. It can be used as a prediction, and learning tool. This tool has two handles.
+  // And a rectangle that can traverse the number line to indicate a statistical interval of the user's choosing.
   intervalToolIconRectangleFillColorProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolIconRectangleFill', { default: '#fef8ab' } ),
   intervalToolIconShadedSphereMainColorProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolIconShadedSphereMainColor', { default: '#fdf47c' } ),
   intervalToolFillProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolFill', { default: Color.toColor( '#fefccf' ).withAlpha( 0.6 ) } ),
@@ -81,6 +84,8 @@ const CAVColors = {
   radioButtonBackgroundColorProperty: new ProfileColorProperty( centerAndVariability, 'radioButtonBackgroundColor', { default: 'rgb( 238, 238, 238 )' } ),
   radioButtonDataPointColorProperty: new ProfileColorProperty( centerAndVariability, 'radioButtonDataPointColor', { default: 'black' } ),
 
+  // On the Variability screen there are 4 scenes associated with a different kicker. One of the ways we differentiate between the scenes is based on
+  // the kicker's jersey color. These fill colors represent that jersey color in the radio buttons.
   kicker1RadioButtonFillColorProperty: new ProfileColorProperty( centerAndVariability, 'kicker1RadioButtonFillColorProperty', { default: '#7bb772' } ),
   kicker2RadioButtonFillColorProperty: new ProfileColorProperty( centerAndVariability, 'kicker2RadioButtonFillColorProperty', { default: '#4f61b4' } ),
   kicker3RadioButtonFillColorProperty: new ProfileColorProperty( centerAndVariability, 'kicker3RadioButtonFillColorProperty', { default: '#c15156' } ),
