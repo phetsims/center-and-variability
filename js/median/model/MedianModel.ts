@@ -16,9 +16,9 @@ import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import CAVSoccerBall from '../../common/model/CAVSoccerBall.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import SoccerCommonPreferencesModel from '../../../../soccer-common/js/model/SoccerCommonPreferencesModel.js';
 import KickDistributionStrategy from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
 import InteractiveCardContainerModel from './InteractiveCardContainerModel.js';
+import PreferencesModel from '../../../../joist/js/preferences/PreferencesModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type MedianModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
@@ -30,7 +30,7 @@ export default class MedianModel extends CAVModel {
   public readonly medianVisibleProperty: BooleanProperty;
   public readonly areCardsSortedProperty: BooleanProperty;
 
-  public constructor( preferencesModel: SoccerCommonPreferencesModel, providedOptions: MedianModelOptions ) {
+  public constructor( preferencesModel: PreferencesModel, providedOptions: MedianModelOptions ) {
 
     const accordionBoxTandem = providedOptions.tandem.createTandem( 'distanceAccordionBox' );
 
@@ -58,7 +58,9 @@ export default class MedianModel extends CAVModel {
       { type: 'randomSkew', skewType: KickDistributionStrategy.chooseSkewDirection(), values: null },
       CAVConstants.PHYSICAL_RANGE,
       CAVSoccerBall.createSoccerBall,
-      preferencesModel.kickerCharacterSetProperty,
+
+      // The regionAndCulturePortrayalProperty will not be undefined since characterSets were passed into the PreferencesModel at startup.
+      preferencesModel.localizationModel.regionAndCulturePortrayalProperty!,
       { tandem: options.tandem.createTandem( 'sceneModel' ) }
     );
 

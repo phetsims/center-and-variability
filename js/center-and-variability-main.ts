@@ -16,11 +16,19 @@ import SimulationPreferencesContentNode from './common/view/SimulationPreference
 import PreferencesModel from '../../joist/js/preferences/PreferencesModel.js';
 import MeanAndMedianScreen from './mean-and-median/MeanAndMedianScreen.js';
 import VariabilityScreen from './variability/VariabilityScreen.js';
-import SoccerCommonPreferencesModel from '../../soccer-common/js/model/SoccerCommonPreferencesModel.js';
 import KickerCharacterSets from '../../soccer-common/js/view/KickerCharacterSets.js';
 
 const centerAndVariabilityTitleStringProperty = CenterAndVariabilityStrings[ 'center-and-variability' ].titleStringProperty;
-const preferencesModel = new SoccerCommonPreferencesModel();
+const preferencesModel = new PreferencesModel( {
+  simulationOptions: {
+    customPreferences: [ {
+      createContent: tandem => new SimulationPreferencesContentNode( phet.joist.sim.topLayer, tandem.createTandem( 'simPreferences' ) )
+    } ]
+  },
+  localizationOptions: {
+    characterSets: KickerCharacterSets.CHARACTER_SETS
+  }
+} );
 
 const simOptions: SimOptions = {
   credits: {
@@ -30,16 +38,7 @@ const simOptions: SimOptions = {
     qualityAssurance: 'Jaron Droder, Clifford Hardin, Emily Miller, Devon Quispe, Nancy Salpepi, Kathryn Woessner',
     graphicArts: 'Mariah Hermsmeyer'
   },
-  preferencesModel: new PreferencesModel( {
-    simulationOptions: {
-      customPreferences: [ {
-        createContent: tandem => new SimulationPreferencesContentNode( phet.joist.sim.topLayer, tandem.createTandem( 'simPreferences' ) )
-      } ]
-    },
-    localizationOptions: {
-      characterSets: KickerCharacterSets.CHARACTER_SETS
-    }
-  } ),
+  preferencesModel: preferencesModel,
   phetioDesigned: true
 };
 

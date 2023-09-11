@@ -31,7 +31,7 @@ export default class CAVSoccerSceneModel<T extends CAVSoccerBall = CAVSoccerBall
                       kickDistributionStrategySpecification: KickDistributionStrategySpecification,
                       physicalRange: Range,
                       soccerBallFactory: ( isFirstSoccerBall: boolean, tandem: Tandem ) => T,
-                      regionAndCultureProperty: Property<RegionAndCulturePortrayal | null>,
+                      regionAndCultureProperty: Property<RegionAndCulturePortrayal>,
                       providedOptions: SoccerSceneModelOptions ) {
 
     const options = providedOptions;

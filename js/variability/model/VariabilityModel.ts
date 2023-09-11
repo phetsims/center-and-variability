@@ -19,8 +19,8 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import CAVConstants, { MAX_KICKS_PROPERTY } from '../../common/CAVConstants.js';
 import Utils from '../../../../dot/js/Utils.js';
-import SoccerCommonPreferencesModel from '../../../../soccer-common/js/model/SoccerCommonPreferencesModel.js';
 import NumberTone from '../../../../soccer-common/js/model/NumberTone.js';
+import PreferencesModel from '../../../../joist/js/preferences/PreferencesModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
@@ -74,31 +74,35 @@ export default class VariabilityModel extends CAVModel {
   // The scenes for individual players on the 'Variability' screen
   public readonly variabilitySceneModels: VariabilitySceneModel[];
 
-  public constructor( preferencesModel: SoccerCommonPreferencesModel, providedOptions: VariabilityModelOptions ) {
+  public constructor( preferencesModel: PreferencesModel, providedOptions: VariabilityModelOptions ) {
+
+    // The regionAndCulturePortrayalProperty will not be undefined since characterSets were passed into the PreferencesModel at startup.
+    const regionAndCulturePortrayalProperty = preferencesModel.localizationModel.regionAndCulturePortrayalProperty!;
 
     let sceneTandemIndex = 1;
+
     // If a new variability scene model is added, a new color associated with that model needs to be added in CAVConstants as well.
     const sceneModels = [
       new VariabilitySceneModel( MAX_KICKS_PROPERTY, {
         type: 'probabilityByDistance',
         values: [ 0, 0, 0, 1, 3, 12, 20, 32, 20, 12, 3, 1, 0, 0, 0 ],
         skewType: null
-      }, preferencesModel.kickerCharacterSetProperty, CAVConstants.VARIABILITY_KICKER_COLORS[ 0 ], providedOptions.tandem.createTandem( `sceneKicker${sceneTandemIndex++}Model` ) ),
+      }, regionAndCulturePortrayalProperty, CAVConstants.VARIABILITY_KICKER_COLORS[ 0 ], providedOptions.tandem.createTandem( `sceneKicker${sceneTandemIndex++}Model` ) ),
       new VariabilitySceneModel( MAX_KICKS_PROPERTY, {
         type: 'probabilityByDistance',
         values: [ 3, 5, 10, 10, 25, 32, 45, 65, 45, 32, 25, 10, 10, 5, 3 ],
         skewType: null
-      }, preferencesModel.kickerCharacterSetProperty, CAVConstants.VARIABILITY_KICKER_COLORS[ 1 ], providedOptions.tandem.createTandem( `sceneKicker${sceneTandemIndex++}Model` ) ),
+      }, regionAndCulturePortrayalProperty, CAVConstants.VARIABILITY_KICKER_COLORS[ 1 ], providedOptions.tandem.createTandem( `sceneKicker${sceneTandemIndex++}Model` ) ),
       new VariabilitySceneModel( MAX_KICKS_PROPERTY, {
         type: 'skew',
         values: null,
         skewType: 'right'
-      }, preferencesModel.kickerCharacterSetProperty, CAVConstants.VARIABILITY_KICKER_COLORS[ 2 ], providedOptions.tandem.createTandem( `sceneKicker${sceneTandemIndex++}Model` ) ),
+      }, regionAndCulturePortrayalProperty, CAVConstants.VARIABILITY_KICKER_COLORS[ 2 ], providedOptions.tandem.createTandem( `sceneKicker${sceneTandemIndex++}Model` ) ),
       new VariabilitySceneModel( MAX_KICKS_PROPERTY, {
         type: 'skew',
         values: null,
         skewType: 'left'
-      }, preferencesModel.kickerCharacterSetProperty, CAVConstants.VARIABILITY_KICKER_COLORS[ 3 ], providedOptions.tandem.createTandem( `sceneKicker${sceneTandemIndex++}Model` ) )
+      }, regionAndCulturePortrayalProperty, CAVConstants.VARIABILITY_KICKER_COLORS[ 3 ], providedOptions.tandem.createTandem( `sceneKicker${sceneTandemIndex++}Model` ) )
     ];
 
     const accordionBoxTandem = providedOptions.tandem.createTandem( 'variabilityMeasureAccordionBox' );

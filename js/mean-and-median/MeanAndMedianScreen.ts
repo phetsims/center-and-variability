@@ -17,15 +17,15 @@ import CenterAndVariabilityStrings from '../CenterAndVariabilityStrings.js';
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import meanAndMedianScreenIcon_png from '../../images/meanAndMedianScreenIcon_png.js';
 import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
-import SoccerCommonPreferencesModel from '../../../soccer-common/js/model/SoccerCommonPreferencesModel.js';
 import MeanAndMedianKeyboardHelpNode from './view/MeanAndMedianKeyboardHelpNode.js';
+import PreferencesModel from '../../../joist/js/preferences/PreferencesModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeanAndMedianScreenOptions = SelfOptions & StrictOmit<CAVScreenOptions, 'name' | 'homeScreenIcon' | 'createKeyboardHelpNode'>;
 
 export default class MeanAndMedianScreen extends CAVScreen<MeanAndMedianModel, MeanAndMedianScreenView> {
 
-  public constructor( preferencesModel: SoccerCommonPreferencesModel, providedOptions: MeanAndMedianScreenOptions ) {
+  public constructor( preferencesModel: PreferencesModel, providedOptions: MeanAndMedianScreenOptions ) {
 
     const options = optionize<MeanAndMedianScreenOptions, SelfOptions, CAVScreenOptions>()( {
       name: CenterAndVariabilityStrings.screen.meanAndMedianStringProperty,

@@ -20,10 +20,10 @@ import CAVSoccerBall from '../../common/model/CAVSoccerBall.js';
 // eslint-disable-next-line no-view-imported-from-model
 import MedianAnimationTone from '../../median/view/MedianAnimationTone.js';
 import Property from '../../../../axon/js/Property.js';
-import SoccerCommonPreferencesModel from '../../../../soccer-common/js/model/SoccerCommonPreferencesModel.js';
 import KickDistributionStrategy from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
 import NumberTone from '../../../../soccer-common/js/model/NumberTone.js';
 import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-players/checkboxCheckedSoundPlayer.js';
+import PreferencesModel from '../../../../joist/js/preferences/PreferencesModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeanAndMedianModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
@@ -45,7 +45,7 @@ export default class MeanAndMedianModel extends CAVModel {
   public readonly predictMeanValueProperty: NumberProperty;
   public readonly isPredictMeanKeyboardDraggingProperty: Property<boolean>;
 
-  public constructor( preferencesModel: SoccerCommonPreferencesModel, providedOptions: MeanAndMedianModelOptions ) {
+  public constructor( preferencesModel: PreferencesModel, providedOptions: MeanAndMedianModelOptions ) {
 
     const accordionBoxTandem = providedOptions.tandem.createTandem( 'plotAccordionBox' );
 
@@ -61,7 +61,9 @@ export default class MeanAndMedianModel extends CAVModel {
       { type: 'randomSkew', skewType: KickDistributionStrategy.chooseSkewDirection(), values: null },
       CAVConstants.PHYSICAL_RANGE,
       CAVSoccerBall.createSoccerBall,
-      preferencesModel.kickerCharacterSetProperty,
+
+      // The regionAndCulturePortrayalProperty will not be undefined since characterSets were passed into the PreferencesModel at startup.
+      preferencesModel.localizationModel.regionAndCulturePortrayalProperty!, options.tandem.createTandem( 'sceneModel' ),
       { tandem: options.tandem.createTandem( 'sceneModel' ) }
     );
 
