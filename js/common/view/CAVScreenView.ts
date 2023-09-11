@@ -251,6 +251,20 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       rotation: Math.PI / 4
     } );
 
+    // We never want the MedianIndicatorNode to overlap the accordion Box.
+    const avoidAccordionBox = () => {
+      if ( this.accordionBox ) {
+        if ( playAreaMedianIndicatorNode.top < this.accordionBox.bottom + INDICATOR_MARGIN ) {
+          playAreaMedianIndicatorNode.top = this.accordionBox.bottom + INDICATOR_MARGIN;
+        }
+      }
+    };
+
+    // When cueing arrows are visible the bottom of the MedianIndicator may need to adjust.
+    const adjustMedianIndicatorBottom = ( topObjectPositionY: number ) => {
+      playAreaMedianIndicatorNode.bottom = topObjectPositionY - 15;
+    };
+
     this.updateDragIndicatorNode = () => {
       const dragIndicatorVisible = model.dragIndicatorModel.isDragIndicatorVisibleProperty.value;
       const dragIndicatorValue = model.dragIndicatorModel.valueProperty.value;
@@ -264,8 +278,10 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
           topObjectPositionY - 11.5
         );
 
+        // If the drag indicator is visible and its stack matches the median stack, adjustments needs to be made.
         if ( model.selectedSceneModelProperty.value.medianValueProperty.value === dragIndicatorValue ) {
-          playAreaMedianIndicatorNode.bottom = dragIndicatorArrowNode.top;
+          adjustMedianIndicatorBottom( topObjectPositionY );
+          avoidAccordionBox();
         }
 
         // The arrow shouldn't overlap the accordion box
@@ -330,22 +346,18 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
         playAreaMedianIndicatorNode.centerX = this.modelViewTransform.modelToViewX( medianValue );
         playAreaMedianIndicatorNode.bottom = topObjectPositionY;
 
+        // If cueing indicators are visible and their stack matches the median stack, adjustments needs to be made.
         if ( medianValue === model.dragIndicatorModel.valueProperty.value && model.dragIndicatorModel.isDragIndicatorVisibleProperty.value ) {
-          playAreaMedianIndicatorNode.bottom = topObjectPositionY - 15;
+          adjustMedianIndicatorBottom( topObjectPositionY );
 
         }
-
         if ( medianValue === model.focusedSoccerBallProperty.value?.valueProperty.value &&
              ( model.isKeyboardDragArrowVisibleProperty.value || model.isKeyboardSelectArrowVisibleProperty.value ) ) {
-          playAreaMedianIndicatorNode.bottom = topObjectPositionY - 15;
+          adjustMedianIndicatorBottom( topObjectPositionY );
         }
 
         // The arrow shouldn't overlap the accordion box
-        if ( this.accordionBox ) {
-          if ( playAreaMedianIndicatorNode.top < this.accordionBox.bottom + INDICATOR_MARGIN ) {
-            playAreaMedianIndicatorNode.top = this.accordionBox.bottom + INDICATOR_MARGIN;
-          }
-        }
+        avoidAccordionBox();
       }
       playAreaMedianIndicatorNode.visible = visible;
     };
