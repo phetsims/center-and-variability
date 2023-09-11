@@ -56,11 +56,10 @@ export default class MedianModel extends CAVModel {
       maxKicksProperty,
       maxKicksAllowed,
       { type: 'randomSkew', skewType: KickDistributionStrategy.chooseSkewDirection(), values: null },
-      false,
       CAVConstants.PHYSICAL_RANGE,
       CAVSoccerBall.createSoccerBall,
       preferencesModel.kickerCharacterSetProperty,
-      options.tandem.createTandem( 'sceneModel' )
+      { tandem: options.tandem.createTandem( 'sceneModel' ) }
     );
 
     super( maxKicksProperty, [ sceneModel ], options );

@@ -58,11 +58,13 @@ export default class VariabilitySceneModel extends CAVSoccerSceneModel<Variabili
       maxKicksProperty,
       CAVConstants.MAX_KICKS_VALUES,
       kickDistributionStrategySpecification,
-      true,
       CAVConstants.PHYSICAL_RANGE,
       VariabilitySoccerBall.createSoccerBall,
       regionAndCultureProperty,
-      tandem
+      {
+        tandem: tandem,
+        isSingleKickerScene: true
+      }
     );
 
     this.maxValueProperty = new DerivedProperty( [ this.dataRangeProperty ], dataRange => {

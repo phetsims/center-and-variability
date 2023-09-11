@@ -59,10 +59,10 @@ export default class MeanAndMedianModel extends CAVModel {
       MAX_KICKS_PROPERTY,
       CAVConstants.MAX_KICKS_VALUES,
       { type: 'randomSkew', skewType: KickDistributionStrategy.chooseSkewDirection(), values: null },
-      false,
       CAVConstants.PHYSICAL_RANGE,
       CAVSoccerBall.createSoccerBall,
-      preferencesModel.kickerCharacterSetProperty, options.tandem.createTandem( 'sceneModel' )
+      preferencesModel.kickerCharacterSetProperty,
+      { tandem: options.tandem.createTandem( 'sceneModel' ) }
     );
 
     super( MAX_KICKS_PROPERTY, [ sceneModel ], options );

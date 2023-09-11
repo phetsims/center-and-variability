@@ -8,7 +8,7 @@
  *
  */
 
-import SoccerSceneModel from '../../../../soccer-common/js/model/SoccerSceneModel.js';
+import SoccerSceneModel, { SoccerSceneModelOptions } from '../../../../soccer-common/js/model/SoccerSceneModel.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Range from '../../../../dot/js/Range.js';
@@ -29,17 +29,18 @@ export default class CAVSoccerSceneModel<T extends CAVSoccerBall = CAVSoccerBall
   public constructor( maxKicksProperty: TReadOnlyProperty<number>,
                       maxKicksChoices: number[],
                       kickDistributionStrategySpecification: KickDistributionStrategySpecification,
-                      showPlayersWhenDoneKicking: boolean,
                       physicalRange: Range,
                       soccerBallFactory: ( isFirstSoccerBall: boolean, tandem: Tandem ) => T,
                       regionAndCultureProperty: Property<RegionAndCulturePortrayal | null>,
-                      tandem: Tandem ) {
+                      providedOptions: SoccerSceneModelOptions ) {
 
-    super( maxKicksProperty, maxKicksChoices, kickDistributionStrategySpecification, showPlayersWhenDoneKicking, physicalRange,
-      soccerBallFactory, regionAndCultureProperty, tandem );
+    const options = providedOptions;
+
+    super( maxKicksProperty, maxKicksChoices, kickDistributionStrategySpecification, physicalRange,
+      soccerBallFactory, regionAndCultureProperty, options );
 
     this.medianValueProperty = new Property<number | null>( null, {
-      tandem: tandem.createTandem( 'medianValueProperty' ),
+      tandem: options.tandem.createTandem( 'medianValueProperty' ),
       phetioValueType: NullableIO( NumberIO ),
       phetioReadOnly: true,
       phetioFeatured: true,
