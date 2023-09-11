@@ -169,7 +169,6 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       model,
       sceneModel,
       this.keyboardDragArrowNode,
-      this.keyboardSelectArrowNode,
       ( kicker, sceneModel ) => this.getKickerImageSets( kicker, sceneModel ),
       this.modelViewTransform,
       CAVConstants.PHYSICAL_RANGE,
@@ -352,7 +351,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
 
         }
         if ( medianValue === model.focusedSoccerBallProperty.value?.valueProperty.value &&
-             ( model.isKeyboardDragArrowVisibleProperty.value || model.isKeyboardSelectArrowVisibleProperty.value ) ) {
+             ( model.isKeyboardDragArrowVisibleProperty.value ) ) {
           adjustMedianIndicatorBottom( topObjectPositionY );
         }
 
@@ -362,7 +361,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       playAreaMedianIndicatorNode.visible = visible;
     };
 
-    Multilink.multilink( [ model.dragIndicatorModel.isDragIndicatorVisibleProperty, model.isKeyboardDragArrowVisibleProperty, model.isKeyboardSelectArrowVisibleProperty ],
+    Multilink.multilink( [ model.dragIndicatorModel.isDragIndicatorVisibleProperty, model.isKeyboardDragArrowVisibleProperty ],
       () => {
         this.updateMedianNode();
       } );

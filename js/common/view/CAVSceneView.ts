@@ -26,13 +26,12 @@ export default class CAVSceneView extends SoccerSceneView {
   public constructor( model: CAVModel,
                       sceneModel: CAVSoccerSceneModel,
                       keyboardDragArrowNode: Node,
-                      keyboardSelectArrowNode: Node,
                       getKickerImageSet: ( kicker: Kicker, sceneModel: SoccerSceneModel ) => KickerImageSet[],
                       modelViewTransform: ModelViewTransform2,
                       physicalRange: Range,
                       tandem: Tandem ) {
 
-    super( model, sceneModel, keyboardDragArrowNode, keyboardSelectArrowNode, model.dragIndicatorModel.soccerBallHasBeenDraggedProperty, model.dragIndicatorModel.valueProperty, getKickerImageSet, modelViewTransform, physicalRange, tandem );
+    super( model, sceneModel, keyboardDragArrowNode, model.dragIndicatorModel.soccerBallHasBeenDraggedProperty, model.dragIndicatorModel.valueProperty, getKickerImageSet, modelViewTransform, physicalRange, tandem );
 
     const medianHighlightLayer = new MedianHighlightLayer( sceneModel.soccerBalls, modelViewTransform, model.isPlayAreaMedianVisibleProperty, {
       visibleProperty: model.isPlayAreaMedianVisibleProperty
