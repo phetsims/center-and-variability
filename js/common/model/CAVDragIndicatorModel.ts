@@ -10,6 +10,7 @@
 import DragIndicatorModel from '../../../../soccer-common/js/model/DragIndicatorModel.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVSoccerSceneModel from './CAVSoccerSceneModel.js';
+import SoccerBall from '../../../../soccer-common/js/model/SoccerBall.js';
 
 export default class CAVDragIndicatorModel extends DragIndicatorModel {
 
@@ -43,6 +44,14 @@ export default class CAVDragIndicatorModel extends DragIndicatorModel {
             .valueProperty.value!;
         }
       }
+    }
+  }
+
+  public moveToFocus( focusedSoccerBall: SoccerBall | null ): void {
+    if ( focusedSoccerBall !== null ) {
+      // If there is a focused soccer ball, i.e. a soccer ball that has been selected or tabbed to via the keyboard,
+      // that takes precedence for indication.
+      this.valueProperty.value = focusedSoccerBall.valueProperty.value;
     }
   }
 }

@@ -51,6 +51,7 @@ import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.j
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import erase_mp3 from '../../../../scenery-phet/sounds/erase_mp3.js';
 import CAVToggleNode from './CAVToggleNode.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -253,20 +254,19 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
     this.updateDragIndicatorNode = () => {
       const dragIndicatorVisible = model.dragIndicatorModel.isDragIndicatorVisibleProperty.value;
       const dragIndicatorValue = model.dragIndicatorModel.valueProperty.value;
-      const focusedSoccerBall = model.focusedSoccerBallProperty.value;
 
-      // If there is a focused soccer ball, i.e. a soccer ball that has been selected or tabbed to via the keyboard,
-      // that takes precedence for indication.
-      const valueToIndicate = focusedSoccerBall ? focusedSoccerBall.valueProperty.value : dragIndicatorValue;
-
-      if ( dragIndicatorVisible && valueToIndicate ) {
-
+      if ( dragIndicatorVisible && dragIndicatorValue ) {
+        const topObjectPositionY = this.getTopObjectPositionY( dragIndicatorValue );
         dragIndicatorArrowNode.center = new Vector2(
-          this.modelViewTransform.modelToViewX( valueToIndicate ),
+          this.modelViewTransform.modelToViewX( dragIndicatorValue ),
 
           // This value must be kept in sync with the other occurrences of CREATE_KEYBOARD_ARROW_NODE that are shown for the keyboard
-          this.getTopObjectPositionY( valueToIndicate ) - 11.5
+          topObjectPositionY - 11.5
         );
+
+        if ( model.selectedSceneModelProperty.value.medianValueProperty.value === dragIndicatorValue ) {
+          playAreaMedianIndicatorNode.bottom = dragIndicatorArrowNode.top;
+        }
 
         // The arrow shouldn't overlap the accordion box
         if ( this.accordionBox ) {
@@ -325,8 +325,20 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       const visible = medianValue !== null && model.isPlayAreaMedianVisibleProperty.value;
 
       if ( visible ) {
+        const topObjectPositionY = this.getTopObjectPositionY( medianValue );
+
         playAreaMedianIndicatorNode.centerX = this.modelViewTransform.modelToViewX( medianValue );
-        playAreaMedianIndicatorNode.bottom = this.getTopObjectPositionY( medianValue );
+        playAreaMedianIndicatorNode.bottom = topObjectPositionY;
+
+        if ( medianValue === model.dragIndicatorModel.valueProperty.value && model.dragIndicatorModel.isDragIndicatorVisibleProperty.value ) {
+          playAreaMedianIndicatorNode.bottom = topObjectPositionY - 15;
+
+        }
+
+        if ( medianValue === model.focusedSoccerBallProperty.value?.valueProperty.value &&
+             ( model.isKeyboardDragArrowVisibleProperty.value || model.isKeyboardSelectArrowVisibleProperty.value ) ) {
+          playAreaMedianIndicatorNode.bottom = topObjectPositionY - 15;
+        }
 
         // The arrow shouldn't overlap the accordion box
         if ( this.accordionBox ) {
@@ -337,6 +349,13 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       }
       playAreaMedianIndicatorNode.visible = visible;
     };
+
+    Multilink.multilink( [ model.dragIndicatorModel.isDragIndicatorVisibleProperty, model.isKeyboardDragArrowVisibleProperty, model.isKeyboardSelectArrowVisibleProperty ],
+      () => {
+        this.updateMedianNode();
+      } );
+
+
     this.model.selectedSceneModelProperty.link( this.updateMedianNode );
     this.model.sceneModels.forEach( sceneModel => {
       sceneModel.medianValueProperty.link( this.updateMedianNode );

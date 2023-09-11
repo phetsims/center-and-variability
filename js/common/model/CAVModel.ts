@@ -135,6 +135,8 @@ export default class CAVModel extends SoccerModel<CAVSoccerSceneModel> {
         this.selectedSceneStackedSoccerBallCountProperty.value,
         this.selectedSceneMaxKicksProperty.value
       );
+
+      this.dragIndicatorModel.moveToFocus( this.focusedSoccerBallProperty.value );
     } );
   }
 
