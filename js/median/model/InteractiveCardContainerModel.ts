@@ -136,11 +136,15 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
     medianModel.selectedSceneModelProperty.value.resetEmitter.addListener( () => {
       this.totalDragDistanceProperty.reset();
       this.hasKeyboardMovedCardProperty.reset();
-      this.focusedCardProperty.reset();
-      this.isCardGrabbedProperty.reset();
       this.hasKeyboardGrabbedCardProperty.reset();
       this.hasKeyboardSelectedDifferentCardProperty.reset();
     } );
+
+    medianModel.selectedSceneModelProperty.value.clearDataEmitter.addListener( () => {
+        this.focusedCardProperty.reset();
+        this.isCardGrabbedProperty.reset();
+      }
+    );
 
     this.manuallySortedEmitter = new Emitter( {
       tandem: providedOptions.tandem.createTandem( 'manuallySortedEmitter' ),
