@@ -52,7 +52,7 @@ export default class VariabilityModel extends CAVModel {
   public readonly isIntervalToolVisibleProperty: Property<boolean>;
 
   // Whether input is enabled on the interval tool
-  public readonly isIntervalToolInputEnabledProperty: Property<boolean>;
+  public readonly isIntervalToolTranslationEnabledProperty: Property<boolean>;
 
   // The value of the interval tool's handle that starts out on the left
   public readonly intervalTool1ValueProperty: NumberProperty;
@@ -161,7 +161,7 @@ export default class VariabilityModel extends CAVModel {
       phetioFeatured: true
     } );
 
-    this.isIntervalToolInputEnabledProperty = new BooleanProperty( true, {
+    this.isIntervalToolTranslationEnabledProperty = new BooleanProperty( true, {
       tandem: intervalToolTandem.createTandem( 'isInputEnabledProperty' ),
       phetioFeatured: true,
       phetioDocumentation: 'When false, the interval cannot be translated left/right, but the handles are still moveable/interactive.'
