@@ -27,6 +27,7 @@ import NeedAtLeastNKicksText from '../../common/view/NeedAtLeastNKicksText.js';
 import RepresentationContext from '../../common/model/RepresentationContext.js';
 import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 
 type SelfOptions = {
   parentContext: RepresentationContext;
@@ -90,7 +91,8 @@ export default class IQRNode extends CAVPlotNode {
           fontSize: 14,
           fill: fillColor,
           centerX: 0,
-          centerY: 0
+          centerY: 0,
+          maxWidth: CAVConstants.IQR_LABEL_MAX_WIDTH
         } )
       ];
 
@@ -167,6 +169,7 @@ export default class IQRNode extends CAVPlotNode {
 
     const resolveTextLabelOverlaps = () => {
       const widthTolerance = 1;
+      const intersectionTolerance = 10;
       const offsetY = -20;
       const elementsToCheck = [ minLabelNode, q1LabelNode, q3LabelNode, maxLabelNode ];
       const verticalOffsets = [
@@ -187,7 +190,10 @@ export default class IQRNode extends CAVPlotNode {
 
       for ( let i = 0; i < elementsToCheck.length; i++ ) {
         for ( let j = i + 1; j < elementsToCheck.length; j++ ) {
-          if ( Math.abs( elementsToCheck[ i ].x - elementsToCheck[ j ].x ) < widthTolerance ) {
+          const intersection = elementsToCheck[ i ].bounds.intersection( elementsToCheck[ j ].bounds );
+          const isIntersectionValid = intersection.isValid();
+
+          if ( isIntersectionValid && intersection.width > intersectionTolerance ) {
             verticalOffsets[ j ] += offsetY;
           }
         }
@@ -318,6 +324,10 @@ export default class IQRNode extends CAVPlotNode {
     model.isIQRVisibleProperty.link( updateIQRNode );
     model.selectedVariabilityMeasureProperty.link( updateIQRNode );
     SHOW_OUTLIERS_PROPERTY.link( updateIQRNode );
+
+    // We want to ensure that label overlaps and plotNode layout are handled with dynamic text as well.
+    Multilink.multilink( [ minLabelTextNode.boundsProperty, q1LabelTextNode.boundsProperty, q3LabelTextNode.boundsProperty, maxLabelTextNode.boundsProperty ],
+      () => updateIQRNode() );
 
     // It's important to avoid inconsistent intermediate states during the updateDataMeasures calculation, so we
     // only update once it's complete

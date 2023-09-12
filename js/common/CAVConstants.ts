@@ -85,6 +85,7 @@ const CAVConstants = {
     font: MAIN_FONT,
     maxWidth: 90
   },
+  IQR_LABEL_MAX_WIDTH: 40,
 
   PHYSICAL_RANGE: PHYSICAL_RANGE,
   VARIABILITY_DRAG_RANGE: new Range( 0, 16 ),
