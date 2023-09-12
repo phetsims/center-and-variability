@@ -71,7 +71,6 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
   // Visible properties for keyboard hints
   public readonly isGrabReleaseCueVisibleProperty: TReadOnlyProperty<boolean>;
   public readonly isKeyboardDragArrowVisibleProperty: TReadOnlyProperty<boolean>;
-  public readonly isKeyboardSelectArrowVisibleProperty: TReadOnlyProperty<boolean>;
 
   // Properties that track if a certain action have ever been performed vai keyboard input.
   public readonly hasKeyboardMovedCardProperty = new BooleanProperty( false );
@@ -103,12 +102,6 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
         this.isCardGrabbedProperty, this.isKeyboardFocusedProperty ],
       ( focusedCard, hasKeyboardMovedCard, hasGrabbedCard, isCardGrabbed, hasKeyboardFocus ) => {
         return focusedCard !== null && !hasKeyboardMovedCard && hasGrabbedCard && isCardGrabbed && hasKeyboardFocus;
-      } );
-
-    this.isKeyboardSelectArrowVisibleProperty = new DerivedProperty( [ this.focusedCardProperty, this.isCardGrabbedProperty,
-        this.hasKeyboardSelectedDifferentCardProperty, this.isKeyboardFocusedProperty ],
-      ( focusedCard, isCardGrabbed, hasSelectedDifferentCard, hasKeyboardFocus ) => {
-        return focusedCard !== null && !isCardGrabbed && !hasSelectedDifferentCard && hasKeyboardFocus;
       } );
 
     this.isGrabReleaseCueVisibleProperty = new DerivedProperty( [ this.focusedCardProperty, this.hasKeyboardGrabbedCardProperty, this.isKeyboardFocusedProperty ],

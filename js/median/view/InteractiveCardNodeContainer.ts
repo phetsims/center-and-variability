@@ -107,10 +107,8 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
     } );
 
     const keyboardDragArrowNode = SoccerCommonConstants.CREATE_KEYBOARD_ARROW_NODE( model.isKeyboardDragArrowVisibleProperty );
-    const keyboardSelectArrowNode = SoccerCommonConstants.CREATE_KEYBOARD_ARROW_NODE( model.isKeyboardSelectArrowVisibleProperty );
 
     this.addChild( keyboardDragArrowNode );
-    this.addChild( keyboardSelectArrowNode );
 
     const isDragIndicatorVisibleProperty = new DerivedProperty( [ this.inputEnabledProperty, model.isKeyboardFocusedProperty ],
       ( inputEnabled, hasKeyboardFocus ) => inputEnabled && !hasKeyboardFocus );
@@ -261,7 +259,6 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
           focusedCardNode.model.isDraggingProperty.value = isCardGrabbed;
 
           keyboardDragArrowNode.centerBottom = new Vector2( focusedCardNode.centerX + CARD_LAYER_OFFSET + PICK_UP_DELTA_X / 2 + 1, focusForSelectedCard.bottom + 11 );
-          keyboardSelectArrowNode.centerBottom = new Vector2( focusedCardNode.centerX + CARD_LAYER_OFFSET - PICK_UP_DELTA_X / 2, focusForSelectedCard.bottom + 15 );
         }
         else {
           this.setFocusHighlight( 'invisible' );
