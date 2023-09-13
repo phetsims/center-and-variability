@@ -12,8 +12,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import InteractiveCardContainerModel from '../model/InteractiveCardContainerModel.js';
 import Property from '../../../../axon/js/Property.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
-import { HighlightFromNode, HighlightPath, Image, KeyboardListener, Node, NodeTranslationOptions, Path } from '../../../../scenery/js/imports.js';
-import dragIndicatorHand_png from '../../../images/dragIndicatorHand_png.js';
+import { HighlightFromNode, HighlightPath, KeyboardListener, NodeTranslationOptions, Path } from '../../../../scenery/js/imports.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import Animation from '../../../../twixt/js/Animation.js';
@@ -29,10 +28,10 @@ import GrabReleaseCueNode from '../../../../scenery-phet/js/accessibility/nodes/
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import CelebrationNode from './CelebrationNode.js';
 import SoccerCommonConstants from '../../../../soccer-common/js/SoccerCommonConstants.js';
-import InteractiveCueArrowNode from '../../../../soccer-common/js/view/InteractiveCueArrowNode.js';
 import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-players/checkboxCheckedSoundPlayer.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import CardDragCueNode from './CardDragCueNode.js';
 
 const FOCUS_HIGHLIGHT_Y_MARGIN = CAVConstants.CARD_SPACING + 3;
 
@@ -54,6 +53,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
                       medianVisibleProperty: Property<boolean>,
                       providedOptions: InteractiveCardNodeContainerOptions
   ) {
+
     super( model, sceneModel, medianVisibleProperty, providedOptions );
 
     this.celebrationNode = new CelebrationNode( model, this.cardMap, this.sceneModel.resetEmitter );
@@ -88,18 +88,6 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       } );
     } );
 
-    const mouseArrowNode = new InteractiveCueArrowNode( {
-      doubleHead: false,
-      dashWidth: 2,
-      dashHeight: 1.8,
-      numberOfDashes: 3,
-      spacing: 1.5,
-      triangleNodeOptions: {
-        triangleWidth: 5,
-        triangleHeight: 4.7
-      }
-    } );
-
     const focusHighlightPath = new HighlightPath( null, {
       outerStroke: HighlightPath.OUTER_LIGHT_GROUP_FOCUS_COLOR,
       innerStroke: HighlightPath.INNER_LIGHT_GROUP_FOCUS_COLOR,
@@ -119,24 +107,18 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
     const isDragIndicatorVisibleProperty = new DerivedProperty( [ this.inputEnabledProperty, model.isKeyboardFocusedProperty ],
       ( inputEnabled, hasKeyboardFocus ) => inputEnabled && !hasKeyboardFocus );
 
-    const handWithArrowNode = new Node( {
-      children: [
-        mouseArrowNode,
-        new Image( dragIndicatorHand_png, { scale: 0.077, centerTop: mouseArrowNode.leftTop.plusXY( -0.5, 0 ) } )
-      ],
-      opacity: 0,
-      pickable: false,
+    const cardDragCueNode = new CardDragCueNode( {
       centerTop: new Vector2( 0.5 * CAVConstants.CARD_DIMENSION, CAVConstants.CARD_DIMENSION - 9 ),
       visibleProperty: isDragIndicatorVisibleProperty
     } );
 
-    this.addChild( handWithArrowNode );
+    this.addChild( cardDragCueNode );
 
     // Fade in the hand with arrow node
     const fadeInAnimation = new Animation( {
       duration: 0.5,
       targets: [ {
-        property: handWithArrowNode.opacityProperty,
+        property: cardDragCueNode.opacityProperty,
         to: 1,
         easing: Easing.QUADRATIC_IN_OUT
       } ]
@@ -146,7 +128,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
     const fadeOutAnimation = new Animation( {
       duration: 0.1,
       targets: [ {
-        property: handWithArrowNode.opacityProperty,
+        property: cardDragCueNode.opacityProperty,
         to: 0,
         easing: Easing.QUADRATIC_IN_OUT
       } ]
