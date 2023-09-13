@@ -20,7 +20,6 @@ import Property from '../../../../axon/js/Property.js';
 import Range from '../../../../dot/js/Range.js';
 import IntervalToolRectangle from './IntervalToolRectangle.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import Multilink from '../../../../axon/js/Multilink.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
@@ -71,7 +70,7 @@ export default class IntervalToolNode extends Node {
 
     const rectangle = new IntervalToolRectangle( model.handle1ValueProperty, model.handle2ValueProperty,
       modelViewTransform, accordionBoxTopProperty, model.isBeingTranslatedProperty, {
-        inputEnabledProperty: model.isTranslationEnabledProperty,
+        inputEnabledProperty: model.isRectangleInputEnabledProperty,
         phetioEnabledPropertyInstrumented: false,
         tandem: tandem.createTandem( 'rectangle' ),
         phetioVisiblePropertyInstrumented: false
@@ -82,17 +81,11 @@ export default class IntervalToolNode extends Node {
       visibleProperty: model.isVisibleProperty
     } );
 
-    // Prevent multitouch on the handles when the main interval tool is being dragged, see https://github.com/phetsims/center-and-variability/issues/225
+    // Prevent multitouch on the handles when the tool is being translated, see https://github.com/phetsims/center-and-variability/issues/225
     model.isBeingTranslatedProperty.link( isBeingTranslated => {
       handle1.inputEnabled = !isBeingTranslated;
       handle2.inputEnabled = !isBeingTranslated;
     } );
-
-    // Prevent multitouch on the rectangle if the user is manipulating either of the handles, see https://github.com/phetsims/center-and-variability/issues/225
-    Multilink.multilink( [ handle1.isKeyboardDraggingProperty, handle1.isMouseTouchDraggingProperty, handle2.isKeyboardDraggingProperty, handle2.isMouseTouchDraggingProperty ], ( keyboard1, mouse1, keyboard2, mouse2 ) => {
-      rectangle.inputEnabled = !keyboard1 && !mouse1 && !keyboard2 && !mouse2;
-    } );
-
 
     const intervalDistanceProperty = new DerivedProperty( [ model.deltaStableProperty ], delta => {
       return Utils.linear( 0, 16, 2, 1, delta );

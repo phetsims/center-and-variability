@@ -14,6 +14,8 @@ import Property from '../../../../axon/js/Property.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import CAVConstants from '../../common/CAVConstants.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 
 export default class IntervalToolModel {
@@ -31,6 +33,7 @@ export default class IntervalToolModel {
   // Whether input is enabled on the interval tool
   public readonly isTranslationEnabledProperty: Property<boolean>;
   public readonly isBeingTranslatedProperty = new BooleanProperty( false );
+  public readonly isRectangleInputEnabledProperty: TReadOnlyProperty<boolean>;
 
   public readonly isVisibleProperty: Property<boolean>;
 
@@ -63,6 +66,13 @@ export default class IntervalToolModel {
       tandem: tandem.createTandem( 'isVisibleProperty' ),
       phetioFeatured: true
     } );
+
+    // Prevent multitouch on the rectangle if the user is manipulating either of the handles, see https://github.com/phetsims/center-and-variability/issues/225
+    this.isRectangleInputEnabledProperty = new DerivedProperty( [ this.isTranslationEnabledProperty, this.isHandle1BeingMouseDraggedProperty,
+    this.isHandle2BeingMouseDraggedProperty, this.isHandle1BeingKeyboardDraggedProperty, this.isHandle2BeingKeyboardDraggedProperty ],
+      ( isTranslationEnabled, isMouse1, isKeyboard1, isMouse2, isKeyboard2 ) => {
+        return isTranslationEnabled && !isMouse1 && !isKeyboard1 && !isMouse2 && !isKeyboard2;
+      } );
 
     this.deltaStableProperty = new NumberProperty( this.getIntervalToolWidth() );
   }
