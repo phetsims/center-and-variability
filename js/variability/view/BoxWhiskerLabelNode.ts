@@ -52,7 +52,7 @@ export default class BoxWhiskerLabelNode extends Node {
     this.labelContainer = labelContainer;
 
     textNode.boundsProperty.link( newBounds => {
-      textHighlightRect.setRectBounds( newBounds.dilateX( 3 ).dilateY( 1.5 ) );
+      textHighlightRect.setRectBounds( newBounds.dilateX( 2 ).dilateY( 1.5 ) );
       labelContainer.centerX = 0;
     } );
   }

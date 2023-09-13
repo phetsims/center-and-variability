@@ -95,8 +95,14 @@ export default class IQRNode extends CAVPlotNode {
     const boxWhiskerEndCapLeft = createBoxWhiskerEndCap();
     const boxWhiskerEndCapRight = createBoxWhiskerEndCap();
 
-    const medianLabelNode = new BoxWhiskerLabelNode( CenterAndVariabilityStrings.minStringProperty, false, CAVColors.medianColorProperty, true );
+    boxWhiskerNode.addChild( boxWhiskerMedianLine );
+    boxWhiskerNode.addChild( boxWhiskerBox );
+    boxWhiskerNode.addChild( boxWhiskerLineLeft );
+    boxWhiskerNode.addChild( boxWhiskerLineRight );
+    boxWhiskerNode.addChild( boxWhiskerEndCapLeft );
+    boxWhiskerNode.addChild( boxWhiskerEndCapRight );
 
+    const medianLabelNode = new BoxWhiskerLabelNode( CenterAndVariabilityStrings.minStringProperty, false, CAVColors.medianColorProperty, true );
     const minLabelNode = new BoxWhiskerLabelNode( CenterAndVariabilityStrings.minStringProperty, false, CAVColors.iqrLabelColorProperty );
     const maxLabelNode = new BoxWhiskerLabelNode( CenterAndVariabilityStrings.maxStringProperty, false, CAVColors.iqrLabelColorProperty );
     const q1LabelNode = new BoxWhiskerLabelNode( CenterAndVariabilityStrings.q1StringProperty, true, CAVColors.iqrLabelColorProperty );
@@ -105,21 +111,14 @@ export default class IQRNode extends CAVPlotNode {
     medianLabelNode.y = -31;
     q1LabelNode.y = q3LabelNode.y = minLabelNode.y = maxLabelNode.y = -35;
 
-    const outlierDisplay = new Node();
+    const nonMedianLabelNodes = [ minLabelNode, q1LabelNode, q3LabelNode, maxLabelNode ];
 
-    boxWhiskerNode.addChild( boxWhiskerMedianLine );
-    boxWhiskerNode.addChild( boxWhiskerBox );
-    boxWhiskerNode.addChild( boxWhiskerLineLeft );
-    boxWhiskerNode.addChild( boxWhiskerLineRight );
-    boxWhiskerNode.addChild( boxWhiskerEndCapLeft );
-    boxWhiskerNode.addChild( boxWhiskerEndCapRight );
-
-    boxWhiskerNode.addChild( q1LabelNode );
-    boxWhiskerNode.addChild( q3LabelNode );
-    boxWhiskerNode.addChild( minLabelNode );
-    boxWhiskerNode.addChild( maxLabelNode );
+    nonMedianLabelNodes.forEach( nonMedianLabelNode => {
+      boxWhiskerNode.addChild( nonMedianLabelNode );
+    } );
     boxWhiskerNode.addChild( medianLabelNode );
 
+    const outlierDisplay = new Node();
     boxWhiskerNode.addChild( outlierDisplay );
 
     this.addChild( iqrBar );
@@ -134,7 +133,7 @@ export default class IQRNode extends CAVPlotNode {
       const widthTolerance = 1;
       const intersectionTolerance = 10;
       const offsetY = -20;
-      const elementsToCheck = [ minLabelNode, q1LabelNode, q3LabelNode, maxLabelNode ];
+      const elementsToCheck = [ ...nonMedianLabelNodes ];
       const verticalOffsets = [
         ARROW_LABEL_TEXT_OFFSET_DEFAULT,
         ARROW_LABEL_TEXT_OFFSET_DEFAULT,
@@ -161,7 +160,9 @@ export default class IQRNode extends CAVPlotNode {
         }
       }
 
-      const elementsToResolve = [ minLabelNode.labelContainer, q1LabelNode.labelContainer, q3LabelNode.labelContainer, maxLabelNode.labelContainer ];
+      const elementsToResolve = nonMedianLabelNodes.map( nonMedianLabelNode => {
+        return nonMedianLabelNode.labelContainer;
+      } );
       if ( quartileLabelsOverlap ) {
         elementsToResolve.splice( 2, 0, medianLabelNode );
 
@@ -204,6 +205,18 @@ export default class IQRNode extends CAVPlotNode {
           centerX: centerX
         }
       );
+    };
+
+    const updateIntervalBar = () => {
+      const minLabelNodeY = Math.min( ...nonMedianLabelNodes.map( nonMedianLabelNode => nonMedianLabelNode.labelContainer.y ) );
+
+      iqrBar.setIntervalBarNodeWidth( iqrRectangle.rectWidth );
+      iqrBar.bottom = options.parentContext === 'accordion' ? iqrRectangle.top + CAVConstants.VARIABILITY_PLOT_BAR_OFFSET_Y : minLabelNodeY + 12;
+      iqrBar.centerX = iqrRectangle.centerX;
+
+      // Gracefully handle transient intermediate states during phet-io set state
+      iqrBarLabel.string = sceneModel.iqrValueProperty.value === null ? '' : sceneModel.iqrValueProperty.value;
+      iqrBarLabel.centerBottom = iqrBar.centerTop;
     };
 
     const updateIQRNode = () => {
@@ -267,15 +280,7 @@ export default class IQRNode extends CAVPlotNode {
         iqrRectangle.left = boxLeft;
         iqrRectangle.bottom = options.parentContext === 'info' ? boxWhiskerNode.y + 0.5 * BOX_HEIGHT : floor;
 
-        const minLabelNodeY = Math.min( minLabelNode.labelContainer.y, q1LabelNode.labelContainer.y, q3LabelNode.labelContainer.y, maxLabelNode.labelContainer.y );
-
-        iqrBar.setIntervalBarNodeWidth( iqrRectangle.rectWidth );
-        iqrBar.bottom = options.parentContext === 'accordion' ? iqrRectangle.top + CAVConstants.VARIABILITY_PLOT_BAR_OFFSET_Y : minLabelNodeY + 12;
-        iqrBar.centerX = iqrRectangle.centerX;
-
-        // Gracefully handle transient intermediate states during phet-io set state
-        iqrBarLabel.string = sceneModel.iqrValueProperty.value === null ? '' : sceneModel.iqrValueProperty.value;
-        iqrBarLabel.centerBottom = iqrBar.centerTop;
+        updateIntervalBar();
       }
 
       let outlierDisplayChildren: Path[] = [];
@@ -291,7 +296,10 @@ export default class IQRNode extends CAVPlotNode {
 
     // We want to ensure that label overlaps and plotNode layout are handled with dynamic text as well.
     Multilink.multilink( [ minLabelNode.boundsProperty, q1LabelNode.boundsProperty, q3LabelNode.boundsProperty, maxLabelNode.boundsProperty ],
-      () => resolveTextLabelOverlaps() );
+      () => {
+        resolveTextLabelOverlaps();
+        updateIntervalBar();
+      } );
 
     // It's important to avoid inconsistent intermediate states during the updateDataMeasures calculation, so we
     // only update once it's complete
