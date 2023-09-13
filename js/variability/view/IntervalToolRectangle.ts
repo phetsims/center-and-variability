@@ -28,7 +28,7 @@ type SelfOptions = EmptySelfOptions;
 type ParentOptions = NodeOptions & AccessibleSliderOptions;
 type IntervalToolNodeOptions = StrictOmit<SelfOptions & WithRequired<ParentOptions, 'tandem'>, 'enabledRangeProperty' | 'valueProperty'>;
 
-export default class IntervalToolNode extends AccessibleSlider( Node, 0 ) {
+export default class IntervalToolRectangle extends AccessibleSlider( Node, 0 ) {
   public constructor( intervalToolValue1Property: NumberProperty, intervalToolValue2Property: NumberProperty, modelViewTransform: ModelViewTransform2,
                       topAlignmentProperty: TReadOnlyProperty<number>, isBeingDragged: Property<boolean>, providedOptions: IntervalToolNodeOptions ) {
 
@@ -157,4 +157,4 @@ export default class IntervalToolNode extends AccessibleSlider( Node, 0 ) {
   }
 }
 
-centerAndVariability.register( 'IntervalToolNode', IntervalToolNode );
+centerAndVariability.register( 'IntervalToolRectangle', IntervalToolRectangle );

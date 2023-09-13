@@ -31,7 +31,7 @@ import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js'
 import CAVInfoButton from '../../common/view/CAVInfoButton.js';
 import ButtonNode from '../../../../sun/js/buttons/ButtonNode.js';
 import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
-import IntervalToolNode from './IntervalToolNode.js';
+import IntervalToolRectangle from './IntervalToolRectangle.js';
 import Property from '../../../../axon/js/Property.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import CAVToggleNode from '../../common/view/CAVToggleNode.js';
@@ -39,7 +39,7 @@ import CAVToggleNode from '../../common/view/CAVToggleNode.js';
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 
   public readonly infoButton: ButtonNode;
-  private readonly intervalToolNode: IntervalToolNode;
+  private readonly intervalToolNode: IntervalToolRectangle;
 
   public constructor( model: VariabilityModel, tandem: Tandem, playAreaNumberLineNode: NumberLineNode ) {
 
@@ -56,7 +56,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
 
     const accordionBoxTitleProperty = new DynamicProperty<string, unknown, unknown>( currentProperty );
 
-    const intervalToolNode = new IntervalToolNode( model.intervalTool1ValueProperty,
+    const intervalToolNode = new IntervalToolRectangle( model.intervalTool1ValueProperty,
       model.intervalTool2ValueProperty, CAVConstants.PLOT_NODE_TRANSFORM, new Property( -18 ),
       new BooleanProperty( false ), {
         focusable: false,
@@ -264,7 +264,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
   /**
    * Match the highlighting for the accordion box section of the interval tool to be the same as the one in the play area.
    */
-  public setFocusHighlightForIntervalTool( parentIntervalToolNode: IntervalToolNode ): void {
+  public setFocusHighlightForIntervalTool( parentIntervalToolNode: IntervalToolRectangle ): void {
     this.intervalToolNode.setFocusHighlight( new HighlightFromNode( parentIntervalToolNode ) );
   }
 }

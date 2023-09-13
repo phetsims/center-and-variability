@@ -31,7 +31,7 @@ import Property from '../../../../axon/js/Property.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Range from '../../../../dot/js/Range.js';
-import IntervalToolNode from './IntervalToolNode.js';
+import IntervalToolRectangle from './IntervalToolRectangle.js';
 import ContinuousPropertySoundGenerator from '../../../../tambo/js/sound-generators/ContinuousPropertySoundGenerator.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import intervalToolLoop_wav from '../../../sounds/intervalToolLoop_wav.js';
@@ -135,7 +135,7 @@ export default class VariabilityScreenView extends CAVScreenView {
         variabilityRadioButtonGroupWrapper.top = accordionBoxWrapper.top + 8;
       } );
 
-    const intervalToolNode = new IntervalToolNode( model.intervalTool1ValueProperty, model.intervalTool2ValueProperty, this.modelViewTransform,
+    const intervalToolNode = new IntervalToolRectangle( model.intervalTool1ValueProperty, model.intervalTool2ValueProperty, this.modelViewTransform,
       new DerivedProperty( [ variabilityAccordionBox.boundsProperty ], bounds => bounds.top ), isIntervalAreaBeingDraggedProperty, {
         visibleProperty: model.isIntervalToolVisibleProperty,
         inputEnabledProperty: model.isIntervalToolTranslationEnabledProperty,
