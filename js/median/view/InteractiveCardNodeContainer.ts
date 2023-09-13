@@ -12,7 +12,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import InteractiveCardContainerModel from '../model/InteractiveCardContainerModel.js';
 import Property from '../../../../axon/js/Property.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
-import { HighlightFromNode, HighlightPath, Image, KeyboardListener, Node, Path } from '../../../../scenery/js/imports.js';
+import { HighlightFromNode, HighlightPath, Image, KeyboardListener, Node, NodeTranslationOptions, Path } from '../../../../scenery/js/imports.js';
 import dragIndicatorHand_png from '../../../images/dragIndicatorHand_png.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import CAVConstants from '../../common/CAVConstants.js';
@@ -31,8 +31,14 @@ import CelebrationNode from './CelebrationNode.js';
 import SoccerCommonConstants from '../../../../soccer-common/js/SoccerCommonConstants.js';
 import InteractiveCueArrowNode from '../../../../soccer-common/js/view/InteractiveCueArrowNode.js';
 import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-players/checkboxCheckedSoundPlayer.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
 const FOCUS_HIGHLIGHT_Y_MARGIN = CAVConstants.CARD_SPACING + 3;
+
+type SelfOptions = EmptySelfOptions;
+
+type InteractiveCardNodeContainerOptions = SelfOptions & NodeTranslationOptions & PickRequired<CardNodeContainerOptions, 'tandem'>;
 
 export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
@@ -46,7 +52,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
                       private readonly isSortingDataProperty: Property<boolean>,
                       sceneModel: CAVSoccerSceneModel,
                       medianVisibleProperty: Property<boolean>,
-                      providedOptions: CardNodeContainerOptions
+                      providedOptions: InteractiveCardNodeContainerOptions
   ) {
     super( model, sceneModel, medianVisibleProperty, providedOptions );
 
