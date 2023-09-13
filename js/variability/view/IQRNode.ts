@@ -7,16 +7,14 @@
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 
-import { Line, ManualConstraint, Node, Path, ProfileColorProperty, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { Line, ManualConstraint, Node, Path, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import { Shape } from '../../../../kite/js/imports.js';
-import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVPlotNode, { CAVPlotNodeOptions, MIN_KICKS_TEXT_OFFSET } from '../../common/view/CAVPlotNode.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import CAVColors from '../../common/CAVColors.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import CAVConstants, { SHOW_OUTLIERS_PROPERTY } from '../../common/CAVConstants.js';
 import optionize from '../../../../phet-core/js/optionize.js';
@@ -28,11 +26,14 @@ import RepresentationContext from '../../common/model/RepresentationContext.js';
 import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
+import BoxWhiskerLabelNode from './BoxWhiskerLabelNode.js';
 
 type SelfOptions = {
   parentContext: RepresentationContext;
 };
 type IQRNodeOptions = SelfOptions & StrictOmit<CAVPlotNodeOptions, 'dataPointFill'>;
+
+export const ARROW_LABEL_TEXT_OFFSET_DEFAULT = -11;
 
 export default class IQRNode extends CAVPlotNode {
   public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, isDataPointLayerVisibleProperty: TProperty<boolean>, providedOptions: IQRNodeOptions ) {
@@ -68,42 +69,6 @@ export default class IQRNode extends CAVPlotNode {
       fill: CAVColors.iqrColorProperty
     } );
 
-    const ARROW_LABEL_TEXT_OFFSET_DEFAULT = -11;
-
-    const boxWhiskerLabelArrow = ( fillColor: ProfileColorProperty ) => {
-      return new ArrowNode( 0, 0, 0, 24, {
-        fill: fillColor,
-        stroke: null,
-        headHeight: 12,
-        headWidth: 15,
-        tailWidth: 4,
-        maxHeight: 18
-      } );
-    };
-
-    const boxWhiskerLabelText = ( fillColor: ProfileColorProperty, labelTextProperty: TReadOnlyProperty<string>, isQuartile: boolean ) => {
-      const backgroundRectWidth = 25;
-      const backgroundRectHeight = 19;
-      const textNodeChildren = [ ...( isQuartile ?
-        [ new Rectangle( -0.5 * backgroundRectWidth, -0.5 * backgroundRectHeight, backgroundRectWidth, backgroundRectHeight,
-          { fill: CAVColors.iqrColorProperty, cornerRadius: 5 } ) ] : [] ),
-        new Text( labelTextProperty, {
-          fontSize: 14,
-          fill: fillColor,
-          centerX: 0,
-          centerY: 0,
-          maxWidth: CAVConstants.IQR_LABEL_MAX_WIDTH
-        } )
-      ];
-
-      return new Node( { children: textNodeChildren, centerY: ARROW_LABEL_TEXT_OFFSET_DEFAULT } );
-    };
-
-    const boxWhiskerLabel = ( fillColor: ProfileColorProperty, textNode: Node ) => {
-      const arrowNode = boxWhiskerLabelArrow( fillColor );
-      return new Node( { children: [ textNode, arrowNode ] } );
-    };
-
     const boxWhiskerMedianLine = new Line( 0, -BOX_HEIGHT / 2, 0, BOX_HEIGHT / 2, {
       stroke: CAVColors.boxWhiskerStrokeColorProperty,
       lineWidth: BOX_STROKE_WIDTH
@@ -130,19 +95,14 @@ export default class IQRNode extends CAVPlotNode {
     const boxWhiskerEndCapLeft = createBoxWhiskerEndCap();
     const boxWhiskerEndCapRight = createBoxWhiskerEndCap();
 
-    const medianArrowNode = boxWhiskerLabelArrow( CAVColors.medianColorProperty );
+    const medianLabelNode = new BoxWhiskerLabelNode( CenterAndVariabilityStrings.minStringProperty, false, CAVColors.medianColorProperty, true );
 
-    const minLabelTextNode = boxWhiskerLabelText( CAVColors.iqrLabelColorProperty, CenterAndVariabilityStrings.minStringProperty, false );
-    const maxLabelTextNode = boxWhiskerLabelText( CAVColors.iqrLabelColorProperty, CenterAndVariabilityStrings.maxStringProperty, false );
-    const q1LabelTextNode = boxWhiskerLabelText( CAVColors.iqrLabelColorProperty, CenterAndVariabilityStrings.q1StringProperty, true );
-    const q3LabelTextNode = boxWhiskerLabelText( CAVColors.iqrLabelColorProperty, CenterAndVariabilityStrings.q3StringProperty, true );
+    const minLabelNode = new BoxWhiskerLabelNode( CenterAndVariabilityStrings.minStringProperty, false, CAVColors.iqrLabelColorProperty );
+    const maxLabelNode = new BoxWhiskerLabelNode( CenterAndVariabilityStrings.maxStringProperty, false, CAVColors.iqrLabelColorProperty );
+    const q1LabelNode = new BoxWhiskerLabelNode( CenterAndVariabilityStrings.q1StringProperty, true, CAVColors.iqrLabelColorProperty );
+    const q3LabelNode = new BoxWhiskerLabelNode( CenterAndVariabilityStrings.q3StringProperty, true, CAVColors.iqrLabelColorProperty );
 
-    const minLabelNode = boxWhiskerLabel( CAVColors.iqrLabelColorProperty, minLabelTextNode );
-    const maxLabelNode = boxWhiskerLabel( CAVColors.iqrLabelColorProperty, maxLabelTextNode );
-    const q1LabelNode = boxWhiskerLabel( CAVColors.iqrLabelColorProperty, q1LabelTextNode );
-    const q3LabelNode = boxWhiskerLabel( CAVColors.iqrLabelColorProperty, q3LabelTextNode );
-
-    medianArrowNode.y = -31;
+    medianLabelNode.y = -31;
     q1LabelNode.y = q3LabelNode.y = minLabelNode.y = maxLabelNode.y = -35;
 
     const outlierDisplay = new Node();
@@ -153,11 +113,13 @@ export default class IQRNode extends CAVPlotNode {
     boxWhiskerNode.addChild( boxWhiskerLineRight );
     boxWhiskerNode.addChild( boxWhiskerEndCapLeft );
     boxWhiskerNode.addChild( boxWhiskerEndCapRight );
+
     boxWhiskerNode.addChild( q1LabelNode );
     boxWhiskerNode.addChild( q3LabelNode );
     boxWhiskerNode.addChild( minLabelNode );
     boxWhiskerNode.addChild( maxLabelNode );
-    boxWhiskerNode.addChild( medianArrowNode );
+    boxWhiskerNode.addChild( medianLabelNode );
+
     boxWhiskerNode.addChild( outlierDisplay );
 
     this.addChild( iqrBar );
@@ -167,6 +129,7 @@ export default class IQRNode extends CAVPlotNode {
 
     iqrRectangle.moveToBack();
 
+    // Ensures that the BoxWhiskerLabelNodes don't overlap one another
     const resolveTextLabelOverlaps = () => {
       const widthTolerance = 1;
       const intersectionTolerance = 10;
@@ -182,10 +145,9 @@ export default class IQRNode extends CAVPlotNode {
       const quartileLabelsOverlap = Math.abs( q1LabelNode.x - q3LabelNode.x ) < widthTolerance;
 
       if ( quartileLabelsOverlap ) {
-        elementsToCheck.splice( 2, 0, medianArrowNode );
+        elementsToCheck.splice( 2, 0, medianLabelNode );
         verticalOffsets.push( ARROW_LABEL_TEXT_OFFSET_DEFAULT );
-
-        medianArrowNode.x = q1LabelNode.x;
+        medianLabelNode.x = q1LabelNode.x;
       }
 
       for ( let i = 0; i < elementsToCheck.length; i++ ) {
@@ -199,15 +161,15 @@ export default class IQRNode extends CAVPlotNode {
         }
       }
 
-      const elementsToResolve = [ minLabelTextNode, q1LabelTextNode, q3LabelTextNode, maxLabelTextNode ];
+      const elementsToResolve = [ minLabelNode.labelContainer, q1LabelNode.labelContainer, q3LabelNode.labelContainer, maxLabelNode.labelContainer ];
       if ( quartileLabelsOverlap ) {
-        elementsToResolve.splice( 2, 0, medianArrowNode );
+        elementsToResolve.splice( 2, 0, medianLabelNode );
 
         //offset the median arrow additionally since it has a different anchor point than the text labels
         verticalOffsets[ 2 ] -= 44;
       }
       else {
-        medianArrowNode.y = -31;
+        medianLabelNode.y = -31;
       }
 
       for ( let i = 0; i < elementsToResolve.length; i++ ) {
@@ -218,9 +180,9 @@ export default class IQRNode extends CAVPlotNode {
 
       // if q1 is in the same place as the min but the quartiles don't overlap, put the quartile labels on the same level
       if ( q1OverlapsMin && !quartileLabelsOverlap ) {
-        const q1LabelY = q1LabelTextNode.y;
-        q1LabelTextNode.y = minLabelTextNode.y;
-        minLabelTextNode.y = q1LabelY;
+        const q1LabelTextY = q1LabelNode.labelContainer.y;
+        q1LabelNode.labelContainer.y = minLabelNode.labelContainer.y;
+        minLabelNode.labelContainer.y = q1LabelTextY;
       }
     };
 
@@ -245,12 +207,12 @@ export default class IQRNode extends CAVPlotNode {
     };
 
     const updateIQRNode = () => {
-
       // Avoid inconsistent intermediate states during a clear, but note that this will be called immediately
       // after clearing, see https://github.com/phetsims/center-and-variability/issues/240
       if ( sceneModel.isClearingData ) {
         return;
       }
+
       const sortedValues = sceneModel.getSortedStackedObjects().map( object => object.valueProperty.value! );
 
       const outlierValues = SHOW_OUTLIERS_PROPERTY.value ? _.uniq( sortedValues.filter( isOutlier ) ) : [];
@@ -264,7 +226,7 @@ export default class IQRNode extends CAVPlotNode {
       const boxRight = this.modelViewTransform.modelToViewX( sceneModel.q3ValueProperty.value! );
 
       const medianPositionX = this.modelViewTransform.modelToViewX( sceneModel.medianValueProperty.value! );
-      medianArrowNode.x = boxWhiskerMedianLine.x1 = boxWhiskerMedianLine.x2 = medianPositionX;
+      medianLabelNode.x = boxWhiskerMedianLine.x1 = boxWhiskerMedianLine.x2 = medianPositionX;
 
       boxWhiskerBox.left = boxLeft - 0.5 * BOX_STROKE_WIDTH;
       boxWhiskerBox.rectWidth = boxRight - boxLeft;
@@ -288,7 +250,7 @@ export default class IQRNode extends CAVPlotNode {
       const showHighlightRectangle = enoughDataForIQR && ( options.parentContext === 'info' || model.isIQRVisibleProperty.value );
       const showBoxWhiskerLabels = options.parentContext === 'info' && enoughDataForIQR;
 
-      medianArrowNode.visible = enoughDataForMedian;
+      medianLabelNode.visible = enoughDataForMedian;
       boxWhiskerNode.visible = enoughDataForIQR;
       iqrRectangle.visible = iqrBar.visible = iqrBarLabel.visible = showHighlightRectangle;
       minLabelNode.visible = maxLabelNode.visible = q1LabelNode.visible = q3LabelNode.visible = showBoxWhiskerLabels;
@@ -305,8 +267,10 @@ export default class IQRNode extends CAVPlotNode {
         iqrRectangle.left = boxLeft;
         iqrRectangle.bottom = options.parentContext === 'info' ? boxWhiskerNode.y + 0.5 * BOX_HEIGHT : floor;
 
+        const minLabelNodeY = Math.min( minLabelNode.labelContainer.y, q1LabelNode.labelContainer.y, q3LabelNode.labelContainer.y, maxLabelNode.labelContainer.y );
+
         iqrBar.setIntervalBarNodeWidth( iqrRectangle.rectWidth );
-        iqrBar.bottom = options.parentContext === 'accordion' ? iqrRectangle.top + CAVConstants.VARIABILITY_PLOT_BAR_OFFSET_Y : Math.min( minLabelTextNode.y, q1LabelTextNode.y, q3LabelTextNode.y, maxLabelTextNode.y ) + 12;
+        iqrBar.bottom = options.parentContext === 'accordion' ? iqrRectangle.top + CAVConstants.VARIABILITY_PLOT_BAR_OFFSET_Y : minLabelNodeY + 12;
         iqrBar.centerX = iqrRectangle.centerX;
 
         // Gracefully handle transient intermediate states during phet-io set state
@@ -326,8 +290,8 @@ export default class IQRNode extends CAVPlotNode {
     SHOW_OUTLIERS_PROPERTY.link( updateIQRNode );
 
     // We want to ensure that label overlaps and plotNode layout are handled with dynamic text as well.
-    Multilink.multilink( [ minLabelTextNode.boundsProperty, q1LabelTextNode.boundsProperty, q3LabelTextNode.boundsProperty, maxLabelTextNode.boundsProperty ],
-      () => updateIQRNode() );
+    Multilink.multilink( [ minLabelNode.boundsProperty, q1LabelNode.boundsProperty, q3LabelNode.boundsProperty, maxLabelNode.boundsProperty ],
+      () => resolveTextLabelOverlaps() );
 
     // It's important to avoid inconsistent intermediate states during the updateDataMeasures calculation, so we
     // only update once it's complete
