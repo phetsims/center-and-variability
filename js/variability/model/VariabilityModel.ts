@@ -21,6 +21,7 @@ import CAVConstants, { MAX_KICKS_PROPERTY } from '../../common/CAVConstants.js';
 import Utils from '../../../../dot/js/Utils.js';
 import NumberTone from '../../../../soccer-common/js/model/NumberTone.js';
 import PreferencesModel from '../../../../joist/js/preferences/PreferencesModel.js';
+import IntervalToolModel from './IntervalToolModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
@@ -48,23 +49,6 @@ export default class VariabilityModel extends CAVModel {
   // Whether the pointer is currently being dragged by the keyboard. Used to avoid conflicts between keyboard and mouse/touch interaction.
   public readonly isPointerKeyboardDraggingProperty: Property<boolean>;
 
-  // Is the interval tool currently being shown?
-  public readonly isIntervalToolVisibleProperty: Property<boolean>;
-
-  // Whether input is enabled on the interval tool
-  public readonly isIntervalToolTranslationEnabledProperty: Property<boolean>;
-
-  // The value of the interval tool's handle that starts out on the left
-  public readonly intervalTool1ValueProperty: NumberProperty;
-
-  // The value of the interval tool's handle that starts out on the right
-  public readonly intervalTool2ValueProperty: NumberProperty;
-
-  // The absolute value of the distance between the interval tool handles in meters. To work around inconsistent
-  // intermediate values in the axon library, update this value once at the end of each step.
-  // Used in sonification.
-  public readonly intervalToolDeltaStableProperty: Property<number>;
-
   // Whether the variability model is currently in the process of resetting. Used to handle intermediate states.
   public readonly variabilityModelResetInProgressProperty = new BooleanProperty( false );
 
@@ -73,6 +57,8 @@ export default class VariabilityModel extends CAVModel {
 
   // The scenes for individual players on the 'Variability' screen
   public readonly variabilitySceneModels: VariabilitySceneModel[];
+
+  public readonly intervalToolModel: IntervalToolModel;
 
   public constructor( preferencesModel: PreferencesModel, providedOptions: VariabilityModelOptions ) {
 
@@ -154,31 +140,7 @@ export default class VariabilityModel extends CAVModel {
 
     this.isPointerKeyboardDraggingProperty = new BooleanProperty( false );
 
-    const intervalToolTandem = this.soccerAreaTandem.createTandem( 'intervalTool' );
-
-    this.isIntervalToolVisibleProperty = new BooleanProperty( false, {
-      tandem: intervalToolTandem.createTandem( 'isVisibleProperty' ),
-      phetioFeatured: true
-    } );
-
-    this.isIntervalToolTranslationEnabledProperty = new BooleanProperty( true, {
-      tandem: intervalToolTandem.createTandem( 'isInputEnabledProperty' ),
-      phetioFeatured: true,
-      phetioDocumentation: 'When false, the interval cannot be translated left/right, but the handles are still moveable/interactive.'
-    } );
-
-    this.intervalTool1ValueProperty = new NumberProperty( 1.7, {
-      range: CAVConstants.VARIABILITY_DRAG_RANGE,
-      tandem: intervalToolTandem.createTandem( 'handle1ValueProperty' ),
-      phetioFeatured: true
-    } );
-    this.intervalTool2ValueProperty = new NumberProperty( 3.4, {
-      range: CAVConstants.VARIABILITY_DRAG_RANGE,
-      tandem: intervalToolTandem.createTandem( 'handle2ValueProperty' ),
-      phetioFeatured: true
-    } );
-
-    this.intervalToolDeltaStableProperty = new NumberProperty( this.getIntervalToolWidth() );
+    this.intervalToolModel = new IntervalToolModel( options.tandem.createTandem( 'intervalToolModel' ) );
 
     this.pointerValueProperty.lazyLink( ( value, oldValue ) => {
       if ( this.isPointerKeyboardDraggingProperty.value ) {
@@ -190,17 +152,11 @@ export default class VariabilityModel extends CAVModel {
     } );
   }
 
-  /**
-   * Gets the distance (a non-negative number) between the interval tool handles
-   */
-  private getIntervalToolWidth(): number {
-    return Math.abs( this.intervalTool2ValueProperty.value - this.intervalTool1ValueProperty.value );
-  }
 
   public override step( dt: number ): void {
     super.step( dt );
 
-    this.intervalToolDeltaStableProperty.value = this.getIntervalToolWidth();
+    this.intervalToolModel.updateDeltaStableProperty();
   }
 
   public override reset(): void {
@@ -212,10 +168,7 @@ export default class VariabilityModel extends CAVModel {
     this.isIQRVisibleProperty.reset();
     this.isMADVisibleProperty.reset();
 
-    this.isIntervalToolVisibleProperty.reset();
-    this.intervalTool1ValueProperty.reset();
-    this.intervalTool2ValueProperty.reset();
-    this.intervalToolDeltaStableProperty.reset();
+    this.intervalToolModel.reset();
 
     this.pointerValueProperty.reset();
     this.isPointerVisibleProperty.reset();

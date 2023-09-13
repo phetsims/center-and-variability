@@ -35,13 +35,14 @@ import IntervalToolRectangle from './IntervalToolRectangle.js';
 import Property from '../../../../axon/js/Property.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import CAVToggleNode from '../../common/view/CAVToggleNode.js';
+import IntervalToolModel from '../model/IntervalToolModel.js';
 
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 
   public readonly infoButton: ButtonNode;
   private readonly intervalToolNode: IntervalToolRectangle;
 
-  public constructor( model: VariabilityModel, tandem: Tandem, playAreaNumberLineNode: NumberLineNode ) {
+  public constructor( model: VariabilityModel, intervalToolModel: IntervalToolModel, tandem: Tandem, playAreaNumberLineNode: NumberLineNode ) {
 
     // Specify a "footprint" within which we do all the layout.
     const backgroundShape = CAVConstants.ACCORDION_BOX_CONTENTS_SHAPE_VARIABILITY;
@@ -56,12 +57,12 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
 
     const accordionBoxTitleProperty = new DynamicProperty<string, unknown, unknown>( currentProperty );
 
-    const intervalToolNode = new IntervalToolRectangle( model.intervalTool1ValueProperty,
-      model.intervalTool2ValueProperty, CAVConstants.PLOT_NODE_TRANSFORM, new Property( -18 ),
+    const intervalToolNode = new IntervalToolRectangle( intervalToolModel.handle1ValueProperty,
+      intervalToolModel.handle2ValueProperty, CAVConstants.PLOT_NODE_TRANSFORM, new Property( -18 ),
       new BooleanProperty( false ), {
         focusable: false,
-        visibleProperty: model.isIntervalToolVisibleProperty,
-        enabledProperty: model.isIntervalToolTranslationEnabledProperty,
+        visibleProperty: intervalToolModel.isVisibleProperty,
+        enabledProperty: intervalToolModel.isTranslationEnabledProperty,
         tandem: tandem.createTandem( 'intervalToolNode' )
       } );
 

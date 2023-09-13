@@ -8,7 +8,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import optionize, { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import VariabilityModel from '../model/VariabilityModel.js';
@@ -25,30 +25,20 @@ import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 import Kicker from '../../../../soccer-common/js/model/Kicker.js';
 import { KickerImageSet } from '../../../../soccer-common/js/view/KickerCharacterSet.js';
 import VariabilityInfoDialog from './VariabilityInfoDialog.js';
-import Multilink from '../../../../axon/js/Multilink.js';
-import PredictionSlider, { PredictionSliderOptions } from '../../common/view/PredictionSlider.js';
+import PredictionSlider from '../../common/view/PredictionSlider.js';
 import Property from '../../../../axon/js/Property.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Range from '../../../../dot/js/Range.js';
-import IntervalToolRectangle from './IntervalToolRectangle.js';
-import ContinuousPropertySoundGenerator from '../../../../tambo/js/sound-generators/ContinuousPropertySoundGenerator.js';
-import soundManager from '../../../../tambo/js/soundManager.js';
-import intervalToolLoop_wav from '../../../sounds/intervalToolLoop_wav.js';
-import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
-import Utils from '../../../../dot/js/Utils.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import { createGatedVisibleProperty } from '../../common/model/createGatedVisibleProperty.js';
 import KickerCharacterSets from '../../../../soccer-common/js/view/KickerCharacterSets.js';
-import IntervalToolPredictionSlider from './IntervalToolPredictionSlider.js';
+import IntervalToolNode from './IntervalToolNode.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
 
 export default class VariabilityScreenView extends CAVScreenView {
-  private readonly continuousPropertySoundGenerator: ContinuousPropertySoundGenerator;
+
+  private readonly intervalToolNode: IntervalToolNode;
 
   public constructor( model: VariabilityModel, providedOptions: VariabilityScreenViewOptions ) {
 
@@ -86,45 +76,9 @@ export default class VariabilityScreenView extends CAVScreenView {
         phetioFeatured: true
       } );
 
-    const createPredictionSliderOptions = ( tandem: Tandem ) => {
-
-      const visibleProperty = createGatedVisibleProperty( model.isIntervalToolVisibleProperty, tandem, {
-        phetioDocumentation: 'Sets the visibility of the interval tool handle. When false, the corresponding side of the interval tool cannot be used to change the range.'
-      } );
-      return {
-        predictionThumbNodeOptions: {
-          color: CAVColors.intervalToolIconShadedSphereMainColorProperty,
-          style: 'line' as const
-        },
-
-        enabledRangeProperty: new Property<Range>( CAVConstants.VARIABILITY_DRAG_RANGE ),
-        roundToInterval: null, // continuous
-        visibleProperty: visibleProperty
-      };
-    };
-
-    const isIntervalHandle1BeingDraggedProperty = new BooleanProperty( false );
-    const isIntervalHandle2BeingDraggedProperty = new BooleanProperty( false );
-    const isIntervalAreaBeingDraggedProperty = new BooleanProperty( false );
-
-    const intervalToolNodeTandem = this.soccerAreaTandem.createTandem( 'intervalToolNode' );
-    const toolHandle1Tandem = intervalToolNodeTandem.createTandem( 'handle1' );
-    const toolHandle2Tandem = intervalToolNodeTandem.createTandem( 'handle2' );
-
-    const handle1 = new IntervalToolPredictionSlider( model.intervalTool1ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE,
-      isIntervalHandle1BeingDraggedProperty, new BooleanProperty( false ), combineOptions<PredictionSliderOptions>( {
-        valueProperty: model.intervalTool1ValueProperty,
-        tandem: toolHandle1Tandem
-      }, createPredictionSliderOptions( toolHandle1Tandem ) ) );
-
-    const handle2 = new IntervalToolPredictionSlider( model.intervalTool2ValueProperty, this.modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE,
-      isIntervalHandle2BeingDraggedProperty, new BooleanProperty( false ), combineOptions<PredictionSliderOptions>( {
-        valueProperty: model.intervalTool2ValueProperty,
-        tandem: toolHandle2Tandem
-      }, createPredictionSliderOptions( toolHandle2Tandem ) ) );
-
     const variabilityAccordionBox = new VariabilityAccordionBox(
       model,
+      model.intervalToolModel,
       accordionBoxTandem,
       this.playAreaNumberLineNode
     );
@@ -135,107 +89,21 @@ export default class VariabilityScreenView extends CAVScreenView {
         variabilityRadioButtonGroupWrapper.top = accordionBoxWrapper.top + 8;
       } );
 
-    const intervalToolNode = new IntervalToolRectangle( model.intervalTool1ValueProperty, model.intervalTool2ValueProperty, this.modelViewTransform,
-      new DerivedProperty( [ variabilityAccordionBox.boundsProperty ], bounds => bounds.top ), isIntervalAreaBeingDraggedProperty, {
-        visibleProperty: model.isIntervalToolVisibleProperty,
-        inputEnabledProperty: model.isIntervalToolTranslationEnabledProperty,
-        phetioEnabledPropertyInstrumented: false,
-        tandem: intervalToolNodeTandem
-      } );
+    this.intervalToolNode = new IntervalToolNode( model.intervalToolModel, model.variabilityModelResetInProgressProperty,
+      this.modelViewTransform, new DerivedProperty( [ variabilityAccordionBox.boundsProperty ], bounds => bounds.top ),
+      options.tandem.createTandem( 'intervalToolNode' ) );
 
     // To avoid a cycle during startup, we must create the AccordionBox and IntervalToolNode, then propagate the IntervalToolNode
     // through so the one in the accordion box can share the same highlight region as the one in the play area.
-    variabilityAccordionBox.setFocusHighlightForIntervalTool( intervalToolNode );
+    variabilityAccordionBox.setFocusHighlightForIntervalTool( this.intervalToolNode.rectangle );
 
     // Add play area tools to scene graph
-    this.backScreenViewLayer.addChild( handle1 );
-    this.backScreenViewLayer.addChild( handle2 );
-    this.intervalToolLayer.addChild( intervalToolNode );
+    // this.backScreenViewLayer.addChild( handle1 );
+    // this.backScreenViewLayer.addChild( handle2 );
+    this.intervalToolLayer.addChild( this.intervalToolNode );
 
     // pointer should always be in front of the interval tool so must be added after.
     this.backScreenViewLayer.addChild( pointerSlider );
-
-    // Prevent multitouch on the handles when the main interval tool is being dragged, see https://github.com/phetsims/center-and-variability/issues/225
-    isIntervalAreaBeingDraggedProperty.link( isIntervalAreaBeingDragged => {
-      handle1.inputEnabled = !isIntervalAreaBeingDragged;
-      handle2.inputEnabled = !isIntervalAreaBeingDragged;
-    } );
-
-    // Prevent multitouch on the intervalToolNode if the user is manipulating either of the arrow handles, see https://github.com/phetsims/center-and-variability/issues/225
-    Multilink.multilink( [ handle1.isKeyboardDraggingProperty, handle1.isMouseTouchDraggingProperty, handle2.isKeyboardDraggingProperty, handle2.isMouseTouchDraggingProperty ], ( keyboard1, mouse1, keyboard2, mouse2 ) => {
-      intervalToolNode.inputEnabled = !keyboard1 && !mouse1 && !keyboard2 && !mouse2;
-    } );
-
-    const intervalDistanceProperty = new DerivedProperty( [ model.intervalToolDeltaStableProperty ], interval => {
-      return Utils.linear( 0, 16, 2, 1, interval );
-    } );
-
-    // the minimum distance that the interval must change before a sound is played (to prevent sound playing on tiny movements)
-    const INTERVAL_WIDTH_CHANGE_THRESHOLD = 0.005;
-    const INTERVAL_POSITION_CHANGE_THRESHOLD = 0.05;
-
-    let lastIntervalWidthValue = intervalDistanceProperty.value;
-    let lastIntervalTool1Value = model.intervalTool1ValueProperty.value;
-
-    const intervalDistanceWithThresholdProperty = new NumberProperty( lastIntervalWidthValue );
-
-    intervalDistanceProperty.link( newValue => {
-      if ( Math.abs( newValue - lastIntervalWidthValue ) >= INTERVAL_WIDTH_CHANGE_THRESHOLD ) {
-        intervalDistanceWithThresholdProperty.value = newValue;
-        lastIntervalWidthValue = newValue;
-      }
-    } );
-
-    // keeps track of the translation of the entire interval tool
-    model.intervalTool1ValueProperty.link( newValue => {
-      if ( Math.abs( newValue - lastIntervalTool1Value ) >= INTERVAL_POSITION_CHANGE_THRESHOLD ) {
-        intervalDistanceWithThresholdProperty.notifyListenersStatic();
-        lastIntervalTool1Value = newValue;
-      }
-    } );
-
-    const biquadFilterNode = new BiquadFilterNode( phetAudioContext, {
-      type: 'lowpass',
-      frequency: 800,
-      Q: 1.5
-    } );
-
-    isIntervalHandle1BeingDraggedProperty.lazyLink( value => {
-      if ( value ) {
-        biquadFilterNode.frequency.setTargetAtTime( 300, phetAudioContext.currentTime, 0 );
-      }
-    } );
-
-    isIntervalHandle2BeingDraggedProperty.lazyLink( value => {
-      if ( value ) {
-        biquadFilterNode.frequency.setTargetAtTime( 1200, phetAudioContext.currentTime, 0 );
-      }
-    } );
-
-    isIntervalAreaBeingDraggedProperty.lazyLink( value => {
-      if ( value ) {
-        biquadFilterNode.frequency.setTargetAtTime( 600, phetAudioContext.currentTime, 0 );
-      }
-    } );
-
-    this.continuousPropertySoundGenerator = new ContinuousPropertySoundGenerator(
-      intervalDistanceWithThresholdProperty,
-      intervalToolLoop_wav,
-      new Range( 1, 2 ), {
-        initialOutputLevel: 0.25,
-        playbackRateCenterOffset: 0,
-
-        resetInProgressProperty: model.variabilityModelResetInProgressProperty,
-        trimSilence: false, // a very precise sound file is used, so make sure it doesn't get changed
-        fadeTime: 0.3,
-        delayBeforeStop: 0.25,
-        playbackRateSpanOctaves: 1.5,
-        additionalAudioNodes: [
-          biquadFilterNode
-        ]
-      }
-    );
-    soundManager.addSoundGenerator( this.continuousPropertySoundGenerator );
 
     const sceneKickerRadioButtonGroup = new SceneKickerRadioButtonGroup( model.variabilitySceneModels, model.selectedSceneModelProperty, {
       left: 10,
@@ -256,7 +124,7 @@ export default class VariabilityScreenView extends CAVScreenView {
         PlayAreaCheckboxFactory.getMedianCheckboxItem( model.isPlayAreaMedianVisibleProperty, model.selectedSceneModelProperty ),
         PlayAreaCheckboxFactory.getMeanCheckboxItem( model.isPlayAreaMeanVisibleProperty, model.selectedSceneModelProperty ),
         PlayAreaCheckboxFactory.getPointerCheckboxItem( model.isPointerVisibleProperty ),
-        PlayAreaCheckboxFactory.getIntervalToolCheckboxItem( model.isIntervalToolVisibleProperty )
+        PlayAreaCheckboxFactory.getIntervalToolCheckboxItem( model.intervalToolModel.isVisibleProperty )
       ], {
         tandem: this.soccerAreaTandem.createTandem( 'checkboxGroup' ),
         visiblePropertyOptions: {
@@ -280,7 +148,7 @@ export default class VariabilityScreenView extends CAVScreenView {
       } );
     } );
 
-    this.cavSetPDOMOrder( controls, [ pointerSlider, handle1, handle2 ], variabilityAccordionBox.infoButton,
+    this.cavSetPDOMOrder( controls, [ pointerSlider, this.intervalToolNode ], variabilityAccordionBox.infoButton,
       sceneKickerRadioButtonGroup, variabilityMeasureRadioButtonGroup );
   }
 
@@ -295,7 +163,7 @@ export default class VariabilityScreenView extends CAVScreenView {
 
   public override step( dt: number ): void {
     super.step( dt );
-    this.continuousPropertySoundGenerator.step( dt );
+    this.intervalToolNode.step( dt );
   }
 }
 
