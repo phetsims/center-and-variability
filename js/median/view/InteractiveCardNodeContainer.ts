@@ -114,7 +114,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
     this.addChild( cardDragCueNode );
 
-    // Fade in the hand with arrow node
+    // Fade in the hand with arrow node, requested in https://github.com/phetsims/center-and-variability/issues/273#issuecomment-1607717045
     const fadeInAnimation = new Animation( {
       duration: 0.5,
       targets: [ {
@@ -124,7 +124,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       } ]
     } );
 
-    // Fade out the hand with arrow node
+    // Fade out the hand with arrow node, requested in https://github.com/phetsims/center-and-variability/issues/273#issuecomment-1607717045
     const fadeOutAnimation = new Animation( {
       duration: 0.1,
       targets: [ {
