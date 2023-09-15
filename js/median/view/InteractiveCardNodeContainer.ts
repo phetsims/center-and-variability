@@ -303,6 +303,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
     };
 
     const keyboardListener = new KeyboardListener( {
+      fireOnHold: true,
       keys: [ 'arrowRight', 'arrowLeft', 'enter', 'space', 'home', 'end', 'escape', 'pageUp', 'pageDown' ],
       callback: ( event, keysPressed ) => {
 
