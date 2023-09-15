@@ -108,14 +108,16 @@ export default class IQRNode extends CAVPlotNode {
     const q1LabelNode = new BoxWhiskerLabelNode( CenterAndVariabilityStrings.q1StringProperty, true, CAVColors.iqrLabelColorProperty );
     const q3LabelNode = new BoxWhiskerLabelNode( CenterAndVariabilityStrings.q3StringProperty, true, CAVColors.iqrLabelColorProperty );
 
+    // Used for resolving label overlaps and repositioning IQR bar on label position/size updates
+    const nonMedianLabelNodes = [ minLabelNode, q1LabelNode, q3LabelNode, maxLabelNode ];
+
     medianLabelNode.y = -31;
     q1LabelNode.y = q3LabelNode.y = minLabelNode.y = maxLabelNode.y = -35;
 
-    const nonMedianLabelNodes = [ minLabelNode, q1LabelNode, q3LabelNode, maxLabelNode ];
-
-    nonMedianLabelNodes.forEach( nonMedianLabelNode => {
-      boxWhiskerNode.addChild( nonMedianLabelNode );
-    } );
+    boxWhiskerNode.addChild( minLabelNode );
+    boxWhiskerNode.addChild( maxLabelNode );
+    boxWhiskerNode.addChild( q1LabelNode );
+    boxWhiskerNode.addChild( q3LabelNode );
     boxWhiskerNode.addChild( medianLabelNode );
 
     const outlierDisplay = new Node();

@@ -40,7 +40,6 @@ export default class BoxWhiskerLabelNode extends Node {
     const textHighlightRect = new Rectangle( 0, 0, 0, 0,
       { fill: CAVColors.iqrColorProperty, cornerRadius: 5, visible: isQuartile } );
 
-    // Container for the text and background rectangle
     const labelContainer = new Node( { children: [ textHighlightRect, textNode ], visible: !onlyShowArrow } );
 
     super( {
