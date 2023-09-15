@@ -9,25 +9,25 @@ This document is a high-level description of the model used in PhET's _Center an
 The Center and Variability simulation is designed to help students visualize and understand concepts in statistics,
 specifically relating to mean, median, and measures of spread. The main functionalities of the simulation include:
 
-#### Creating distributions of kicked soccer balls
+### Creating distributions of kicked soccer balls
 
 The simulation allows students to kick soccer balls onto the field, creating a distribution of distances. On the "
 Median" and "Mean & Median" screens, the kicker changes after each kick, creating a distribution of kicks by different
 players. On the "Variability" screen, the student can choose between four kickers, creating the opportunity to compare
 distributions of kicks per player.
 
-#### Customizing distributions of kicked soccer balls
+### Customizing distributions of kicked soccer balls
 
 The simulation allows students to change the kicked distance of a landed soccer ball by dragging the soccer ball to a
 new location.
 
-#### Sorting data with cards
+### Sorting data with cards
 
 On the Median screen, students are encouraged to manually sort the cards in the Accordion Box into numerical order.
 Checking the Sort Data checkbox auto-sorts existing cards and any new cards created when additional soccer balls are
 kicked.
 
-#### Analyzing data with plots
+### Analyzing data with plots
 
 On the "Mean & Median" and "Variability" screens, an abstract representation of the soccer ball data is plotted using
 an 'x' or a '●' as the data point. The mean, median, and measures of variability can be visually displayed on the
