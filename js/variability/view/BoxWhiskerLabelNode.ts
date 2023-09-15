@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Label text and with highlight rectangle and arrow for the IQR (interquartile range) info display
+ * Label text with highlight rectangle and arrow for the IQR (interquartile range) info display
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
