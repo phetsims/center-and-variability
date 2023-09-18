@@ -31,7 +31,7 @@ import SoccerCommonConstants from '../../../../soccer-common/js/SoccerCommonCons
 import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-players/checkboxCheckedSoundPlayer.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import CardDragCueNode from './CardDragCueNode.js';
+import CardDragIndicatorNode from './CardDragIndicatorNode.js';
 
 const FOCUS_HIGHLIGHT_Y_MARGIN = CAVConstants.CARD_SPACING + 3;
 
@@ -107,7 +107,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
     const isDragIndicatorVisibleProperty = new DerivedProperty( [ this.inputEnabledProperty, model.isKeyboardFocusedProperty ],
       ( inputEnabled, hasKeyboardFocus ) => inputEnabled && !hasKeyboardFocus );
 
-    const cardDragIndicatorNode = new CardDragCueNode( {
+    const cardDragIndicatorNode = new CardDragIndicatorNode( {
       centerTop: new Vector2( 0.5 * CAVConstants.CARD_DIMENSION, CAVConstants.CARD_DIMENSION - 9 ),
       visibleProperty: isDragIndicatorVisibleProperty,
       opacity: 0 // initially invisible, opacityProperty is modified by fadeInAnimation and fadeOutAnimation

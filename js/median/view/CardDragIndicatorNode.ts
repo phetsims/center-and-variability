@@ -20,7 +20,7 @@ type SelfOptions = EmptySelfOptions;
 type CardDragCueNodeOptions = SelfOptions & NodeTranslationOptions &
   PickRequired<NodeOptions, 'visibleProperty' | 'opacity'>;
 
-export default class CardDragCueNode extends Node {
+export default class CardDragIndicatorNode extends Node {
 
   public constructor( providedOptions?: CardDragCueNodeOptions ) {
 
@@ -50,4 +50,4 @@ export default class CardDragCueNode extends Node {
   }
 }
 
-centerAndVariability.register( 'CardDragCueNode', CardDragCueNode );
+centerAndVariability.register( 'CardDragCueNode', CardDragIndicatorNode );
