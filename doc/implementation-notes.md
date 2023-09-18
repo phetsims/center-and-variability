@@ -90,7 +90,7 @@ There are variations based on whether the user is focusing on values, means, or 
 On the Median screen, the cards play sounds based on movement. The median animation in the accordion box plays a sound
 while animating, see [MedianAnimationTone.ts](../js/median/view/MedianAnimationTone.ts).
 
-The interval tool generates a continuous sound while the user is dragging the interval or its handles.This continuous
+The interval tool generates a continuous sound while the user is dragging the interval or its handles. This continuous
 sound represents the width, or interval the tool is currently set to.
 
 Other sounds are provided by common-code UI components.
