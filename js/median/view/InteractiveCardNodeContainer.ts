@@ -110,7 +110,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
     const cardDragCueNode = new CardDragCueNode( {
       centerTop: new Vector2( 0.5 * CAVConstants.CARD_DIMENSION, CAVConstants.CARD_DIMENSION - 9 ),
       visibleProperty: isDragIndicatorVisibleProperty,
-      opacity: 0 // initially invisible, opacityProperty is modified by fadeInAnimation and fadeInAnimation
+      opacity: 0 // initially invisible, opacityProperty is modified by fadeInAnimation and fadeOutAnimation
     } );
 
     this.addChild( cardDragCueNode );
