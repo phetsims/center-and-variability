@@ -75,6 +75,11 @@ export default class IntervalToolModel {
       } );
 
     this.deltaStableProperty = new NumberProperty( this.getIntervalToolWidth() );
+
+    // https://github.com/phetsims/center-and-variability/issues/533
+    Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( () => {
+      this.deltaStableProperty.value = this.getIntervalToolWidth();
+    } );
   }
 
   /**
