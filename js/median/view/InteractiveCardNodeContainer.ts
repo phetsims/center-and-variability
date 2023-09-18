@@ -12,7 +12,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import InteractiveCardContainerModel from '../model/InteractiveCardContainerModel.js';
 import Property from '../../../../axon/js/Property.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
-import { HighlightFromNode, HighlightPath, KeyboardListener, NodeTranslationOptions, Path } from '../../../../scenery/js/imports.js';
+import { animatedPanZoomSingleton, HighlightFromNode, HighlightPath, KeyboardListener, NodeTranslationOptions, Path } from '../../../../scenery/js/imports.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import Animation from '../../../../twixt/js/Animation.js';
@@ -211,6 +211,11 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
         if ( model.focusedCardProperty.value === null && activeCardNodes.length > 0 ) {
           model.focusedCardProperty.value = activeCardNodes[ 0 ].model;
         }
+
+        // When the group receives keyboard focus, make sure that the focused ball is displayed
+        if ( focusedCardNodeProperty.value ) {
+          animatedPanZoomSingleton.listener.panToNode( focusedCardNodeProperty.value, false );
+        }
         model.isKeyboardFocusedProperty.value = true;
       },
       blur: () => {
@@ -359,6 +364,10 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
             model.focusedCardProperty.value = this.model.getCardsInCellOrder()[ 0 ];
           }
+
+          // When using keyboard input, make sure that the "focused" card is still displayed by panning to keep it
+          // in view.
+          animatedPanZoomSingleton.listener.panToNode( focusedCardNodeProperty.value );
         }
       }
     } );
