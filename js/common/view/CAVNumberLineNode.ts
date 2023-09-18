@@ -1,12 +1,13 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * A subclass of NumberLineNode, that adds in a MeanIndicator and RangeNode.
+ * CAVNumberLineNode extends the basic NumberLineNode by integrating a MeanIndicator and a RangeNode.
+ * This enhanced visualization aids in the interpretation of data for the Center and Variability simulation.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
- *
  */
+
 
 import NumberLineNode, { NumberLineNodeOptions } from '../../../../soccer-common/js/view/NumberLineNode.js';
 import centerAndVariability from '../../centerAndVariability.js';

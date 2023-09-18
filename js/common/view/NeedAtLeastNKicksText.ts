@@ -1,7 +1,9 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Shows text in the accordion box and info dialogs when more data is needed to compute a particular statistic.
+ * NeedAtLeastNKicksText is a text UI component designed for accordion boxes and info dialogs.
+ * It conveys a message to the user indicating that a minimum amount of data (or kicks) is
+ * required to calculate a specific statistic.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

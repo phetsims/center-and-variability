@@ -1,8 +1,10 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * Renders non-interactive red bars that show how the median splits up into the lower and upper groups.
- * This appears within the CardNodeContainer and in the CAVPlotNode
+ * MedianBarNode displays non-interactive bars that visually demonstrate how the median divides data
+ * into lower and upper groups. These bars appear in the CardNodeContainer and CAVPlotNode.
+ * Depending on its style ('continuous' or 'split'), the bar can either be a single bracket or two
+ * separate brackets with a gap in the middle. Additionally, there's an optional arrow indicating the median.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

@@ -1,7 +1,8 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * Shows a shaded sphere and arrow pointing up, to show where the user predicts a value or boundary of an interval.
+ * PredictionSlider is a visual indicator to show where the user predicts a value or boundary of an interval.
+ * It consists of a shaded sphere and arrow pointing upwards.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

@@ -1,7 +1,8 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Shows the title/description at the top of an info dialog. The title is bold and the description is normal.
+ * InfoTitleDescriptionRichText visualizes the title (bold) and description (normal) for an info dialog using the RichText component.
+ * Configurations such as font size, text width, and layout margins are derived from CAVConstants.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

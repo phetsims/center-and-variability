@@ -1,11 +1,13 @@
 // Copyright 2023, University of Colorado Boulder
 
+
 /**
- * A subclass of SoccerSceneView that adds the MedianHighlightLayer.
+ * CAVSceneView is a specialized rendition of the SoccerSceneView tailored for the Center and Variability simulation.
+ * Its primary augmentation to the parent view is the integration of the MedianHighlightLayer, which offers a visual
+ * emphasis on the median value among the soccer balls present in the scene.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
  * @author Matthew Blackman (PhET Interactive Simulations)
- *
  */
 
 import SoccerSceneView from '../../../../soccer-common/js/view/SoccerSceneView.js';

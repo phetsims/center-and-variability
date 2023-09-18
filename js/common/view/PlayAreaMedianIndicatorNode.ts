@@ -1,7 +1,8 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * An arrow that points downward at the median value on the number line in the play area.
+ * PlayAreaMedianIndicatorNode is a graphical UI component that represents an arrow pointing downwards,
+ * indicating the median value on a number line within the play area.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

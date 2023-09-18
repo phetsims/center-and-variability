@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Look and layout for the info button, shown in each accordion box.
+ * This class provides a custom dialog for the Center and Variability simulation. It features enhanced close button touch areas.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

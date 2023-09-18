@@ -1,7 +1,10 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Show all the highlights for the median soccer balls in the front layer.
+ * MedianHighlightLayer displays visual highlights for soccer balls that represent the median.
+ * Two circular highlights are shown on the front layer. The class updates the visibility and
+ * position of these highlights based on the status and position of median soccer balls.
+ * Performance optimizations are included to ensure that unnecessary calculations are avoided.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Matt Blackman (PhET Interactive Simulations)

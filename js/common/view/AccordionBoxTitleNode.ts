@@ -1,7 +1,11 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Shows the title in the accordion box. Has a semi-transparent background in case some data goes behind it.
+ * AccordionBoxTitleNode is a visual node that displays the title within an accordion box.
+ * This title is accompanied by a semi-transparent background to ensure readability, even if
+ * data or other visual elements pass behind it. The background adapts to the title's size
+ * and ensures the title remains centered, making for a dynamic and adaptable visual component
+ * suited for various title lengths and contents.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Matt Blackman (PhET Interactive Simulations)

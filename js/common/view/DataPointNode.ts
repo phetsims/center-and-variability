@@ -1,8 +1,9 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Renders a circle or x depending on the plot type. Each dataPointNode is connected to a soccerBall to keep track of
- * its value on the plot.
+ * DataPointNode is responsible for rendering a graphical representation (either a circle or an 'x') of a data point
+ * depending on the current plot type. Each DataPointNode is associated with a soccer ball to keep track of its value
+ * on the plot. This node can also highlight the median data point when required.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

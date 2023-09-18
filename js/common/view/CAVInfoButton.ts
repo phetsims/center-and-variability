@@ -1,7 +1,8 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Look and layout for the info button, shown in each accordion box.
+ * CAVInfoButton is a customized info button tailored for the Center and Variability simulation. Designed to fit
+ * within accordion boxes, this button exhibits a distinct look and behavior compared to standard info buttons.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

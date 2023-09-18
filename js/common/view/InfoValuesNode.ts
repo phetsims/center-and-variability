@@ -1,7 +1,8 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Shows e.g., "Values: 1,3,4,5" with a median arrow indicating the median. Appears in the info dialogs for Median, Mean & Median and IQR.
+ * InfoValuesNode displays a sequence like "Values: 1,3,4,5" and highlights the median with an arrow.
+ * It is utilized in the info dialogs for Median, Mean & Median, and IQR.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

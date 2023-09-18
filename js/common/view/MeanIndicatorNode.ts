@@ -1,7 +1,9 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Creates a triangle shape that points upwards to show the value of the mean.
+ * MeanIndicatorNode displays an upward-pointing triangle shape to represent the value of the mean.
+ * The triangle's size can vary based on whether it is used as an icon or not,
+ * and it can optionally have a stroke around it.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

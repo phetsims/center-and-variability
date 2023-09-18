@@ -1,7 +1,9 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * Shows the dot plot or line plot on the "Mean & Median" Screen. The plot is non-interactive.
+ * CAVPlotNode visualizes data in the "Mean & Median" Screen of the simulation as either a dot plot or line plot.
+ * This plot is designed to be purely illustrative and does not support interactivity. Various components, such as
+ * a number line, mean indicator, and data points, are incorporated to provide clarity.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

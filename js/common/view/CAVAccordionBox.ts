@@ -1,7 +1,9 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * Accordion box that appears at the top of each screen.
+ * The CAVAccordionBox is an accordion UI component for the Center and Variability simulation.
+ * Positioned at the top of each screen, it offers configurable margins and spacings. Unique features include
+ * full content extension up to the top edge and a clipping mechanism for content that exceeds the accordion's height.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

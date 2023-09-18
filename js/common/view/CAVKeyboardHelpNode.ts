@@ -1,7 +1,8 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * The keyboard help content for a Center and Variability sim screen.
+ * CAVKeyboardHelpNode offers the specific keyboard guidance for a Center and Variability simulation screen.
+ * It is a structured layout presenting basic actions and other keyboard interactions.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

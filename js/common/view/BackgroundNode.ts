@@ -1,7 +1,10 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * Shows the sky and the ground. Reshapes to the visible bounds.
+ * BackgroundNode is a visual component designed to represent the environment's backdrop. It features both the sky
+ * and the ground, transitioning through a gradient. To ensure consistent visibility and adaptability to various
+ * screen dimensions, the node reshapes itself based on the current visible bounds. The sky's gradient
+ * is derived from sampled color stops, while the ground is distinguished with a distinct color for clarity and contrast.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

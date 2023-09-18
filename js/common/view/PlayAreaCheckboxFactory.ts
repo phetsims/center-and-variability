@@ -1,7 +1,8 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * Supports any combination of checkboxes for each of the screens for the bottom objects.
+ * PlayAreaCheckboxFactory is a utility class responsible for generating UI components related to checkboxes within the play area.
+ * It supports the creation of checkboxes for various statistical tools and information, such as interval tool, median, mean, predictions, and pointers.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

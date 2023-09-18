@@ -1,7 +1,8 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * ComboBox in PreferencesDialog that provides options on the maximum number of kicks allowed per scene.
+ * MaxKicksComboBox provides a dropdown selection in the PreferencesDialog for users to choose the maximum
+ * number of kicks allowed per scene. The options are derived from predefined constants.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

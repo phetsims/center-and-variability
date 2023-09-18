@@ -1,7 +1,9 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * Shows the "Kick 1" and "Kick 5" buttons in the soccer screens.
+ * KickButtonGroup contains "Kick 1" and "Kick 5" buttons utilized in the soccer screens.
+ * These buttons allow users to trigger actions in the simulations, and their visibility and functionality
+ * are dependent on the presence of kickable soccer balls.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

@@ -1,7 +1,7 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * General simulation controls that globally change the presentation or behavior of the simulation.
+ * SimulationPreferencesContentNode displays general controls that globally affect the presentation or behavior of the simulation.
  *
  * @author Aaron Davis (PhET Interactive Simulations)
  * @author Jonathan Olson <jonathan.olson@colorado.edu>

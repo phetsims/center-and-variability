@@ -1,7 +1,11 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * Factory that creates checkboxes for the AccordionBox.
+ * AccordionBoxCheckboxFactory is responsible for generating checkboxes with associated functionality
+ * for use within an AccordionBox. The factory provides methods to create checkboxes with various
+ * types of indicators, such as text, icons, and specific configurations for median and mean
+ * representation. The created checkboxes can be used to control different elements and properties
+ * within the simulation's interface, and some of the checkboxes come with associated sound effects.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

@@ -1,7 +1,8 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Renders a horizontal line with short vertical drop lines on each end, to indicate some interval over data.
+ * IntervalBarNode displays a horizontal line representing an interval.
+ * Short vertical lines at each end indicate the boundaries of the interval over the data set.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

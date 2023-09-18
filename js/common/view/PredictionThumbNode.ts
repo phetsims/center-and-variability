@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * The thumb node for the PredictionSlider. Is made up of an Arrow and ShadedSphere.
+ * PredictionThumbNode is a visual handle for the PredictionSlider. Is made up of an Arrow and ShadedSphere.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

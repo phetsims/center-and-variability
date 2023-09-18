@@ -1,7 +1,9 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Creates an icon that uses the passed in shape to represent a plot
+ * PlotIcon is a graphical UI component that represents a mini-plot with customizable data points using
+ * the provided shape. The icon consists of a background rectangle, a line at its bottom, and several
+ * data points arranged in columns.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
  *

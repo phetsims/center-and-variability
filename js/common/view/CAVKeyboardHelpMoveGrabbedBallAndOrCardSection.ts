@@ -1,7 +1,8 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Help content for the KeyboardHelpDialog describing how to move a grabbed ball and/or card.
+ * CAVKeyboardHelpMoveGrabbedBallAndOrCardSection provides help content within the KeyboardHelpDialog. It instructs
+ * users on how to move a grabbed ball and/or card using keyboard inputs in the Center and Variability simulation.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

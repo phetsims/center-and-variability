@@ -1,7 +1,8 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Help content for the KeyboardHelpDialog describing how to grab or drop an item.
+ * CAVKeyboardHelpGrabOrReleaseSection provides instructions within the KeyboardHelpDialog. It specifically outlines
+ * the steps for grabbing or releasing an item using keyboard inputs in the Center and Variability simulation.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
