@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * CardDragCueNode is provides a cue that a card can be dragged. It appears on the leftmost card in the accordion box,
+ * CardDragIndicatorNode provides a cue that a card can be dragged. It appears on the leftmost card in the accordion box,
  * and displays a hand with an arrow that points to the left.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
@@ -17,12 +17,12 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = EmptySelfOptions;
 
-type CardDragCueNodeOptions = SelfOptions & NodeTranslationOptions &
+type CardDragIndicatorNodeOptions = SelfOptions & NodeTranslationOptions &
   PickRequired<NodeOptions, 'visibleProperty' | 'opacity'>;
 
 export default class CardDragIndicatorNode extends Node {
 
-  public constructor( providedOptions?: CardDragCueNodeOptions ) {
+  public constructor( providedOptions?: CardDragIndicatorNodeOptions ) {
 
     const arrowNode = new InteractiveCueArrowNode( {
       doubleHead: false,
@@ -41,7 +41,7 @@ export default class CardDragIndicatorNode extends Node {
       centerTop: arrowNode.leftTop.plusXY( -0.5, 0 )
     } );
 
-    const options = optionize<CardDragCueNodeOptions, SelfOptions, NodeOptions>()( {
+    const options = optionize<CardDragIndicatorNodeOptions, SelfOptions, NodeOptions>()( {
       children: [ arrowNode, handNode ],
       pickable: false
     }, providedOptions );
@@ -50,4 +50,4 @@ export default class CardDragIndicatorNode extends Node {
   }
 }
 
-centerAndVariability.register( 'CardDragCueNode', CardDragIndicatorNode );
+centerAndVariability.register( 'CardDragIndicatorNode', CardDragIndicatorNode );
