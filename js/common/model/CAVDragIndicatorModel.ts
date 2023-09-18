@@ -1,8 +1,8 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * A subclass of the DragIndicatorModel that adds logic to place the drag indicator in some other spot that
- * is not the median. This is to minimize occurrence of drag indicator and median indicator overlap.
+ * CAVDragIndicatorModel is a subclass of the DragIndicatorModel that adds logic to place the drag indicator in a
+ * spot that is not the median. Its role is to minimize the occurrence of drag indicator and median indicator overlap.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
  */

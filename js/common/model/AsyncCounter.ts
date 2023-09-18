@@ -1,7 +1,8 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * Fire a final event when all child events have completed. Used for card animation sequences.
+ * AsyncCounter manages the animations that play during card animation sequences.
+ * A final callback is fired when all animations have completed.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
@@ -19,7 +20,7 @@ export default class AsyncCounter {
   // The total number of cards that are being animated in the current sequence
   private readonly count: number;
 
-  // A callback that is fired when all animations in the sequence have completed
+  // The callback fired when all animations in the sequence have completed
   private readonly callback: () => void;
 
   public constructor( count: number, callback: () => void ) {

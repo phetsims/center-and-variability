@@ -1,8 +1,9 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Tracks the median, and data range for the scene. The Median and Mean & Median screens have one scene model.
- * The Variability screen has four scene models.
+ * CAVSoccerSceneModel manages the scene's statistical properties, specifically the median and the data range.
+ * In the simulation, the "Median" and "Mean & Median" screens utilize a single instance of this model.
+ * Conversely, the "Variability" screen utilizes four instances.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
  *
@@ -22,8 +23,10 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class CAVSoccerSceneModel<T extends CAVSoccerBall = CAVSoccerBall> extends SoccerSceneModel<T> {
 
-  // Indicates the max and min values in the data set, or null if there are no values in the data set
+  // This property tracks the maximum and minimum values in the dataset. It is set to null if the dataset is empty.
   public readonly dataRangeProperty: Property<Range | null>;
+
+  // This property represents the median value in the dataset. It is set to null if the dataset is empty.
   public readonly medianValueProperty: Property<number | null>;
 
   public constructor( maxKicksProperty: TReadOnlyProperty<number>,
@@ -50,6 +53,10 @@ export default class CAVSoccerSceneModel<T extends CAVSoccerBall = CAVSoccerBall
     this.dataRangeProperty = new Property<Range | null>( null );
   }
 
+  /**
+   * This method updates statistical measures in the model. It is an extension of the base class method
+   * with added functionality to calculate and set the median and data range properties.
+   */
   protected override updateDataMeasures(): void {
 
     super.updateDataMeasures();
@@ -67,7 +74,7 @@ export default class CAVSoccerSceneModel<T extends CAVSoccerBall = CAVSoccerBall
 
     if ( sortedObjects.length > 0 ) {
 
-      // take the average to account for cases where there is more than one object contributing to the median
+      // For cases where there may be more than one object contributing to the median, we want to take the average.
       this.medianValueProperty.value = _.mean( medianObjects.map( soccerBall => soccerBall.valueProperty.value ) );
 
       const min = sortedObjects[ 0 ].valueProperty.value!;
