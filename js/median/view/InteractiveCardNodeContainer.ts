@@ -15,8 +15,6 @@ import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import { animatedPanZoomSingleton, HighlightFromNode, HighlightPath, KeyboardListener, NodeTranslationOptions, Path } from '../../../../scenery/js/imports.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import CAVConstants from '../../common/CAVConstants.js';
-import Animation from '../../../../twixt/js/Animation.js';
-import Easing from '../../../../twixt/js/Easing.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import CardNode, { cardDropClip, cardPickUpSoundClip, PICK_UP_DELTA_X } from './CardNode.js';
 import Utils from '../../../../dot/js/Utils.js';
@@ -104,36 +102,14 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
     this.addChild( keyboardDragArrowNode );
 
-    const isDragIndicatorVisibleProperty = new DerivedProperty( [ this.inputEnabledProperty, model.isKeyboardFocusedProperty ],
-      ( inputEnabled, hasKeyboardFocus ) => inputEnabled && !hasKeyboardFocus );
-
     const cardDragIndicatorNode = new CardDragIndicatorNode( {
       centerTop: new Vector2( 0.5 * CAVConstants.CARD_DIMENSION, CAVConstants.CARD_DIMENSION - 9 ),
-      visibleProperty: isDragIndicatorVisibleProperty,
-      opacity: 0 // initially invisible, opacityProperty is modified by fadeInAnimation and fadeOutAnimation
+      visibleProperty: new DerivedProperty(
+        [ this.inputEnabledProperty, model.isKeyboardFocusedProperty, model.dragIndicationCardProperty ],
+        ( inputEnabled, hasKeyboardFocus, dragIndicationCard ) => inputEnabled && !hasKeyboardFocus && !!dragIndicationCard )
     } );
 
     this.addChild( cardDragIndicatorNode );
-
-    // Fade in the hand with arrow node, requested in https://github.com/phetsims/center-and-variability/issues/273#issuecomment-1607717045
-    const fadeInAnimation = new Animation( {
-      duration: 0.5,
-      targets: [ {
-        property: cardDragIndicatorNode.opacityProperty,
-        to: 1,
-        easing: Easing.QUADRATIC_IN_OUT
-      } ]
-    } );
-
-    // Fade out the hand with arrow node, requested in https://github.com/phetsims/center-and-variability/issues/273#issuecomment-1607717045
-    const fadeOutAnimation = new Animation( {
-      duration: 0.1,
-      targets: [ {
-        property: cardDragIndicatorNode.opacityProperty,
-        to: 0,
-        easing: Easing.QUADRATIC_IN_OUT
-      } ]
-    } );
 
     model.dragIndicationCardProperty.lazyLink( ( newCard, oldCard ) => {
 
@@ -151,16 +127,6 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
         const newArea = new Bounds2( bounds.minX, bounds.minY, bounds.maxX, bounds.maxY + 30 );
         newCardNode.mouseArea = newArea;
         newCardNode.touchArea = newArea;
-      }
-
-      if ( oldCard && !newCard ) {
-        fadeInAnimation.stop();
-        fadeOutAnimation.start();
-      }
-
-      else if ( newCard && !oldCard ) {
-        fadeOutAnimation.stop();
-        fadeInAnimation.start();
       }
     } );
 

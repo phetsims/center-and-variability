@@ -55,10 +55,12 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
   // For sonification, order the active, non-displaced cards appeared in the last step
   private lastStepOrder: CardModel[] = [];
 
-  // Indicates whether the user has ever dragged a card. It's used to hide the drag indicator arrow after
-  // the user dragged a card
+  // Indicates whether the user has ever dragged a card, used to determine dragIndicationCardProperty.
   public readonly hasDraggedCardProperty: TReadOnlyProperty<boolean>;
+
+  // The card where the drag indicator should appear. null if no drag indicator should appear.
   public readonly dragIndicationCardProperty: Property<CardModel | null>;
+
   public readonly totalDragDistanceProperty: Property<number>;
 
   // KEYBOARD INPUT PROPERTIES:
@@ -73,7 +75,7 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
   public readonly isKeyboardDragArrowVisibleProperty: TReadOnlyProperty<boolean>;
 
   // Properties that track if a certain action have ever been performed vai keyboard input.
-  public readonly hasKeyboardMovedCardProperty = new BooleanProperty( false );
+  public readonly hasKeyboardMovedCardProperty: Property<boolean>;
   public readonly hasKeyboardGrabbedCardProperty = new BooleanProperty( false );
   public readonly hasKeyboardSelectedDifferentCardProperty = new BooleanProperty( false );
 
@@ -84,12 +86,22 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
   public constructor( medianModel: MedianModel, providedOptions: InteractiveCardContainerModelOptions ) {
     super( medianModel, providedOptions );
 
-    // Accumulated card drag distance, for purposes of hiding the drag indicator node
-    this.totalDragDistanceProperty = new NumberProperty( 0 );
-
-    this.hasDraggedCardProperty = new DerivedProperty( [ this.totalDragDistanceProperty, this.hasKeyboardMovedCardProperty ], ( totalDragDistance, hasKeyboardMovedCard ) => {
-      return totalDragDistance > 15 || hasKeyboardMovedCard;
+    this.totalDragDistanceProperty = new NumberProperty( 0, {
+      tandem: providedOptions.tandem.createTandem( 'totalDragDistanceProperty' ),
+      phetioReadOnly: true, // controlled by the sim
+      phetioDocumentation: 'Accumulated card drag distance, for purposes of hiding the drag indicator node'
     } );
+
+    this.hasKeyboardMovedCardProperty = new BooleanProperty( false, {
+      tandem: providedOptions.tandem.createTandem( 'hasKeyboardMovedCardProperty' ),
+      phetioReadOnly: true, // controlled by the sim
+      phetioDocumentation: 'Whether a card been moved using the keyboard, for purposes of hiding the drag indicator node'
+    } );
+
+    this.hasDraggedCardProperty = new DerivedProperty(
+      [ this.totalDragDistanceProperty, this.hasKeyboardMovedCardProperty ],
+      ( totalDragDistance, hasKeyboardMovedCard ) => totalDragDistance > 15 || hasKeyboardMovedCard
+    );
 
     this.dragIndicationCardProperty = new Property<CardModel | null>( null, {
       phetioReadOnly: true,
