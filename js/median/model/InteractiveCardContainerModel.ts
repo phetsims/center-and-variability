@@ -130,12 +130,12 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
       const leftCard = this.getCardsInCellOrder()[ 0 ];
       const rightCard = this.getCardsInCellOrder()[ 1 ];
 
-      // if the user has not yet dragged a card and there are multiple cards showing, fade in the drag indicator
+      // If the user has not yet dragged a card and there are multiple cards showing, add the drag indicator to leftCard.
       if ( !this.hasDraggedCardProperty.value && leftCard && rightCard ) {
         this.dragIndicationCardProperty.value = leftCard;
       }
 
-      // if the user has dragged a card and the hand indicator is showing, fade the hand indicator out
+      // If the user has dragged a card, then the drag indicator does not need to be shown.
       if ( this.hasDraggedCardProperty.value || !leftCard || !rightCard ) {
         this.dragIndicationCardProperty.value = null;
       }
