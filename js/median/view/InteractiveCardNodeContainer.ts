@@ -107,18 +107,18 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
     const isDragIndicatorVisibleProperty = new DerivedProperty( [ this.inputEnabledProperty, model.isKeyboardFocusedProperty ],
       ( inputEnabled, hasKeyboardFocus ) => inputEnabled && !hasKeyboardFocus );
 
-    const cardDragCueNode = new CardDragCueNode( {
+    const cardDragIndicatorNode = new CardDragCueNode( {
       centerTop: new Vector2( 0.5 * CAVConstants.CARD_DIMENSION, CAVConstants.CARD_DIMENSION - 9 ),
       visibleProperty: isDragIndicatorVisibleProperty
     } );
 
-    this.addChild( cardDragCueNode );
+    this.addChild( cardDragIndicatorNode );
 
     // Fade in the hand with arrow node, requested in https://github.com/phetsims/center-and-variability/issues/273#issuecomment-1607717045
     const fadeInAnimation = new Animation( {
       duration: 0.5,
       targets: [ {
-        property: cardDragCueNode.opacityProperty,
+        property: cardDragIndicatorNode.opacityProperty,
         to: 1,
         easing: Easing.QUADRATIC_IN_OUT
       } ]
@@ -128,7 +128,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
     const fadeOutAnimation = new Animation( {
       duration: 0.1,
       targets: [ {
-        property: cardDragCueNode.opacityProperty,
+        property: cardDragIndicatorNode.opacityProperty,
         to: 0,
         easing: Easing.QUADRATIC_IN_OUT
       } ]
