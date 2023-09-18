@@ -19,7 +19,7 @@ export default class VariabilityKeyboardHelpSection extends KeyboardHelpSection 
     super( CenterAndVariabilityStrings.keyboardHelpDialog.variabilityScreen.movePointerIntervalHandleOrIntervalBlockStringProperty, [
       KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.keyboardHelpDialog.variabilityScreen.moveStringProperty, KeyboardHelpIconFactory.leftRightArrowKeysRowIcon() ),
       KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.keyboardHelpDialog.variabilityScreen.moveInSmallerStepsStringProperty, KeyboardHelpIconFactory.shiftPlusIcon( KeyboardHelpIconFactory.leftRightArrowKeysRowIcon() ) ),
-      KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.keyboardHelpDialog.moveInLargerStepsStringProperty, KeyboardHelpIconFactory.pageUpPageDownRowIcon() ),
+      KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.keyboardHelpDialog.variabilityScreen.moveInLargerStepsStringProperty, KeyboardHelpIconFactory.pageUpPageDownRowIcon() ),
       KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.keyboardHelpDialog.jumpToStartOfNumberLineStringProperty, TextKeyNode.home() ),
       KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.keyboardHelpDialog.jumpToEndOfNumberLineStringProperty, TextKeyNode.end() ) ], {
       headingOptions: { lineWrap: 300 }
