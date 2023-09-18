@@ -55,6 +55,7 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import erase_mp3 from '../../../../scenery-phet/sounds/erase_mp3.js';
 import CAVToggleNode from './CAVToggleNode.js';
 import Multilink from '../../../../axon/js/Multilink.js';
+import isResettingProperty from '../../../../soccer-common/js/model/isResettingProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -126,8 +127,12 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
 
     this.resetAllButton = new ResetAllButton( {
       listener: () => {
+        assert && assert( !isResettingProperty.value, 'cannot reset while already resetting' );
+
+        isResettingProperty.value = true;
         this.interruptSubtreeInput(); // cancel interactions that may be in progress
         model.reset();
+        isResettingProperty.value = false;
       },
       right: this.layoutBounds.maxX - SoccerCommonConstants.SCREEN_VIEW_X_MARGIN,
       bottom: this.layoutBounds.maxY - SoccerCommonConstants.SCREEN_VIEW_Y_MARGIN,
