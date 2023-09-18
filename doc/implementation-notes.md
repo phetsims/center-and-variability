@@ -46,7 +46,7 @@ in [CAVConstants.ts](../js/common/CAVConstants.ts).
 ### Query Parameters
 
 Query parameters are used to enable sim-specific features. Sim-specific query parameters are documented
-in [CAVQueryParameters.ts](https://github.com/phetsims/center-and-variability/blob/main/js/common/view/CAVQueryParameters.ts).
+in [CAVQueryParameters.ts](https://github.com/phetsims/center-and-variability/blob/main/js/common/CAVQueryParameters.ts).
 
 ### Memory Management
 
