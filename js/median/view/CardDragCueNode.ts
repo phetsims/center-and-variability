@@ -17,7 +17,8 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = EmptySelfOptions;
 
-type CardDragCueNodeOptions = SelfOptions & NodeTranslationOptions & PickRequired<NodeOptions, 'visibleProperty'>;
+type CardDragCueNodeOptions = SelfOptions & NodeTranslationOptions &
+  PickRequired<NodeOptions, 'visibleProperty' | 'opacity'>;
 
 export default class CardDragCueNode extends Node {
 
