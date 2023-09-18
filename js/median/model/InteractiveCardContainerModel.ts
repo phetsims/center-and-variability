@@ -74,7 +74,7 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
   public readonly isGrabReleaseCueVisibleProperty: TReadOnlyProperty<boolean>;
   public readonly isKeyboardDragArrowVisibleProperty: TReadOnlyProperty<boolean>;
 
-  // Properties that track if a certain action have ever been performed vai keyboard input.
+  // Properties that track if a certain action has ever been performed via keyboard input.
   public readonly hasKeyboardMovedCardProperty: Property<boolean>;
   public readonly hasKeyboardGrabbedCardProperty = new BooleanProperty( false );
   public readonly hasKeyboardSelectedDifferentCardProperty = new BooleanProperty( false );
