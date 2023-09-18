@@ -40,7 +40,7 @@ In addition to this document, you are encouraged to read:
 This simulation makes use of a model-view transform to map model coordinates (horizontally: meters, vertically: number
 of data points) to view coordinates in the soccer
 area [CAVScreenView.ts](https://github.com/phetsims/center-and-variability/blob/main/js/common/view/CAVScreenView.ts),
-and in the charts which are shown in the accordion box and info dialogs. The plotNode model-view transform can be found
+and in the charts which are shown in the accordion box and info dialogs. The plotNode model-view transform (`PLOT_NODE_TRANSFORM`) can be found
 in [CAVConstants.ts](../js/common/CAVConstants.ts).
 
 ### Query Parameters
