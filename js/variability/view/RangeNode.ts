@@ -66,10 +66,14 @@ export default class RangeNode extends CAVPlotNode {
 
       const sortedDots = sceneModel.getSortedLandedObjects();
 
+      // Typescript doesn't know that sortedDots could have 0 elements, so we must
+      // set the type as SoccerBall or undefined.
       const leftmostDot = sortedDots[ 0 ] as SoccerBall | undefined;
       const rightmostDot = sortedDots[ sortedDots.length - 1 ] as SoccerBall | undefined;
 
-      // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card
+      // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card.
+      // We need the double bang for leftmostDot and rightmostDot because they are potentially undefined.
+      // See:  https://github.com/phetsims/center-and-variability/issues/191
       const hasNonZeroRange = !!leftmostDot &&
                               !!rightmostDot &&
                               leftmostDot.valueProperty.value !== rightmostDot.valueProperty.value;
