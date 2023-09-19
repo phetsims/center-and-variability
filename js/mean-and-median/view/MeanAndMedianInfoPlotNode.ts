@@ -1,8 +1,10 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * PlotNode for the info dialog in the Mean and Median Screen.
- * Adds a medianArrowNode to the plot node.
+ * MeanAndMedianInfoPlotNode is a specialized graphical node that represents data on the "Mean and Median Screen".
+ * Apart from showcasing the plot points, it also includes visual indicators for both the mean and median values.
+ * The node visually represents the median value with an arrow and the mean value with an indicator.
+ * The position and visibility of these elements are dynamically updated based on changes in the underlying model data.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
  *

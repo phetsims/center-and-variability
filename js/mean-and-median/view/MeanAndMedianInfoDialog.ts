@@ -1,7 +1,9 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Info Dialog for the Mean and Median Screen. Creates a MeanAndMedianInfoNode
+ * MeanAndMedianInfoDialog is a UI component for the Mean and Median Screen. It provides a dialog that displays
+ * detailed information using the MeanAndMedianInfoNode. The dialog leverages information from the provided
+ * model, scene model, and a number line node.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
  *

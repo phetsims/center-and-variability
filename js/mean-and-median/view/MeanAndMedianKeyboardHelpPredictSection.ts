@@ -1,7 +1,9 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Help content for the KeyboardHelpDialog for moving the Predict Median.
+ * MeanAndMedianKeyboardHelpPredictSection provides detailed keyboard guidance for
+ * predicting the median in the Mean and Median screen. It offers visual aids and
+ * descriptions for various key commands, such as navigating or adjusting the prediction pointer.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

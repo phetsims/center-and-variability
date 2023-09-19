@@ -1,7 +1,9 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Info Node for the Mean and Median screen. Shows mean and median calculation as well as results.
+ * MeanAndMedianInfoNode is a UI component that displays detailed information regarding mean and median calculations.
+ * It shows both the calculations and the results using visual elements, and responds dynamically to changes in the
+ * scene model by updating its content accordingly.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
  *

@@ -1,8 +1,9 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Shows the dot plot or line plot on the "Mean & Median" Screen, including the legends/readouts to the left.
- * The plot is non-interactive.
+ * MeanAndMedianPlotNode displays a non-interactive dot or line plot on the "Mean & Median" screen.
+ * The plot is complemented by legends and readouts to the left. It visualizes soccer ball data
+ * while offering indicators for median values and supporting various configuration options.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

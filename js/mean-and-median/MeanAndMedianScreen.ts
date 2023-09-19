@@ -1,7 +1,10 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * "Mean & Median" screen
+ * The MeanAndMedianScreen class represents the entire Mean & Median screen
+ * in the simulation. It initializes and integrates the corresponding model and view.
+ * Additionally, it specifies default configurations such as the name of the screen,
+ * an associated icon for the home screen, and a function to create a keyboard help node.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

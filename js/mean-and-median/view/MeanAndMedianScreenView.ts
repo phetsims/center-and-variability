@@ -1,7 +1,10 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * ScreenView for the "Mean and Median" Screen
+ * MeanAndMedianScreenView represents the view for the Mean and Median screen.
+ * It organizes and displays various UI elements, including accordion boxes,
+ * prediction sliders for mean and median, checkboxes for play area controls,
+ * and an info dialog providing additional details about the mean and median.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

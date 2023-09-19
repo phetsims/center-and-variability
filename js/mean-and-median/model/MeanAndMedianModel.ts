@@ -1,11 +1,14 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * Model for the "Mean & Median" screen.
+ * The MeanAndMedianModel class represents the model for the "Mean & Median" screen.
+ * This model keeps track of the behaviors and properties associated with the representation
+ * of mean and median values in a soccer scene.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */
+
 
 import centerAndVariability from '../../centerAndVariability.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';

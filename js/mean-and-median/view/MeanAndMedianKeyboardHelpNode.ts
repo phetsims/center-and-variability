@@ -1,7 +1,9 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * The keyboard help content for the Mean and Median screen.
+ * MeanAndMedianKeyboardHelpNode provides a guide to keyboard interactions on the Mean and Median screen.
+ * It defines input behaviors for different keyboard actions, such as grabbing, moving, or predicting with
+ * interactive elements in the simulation.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

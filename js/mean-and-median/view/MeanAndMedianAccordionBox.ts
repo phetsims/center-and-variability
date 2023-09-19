@@ -1,8 +1,9 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Accordion Box in the Mean and Median Screen. Contains a plotNode and checkboxes that allow the user to see a visual
- * indication of the mean and median in the plotNode.
+ * MeanAndMedianAccordionBox is a UI component for the Mean and Median Screen. It provides an interactive accordion box that
+ * features a plot visualization, checkboxes for toggling the visibility of mean and median indicators, and readouts
+ * for displaying the mean and median values.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
