@@ -115,7 +115,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
     this.addChild( keyboardDragArrowNode );
 
     const cardDragIndicatorNode = new CardDragIndicatorNode( {
-      centerTop: new Vector2( 0.5 * CAVConstants.CARD_DIMENSION, CAVConstants.CARD_DIMENSION - 9 ),
+      centerTop: new Vector2( 0.5 * CAVConstants.CARD_DIMENSION - PICK_UP_DELTA_X, CAVConstants.CARD_DIMENSION - 9 ),
       visibleProperty: new DerivedProperty(
         [ this.inputEnabledProperty, model.isKeyboardFocusedProperty, model.dragIndicationCardProperty ],
         ( inputEnabled, hasKeyboardFocus, dragIndicationCard ) => inputEnabled && !hasKeyboardFocus && !!dragIndicationCard )
