@@ -258,11 +258,11 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       rotation: Math.PI / 4
     } );
 
-    // We never want the MedianIndicatorNode to overlap the accordion Box.
-    const avoidAccordionBox = () => {
+    // Utility function to prevent nodes from overlapping with the accordion box
+    const repositionNodeIfOverlappingAccordionBox = ( node: Node ) => {
       if ( this.accordionBox ) {
-        if ( playAreaMedianIndicatorNode.top < this.accordionBox.bottom + INDICATOR_MARGIN ) {
-          playAreaMedianIndicatorNode.top = this.accordionBox.bottom + INDICATOR_MARGIN;
+        if ( node.top < this.accordionBox.bottom + INDICATOR_MARGIN ) {
+          node.top = this.accordionBox.bottom + INDICATOR_MARGIN;
         }
       }
     };
@@ -285,18 +285,15 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
           topObjectPositionY - 11.5
         );
 
-        // If the drag indicator is visible and its stack matches the median stack, adjustments needs to be made.
+        // If the drag indicator is visible and its stack matches the median stack, try to place the median indicator
+        // above the drag indicator, while avoiding overlap with the accordion box.
         if ( model.selectedSceneModelProperty.value.medianValueProperty.value === dragIndicatorValue ) {
           adjustMedianIndicatorBottom( topObjectPositionY );
-          avoidAccordionBox();
+          repositionNodeIfOverlappingAccordionBox( playAreaMedianIndicatorNode );
         }
 
-        // The arrow shouldn't overlap the accordion box
-        if ( this.accordionBox ) {
-          if ( dragIndicatorArrowNode.top < this.accordionBox.bottom + INDICATOR_MARGIN ) {
-            dragIndicatorArrowNode.top = this.accordionBox.bottom + INDICATOR_MARGIN;
-          }
-        }
+        // We never want the dragIndicatorArrowNode to overlap the accordion Box.
+        repositionNodeIfOverlappingAccordionBox( dragIndicatorArrowNode );
       }
     };
 
@@ -363,8 +360,8 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
           adjustMedianIndicatorBottom( topObjectPositionY );
         }
 
-        // The arrow shouldn't overlap the accordion box
-        avoidAccordionBox();
+        // The playAreaMedianIndicatorNode shouldn't overlap the accordion box
+        repositionNodeIfOverlappingAccordionBox( playAreaMedianIndicatorNode );
       }
       playAreaMedianIndicatorNode.visible = visible;
     };
