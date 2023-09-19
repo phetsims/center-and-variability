@@ -1,9 +1,11 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * A node that contains the IntervalToolRectangle as well as two IntervalToolPredictionSliders.
- * The IntervalToolNode can be used to make variability estimations in the sim as well functions
- * as a pedagogical tool to highlight different ways to look at the data.
+ * IntervalToolNode is a graphical node that enables users to highlight a range of values on the soccer field as well
+ * as in the accordion box. It contains an IntervalToolRectangle as well as two IntervalToolPredictionSliders.
+ * The IntervalToolNode can be used to make variability estimations, and as a pedagogical tool to
+ * highlight data or make predictions. It also provides auditory feedback through sound effects,
+ * which change based on user interactions with the sliders and overall interval tool movement.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
  *
