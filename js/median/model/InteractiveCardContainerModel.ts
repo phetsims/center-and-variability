@@ -1,7 +1,9 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Adds sonification, animation, and interactive user input logic in the accordion box.
+ * InteractiveCardContainerModel manages the interactive card container in a simulation. It supports a variety
+ * of user interactions, including mouse drags and keyboard inputs. With integrated sonification, it provides
+ * auditory feedback when cards shift position, ensuring a more accessible user experience.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
  *

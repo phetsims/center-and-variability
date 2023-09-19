@@ -1,7 +1,8 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Info dialog on the median screen. Contains the MedianInfoNode
+ * The MedianInfoDialog serves as an information dialog on the Median screen.
+ * It primarily encapsulates and presents the MedianInfoNode for the users.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

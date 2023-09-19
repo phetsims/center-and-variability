@@ -1,7 +1,8 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * Manages creation, dragging, positioning of CardNode instances.
+ * CardNodeContainer oversees the lifecycle and behavior of individual CardNodes. It manages the layout, interactivity,
+ * and statistical visual aids, such as median representation, linked to the movement and positioning of the CardNodes.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

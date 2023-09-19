@@ -1,7 +1,12 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Help content for the KeyboardHelpDialog for moving the Predict Median.
+ * The MedianKeyboardHelpPredictMedianSection outlines keyboard instructions specifically for the "Predict Median" function within the KeyboardHelpDialog.
+ * This section provides guidance on:
+ * - Moving the Predict Median using arrow keys.
+ * - Making larger stepwise movements.
+ * - Jumping to the start or end of the number line.
+ * Icons associated with specific key commands are presented alongside these instructions for clear visual representation.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

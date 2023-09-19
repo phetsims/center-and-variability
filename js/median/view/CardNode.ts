@@ -1,7 +1,8 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * Draggable node that shows a single number on a card.  The number can change if the corresponding ball is dragged.
+ * CardNode represents a draggable UI element that displays a numerical value. This value can be dynamically altered
+ * based on the movement of its corresponding soccer ball.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

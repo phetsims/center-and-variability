@@ -1,8 +1,8 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * CardDragIndicatorNode provides a cue that a card can be dragged. It appears on the leftmost card in the accordion box,
- * and displays a hand with an arrow that points to the left.
+ * CardDragIndicatorNode visualizes a draggable cue for cards, displaying an arrow and hand symbol on the
+ * leftmost card of the accordion box. It signals that the card can be interactively moved.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
  * @author Chris Malley (PixelZoom, Inc.)

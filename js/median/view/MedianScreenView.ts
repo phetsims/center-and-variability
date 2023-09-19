@@ -1,7 +1,8 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * Screen View for the "Median" screen
+ * The MedianScreenView displays the Median screen in a simulation. It features a question bar, an accordion box,
+ * a "Predict Median" visual node, and an info dialog that appears when the "Info" button is clicked.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

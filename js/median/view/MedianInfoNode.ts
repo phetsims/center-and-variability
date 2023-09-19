@@ -1,7 +1,9 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Shows the content for the median info dialog. A definition of the median, and sorted cards that are not interactive.
+ * The MedianInfoNode is a visual component designed to display the content for the Median Info dialog.
+ * It provides a comprehensive definition of the median along with a visualization of sorted cards, which are for
+ * display purposes and are non-interactive.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

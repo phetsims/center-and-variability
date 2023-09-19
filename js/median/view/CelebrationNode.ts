@@ -1,7 +1,9 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * A panel that animates when a user has successfully sorted the cards in the Card Container.
+ * CelebrationNode is a Panel in the PhET Interactive Simulations framework that animates and provides feedback when
+ * the user successfully sorts cards in a Card Container. It manages animations such as cards growing, rotating, and
+ * performing a "wave" motion, in addition to playing a success sound.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
  *

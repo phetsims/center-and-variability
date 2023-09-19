@@ -1,7 +1,9 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * Model for the "Median" screen
+ * MedianModel represents the core model for the Median screen, controlling properties such as data sorting,
+ * median visibility, and interactions with interactive cards. Also handles soccer scene dynamics
+ * and ensures synchronization with UI components.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

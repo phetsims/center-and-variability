@@ -1,10 +1,10 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Class with static methods for playing the corresponding notes for the median animation (when the median checkbox in the
- * accordion box is checked). The notes are played using pairwise/stepwise notes in the pentatonic scale.  For instance,
- * if there are 5 data points, then it plays the outermost pair with an upper pitch note and lower pitch note, then the
- * next pair, and so on.  In this case, for a total of 3 "pairs" of notes.
+ * The MedianAnimationTone class contains static methods for playing the corresponding notes for the median animation
+ * (when the median checkbox in the accordion box is checked). The notes are played using pairwise/stepwise notes
+ * in the pentatonic scale.  For instance, if there are 5 data points, then it plays the outermost pair with an
+ * upper pitch note and lower pitch note, then the next pair, and so on. In this case, for a total of 3 "pairs" of notes.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

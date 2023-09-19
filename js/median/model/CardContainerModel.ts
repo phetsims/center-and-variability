@@ -1,8 +1,8 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Model for the cardContainerNode. Creates card models, tracks their position and order in the accordionBox and infoDialog,
- * handles step animation and cardMovementSounds.
+ * CardContainerModel is the core model responsible for managing the behavior and state of cards in a container.
+ * It handles card creation, positioning, animations, and interactions within both the accordion box and info dialog.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
  *

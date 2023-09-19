@@ -1,7 +1,12 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * The keyboard help content for the Median screen.
+ * The MedianKeyboardHelpNode provides specialized keyboard help content tailored for the Median screen.
+ * This content assists users in navigating and interacting with the Median screen using keyboard controls.
+ * It offers guidance on:
+ * - Grabbing or releasing a ball or card.
+ * - Moving a grabbed ball or card, including jumping to the start or end of cards or the number line.
+ * - Predicting the median.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

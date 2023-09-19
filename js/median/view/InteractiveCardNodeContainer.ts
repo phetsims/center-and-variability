@@ -1,7 +1,19 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * Adds mouse and keyboard input to the CardNodeContainer in the accordion box.
+ * InteractiveCardNodeContainer extends the functionality of the CardNodeContainer by adding interactivity features. It
+ * manages user interactions, both mouse and keyboard, with the cards inside the accordion box, enabling users to sort,
+ * drag, and drop the cards. This container also integrates visual feedbacks like drag indicators and animation
+ * effects for cards, as well as auditory feedbacks with sounds on various user actions. Moreover, the container handles
+ * focus and blur events, ensuring a seamless experience for keyboard users. Additionally, the container checks and
+ * celebrates when the cards are sorted correctly.
+ *
+ * Major functionalities include:
+ * - Handling drag and drop for individual cards, animating them back to their home cells when dropped.
+ * - Responding to the correct sorting of cards with visual and auditory feedback.
+ * - Managing focus highlights and interactivity cues for keyboard users.
+ * - Processing keyboard inputs to move and sort cards using keys like arrows, space, enter, and more.
+ * - Adjusting visual components like the drag indicator based on the interaction state.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
  *

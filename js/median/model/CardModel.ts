@@ -1,7 +1,9 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * Contains logic for the position, cellPosition, and active status of a CardNode.
+ * CardModel is responsible for representing the individual cards in a card container, encapsulating their position,
+ * active status, and the interactions related to a card, such as dragging and animations. It also monitors the state
+ * of the associated SoccerBall and reflects its changes in the card.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

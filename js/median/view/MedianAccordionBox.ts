@@ -1,8 +1,13 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Accordion box in the Median screen. Renders cards that can be dragged and sorted.
- * Has checkboxes that allows the user to visualize the median in a sorted set of cards.
+ * The MedianAccordionBox is an accordion box designed for the Median screen.
+ * It is responsible for rendering cards that users can drag and sort. Additionally,
+ * it provides checkboxes that empower users to visualize the median in a sorted set of cards.
+ *
+ * Main features:
+ * - Draggable and sortable cards.
+ * - Visualization controls for the median in a sorted card set.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
