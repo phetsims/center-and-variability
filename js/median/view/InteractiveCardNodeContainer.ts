@@ -202,23 +202,26 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
         model.isKeyboardFocusedProperty.value = false;
       },
       out: () => {
+        if ( !animatedPanZoomSingleton.listener.animatingProperty.value ) {
+          if ( model.focusedCardProperty.value !== null ) {
 
-        if ( model.focusedCardProperty.value !== null ) {
+            // Before clearing out the focusedCardProperty the CardModel must be cleared out of it's
+            // dragging state.
+            model.focusedCardProperty.value.isDraggingProperty.set( false );
 
-          // Before clearing out the focusedCardProperty the CardModel must be cleared out of it's
-          // dragging state.
-          model.focusedCardProperty.value.isDraggingProperty.set( false );
+            // Clear the 'focused' card so that there isn't a flicker to a highlight around that card when
+            // moving between the CardNode interactive highlight and the container group highlight (which has
+            // a custom highlight around the focused card).
+            model.focusedCardProperty.set( null );
+          }
 
-          // Clear the 'focused' card so that there isn't a flicker to a highlight around that card when
-          // moving between the CardNode interactive highlight and the container group highlight (which has
-          // a custom highlight around the focused card).
-          model.focusedCardProperty.set( null );
+          model.isCardGrabbedProperty.value = false;
         }
-
-        model.isCardGrabbedProperty.value = false;
       },
       over: () => {
-        model.isKeyboardFocusedProperty.value = false;
+        if ( !animatedPanZoomSingleton.listener.animatingProperty.value ) {
+          model.isKeyboardFocusedProperty.value = false;
+        }
       }
     } );
 
