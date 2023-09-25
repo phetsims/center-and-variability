@@ -43,7 +43,6 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import KickerCharacterSets from '../../../../soccer-common/js/view/KickerCharacterSets.js';
 import dragIndicatorHand_png from '../../../images/dragIndicatorHand_png.js';
 import SoccerSceneModel from '../../../../soccer-common/js/model/SoccerSceneModel.js';
 import SoccerScreenView, { DRAG_CUE_SCALE, SoccerScreenViewOptions } from '../../../../soccer-common/js/view/SoccerScreenView.js';
@@ -56,6 +55,9 @@ import erase_mp3 from '../../../../scenery-phet/sounds/erase_mp3.js';
 import CAVToggleNode from './CAVToggleNode.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import isResettingProperty from '../../../../soccer-common/js/model/isResettingProperty.js';
+import KickerCharacterSetUSA from '../../../../soccer-common/js/view/KickerCharacterSetUSA.js';
+import KickerCharacterSetAfrica from '../../../../soccer-common/js/view/KickerCharacterSetAfrica.js';
+import KickerCharacterSetAfricaModest from '../../../../soccer-common/js/view/KickerCharacterSetAfricaModest.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -70,17 +72,17 @@ const INDICATOR_MARGIN = 4;
 const KICKER_IMAGE_SETS: KickerImageSet[][] = [];
 
 for ( let i = 0; i < CAVConstants.MAX_KICKS_VALUES[ CAVConstants.MAX_KICKS_VALUES.length - 1 ]; i++ ) {
-  const locale1MaxNumberOfCharacters = KickerCharacterSets.CHARACTER_SET_1.unnumberedKickersCount;
-  const locale2MaxNumberOfCharacters = KickerCharacterSets.CHARACTER_SET_2.unnumberedKickersCount;
-  const locale3MaxNumberOfCharacters = KickerCharacterSets.CHARACTER_SET_3.unnumberedKickersCount;
+  const locale1MaxNumberOfCharacters = KickerCharacterSetUSA.unnumberedKickersCount;
+  const locale2MaxNumberOfCharacters = KickerCharacterSetAfrica.unnumberedKickersCount;
+  const locale3MaxNumberOfCharacters = KickerCharacterSetAfricaModest.unnumberedKickersCount;
 
   const locale1CharacterIndex = i < locale1MaxNumberOfCharacters ? i : i % locale1MaxNumberOfCharacters;
   const locale2CharacterIndex = i < locale2MaxNumberOfCharacters ? i : i % locale2MaxNumberOfCharacters;
   const locale3CharacterIndex = i < locale3MaxNumberOfCharacters ? i : i % locale3MaxNumberOfCharacters;
 
-  KICKER_IMAGE_SETS.push( [ KickerCharacterSets.CHARACTER_SET_1.unnumberedKickerImages[ locale1CharacterIndex ],
-    KickerCharacterSets.CHARACTER_SET_2.unnumberedKickerImages[ locale2CharacterIndex ],
-    KickerCharacterSets.CHARACTER_SET_3.unnumberedKickerImages[ locale3CharacterIndex ]
+  KICKER_IMAGE_SETS.push( [ KickerCharacterSetUSA.unnumberedKickerImages[ locale1CharacterIndex ],
+    KickerCharacterSetAfrica.unnumberedKickerImages[ locale2CharacterIndex ],
+    KickerCharacterSetAfricaModest.unnumberedKickerImages[ locale3CharacterIndex ]
   ] );
 }
 

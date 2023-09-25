@@ -30,8 +30,10 @@ import Property from '../../../../axon/js/Property.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
-import KickerCharacterSets from '../../../../soccer-common/js/view/KickerCharacterSets.js';
 import IntervalToolNode from './IntervalToolNode.js';
+import KickerCharacterSetUSA from '../../../../soccer-common/js/view/KickerCharacterSetUSA.js';
+import KickerCharacterSetAfrica from '../../../../soccer-common/js/view/KickerCharacterSetAfrica.js';
+import KickerCharacterSetAfricaModest from '../../../../soccer-common/js/view/KickerCharacterSetAfricaModest.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
@@ -155,9 +157,9 @@ export default class VariabilityScreenView extends CAVScreenView {
   public override getKickerImageSets( kicker: Kicker, sceneModel: CAVSoccerSceneModel ): KickerImageSet[] {
     const index = this.model.sceneModels.indexOf( sceneModel );
     return [
-      KickerCharacterSets.CHARACTER_SET_1.numberedKickerImages[ index ],
-      KickerCharacterSets.CHARACTER_SET_2.numberedKickerImages[ index ],
-      KickerCharacterSets.CHARACTER_SET_3.numberedKickerImages[ index ]
+      KickerCharacterSetUSA.numberedKickerImages[ index ],
+      KickerCharacterSetAfrica.numberedKickerImages[ index ],
+      KickerCharacterSetAfricaModest.numberedKickerImages[ index ]
     ];
   }
 
