@@ -289,6 +289,21 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       }
     };
 
+    // A single 'panListener' so that we can keep an easy reference to it to remove it when necessary.
+    // When using keyboard input, make sure that the "focused" card is still displayed by panning to keep it
+    // in view.
+    const panListener = () => {
+
+      // remove this listener, it will only be called once
+      if ( model.focusedCardProperty.value && model.focusedCardProperty.value.animation ) {
+        model.focusedCardProperty.value.animation.endedEmitter.removeListener( panListener );
+      }
+
+      if ( focusedCardNodeProperty.value ) {
+        animatedPanZoomSingleton.listener.panToNode( focusedCardNodeProperty.value );
+      }
+    };
+
     const keyboardListener = new KeyboardListener( {
       fireOnHold: true,
       keys: [ 'arrowRight', 'arrowLeft', 'enter', 'space', 'home', 'end', 'escape', 'pageUp', 'pageDown' ],
@@ -347,9 +362,15 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
             model.focusedCardProperty.value = this.model.getCardsInCellOrder()[ 0 ];
           }
 
-          // When using keyboard input, make sure that the "focused" card is still displayed by panning to keep it
-          // in view.
-          animatedPanZoomSingleton.listener.panToNode( focusedCardNodeProperty.value );
+          assert && assert( model.focusedCardProperty.value, 'Can we assume this exists?' );
+          const focusedCard = model.focusedCardProperty.value!;
+
+          if ( focusedCard.animation ) {
+            if ( focusedCard.animation.endedEmitter.hasListener( panListener ) ) {
+              focusedCard.animation.endedEmitter.removeListener( panListener );
+            }
+            focusedCard.animation.endedEmitter.addListener( panListener );
+          }
         }
       }
     } );
