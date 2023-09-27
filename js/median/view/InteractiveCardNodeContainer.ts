@@ -42,6 +42,7 @@ import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-player
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import CardDragIndicatorNode from './CardDragIndicatorNode.js';
+import cavFocusManagerSingleton from '../../common/cavFocusManagerSingleton.js';
 
 const FOCUS_HIGHLIGHT_Y_MARGIN = CAVConstants.CARD_SPACING + 3;
 
@@ -200,28 +201,30 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       blur: () => {
         model.isCardGrabbedProperty.value = false;
         model.isKeyboardFocusedProperty.value = false;
-      },
-      out: () => {
-        if ( !animatedPanZoomSingleton.listener.animatingProperty.value ) {
-          if ( model.focusedCardProperty.value !== null ) {
+      }
+    } );
 
-            // Before clearing out the focusedCardProperty the CardModel must be cleared out of it's
-            // dragging state.
-            model.focusedCardProperty.value.isDraggingProperty.set( false );
+    // When pdomFocusHighlightsVisibleProperty become false, interaction with a mouse has begun while using
+    // Interactive Highlighting. When that happens, clear the sim-specific state tracking 'focused' cards.
+    cavFocusManagerSingleton.focusHighlightVisibleProperty.link( ( visible: boolean ) => {
+      if ( !visible ) {
+        if ( model.focusedCardProperty.value !== null ) {
 
-            // Clear the 'focused' card so that there isn't a flicker to a highlight around that card when
-            // moving between the CardNode interactive highlight and the container group highlight (which has
-            // a custom highlight around the focused card).
-            model.focusedCardProperty.set( null );
-          }
+          // Before clearing out the focusedCardProperty the CardModel must be cleared out of it's
+          // dragging state.
+          model.focusedCardProperty.value.isDraggingProperty.set( false );
 
-          model.isCardGrabbedProperty.value = false;
+          // Clear the 'focused' card so that there isn't a flicker to a highlight around that card when
+          // moving between the CardNode interactive highlight and the container group highlight (which has
+          // a custom highlight around the focused card).
+          model.focusedCardProperty.set( null );
         }
-      },
-      over: () => {
-        if ( !animatedPanZoomSingleton.listener.animatingProperty.value ) {
-          model.isKeyboardFocusedProperty.value = false;
-        }
+
+        model.isCardGrabbedProperty.value = false;
+
+        // This controls the visibility of interaction cues (keyboard vs mouse), so we need to clear it when
+        // switching interaction modes.
+        model.isKeyboardFocusedProperty.value = false;
       }
     } );
 
@@ -352,8 +355,9 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
           }
           else {
 
-            // We cleared the 'focused' card because we were using mouse input - start over with
-            // keyboard interaction and focus the first card.
+            // No cards are grabbed! We cleared the 'focused' card because we were using mouse input - start over with
+            // keyboard interaction and focus the first card AND make sure that all cards individually are no longer
+            // dragging.
             this.cardNodes.forEach( cardNode => {
               cardNode.model.isDraggingProperty.value = false;
             } );

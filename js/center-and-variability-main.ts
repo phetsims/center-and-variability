@@ -17,6 +17,7 @@ import PreferencesModel from '../../joist/js/preferences/PreferencesModel.js';
 import MeanAndMedianScreen from './mean-and-median/MeanAndMedianScreen.js';
 import VariabilityScreen from './variability/VariabilityScreen.js';
 import KickerCharacterSets from '../../soccer-common/js/view/KickerCharacterSets.js';
+import cavFocusManagerSingleton from './common/cavFocusManagerSingleton.js';
 
 const centerAndVariabilityTitleStringProperty = CenterAndVariabilityStrings[ 'center-and-variability' ].titleStringProperty;
 const preferencesModel = new PreferencesModel( {
@@ -48,5 +49,6 @@ simLauncher.launch( () => {
     new MeanAndMedianScreen( preferencesModel, { tandem: Tandem.ROOT.createTandem( 'meanAndMedianScreen' ) } ),
     new VariabilityScreen( preferencesModel, { tandem: Tandem.ROOT.createTandem( 'variabilityScreen' ) } )
   ], simOptions );
+  cavFocusManagerSingleton.initialize( sim.display );
   sim.start();
 } );
