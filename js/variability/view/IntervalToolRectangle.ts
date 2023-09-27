@@ -30,7 +30,7 @@ type IntervalToolNodeOptions = StrictOmit<SelfOptions & WithRequired<ParentOptio
 
 export default class IntervalToolRectangle extends AccessibleSlider( Node, 0 ) {
   public constructor( intervalToolValue1Property: NumberProperty, intervalToolValue2Property: NumberProperty, modelViewTransform: ModelViewTransform2,
-                      topAlignmentProperty: TReadOnlyProperty<number>, isBeingDragged: Property<boolean>, providedOptions: IntervalToolNodeOptions ) {
+                      topAlignmentProperty: TReadOnlyProperty<number>, isBeingDraggedProperty: Property<boolean>, providedOptions: IntervalToolNodeOptions ) {
 
     const rectangleNode = new Rectangle( 0, 0, 0, 400, {
       fill: CAVColors.intervalToolFillProperty,
@@ -67,11 +67,14 @@ export default class IntervalToolRectangle extends AccessibleSlider( Node, 0 ) {
       return new Range( dragBounds.minX, dragBounds.maxX );
     } );
 
+    let distanceBetweenTools = intervalToolValue2Property.value - intervalToolValue1Property.value;
+
     const startDrag = () => {
-      isBeingDragged.value = true;
+      isBeingDraggedProperty.value = true;
+      distanceBetweenTools = intervalToolValue2Property.value - intervalToolValue1Property.value;
     };
     const endDrag = () => {
-      isBeingDragged.value = false;
+      isBeingDraggedProperty.value = false;
     };
 
     const options = optionize<IntervalToolNodeOptions, SelfOptions, ParentOptions>()( {
@@ -119,15 +122,15 @@ export default class IntervalToolRectangle extends AccessibleSlider( Node, 0 ) {
       inverseMap: function( value: Vector2 ) { return value.x; }
     } );
 
-
+    const shouldDistanceBeRecalculated = ( value: number ) => value < 0 && value > 16;
     intervalToolValue1PositionProperty.link( ( value: Vector2 ) => {
 
       // If the change was triggered by the drag listener, then we want to keep the distance between the two values constant.
-      if ( isBeingDragged.value ) {
-        const distanceBetweenToolValues = intervalToolValue2Property.value - intervalToolValue1Property.value;
-        const value2 = value.x + distanceBetweenToolValues;
+      if ( isBeingDraggedProperty.value ) {
+        distanceBetweenTools = shouldDistanceBeRecalculated( value.x + distanceBetweenTools ) ? intervalToolValue2Property.value - intervalToolValue1Property.value : distanceBetweenTools;
+        const value2 = value.x + distanceBetweenTools;
         assert && assert( value2 > -0.001 && value2 < 16.001,
-          `The intervalToolValue2Property is outside of its range: ${value2}. Calculation that got us here is: (value2) ${intervalToolValue2Property.value} - (value1) ${intervalToolValue1Property.value} = (distanceBetweenValues) ${distanceBetweenToolValues}, The x value of intervalTool handle 1: ${value}` );
+          `The intervalToolValue2Property is outside of its range: ${value2}. Calculation that got us here is: (value2) ${intervalToolValue2Property.value} - (value1) ${intervalToolValue1Property.value} = (distanceBetweenValues) ${distanceBetweenTools}, The x value of intervalTool handle 1: ${value}` );
 
         // The dragBounds makes sure neither of these exceeds the bounds.
         intervalToolValue1Property.value = intervalToolValue1Property.range.constrainValue( value.x );
