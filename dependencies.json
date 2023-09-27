@@ -1,5 +1,5 @@
 {
-  "comment": "# center-and-variability 1.1.0-dev.15 Mon Sep 25 2023 17:06:35 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# center-and-variability 1.1.0-dev.16 Wed Sep 27 2023 13:58:36 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "94831413cd4dd4dc27c2a1aebbcafd3987934a99",
     "branch": "main"
@@ -17,7 +17,7 @@
     "branch": "main"
   },
   "center-and-variability": {
-    "sha": "f2faeff1c28c98402af82e48c6469367dac3da27",
+    "sha": "693da0aa5867ce06d63ed8cda10697dc3e083762",
     "branch": "main"
   },
   "chipper": {
@@ -37,7 +37,7 @@
     "branch": "main"
   },
   "perennial-alias": {
-    "sha": "41b0f76320814a286ed9be1c797794af1a4d164c",
+    "sha": "3b46d4d0e6e841cc522445e663cbdf644473bce1",
     "branch": "main"
   },
   "phet-core": {
@@ -49,11 +49,11 @@
     "branch": "main"
   },
   "phet-io-sim-specific": {
-    "sha": "2f8c66997983ce5eff8b3b522647d56d0d6d9502",
+    "sha": "38edd852a3453cad10f7b1a292b3c6a3f2c7a857",
     "branch": "main"
   },
   "phet-io-wrappers": {
-    "sha": "677de65b1bbdf8f35c7f458f8705410171eea465",
+    "sha": "402b1214e55374e198304bceb4bfeabf5ca5fba9",
     "branch": "main"
   },
   "phetcommon": {
@@ -73,11 +73,11 @@
     "branch": "main"
   },
   "scenery-phet": {
-    "sha": "445535ed61740303a929f1aba127fdb7a6e66326",
+    "sha": "9d90b2325a590021ba74b585d1c110288a38292d",
     "branch": "main"
   },
   "sherpa": {
-    "sha": "8551ef37e7bcc116f76cd10063cc9dc69e43f9a2",
+    "sha": "2ef17c2d981f3d8c344a09396d87a77b14f7b47f",
     "branch": "main"
   },
   "soccer-common": {
