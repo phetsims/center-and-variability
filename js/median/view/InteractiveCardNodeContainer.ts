@@ -331,6 +331,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
               const nextIndex = Utils.clamp( currentIndex + delta, 0, numberOfActiveCards - 1 );
               model.focusedCardProperty.value = activeCardNodes[ nextIndex ].model;
               model.hasKeyboardSelectedDifferentCardProperty.value = true;
+              animatedPanZoomSingleton.listener.panToNode( focusedCardNode );
             }
           }
           else if ( [ 'pageUp', 'pageDown' ].includes( keysPressed ) && isCardGrabbed ) {
