@@ -38,6 +38,12 @@ const CAVQueryParameters = QueryStringMachine.getAll( {
   cardMovementSoundPlaybackRate: {
     type: 'number',
     defaultValue: 1.5
+  },
+
+  //
+  removeFocusedCardAnimation: {
+    type: 'flag',
+    public: false
   }
 } );
 

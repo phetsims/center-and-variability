@@ -43,6 +43,7 @@ import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import CardDragIndicatorNode from './CardDragIndicatorNode.js';
 import cavFocusManagerSingleton from '../../common/cavFocusManagerSingleton.js';
+import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 
 const FOCUS_HIGHLIGHT_Y_MARGIN = CAVConstants.CARD_SPACING + 3;
 
@@ -282,7 +283,13 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
           card.model.indexProperty.value = displacedIndexes[ index ];
           model.animateToHomeCell( card.model, 0.3 );
         } );
-        model.animateToHomeCell( focusedCard.model, 0.3 );
+
+        if ( CAVQueryParameters.removeFocusedCardAnimation ) {
+          model.setAtHomeCell( focusedCard.model );
+        }
+        else {
+          model.animateToHomeCell( focusedCard.model, 0.3 );
+        }
 
         model.cardCellsChangedEmitter.emit();
 
