@@ -15,9 +15,9 @@ import centerAndVariability from '../../centerAndVariability.js';
 export const SECTION_LABEL_OPTIONS = { labelOptions: { lineWrap: 200 } };
 
 export default class CAVKeyboardHelpNode extends TwoColumnKeyboardHelpContent {
-  public constructor( leftContent: KeyboardHelpSection[] ) {
+  public constructor( leftContent: KeyboardHelpSection[], sliderContent: KeyboardHelpSection ) {
     KeyboardHelpSection.alignHelpSectionIcons( leftContent );
-    super( leftContent, [ new BasicActionsKeyboardHelpSection( {
+    super( leftContent, [ sliderContent, new BasicActionsKeyboardHelpSection( {
       withCheckboxContent: true
     } ) ] );
   }

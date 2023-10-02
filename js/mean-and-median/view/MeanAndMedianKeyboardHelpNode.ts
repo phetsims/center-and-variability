@@ -25,9 +25,8 @@ export default class MeanAndMedianKeyboardHelpNode extends CAVKeyboardHelpNode {
         CenterAndVariabilityStrings.keyboardHelpDialog.moveGrabbedBallStringProperty,
         CenterAndVariabilityStrings.keyboardHelpDialog.jumpToStartOfNumberLineStringProperty,
         CenterAndVariabilityStrings.keyboardHelpDialog.jumpToEndOfNumberLineStringProperty
-      ),
-      new MeanAndMedianKeyboardHelpPredictSection()
-    ] );
+      )
+    ], new MeanAndMedianKeyboardHelpPredictSection() );
   }
 }
 

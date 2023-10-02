@@ -28,9 +28,8 @@ export default class MedianKeyboardHelpNode extends CAVKeyboardHelpNode {
         CenterAndVariabilityStrings.keyboardHelpDialog.medianScreen.moveGrabbedBallOrCardStringProperty,
         CenterAndVariabilityStrings.keyboardHelpDialog.medianScreen.jumpToStartOfCardsOrNumberLineStringProperty,
         CenterAndVariabilityStrings.keyboardHelpDialog.medianScreen.jumpToEndOfCardsOrNumberLineStringProperty
-      ),
-      new MedianKeyboardHelpPredictMedianSection()
-    ] );
+      )
+    ], new MedianKeyboardHelpPredictMedianSection() );
   }
 }
 
