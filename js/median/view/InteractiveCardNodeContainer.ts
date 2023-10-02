@@ -316,7 +316,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
     const keyboardListener = new KeyboardListener( {
       fireOnHold: true,
-      keys: [ 'd', 'a', 'arrowRight', 'arrowLeft', 'enter', 'space', 'home', 'end', 'escape', 'pageUp', 'pageDown' ],
+      keys: [ 'd', 'a', 'arrowRight', 'arrowLeft', 'w', 's', 'arrowUp', 'arrowDown', 'enter', 'space', 'home', 'end', 'escape', 'pageUp', 'pageDown' ],
       callback: ( event, keysPressed ) => {
 
         const focusedCardNode = focusedCardNodeProperty.value;
@@ -326,13 +326,13 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
         if ( focusedCardNode ) {
 
-          if ( [ 'arrowRight', 'arrowLeft', 'a', 'd' ].includes( keysPressed ) ) {
-            const delta = keysPressed === 'arrowRight' || keysPressed === 'd' ? 1 : -1;
+          if ( [ 'arrowRight', 'arrowLeft', 'a', 'd', 'arrowUp', 'arrowDown', 'w', 's' ].includes( keysPressed ) ) {
+            const delta = [ 'arrowRight', 'd', 'arrowUp', 'w' ].includes( keysPressed ) ? 1 : -1;
 
             if ( isCardGrabbed ) {
               swapCards( activeCardNodes, focusedCardNode, delta );
             }
-            else if ( [ 'arrowRight', 'arrowLeft' ].includes( keysPressed ) ) {
+            else if ( [ 'arrowRight', 'arrowLeft', 'arrowUp', 'arrowDown' ].includes( keysPressed ) ) {
 
               // Arrow keys will shift the card focus when a card is not grabbed.
               const currentIndex = activeCardNodes.indexOf( focusedCardNode );
