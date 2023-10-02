@@ -19,9 +19,9 @@ export default class MedianKeyboardHelpPredictMedianSection extends SliderContro
   public constructor() {
 
     super( {
-      headingStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.medianScreen.predictMedianStringProperty,
+      headingStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.medianScreen.movePredictMedianStringProperty,
       verbStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.moveStringProperty,
-      sliderStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.medianScreen.lowercasePredictMedianStringProperty,
+      sliderStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.medianScreen.predictMedianStringProperty,
       maximumStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.endOfNumberLineStringProperty,
       minimumStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.startOfNumberLineStringProperty
     } );

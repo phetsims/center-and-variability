@@ -93,15 +93,15 @@ type StringsType = {
     'moveInLargerStepsStringProperty': LocalizedStringProperty;
     'medianScreen': {
       'grabOrReleaseBallOrCardStringProperty': LocalizedStringProperty;
+      'movePredictMedianStringProperty': LocalizedStringProperty;
       'predictMedianStringProperty': LocalizedStringProperty;
-      'lowercasePredictMedianStringProperty': LocalizedStringProperty;
       'moveGrabbedBallOrCardTitleStringProperty': LocalizedStringProperty;
       'moveGrabbedBallOrCardStringProperty': LocalizedStringProperty;
       'jumpToStartOfCardsOrNumberLineStringProperty': LocalizedStringProperty;
       'jumpToEndOfCardsOrNumberLineStringProperty': LocalizedStringProperty;
     };
     'meanAndMedianScreen': {
-      'predictMeanOrMedianStringProperty': LocalizedStringProperty;
+      'movePredictMeanOrMedianStringProperty': LocalizedStringProperty;
       'predictionPointerStringProperty': LocalizedStringProperty;
     };
     'variabilityScreen': {

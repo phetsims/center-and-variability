@@ -16,7 +16,7 @@ export default class MeanAndMedianKeyboardHelpPredictSection extends SliderContr
   public constructor() {
 
     super( {
-      headingStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.meanAndMedianScreen.predictMeanOrMedianStringProperty,
+      headingStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.meanAndMedianScreen.movePredictMeanOrMedianStringProperty,
       sliderStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.meanAndMedianScreen.predictionPointerStringProperty,
       verbStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.moveStringProperty,
       maximumStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.endOfNumberLineStringProperty,
