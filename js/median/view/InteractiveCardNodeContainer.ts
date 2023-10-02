@@ -43,7 +43,6 @@ import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import CardDragIndicatorNode from './CardDragIndicatorNode.js';
 import cavFocusManagerSingleton from '../../common/cavFocusManagerSingleton.js';
-import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 
 const FOCUS_HIGHLIGHT_Y_MARGIN = CAVConstants.CARD_SPACING + 3;
 
@@ -192,9 +191,9 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
           model.focusedCardProperty.value = activeCardNodes[ 0 ].model;
         }
 
-        // When the group receives keyboard focus, make sure that the focused ball is displayed
+        // When the group receives keyboard focus, make sure that the focused card is displayed
         if ( focusedCardNodeProperty.value ) {
-          animatedPanZoomSingleton.listener.panToNode( focusedCardNodeProperty.value, false );
+          animatedPanZoomSingleton.listener.panToNode( focusedCardNodeProperty.value, true );
         }
         model.isKeyboardFocusedProperty.value = true;
       },
@@ -284,33 +283,13 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
           model.animateToHomeCell( card.model, 0.3 );
         } );
 
-        if ( CAVQueryParameters.removeFocusedCardAnimation ) {
-          model.setAtHomeCell( focusedCard.model );
-          animatedPanZoomSingleton.listener.panToNode( focusedCard );
-        }
-        else {
-          model.animateToHomeCell( focusedCard.model, 0.3 );
-        }
+        model.setAtHomeCell( focusedCard.model );
+        animatedPanZoomSingleton.listener.panToNode( focusedCard );
 
         model.cardCellsChangedEmitter.emit();
 
         // Gets rid of the hand icon
         model.hasKeyboardMovedCardProperty.value = true;
-      }
-    };
-
-    // A single 'panListener' so that we can keep an easy reference to it to remove it when necessary.
-    // When using keyboard input, make sure that the "focused" card is still displayed by panning to keep it
-    // in view.
-    const panListener = () => {
-
-      // remove this listener, it will only be called once
-      if ( model.focusedCardProperty.value && model.focusedCardProperty.value.animation ) {
-        model.focusedCardProperty.value.animation.endedEmitter.removeListener( panListener );
-      }
-
-      if ( focusedCardNodeProperty.value ) {
-        animatedPanZoomSingleton.listener.panToNode( focusedCardNodeProperty.value );
       }
     };
 
@@ -373,16 +352,6 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
             model.isCardGrabbedProperty.value = false;
 
             model.focusedCardProperty.value = this.model.getCardsInCellOrder()[ 0 ];
-          }
-
-          assert && assert( model.focusedCardProperty.value, 'Can we assume this exists?' );
-          const focusedCard = model.focusedCardProperty.value!;
-
-          if ( focusedCard.animation ) {
-            if ( focusedCard.animation.endedEmitter.hasListener( panListener ) ) {
-              focusedCard.animation.endedEmitter.removeListener( panListener );
-            }
-            focusedCard.animation.endedEmitter.addListener( panListener );
           }
         }
       }
