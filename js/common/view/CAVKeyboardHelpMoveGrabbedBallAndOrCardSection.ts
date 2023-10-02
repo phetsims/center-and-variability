@@ -26,13 +26,15 @@ export default class CAVKeyboardHelpMoveGrabbedBallAndOrCardSection extends Keyb
     jumpEndMessage: LocalizedStringProperty
   ) {
     super( title, [
-      KeyboardHelpSectionRow.labelWithIcon( moveMessage, KeyboardHelpIconFactory.iconOrIcon(
-        KeyboardHelpIconFactory.leftRightArrowKeysRowIcon(),
-        KeyboardHelpIconFactory.iconRow( [ LetterKeyNode.a(), LetterKeyNode.d() ], { spacing: 1.3 } )
-      ) ),
-      KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.keyboardHelpDialog.moveInLargerStepsStringProperty,
-        KeyboardHelpIconFactory.pageUpPageDownRowIcon()
-      ),
+      KeyboardHelpSectionRow.labelWithIcon( moveMessage,
+        KeyboardHelpIconFactory.iconOrIcon(
+          KeyboardHelpIconFactory.iconOrIcon(
+            KeyboardHelpIconFactory.leftRightArrowKeysRowIcon(),
+            KeyboardHelpIconFactory.iconRow( [ LetterKeyNode.a(), LetterKeyNode.d() ], { spacing: 1.3 } ) ),
+          KeyboardHelpIconFactory.iconOrIcon(
+            KeyboardHelpIconFactory.upDownArrowKeysRowIcon(),
+            KeyboardHelpIconFactory.iconRow( [ LetterKeyNode.w(), LetterKeyNode.s() ] ), { spacing: 1.3 } ) ) ),
+      KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.keyboardHelpDialog.moveInLargerStepsStringProperty, KeyboardHelpIconFactory.pageUpPageDownRowIcon() ),
       KeyboardHelpSectionRow.labelWithIcon( jumpStartMessage, TextKeyNode.home(), SECTION_LABEL_OPTIONS ),
       KeyboardHelpSectionRow.labelWithIcon( jumpEndMessage, TextKeyNode.end(), SECTION_LABEL_OPTIONS ),
       KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.keyboardHelpDialog.jumpBallToTickMarkStringProperty,
