@@ -52,7 +52,10 @@ export default class IntervalToolNode extends Node {
         roundToInterval: null, // continuous
 
         tandem: tandem.createTandem( 'handle1' ),
-        phetioVisiblePropertyInstrumented: true
+        phetioVisiblePropertyInstrumented: true,
+        visiblePropertyOptions: {
+          phetioFeatured: true
+        }
       } );
 
     const handle2 = new IntervalToolPredictionSlider( model.handle2ValueProperty,
@@ -67,7 +70,10 @@ export default class IntervalToolNode extends Node {
         roundToInterval: null, // continuous
 
         tandem: tandem.createTandem( 'handle2' ),
-        phetioVisiblePropertyInstrumented: true
+        phetioVisiblePropertyInstrumented: true,
+        visiblePropertyOptions: {
+          phetioFeatured: true
+        }
       } );
 
     const rectangle = new IntervalToolRectangle( model.handle1ValueProperty, model.handle2ValueProperty,
