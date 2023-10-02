@@ -11,30 +11,20 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import KeyboardHelpIconFactory from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpIconFactory.js';
-import KeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpSection.js';
-import KeyboardHelpSectionRow from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpSectionRow.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import TextKeyNode from '../../../../scenery-phet/js/keyboard/TextKeyNode.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
+import SliderControlsKeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/SliderControlsKeyboardHelpSection.js';
 
-export default class MedianKeyboardHelpPredictMedianSection extends KeyboardHelpSection {
+export default class MedianKeyboardHelpPredictMedianSection extends SliderControlsKeyboardHelpSection {
   public constructor() {
-    super( 'Predict Median', [
-      KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.keyboardHelpDialog.medianScreen.movePredictMedianStringProperty,
-        KeyboardHelpIconFactory.iconOrIcon(
-          KeyboardHelpIconFactory.leftRightArrowKeysRowIcon(),
-          KeyboardHelpIconFactory.upDownArrowKeysRowIcon()
-        ) ), KeyboardHelpSectionRow.labelWithIcon(
-        CenterAndVariabilityStrings.keyboardHelpDialog.moveInLargerStepsStringProperty,
-        KeyboardHelpIconFactory.pageUpPageDownRowIcon()
-      ), KeyboardHelpSectionRow.labelWithIcon(
-        CenterAndVariabilityStrings.keyboardHelpDialog.jumpToStartOfNumberLineStringProperty,
-        TextKeyNode.home(), { labelOptions: { lineWrap: 200 } }
-      ), KeyboardHelpSectionRow.labelWithIcon(
-        CenterAndVariabilityStrings.keyboardHelpDialog.jumpToEndOfNumberLineStringProperty,
-        TextKeyNode.end(), { labelOptions: { lineWrap: 200 } }
-      ) ] );
+
+    super( {
+      headingStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.medianScreen.predictMedianStringProperty,
+      verbStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.moveStringProperty,
+      sliderStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.medianScreen.lowercasePredictMedianStringProperty,
+      maximumStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.endOfNumberLineStringProperty,
+      minimumStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.startOfNumberLineStringProperty
+    } );
   }
 }
 

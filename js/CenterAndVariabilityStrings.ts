@@ -80,6 +80,9 @@ type StringsType = {
   'valueKicksPatternStringProperty': LocalizedStringProperty;
   'pointerStringProperty': LocalizedStringProperty;
   'keyboardHelpDialog': {
+    'moveStringProperty': LocalizedStringProperty;
+    'endOfNumberLineStringProperty': LocalizedStringProperty;
+    'startOfNumberLineStringProperty': LocalizedStringProperty;
     'grabOrReleaseBallStringProperty': LocalizedStringProperty;
     'moveGrabbedBallTitleStringProperty': LocalizedStringProperty;
     'moveGrabbedBallStringProperty': LocalizedStringProperty;
@@ -90,23 +93,19 @@ type StringsType = {
     'moveInLargerStepsStringProperty': LocalizedStringProperty;
     'medianScreen': {
       'grabOrReleaseBallOrCardStringProperty': LocalizedStringProperty;
+      'predictMedianStringProperty': LocalizedStringProperty;
+      'lowercasePredictMedianStringProperty': LocalizedStringProperty;
       'moveGrabbedBallOrCardTitleStringProperty': LocalizedStringProperty;
       'moveGrabbedBallOrCardStringProperty': LocalizedStringProperty;
       'jumpToStartOfCardsOrNumberLineStringProperty': LocalizedStringProperty;
       'jumpToEndOfCardsOrNumberLineStringProperty': LocalizedStringProperty;
-      'movePredictMedianStringProperty': LocalizedStringProperty;
     };
     'meanAndMedianScreen': {
       'predictMeanOrMedianStringProperty': LocalizedStringProperty;
-      'movePredictionPointerStringProperty': LocalizedStringProperty;
-      'movePredictionPointerInLargerStepsStringProperty': LocalizedStringProperty;
-      'movePredictionPointerInSmallerStepsStringProperty': LocalizedStringProperty;
+      'predictionPointerStringProperty': LocalizedStringProperty;
     };
     'variabilityScreen': {
       'movePointerIntervalHandleOrIntervalBlockStringProperty': LocalizedStringProperty;
-      'moveStringProperty': LocalizedStringProperty;
-      'moveInSmallerStepsStringProperty': LocalizedStringProperty;
-      'moveInLargerStepsStringProperty': LocalizedStringProperty;
     }
   }
 };

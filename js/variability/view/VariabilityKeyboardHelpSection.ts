@@ -6,23 +6,20 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import KeyboardHelpIconFactory from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpIconFactory.js';
-import KeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpSection.js';
-import KeyboardHelpSectionRow from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpSectionRow.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import TextKeyNode from '../../../../scenery-phet/js/keyboard/TextKeyNode.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
+import SliderControlsKeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/SliderControlsKeyboardHelpSection.js';
+import StringProperty from '../../../../axon/js/StringProperty.js';
 
-export default class VariabilityKeyboardHelpSection extends KeyboardHelpSection {
+export default class VariabilityKeyboardHelpSection extends SliderControlsKeyboardHelpSection {
   public constructor() {
 
-    super( CenterAndVariabilityStrings.keyboardHelpDialog.variabilityScreen.movePointerIntervalHandleOrIntervalBlockStringProperty, [
-      KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.keyboardHelpDialog.variabilityScreen.moveStringProperty, KeyboardHelpIconFactory.leftRightArrowKeysRowIcon() ),
-      KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.keyboardHelpDialog.variabilityScreen.moveInSmallerStepsStringProperty, KeyboardHelpIconFactory.shiftPlusIcon( KeyboardHelpIconFactory.leftRightArrowKeysRowIcon() ) ),
-      KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.keyboardHelpDialog.variabilityScreen.moveInLargerStepsStringProperty, KeyboardHelpIconFactory.pageUpPageDownRowIcon() ),
-      KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.keyboardHelpDialog.jumpToStartOfNumberLineStringProperty, TextKeyNode.home() ),
-      KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.keyboardHelpDialog.jumpToEndOfNumberLineStringProperty, TextKeyNode.end() ) ], {
-      headingOptions: { lineWrap: 300 }
+    super( {
+      headingStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.variabilityScreen.movePointerIntervalHandleOrIntervalBlockStringProperty,
+      sliderStringProperty: new StringProperty( '' ),
+      verbStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.moveStringProperty,
+      maximumStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.endOfNumberLineStringProperty,
+      minimumStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.startOfNumberLineStringProperty
     } );
   }
 }
