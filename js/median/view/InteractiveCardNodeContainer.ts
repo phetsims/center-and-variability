@@ -286,6 +286,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
         if ( CAVQueryParameters.removeFocusedCardAnimation ) {
           model.setAtHomeCell( focusedCard.model );
+          animatedPanZoomSingleton.listener.panToNode( focusedCard );
         }
         else {
           model.animateToHomeCell( focusedCard.model, 0.3 );
