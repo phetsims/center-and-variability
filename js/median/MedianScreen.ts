@@ -1,7 +1,7 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * The MedianScreen represents the entire Mean & Median screen in the simulation.
+ * The MedianScreen represents the entire Median screen in the simulation.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
