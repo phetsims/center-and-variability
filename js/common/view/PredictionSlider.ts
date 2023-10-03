@@ -52,7 +52,7 @@ export default class PredictionSlider extends AccessibleSlider( Node, 0 ) {
 
       keyboardStep: 0.5,
       shiftKeyboardStep: 0.1,
-      pageKeyboardStep: 1,
+      pageKeyboardStep: 2,
 
       // Keyboard has a different rounding than mouse
       constrainValue: value => Utils.roundToInterval( value, 0.5 ),
