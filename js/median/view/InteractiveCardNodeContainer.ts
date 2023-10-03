@@ -354,6 +354,9 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
             model.focusedCardProperty.value = this.model.getCardsInCellOrder()[ 0 ];
           }
         }
+        else {
+          model.focusedCardProperty.value = this.model.getCardsInCellOrder()[ 0 ];
+        }
       }
     } );
     const focusHighlightWidthProperty = new DerivedProperty( [ model.numActiveCardsProperty ], numActiveCards => {
