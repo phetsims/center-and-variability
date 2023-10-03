@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * CAVSoccerSceneModel manages the scene's statistical properties, specifically the median and the data range.
+ * CAVSoccerSceneModel manages the scene's statistical Properties, specifically the median and the data range.
  * In the simulation, the "Median" and "Mean & Median" screens utilize a single instance of this model.
  * Conversely, the "Variability" screen utilizes four instances.
  *
@@ -23,10 +23,10 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class CAVSoccerSceneModel<T extends CAVSoccerBall = CAVSoccerBall> extends SoccerSceneModel<T> {
 
-  // This property tracks the maximum and minimum values in the dataset. It is set to null if the dataset is empty.
+  // This Property tracks the maximum and minimum values in the dataset. It is set to null if the dataset is empty.
   public readonly dataRangeProperty: Property<Range | null>;
 
-  // This property represents the median value in the dataset. It is set to null if the dataset is empty.
+  // This Property represents the median value in the dataset. It is set to null if the dataset is empty.
   public readonly medianValueProperty: Property<number | null>;
 
   public constructor( maxKicksProperty: TReadOnlyProperty<number>,
@@ -55,7 +55,7 @@ export default class CAVSoccerSceneModel<T extends CAVSoccerBall = CAVSoccerBall
 
   /**
    * This method updates statistical measures in the model. It is an extension of the base class method
-   * with added functionality to calculate and set the median and data range properties.
+   * with added functionality to calculate and set the median and data range Properties.
    */
   protected override updateDataMeasures(): void {
 

@@ -3,7 +3,7 @@
 /**
  * IntervalToolModel represents the underlying data model for the IntervalToolNode. It manages the values and
  * interactions of two handles used for defining intervals, including their drag states and positions. Additionally,
- * it provides properties that control the visibility, translatability, and sonification aspects of the interval tool.
+ * it provides Properties that control the visibility, translatability, and sonification aspects of the interval tool.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
  *

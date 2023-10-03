@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * VariabilitySoccerBall extends the functionality of CAVSoccerBall by introducing properties specific to
+ * VariabilitySoccerBall extends the functionality of CAVSoccerBall by introducing Properties specific to
  * variability measures. Each instance of this class can determine if it's a part of the first (Q1) or
  * third (Q3) quartile boundary in a data set, which is essential for visualizing variability in the simulation.
  *

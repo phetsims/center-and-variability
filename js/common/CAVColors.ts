@@ -49,7 +49,7 @@ const CAVColors = {
   medianColorProperty: new ProfileColorProperty( centerAndVariability, 'medianColor', { default: '#f03000' } ),
   meanColorProperty: new ProfileColorProperty( centerAndVariability, 'meanColor', { default: '#8500bd' } ),
 
-  // The following color properties are used for elements in the plot nodes.
+  // The following color Properties are used for elements in the plot nodes.
   rangeReadoutColorProperty: new ProfileColorProperty( centerAndVariability, 'rangeReadoutColor', { default: new Color( '#215E2B' ) } ),
   iqrLabelColorProperty: new ProfileColorProperty( centerAndVariability, 'iqrLabelColor', { default: 'black' } ),
   madColorProperty: new ProfileColorProperty( centerAndVariability, 'madColor', { default: 'black' } ),

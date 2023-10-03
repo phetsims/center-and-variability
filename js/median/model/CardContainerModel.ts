@@ -190,7 +190,7 @@ export default class CardContainerModel extends PhetioObject {
 
   public sortData( animationReason: 'valueChanged' | null = null ): void {
 
-    // If the card is visible, the value property should be non-null
+    // If the card is visible, the value Property should be non-null.
     const cardsSortedByValue = _.sortBy( this.getCardsInCells(), card => card.soccerBall.valueProperty.value );
     cardsSortedByValue.forEach( ( card, index ) => {
       card.indexProperty.value = index;

@@ -15,10 +15,10 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class CAVSoccerBall extends SoccerBall {
 
-  // This property identifies whether the soccer ball represents the median value in a dataset.
+  // This Property identifies whether the soccer ball represents the median value in a dataset.
   public readonly isMedianObjectProperty: BooleanProperty;
 
-  // This property determines if the soccer ball should be illuminated during a median-based animation.
+  // This Property determines if the soccer ball should be illuminated during a median-based animation.
   public readonly isAnimationHighlightVisibleProperty: BooleanProperty;
 
   public constructor( isFirstSoccerBall: boolean, tandem: Tandem ) {

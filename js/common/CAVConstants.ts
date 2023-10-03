@@ -140,7 +140,7 @@ export const SHOW_OUTLIERS_PROPERTY = new BooleanProperty( CAVQueryParameters.sh
 // The scaling for the data points depends on the max kicks selected, and applies across the entire sim
 export const DATA_POINT_SCALE_PROPERTY = new DerivedProperty( [ MAX_KICKS_PROPERTY ], maxKicks => {
 
-  // There are only 4 valid values for maxKicks property and those are set by the MAX_KICKS_CONFIG.
+  // There are only 4 valid values for MAX_KICKS_PROPERTY and those are set by the MAX_KICKS_CONFIG.
   return MAX_KICKS_CONFIG.find( config => config.kicks === maxKicks )!.scale;
 }, {
   validValues: MAX_KICKS_CONFIG.map( config => config.scale )

@@ -1,7 +1,7 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * MedianModel represents the core model for the Median screen, controlling properties such as data sorting,
+ * MedianModel represents the core model for the Median screen, controlling Properties such as data sorting,
  * median visibility, and interactions with interactive cards. Also handles soccer scene dynamics
  * and ensures synchronization with UI components.
  *
