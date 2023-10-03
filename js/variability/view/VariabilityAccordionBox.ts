@@ -1,8 +1,9 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Accordion box for the Variability Screen. There are three possible plot nodes it can render:
- * Range, IQR, and MAD. The accordion box creates four of each plot node, 1 per scene.
+ * VariabilityAccordionBox is a specialized accordion box for the Variability Screen. It visualizes
+ * data measures such as Range, IQR, and MAD using dynamic graphical representations. The accordion box
+ * creates four plot nodes for each data measure, facilitating user interactions and scene-specific data views.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

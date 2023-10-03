@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * The interval tool icon and variability measures show a similar arrow across their icon rectangles.
+ * IconArrowNode represents the arrow icon used for the interval tool and variability measure UIs.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

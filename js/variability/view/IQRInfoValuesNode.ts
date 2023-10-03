@@ -1,8 +1,9 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Shows the values in the IQR (interquartile range) info dialog, with an arrow over the median and blue highlight
- * over q1 and q3.
+ * IQRInfoValuesNode is a visual list of the data, in order of value.
+ * It highlights the Q1 and Q3 data values using distinct visuals, and provides an overlay on the median.
+ * It also dynamically adjusts these visual highlights based on changes in the underlying data.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

@@ -1,7 +1,8 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Icon for the PurpleArrow radio button.
+ * `MADIconNode` represents the icon for the MAD radio button. This icon displays a vertical line at the center
+ * of a purple background rectangle, accompanied by horizontal double-headed arrows on both sides.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

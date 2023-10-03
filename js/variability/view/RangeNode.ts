@@ -1,7 +1,8 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * RangeNode overlays a range indicator on the plot. It is used in both the accordion and info views.
+ * RangeNode overlays an indicator on the plot to display the range.
+ * It's designed to adapt its visualization based on the context, whether shown in an accordion or information view.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

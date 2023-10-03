@@ -1,7 +1,8 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Radio button group for the scene selection.
+ * SceneKickerRadioButtonGroup provides radio buttons for users to select different scenes.
+ * Each button showcases a t-shirt icon labeled with a scene number, facilitating easy scene selection.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

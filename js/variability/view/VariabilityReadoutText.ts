@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * For the "Mean and Median" screen and the "Variability" screen, show the readouts on the left of the dot plot.
+ * VariabilityReadoutText shows the readouts on the left of the dot plot in the Variability screen accordion box.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

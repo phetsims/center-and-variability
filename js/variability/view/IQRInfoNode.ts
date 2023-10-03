@@ -1,8 +1,9 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Contains the definition of IQR (interquartile range), shows the IQR calculation, and a plot node with
- * quartile range.
+ * `IQRInfoNode` presents the Interquartile Range (IQR) by visualizing its calculation and plotting quartile ranges.
+ * The node is responsive, adjusting the displayed data based on the available data points. It also provides textual
+ * information about the IQR, alongside visualizations of quartile calculations.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  */

@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * The keyboard help content for the Variability screen.
+ * VariabilityKeyboardHelpNode displays the keyboard help content for the Variability screen.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

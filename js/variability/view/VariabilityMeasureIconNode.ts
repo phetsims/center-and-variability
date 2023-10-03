@@ -1,7 +1,8 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * The icons for IQR, Range, MAD, and the Interval Tool checkboxes are all the same except for the color.
+ * VariabilityMeasureIconNode represents the icons for IQR, Range, MAD, and the Interval Tool checkboxes,
+ * which are all the same except for the color.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
  *

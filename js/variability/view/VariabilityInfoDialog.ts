@@ -1,7 +1,8 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Must show one of three plot nodes according to the selectedVariabilityMeasureProperty.
+ * VariabilityInfoDialog presents a dynamic dialogue box for the Variability Screen.
+ * It displays a plot node (Range, IQR, or MAD) based on the selectedVariabilityMeasureProperty.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

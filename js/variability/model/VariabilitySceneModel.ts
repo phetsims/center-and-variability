@@ -1,7 +1,9 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * Model for the "Variability" screen. This has 4 scene models with different distributions.
+ * VariabilitySceneModel represents an individual scene in the "Variability" screen. Each scene is characterized by
+ * a specific distribution of soccer balls on the field. The model provides functionality for various measures
+ * of variability, including the range, quartiles (Q1, Q3), interquartile range (IQR), and the mean absolute deviation (MAD).
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

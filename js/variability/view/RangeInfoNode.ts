@@ -1,7 +1,8 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Contains the definition of range, a plot node that showcases the range Interval, and a range calculation.
+ * `RangeInfoNode`: Displays the range, its calculation, and visual representation on a plot.
+ * It showcases details about the range in a more informative view.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

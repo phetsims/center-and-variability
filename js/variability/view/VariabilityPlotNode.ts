@@ -1,8 +1,8 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Shows the dot plot or line plot on the "Mean & Median" Screen, including the legends/readouts to the left.
- * The plot is non-interactive.
+ * VariabilityPlotNode shows the dot plots or line plots on the "Variability" screen.
+ * It uses CAVToggleNodes to switch between the Range, IQR and MAD plots.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

@@ -1,8 +1,8 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * VariabilityScreenView is the ScreenView for the 'Variability' screen, which has four different scenes with four different
- * distributions.
+ * VariabilityScreenView is the ScreenView for the 'Variability' screen, which has four different scenes with
+ * four different distributions.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

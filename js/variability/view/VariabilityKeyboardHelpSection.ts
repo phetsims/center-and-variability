@@ -1,7 +1,8 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Help content for the KeyboardHelpDialog for moving the pointer, interval handle, or interval block in the Variability screen.
+ * VariabilityKeyboardHelpSection displays the help content for the KeyboardHelpDialog for moving the pointer,
+ * interval handle, or interval block in the Variability screen.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

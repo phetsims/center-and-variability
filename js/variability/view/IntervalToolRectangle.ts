@@ -1,7 +1,9 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Shows the highlighted area for the interval tool in the play area.
+ * `IntervalToolRectangle` visualizes a draggable rectangular area in the play area, representing the
+ * interval between two points on a number line. This rectangle serves as an interactive visualization,
+ * allowing users to manipulate its position and visualize corresponding changes on the number line.
  *
  * @author Sam Reid (PhET Interactive Simulations);
  */

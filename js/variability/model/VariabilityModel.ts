@@ -1,7 +1,10 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * Model for the "Variability" class.
+ * VariabilityModel represents the core data model for the "Variability" screen. It manages and tracks the state of
+ * various measures of variability, such as range, interquartile range (IQR), and mean absolute deviation (MAD).
+ * This model also encompasses functionality related to the pointer on the number line, individual soccer player scenes,
+ * and the interval tool.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

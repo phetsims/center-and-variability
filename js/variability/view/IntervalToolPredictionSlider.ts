@@ -1,7 +1,9 @@
 // Copyright 2023, University of Colorado Boulder
+
 /**
- * The handle for the Interval Tool. These act as sliders and move left or right across
- * the play area number line.
+ * IntervalToolPredictionSlider represents the handle component of the Interval Tool. Each handle acts as a slider
+ * that the user can move left or right across a number line in the play area. The functionality of this slider
+ * includes both mouse/touch and keyboard interactions.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
  * @author Matthew Blackman (PhET Interactive Simulations)

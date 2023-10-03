@@ -1,7 +1,9 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Label text with highlight rectangle and arrow for the IQR (interquartile range) info display
+ * BoxWhiskerLabelNode represents a graphical node for displaying labels associated with the Box-and-Whisker plots
+ * used in the simulation. Specifically, this node visualizes the label for the interquartile range (IQR) with
+ * optional highlighting and an arrow for emphasis.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  */

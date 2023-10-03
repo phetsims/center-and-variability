@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Icon for the IQR (interquartile range) radio button.
+ * `IQRIconNode` provides a visual representation for the Interquartile Range (IQR) radio button.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

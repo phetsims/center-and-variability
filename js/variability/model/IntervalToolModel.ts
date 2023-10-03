@@ -1,8 +1,9 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * The IntervalToolModel is the model for the IntervalToolNode. It tracks the values
- * of each handle, as well as their drag state.
+ * IntervalToolModel represents the underlying data model for the IntervalToolNode. It manages the values and
+ * interactions of two handles used for defining intervals, including their drag states and positions. Additionally,
+ * it provides properties that control the visibility, translatability, and sonification aspects of the interval tool.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
  *
@@ -16,7 +17,6 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-
 
 export default class IntervalToolModel {
 

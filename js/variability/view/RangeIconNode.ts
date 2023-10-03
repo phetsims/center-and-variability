@@ -1,7 +1,9 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Icon for the range radio button. Dynamically changes between dot plot and line plot based on preferences.
+ * `RangeIconNode`: An icon for the range radio button. This icon can dynamically switch
+ * between dot plot and line plot representations based on user preferences. It leverages
+ * the `CAVToggleNode` for the visualization switch.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

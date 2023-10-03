@@ -1,8 +1,10 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Adds on IQR (interquartile range) specific visuals to the plot node including a boxWhisker, IQR label, and a
- * rectangle that highlights the IQR interval
+ * The `IQRNode` class extends the plot node visuals to display specifics of the Interquartile Range (IQR).
+ * It features a box-whisker plot, an IQR label, and a rectangle highlighting the IQR span. Data points like
+ * median, min, max, and quartiles are emphasized. Outliers are marked with diamond nodes. The node dynamically
+ * adjusts label positions to avoid overlaps and prompts when there's insufficient data for IQR calculations.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
