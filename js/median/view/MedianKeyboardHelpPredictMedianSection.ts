@@ -23,7 +23,8 @@ export default class MedianKeyboardHelpPredictMedianSection extends SliderContro
       verbStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.moveStringProperty,
       sliderStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.medianScreen.predictMedianStringProperty,
       maximumStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.endOfNumberLineStringProperty,
-      minimumStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.startOfNumberLineStringProperty
+      minimumStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.startOfNumberLineStringProperty,
+      includeSmallerStepsRow: false
     } );
   }
 }
