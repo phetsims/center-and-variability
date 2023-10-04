@@ -284,7 +284,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
         } );
 
         model.setAtHomeCell( focusedCard.model );
-        animatedPanZoomSingleton.listener.panToNode( focusedCard );
+        animatedPanZoomSingleton.listener.panToNode( focusedCard, true );
 
         model.cardCellsChangedEmitter.emit();
 
@@ -318,7 +318,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
               const nextIndex = Utils.clamp( currentIndex + delta, 0, numberOfActiveCards - 1 );
               model.focusedCardProperty.value = activeCardNodes[ nextIndex ].model;
               model.hasKeyboardSelectedDifferentCardProperty.value = true;
-              animatedPanZoomSingleton.listener.panToNode( focusedCardNode );
+              animatedPanZoomSingleton.listener.panToNode( focusedCardNode, true );
             }
           }
           else if ( [ 'pageUp', 'pageDown' ].includes( keysPressed ) && isCardGrabbed ) {
