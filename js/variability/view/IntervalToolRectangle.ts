@@ -129,7 +129,10 @@ export default class IntervalToolRectangle extends AccessibleSlider( Node, 0 ) {
       inverseMap: function( value: Vector2 ) { return value.x; }
     } );
 
-    const shouldDistanceBeRecalculated = ( value: number ) => value < 0 && value > 16;
+    // We want to check if the value provided by distanceBetweenTools will cause an assertion error.
+    // If so we want to recalculate the distance to make sure we are getting accurate current values for
+    // intervalToolValue2 and intervalToolValue1.
+    const shouldDistanceBeRecalculated = ( value: number ) => value < 0 || value > 16;
     intervalToolValue1PositionProperty.link( ( value: Vector2 ) => {
 
       // If the change was triggered by the drag listener, then we want to keep the distance between the two values constant.
