@@ -42,7 +42,6 @@ import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-player
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import CardDragIndicatorNode from './CardDragIndicatorNode.js';
-import cavFocusManagerSingleton from '../../common/cavFocusManagerSingleton.js';
 
 const FOCUS_HIGHLIGHT_Y_MARGIN = CAVConstants.CARD_SPACING + 3;
 
@@ -205,7 +204,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
     // When pdomFocusHighlightsVisibleProperty become false, interaction with a mouse has begun while using
     // Interactive Highlighting. When that happens, clear the sim-specific state tracking 'focused' cards.
-    cavFocusManagerSingleton.focusHighlightVisibleProperty.link( ( visible: boolean ) => {
+    phet.joist.sim.display.focusManager.pdomFocusHighlightsVisibleProperty.link( ( visible: boolean ) => {
       if ( !visible ) {
         if ( model.focusedCardProperty.value !== null ) {
 
