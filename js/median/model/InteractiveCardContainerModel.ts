@@ -108,7 +108,7 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
     this.dragIndicationCardProperty = new Property<CardModel | null>( null, {
       phetioReadOnly: true,
       phetioValueType: NullableIO( ReferenceIO( IOType.ObjectIO ) ),
-      tandem: this.parentContext === 'accordion' ? providedOptions.tandem.createTandem( 'cardDragIndicatorProperty' ) : Tandem.OPT_OUT,
+      tandem: this.representationContext === 'accordion' ? providedOptions.tandem.createTandem( 'cardDragIndicatorProperty' ) : Tandem.OPT_OUT,
       phetioDocumentation: 'This is for PhET-iO internal use only.'
     } );
 

@@ -28,7 +28,7 @@ import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 type SelfOptions = {
-  parentContext: RepresentationContext;
+  representationContext: RepresentationContext;
 };
 type RangeNodeOptions = SelfOptions & StrictOmit<CAVPlotNodeOptions, 'dataPointFill'>;
 
@@ -86,7 +86,7 @@ export default class RangeNode extends CAVPlotNode {
 
         const floor = this.modelViewTransform.modelToViewY( 0 );
 
-        if ( options.parentContext === 'info' ) {
+        if ( options.representationContext === 'info' ) {
           const dataPointRadius = this.modelViewTransform.modelToViewDeltaX( CAVObjectType.DATA_POINT.radius ) * DATA_POINT_SCALE_PROPERTY.value;
           const topPadding = 3 * dataPointRadius;
           rangeRectangle.rectHeight = floor - highestYValue + dataPointRadius + topPadding;
@@ -102,13 +102,13 @@ export default class RangeNode extends CAVPlotNode {
         rangeTextReadout.string = sceneModel.rangeValueProperty.value + '';
         rangeTextReadout.centerBottom = rangeBar.centerTop;
       }
-      const rangeVisibility = ( options.parentContext === 'info' && hasNonZeroRange ) ||
-                              ( options.parentContext === 'accordion' && hasNonZeroRange && model.isRangeVisibleProperty.value );
+      const rangeVisibility = ( options.representationContext === 'info' && hasNonZeroRange ) ||
+                              ( options.representationContext === 'accordion' && hasNonZeroRange && model.isRangeVisibleProperty.value );
       rangeRectangle.visible = rangeVisibility;
       rangeBar.visible = rangeVisibility;
       rangeTextReadout.visible = rangeVisibility;
-      needAtLeastOneKickText.visible = sceneModel.numberOfDataPointsProperty.value === 0 && ( options.parentContext === 'info' ||
-                                                                                              ( options.parentContext === 'accordion' && model.isRangeVisibleProperty.value ) );
+      needAtLeastOneKickText.visible = sceneModel.numberOfDataPointsProperty.value === 0 && ( options.representationContext === 'info' ||
+                                                                                              ( options.representationContext === 'accordion' && model.isRangeVisibleProperty.value ) );
     };
 
     model.isRangeVisibleProperty.link( updateRangeNode );

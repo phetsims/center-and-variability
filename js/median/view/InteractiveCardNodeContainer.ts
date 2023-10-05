@@ -151,7 +151,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
           model.sortData();
         }
         else if ( !isSettingPhetioStateProperty.value ) {
-          if ( model.parentContext === 'accordion' ) {
+          if ( model.representationContext === 'accordion' ) {
             if ( this.model.getActiveCards().length === 0 ) {
               checkboxCheckedSoundPlayer.play();
             }

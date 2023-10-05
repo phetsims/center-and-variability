@@ -25,12 +25,12 @@ import { DATA_POINT_SCALE_PROPERTY } from '../../common/CAVConstants.js';
 import MeanIndicatorNode from '../../common/view/MeanIndicatorNode.js';
 
 
-type MeanAndMedianInfoPlotNodeOptions = StrictOmit<MeanAndMedianPlotNodeOptions, 'parentContext' | 'dataPointFill'> & EmptySelfOptions;
+type MeanAndMedianInfoPlotNodeOptions = StrictOmit<MeanAndMedianPlotNodeOptions, 'representationContext' | 'dataPointFill'> & EmptySelfOptions;
 
 export default class MeanAndMedianInfoPlotNode extends MeanAndMedianPlotNode {
   public constructor( model: MeanAndMedianModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLine: NumberLineNode, providedOptions: MeanAndMedianInfoPlotNodeOptions ) {
     const options = optionize<MeanAndMedianInfoPlotNodeOptions, EmptySelfOptions, MeanAndMedianPlotNodeOptions>()( {
-      parentContext: 'info',
+      representationContext: 'info',
       dataPointFill: CAVColors.meanAndMedianDataPointFill,
       isMeanAndMedianInfoPlot: true
     }, providedOptions );

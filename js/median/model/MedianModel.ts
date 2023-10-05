@@ -86,7 +86,7 @@ export default class MedianModel extends CAVModel {
     } );
 
     this.interactiveCardContainerModel = new InteractiveCardContainerModel( this, {
-      tandem: accordionBoxTandem.createTandem( 'cardContainerModel' ), parentContext: 'accordion'
+      tandem: accordionBoxTandem.createTandem( 'cardContainerModel' ), representationContext: 'accordion'
     } );
   }
 

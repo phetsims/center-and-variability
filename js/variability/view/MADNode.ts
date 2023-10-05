@@ -39,7 +39,7 @@ import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 type SelfOptions = {
-  parentContext: RepresentationContext;
+  representationContext: RepresentationContext;
 };
 type MADNodeOptions = SelfOptions & StrictOmit<CAVPlotNodeOptions, 'dataPointFill'> & PickRequired<CAVPlotNodeOptions, 'tandem'>;
 
@@ -90,7 +90,7 @@ export default class MADNode extends CAVPlotNode {
       font: new PhetFont( 14 )
     } );
 
-    if ( options.parentContext === 'info' ) {
+    if ( options.representationContext === 'info' ) {
       this.addChild( meanReadoutText );
     }
 
@@ -120,7 +120,7 @@ export default class MADNode extends CAVPlotNode {
     this.addChild( madAnnotationContainer );
 
     this.addChild( meanLine );
-    if ( options.parentContext === 'info' ) {
+    if ( options.representationContext === 'info' ) {
       this.addChild( meanLabelLine );
     }
 
@@ -144,12 +144,12 @@ export default class MADNode extends CAVPlotNode {
         const mean = _.mean( soccerBalls.map( dot => dot.valueProperty.value ) );
 
         // in the accordion box, the top margin is MAD_MARGIN_TOP, bottom margin is MAD_MARGIN_BOTTOM_MIN + MAD_MARGIN_BOTTOM_FACTOR * lineDeltaY
-        const lineDeltaY = options.parentContext === 'info' ? 12 :
+        const lineDeltaY = options.representationContext === 'info' ? 12 :
                            ( CAVConstants.VARIABILITY_PLOT_RECT_HEIGHT - MAD_MARGIN_TOP - MAD_MARGIN_BOTTOM_MIN ) / ( MAX_KICKS_PROPERTY.value - 1 + MAD_MARGIN_BOTTOM_FACTOR );
 
         // Start the deviation lines below the top of the MAD rectangle and build downwards
         // In the info dialog, ensure that there is a margin of 10 between the number line and the bottom deviation line
-        let y = options.parentContext === 'info' ?
+        let y = options.representationContext === 'info' ?
                 this.modelViewTransform.modelToViewY( 0 ) - 10 - ( soccerBalls.length - 1 ) * lineDeltaY :
                 madRectangle.top + MAD_MARGIN_TOP;
 
@@ -170,7 +170,7 @@ export default class MADNode extends CAVPlotNode {
             } ) );
           }
 
-          if ( options.parentContext === 'info' ) {
+          if ( options.representationContext === 'info' ) {
             const deltaX = soccerBall.valueProperty.value! - sceneModel.meanValueProperty.value!;
 
             const distanceToMean = sceneModel.getDeviationForBallValue( soccerBall.valueProperty.value! );
@@ -209,14 +209,14 @@ export default class MADNode extends CAVPlotNode {
 
       madRectangle.rectWidth = this.modelViewTransform.modelToViewDeltaX( mad === null ? 0 : mad * 2 );
 
-      const isMADVisible = ( options.parentContext === 'info' || model.isMADVisibleProperty.value ) && mad !== null;
+      const isMADVisible = ( options.representationContext === 'info' || model.isMADVisibleProperty.value ) && mad !== null;
       madRectangle.visible = isMADVisible;
       madAnnotationContainer.visible = isMADVisible && soccerBalls.length > 1;
 
       if ( mad !== null ) {
         const viewCenterX = this.modelViewTransform.modelToViewX( sceneModel.meanValueProperty.value! );
 
-        if ( options.parentContext === 'info' ) {
+        if ( options.representationContext === 'info' ) {
           madRectangle.rectHeight = linesAndTextNodes.length > 0 ? ( linesAndTextContainer.height + textNodes[ 0 ].height ) : 0;
         }
 
@@ -245,7 +245,7 @@ export default class MADNode extends CAVPlotNode {
         meanLine.bottom = this.modelViewTransform.modelToViewY( 0 );
       }
 
-      if ( options.parentContext === 'info' ) {
+      if ( options.representationContext === 'info' ) {
         meanLabelLine.visible = sceneModel.meanValueProperty.value !== null;
 
         if ( meanLabelLine.visible ) {
@@ -255,7 +255,7 @@ export default class MADNode extends CAVPlotNode {
         }
       }
 
-      const meanReadoutTextVisible = sceneModel.numberOfDataPointsProperty.value > 0 && options.parentContext === 'info';
+      const meanReadoutTextVisible = sceneModel.numberOfDataPointsProperty.value > 0 && options.representationContext === 'info';
       meanReadoutText.visible = meanReadoutTextVisible;
       if ( meanReadoutTextVisible ) {
         meanReadoutText.centerX = meanLine.centerX;
@@ -271,7 +271,7 @@ export default class MADNode extends CAVPlotNode {
         }
       }
 
-      needAtLeastOneKickText.visible = sceneModel.numberOfDataPointsProperty.value === 0 && ( options.parentContext === 'info' || model.isMADVisibleProperty.value );
+      needAtLeastOneKickText.visible = sceneModel.numberOfDataPointsProperty.value === 0 && ( options.representationContext === 'info' || model.isMADVisibleProperty.value );
     };
 
     model.isMADVisibleProperty.link( update );

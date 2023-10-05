@@ -31,7 +31,7 @@ type SelfOptions = {
 
   // 'accordionBox': the full-featured interactive version with drag input and sound effects
   // 'info': the non-interactive version used in the info dialog
-  parentContext: RepresentationContext;
+  representationContext: RepresentationContext;
 };
 
 export type CardContainerModelOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'> &
@@ -45,7 +45,7 @@ export default class CardContainerModel extends PhetioObject {
   // All cards are created on start-up
   public readonly cards: CardModel[];
 
-  public readonly parentContext: 'info' | 'accordion';
+  public readonly representationContext: 'info' | 'accordion';
 
   public readonly numActiveCardsProperty: Property<number>;
 
@@ -59,7 +59,7 @@ export default class CardContainerModel extends PhetioObject {
 
     super( options );
 
-    this.parentContext = options.parentContext;
+    this.representationContext = options.representationContext;
     this.numActiveCardsProperty = new Property<number>( 0 );
 
     // Allocate all the card models at start-up.
@@ -81,11 +81,11 @@ export default class CardContainerModel extends PhetioObject {
         }
 
         // A ball landed OR a value changed
-        if ( ( medianModel.isSortingDataProperty.value && value !== null ) || options.parentContext === 'info' ) {
+        if ( ( medianModel.isSortingDataProperty.value && value !== null ) || options.representationContext === 'info' ) {
           this.sortData( 'valueChanged' );
         }
 
-        if ( options.parentContext === 'accordion' ) {
+        if ( options.representationContext === 'accordion' ) {
           medianModel.areCardsSortedProperty.value = this.isDataSorted();
         }
       } );
@@ -100,7 +100,7 @@ export default class CardContainerModel extends PhetioObject {
           let targetIndex = cardCells.length;
 
           // We want to auto-sort cards in the infoDialog no matter what the value for isSortingDataProperty is.
-          if ( medianModel.isSortingDataProperty.value || options.parentContext === 'info' ) {
+          if ( medianModel.isSortingDataProperty.value || options.representationContext === 'info' ) {
 
             const newValue = card.soccerBall.valueProperty.value!;
             const existingLowerCards = cardCells.filter( card => card.soccerBall.valueProperty.value! <= newValue );

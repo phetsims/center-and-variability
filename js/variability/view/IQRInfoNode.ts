@@ -74,7 +74,7 @@ export default class IQRInfoNode extends VBox {
         } ),
 
         new IQRNode( model, sceneModel, playAreaNumberLineNode, model.isDataPointLayerVisibleProperty, {
-          parentContext: 'info',
+          representationContext: 'info',
           layoutOptions: { topMargin: PLOT_NODE_TOP_MARGIN }
         } )
       ],

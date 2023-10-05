@@ -31,7 +31,7 @@ import Multilink from '../../../../axon/js/Multilink.js';
 import BoxWhiskerLabelNode from './BoxWhiskerLabelNode.js';
 
 type SelfOptions = {
-  parentContext: RepresentationContext;
+  representationContext: RepresentationContext;
 };
 type IQRNodeOptions = SelfOptions & StrictOmit<CAVPlotNodeOptions, 'dataPointFill'>;
 
@@ -66,7 +66,7 @@ export default class IQRNode extends CAVPlotNode {
       font: CAVConstants.VARIABILITY_MEASURE_NUMBER_READOUT_FONT
     } );
 
-    const iqrRectHeight = options.parentContext === 'info' ? BOX_HEIGHT : CAVConstants.VARIABILITY_PLOT_RECT_HEIGHT;
+    const iqrRectHeight = options.representationContext === 'info' ? BOX_HEIGHT : CAVConstants.VARIABILITY_PLOT_RECT_HEIGHT;
     const iqrRectangle = new Rectangle( 0, 0, 0, iqrRectHeight, {
       fill: CAVColors.iqrColorProperty
     } );
@@ -215,7 +215,7 @@ export default class IQRNode extends CAVPlotNode {
       const minLabelNodeY = Math.min( ...nonMedianLabelNodes.map( nonMedianLabelNode => nonMedianLabelNode.labelContainer.y ) );
 
       iqrBar.setIntervalBarNodeWidth( iqrRectangle.rectWidth );
-      iqrBar.bottom = options.parentContext === 'accordion' ? iqrRectangle.top + CAVConstants.VARIABILITY_PLOT_BAR_OFFSET_Y : minLabelNodeY + 12;
+      iqrBar.bottom = options.representationContext === 'accordion' ? iqrRectangle.top + CAVConstants.VARIABILITY_PLOT_BAR_OFFSET_Y : minLabelNodeY + 12;
       iqrBar.centerX = iqrRectangle.centerX;
 
       // Gracefully handle transient intermediate states during phet-io set state
@@ -264,17 +264,17 @@ export default class IQRNode extends CAVPlotNode {
 
       const enoughDataForMedian = sceneModel.numberOfDataPointsProperty.value >= 1;
       const enoughDataForIQR = sceneModel.numberOfDataPointsProperty.value >= 5;
-      const showHighlightRectangle = enoughDataForIQR && ( options.parentContext === 'info' || model.isIQRVisibleProperty.value );
-      const showBoxWhiskerLabels = options.parentContext === 'info' && enoughDataForIQR;
+      const showHighlightRectangle = enoughDataForIQR && ( options.representationContext === 'info' || model.isIQRVisibleProperty.value );
+      const showBoxWhiskerLabels = options.representationContext === 'info' && enoughDataForIQR;
 
       medianLabelNode.visible = enoughDataForMedian;
       boxWhiskerNode.visible = enoughDataForIQR;
       iqrRectangle.visible = iqrBar.visible = iqrBarLabel.visible = showHighlightRectangle;
       minLabelNode.visible = maxLabelNode.visible = q1LabelNode.visible = q3LabelNode.visible = showBoxWhiskerLabels;
 
-      needAtLeastFiveKicksText.visible = !enoughDataForIQR && ( model.isIQRVisibleProperty.value || options.parentContext === 'info' );
+      needAtLeastFiveKicksText.visible = !enoughDataForIQR && ( model.isIQRVisibleProperty.value || options.representationContext === 'info' );
 
-      if ( options.parentContext === 'info' ) {
+      if ( options.representationContext === 'info' ) {
         resolveTextLabelOverlaps();
       }
 
@@ -282,7 +282,7 @@ export default class IQRNode extends CAVPlotNode {
         const floor = this.modelViewTransform.modelToViewY( 0 );
         iqrRectangle.rectWidth = boxRight - boxLeft;
         iqrRectangle.left = boxLeft;
-        iqrRectangle.bottom = options.parentContext === 'info' ? boxWhiskerNode.y + 0.5 * BOX_HEIGHT : floor;
+        iqrRectangle.bottom = options.representationContext === 'info' ? boxWhiskerNode.y + 0.5 * BOX_HEIGHT : floor;
 
         updateIntervalBar();
       }

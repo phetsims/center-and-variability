@@ -28,7 +28,7 @@ type SelfOptions = {
   dataPointFill: TColor;
 
   // Whether the plot is part of the accordion box or the info display
-  parentContext: RepresentationContext;
+  representationContext: RepresentationContext;
 
   // Whether the plot is being shown in the info display of the 'Mean and Median' screen. Used for highlighting data points.
   isMeanAndMedianInfoPlot?: boolean;
@@ -65,7 +65,7 @@ export default class CAVPlotNode extends Node {
     super( options );
 
     this.dataPointLayer = new Node();
-    if ( options.parentContext === 'accordion' ) {
+    if ( options.representationContext === 'accordion' ) {
       this.dataPointLayer.visibleProperty = isDataPointLayerVisibleProperty;
     }
 
@@ -83,7 +83,7 @@ export default class CAVPlotNode extends Node {
         includeXAxis: true,
         includeMeanStroke: false,
         y: CAVConstants.NUMBER_LINE_POSITION_Y,
-        includeRangeOnXAxis: includeRangeOnXAxisInAccordionBox && options.parentContext === 'accordion'
+        includeRangeOnXAxis: includeRangeOnXAxisInAccordionBox && options.representationContext === 'accordion'
       } );
     backgroundNode.addChild( this.numberLineNode );
 

@@ -97,7 +97,7 @@ export default class CardNodeContainer extends InteractiveHighlightingNode {
       const MARGIN_Y = PICK_UP_DELTA_Y - 3;
 
       // Only redraw the shape if the feature is selected and the data is sorted, and there is at least one card
-      if ( leftmostCard && ( ( this.medianVisibleProperty.value && model.isDataSorted() ) || model.parentContext === 'info' ) ) {
+      if ( leftmostCard && ( ( this.medianVisibleProperty.value && model.isDataSorted() ) || model.representationContext === 'info' ) ) {
         const barY = MARGIN_Y;
 
         // If the card model exists the cardNode must also exist
@@ -115,7 +115,7 @@ export default class CardNodeContainer extends InteractiveHighlightingNode {
       if ( leftmostCard ) {
         const centerX = model.getCardPositionX( ( cardCells.length - 1 ) / 2 ) + leftmostCard.width / 2;
 
-        if ( model.parentContext === 'accordion' ) {
+        if ( model.representationContext === 'accordion' ) {
           medianReadoutText.centerX = centerX + PICK_UP_DELTA_X;
           if ( medianReadoutText.left < 0 ) {
             medianReadoutText.left = 0;
@@ -126,7 +126,7 @@ export default class CardNodeContainer extends InteractiveHighlightingNode {
         }
 
         medianReadoutText.bottom = MARGIN_Y - 5;
-        medianReadoutText.visible = this.medianVisibleProperty.value || model.parentContext === 'info';
+        medianReadoutText.visible = this.medianVisibleProperty.value || model.representationContext === 'info';
       }
       else {
         medianReadoutText.visible = false;

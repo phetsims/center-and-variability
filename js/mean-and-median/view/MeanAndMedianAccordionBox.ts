@@ -47,7 +47,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
 
     const meanAndMedianPlotNode = new MeanAndMedianPlotNode( model, sceneModel, playAreaNumberLineNode, model.isDataPointLayerVisibleProperty, {
       dataPointFill: 'black',
-      parentContext: 'accordion'
+      representationContext: 'accordion'
     } ).mutate( {
       bottom: backgroundShape.bounds.height
     } );

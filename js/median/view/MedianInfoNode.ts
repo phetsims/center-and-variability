@@ -26,7 +26,7 @@ export default class MedianInfoNode extends VBox {
     const hasZeroKicksProperty = DerivedProperty.valueEqualsConstant( sceneModel.numberOfDataPointsProperty, 0 );
     const infoDataValuesNode = new InfoValuesNode( sceneModel );
 
-    const cardContainerModel = new CardContainerModel( model, { parentContext: 'info', tandem: tandem } );
+    const cardContainerModel = new CardContainerModel( model, { representationContext: 'info', tandem: tandem } );
     const cardNodeContainer = new CardNodeContainer( cardContainerModel, model.selectedSceneModelProperty.value,
       model.medianVisibleProperty, {
 

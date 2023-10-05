@@ -35,19 +35,19 @@ export default class VariabilityPlotNode extends Node {
     // We need to specify CAVPlotNode manually because otherwise TypeScript will infer all Nodes as the first element (RangeNode), see https://github.com/phetsims/sun/issues/846
     const toggleNode = new CAVToggleNode<VariabilityMeasure, CAVPlotNode>( model.selectedVariabilityMeasureProperty, [ {
       createNode: tandem => new RangeNode( model, sceneModel, playAreaNumberLineNode, isDataPointLayerVisibleProperty, {
-        parentContext: 'accordion',
+        representationContext: 'accordion',
         tandem: tandem.createTandem( 'rangeNode' )
       } ),
       value: VariabilityMeasure.RANGE
     }, {
       createNode: tandem => new IQRNode( model, sceneModel, playAreaNumberLineNode, isDataPointLayerVisibleProperty, {
-        parentContext: 'accordion',
+        representationContext: 'accordion',
         tandem: tandem.createTandem( 'iqrNode' )
       } ),
       value: VariabilityMeasure.IQR
     }, {
       createNode: tandem => new MADNode( model, sceneModel, playAreaNumberLineNode, isDataPointLayerVisibleProperty, {
-        parentContext: 'accordion',
+        representationContext: 'accordion',
         tandem: tandem.createTandem( 'madNode' )
       } ),
       value: VariabilityMeasure.MAD

@@ -137,7 +137,7 @@ export default class CardNode extends Node {
     } );
 
     this.dragListener = new DragListener( {
-      tandem: model.cardContainerModel.parentContext === 'info' ? Tandem.OPT_OUT : options.tandem.createTandem( 'dragListener' ),
+      tandem: model.cardContainerModel.representationContext === 'info' ? Tandem.OPT_OUT : options.tandem.createTandem( 'dragListener' ),
       positionProperty: model.positionProperty,
       start: () => model.isDraggingProperty.set( true ),
       end: () => model.isDraggingProperty.set( false )

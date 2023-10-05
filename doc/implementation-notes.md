@@ -80,7 +80,7 @@ Likewise, `deltaStableProperty` in [IntervalToolModel.ts](https://github.com/phe
 ## The Variability Measurements (range, MAD, IQR)
 
 The Variability Measurements (range, MAD, IQR) have subtle variations when shown in the accordion box vs the info
-dialog. This is managed with a `parentContext` option.
+dialog. This is managed with a `representationContext` option.
 
 ## Sound
 
