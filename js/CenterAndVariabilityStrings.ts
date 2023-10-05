@@ -102,7 +102,9 @@ type StringsType = {
     };
     'meanAndMedianScreen': {
       'movePredictMeanOrMedianStringProperty': LocalizedStringProperty;
-      'predictionPointerStringProperty': LocalizedStringProperty;
+      'movePredictionPointerStringProperty': LocalizedStringProperty;
+      'movePredictMeanInSmallerStepsStringProperty': LocalizedStringProperty;
+      'moveInLargerStepsStringProperty': LocalizedStringProperty;
     };
     'variabilityScreen': {
       'movePointerIntervalHandleOrIntervalBlockStringProperty': LocalizedStringProperty;

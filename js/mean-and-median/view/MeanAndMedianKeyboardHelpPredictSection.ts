@@ -17,8 +17,9 @@ export default class MeanAndMedianKeyboardHelpPredictSection extends SliderContr
 
     super( {
       headingStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.meanAndMedianScreen.movePredictMeanOrMedianStringProperty,
-      sliderStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.meanAndMedianScreen.predictionPointerStringProperty,
-      verbStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.moveStringProperty,
+      adjustSliderStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.meanAndMedianScreen.movePredictionPointerStringProperty,
+      adjustInSmallerStepsStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.meanAndMedianScreen.movePredictMeanInSmallerStepsStringProperty,
+      adjustInLargerStepsStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.meanAndMedianScreen.moveInLargerStepsStringProperty,
       maximumStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.endOfNumberLineStringProperty,
       minimumStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.startOfNumberLineStringProperty
     } );
