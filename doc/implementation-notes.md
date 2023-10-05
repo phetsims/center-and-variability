@@ -65,7 +65,7 @@ The mathematical definitions of the statistical measures of center and spread ar
 
 In order to avoid performance problems and spurious intermediate values in the Variability screen, measures are computed
 as a batch, then signified via `updateDataMeasures` and `variabilityDataMeasuresUpdatedEmitter`.
-Likewise, `intervalToolDeltaStableProperty` works around inconsistent intermediate values.
+Likewise, `deltaStableProperty` in [IntervalToolModel.ts](https://github.com/phetsims/center-and-variability/blob/main/js/variability/model/IntervalToolModel.ts) works around inconsistent intermediate values.
 
 ## Main Architecture & Scenes
 
