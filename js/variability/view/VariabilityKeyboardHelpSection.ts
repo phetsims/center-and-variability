@@ -10,14 +10,13 @@
 import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import SliderControlsKeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/SliderControlsKeyboardHelpSection.js';
-import StringProperty from '../../../../axon/js/StringProperty.js';
 
 export default class VariabilityKeyboardHelpSection extends SliderControlsKeyboardHelpSection {
   public constructor() {
 
     super( {
       headingStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.variabilityScreen.movePointerIntervalHandleOrIntervalBlockStringProperty,
-      sliderStringProperty: new StringProperty( '' ),
+      sliderStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.variabilityScreen.objectStringProperty,
       verbStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.moveStringProperty,
       maximumStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.endOfNumberLineStringProperty,
       minimumStringProperty: CenterAndVariabilityStrings.keyboardHelpDialog.startOfNumberLineStringProperty

@@ -108,6 +108,7 @@ type StringsType = {
     };
     'variabilityScreen': {
       'movePointerIntervalHandleOrIntervalBlockStringProperty': LocalizedStringProperty;
+      'objectStringProperty': LocalizedStringProperty;
     }
   }
 };

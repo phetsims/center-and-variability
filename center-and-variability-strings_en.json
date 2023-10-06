@@ -265,5 +265,8 @@
   },
   "keyboardHelpDialog.variabilityScreen.movePointerIntervalHandleOrIntervalBlock": {
     "value": "Move Pointer, Interval Handles, or Interval Block"
+  },
+  "keyboardHelpDialog.variabilityScreen.object": {
+    "value": "object"
   }
 }
