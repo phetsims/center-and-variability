@@ -85,7 +85,7 @@ export default class IntervalToolNode extends Node {
       } );
 
     super( {
-      children: [ handle1, rectangle, handle2 ],
+      children: [ handle1, handle2, rectangle ],
       visibleProperty: model.isVisibleProperty
     } );
 
