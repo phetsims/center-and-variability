@@ -169,6 +169,8 @@ export default class IntervalToolNode extends Node {
     soundManager.addSoundGenerator( this.continuousPropertySoundGenerator );
 
     this.rectangle = rectangle;
+
+    this.pdomOrder = [ handle1, handle2, rectangle ];
   }
 
   public step( dt: number ): void {
