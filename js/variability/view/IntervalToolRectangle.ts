@@ -95,7 +95,7 @@ export default class IntervalToolRectangle extends AccessibleSlider( Node, 0 ) {
       // This tool is very large and panning in all directions so that the viewport follows the center of the Node
       // means that important content is shifted off screen. Instead, we only pan horizontally as this Node moves.
       // See https://github.com/phetsims/center-and-variability/issues/564
-      focusPanDirection: 'horizontal'
+      limitPanDirection: 'horizontal'
     }, providedOptions );
 
     super( options );
