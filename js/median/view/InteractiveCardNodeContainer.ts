@@ -370,7 +370,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
     focusHighlightWidthProperty.link( focusHighlightWidth => {
       const marginX = 7;
-      const focusRect = Shape.rect( -marginX, -FOCUS_HIGHLIGHT_Y_MARGIN, focusHighlightWidth + 2 * marginX, CAVConstants.CARD_DIMENSION + 2 * FOCUS_HIGHLIGHT_Y_MARGIN + 12 );
+      const focusRect = Shape.rect( -marginX, -FOCUS_HIGHLIGHT_Y_MARGIN, focusHighlightWidth + 2 * marginX, CAVConstants.CARD_DIMENSION + 2 * FOCUS_HIGHLIGHT_Y_MARGIN );
       focusHighlightPath.setShape( focusRect );
       highlightRectangle.setShape( focusRect );
       const cueNodeWidth = grabReleaseCueNode.width;
