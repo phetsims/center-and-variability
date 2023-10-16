@@ -359,7 +359,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       }
     } );
     const focusHighlightWidthProperty = new DerivedProperty( [ model.numActiveCardsProperty ], numActiveCards => {
-      return model.getCardPositionX( numActiveCards === 0 ? 1 : numActiveCards + 1 );
+      return model.getCardPositionX( numActiveCards === 0 ? 1 : numActiveCards );
     } );
 
     focusHighlightPath.addChild( grabReleaseCueNode );
