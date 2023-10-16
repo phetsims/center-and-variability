@@ -39,15 +39,16 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import CelebrationNode from './CelebrationNode.js';
 import SoccerCommonConstants from '../../../../soccer-common/js/SoccerCommonConstants.js';
 import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-players/checkboxCheckedSoundPlayer.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import CardDragIndicatorNode from './CardDragIndicatorNode.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 
 const FOCUS_HIGHLIGHT_Y_MARGIN = CAVConstants.CARD_SPACING + 3;
 
 type SelfOptions = EmptySelfOptions;
 
-type InteractiveCardNodeContainerOptions = SelfOptions & NodeTranslationOptions & PickRequired<CardNodeContainerOptions, 'tandem'>;
+type InteractiveCardNodeContainerOptions = SelfOptions & NodeTranslationOptions & PickRequired<CardNodeContainerOptions, 'tandem'> & StrictOmit<CardNodeContainerOptions, 'focusable'>;
 
 export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
@@ -63,8 +64,12 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
                       medianVisibleProperty: Property<boolean>,
                       providedOptions: InteractiveCardNodeContainerOptions
   ) {
+    
+    const options = optionize<InteractiveCardNodeContainerOptions, SelfOptions, CardNodeContainerOptions>()( {
+      focusable: true
+    }, providedOptions );
 
-    super( model, sceneModel, medianVisibleProperty, providedOptions );
+    super( model, sceneModel, medianVisibleProperty, options );
 
     this.celebrationNode = new CelebrationNode( model, this.cardMap, this.sceneModel.resetEmitter );
     this.addChild( this.celebrationNode );
