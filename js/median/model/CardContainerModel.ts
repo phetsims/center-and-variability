@@ -90,10 +90,8 @@ export default class CardContainerModel extends PhetioObject {
         }
       } );
 
-      card.isActiveProperty.link( isActive => {
-        if ( this.cards && !isSettingPhetioStateProperty.value ) {
-          this.numActiveCardsProperty.value = this.getCardsInCellOrder().length;
-        }
+      card.isActiveProperty.lazyLink( isActive => {
+        this.numActiveCardsProperty.value = this.getActiveCards().length;
 
         if ( isActive && !isSettingPhetioStateProperty.value ) {
           const cardCells = this.getCardsInCellOrder();
