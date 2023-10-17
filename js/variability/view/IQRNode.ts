@@ -297,6 +297,7 @@ export default class IQRNode extends CAVPlotNode {
     model.isIQRVisibleProperty.link( updateIQRNode );
     model.selectedVariabilityMeasureProperty.link( updateIQRNode );
     SHOW_OUTLIERS_PROPERTY.link( updateIQRNode );
+    sceneModel.iqrValueProperty.lazyLink( updateIQRNode );
 
     // We want to ensure that label overlaps and plotNode layout are handled with dynamic text as well.
     Multilink.multilink( [ minLabelNode.boundsProperty, q1LabelNode.boundsProperty, q3LabelNode.boundsProperty, maxLabelNode.boundsProperty ],
