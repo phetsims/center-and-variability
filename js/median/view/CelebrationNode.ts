@@ -100,7 +100,7 @@ export default class CelebrationNode extends Panel {
       assert && assert( leftmostCard, 'leftmostCard should be defined' );
 
       this.centerX = this.cardContainerModel.getCardPositionX( ( cardCells.length - 1 ) / 2 ) + CAVConstants.CARD_DIMENSION / 2;
-      this.top = leftmostCard.bottom + 7;
+      this.top = leftmostCard.bottom + 20;
 
       if ( this.left < 0 ) {
         this.left = 0;
