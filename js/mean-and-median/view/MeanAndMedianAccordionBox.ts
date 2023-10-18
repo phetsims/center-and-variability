@@ -9,7 +9,7 @@
  */
 
 import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
-import { AlignBox, Text, TPaint, VBox } from '../../../../scenery/js/imports.js';
+import { AlignBox, LinearGradient, Rectangle, Text, TPaint, VBox } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
@@ -68,10 +68,19 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
       yAlign: 'center'
     } );
 
-    const infoButton = new CAVInfoButton( model.infoButtonPressedEmitter, backgroundShape, tandem.createTandem( 'infoButton' ) );
-    backgroundNode.addChild( infoButton );
     backgroundNode.addChild( checkboxGroupAlignBox );
     backgroundNode.addChild( meanAndMedianPlotNode );
+
+    // We want the data points to fade out of the accordion box when a data point stack gets too high to indicate that
+    // more data points exist that may not be visible.
+    const topGradient = new LinearGradient( 0, backgroundShape.bounds.minY, 0, backgroundShape.bounds.minY + 30 )
+      .addColorStop( 0.15, CAVColors.meanAndMedianAccordionBoxFillProperty )
+      .addColorStop( 1, CAVColors.meanAndMedianAccordionBottomGradientColorProperty );
+    const gradientRectangle = new Rectangle( 0, backgroundShape.bounds.minY, backgroundShape.bounds.maxX, backgroundShape.bounds.minY + 5, { fill: topGradient } );
+    backgroundNode.addChild( gradientRectangle );
+
+    const infoButton = new CAVInfoButton( model.infoButtonPressedEmitter, backgroundShape, tandem.createTandem( 'infoButton' ) );
+    backgroundNode.addChild( infoButton );
 
     const createReadoutText = ( valueProperty: TReadOnlyProperty<number | null>, visibleProperty: TReadOnlyProperty<boolean>,
                                 patternStringProperty: TReadOnlyProperty<string>, unknownStringProperty: LocalizedStringProperty, fill: TPaint, decimalPlaces: number | null ) => {
