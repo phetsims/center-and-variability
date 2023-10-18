@@ -28,6 +28,7 @@ import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import IOType from '../../../../tandem/js/types/IOType.js';
 
 type SelfOptions = EmptySelfOptions;
 type CardModelOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'>;
@@ -65,7 +66,8 @@ export default class CardModel extends PhetioObject {
 
     const options = optionize<CardModelOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioState: false,
-      isDisposable: false
+      isDisposable: false,
+      phetioType: CardModel.CardModelIO
     }, providedOptions );
 
     super( options );
@@ -136,6 +138,10 @@ export default class CardModel extends PhetioObject {
 
     this.animation.start();
   }
+
+  public static CardModelIO = new IOType( 'CardModelIO', {
+    valueType: CardModel
+  } );
 }
 
 centerAndVariability.register( 'CardModel', CardModel );

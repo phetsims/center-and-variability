@@ -29,7 +29,6 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
-import IOType from '../../../../tandem/js/types/IOType.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import CAVQueryParameters from '../../common/CAVQueryParameters.js';
@@ -107,7 +106,7 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
 
     this.dragIndicationCardProperty = new Property<CardModel | null>( null, {
       phetioReadOnly: true,
-      phetioValueType: NullableIO( ReferenceIO( IOType.ObjectIO ) ),
+      phetioValueType: NullableIO( ReferenceIO( CardModel.CardModelIO ) ),
       tandem: this.representationContext === 'accordion' ? providedOptions.tandem.createTandem( 'cardDragIndicatorProperty' ) : Tandem.OPT_OUT,
       phetioDocumentation: 'This is for PhET-iO internal use only.'
     } );
