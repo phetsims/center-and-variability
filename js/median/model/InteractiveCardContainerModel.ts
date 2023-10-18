@@ -153,7 +153,7 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
       this.hasKeyboardSelectedDifferentCardProperty.reset();
     } );
 
-    medianModel.selectedSceneModelProperty.value.clearDataEmitter.addListener( () => {
+    medianModel.selectedSceneModelProperty.value.preClearDataEmitter.addListener( () => {
         this.focusedCardProperty.reset();
         this.isCardGrabbedProperty.reset();
       }
