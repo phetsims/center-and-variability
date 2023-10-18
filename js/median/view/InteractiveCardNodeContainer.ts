@@ -48,7 +48,11 @@ const FOCUS_HIGHLIGHT_Y_MARGIN = CAVConstants.CARD_SPACING + 3;
 
 type SelfOptions = EmptySelfOptions;
 
-type InteractiveCardNodeContainerOptions = SelfOptions & NodeTranslationOptions & PickRequired<CardNodeContainerOptions, 'tandem'> & StrictOmit<CardNodeContainerOptions, 'focusable'>;
+type InteractiveCardNodeContainerOptions =
+  SelfOptions
+  & NodeTranslationOptions
+  & PickRequired<CardNodeContainerOptions, 'tandem'>
+  & StrictOmit<CardNodeContainerOptions, 'focusable'>;
 
 export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
@@ -64,7 +68,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
                       medianVisibleProperty: Property<boolean>,
                       providedOptions: InteractiveCardNodeContainerOptions
   ) {
-    
+
     const options = optionize<InteractiveCardNodeContainerOptions, SelfOptions, CardNodeContainerOptions>()( {
       focusable: true
     }, providedOptions );
@@ -308,32 +312,9 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
         const isCardGrabbed = model.isCardGrabbedProperty.value;
 
         if ( focusedCardNode ) {
+          const delta = this.getKeystrokeDelta( keysPressed, numberOfActiveCards );
 
-          if ( [ 'arrowRight', 'arrowLeft', 'a', 'd', 'arrowUp', 'arrowDown', 'w', 's' ].includes( keysPressed ) ) {
-            const delta = [ 'arrowRight', 'd', 'arrowUp', 'w' ].includes( keysPressed ) ? 1 : -1;
-
-            if ( isCardGrabbed ) {
-              swapCards( activeCardNodes, focusedCardNode, delta );
-            }
-            else if ( [ 'arrowRight', 'arrowLeft', 'arrowUp', 'arrowDown' ].includes( keysPressed ) ) {
-
-              // Arrow keys will shift the card focus when a card is not grabbed.
-              const currentIndex = activeCardNodes.indexOf( focusedCardNode );
-              const nextIndex = Utils.clamp( currentIndex + delta, 0, numberOfActiveCards - 1 );
-              model.focusedCardProperty.value = activeCardNodes[ nextIndex ].model;
-              model.hasKeyboardSelectedDifferentCardProperty.value = true;
-              animatedPanZoomSingleton.listener.panToNode( focusedCardNode, true );
-            }
-          }
-          else if ( [ 'pageUp', 'pageDown' ].includes( keysPressed ) && isCardGrabbed ) {
-            const delta = keysPressed === 'pageUp' ? 3 : -3;
-            swapCards( activeCardNodes, focusedCardNode, delta );
-          }
-          else if ( [ 'home', 'end' ].includes( keysPressed ) && isCardGrabbed ) {
-            const delta = keysPressed === 'end' ? numberOfActiveCards : -numberOfActiveCards;
-            swapCards( activeCardNodes, focusedCardNode, delta );
-          }
-          else if ( [ 'enter', 'space' ].includes( keysPressed ) ) {
+          if ( [ 'enter', 'space' ].includes( keysPressed ) ) {
             model.isCardGrabbedProperty.value = !model.isCardGrabbedProperty.value;
             model.hasKeyboardGrabbedCardProperty.value = true;
 
@@ -342,8 +323,26 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
               this.isSortingDataProperty.value = false;
             }
           }
-          else if ( keysPressed === 'escape' && isCardGrabbed ) {
-            model.isCardGrabbedProperty.value = false;
+          else if ( isCardGrabbed ) {
+            if ( keysPressed === 'escape' ) {
+              model.isCardGrabbedProperty.value = false;
+            }
+
+            // If we have a nonNull delta and the card is grabbed we want to swap card positions.
+            else if ( delta !== null ) {
+              swapCards( activeCardNodes, focusedCardNode, delta );
+            }
+          }
+
+          // If we have a nonNull delta and the card is not grabbed we want to shift focus to a different card.
+          else if ( delta !== null ) {
+
+            // Shift the card focus when a card is not grabbed.
+            const currentIndex = activeCardNodes.indexOf( focusedCardNode );
+            const nextIndex = Utils.clamp( currentIndex + delta, 0, numberOfActiveCards - 1 );
+            model.focusedCardProperty.value = activeCardNodes[ nextIndex ].model;
+            model.hasKeyboardSelectedDifferentCardProperty.value = true;
+            animatedPanZoomSingleton.listener.panToNode( focusedCardNode, true );
           }
           else {
 
@@ -431,7 +430,18 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
     };
   }
 
-
+  private getKeystrokeDelta( keysPressed: string, numberOfActiveCards: number ): number | null {
+    if ( [ 'arrowRight', 'arrowLeft', 'a', 'd', 'arrowUp', 'arrowDown', 'w', 's' ].includes( keysPressed ) ) {
+      return [ 'arrowRight', 'd', 'arrowUp', 'w' ].includes( keysPressed ) ? 1 : -1;
+    }
+    else if ( [ 'pageUp', 'pageDown' ].includes( keysPressed ) ) {
+      return keysPressed === 'pageUp' ? 3 : -3;
+    }
+    else if ( [ 'home', 'end' ].includes( keysPressed ) ) {
+      return keysPressed === 'end' ? numberOfActiveCards : -numberOfActiveCards;
+    }
+    return null;
+  }
 }
 
 centerAndVariability.register( 'InteractiveCardNodeContainer', InteractiveCardNodeContainer );
