@@ -79,6 +79,8 @@ const CAVColors = {
   rangeFillProperty: new ProfileColorProperty( centerAndVariability, 'rangeFill', { default: new Color( '#c3fdb9' ).withAlpha( 0.7 ) } ),
 
   meanAndMedianAccordionBoxFillProperty: new ProfileColorProperty( centerAndVariability, 'meanAndMedianAccordionBoxFill', { default: 'rgb( 238, 238, 238 )' } ),
+  meanAndMedianAccordionBottomGradientColorProperty: new ProfileColorProperty( centerAndVariability, 'meanAndMedianAccordionBottomGradientColor', { default: 'rgba( 238, 238, 238, 0 )' } ),
+  variabilityAccordionBottomGradientColorProperty: new ProfileColorProperty( centerAndVariability, 'variabilityAccordionBottomGradientColor', { default: Color.WHITE.withAlpha( 0 ) } ),
   variabilityAccordionBoxFillProperty: new ProfileColorProperty( centerAndVariability, 'variabilityAccordionBoxFill', { default: 'white' } ),
 
   radioButtonBackgroundColorProperty: new ProfileColorProperty( centerAndVariability, 'radioButtonBackgroundColor', { default: 'rgb( 238, 238, 238 )' } ),

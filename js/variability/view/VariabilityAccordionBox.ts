@@ -8,7 +8,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { AlignBox, HighlightFromNode, VBox } from '../../../../scenery/js/imports.js';
+import { AlignBox, HighlightFromNode, LinearGradient, Rectangle, VBox } from '../../../../scenery/js/imports.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
@@ -82,9 +82,6 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       bottom: backgroundShape.bounds.height
     } );
 
-    const infoButton = new CAVInfoButton( model.infoButtonPressedEmitter, backgroundShape, tandem.createTandem( 'infoButton' ) );
-    backgroundNode.addChild( infoButton );
-
     const checkboxesTandem = tandem.createTandem( 'checkboxes' );
     const checkboxToggleNode = new AlignBox( new CAVToggleNode( model.selectedVariabilityMeasureProperty, [ {
       createNode: () => CAVConstants.ACCORDION_BOX_VERTICAL_CHECKBOX_GROUP.createBox( new VariabilityMeasureCheckbox( model.isRangeVisibleProperty,
@@ -107,6 +104,16 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
 
     backgroundNode.addChild( plotToggleNode );
     backgroundNode.addChild( checkboxToggleNode );
+
+    // We want the data points to fade out of the accordion box when a data point stack gets too high to indicate that
+    // more data points exist that may not be visible.
+    const topGradient = new LinearGradient( 0, backgroundShape.bounds.minY, 0, backgroundShape.bounds.minY + 30 ).addColorStop( 0.15, CAVColors.variabilityAccordionBoxFillProperty )
+      .addColorStop( 1, CAVColors.variabilityAccordionBottomGradientColorProperty );
+    const gradientRectangle = new Rectangle( 0, backgroundShape.bounds.minY, backgroundShape.bounds.maxX, backgroundShape.bounds.minY + 5, { fill: topGradient } );
+    backgroundNode.addChild( gradientRectangle );
+
+    const infoButton = new CAVInfoButton( model.infoButtonPressedEmitter, backgroundShape, tandem.createTandem( 'infoButton' ) );
+    backgroundNode.addChild( infoButton );
 
     const createDerivedValueProperty = ( accessor: ( sceneModel: VariabilitySceneModel ) => TReadOnlyProperty<number | null>, roundToDecimal: number | null ) => {
       return DerivedProperty.deriveAny( [ model.selectedSceneModelProperty, ...model.variabilitySceneModels.map( accessor ), CenterAndVariabilityStrings.valueUnknownStringProperty ], () => {
