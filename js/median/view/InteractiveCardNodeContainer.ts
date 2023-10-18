@@ -120,7 +120,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
     this.addChild( keyboardDragArrowNode );
 
     const cardDragIndicatorNode = new CardDragIndicatorNode( {
-      centerTop: new Vector2( 0.5 * CAVConstants.CARD_DIMENSION - PICK_UP_DELTA_X, CAVConstants.CARD_DIMENSION - 9 ),
+      centerTop: new Vector2( 0.5 * CAVConstants.CARD_DIMENSION - PICK_UP_DELTA_X, CAVConstants.CARD_DIMENSION - 10 ),
       visibleProperty: new DerivedProperty(
         [ this.inputEnabledProperty, model.isKeyboardFocusedProperty, model.dragIndicationCardProperty ],
         ( inputEnabled, hasKeyboardFocus, dragIndicationCard ) => inputEnabled && !hasKeyboardFocus && !!dragIndicationCard )
@@ -375,7 +375,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
     focusHighlightWidthProperty.link( focusHighlightWidth => {
       const marginX = 7;
-      const focusRect = Shape.rect( -marginX, -FOCUS_HIGHLIGHT_Y_MARGIN, focusHighlightWidth + 2 * marginX, CAVConstants.CARD_DIMENSION + 2 * FOCUS_HIGHLIGHT_Y_MARGIN );
+      const focusRect = Shape.rect( -marginX, -FOCUS_HIGHLIGHT_Y_MARGIN, focusHighlightWidth + 2 * marginX, CAVConstants.CARD_DIMENSION + 2 * FOCUS_HIGHLIGHT_Y_MARGIN + 9 );
       focusHighlightPath.setShape( focusRect );
       highlightRectangle.setShape( focusRect );
       const cueNodeWidth = grabReleaseCueNode.width;
