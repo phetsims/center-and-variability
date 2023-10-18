@@ -160,13 +160,14 @@ export default class IntervalToolNode extends Node {
         fadeTime: 0.3,
         delayBeforeStop: 0.25,
         playbackRateSpanOctaves: 1.5,
+        stopOnDisabled: true,
         additionalAudioNodes: [
           biquadFilterNode
         ]
       }
     );
 
-    soundManager.addSoundGenerator( this.continuousPropertySoundGenerator );
+    soundManager.addSoundGenerator( this.continuousPropertySoundGenerator, { associatedViewNode: this } );
 
     this.rectangle = rectangle;
 
