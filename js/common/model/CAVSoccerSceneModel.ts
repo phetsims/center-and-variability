@@ -20,6 +20,8 @@ import CAVSoccerBall from './CAVSoccerBall.js';
 import RegionAndCulturePortrayal from '../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
 import { KickDistributionStrategySpecification } from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import isResettingProperty from '../../../../soccer-common/js/model/isResettingProperty.js';
+import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 
 export default class CAVSoccerSceneModel<T extends CAVSoccerBall = CAVSoccerBall> extends SoccerSceneModel<T> {
 
@@ -51,6 +53,18 @@ export default class CAVSoccerSceneModel<T extends CAVSoccerBall = CAVSoccerBall
     } );
 
     this.dataRangeProperty = new Property<Range | null>( null );
+
+    isResettingProperty.link( isResetting => {
+      if ( !isResetting ) {
+        this.updateDataMeasures();
+      }
+    } );
+    isSettingPhetioStateProperty.link( isSettingPhetioStateProperty => {
+      if ( !isSettingPhetioStateProperty ) {
+        this.updateDataMeasures();
+      }
+    } );
+    this.updateDataMeasures();
   }
 
   /**
@@ -61,7 +75,7 @@ export default class CAVSoccerSceneModel<T extends CAVSoccerBall = CAVSoccerBall
 
     super.updateDataMeasures();
 
-    if ( this.isClearingData ) {
+    if ( this.isClearingData || isResettingProperty.value || isSettingPhetioStateProperty.value ) {
       return;
     }
 

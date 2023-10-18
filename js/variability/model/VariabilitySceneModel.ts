@@ -24,6 +24,7 @@ import RegionAndCulturePortrayal from '../../../../joist/js/preferences/RegionAn
 import { KickDistributionStrategySpecification } from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import { TColor } from '../../../../scenery/js/imports.js';
+import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 
 export default class VariabilitySceneModel extends CAVSoccerSceneModel<VariabilitySoccerBall> {
 
@@ -152,6 +153,10 @@ export default class VariabilitySceneModel extends CAVSoccerSceneModel<Variabili
 
   protected override updateDataMeasures(): void {
     super.updateDataMeasures();
+
+    if ( this.isClearingData || isSettingPhetioStateProperty.value ) {
+      return;
+    }
 
     if ( this.initialized ) {
       const sortedObjects = this.getSortedStackedObjects();
