@@ -1,5 +1,5 @@
 {
-  "comment": "# center-and-variability 1.1.0-rc.1 Mon Oct 09 2023 11:51:17 GMT-0700 (Pacific Daylight Time)",
+  "comment": "# center-and-variability 1.1.0-rc.1 Thu Oct 19 2023 13:00:52 GMT-0700 (Pacific Daylight Time)",
   "assert": {
     "sha": "94831413cd4dd4dc27c2a1aebbcafd3987934a99",
     "branch": "HEAD"
@@ -17,7 +17,7 @@
     "branch": "HEAD"
   },
   "center-and-variability": {
-    "sha": "145792e457b04e14188559e88756ef7fa83a126c",
+    "sha": "7eaa2f1e7b73fa8261548d602d64ba63416b1135",
     "branch": "1.1"
   },
   "chipper": {
@@ -49,8 +49,8 @@
     "branch": "HEAD"
   },
   "phet-io-sim-specific": {
-    "sha": "4fb96297bba43f1386f75782b60205fb0bfa77f0",
-    "branch": "HEAD"
+    "sha": "ebb3984a56ddbff4ea108880bc92e400cc118d52",
+    "branch": "center-and-variability-1.1"
   },
   "phet-io-wrappers": {
     "sha": "f317abe767439d82e84f4b47a25c92d3c9e78df0",
@@ -81,8 +81,8 @@
     "branch": "HEAD"
   },
   "soccer-common": {
-    "sha": "dd49cb15a1e750329fccf55980bc4fc1962afab7",
-    "branch": "HEAD"
+    "sha": "07495082920d1fdfbad3013bd02bb4bad7d9fd1f",
+    "branch": "center-and-variability-1.1"
   },
   "studio": {
     "sha": "30b5f2cf35db488ac28b729b5ae3cc8d7da44f86",
@@ -93,8 +93,8 @@
     "branch": "HEAD"
   },
   "tambo": {
-    "sha": "35892bcb9e3941e14551336cf3551b4e5806298d",
-    "branch": "HEAD"
+    "sha": "1f0af7366158eedd251e88e19dffd5b307486de1",
+    "branch": "center-and-variability-1.1"
   },
   "tandem": {
     "sha": "510b41d4fd918de0fb3b981dbdb4550d067a095b",
