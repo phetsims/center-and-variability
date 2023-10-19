@@ -33,6 +33,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 import Emitter from '../../../../axon/js/Emitter.js';
+import isResettingProperty from '../../../../soccer-common/js/model/isResettingProperty.js';
 
 const cardMovementSounds = [
   cardMovement1_mp3,
@@ -45,7 +46,8 @@ const cardMovementSounds = [
 
 export const cardMovementSoundClips = cardMovementSounds.map( sound => new SoundClip( sound, {
   initialOutputLevel: 0.3,
-  additionalAudioNodes: []
+  additionalAudioNodes: [],
+  enableControlProperties: [ DerivedProperty.not( isResettingProperty ) ]
 } ) );
 cardMovementSoundClips.forEach( soundClip => soundManager.addSoundGenerator( soundClip ) );
 
