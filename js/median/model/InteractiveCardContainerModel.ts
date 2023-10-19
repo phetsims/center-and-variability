@@ -34,6 +34,7 @@ import dotRandom from '../../../../dot/js/dotRandom.js';
 import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import isResettingProperty from '../../../../soccer-common/js/model/isResettingProperty.js';
+import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 
 const cardMovementSounds = [
   cardMovement1_mp3,
@@ -44,10 +45,23 @@ const cardMovementSounds = [
   cardMovement6_mp3
 ];
 
+// This property determines when the card sound can be enabled after reset. In this case it is enabled
+// after one step has been completed.
+const ENABLE_SOUND_IN_STEP_PROPERTY = new BooleanProperty( true );
+
+// A card sound should not be enabled during reset, state setting, or the first step call after either
+// of those processes.
+const cardSoundEnableProperty = new DerivedProperty( [ isResettingProperty, isSettingPhetioStateProperty, ENABLE_SOUND_IN_STEP_PROPERTY ], ( isResetting, isSettingState, isEnabled ) => {
+  if ( isResetting || isSettingState ) {
+    ENABLE_SOUND_IN_STEP_PROPERTY.value = false;
+  }
+  return !isResetting && !isSettingState && isEnabled;
+} );
+
 export const cardMovementSoundClips = cardMovementSounds.map( sound => new SoundClip( sound, {
   initialOutputLevel: 0.3,
   additionalAudioNodes: [],
-  enableControlProperties: [ DerivedProperty.not( isResettingProperty ) ]
+  enableControlProperties: [ cardSoundEnableProperty ]
 } ) );
 cardMovementSoundClips.forEach( soundClip => soundManager.addSoundGenerator( soundClip ) );
 
@@ -237,6 +251,9 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
     this.getCardsInCellOrder().forEach( card => {
       card.timeSinceLanded += dt;
     } );
+
+    // Card sounds may be enabled again when the first step after a reset or state set has been completed.
+    ENABLE_SOUND_IN_STEP_PROPERTY.value = true;
   }
 
 }
