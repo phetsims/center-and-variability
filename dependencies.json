@@ -1,5 +1,5 @@
 {
-  "comment": "# center-and-variability 1.1.0-rc.2 Thu Oct 19 2023 13:11:18 GMT-0700 (Pacific Daylight Time)",
+  "comment": "# center-and-variability 1.1.0-rc.2 Sun Oct 22 2023 18:43:02 GMT-0500 (Central Daylight Time)",
   "assert": {
     "sha": "94831413cd4dd4dc27c2a1aebbcafd3987934a99",
     "branch": "HEAD"
@@ -17,7 +17,7 @@
     "branch": "HEAD"
   },
   "center-and-variability": {
-    "sha": "a827f2a88e0c749a46edb7b4971b65a3473d7e6b",
+    "sha": "6d08fff5fe74d02b2b4778cdeea7300042dc5878",
     "branch": "1.1"
   },
   "chipper": {
@@ -81,8 +81,8 @@
     "branch": "HEAD"
   },
   "soccer-common": {
-    "sha": "07495082920d1fdfbad3013bd02bb4bad7d9fd1f",
-    "branch": "HEAD"
+    "sha": "71b284229ac31b357bee03e007bc8a17e444926d",
+    "branch": "center-and-variability-1.1"
   },
   "studio": {
     "sha": "30b5f2cf35db488ac28b729b5ae3cc8d7da44f86",
