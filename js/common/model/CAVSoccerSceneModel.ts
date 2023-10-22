@@ -75,7 +75,9 @@ export default class CAVSoccerSceneModel<T extends CAVSoccerBall = CAVSoccerBall
 
     super.updateDataMeasures();
 
-    if ( this.isClearingData || isResettingProperty.value || isSettingPhetioStateProperty.value ) {
+    // It is expensive to update data measures, therefore we do not want to do this
+    // unnecessarily while setting phetio state.
+    if ( this.isClearingData || isSettingPhetioStateProperty.value ) {
       return;
     }
 
