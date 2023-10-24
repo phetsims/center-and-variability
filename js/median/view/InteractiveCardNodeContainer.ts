@@ -354,11 +354,13 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
             } );
             model.isCardGrabbedProperty.value = false;
 
-            model.focusedCardProperty.value = this.model.getCardsInCellOrder()[ 0 ];
+            const cards = this.model.getCardsInCellOrder();
+            model.focusedCardProperty.value = cards.length > 0 ? cards[ 0 ] : null;
           }
         }
         else {
-          model.focusedCardProperty.value = this.model.getCardsInCellOrder()[ 0 ];
+          const cards = this.model.getCardsInCellOrder();
+          model.focusedCardProperty.value = cards.length > 0 ? cards[ 0 ] : null;
         }
       }
     } );
