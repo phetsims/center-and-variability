@@ -190,6 +190,12 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       if ( model.focusedCardProperty.value === null && this.focused && model.getActiveCards().length === 1 ) {
         model.focusedCardProperty.value = activeCardNodes[ 0 ].model;
       }
+
+      // If the card cells changed, and we have no more active cards left, that means that all the cards were removed.
+      // Therefore, we want to set the focused card to null.
+      else if ( model.getActiveCards().length === 0 ) {
+        model.focusedCardProperty.value = null;
+      }
     } );
 
     this.addInputListener( {
@@ -311,6 +317,12 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
         const numberOfActiveCards = activeCardNodes.length;
         const isCardGrabbed = model.isCardGrabbedProperty.value;
 
+        // If there are no active cards no card can be focused and no keyboard input is allowed.
+        if ( numberOfActiveCards === 0 ) {
+          model.focusedCardProperty.value = null;
+          return;
+        }
+
         if ( focusedCardNode ) {
           const delta = this.getKeystrokeDelta( keysPressed, numberOfActiveCards );
 
@@ -354,13 +366,11 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
             } );
             model.isCardGrabbedProperty.value = false;
 
-            const cards = this.model.getCardsInCellOrder();
-            model.focusedCardProperty.value = cards.length > 0 ? cards[ 0 ] : null;
+            model.focusedCardProperty.value = activeCardNodes[ 0 ].model;
           }
         }
         else {
-          const cards = this.model.getCardsInCellOrder();
-          model.focusedCardProperty.value = cards.length > 0 ? cards[ 0 ] : null;
+          model.focusedCardProperty.value = activeCardNodes[ 0 ].model;
         }
       }
     } );
