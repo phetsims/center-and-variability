@@ -1,5 +1,5 @@
 {
-  "comment": "# center-and-variability 1.1.0-rc.3 Sun Oct 22 2023 18:52:57 GMT-0500 (Central Daylight Time)",
+  "comment": "# center-and-variability 1.1.0-rc.3 Wed Oct 25 2023 13:32:52 GMT-0700 (Pacific Daylight Time)",
   "assert": {
     "sha": "94831413cd4dd4dc27c2a1aebbcafd3987934a99",
     "branch": "HEAD"
@@ -17,7 +17,7 @@
     "branch": "HEAD"
   },
   "center-and-variability": {
-    "sha": "63330cabc843d7cb057ca1125aed5b208adca33d",
+    "sha": "052d516b3fd3c1c5185b5a16cf2daeb33351adcb",
     "branch": "1.1"
   },
   "chipper": {
@@ -69,8 +69,8 @@
     "branch": "HEAD"
   },
   "scenery": {
-    "sha": "9b92a67e35c50f323a509f4cfeabe70157d98590",
-    "branch": "HEAD"
+    "sha": "a0eb116d18a0e2cc97b05b2f795ad36ff7a0d03e",
+    "branch": "center-and-variability-1.1"
   },
   "scenery-phet": {
     "sha": "a23f8aa9b3f44e2da13aec98c72b5375762ab41e",
