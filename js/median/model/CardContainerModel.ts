@@ -71,6 +71,7 @@ export default class CardContainerModel extends PhetioObject {
       const removeCardCell = ( card: CardModel ) => {
         this.cardCellsChangedEmitter.emit();
         card.indexProperty.reset();
+        card.isDraggingProperty.reset();
       };
 
       card.soccerBall.valueProperty.lazyLink( value => {
