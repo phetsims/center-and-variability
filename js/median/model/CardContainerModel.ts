@@ -26,6 +26,7 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import Property from '../../../../axon/js/Property.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import RepresentationContext from '../../common/model/RepresentationContext.js';
+import isResettingProperty from '../../../../soccer-common/js/model/isResettingProperty.js';
 
 type SelfOptions = {
 
@@ -49,7 +50,7 @@ export default class CardContainerModel extends PhetioObject {
 
   public readonly numActiveCardsProperty: Property<number>;
 
-  public constructor( medianModel: MedianModel, providedOptions: CardContainerModelOptions ) {
+  public constructor( private readonly medianModel: MedianModel, providedOptions: CardContainerModelOptions ) {
 
     const options = optionize<CardContainerModelOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioType: CardContainerModel.CardContainerModelIO,
@@ -193,7 +194,13 @@ export default class CardContainerModel extends PhetioObject {
     const cardsSortedByValue = _.sortBy( this.getCardsInCells(), card => card.soccerBall.valueProperty.value );
     cardsSortedByValue.forEach( ( card, index ) => {
       card.indexProperty.value = index;
-      this.animateToHomeCell( card, 0.5, animationReason );
+
+      if ( isSettingPhetioStateProperty.value || this.medianModel.selectedSceneModelProperty.value.isClearingData || isResettingProperty.value ) {
+        this.setAtHomeCell( card );
+      }
+      else {
+        this.animateToHomeCell( card, 0.5, animationReason );
+      }
     } );
     this.cardCellsChangedEmitter.emit();
   }
