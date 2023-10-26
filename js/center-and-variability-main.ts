@@ -39,7 +39,8 @@ const simOptions: SimOptions = {
     graphicArts: 'Mariah Hermsmeyer'
   },
   preferencesModel: preferencesModel,
-  phetioDesigned: true
+  phetioDesigned: true,
+  webgl: true
 };
 
 simLauncher.launch( () => {
