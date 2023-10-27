@@ -8,6 +8,7 @@
  */
 
 import centerAndVariability from '../centerAndVariability.js';
+import { AFRICA_MODEST_QUERY_VALUE, AFRICA_QUERY_VALUE, USA_QUERY_VALUE } from '../../../soccer-common/js/SoccerCommonQueryParameters.js';
 
 const CAVQueryParameters = QueryStringMachine.getAll( {
 
@@ -38,6 +39,11 @@ const CAVQueryParameters = QueryStringMachine.getAll( {
   cardMovementSoundPlaybackRate: {
     type: 'number',
     defaultValue: 1.5
+  },
+  regionAndCulture: {
+    type: 'string',
+    validValues: [ USA_QUERY_VALUE, AFRICA_QUERY_VALUE, AFRICA_MODEST_QUERY_VALUE ],
+    defaultValue: USA_QUERY_VALUE
   }
 } );
 
