@@ -65,7 +65,7 @@ export default class MeanAndMedianModel extends CAVModel {
       CAVConstants.PHYSICAL_RANGE,
       CAVSoccerBall.createSoccerBall,
 
-      // The regionAndCulturePortrayalProperty will not be undefined since characterSets were passed into the PreferencesModel at startup.
+      // The regionAndCulturePortrayalProperty will not be undefined since portrayals were passed into the PreferencesModel at startup.
       preferencesModel.localizationModel.regionAndCulturePortrayalProperty!,
       { tandem: options.tandem.createTandem( 'sceneModel' ) }
     );

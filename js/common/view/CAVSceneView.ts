@@ -17,7 +17,7 @@ import CAVModel from '../model/CAVModel.js';
 import SoccerSceneModel from '../../../../soccer-common/js/model/SoccerSceneModel.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Kicker from '../../../../soccer-common/js/model/Kicker.js';
-import { KickerImageSet } from '../../../../soccer-common/js/view/KickerCharacterSet.js';
+import { KickerImageSet } from '../../../../soccer-common/js/view/KickerPortrayal.js';
 import Range from '../../../../dot/js/Range.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';

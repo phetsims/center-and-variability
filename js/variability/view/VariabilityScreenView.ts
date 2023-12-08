@@ -23,7 +23,7 @@ import PlayAreaCheckboxFactory from '../../common/view/PlayAreaCheckboxFactory.j
 import CAVConstants from '../../common/CAVConstants.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 import Kicker from '../../../../soccer-common/js/model/Kicker.js';
-import { KickerImageSet } from '../../../../soccer-common/js/view/KickerCharacterSet.js';
+import { KickerImageSet } from '../../../../soccer-common/js/view/KickerPortrayal.js';
 import VariabilityInfoDialog from './VariabilityInfoDialog.js';
 import PredictionSlider from '../../common/view/PredictionSlider.js';
 import Property from '../../../../axon/js/Property.js';
@@ -31,9 +31,9 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import IntervalToolNode from './IntervalToolNode.js';
-import KickerCharacterSetUSA from '../../../../soccer-common/js/view/KickerCharacterSetUSA.js';
-import KickerCharacterSetAfrica from '../../../../soccer-common/js/view/KickerCharacterSetAfrica.js';
-import KickerCharacterSetAfricaModest from '../../../../soccer-common/js/view/KickerCharacterSetAfricaModest.js';
+import KickerPortrayalUSA from '../../../../soccer-common/js/view/KickerPortrayalUSA.js';
+import KickerPortrayalAfrica from '../../../../soccer-common/js/view/KickerPortrayalAfrica.js';
+import KickerPortrayalAfricaModest from '../../../../soccer-common/js/view/KickerPortrayalAfricaModest.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
@@ -157,9 +157,9 @@ export default class VariabilityScreenView extends CAVScreenView {
   public override getKickerImageSets( kicker: Kicker, sceneModel: CAVSoccerSceneModel ): KickerImageSet[] {
     const index = this.model.sceneModels.indexOf( sceneModel );
     return [
-      KickerCharacterSetUSA.numberedKickerImages[ index ],
-      KickerCharacterSetAfrica.numberedKickerImages[ index ],
-      KickerCharacterSetAfricaModest.numberedKickerImages[ index ]
+      KickerPortrayalUSA.numberedKickerImages[ index ],
+      KickerPortrayalAfrica.numberedKickerImages[ index ],
+      KickerPortrayalAfricaModest.numberedKickerImages[ index ]
     ];
   }
 

@@ -16,7 +16,7 @@ import SimulationPreferencesContentNode from './common/view/SimulationPreference
 import PreferencesModel from '../../joist/js/preferences/PreferencesModel.js';
 import MeanAndMedianScreen from './mean-and-median/MeanAndMedianScreen.js';
 import VariabilityScreen from './variability/VariabilityScreen.js';
-import KickerCharacterSets from '../../soccer-common/js/view/KickerCharacterSets.js';
+import KickerImages from '../../soccer-common/js/view/KickerImages.js';
 
 const centerAndVariabilityTitleStringProperty = CenterAndVariabilityStrings[ 'center-and-variability' ].titleStringProperty;
 const preferencesModel = new PreferencesModel( {
@@ -26,7 +26,7 @@ const preferencesModel = new PreferencesModel( {
     } ]
   },
   localizationOptions: {
-    characterSets: KickerCharacterSets
+    characterSets: KickerImages
   }
 } );
 

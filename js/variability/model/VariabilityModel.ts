@@ -65,7 +65,7 @@ export default class VariabilityModel extends CAVModel {
 
   public constructor( preferencesModel: PreferencesModel, providedOptions: VariabilityModelOptions ) {
 
-    // The regionAndCulturePortrayalProperty will not be undefined since characterSets were passed into the PreferencesModel at startup.
+    // The regionAndCulturePortrayalProperty will not be undefined since portrayals were passed into the PreferencesModel at startup.
     const regionAndCulturePortrayalProperty = preferencesModel.localizationModel.regionAndCulturePortrayalProperty!;
 
     let sceneTandemIndex = 1;
