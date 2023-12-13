@@ -26,7 +26,7 @@ const preferencesModel = new PreferencesModel( {
     } ]
   },
   localizationOptions: {
-    characterSets: KickerImages
+    portrayals: KickerImages
   }
 } );
 
