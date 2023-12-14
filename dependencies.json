@@ -17,7 +17,7 @@
     "branch": "HEAD"
   },
   "center-and-variability": {
-    "sha": "702887552b8e6d79abb7f8c5ebe21c247b3871b6",
+    "sha": "4699d27c7bf7bc4a38b52109eca4a65c9dcec2e0",
     "branch": "1.1"
   },
   "chipper": {
@@ -53,7 +53,7 @@
     "branch": "HEAD"
   },
   "phet-io-wrappers": {
-    "sha": "fc3e6055cc3737219a9b75db6f19cbe12bec4172",
+    "sha": "6ac6f63478c82991dde61dc75cedbd34f3b87f45",
     "branch": "HEAD"
   },
   "phetcommon": {
@@ -97,7 +97,7 @@
     "branch": "HEAD"
   },
   "tandem": {
-    "sha": "510b41d4fd918de0fb3b981dbdb4550d067a095b",
+    "sha": "0e9a7f405a012e3dcd213705a9d9984a413cf42b",
     "branch": "HEAD"
   },
   "twixt": {
