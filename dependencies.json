@@ -17,7 +17,7 @@
     "branch": "HEAD"
   },
   "center-and-variability": {
-    "sha": "868e3106bcd44ab2a390592e979b93efc0963ed3",
+    "sha": "5dd55eb7edf75d203ac0ac881df1d0607ee489fe",
     "branch": "1.1"
   },
   "chipper": {
@@ -89,7 +89,7 @@
     "branch": "HEAD"
   },
   "sun": {
-    "sha": "49c1a4153ccea2dd5063eb3842d7b408dc5b3596",
+    "sha": "fd3933b7c96683f0dcaef720e959a00e1fcc47bf",
     "branch": "HEAD"
   },
   "tambo": {
