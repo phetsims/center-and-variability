@@ -57,7 +57,7 @@ const cardSoundEnableProperty = new DerivedProperty( [ isResettingProperty, isSe
   }
   return !isResetting && !isSettingState && isEnabled;
 }, {
-  accessNonDependencies: true
+  strictAxonDependencies: false
 } );
 
 export const cardMovementSoundClips = cardMovementSounds.map( sound => new SoundClip( sound, {

@@ -97,7 +97,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
         const result = valueProperty.value;
         return result === null ? unknownStringProperty.value : valuePatternStringProperty.value;
       }, {
-        accessNonDependencies: true
+        strictAxonDependencies: false
       } );
 
       return new Text( readoutPatternStringProperty, {
