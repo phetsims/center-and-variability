@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2023-2024, University of Colorado Boulder
 
 /**
  * InteractiveCardContainerModel manages the interactive card container in a simulation. It supports a variety
