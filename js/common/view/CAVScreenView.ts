@@ -392,6 +392,8 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
     this.screenViewRootNode.addChild( this.frontScreenViewLayer );
 
     this.addChild( this.screenViewRootNode );
+
+    // TODO: Can this be managed by the scene view instead? https://github.com/phetsims/scenery-phet/issues/815
     this.addGrabReleaseCue();
   }
 
@@ -435,7 +437,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
     this.accordionBox.boundsProperty.link( this.updateMedianNode );
     this.accordionBox.boundsProperty.link( this.updateDragIndicatorNode );
     this.accordionBox.boundsProperty.link( () => {
-      this.sceneViews.forEach( sceneView => sceneView.setGroupFocusHighlightTop( this.accordionBox!.bounds.bottom ) );
+      this.sceneViews.forEach( sceneView => sceneView.groupSortInteractionView.setGroupFocusHighlightTop( this.accordionBox!.bounds.bottom ) );
     } );
   }
 
