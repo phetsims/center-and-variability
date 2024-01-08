@@ -252,11 +252,11 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       }
     } );
 
-    const dragIndicatorArrowNode = SoccerCommonConstants.CREATE_KEYBOARD_ARROW_NODE( model.dragIndicatorModel.isDragIndicatorVisibleProperty, DRAG_CUE_SCALE );
+    const dragIndicatorArrowNode = SoccerCommonConstants.CREATE_KEYBOARD_ARROW_NODE( model.groupSortInteractionModel.dragIndicatorModel.isDragIndicatorVisibleProperty, DRAG_CUE_SCALE );
 
     const dragIndicatorHandImage = new Image( dragIndicatorHand_png, {
       scale: 0.07,
-      visibleProperty: model.dragIndicatorModel.isDragIndicatorVisibleProperty,
+      visibleProperty: model.groupSortInteractionModel.dragIndicatorModel.isDragIndicatorVisibleProperty,
       rotation: Math.PI / 4
     } );
 
@@ -275,8 +275,8 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
     };
 
     this.updateDragIndicatorNode = () => {
-      const dragIndicatorVisible = model.dragIndicatorModel.isDragIndicatorVisibleProperty.value;
-      const dragIndicatorValue = model.dragIndicatorModel.valueProperty.value;
+      const dragIndicatorVisible = model.groupSortInteractionModel.dragIndicatorModel.isDragIndicatorVisibleProperty.value;
+      const dragIndicatorValue = model.groupSortInteractionModel.dragIndicatorModel.valueProperty.value;
 
       if ( dragIndicatorVisible && dragIndicatorValue ) {
         const topObjectPositionY = this.getTopObjectPositionY( dragIndicatorValue );
@@ -306,17 +306,17 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       dragIndicatorHandImage.top = dragIndicatorArrowNodeProxy.bottom + Math.abs( this.modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) ) - 5;
     } );
 
-    dragIndicatorArrowNode.addLinkedElement( model.dragIndicatorModel.valueProperty );
+    dragIndicatorArrowNode.addLinkedElement( model.groupSortInteractionModel.dragIndicatorModel.valueProperty );
 
-    model.dragIndicatorModel.isDragIndicatorVisibleProperty.link( this.updateDragIndicatorNode );
-    model.dragIndicatorModel.valueProperty.link( this.updateDragIndicatorNode );
+    model.groupSortInteractionModel.dragIndicatorModel.isDragIndicatorVisibleProperty.link( this.updateDragIndicatorNode );
+    model.groupSortInteractionModel.dragIndicatorModel.valueProperty.link( this.updateDragIndicatorNode );
     this.visibleBoundsProperty.link( this.updateDragIndicatorNode );
     this.model.selectedSceneModelProperty.link( this.updateDragIndicatorNode );
     this.model.sceneModels.forEach( sceneModel => {
       sceneModel.medianValueProperty.link( this.updateDragIndicatorNode );
       sceneModel.objectChangedEmitter.addListener( this.updateDragIndicatorNode );
     } );
-    this.model.focusedSoccerBallProperty.link( this.updateDragIndicatorNode );
+    this.model.groupSortInteractionModel.focusedSoccerBallProperty.link( this.updateDragIndicatorNode );
 
     const playAreaMedianIndicatorNode = new PlayAreaMedianIndicatorNode();
 
@@ -353,12 +353,12 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
         playAreaMedianIndicatorNode.bottom = topObjectPositionY;
 
         // If cueing indicators are visible and their stack matches the median stack, adjustments needs to be made.
-        if ( medianValue === model.dragIndicatorModel.valueProperty.value && model.dragIndicatorModel.isDragIndicatorVisibleProperty.value ) {
+        if ( medianValue === model.groupSortInteractionModel.dragIndicatorModel.valueProperty.value && model.groupSortInteractionModel.dragIndicatorModel.isDragIndicatorVisibleProperty.value ) {
           adjustMedianIndicatorBottom( topObjectPositionY );
 
         }
-        if ( medianValue === model.focusedSoccerBallProperty.value?.valueProperty.value &&
-             ( model.isKeyboardDragArrowVisibleProperty.value ) ) {
+        if ( medianValue === model.groupSortInteractionModel.focusedSoccerBallProperty.value?.valueProperty.value &&
+             ( model.groupSortInteractionModel.isKeyboardDragArrowVisibleProperty.value ) ) {
           adjustMedianIndicatorBottom( topObjectPositionY );
         }
 
@@ -368,7 +368,8 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       playAreaMedianIndicatorNode.visible = visible;
     };
 
-    Multilink.multilink( [ model.dragIndicatorModel.isDragIndicatorVisibleProperty, model.isKeyboardDragArrowVisibleProperty ],
+    Multilink.multilink( [ model.groupSortInteractionModel.dragIndicatorModel.isDragIndicatorVisibleProperty,
+        model.groupSortInteractionModel.isKeyboardDragArrowVisibleProperty ],
       () => {
         this.updateMedianNode();
       } );

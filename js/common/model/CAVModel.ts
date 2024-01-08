@@ -16,7 +16,6 @@ import Property from '../../../../axon/js/Property.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import CAVSoccerSceneModel from './CAVSoccerSceneModel.js';
-import CAVDragIndicatorModel from './CAVDragIndicatorModel.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import optionize from '../../../../phet-core/js/optionize.js';
@@ -37,8 +36,6 @@ type SelfOptions = {
 export type CAVModelOptions = SelfOptions;
 
 export default class CAVModel extends SoccerModel<CAVSoccerSceneModel> {
-
-  public override readonly dragIndicatorModel: CAVDragIndicatorModel;
 
   public readonly isPlayAreaMedianVisibleProperty: BooleanProperty; // Screens 1-3
   public readonly isPlayAreaMeanVisibleProperty: BooleanProperty;  // Screens 2-3
@@ -115,28 +112,22 @@ export default class CAVModel extends SoccerModel<CAVSoccerSceneModel> {
 
     const allValueProperties = sceneModels.flatMap( sceneModel => sceneModel.soccerBalls.map( soccerBall => soccerBall.valueProperty ) );
 
-    this.dragIndicatorModel = new CAVDragIndicatorModel(
-      this.isKeyboardFocusedProperty,
-      this.soccerBallsEnabledProperty,
-      this.soccerAreaTandem.createTandem( 'soccerBallDragIndicatorModel' )
-    );
-
     // It is important to link to the values of all the soccer balls in the screen, so that the dragIndicator can be
     // updated after all the balls have landed, and not just after they have been kicked.
     Multilink.multilinkAny( [ ...allValueProperties, this.selectedSceneModelProperty,
-      this.dragIndicatorModel.soccerBallHasBeenDraggedProperty, this.selectedSceneStackedSoccerBallCountProperty,
-      this.selectedSceneMaxKicksProperty, this.isKeyboardFocusedProperty,
+      this.groupSortInteractionModel.dragIndicatorModel.soccerBallHasBeenDraggedProperty, this.selectedSceneStackedSoccerBallCountProperty,
+      this.selectedSceneMaxKicksProperty, this.groupSortInteractionModel.isKeyboardFocusedProperty,
 
       // The median is queried in the subclass implementation, so needs to trigger an update
       ...this.sceneModels.map( sceneModel => sceneModel.medianValueProperty )
     ], () => {
-      this.dragIndicatorModel.updateDragIndicator(
+      this.groupSortInteractionModel.dragIndicatorModel.updateDragIndicator(
         this.selectedSceneModelProperty.value,
         this.selectedSceneStackedSoccerBallCountProperty.value,
         this.selectedSceneMaxKicksProperty.value
       );
 
-      this.dragIndicatorModel.moveToFocus( this.focusedSoccerBallProperty.value );
+      this.groupSortInteractionModel.dragIndicatorModel.moveToFocus( this.groupSortInteractionModel.focusedSoccerBallProperty.value );
     } );
   }
 
@@ -164,7 +155,6 @@ export default class CAVModel extends SoccerModel<CAVSoccerSceneModel> {
 
     this.isPredictMedianVisibleProperty.reset();
 
-    this.dragIndicatorModel.reset();
     this.isAccordionBoxExpandedProperty.reset();
   }
 }

@@ -12,6 +12,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import CAVSoccerSceneModel from './CAVSoccerSceneModel.js';
 import SoccerBall from '../../../../soccer-common/js/model/SoccerBall.js';
 
+// TODO: use this again, https://github.com/phetsims/scenery-phet/issues/815
 export default class CAVDragIndicatorModel extends DragIndicatorModel {
 
   public override updateDragIndicator( sceneModel: Pick<CAVSoccerSceneModel, 'getSortedStackedObjects' | 'getStackAtValue' | 'medianValueProperty' | 'getTopSoccerBalls' | 'getActiveSoccerBalls'>, soccerBallCount: number, maxKicks: number ): void {
@@ -47,7 +48,7 @@ export default class CAVDragIndicatorModel extends DragIndicatorModel {
     }
   }
 
-  public moveToFocus( focusedSoccerBall: SoccerBall | null ): void {
+  public override moveToFocus( focusedSoccerBall: SoccerBall | null ): void {
     if ( focusedSoccerBall !== null ) {
       // If there is a focused soccer ball, i.e. a soccer ball that has been selected or tabbed to via the keyboard,
       // that takes precedence for indication.
