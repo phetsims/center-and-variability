@@ -116,7 +116,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
     const grabReleaseCueNode = new GrabReleaseCueNode( {
       top: CAVConstants.CARD_DIMENSION + FOCUS_HIGHLIGHT_Y_MARGIN + 15,
-      visibleProperty: model.isGrabReleaseCueVisibleProperty
+      visibleProperty: model.grabReleaseCueVisibleProperty
     } );
 
     const keyboardDragArrowNode = SoccerCommonConstants.CREATE_KEYBOARD_ARROW_NODE( model.isKeyboardDragArrowVisibleProperty );
