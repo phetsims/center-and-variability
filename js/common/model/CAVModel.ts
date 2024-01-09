@@ -115,19 +115,19 @@ export default class CAVModel extends SoccerModel<CAVSoccerSceneModel> {
     // It is important to link to the values of all the soccer balls in the screen, so that the dragIndicator can be
     // updated after all the balls have landed, and not just after they have been kicked.
     Multilink.multilinkAny( [ ...allValueProperties, this.selectedSceneModelProperty,
-      this.groupSortInteractionModel.dragIndicatorModel.soccerBallHasBeenDraggedProperty, this.selectedSceneStackedSoccerBallCountProperty,
+      this.groupSortInteractionModel.soccerBallHasBeenDraggedProperty, this.selectedSceneStackedSoccerBallCountProperty,
       this.selectedSceneMaxKicksProperty, this.groupSortInteractionModel.isKeyboardFocusedProperty,
 
       // The median is queried in the subclass implementation, so needs to trigger an update
       ...this.sceneModels.map( sceneModel => sceneModel.medianValueProperty )
     ], () => {
-      this.groupSortInteractionModel.dragIndicatorModel.updateDragIndicator(
+      this.groupSortInteractionModel.updateDragIndicator(
         this.selectedSceneModelProperty.value,
         this.selectedSceneStackedSoccerBallCountProperty.value,
         this.selectedSceneMaxKicksProperty.value
       );
 
-      this.groupSortInteractionModel.dragIndicatorModel.moveToFocus( this.groupSortInteractionModel.focusedSoccerBallProperty.value );
+      this.groupSortInteractionModel.moveToFocus( this.groupSortInteractionModel.focusedSoccerBallProperty.value );
     } );
   }
 

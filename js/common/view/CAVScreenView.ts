@@ -252,11 +252,11 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       }
     } );
 
-    const dragIndicatorArrowNode = SoccerCommonConstants.CREATE_KEYBOARD_ARROW_NODE( model.groupSortInteractionModel.dragIndicatorModel.isDragIndicatorVisibleProperty, DRAG_CUE_SCALE );
+    const dragIndicatorArrowNode = SoccerCommonConstants.CREATE_KEYBOARD_ARROW_NODE( model.groupSortInteractionModel.isDragIndicatorVisibleProperty, DRAG_CUE_SCALE );
 
     const dragIndicatorHandImage = new Image( dragIndicatorHand_png, {
       scale: 0.07,
-      visibleProperty: model.groupSortInteractionModel.dragIndicatorModel.isDragIndicatorVisibleProperty,
+      visibleProperty: model.groupSortInteractionModel.isDragIndicatorVisibleProperty,
       rotation: Math.PI / 4
     } );
 
@@ -274,9 +274,10 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       playAreaMedianIndicatorNode.bottom = topObjectPositionY - 15;
     };
 
+    // TODO: likely moved into GroupSortInteractionView? https://github.com/phetsims/scenery-phet/issues/815
     this.updateDragIndicatorNode = () => {
-      const dragIndicatorVisible = model.groupSortInteractionModel.dragIndicatorModel.isDragIndicatorVisibleProperty.value;
-      const dragIndicatorValue = model.groupSortInteractionModel.dragIndicatorModel.valueProperty.value;
+      const dragIndicatorVisible = model.groupSortInteractionModel.isDragIndicatorVisibleProperty.value;
+      const dragIndicatorValue = model.groupSortInteractionModel.dragIndicatorValueProperty.value;
 
       if ( dragIndicatorVisible && dragIndicatorValue ) {
         const topObjectPositionY = this.getTopObjectPositionY( dragIndicatorValue );
@@ -306,10 +307,10 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       dragIndicatorHandImage.top = dragIndicatorArrowNodeProxy.bottom + Math.abs( this.modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) ) - 5;
     } );
 
-    dragIndicatorArrowNode.addLinkedElement( model.groupSortInteractionModel.dragIndicatorModel.valueProperty );
+    dragIndicatorArrowNode.addLinkedElement( model.groupSortInteractionModel.dragIndicatorValueProperty );
 
-    model.groupSortInteractionModel.dragIndicatorModel.isDragIndicatorVisibleProperty.link( this.updateDragIndicatorNode );
-    model.groupSortInteractionModel.dragIndicatorModel.valueProperty.link( this.updateDragIndicatorNode );
+    model.groupSortInteractionModel.isDragIndicatorVisibleProperty.link( this.updateDragIndicatorNode );
+    model.groupSortInteractionModel.dragIndicatorValueProperty.link( this.updateDragIndicatorNode );
     this.visibleBoundsProperty.link( this.updateDragIndicatorNode );
     this.model.selectedSceneModelProperty.link( this.updateDragIndicatorNode );
     this.model.sceneModels.forEach( sceneModel => {
@@ -353,7 +354,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
         playAreaMedianIndicatorNode.bottom = topObjectPositionY;
 
         // If cueing indicators are visible and their stack matches the median stack, adjustments needs to be made.
-        if ( medianValue === model.groupSortInteractionModel.dragIndicatorModel.valueProperty.value && model.groupSortInteractionModel.dragIndicatorModel.isDragIndicatorVisibleProperty.value ) {
+        if ( medianValue === model.groupSortInteractionModel.dragIndicatorValueProperty.value && model.groupSortInteractionModel.isDragIndicatorVisibleProperty.value ) {
           adjustMedianIndicatorBottom( topObjectPositionY );
 
         }
@@ -368,7 +369,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       playAreaMedianIndicatorNode.visible = visible;
     };
 
-    Multilink.multilink( [ model.groupSortInteractionModel.dragIndicatorModel.isDragIndicatorVisibleProperty,
+    Multilink.multilink( [ model.groupSortInteractionModel.isDragIndicatorVisibleProperty,
         model.groupSortInteractionModel.isKeyboardDragArrowVisibleProperty ],
       () => {
         this.updateMedianNode();

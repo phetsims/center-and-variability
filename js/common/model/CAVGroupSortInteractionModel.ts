@@ -3,17 +3,17 @@
 /**
  * CAVDragIndicatorModel is a subclass of the DragIndicatorModel that adds logic to place the drag indicator in a
  * spot that is not the median. Its role is to minimize the occurrence of drag indicator and median indicator overlap.
- *
+ * TODO: https://github.com/phetsims/scenery-phet/issues/815
  * @author Marla Schulz (PhET Interactive Simulations)
  */
 
-import DragIndicatorModel from '../../../../soccer-common/js/model/DragIndicatorModel.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVSoccerSceneModel from './CAVSoccerSceneModel.js';
 import SoccerBall from '../../../../soccer-common/js/model/SoccerBall.js';
+import GroupSortInteractionModel from '../../../../soccer-common/js/model/GroupSortInteractionModel.js';
 
 // TODO: use this again, https://github.com/phetsims/scenery-phet/issues/815
-export default class CAVDragIndicatorModel extends DragIndicatorModel {
+export default class CAVGroupSortInteractionModel extends GroupSortInteractionModel {
 
   public override updateDragIndicator( sceneModel: Pick<CAVSoccerSceneModel, 'getSortedStackedObjects' | 'getStackAtValue' | 'medianValueProperty' | 'getTopSoccerBalls' | 'getActiveSoccerBalls'>, soccerBallCount: number, maxKicks: number ): void {
     super.updateDragIndicator( sceneModel, soccerBallCount, maxKicks );
@@ -21,9 +21,9 @@ export default class CAVDragIndicatorModel extends DragIndicatorModel {
     // Empirically determined based on height of AccordionBox and play area. This may need to be adjusted if those change.
     const maxHeight = 8;
 
-    if ( this.valueProperty.value !== null ) {
-      const stackHeight = sceneModel.getStackAtValue( this.valueProperty.value ).length;
-      if ( this.valueProperty.value === sceneModel.medianValueProperty.value || stackHeight > maxHeight ) {
+    if ( this.dragIndicatorValueProperty.value !== null ) {
+      const stackHeight = sceneModel.getStackAtValue( this.dragIndicatorValueProperty.value ).length;
+      if ( this.dragIndicatorValueProperty.value === sceneModel.medianValueProperty.value || stackHeight > maxHeight ) {
 
         // Order kicked, not order landed
         const topBallsInReversedOrder = sceneModel.getActiveSoccerBalls().reverse().filter(
@@ -39,7 +39,7 @@ export default class CAVDragIndicatorModel extends DragIndicatorModel {
         if ( !allEqualToMedian ) {
 
           // Show it over a recently landed ball that is not in the median stack
-          this.valueProperty.value = topBallsInReversedOrder
+          this.dragIndicatorValueProperty.value = topBallsInReversedOrder
             .find( soccerBall => soccerBall.valueProperty.value !== sceneModel.medianValueProperty.value &&
                                  sceneModel.getStackAtValue( soccerBall.valueProperty.value! ).length <= maxHeight )!
             .valueProperty.value!;
@@ -52,9 +52,9 @@ export default class CAVDragIndicatorModel extends DragIndicatorModel {
     if ( focusedSoccerBall !== null ) {
       // If there is a focused soccer ball, i.e. a soccer ball that has been selected or tabbed to via the keyboard,
       // that takes precedence for indication.
-      this.valueProperty.value = focusedSoccerBall.valueProperty.value;
+      this.dragIndicatorValueProperty.value = focusedSoccerBall.valueProperty.value;
     }
   }
 }
 
-centerAndVariability.register( 'CAVDragIndicatorModel', CAVDragIndicatorModel );
+centerAndVariability.register( 'CAVGroupSortInteractionModel', CAVGroupSortInteractionModel );
