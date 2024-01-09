@@ -114,21 +114,17 @@ export default class CAVModel extends SoccerModel<CAVSoccerSceneModel> {
 
     // It is important to link to the values of all the soccer balls in the screen, so that the dragIndicator can be
     // updated after all the balls have landed, and not just after they have been kicked.
-    Multilink.multilinkAny( [ ...allValueProperties, this.selectedSceneModelProperty,
-      this.groupSortInteractionModel.hasGroupItemBeenSortedProperty, this.selectedSceneStackedSoccerBallCountProperty,
-      this.selectedSceneMaxKicksProperty, this.groupSortInteractionModel.isKeyboardFocusedProperty,
+    Multilink.multilinkAny( [
+      ...allValueProperties,
+      this.selectedSceneModelProperty,
+      this.groupSortInteractionModel.hasGroupItemBeenSortedProperty,
+      this.selectedSceneStackedSoccerBallCountProperty,
+      this.selectedSceneMaxKicksProperty,
+      this.groupSortInteractionModel.isKeyboardFocusedProperty,
 
       // The median is queried in the subclass implementation, so needs to trigger an update
       ...this.sceneModels.map( sceneModel => sceneModel.medianValueProperty )
-    ], () => {
-      this.groupSortInteractionModel.updateSortIndicator(
-        this.selectedSceneModelProperty.value,
-        this.selectedSceneStackedSoccerBallCountProperty.value,
-        this.selectedSceneMaxKicksProperty.value
-      );
-
-      this.groupSortInteractionModel.moveToFocus( this.groupSortInteractionModel.focusedGroupItemProperty.value );
-    } );
+    ], () => this.groupSortInteractionModel.updateSortIndicator() );
   }
 
   // This function determines whether a value has crossed an integer or half-integer boundary, or lands exactly on an

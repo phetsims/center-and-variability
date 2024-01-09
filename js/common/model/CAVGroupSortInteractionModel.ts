@@ -10,13 +10,43 @@
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVSoccerSceneModel from './CAVSoccerSceneModel.js';
 import SoccerBall from '../../../../soccer-common/js/model/SoccerBall.js';
-import GroupSortInteractionModel from '../../../../soccer-common/js/model/GroupSortInteractionModel.js';
+import GroupSortInteractionModel, { GroupSortInteractionModelOptions } from '../../../../soccer-common/js/model/GroupSortInteractionModel.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import TProperty from '../../../../axon/js/TProperty.js';
 
 // TODO: use this again, https://github.com/phetsims/scenery-phet/issues/815
 export default class CAVGroupSortInteractionModel extends GroupSortInteractionModel<SoccerBall> {
 
-  public override updateSortIndicator( sceneModel: Pick<CAVSoccerSceneModel, 'getSortedStackedObjects' | 'getStackAtValue' | 'medianValueProperty' | 'getTopSoccerBalls' | 'getActiveSoccerBalls'>, soccerBallCount: number, maxKicks: number ): void {
-    super.updateSortIndicator( sceneModel, soccerBallCount, maxKicks );
+  public constructor( private readonly selectedSceneModelProperty: TProperty<CAVSoccerSceneModel>,
+                      private readonly selectedSceneStackedSoccerBallCountProperty: TProperty<number>,
+                      private readonly selectedSceneMaxKicksProperty: TProperty<number>,
+                      sortEnabledProperty: TReadOnlyProperty<boolean>, providedOptions: GroupSortInteractionModelOptions ) {
+    super( sortEnabledProperty, providedOptions );
+  }
+
+  // This is an algorithm that can be used to get the best guess about where the sort indicator should be set to based
+  // on the current state of the soccer balls.
+  public override updateSortIndicator(): void {
+
+    const soccerBallCount = this.selectedSceneStackedSoccerBallCountProperty.value;
+    const maxKicks = this.selectedSceneMaxKicksProperty.value;
+    const sceneModel = this.selectedSceneModelProperty.value;
+
+    //  If an object was sorted, objects are not input enabled, or the max number of balls haven't been kicked out
+    //  don't show the sortIndicatorCue.
+    this.sortIndicatorCueVisibleProperty.value = !this.hasGroupItemBeenSortedProperty.value &&
+                                                 !this.isKeyboardFocusedProperty.value &&
+                                                 soccerBallCount === maxKicks &&
+                                                 this.sortEnabledProperty.value &&
+                                                 _.every( sceneModel?.getActiveSoccerBalls(), soccerBall => soccerBall.valueProperty.value !== null );
+
+    const reversedBalls = sceneModel.getActiveSoccerBalls().filter( soccerBall => soccerBall.valueProperty.value !== null ).reverse();
+
+    // Show the sort indicator over the most recently landed ball
+    this.sortIndicatorValueProperty.value = reversedBalls.length > 0 ? reversedBalls[ 0 ].valueProperty.value : null;
+
+    // TODO: Should the above algorithm be in soccer-common? https://github.com/phetsims/scenery-phet/issues/815
+    /////////////////
 
     // Empirically determined based on height of AccordionBox and play area. This may need to be adjusted if those change.
     const maxHeight = 8;
@@ -46,14 +76,9 @@ export default class CAVGroupSortInteractionModel extends GroupSortInteractionMo
         }
       }
     }
-  }
 
-  public override moveToFocus( focusedSoccerBall: SoccerBall | null ): void {
-    if ( focusedSoccerBall !== null ) {
-      // If there is a focused soccer ball, i.e. a soccer ball that has been selected or tabbed to via the keyboard,
-      // that takes precedence for indication.
-      this.sortIndicatorValueProperty.value = focusedSoccerBall.valueProperty.value;
-    }
+    // A focused group item will overwrite any heuristic from above.
+    this.moveSortIndicatorToFocusedGroupItem();
   }
 }
 
