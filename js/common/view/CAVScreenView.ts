@@ -252,11 +252,11 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       }
     } );
 
-    const dragIndicatorArrowNode = SoccerCommonConstants.CREATE_KEYBOARD_ARROW_NODE( model.groupSortInteractionModel.isDragIndicatorVisibleProperty, DRAG_CUE_SCALE );
+    const sortIndicatorArrowNode = SoccerCommonConstants.CREATE_KEYBOARD_ARROW_NODE( model.groupSortInteractionModel.sortIndicatorCueVisibleProperty, DRAG_CUE_SCALE );
 
     const dragIndicatorHandImage = new Image( dragIndicatorHand_png, {
       scale: 0.07,
-      visibleProperty: model.groupSortInteractionModel.isDragIndicatorVisibleProperty,
+      visibleProperty: model.groupSortInteractionModel.sortIndicatorCueVisibleProperty,
       rotation: Math.PI / 4
     } );
 
@@ -276,12 +276,12 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
 
     // TODO: likely moved into GroupSortInteractionView? https://github.com/phetsims/scenery-phet/issues/815
     this.updateDragIndicatorNode = () => {
-      const dragIndicatorVisible = model.groupSortInteractionModel.isDragIndicatorVisibleProperty.value;
-      const dragIndicatorValue = model.groupSortInteractionModel.dragIndicatorValueProperty.value;
+      const dragIndicatorVisible = model.groupSortInteractionModel.sortIndicatorCueVisibleProperty.value;
+      const dragIndicatorValue = model.groupSortInteractionModel.sortIndicatorValueProperty.value;
 
       if ( dragIndicatorVisible && dragIndicatorValue ) {
         const topObjectPositionY = this.getTopObjectPositionY( dragIndicatorValue );
-        dragIndicatorArrowNode.center = new Vector2(
+        sortIndicatorArrowNode.center = new Vector2(
           this.modelViewTransform.modelToViewX( dragIndicatorValue ),
 
           // This value must be kept in sync with the other occurrences of CREATE_KEYBOARD_ARROW_NODE that are shown for the keyboard
@@ -295,22 +295,22 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
           repositionNodeIfOverlappingAccordionBox( playAreaMedianIndicatorNode );
         }
 
-        // We never want the dragIndicatorArrowNode to overlap the accordion Box.
-        repositionNodeIfOverlappingAccordionBox( dragIndicatorArrowNode );
+        // We never want the sortIndicatorArrowNode to overlap the accordion Box.
+        repositionNodeIfOverlappingAccordionBox( sortIndicatorArrowNode );
       }
     };
 
-    ManualConstraint.create( this, [ dragIndicatorArrowNode ], dragIndicatorArrowNodeProxy => {
+    ManualConstraint.create( this, [ sortIndicatorArrowNode ], sortIndicatorArrowNodeProxy => {
 
       // Pixel adjustments needed with rotation option on dragIndicatorHandImage and empirically determined to match design
-      dragIndicatorHandImage.right = dragIndicatorArrowNodeProxy.left + 22;
-      dragIndicatorHandImage.top = dragIndicatorArrowNodeProxy.bottom + Math.abs( this.modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) ) - 5;
+      dragIndicatorHandImage.right = sortIndicatorArrowNodeProxy.left + 22;
+      dragIndicatorHandImage.top = sortIndicatorArrowNodeProxy.bottom + Math.abs( this.modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) ) - 5;
     } );
 
-    dragIndicatorArrowNode.addLinkedElement( model.groupSortInteractionModel.dragIndicatorValueProperty );
+    sortIndicatorArrowNode.addLinkedElement( model.groupSortInteractionModel.sortIndicatorValueProperty );
 
-    model.groupSortInteractionModel.isDragIndicatorVisibleProperty.link( this.updateDragIndicatorNode );
-    model.groupSortInteractionModel.dragIndicatorValueProperty.link( this.updateDragIndicatorNode );
+    model.groupSortInteractionModel.sortIndicatorCueVisibleProperty.link( this.updateDragIndicatorNode );
+    model.groupSortInteractionModel.sortIndicatorValueProperty.link( this.updateDragIndicatorNode );
     this.visibleBoundsProperty.link( this.updateDragIndicatorNode );
     this.model.selectedSceneModelProperty.link( this.updateDragIndicatorNode );
     this.model.sceneModels.forEach( sceneModel => {
@@ -354,12 +354,12 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
         playAreaMedianIndicatorNode.bottom = topObjectPositionY;
 
         // If cueing indicators are visible and their stack matches the median stack, adjustments needs to be made.
-        if ( medianValue === model.groupSortInteractionModel.dragIndicatorValueProperty.value && model.groupSortInteractionModel.isDragIndicatorVisibleProperty.value ) {
+        if ( medianValue === model.groupSortInteractionModel.sortIndicatorValueProperty.value && model.groupSortInteractionModel.sortIndicatorCueVisibleProperty.value ) {
           adjustMedianIndicatorBottom( topObjectPositionY );
 
         }
         if ( medianValue === model.groupSortInteractionModel.focusedGroupItemProperty.value?.valueProperty.value &&
-             ( model.groupSortInteractionModel.isKeyboardDragArrowVisibleProperty.value ) ) {
+             ( model.groupSortInteractionModel.keyboardSortArrowCueVisibleProperty.value ) ) {
           adjustMedianIndicatorBottom( topObjectPositionY );
         }
 
@@ -369,8 +369,8 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       playAreaMedianIndicatorNode.visible = visible;
     };
 
-    Multilink.multilink( [ model.groupSortInteractionModel.isDragIndicatorVisibleProperty,
-        model.groupSortInteractionModel.isKeyboardDragArrowVisibleProperty ],
+    Multilink.multilink( [ model.groupSortInteractionModel.sortIndicatorCueVisibleProperty,
+        model.groupSortInteractionModel.keyboardSortArrowCueVisibleProperty ],
       () => {
         this.updateMedianNode();
       } );
@@ -384,7 +384,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
     this.visibleBoundsProperty.link( this.updateMedianNode );
     model.isPlayAreaMedianVisibleProperty.link( this.updateMedianNode );
 
-    this.middleScreenViewLayer.addChild( dragIndicatorArrowNode );
+    this.middleScreenViewLayer.addChild( sortIndicatorArrowNode );
     this.middleScreenViewLayer.addChild( dragIndicatorHandImage );
 
     // Add to screenViewRootNode for alternativeInput
