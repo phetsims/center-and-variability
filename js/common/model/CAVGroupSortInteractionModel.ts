@@ -13,7 +13,7 @@ import SoccerBall from '../../../../soccer-common/js/model/SoccerBall.js';
 import GroupSortInteractionModel from '../../../../soccer-common/js/model/GroupSortInteractionModel.js';
 
 // TODO: use this again, https://github.com/phetsims/scenery-phet/issues/815
-export default class CAVGroupSortInteractionModel extends GroupSortInteractionModel {
+export default class CAVGroupSortInteractionModel extends GroupSortInteractionModel<SoccerBall> {
 
   public override updateDragIndicator( sceneModel: Pick<CAVSoccerSceneModel, 'getSortedStackedObjects' | 'getStackAtValue' | 'medianValueProperty' | 'getTopSoccerBalls' | 'getActiveSoccerBalls'>, soccerBallCount: number, maxKicks: number ): void {
     super.updateDragIndicator( sceneModel, soccerBallCount, maxKicks );
