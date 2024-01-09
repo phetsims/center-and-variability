@@ -34,7 +34,7 @@ export default class CAVSceneView extends SoccerSceneView {
                       tandem: Tandem ) {
 
     super( model, sceneModel, keyboardDragArrowNode,
-      model.groupSortInteractionModel.groupItemHasBeenDraggedProperty,
+      model.groupSortInteractionModel.hasGroupItemBeenDraggedProperty,
       model.groupSortInteractionModel.dragIndicatorValueProperty, getKickerImageSet, modelViewTransform,
       physicalRange, tandem );
 
