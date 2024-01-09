@@ -317,7 +317,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       sceneModel.medianValueProperty.link( this.updateDragIndicatorNode );
       sceneModel.objectChangedEmitter.addListener( this.updateDragIndicatorNode );
     } );
-    this.model.groupSortInteractionModel.focusedSoccerBallProperty.link( this.updateDragIndicatorNode );
+    this.model.groupSortInteractionModel.focusedGroupItemProperty.link( this.updateDragIndicatorNode );
 
     const playAreaMedianIndicatorNode = new PlayAreaMedianIndicatorNode();
 
@@ -358,7 +358,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
           adjustMedianIndicatorBottom( topObjectPositionY );
 
         }
-        if ( medianValue === model.groupSortInteractionModel.focusedSoccerBallProperty.value?.valueProperty.value &&
+        if ( medianValue === model.groupSortInteractionModel.focusedGroupItemProperty.value?.valueProperty.value &&
              ( model.groupSortInteractionModel.isKeyboardDragArrowVisibleProperty.value ) ) {
           adjustMedianIndicatorBottom( topObjectPositionY );
         }

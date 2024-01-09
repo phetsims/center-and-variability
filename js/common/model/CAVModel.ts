@@ -127,7 +127,7 @@ export default class CAVModel extends SoccerModel<CAVSoccerSceneModel> {
         this.selectedSceneMaxKicksProperty.value
       );
 
-      this.groupSortInteractionModel.moveToFocus( this.groupSortInteractionModel.focusedSoccerBallProperty.value );
+      this.groupSortInteractionModel.moveToFocus( this.groupSortInteractionModel.focusedGroupItemProperty.value );
     } );
   }
 
