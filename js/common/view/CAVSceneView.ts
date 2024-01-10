@@ -33,6 +33,8 @@ export default class CAVSceneView extends SoccerSceneView {
                       physicalRange: Range,
                       tandem: Tandem ) {
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error TODO: fix this with parameterization? https://github.com/phetsims/scenery-phet/issues/815
     super( model, sceneModel, keyboardDragArrowNode,
       getKickerImageSet, modelViewTransform,
       physicalRange, tandem );
