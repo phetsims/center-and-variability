@@ -274,12 +274,11 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       playAreaMedianIndicatorNode.bottom = topObjectPositionY - 15;
     };
 
-    // TODO: likely moved into GroupSortInteractionView? https://github.com/phetsims/scenery-phet/issues/815
     this.updateSortIndicatorNode = () => {
       const dragIndicatorVisible = model.groupSortInteractionModel.sortIndicatorCueVisibleProperty.value;
       const dragIndicatorValue = model.groupSortInteractionModel.sortIndicatorValueProperty.value;
 
-      if ( dragIndicatorVisible && dragIndicatorValue ) {
+      if ( dragIndicatorVisible && dragIndicatorValue !== null ) {
         const topObjectPositionY = this.getTopObjectPositionY( dragIndicatorValue );
         sortIndicatorArrowNode.center = new Vector2(
           this.modelViewTransform.modelToViewX( dragIndicatorValue ),
