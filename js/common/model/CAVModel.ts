@@ -25,15 +25,17 @@ import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import ObjectLiteralIO from '../../../../tandem/js/types/ObjectLiteralIO.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
-import SoccerModel from '../../../../soccer-common/js/model/SoccerModel.js';
+import SoccerModel, { SoccerModelOptions } from '../../../../soccer-common/js/model/SoccerModel.js';
 import NumberTone from '../../../../soccer-common/js/model/NumberTone.js';
+import CAVGroupSortInteractionModel from './CAVGroupSortInteractionModel.js';
 
 type SelfOptions = {
   instrumentMeanProperty: boolean;
   instrumentDataPointVisibilityProperty: boolean;
   accordionBoxTandem: Tandem;
 } & PickRequired<PhetioObjectOptions, 'tandem'>;
-export type CAVModelOptions = SelfOptions;
+type ParentOptions = SoccerModelOptions<CAVSoccerSceneModel>;
+export type CAVModelOptions = SelfOptions & ParentOptions;
 
 export default class CAVModel extends SoccerModel<CAVSoccerSceneModel> {
 
@@ -49,7 +51,14 @@ export default class CAVModel extends SoccerModel<CAVSoccerSceneModel> {
 
   public constructor( public readonly maxKicksProperty: TReadOnlyProperty<number>, sceneModels: CAVSoccerSceneModel[], providedOptions: CAVModelOptions ) {
 
-    const options = optionize<CAVModelOptions, SelfOptions, PhetioObjectOptions>()( {
+    const options = optionize<CAVModelOptions, SelfOptions, ParentOptions>()( {
+      createGroupSortInteractionModel: soccerModel => {
+        return new CAVGroupSortInteractionModel(
+          soccerModel.selectedSceneModelProperty,
+          soccerModel.selectedSceneStackedSoccerBallCountProperty,
+          soccerModel.selectedSceneMaxKicksProperty,
+          soccerModel.soccerBallsEnabledProperty );
+      },
       phetioType: CAVModelIO,
       phetioState: false,
       phetioDocumentation: 'The model for the "Center and Variability" simulation. Contains 1+ sceneModels which contains the data itself. Also includes settings, like selections for checkboxes.'

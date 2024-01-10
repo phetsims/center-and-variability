@@ -14,20 +14,18 @@ import GroupSortInteractionModel, { GroupSortInteractionModelOptions } from '../
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 
-// TODO: use this again, https://github.com/phetsims/scenery-phet/issues/815
 export default class CAVGroupSortInteractionModel extends GroupSortInteractionModel<SoccerBall> {
 
   public constructor( private readonly selectedSceneModelProperty: TProperty<CAVSoccerSceneModel>,
                       private readonly selectedSceneStackedSoccerBallCountProperty: TProperty<number>,
                       private readonly selectedSceneMaxKicksProperty: TProperty<number>,
-                      sortEnabledProperty: TReadOnlyProperty<boolean>, providedOptions: GroupSortInteractionModelOptions ) {
+                      sortEnabledProperty: TReadOnlyProperty<boolean>, providedOptions?: GroupSortInteractionModelOptions ) {
     super( sortEnabledProperty, providedOptions );
   }
 
   // This is an algorithm that can be used to get the best guess about where the sort indicator should be set to based
   // on the current state of the soccer balls.
   public override updateSortIndicator(): void {
-
     const soccerBallCount = this.selectedSceneStackedSoccerBallCountProperty.value;
     const maxKicks = this.selectedSceneMaxKicksProperty.value;
     const sceneModel = this.selectedSceneModelProperty.value;
