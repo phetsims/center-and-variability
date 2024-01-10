@@ -252,7 +252,8 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       }
     } );
 
-    const sortIndicatorArrowNode = SoccerCommonConstants.CREATE_KEYBOARD_ARROW_NODE( model.groupSortInteractionModel.sortIndicatorCueVisibleProperty, DRAG_CUE_SCALE );
+    const sortIndicatorArrowNode = SoccerCommonConstants.CREATE_KEYBOARD_ARROW_NODE(
+      model.groupSortInteractionModel.sortIndicatorCueVisibleProperty, DRAG_CUE_SCALE );
 
     const dragIndicatorHandImage = new Image( dragIndicatorHand_png, {
       scale: 0.07,
