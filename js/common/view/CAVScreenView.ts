@@ -392,7 +392,6 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
 
     this.addChild( this.screenViewRootNode );
 
-    // TODO: Can this be managed by the scene view instead? https://github.com/phetsims/scenery-phet/issues/815
     this.addGrabReleaseCue();
   }
 
