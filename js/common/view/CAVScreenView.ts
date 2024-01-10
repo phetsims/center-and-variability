@@ -106,7 +106,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
   private readonly sceneViews: SoccerSceneView[];
 
   private readonly updateMedianNode: () => void;
-  private readonly updateDragIndicatorNode: () => void;
+  private readonly updateSortIndicatorNode: () => void;
 
   protected readonly kickButtonGroup: KickButtonGroup;
 
@@ -275,7 +275,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
     };
 
     // TODO: likely moved into GroupSortInteractionView? https://github.com/phetsims/scenery-phet/issues/815
-    this.updateDragIndicatorNode = () => {
+    this.updateSortIndicatorNode = () => {
       const dragIndicatorVisible = model.groupSortInteractionModel.sortIndicatorCueVisibleProperty.value;
       const dragIndicatorValue = model.groupSortInteractionModel.sortIndicatorValueProperty.value;
 
@@ -309,15 +309,13 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
 
     sortIndicatorArrowNode.addLinkedElement( model.groupSortInteractionModel.sortIndicatorValueProperty );
 
-    model.groupSortInteractionModel.sortIndicatorCueVisibleProperty.link( this.updateDragIndicatorNode );
-    model.groupSortInteractionModel.sortIndicatorValueProperty.link( this.updateDragIndicatorNode );
-    this.visibleBoundsProperty.link( this.updateDragIndicatorNode );
-    this.model.selectedSceneModelProperty.link( this.updateDragIndicatorNode );
+    this.visibleBoundsProperty.link( this.updateSortIndicatorNode );
+    this.model.selectedSceneModelProperty.link( this.updateSortIndicatorNode );
     this.model.sceneModels.forEach( sceneModel => {
-      sceneModel.medianValueProperty.link( this.updateDragIndicatorNode );
-      sceneModel.objectChangedEmitter.addListener( this.updateDragIndicatorNode );
+      sceneModel.medianValueProperty.link( this.updateSortIndicatorNode );
+      sceneModel.objectChangedEmitter.addListener( this.updateSortIndicatorNode );
     } );
-    this.model.groupSortInteractionModel.focusedGroupItemProperty.link( this.updateDragIndicatorNode );
+    model.groupSortInteractionModel.registerUpdateSortIndicatorNode( this.updateSortIndicatorNode );
 
     const playAreaMedianIndicatorNode = new PlayAreaMedianIndicatorNode();
 
@@ -436,7 +434,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
     this.updateAccordionBoxPosition();
 
     this.accordionBox.boundsProperty.link( this.updateMedianNode );
-    this.accordionBox.boundsProperty.link( this.updateDragIndicatorNode );
+    this.accordionBox.boundsProperty.link( this.updateSortIndicatorNode );
     this.accordionBox.boundsProperty.link( () => {
       this.sceneViews.forEach( sceneView => sceneView.groupSortInteractionView.setGroupFocusHighlightTop( this.accordionBox!.bounds.bottom ) );
     } );

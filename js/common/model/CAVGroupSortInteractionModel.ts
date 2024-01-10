@@ -25,6 +25,7 @@ export default class CAVGroupSortInteractionModel extends GroupSortInteractionMo
 
   // This is an algorithm that can be used to get the best guess about where the sort indicator should be set to based
   // on the current state of the soccer balls.
+  // TODO: use an emitter + listener instead of subtyping? https://github.com/phetsims/scenery-phet/issues/815
   public override updateSortIndicator(): void {
     const soccerBallCount = this.selectedSceneStackedSoccerBallCountProperty.value;
     const maxKicks = this.selectedSceneMaxKicksProperty.value;
