@@ -58,6 +58,7 @@ import isResettingProperty from '../../../../soccer-common/js/model/isResettingP
 import KickerPortrayalUSA from '../../../../soccer-common/js/view/KickerPortrayalUSA.js';
 import KickerPortrayalAfrica from '../../../../soccer-common/js/view/KickerPortrayalAfrica.js';
 import KickerPortrayalAfricaModest from '../../../../soccer-common/js/view/KickerPortrayalAfricaModest.js';
+import GroupSortInteractionView from '../../../../soccer-common/js/view/GroupSortInteractionView.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -252,7 +253,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       }
     } );
 
-    const sortIndicatorArrowNode = SoccerCommonConstants.CREATE_KEYBOARD_ARROW_NODE(
+    const sortIndicatorArrowNode = GroupSortInteractionView.createSortCueNode(
       model.groupSortInteractionModel.sortIndicatorCueVisibleProperty, DRAG_CUE_SCALE );
 
     const dragIndicatorHandImage = new Image( dragIndicatorHand_png, {
@@ -284,7 +285,8 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
         sortIndicatorArrowNode.center = new Vector2(
           this.modelViewTransform.modelToViewX( dragIndicatorValue ),
 
-          // This value must be kept in sync with the other occurrences of CREATE_KEYBOARD_ARROW_NODE that are shown for the keyboard
+          // This value must be kept in sync with the other occurrences of GroupSortInteractionView.createSortCueNode()
+          // that are shown for the keyboard.
           topObjectPositionY - 11.5
         );
 

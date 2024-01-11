@@ -37,12 +37,12 @@ import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioS
 import GrabReleaseCueNode from '../../../../scenery-phet/js/accessibility/nodes/GrabReleaseCueNode.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import CelebrationNode from './CelebrationNode.js';
-import SoccerCommonConstants from '../../../../soccer-common/js/SoccerCommonConstants.js';
 import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-players/checkboxCheckedSoundPlayer.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import CardDragIndicatorNode from './CardDragIndicatorNode.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import GroupSortInteractionView from '../../../../soccer-common/js/view/GroupSortInteractionView.js';
 
 const FOCUS_HIGHLIGHT_Y_MARGIN = CAVConstants.CARD_SPACING + 3;
 
@@ -119,7 +119,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       visibleProperty: model.grabReleaseCueVisibleProperty
     } );
 
-    const keyboardDragArrowNode = SoccerCommonConstants.CREATE_KEYBOARD_ARROW_NODE( model.isKeyboardDragArrowVisibleProperty );
+    const keyboardDragArrowNode = GroupSortInteractionView.createSortCueNode( model.isKeyboardDragArrowVisibleProperty );
 
     this.addChild( keyboardDragArrowNode );
 
