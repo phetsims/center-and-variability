@@ -1,9 +1,8 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * CAVDragIndicatorModel is a subclass of the DragIndicatorModel that adds logic to place the drag indicator in a
+ * CAVGroupSortInteractionModel is a subclass that adds logic to place the drag indicator in a
  * spot that is not the median. Its role is to minimize the occurrence of drag indicator and median indicator overlap.
- * TODO: https://github.com/phetsims/scenery-phet/issues/815
  * @author Marla Schulz (PhET Interactive Simulations)
  */
 
