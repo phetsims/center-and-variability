@@ -358,7 +358,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
           adjustMedianIndicatorBottom( topObjectPositionY );
 
         }
-        if ( medianValue === model.groupSortInteractionModel.focusedGroupItemProperty.value?.valueProperty.value &&
+        if ( medianValue === model.groupSortInteractionModel.selectedGroupItemProperty.value?.valueProperty.value &&
              ( model.groupSortInteractionModel.keyboardSortArrowCueVisibleProperty.value ) ) {
           adjustMedianIndicatorBottom( topObjectPositionY );
         }

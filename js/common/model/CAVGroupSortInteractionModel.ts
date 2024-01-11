@@ -76,7 +76,7 @@ export default class CAVGroupSortInteractionModel extends GroupSortInteractionMo
     }
 
     // A focused group item will overwrite any heuristic from above.
-    this.moveSortIndicatorToFocusedGroupItem();
+    this.moveSortIndicatorToSelectedGroupItem();
   }
 }
 
