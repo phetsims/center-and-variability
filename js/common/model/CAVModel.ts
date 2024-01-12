@@ -56,8 +56,10 @@ export default class CAVModel extends SoccerModel<CAVSoccerSceneModel> {
         return new CAVGroupSortInteractionModel(
           soccerModel.selectedSceneModelProperty,
           soccerModel.selectedSceneStackedSoccerBallCountProperty,
-          soccerModel.selectedSceneMaxKicksProperty,
-          soccerModel.soccerBallsEnabledProperty, { tandem: tandem } );
+          soccerModel.selectedSceneMaxKicksProperty, {
+            enabledProperty: soccerModel.soccerBallsEnabledProperty,
+            tandem: tandem
+          } );
       },
       phetioType: CAVModelIO,
       phetioState: false,

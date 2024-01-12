@@ -10,16 +10,14 @@ import centerAndVariability from '../../centerAndVariability.js';
 import CAVSoccerSceneModel from './CAVSoccerSceneModel.js';
 import SoccerBall from '../../../../soccer-common/js/model/SoccerBall.js';
 import GroupSortInteractionModel, { GroupSortInteractionModelOptions } from '../../../../scenery-phet/js/accessibility/group-sort/model/GroupSortInteractionModel.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 
 export default class CAVGroupSortInteractionModel extends GroupSortInteractionModel<SoccerBall> {
 
   public constructor( private readonly selectedSceneModelProperty: TProperty<CAVSoccerSceneModel>,
                       private readonly selectedSceneStackedSoccerBallCountProperty: TProperty<number>,
-                      private readonly selectedSceneMaxKicksProperty: TProperty<number>,
-                      sortEnabledProperty: TReadOnlyProperty<boolean>, providedOptions?: GroupSortInteractionModelOptions ) {
-    super( sortEnabledProperty, providedOptions );
+                      private readonly selectedSceneMaxKicksProperty: TProperty<number>, providedOptions?: GroupSortInteractionModelOptions ) {
+    super( providedOptions );
   }
 
   // This is an algorithm that can be used to get the best guess about where the sort indicator should be set to based
@@ -33,10 +31,10 @@ export default class CAVGroupSortInteractionModel extends GroupSortInteractionMo
     //  If an object was sorted, objects are not input enabled, or the max number of balls haven't been kicked out
     //  don't show the sortIndicatorCue.
     this.mouseSortCueVisibleProperty.value = !this.hasGroupItemBeenSortedProperty.value &&
-                                                 !this.isKeyboardFocusedProperty.value &&
-                                                 soccerBallCount === maxKicks &&
-                                                 this.sortEnabledProperty.value &&
-                                                 _.every( sceneModel?.getActiveSoccerBalls(), soccerBall => soccerBall.valueProperty.value !== null );
+                                             !this.isKeyboardFocusedProperty.value &&
+                                             soccerBallCount === maxKicks &&
+                                             this.enabledProperty.value &&
+                                             _.every( sceneModel?.getActiveSoccerBalls(), soccerBall => soccerBall.valueProperty.value !== null );
 
     const reversedBalls = sceneModel.getActiveSoccerBalls().filter( soccerBall => soccerBall.valueProperty.value !== null ).reverse();
 
