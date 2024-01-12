@@ -18,7 +18,7 @@ export default class CAVGroupSortInteractionModel extends GroupSortInteractionMo
   public constructor( private readonly selectedSceneModelProperty: TProperty<CAVSoccerSceneModel>,
                       private readonly selectedSceneStackedSoccerBallCountProperty: TProperty<number>,
                       private readonly selectedSceneMaxKicksProperty: TProperty<number>,
-                      sceneModels: CAVSoccerSceneModel[], providedOptions?: GroupSortInteractionModelOptions ) {
+                      sceneModels: CAVSoccerSceneModel[], providedOptions?: GroupSortInteractionModelOptions<SoccerBall> ) {
     super( providedOptions );
 
     const allValueProperties = sceneModels.flatMap( sceneModel => sceneModel.soccerBalls.map( soccerBall => soccerBall.valueProperty ) );
