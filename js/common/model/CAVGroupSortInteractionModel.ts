@@ -60,7 +60,7 @@ export default class CAVGroupSortInteractionModel extends GroupSortInteractionMo
       // Show the sort indicator over the most recently landed ball
       this.selectedGroupItemProperty.value = reversedBalls.length > 0 ? reversedBalls[ 0 ] : null;
 
-      // TODO: Should the above algorithm be in soccer-common? https://github.com/phetsims/scenery-phet/issues/815
+      // TODO: MS!! Should the above algorithm be in soccer-common? https://github.com/phetsims/scenery-phet/issues/815
       /////////////////
 
       // Empirically determined based on height of AccordionBox and play area. This may need to be adjusted if those change.
