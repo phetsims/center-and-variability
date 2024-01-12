@@ -52,12 +52,12 @@ export default class CAVModel extends SoccerModel<CAVSoccerSceneModel> {
   public constructor( public readonly maxKicksProperty: TReadOnlyProperty<number>, sceneModels: CAVSoccerSceneModel[], providedOptions: CAVModelOptions ) {
 
     const options = optionize<CAVModelOptions, SelfOptions, ParentOptions>()( {
-      createGroupSortInteractionModel: soccerModel => {
+      createGroupSortInteractionModel: ( soccerModel, tandem ) => {
         return new CAVGroupSortInteractionModel(
           soccerModel.selectedSceneModelProperty,
           soccerModel.selectedSceneStackedSoccerBallCountProperty,
           soccerModel.selectedSceneMaxKicksProperty,
-          soccerModel.soccerBallsEnabledProperty );
+          soccerModel.soccerBallsEnabledProperty, { tandem: tandem } );
       },
       phetioType: CAVModelIO,
       phetioState: false,
