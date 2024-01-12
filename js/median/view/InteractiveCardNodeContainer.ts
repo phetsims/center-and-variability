@@ -42,7 +42,7 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import CardDragIndicatorNode from './CardDragIndicatorNode.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import GroupSortInteractionView from '../../../../soccer-common/js/view/GroupSortInteractionView.js';
+import GroupSortInteractionView from '../../../../scenery-phet/js/view/GroupSortInteractionView.js';
 
 const FOCUS_HIGHLIGHT_Y_MARGIN = CAVConstants.CARD_SPACING + 3;
 
