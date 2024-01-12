@@ -119,9 +119,9 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       visibleProperty: model.grabReleaseCueVisibleProperty
     } );
 
-    const keyboardDragArrowNode = GroupSortInteractionView.createSortCueNode( model.isKeyboardDragArrowVisibleProperty );
+    const keyboardSortCueNode = GroupSortInteractionView.createSortCueNode( model.isKeyboardDragArrowVisibleProperty );
 
-    this.addChild( keyboardDragArrowNode );
+    this.addChild( keyboardSortCueNode );
 
     const cardDragIndicatorNode = new CardDragIndicatorNode( {
       centerTop: new Vector2( 0.5 * CAVConstants.CARD_DIMENSION - PICK_UP_DELTA_X, CAVConstants.CARD_DIMENSION - 10 ),
@@ -249,7 +249,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
           focusedCardNode.model.isDraggingProperty.value = isCardGrabbed;
 
-          keyboardDragArrowNode.centerBottom = new Vector2( focusedCardNode.centerX + CARD_LAYER_OFFSET + PICK_UP_DELTA_X / 2 + 1, focusForSelectedCard.bottom + 11 );
+          keyboardSortCueNode.centerBottom = new Vector2( focusedCardNode.centerX + CARD_LAYER_OFFSET + PICK_UP_DELTA_X / 2 + 1, focusForSelectedCard.bottom + 11 );
         }
         else {
           this.setFocusHighlight( 'invisible' );

@@ -179,7 +179,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
     this.sceneViews = model.sceneModels.map( ( sceneModel, index ) => new CAVSceneView(
       model,
       sceneModel,
-      this.keyboardDragArrowNode,
+      this.keyboardSortCueNode,
       ( kicker, sceneModel ) => this.getKickerImageSets( kicker, sceneModel ),
       this.modelViewTransform,
       CAVConstants.PHYSICAL_RANGE,
@@ -254,11 +254,11 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
     } );
 
     const sortIndicatorArrowNode = GroupSortInteractionView.createSortCueNode(
-      model.groupSortInteractionModel.sortIndicatorCueVisibleProperty, DRAG_CUE_SCALE );
+      model.groupSortInteractionModel.mouseSortCueVisibleProperty, DRAG_CUE_SCALE );
 
     const dragIndicatorHandImage = new Image( dragIndicatorHand_png, {
       scale: 0.07,
-      visibleProperty: model.groupSortInteractionModel.sortIndicatorCueVisibleProperty,
+      visibleProperty: model.groupSortInteractionModel.mouseSortCueVisibleProperty,
       rotation: Math.PI / 4
     } );
 
@@ -277,7 +277,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
     };
 
     this.updateSortIndicatorNode = () => {
-      const dragIndicatorVisible = model.groupSortInteractionModel.sortIndicatorCueVisibleProperty.value;
+      const dragIndicatorVisible = model.groupSortInteractionModel.mouseSortCueVisibleProperty.value;
       const dragIndicatorValue = model.groupSortInteractionModel.sortIndicatorValueProperty.value;
 
       if ( dragIndicatorVisible && dragIndicatorValue !== null ) {
@@ -354,12 +354,12 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
         playAreaMedianIndicatorNode.bottom = topObjectPositionY;
 
         // If cueing indicators are visible and their stack matches the median stack, adjustments needs to be made.
-        if ( medianValue === model.groupSortInteractionModel.sortIndicatorValueProperty.value && model.groupSortInteractionModel.sortIndicatorCueVisibleProperty.value ) {
+        if ( medianValue === model.groupSortInteractionModel.sortIndicatorValueProperty.value && model.groupSortInteractionModel.mouseSortCueVisibleProperty.value ) {
           adjustMedianIndicatorBottom( topObjectPositionY );
 
         }
         if ( medianValue === model.groupSortInteractionModel.selectedGroupItemProperty.value?.valueProperty.value &&
-             ( model.groupSortInteractionModel.keyboardSortArrowCueVisibleProperty.value ) ) {
+             ( model.groupSortInteractionModel.keyboardSortCueVisibleProperty.value ) ) {
           adjustMedianIndicatorBottom( topObjectPositionY );
         }
 
@@ -369,8 +369,8 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       playAreaMedianIndicatorNode.visible = visible;
     };
 
-    Multilink.multilink( [ model.groupSortInteractionModel.sortIndicatorCueVisibleProperty,
-        model.groupSortInteractionModel.keyboardSortArrowCueVisibleProperty ],
+    Multilink.multilink( [ model.groupSortInteractionModel.mouseSortCueVisibleProperty,
+        model.groupSortInteractionModel.keyboardSortCueVisibleProperty ],
       () => {
         this.updateMedianNode();
       } );

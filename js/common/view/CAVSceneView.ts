@@ -27,13 +27,13 @@ export default class CAVSceneView extends SoccerSceneView<CAVSoccerSceneModel> {
 
   public constructor( model: CAVModel,
                       sceneModel: CAVSoccerSceneModel,
-                      keyboardDragArrowNode: Node,
+                      keyboardSortCueNode: Node,
                       getKickerImageSet: ( kicker: Kicker, sceneModel: SoccerSceneModel ) => KickerImageSet[],
                       modelViewTransform: ModelViewTransform2,
                       physicalRange: Range,
                       tandem: Tandem ) {
 
-    super( model, sceneModel, keyboardDragArrowNode,
+    super( model, sceneModel, keyboardSortCueNode,
       getKickerImageSet, modelViewTransform,
       physicalRange, tandem );
 

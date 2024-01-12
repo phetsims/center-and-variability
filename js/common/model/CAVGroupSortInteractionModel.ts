@@ -32,7 +32,7 @@ export default class CAVGroupSortInteractionModel extends GroupSortInteractionMo
 
     //  If an object was sorted, objects are not input enabled, or the max number of balls haven't been kicked out
     //  don't show the sortIndicatorCue.
-    this.sortIndicatorCueVisibleProperty.value = !this.hasGroupItemBeenSortedProperty.value &&
+    this.mouseSortCueVisibleProperty.value = !this.hasGroupItemBeenSortedProperty.value &&
                                                  !this.isKeyboardFocusedProperty.value &&
                                                  soccerBallCount === maxKicks &&
                                                  this.sortEnabledProperty.value &&
