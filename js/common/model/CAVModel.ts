@@ -14,7 +14,6 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import CAVConstants from '../CAVConstants.js';
 import Property from '../../../../axon/js/Property.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
-import Multilink from '../../../../axon/js/Multilink.js';
 import CAVSoccerSceneModel from './CAVSoccerSceneModel.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
@@ -56,7 +55,8 @@ export default class CAVModel extends SoccerModel<CAVSoccerSceneModel> {
         return new CAVGroupSortInteractionModel(
           soccerModel.selectedSceneModelProperty,
           soccerModel.selectedSceneStackedSoccerBallCountProperty,
-          soccerModel.selectedSceneMaxKicksProperty, {
+          soccerModel.selectedSceneMaxKicksProperty,
+          sceneModels, {
             enabledProperty: soccerModel.soccerBallsEnabledProperty,
             tandem: tandem
           } );
@@ -120,22 +120,6 @@ export default class CAVModel extends SoccerModel<CAVSoccerSceneModel> {
     } );
 
     this.infoButtonPressedEmitter = new Emitter();
-
-    const allValueProperties = sceneModels.flatMap( sceneModel => sceneModel.soccerBalls.map( soccerBall => soccerBall.valueProperty ) );
-
-    // It is important to link to the values of all the soccer balls in the screen, so that the dragIndicator can be
-    // updated after all the balls have landed, and not just after they have been kicked.
-    Multilink.multilinkAny( [
-      ...allValueProperties,
-      this.selectedSceneModelProperty,
-      this.groupSortInteractionModel.hasGroupItemBeenSortedProperty,
-      this.selectedSceneStackedSoccerBallCountProperty,
-      this.selectedSceneMaxKicksProperty,
-      this.groupSortInteractionModel.isKeyboardFocusedProperty,
-
-      // The median is queried in the subclass implementation, so needs to trigger an update
-      ...this.sceneModels.map( sceneModel => sceneModel.medianValueProperty )
-    ], () => this.groupSortInteractionModel.updateSortIndicator() );
   }
 
   // This function determines whether a value has crossed an integer or half-integer boundary, or lands exactly on an

@@ -107,7 +107,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
   private readonly sceneViews: SoccerSceneView[];
 
   private readonly updateMedianNode: () => void;
-  private readonly updateSortIndicatorNode: () => void;
+  private readonly updateMouseSortCueNode: () => void;
 
   protected readonly kickButtonGroup: KickButtonGroup;
 
@@ -256,7 +256,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
     const sortIndicatorArrowNode = GroupSortInteractionView.createSortCueNode(
       model.groupSortInteractionModel.mouseSortCueVisibleProperty, DRAG_CUE_SCALE );
 
-    const dragIndicatorHandImage = new Image( dragIndicatorHand_png, {
+    const mouseSortHandCueNode = new Image( dragIndicatorHand_png, {
       scale: 0.07,
       visibleProperty: model.groupSortInteractionModel.mouseSortCueVisibleProperty,
       rotation: Math.PI / 4
@@ -276,14 +276,14 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       playAreaMedianIndicatorNode.bottom = topObjectPositionY - 15;
     };
 
-    this.updateSortIndicatorNode = () => {
-      const dragIndicatorVisible = model.groupSortInteractionModel.mouseSortCueVisibleProperty.value;
-      const dragIndicatorValue = model.groupSortInteractionModel.sortIndicatorValueProperty.value;
+    this.updateMouseSortCueNode = () => {
+      const mouseSortCueVisible = model.groupSortInteractionModel.mouseSortCueVisibleProperty.value;
+      const selectedValue = model.groupSortInteractionModel.selectedGroupItemProperty.value?.valueProperty.value ?? null;
 
-      if ( dragIndicatorVisible && dragIndicatorValue !== null ) {
-        const topObjectPositionY = this.getTopObjectPositionY( dragIndicatorValue );
+      if ( mouseSortCueVisible && selectedValue !== null ) {
+        const topObjectPositionY = this.getTopObjectPositionY( selectedValue );
         sortIndicatorArrowNode.center = new Vector2(
-          this.modelViewTransform.modelToViewX( dragIndicatorValue ),
+          this.modelViewTransform.modelToViewX( selectedValue ),
 
           // This value must be kept in sync with the other occurrences of GroupSortInteractionView.createSortCueNode()
           // that are shown for the keyboard.
@@ -292,7 +292,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
 
         // If the drag indicator is visible and its stack matches the median stack, try to place the median indicator
         // above the drag indicator, while avoiding overlap with the accordion box.
-        if ( model.selectedSceneModelProperty.value.medianValueProperty.value === dragIndicatorValue ) {
+        if ( model.selectedSceneModelProperty.value.medianValueProperty.value === selectedValue ) {
           adjustMedianIndicatorBottom( topObjectPositionY );
           repositionNodeIfOverlappingAccordionBox( playAreaMedianIndicatorNode );
         }
@@ -304,20 +304,21 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
 
     ManualConstraint.create( this, [ sortIndicatorArrowNode ], sortIndicatorArrowNodeProxy => {
 
-      // Pixel adjustments needed with rotation option on dragIndicatorHandImage and empirically determined to match design
-      dragIndicatorHandImage.right = sortIndicatorArrowNodeProxy.left + 22;
-      dragIndicatorHandImage.top = sortIndicatorArrowNodeProxy.bottom + Math.abs( this.modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) ) - 5;
+      // Pixel adjustments needed with rotation option on mouseSortHandCueNode and empirically determined to match design
+      mouseSortHandCueNode.right = sortIndicatorArrowNodeProxy.left + 22;
+      mouseSortHandCueNode.top = sortIndicatorArrowNodeProxy.bottom + Math.abs( this.modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) ) - 5;
     } );
 
-    sortIndicatorArrowNode.addLinkedElement( model.groupSortInteractionModel.sortIndicatorValueProperty );
+    // TODO: DESIGN! This doesn't really work anymore, since the value is just taken from the current selected group item's value, https://github.com/phetsims/scenery-phet/issues/815
+    // sortIndicatorArrowNode.addLinkedElement( model.groupSortInteractionModel.sortIndicatorValueProperty );
 
-    this.visibleBoundsProperty.link( this.updateSortIndicatorNode );
-    this.model.selectedSceneModelProperty.link( this.updateSortIndicatorNode );
+    this.visibleBoundsProperty.link( this.updateMouseSortCueNode );
+    this.model.selectedSceneModelProperty.link( this.updateMouseSortCueNode );
     this.model.sceneModels.forEach( sceneModel => {
-      sceneModel.medianValueProperty.link( this.updateSortIndicatorNode );
-      sceneModel.objectChangedEmitter.addListener( this.updateSortIndicatorNode );
+      sceneModel.medianValueProperty.link( this.updateMouseSortCueNode );
+      sceneModel.objectChangedEmitter.addListener( this.updateMouseSortCueNode );
     } );
-    model.groupSortInteractionModel.registerUpdateSortIndicatorNode( this.updateSortIndicatorNode );
+    model.groupSortInteractionModel.registerUpdateSortIndicatorNode( this.updateMouseSortCueNode );
 
     const playAreaMedianIndicatorNode = new PlayAreaMedianIndicatorNode();
 
@@ -354,7 +355,8 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
         playAreaMedianIndicatorNode.bottom = topObjectPositionY;
 
         // If cueing indicators are visible and their stack matches the median stack, adjustments needs to be made.
-        if ( medianValue === model.groupSortInteractionModel.sortIndicatorValueProperty.value && model.groupSortInteractionModel.mouseSortCueVisibleProperty.value ) {
+        if ( medianValue === model.groupSortInteractionModel.selectedGroupItemProperty.value?.valueProperty.value &&
+             model.groupSortInteractionModel.mouseSortCueVisibleProperty.value ) {
           adjustMedianIndicatorBottom( topObjectPositionY );
 
         }
@@ -385,7 +387,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
     model.isPlayAreaMedianVisibleProperty.link( this.updateMedianNode );
 
     this.middleScreenViewLayer.addChild( sortIndicatorArrowNode );
-    this.middleScreenViewLayer.addChild( dragIndicatorHandImage );
+    this.middleScreenViewLayer.addChild( mouseSortHandCueNode );
 
     // Add to screenViewRootNode for alternativeInput
     this.screenViewRootNode.addChild( this.backScreenViewLayer );
@@ -435,7 +437,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
     this.updateAccordionBoxPosition();
 
     this.accordionBox.boundsProperty.link( this.updateMedianNode );
-    this.accordionBox.boundsProperty.link( this.updateSortIndicatorNode );
+    this.accordionBox.boundsProperty.link( this.updateMouseSortCueNode );
     this.accordionBox.boundsProperty.link( () => {
       this.sceneViews.forEach( sceneView => sceneView.groupSortInteractionView.setGroupFocusHighlightTop( this.accordionBox!.bounds.bottom ) );
     } );
