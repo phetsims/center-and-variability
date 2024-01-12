@@ -1,4 +1,4 @@
-// Copyright 2022-2023, University of Colorado Boulder
+// Copyright 2022-2024, University of Colorado Boulder
 
 /**
  * CAVScreenView serves as the primary base class for all ScreenViews within the simulation. It's designed to integrate

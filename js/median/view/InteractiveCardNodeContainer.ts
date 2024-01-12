@@ -1,4 +1,4 @@
-// Copyright 2022-2023, University of Colorado Boulder
+// Copyright 2022-2024, University of Colorado Boulder
 
 /**
  * InteractiveCardNodeContainer extends the functionality of the CardNodeContainer by adding interactivity features. It
