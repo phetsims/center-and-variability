@@ -9,7 +9,7 @@
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVSoccerSceneModel from './CAVSoccerSceneModel.js';
 import SoccerBall from '../../../../soccer-common/js/model/SoccerBall.js';
-import GroupSortInteractionModel, { GroupSortInteractionModelOptions } from '../../../../scenery-phet/js/model/GroupSortInteractionModel.js';
+import GroupSortInteractionModel, { GroupSortInteractionModelOptions } from '../../../../scenery-phet/js/accessibility/group-sort/model/GroupSortInteractionModel.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 

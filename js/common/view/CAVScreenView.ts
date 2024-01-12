@@ -58,7 +58,7 @@ import isResettingProperty from '../../../../soccer-common/js/model/isResettingP
 import KickerPortrayalUSA from '../../../../soccer-common/js/view/KickerPortrayalUSA.js';
 import KickerPortrayalAfrica from '../../../../soccer-common/js/view/KickerPortrayalAfrica.js';
 import KickerPortrayalAfricaModest from '../../../../soccer-common/js/view/KickerPortrayalAfricaModest.js';
-import GroupSortInteractionView from '../../../../scenery-phet/js/view/GroupSortInteractionView.js';
+import GroupSortInteractionView from '../../../../scenery-phet/js/accessibility/group-sort/view/GroupSortInteractionView.js';
 
 type SelfOptions = EmptySelfOptions;
 

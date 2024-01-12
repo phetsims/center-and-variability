@@ -9,7 +9,7 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import InteractiveCueArrowNode from '../../../../scenery-phet/js/view/InteractiveCueArrowNode.js';
+import InteractiveCueArrowNode from '../../../../scenery-phet/js/accessibility/group-sort/view/InteractiveCueArrowNode.js';
 import { Image, Node, NodeOptions, NodeTranslationOptions } from '../../../../scenery/js/imports.js';
 import dragIndicatorHand_png from '../../../images/dragIndicatorHand_png.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
