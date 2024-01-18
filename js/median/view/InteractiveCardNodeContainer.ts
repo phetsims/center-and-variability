@@ -24,8 +24,9 @@ import centerAndVariability from '../../centerAndVariability.js';
 import InteractiveCardContainerModel from '../model/InteractiveCardContainerModel.js';
 import Property from '../../../../axon/js/Property.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
-import { animatedPanZoomSingleton, HighlightFromNode, HighlightPath, KeyboardListener, NodeTranslationOptions, Path } from '../../../../scenery/js/imports.js';
+import { animatedPanZoomSingleton, Node, NodeTranslationOptions } from '../../../../scenery/js/imports.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import Range from '../../../../dot/js/Range.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import CardNode, { cardDropClip, cardPickUpSoundClip, PICK_UP_DELTA_X } from './CardNode.js';
@@ -34,7 +35,6 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
-import GrabReleaseCueNode from '../../../../scenery-phet/js/accessibility/nodes/GrabReleaseCueNode.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import CelebrationNode from './CelebrationNode.js';
 import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-players/checkboxCheckedSoundPlayer.js';
@@ -43,6 +43,7 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import CardDragIndicatorNode from './CardDragIndicatorNode.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import GroupSortInteractionView from '../../../../scenery-phet/js/accessibility/group-sort/view/GroupSortInteractionView.js';
+import CardModel from '../model/CardModel.js';
 
 const FOCUS_HIGHLIGHT_Y_MARGIN = CAVConstants.CARD_SPACING + 3;
 
@@ -61,6 +62,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
   // The message that appears when the cards are sorted
   private readonly celebrationNode: CelebrationNode;
+  private readonly groupSortInteractionView: GroupSortInteractionView<CardModel, CardNode>;
 
   public constructor( model: InteractiveCardContainerModel,
                       private readonly isSortingDataProperty: Property<boolean>,
@@ -77,6 +79,47 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
     this.celebrationNode = new CelebrationNode( model, this.cardMap, this.sceneModel.resetEmitter );
     this.addChild( this.celebrationNode );
+
+    this.groupSortInteractionView = new GroupSortInteractionView( model.groupSortInteractionModel, this, {
+      getNextSelectedGroupItem: unclampedDelta => {
+        // TODO: we have to do this every time, perhaps a parameter? https://github.com/phetsims/center-and-variability/issues/605
+        const selectedCardModel = model.groupSortInteractionModel.selectedGroupItemProperty.value!;
+        const currentIndex = selectedCardModel.indexProperty.value!;
+        assert && assert( currentIndex !== null, 'need an index to be sorted' );
+
+        // TODO: until range is dynamic, this could be outside of current cards https://github.com/phetsims/center-and-variability/issues/605
+        const delta = new Range( 0, this.getActiveCardNodesInOrder().length - 1 ).clampDelta( currentIndex, unclampedDelta );
+        const newIndex = currentIndex + delta;
+        const cardNodes = this.getActiveCardNodesInOrder();
+        const newCardNode = cardNodes[ newIndex ];
+        assert && assert( newCardNode, 'wrong index for available cards I believe' );
+        return newCardNode.model;
+      },
+      onGrab: groupItem => {
+        groupItem.isDraggingProperty.value = true;
+      },
+      onRelease: groupItem => {
+        groupItem.isDraggingProperty.value = false;
+      },
+      sortGroupItem: ( selectedCardModel, newValue ) => {
+        assert && assert( selectedCardModel.indexProperty.value !== null, 'need an index to be sorted' );
+        const delta = newValue - selectedCardModel.indexProperty.value!;
+        swapCards( this.getActiveCardNodesInOrder(), this.cardMap.get( selectedCardModel )!, delta );
+      },
+      onSort: () => {
+
+        // See if the user unsorted the data.  If so, uncheck the "Sort Data" checkbox
+        if ( this.isSortingDataProperty.value && !this.model.isDataSorted() ) {
+          this.isSortingDataProperty.value = false;
+        }
+      },
+      getGroupItemToSelect: () => {
+        const activeCards = this.getActiveCardNodesInOrder();
+        return activeCards[ 0 ] ? activeCards[ 0 ].model : null;
+      },
+      getNodeFromModelItem: cardModel => this.cardMap.get( cardModel ) || null,
+      sortingRange: new Range( 0, this.model.cards.length - 1 ) // TODO: Need to support Property(Range) https://github.com/phetsims/center-and-variability/issues/605
+    } );
 
     this.cardMap.forEach( ( cardNode, cardModel ) => {
       // Update the position of all cards (via animation) whenever any card is dragged
@@ -107,32 +150,21 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       } );
     } );
 
-    const focusHighlightPath = new HighlightPath( null, {
-      outerStroke: HighlightPath.OUTER_LIGHT_GROUP_FOCUS_COLOR,
-      innerStroke: HighlightPath.INNER_LIGHT_GROUP_FOCUS_COLOR,
-      outerLineWidth: HighlightPath.GROUP_OUTER_LINE_WIDTH,
-      innerLineWidth: HighlightPath.GROUP_INNER_LINE_WIDTH
-    } );
-
-    const grabReleaseCueNode = new GrabReleaseCueNode( {
-      top: CAVConstants.CARD_DIMENSION + FOCUS_HIGHLIGHT_Y_MARGIN + 15,
-      visibleProperty: model.grabReleaseCueVisibleProperty
-    } );
-
-    const keyboardSortCueNode = GroupSortInteractionView.createSortCueNode( model.isKeyboardDragArrowVisibleProperty );
+    const keyboardSortCueNode = GroupSortInteractionView.createSortCueNode( model.groupSortInteractionModel.keyboardSortCueVisibleProperty );
 
     this.addChild( keyboardSortCueNode );
 
     const cardDragIndicatorNode = new CardDragIndicatorNode( {
       centerTop: new Vector2( 0.5 * CAVConstants.CARD_DIMENSION - PICK_UP_DELTA_X, CAVConstants.CARD_DIMENSION - 10 ),
       visibleProperty: new DerivedProperty(
-        [ this.inputEnabledProperty, model.isKeyboardFocusedProperty, model.dragIndicationCardProperty ],
-        ( inputEnabled, hasKeyboardFocus, dragIndicationCard ) => inputEnabled && !hasKeyboardFocus && !!dragIndicationCard )
+        [ this.inputEnabledProperty, model.groupSortInteractionModel.mouseSortCueVisibleProperty ],
+        ( inputEnabled, mouseSortCueVisible ) => inputEnabled && mouseSortCueVisible )
     } );
 
     this.addChild( cardDragIndicatorNode );
 
-    model.dragIndicationCardProperty.lazyLink( ( newCard, oldCard ) => {
+    // TODO: Do we perhaps have to update this based on position instead of selection? https://github.com/phetsims/center-and-variability/issues/605
+    model.groupSortInteractionModel.selectedGroupItemProperty.lazyLink( ( newCard, oldCard ) => {
 
       if ( oldCard ) {
         const oldCardNode = this.cardMap.get( oldCard )!;
@@ -176,7 +208,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
     // Needs to be pickable in accordion box.
     this.pickable = true;
 
-    const focusedCardNodeProperty: TReadOnlyProperty<CardNode | null> = new DerivedProperty( [ model.focusedCardProperty ], focusedCard => {
+    const focusedCardNodeProperty: TReadOnlyProperty<CardNode | null> = new DerivedProperty( [ model.groupSortInteractionModel.selectedGroupItemProperty ], focusedCard => {
       return focusedCard === null ? focusedCard : this.cardMap.get( focusedCard )!;
     } );
 
@@ -187,77 +219,57 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
       // When a user is focused on the card container but there are no cards yet, we want to ensure that a card gets focused
       // once there is a card.
-      if ( model.focusedCardProperty.value === null && this.focused && model.getActiveCards().length === 1 ) {
-        model.focusedCardProperty.value = activeCardNodes[ 0 ].model;
+      // TODO: this.focused should use the model https://github.com/phetsims/center-and-variability/issues/605
+      if ( model.groupSortInteractionModel.selectedGroupItemProperty.value === null && this.focused && model.getActiveCards().length === 1 ) {
+        model.groupSortInteractionModel.selectedGroupItemProperty.value = activeCardNodes[ 0 ].model;
       }
 
-      // If the card cells changed, and we have no more active cards left, that means that all the cards were removed.
+        // If the card cells changed, and we have no more active cards left, that means that all the cards were removed.
       // Therefore, we want to set the focused card to null.
       else if ( model.getActiveCards().length === 0 ) {
-        model.focusedCardProperty.value = null;
-      }
-    } );
-
-    this.addInputListener( {
-      focus: () => {
-        const activeCardNodes = this.getActiveCardNodesInOrder();
-        if ( model.focusedCardProperty.value === null && activeCardNodes.length > 0 ) {
-          model.focusedCardProperty.value = activeCardNodes[ 0 ].model;
-        }
-
-        // When the group receives keyboard focus, make sure that the focused card is displayed
-        if ( focusedCardNodeProperty.value ) {
-          animatedPanZoomSingleton.listener.panToNode( focusedCardNodeProperty.value, true );
-        }
-        model.isKeyboardFocusedProperty.value = true;
-      },
-      blur: () => {
-        model.isCardGrabbedProperty.value = false;
-        model.isKeyboardFocusedProperty.value = false;
+        model.groupSortInteractionModel.selectedGroupItemProperty.value = null;
       }
     } );
 
     // When pdomFocusHighlightsVisibleProperty become false, interaction with a mouse has begun while using
     // Interactive Highlighting. When that happens, clear the sim-specific state tracking 'focused' cards.
+    // TODO: MS: This seems similar to the "over" strategy inside the group sort view, let's talk https://github.com/phetsims/center-and-variability/issues/605
     phet.joist.sim.display.focusManager.pdomFocusHighlightsVisibleProperty.link( ( visible: boolean ) => {
       if ( !visible ) {
-        if ( model.focusedCardProperty.value !== null ) {
+        if ( model.groupSortInteractionModel.selectedGroupItemProperty.value !== null ) {
 
           // Before clearing out the focusedCardProperty the CardModel must be cleared out of it's
           // dragging state.
-          model.focusedCardProperty.value.isDraggingProperty.set( false );
+          model.groupSortInteractionModel.selectedGroupItemProperty.value.isDraggingProperty.set( false );
 
           // Clear the 'focused' card so that there isn't a flicker to a highlight around that card when
           // moving between the CardNode interactive highlight and the container group highlight (which has
           // a custom highlight around the focused card).
-          model.focusedCardProperty.set( null );
+          model.groupSortInteractionModel.selectedGroupItemProperty.value = null;
         }
 
-        model.isCardGrabbedProperty.value = false;
+        model.groupSortInteractionModel.isGroupItemKeyboardGrabbedProperty.value = false;
 
         // This controls the visibility of interaction cues (keyboard vs mouse), so we need to clear it when
         // switching interaction modes.
-        model.isKeyboardFocusedProperty.value = false;
+        // TODO: move to common code? https://github.com/phetsims/center-and-variability/issues/605
+        model.groupSortInteractionModel.isKeyboardFocusedProperty.value = false;
       }
     } );
 
-    Multilink.multilink( [ focusedCardNodeProperty, model.isCardGrabbedProperty ], ( focusedCardNode, isCardGrabbed ) => {
+    Multilink.multilink( [ focusedCardNodeProperty, model.groupSortInteractionModel.isGroupItemKeyboardGrabbedProperty ],
+      ( focusedCardNode, isCardGrabbed ) => {
         if ( focusedCardNode ) {
-
-          const focusForSelectedCard = new HighlightFromNode( focusedCardNode.cardNode, { dashed: isCardGrabbed } );
-          this.setFocusHighlight( focusForSelectedCard );
 
           focusedCardNode.model.isDraggingProperty.value = isCardGrabbed;
 
-          keyboardSortCueNode.centerBottom = new Vector2( focusedCardNode.centerX + CARD_LAYER_OFFSET + PICK_UP_DELTA_X / 2 + 1, focusForSelectedCard.bottom + 11 );
+          keyboardSortCueNode.centerBottom = new Vector2( focusedCardNode.centerX + CARD_LAYER_OFFSET + PICK_UP_DELTA_X / 2 + 1,
+            // TODO: MS: Help? https://github.com/phetsims/center-and-variability/issues/605
+            ( this.focusHighlight as unknown as Node ).bottom + 11 );
         }
-        else {
-          this.setFocusHighlight( 'invisible' );
-        }
-      }
-    );
+      } );
 
-    model.isCardGrabbedProperty.link( isCardGrabbed => {
+    model.groupSortInteractionModel.isGroupItemKeyboardGrabbedProperty.link( isCardGrabbed => {
       if ( isCardGrabbed ) {
         this.wasSortedBefore = model.isDataSorted();
       }
@@ -278,6 +290,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
     // Move and swap cards according to the focused card's target index. Used for alternative input.
     const swapCards = ( activeCards: CardNode[], focusedCard: CardNode, delta: number ) => {
       const currentIndex = activeCards.indexOf( focusedCard );
+      assert && assert( focusedCard.model.indexProperty.value === currentIndex, 'sanity check' );
       const targetIndex = Utils.clamp( currentIndex + delta, 0, activeCards.length - 1 );
 
       if ( targetIndex !== currentIndex ) {
@@ -301,100 +314,27 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
         animatedPanZoomSingleton.listener.panToNode( focusedCard, true );
 
         model.cardCellsChangedEmitter.emit();
-
-        // Gets rid of the hand icon
-        model.hasKeyboardMovedCardProperty.value = true;
       }
     };
 
-    const keyboardListener = new KeyboardListener( {
-      fireOnHold: true,
-      keys: [ 'd', 'a', 'arrowRight', 'arrowLeft', 'w', 's', 'arrowUp', 'arrowDown', 'enter', 'space', 'home', 'end', 'escape', 'pageUp', 'pageDown' ],
-      callback: ( event, keysPressed ) => {
-
-        const focusedCardNode = focusedCardNodeProperty.value;
-        const activeCardNodes = this.getActiveCardNodesInOrder();
-        const numberOfActiveCards = activeCardNodes.length;
-        const isCardGrabbed = model.isCardGrabbedProperty.value;
-
-        // If there are no active cards no card can be focused and no keyboard input is allowed.
-        if ( numberOfActiveCards === 0 ) {
-          model.focusedCardProperty.value = null;
-          return;
-        }
-
-        if ( focusedCardNode ) {
-          const delta = this.getKeystrokeDelta( keysPressed, numberOfActiveCards );
-
-          if ( [ 'enter', 'space' ].includes( keysPressed ) ) {
-            model.isCardGrabbedProperty.value = !model.isCardGrabbedProperty.value;
-            model.hasKeyboardGrabbedCardProperty.value = true;
-
-            // See if the user unsorted the data.  If so, uncheck the "Sort Data" checkbox
-            if ( !model.isCardGrabbedProperty.value && this.isSortingDataProperty.value && !this.model.isDataSorted() ) {
-              this.isSortingDataProperty.value = false;
-            }
-          }
-          else if ( isCardGrabbed ) {
-            if ( keysPressed === 'escape' ) {
-              model.isCardGrabbedProperty.value = false;
-            }
-
-            // If we have a nonNull delta and the card is grabbed we want to swap card positions.
-            else if ( delta !== null ) {
-              swapCards( activeCardNodes, focusedCardNode, delta );
-            }
-          }
-
-          // If we have a nonNull delta and the card is not grabbed we want to shift focus to a different card.
-          else if ( delta !== null ) {
-
-            // Shift the card focus when a card is not grabbed.
-            const currentIndex = activeCardNodes.indexOf( focusedCardNode );
-            const nextIndex = Utils.clamp( currentIndex + delta, 0, numberOfActiveCards - 1 );
-            model.focusedCardProperty.value = activeCardNodes[ nextIndex ].model;
-            model.hasKeyboardSelectedDifferentCardProperty.value = true;
-            animatedPanZoomSingleton.listener.panToNode( focusedCardNode, true );
-          }
-          else {
-
-            // No cards are grabbed! We cleared the 'focused' card because we were using mouse input - start over with
-            // keyboard interaction and focus the first card AND make sure that all cards individually are no longer
-            // dragging.
-            this.cardNodes.forEach( cardNode => {
-              cardNode.model.isDraggingProperty.value = false;
-            } );
-            model.isCardGrabbedProperty.value = false;
-
-            model.focusedCardProperty.value = activeCardNodes[ 0 ].model;
-          }
-        }
-        else {
-          model.focusedCardProperty.value = activeCardNodes[ 0 ].model;
-        }
-      }
+    const grabReleaseCueNode = GroupSortInteractionView.createGrabReleaseCueNode( model.groupSortInteractionModel.grabReleaseCueVisibleProperty, {
+      top: CAVConstants.CARD_DIMENSION + FOCUS_HIGHLIGHT_Y_MARGIN + 15
     } );
+
+    // TODO: MS! Discuss this as a design patter vs. handling visibility manually, https://github.com/phetsims/center-and-variability/issues/605
+    this.groupSortInteractionView.groupFocusHighlightPath.addChild( grabReleaseCueNode );
+
     const focusHighlightWidthProperty = new DerivedProperty( [ model.numActiveCardsProperty ], numActiveCards => {
       return model.getCardPositionX( numActiveCards === 0 ? 1 : numActiveCards );
     } );
 
-    focusHighlightPath.addChild( grabReleaseCueNode );
-
-    const highlightRectangle = new Path( null );
-    this.addChild( highlightRectangle );
-    highlightRectangle.moveToBack();
-
+    const marginX = 7;
     focusHighlightWidthProperty.link( focusHighlightWidth => {
-      const marginX = 7;
       const focusRect = Shape.rect( -marginX, -FOCUS_HIGHLIGHT_Y_MARGIN, focusHighlightWidth + 2 * marginX, CAVConstants.CARD_DIMENSION + 2 * FOCUS_HIGHLIGHT_Y_MARGIN + 9 );
-      focusHighlightPath.setShape( focusRect );
-      highlightRectangle.setShape( focusRect );
+      this.groupSortInteractionView.groupFocusHighlightPath.setShape( focusRect );
       const cueNodeWidth = grabReleaseCueNode.width;
-      grabReleaseCueNode.centerX = Utils.clamp( focusRect.bounds.centerX, cueNodeWidth / 2, this.width - cueNodeWidth / 2 );
+      grabReleaseCueNode.centerX = Utils.clamp( focusRect.bounds.centerX, cueNodeWidth / 2, Math.max( this.width - cueNodeWidth / 2, cueNodeWidth ) );
     } );
-
-    this.setGroupFocusHighlight( focusHighlightPath );
-    this.addInputListener( keyboardListener );
   }
 
   // The listener which is linked to the cardNode.positionProperty
@@ -440,19 +380,6 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
         }
       }
     };
-  }
-
-  private getKeystrokeDelta( keysPressed: string, numberOfActiveCards: number ): number | null {
-    if ( [ 'arrowRight', 'arrowLeft', 'a', 'd', 'arrowUp', 'arrowDown', 'w', 's' ].includes( keysPressed ) ) {
-      return [ 'arrowRight', 'd', 'arrowUp', 'w' ].includes( keysPressed ) ? 1 : -1;
-    }
-    else if ( [ 'pageUp', 'pageDown' ].includes( keysPressed ) ) {
-      return keysPressed === 'pageUp' ? 3 : -3;
-    }
-    else if ( [ 'home', 'end' ].includes( keysPressed ) ) {
-      return keysPressed === 'end' ? numberOfActiveCards : -numberOfActiveCards;
-    }
-    return null;
   }
 }
 

@@ -21,20 +21,17 @@ import cardMovement6_mp3 from '../../../sounds/cardMovement6_mp3.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import MedianModel from './MedianModel.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import CardModel from './CardModel.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import NullableIO from '../../../../tandem/js/types/NullableIO.js';
-import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import isResettingProperty from '../../../../soccer-common/js/model/isResettingProperty.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
+import GroupSortInteractionModel from '../../../../scenery-phet/js/accessibility/group-sort/model/GroupSortInteractionModel.js';
 
 const cardMovementSounds = [
   cardMovement1_mp3,
@@ -74,33 +71,11 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
   // For sonification, order the active, non-displaced cards appeared in the last step
   private lastStepOrder: CardModel[] = [];
 
-  // Indicates whether the user has ever dragged a card, used to determine dragIndicationCardProperty.
-  public readonly hasDraggedCardProperty: TReadOnlyProperty<boolean>;
-
-  // The card where the drag indicator should appear. null if no drag indicator should appear.
-  public readonly dragIndicationCardProperty: Property<CardModel | null>;
-
   public readonly totalDragDistanceProperty: Property<number>;
 
-  // KEYBOARD INPUT PROPERTIES:
-  // The card which currently has focus. Is part of what controls highlight visibility among other things.
-  public readonly focusedCardProperty: Property<CardModel | null> = new Property<CardModel | null>( null );
-
-  // Tracks when a card is currently grabbed via keyboard input.
-  public readonly isCardGrabbedProperty = new BooleanProperty( false );
-
-  // Visible Properties for keyboard hints
-  public readonly grabReleaseCueVisibleProperty: TReadOnlyProperty<boolean>;
-  public readonly isKeyboardDragArrowVisibleProperty: TReadOnlyProperty<boolean>;
-
-  // Properties that track if a certain action has ever been performed via keyboard input.
-  public readonly hasKeyboardMovedCardProperty: Property<boolean>;
-  public readonly hasKeyboardGrabbedCardProperty = new BooleanProperty( false );
-  public readonly hasKeyboardSelectedDifferentCardProperty = new BooleanProperty( false );
-
-  // Property that is triggered via focus and blur events in the InteractiveCardNodeContainer
-  public readonly isKeyboardFocusedProperty = new BooleanProperty( false );
   public readonly manuallySortedEmitter: Emitter;
+
+  public readonly groupSortInteractionModel: GroupSortInteractionModel<CardModel>;
 
   public constructor( medianModel: MedianModel, providedOptions: InteractiveCardContainerModelOptions ) {
     super( medianModel, providedOptions );
@@ -111,71 +86,42 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
       phetioDocumentation: 'Accumulated card drag distance, for purposes of hiding the drag indicator node'
     } );
 
-    this.hasKeyboardMovedCardProperty = new BooleanProperty( false, {
-      tandem: providedOptions.tandem.createTandem( 'hasKeyboardMovedCardProperty' ),
-      phetioReadOnly: true, // controlled by the sim
-      phetioDocumentation: 'Whether a card been moved using the keyboard, for purposes of hiding the drag indicator node'
+    this.groupSortInteractionModel = new GroupSortInteractionModel<CardModel>( {
+      getValueProperty: cardModel => cardModel.indexProperty,
+      tandem: providedOptions.tandem.createTandem( 'groupSortInteractionModel' )
     } );
 
-    this.hasDraggedCardProperty = new DerivedProperty(
-      [ this.totalDragDistanceProperty, this.hasKeyboardMovedCardProperty ],
-      ( totalDragDistance, hasKeyboardMovedCard ) => totalDragDistance > 15 || hasKeyboardMovedCard
-    );
-
-    this.dragIndicationCardProperty = new Property<CardModel | null>( null, {
-      phetioReadOnly: true,
-      phetioValueType: NullableIO( ReferenceIO( CardModel.CardModelIO ) ),
-      tandem: this.representationContext === 'accordion' ? providedOptions.tandem.createTandem( 'cardDragIndicatorProperty' ) : Tandem.OPT_OUT,
-      phetioDocumentation: 'This is for PhET-iO internal use only.'
+    this.totalDragDistanceProperty.link( totalDragDistance => {
+      this.groupSortInteractionModel.hasGroupItemBeenSortedProperty.value = totalDragDistance > 15 ||
+                                                                            this.groupSortInteractionModel.hasGroupItemBeenSortedProperty.value;
     } );
-
-    this.isKeyboardDragArrowVisibleProperty = new DerivedProperty( [ this.focusedCardProperty, this.hasKeyboardMovedCardProperty, this.hasKeyboardGrabbedCardProperty,
-        this.isCardGrabbedProperty, this.isKeyboardFocusedProperty ],
-      ( focusedCard, hasKeyboardMovedCard, hasGrabbedCard, isCardGrabbed, hasKeyboardFocus ) => {
-        return focusedCard !== null && !hasKeyboardMovedCard && hasGrabbedCard && isCardGrabbed && hasKeyboardFocus;
-      } );
-
-    this.grabReleaseCueVisibleProperty = new DerivedProperty( [ this.focusedCardProperty, this.hasKeyboardGrabbedCardProperty, this.isKeyboardFocusedProperty ],
-      ( focusedCard, hasGrabbedCard, hasKeyboardFocus ) => {
-        return focusedCard !== null && !hasGrabbedCard && hasKeyboardFocus;
-      } );
 
     this.cardCellsChangedEmitter.addListener( () => {
       medianModel.areCardsSortedProperty.value = this.isDataSorted();
     } );
 
-    const updateDragIndicationCardProperty = () => {
+    const updateMouseSortCueNode = () => {
 
-      const leftCard = this.getCardsInCellOrder()[ 0 ];
-      const rightCard = this.getCardsInCellOrder()[ 1 ];
-
-      // If the user has not yet dragged a card and there are multiple cards showing, add the drag indicator to leftCard.
-      if ( !this.hasDraggedCardProperty.value && leftCard && rightCard ) {
-        this.dragIndicationCardProperty.value = leftCard;
-      }
-
+      // If the user has not yet dragged a card and there are multiple cards showing, add the drag indicator.
       // If the user has dragged a card, then the drag indicator does not need to be shown.
-      if ( this.hasDraggedCardProperty.value || !leftCard || !rightCard ) {
-        this.dragIndicationCardProperty.value = null;
-      }
+      // TODO: DESIGN! not any interaction sorted, just for mouse, https://github.com/phetsims/center-and-variability/issues/605
+      this.groupSortInteractionModel.mouseSortCueVisibleProperty.value = this.getCardsInCellOrder().length >= 2 &&
+                                                                         !this.groupSortInteractionModel.hasGroupItemBeenSortedProperty.value &&
+                                                                         !this.groupSortInteractionModel.isKeyboardFocusedProperty.value;
     };
 
-    this.cardCellsChangedEmitter.addListener( updateDragIndicationCardProperty );
-    this.hasDraggedCardProperty.link( updateDragIndicationCardProperty );
-    this.cards.forEach( card => card.soccerBall.valueProperty.lazyLink( updateDragIndicationCardProperty ) );
+    this.cardCellsChangedEmitter.addListener( updateMouseSortCueNode );
+    this.groupSortInteractionModel.registerUpdateSortIndicatorNode( updateMouseSortCueNode );
+    this.cards.forEach( card => card.soccerBall.valueProperty.lazyLink( updateMouseSortCueNode ) );
 
     medianModel.selectedSceneModelProperty.value.resetEmitter.addListener( () => {
       this.totalDragDistanceProperty.reset();
-      this.hasKeyboardMovedCardProperty.reset();
-      this.hasKeyboardGrabbedCardProperty.reset();
-      this.hasKeyboardSelectedDifferentCardProperty.reset();
+      this.groupSortInteractionModel.reset();
     } );
 
     medianModel.selectedSceneModelProperty.value.preClearDataEmitter.addListener( () => {
-        this.focusedCardProperty.reset();
-        this.isCardGrabbedProperty.reset();
-      }
-    );
+      this.groupSortInteractionModel.resetInteractionState();
+    } );
 
     this.manuallySortedEmitter = new Emitter( {
       tandem: providedOptions.tandem.createTandem( 'manuallySortedEmitter' ),
