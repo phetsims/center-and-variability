@@ -54,7 +54,7 @@ const cardSoundEnableProperty = new DerivedProperty( [ isResettingProperty, isSe
   }
   return !isResetting && !isSettingState && isEnabled;
 }, {
-  strictAxonDependencies: false
+  strictAxonDependencies: false //TODO https://github.com/phetsims/center-and-variability/issues/607
 } );
 
 export const cardMovementSoundClips = cardMovementSounds.map( sound => new SoundClip( sound, {

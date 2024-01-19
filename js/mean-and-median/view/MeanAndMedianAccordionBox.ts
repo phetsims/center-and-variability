@@ -97,7 +97,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
         const result = valueProperty.value;
         return result === null ? unknownStringProperty.value : valuePatternStringProperty.value;
       }, {
-        strictAxonDependencies: false
+        strictAxonDependencies: false //TODO https://github.com/phetsims/center-and-variability/issues/607
       } );
 
       return new Text( readoutPatternStringProperty, {
