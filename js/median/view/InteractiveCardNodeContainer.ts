@@ -232,8 +232,8 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
     } );
 
     // When pdomFocusHighlightsVisibleProperty become false, interaction with a mouse has begun while using
-    // Interactive Highlighting. When that happens, clear the sim-specific state tracking 'focused' cards.
-    // TODO: MS: This seems similar to the "over" strategy inside the group sort view, let's talk https://github.com/phetsims/center-and-variability/issues/605
+    // Interactive Highlighting. When that happens, clear the sim-specific state tracking 'focused' cards. See https://github.com/phetsims/center-and-variability/issues/557
+    // TODO: MK! Read through above issue and update best thoughts for moving forward, https://github.com/phetsims/center-and-variability/issues/605
     phet.joist.sim.display.focusManager.pdomFocusHighlightsVisibleProperty.link( ( visible: boolean ) => {
       if ( !visible ) {
         if ( model.groupSortInteractionModel.selectedGroupItemProperty.value !== null ) {
