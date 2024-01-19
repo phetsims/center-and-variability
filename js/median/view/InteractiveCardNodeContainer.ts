@@ -81,13 +81,11 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
     this.addChild( this.celebrationNode );
 
     this.groupSortInteractionView = new GroupSortInteractionView( model.groupSortInteractionModel, this, {
-      getNextSelectedGroupItem: unclampedDelta => {
-        // TODO: we have to do this every time, perhaps a parameter? https://github.com/phetsims/center-and-variability/issues/605
-        const selectedCardModel = model.groupSortInteractionModel.selectedGroupItemProperty.value!;
+      getNextSelectedGroupItem: ( unclampedDelta, selectedCardModel ) => {
         const currentIndex = selectedCardModel.indexProperty.value!;
         assert && assert( currentIndex !== null, 'need an index to be sorted' );
 
-        // TODO: until range is dynamic, this could be outside of current cards https://github.com/phetsims/center-and-variability/issues/605
+        // TODO: MS! until range is dynamic, this could be outside of current cards https://github.com/phetsims/center-and-variability/issues/605
         const delta = new Range( 0, this.getActiveCardNodesInOrder().length - 1 ).clampDelta( currentIndex, unclampedDelta );
         const newIndex = currentIndex + delta;
         const cardNodes = this.getActiveCardNodesInOrder();
