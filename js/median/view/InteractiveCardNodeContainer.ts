@@ -217,8 +217,8 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
       // When a user is focused on the card container but there are no cards yet, we want to ensure that a card gets focused
       // once there is a card.
-      // TODO: this.focused should use the model https://github.com/phetsims/center-and-variability/issues/605
-      if ( model.groupSortInteractionModel.selectedGroupItemProperty.value === null && this.focused && model.getActiveCards().length === 1 ) {
+      if ( model.groupSortInteractionModel.selectedGroupItemProperty.value === null &&
+           model.groupSortInteractionModel.isKeyboardFocusedProperty.value && model.getActiveCards().length === 1 ) {
         model.groupSortInteractionModel.selectedGroupItemProperty.value = activeCardNodes[ 0 ].model;
       }
 
