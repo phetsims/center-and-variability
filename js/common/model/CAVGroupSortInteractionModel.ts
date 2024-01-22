@@ -1,105 +1,74 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 /**
- * CAVGroupSortInteractionModel is a subclass that adds logic to place the drag indicator in a
- * spot that is not the median. Its role is to minimize the occurrence of drag indicator and median indicator overlap.
+ * CAVGroupSortInteractionModel is a subclass that adds logic to place the drag cue in a
+ * spot that is not the median. Its role is to minimize the occurrence of drag cue and median indicator overlap by
+ * default. This logic is ignored if there is a specific selection made by the groupSortInteraction (not just a default
+ * heuristic).
  * @author Marla Schulz (PhET Interactive Simulations)
- *
- * design requirements:
- * 1. Default selection is the most recently landed ball
- * 2. Mouse cue location doesn't overlap with the median marker unless keyboard has specifically selected it.
- * 3. BUG FIX! mouse cue doesn't actually follow keyboard selection. boooo.
- * TODO: https://github.com/phetsims/scenery-phet/issues/815
- * 1. SoccerCommonGroupSort for the multilink and "recently landed ball" selection heuristic.
- * 2. Bug fixes and confirmation.
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVSoccerSceneModel from './CAVSoccerSceneModel.js';
 import SoccerBall from '../../../../soccer-common/js/model/SoccerBall.js';
-import GroupSortInteractionModel, { GroupSortInteractionModelOptions } from '../../../../scenery-phet/js/accessibility/group-sort/model/GroupSortInteractionModel.js';
+import { GroupSortInteractionModelOptions } from '../../../../scenery-phet/js/accessibility/group-sort/model/GroupSortInteractionModel.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
+import SoccerCommonGroupSortInteractionModel from '../../../../soccer-common/js/model/SoccerCommonGroupSortInteractionModel.js';
 
-export default class CAVGroupSortInteractionModel extends GroupSortInteractionModel<SoccerBall> {
+// Empirically determined based on height of AccordionBox and play area. This may need to be adjusted if those change.
+const MAX_HEIGHT = 8;
 
-  public constructor( private readonly selectedSceneModelProperty: TProperty<CAVSoccerSceneModel>,
-                      private readonly selectedSceneStackedSoccerBallCountProperty: TProperty<number>,
-                      private readonly selectedSceneMaxKicksProperty: TProperty<number>,
-                      sceneModels: CAVSoccerSceneModel[], providedOptions?: GroupSortInteractionModelOptions<SoccerBall> ) {
-    super( providedOptions );
+export default class CAVGroupSortInteractionModel extends SoccerCommonGroupSortInteractionModel<CAVSoccerSceneModel> {
 
-    const allValueProperties = sceneModels.flatMap( sceneModel => sceneModel.soccerBalls.map( soccerBall => soccerBall.valueProperty ) );
+  public constructor( selectedSceneModelProperty: TProperty<CAVSoccerSceneModel>,
+                      selectedSceneStackedSoccerBallCountProperty: TProperty<number>,
+                      selectedSceneMaxKicksProperty: TProperty<number>,
+                      sceneModels: CAVSoccerSceneModel[],
+                      providedOptions?: GroupSortInteractionModelOptions<SoccerBall> ) {
+    super(
+      selectedSceneModelProperty,
+      selectedSceneStackedSoccerBallCountProperty,
+      selectedSceneMaxKicksProperty,
+      sceneModels,
+      providedOptions
+    );
 
-    // It is important to link to the values of all the soccer balls in the screen, so that the dragIndicator can be
-    // updated after all the balls have landed, and not just after they have been kicked.
+    // The median is queried in the subclass implementation, so needs to trigger an update
     Multilink.multilinkAny( [
-      ...allValueProperties,
-      this.selectedSceneModelProperty,
-      this.hasGroupItemBeenSortedProperty,
-      this.selectedSceneStackedSoccerBallCountProperty,
-      this.selectedSceneMaxKicksProperty,
-      this.isKeyboardFocusedProperty,
-
-      // The median is queried in the subclass implementation, so needs to trigger an update
       ...sceneModels.map( sceneModel => sceneModel.medianValueProperty )
-    ], () => this.updateSelectedGroupItem() );
+    ], () => this.updateSelectedGroupItem( this.selectedSceneModelProperty.value ) );
   }
 
   // This is an algorithm that can be used to get the best guess about where the sort indicator should be set to based
-  // on the current state of the soccer balls. This selection will apply both to the mouse cue location and the initial
-  // group sort selection.
-  public updateSelectedGroupItem(): void {
-    const soccerBallCount = this.selectedSceneStackedSoccerBallCountProperty.value;
-    const maxKicks = this.selectedSceneMaxKicksProperty.value;
-    const sceneModel = this.selectedSceneModelProperty.value;
+  // on the current state of the soccer balls. This selection will apply both to the mouse cue location and the group sort selection.
+  public override updateSelectedGroupItem( sceneModel: CAVSoccerSceneModel ): void {
+    super.updateSelectedGroupItem( sceneModel );
 
-    //  If an object was sorted, objects are not input enabled, or the max number of balls haven't been kicked out
-    //  don't show the sortIndicatorCue.
-    this.mouseSortCueVisibleProperty.value = !this.hasGroupItemBeenSortedProperty.value &&
-                                             !this.isKeyboardFocusedProperty.value &&
-                                             soccerBallCount === maxKicks &&
-                                             this.enabledProperty.value &&
-                                             _.every( sceneModel?.getActiveSoccerBalls(), soccerBall => soccerBall.valueProperty.value !== null );
+    const selectedValue = this.selectedGroupItemProperty.value?.valueProperty.value ?? null;
 
-    if ( !this.isKeyboardFocusedProperty.value ) {
+    if ( !this.isKeyboardFocusedProperty.value && selectedValue !== null ) {
 
-      const reversedBalls = sceneModel.getActiveSoccerBalls().filter( soccerBall => soccerBall.valueProperty.value !== null ).reverse();
+      const stackHeight = sceneModel.getStackAtValue( selectedValue ).length;
+      if ( selectedValue === sceneModel.medianValueProperty.value || stackHeight > MAX_HEIGHT ) {
 
-      // Show the sort indicator over the most recently landed ball
-      this.selectedGroupItemProperty.value = reversedBalls.length > 0 ? reversedBalls[ 0 ] : null;
+        // Order kicked, not order landed
+        const topBallsInReversedOrder = sceneModel.getActiveSoccerBalls().reverse().filter(
+          ball => sceneModel.getTopSoccerBalls().includes( ball )
+        );
 
-      // TODO: MS!! Should the above algorithm be in soccer-common? https://github.com/phetsims/scenery-phet/issues/815
-      /////////////////
+        // add the sortIndicatorArrowNode above the last object when it is added to the play area.
+        // However, we also want to make sure that the dragIndicator is not in the same position as the Median Indicator, if possible
+        // Note the drag indicator only shows up after 15 soccer balls have landed, and it would be impossibly likely for
+        // all 15 to be the same value unless using the ?sameSpot query parameter, which is not a public query parameter.
+        const allEqualToMedian = topBallsInReversedOrder.every( soccerBall => soccerBall.valueProperty.value === sceneModel.medianValueProperty.value );
 
-      // Empirically determined based on height of AccordionBox and play area. This may need to be adjusted if those change.
-      const maxHeight = 8;
+        if ( !allEqualToMedian ) {
 
-      const selectedGroupItem = this.selectedGroupItemProperty.value;
-
-      const selectedValue = selectedGroupItem?.valueProperty.value ?? null;
-      if ( selectedValue !== null ) {
-        const stackHeight = sceneModel.getStackAtValue( selectedValue ).length;
-        if ( selectedValue === sceneModel.medianValueProperty.value || stackHeight > maxHeight ) {
-
-          // Order kicked, not order landed
-          const topBallsInReversedOrder = sceneModel.getActiveSoccerBalls().reverse().filter(
-            ball => sceneModel.getTopSoccerBalls().includes( ball )
-          );
-
-          // add the sortIndicatorArrowNode above the last object when it is added to the play area.
-          // However, we also want to make sure that the dragIndicator is not in the same position as the Median Indicator, if possible
-          // Note the drag indicator only shows up after 15 soccer balls have landed, and it would be impossibly likely for
-          // all 15 to be the same value unless using the ?sameSpot query parameter, which is not a public query parameter.
-          const allEqualToMedian = topBallsInReversedOrder.every( soccerBall => soccerBall.valueProperty.value === sceneModel.medianValueProperty.value );
-
-          if ( !allEqualToMedian ) {
-
-            // Show it over a recently landed ball that is not in the median stack
-            this.selectedGroupItemProperty.value = topBallsInReversedOrder
-              .find( soccerBall => soccerBall.valueProperty.value !== sceneModel.medianValueProperty.value &&
-                                   sceneModel.getStackAtValue( soccerBall.valueProperty.value! ).length <= maxHeight )!;
-          }
+          // Show it over a recently landed ball that is not in the median stack
+          this.selectedGroupItemProperty.value = topBallsInReversedOrder
+            .find( soccerBall => soccerBall.valueProperty.value !== sceneModel.medianValueProperty.value &&
+                                 sceneModel.getStackAtValue( soccerBall.valueProperty.value! ).length <= MAX_HEIGHT )!;
         }
       }
     }
