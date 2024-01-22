@@ -2,7 +2,8 @@
 
 /**
  * CardNode represents a draggable UI element that displays a numerical value. This value can be dynamically altered
- * based on the movement of its corresponding soccer ball.
+ * based on the movement of its corresponding soccer ball. This encapsulation holds the Card visualization as well as
+ * the ability to offset it when it is dragging. See `CardNode.cardNode` for the visual card Node (without offsets).
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
