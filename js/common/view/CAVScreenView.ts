@@ -309,7 +309,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       mouseSortHandCueNode.top = sortIndicatorArrowNodeProxy.bottom + Math.abs( this.modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) ) - 5;
     } );
 
-    // TODO: DESIGN! This doesn't really work anymore, since the value is just taken from the current selected group item's value, https://github.com/phetsims/scenery-phet/issues/815
+    // TODO: PhET-iO DESIGN! This doesn't really work anymore, since the value is just taken from the current selected group item's value, https://github.com/phetsims/scenery-phet/issues/815
     // sortIndicatorArrowNode.addLinkedElement( model.groupSortInteractionModel.sortIndicatorValueProperty );
 
     this.visibleBoundsProperty.link( this.updateMouseSortCueNode );
