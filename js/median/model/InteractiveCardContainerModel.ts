@@ -111,7 +111,7 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
     };
 
     this.cardCellsChangedEmitter.addListener( updateMouseSortCueNode );
-    this.groupSortInteractionModel.registerUpdateSortIndicatorNode( updateMouseSortCueNode );
+    this.groupSortInteractionModel.registerUpdateSortCueNode( updateMouseSortCueNode );
     this.cards.forEach( card => card.soccerBall.valueProperty.lazyLink( updateMouseSortCueNode ) );
 
     medianModel.selectedSceneModelProperty.value.resetEmitter.addListener( () => {

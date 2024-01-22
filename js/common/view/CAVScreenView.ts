@@ -318,7 +318,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       sceneModel.medianValueProperty.link( this.updateMouseSortCueNode );
       sceneModel.objectChangedEmitter.addListener( this.updateMouseSortCueNode );
     } );
-    model.groupSortInteractionModel.registerUpdateSortIndicatorNode( this.updateMouseSortCueNode );
+    model.groupSortInteractionModel.registerUpdateSortCueNode( this.updateMouseSortCueNode );
 
     const playAreaMedianIndicatorNode = new PlayAreaMedianIndicatorNode();
 
