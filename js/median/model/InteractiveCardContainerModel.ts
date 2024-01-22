@@ -104,7 +104,6 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
 
       // If the user has not yet dragged a card and there are multiple cards showing, add the drag indicator.
       // If the user has dragged a card, then the drag indicator does not need to be shown.
-      // TODO: DESIGN! not any interaction sorted, just for mouse, https://github.com/phetsims/center-and-variability/issues/605
       this.groupSortInteractionModel.mouseSortCueVisibleProperty.value = this.getCardsInCellOrder().length >= 2 &&
                                                                          !this.groupSortInteractionModel.hasGroupItemBeenSortedProperty.value &&
                                                                          !this.groupSortInteractionModel.isKeyboardFocusedProperty.value;
