@@ -85,7 +85,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
         const currentIndex = selectedCardModel.indexProperty.value!;
         assert && assert( currentIndex !== null, 'need an index to be sorted' );
 
-        // TODO: MS! until range is dynamic, this could be outside of current cards https://github.com/phetsims/center-and-variability/issues/605
+        // TODO: MS! until range is dynamic, this could be outside of current cards (call getGroupItemToSelect() if the range changes to something that doesn't include the current selection's value) https://github.com/phetsims/center-and-variability/issues/605
         const delta = new Range( 0, this.getActiveCardNodesInOrder().length - 1 ).clampDelta( currentIndex, unclampedDelta );
         const newIndex = currentIndex + delta;
         const cardNodes = this.getActiveCardNodesInOrder();
