@@ -158,17 +158,22 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
     this.addChild( keyboardSortCueNode );
 
+    const cardDragIndicatorVisibleProperty = new DerivedProperty(
+      [ this.inputEnabledProperty, model.groupSortInteractionModel.mouseSortCueVisibleProperty ],
+      ( inputEnabled, mouseSortCueVisible ) => inputEnabled && mouseSortCueVisible );
+
+    const cardDragIndicatorTop = CAVConstants.CARD_DIMENSION - 10;
+
     const cardDragIndicatorNode = new CardDragIndicatorNode( {
-      centerTop: new Vector2( 0.5 * CAVConstants.CARD_DIMENSION - PICK_UP_DELTA_X, CAVConstants.CARD_DIMENSION - 10 ),
-      visibleProperty: new DerivedProperty(
-        [ this.inputEnabledProperty, model.groupSortInteractionModel.mouseSortCueVisibleProperty ],
-        ( inputEnabled, mouseSortCueVisible ) => inputEnabled && mouseSortCueVisible )
+      centerTop: new Vector2( 0.5 * CAVConstants.CARD_DIMENSION - PICK_UP_DELTA_X, cardDragIndicatorTop ),
+      visibleProperty: cardDragIndicatorVisibleProperty
     } );
 
     this.addChild( cardDragIndicatorNode );
 
     let expandedCardNode: CardNode | null = null;
-    model.groupSortInteractionModel.mouseSortCueVisibleProperty.lazyLink( visible => {
+
+    cardDragIndicatorVisibleProperty.lazyLink( visible => {
 
       if ( !visible && expandedCardNode ) {
         expandedCardNode.restorePointerAreas();
@@ -185,8 +190,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
           const bounds = newCardNode.getLocalPointerAreaShape();
 
           // Expand the card's touch + mouse area to cover the hand. Much simpler than adding a DragListener.createForwardingListener
-          // TODO: use something from the cardDragIndicatorNode instead of 30, https://github.com/phetsims/center-and-variability/issues/605
-          const newArea = new Bounds2( bounds.minX, bounds.minY, bounds.maxX, bounds.maxY + 30 );
+          const newArea = new Bounds2( bounds.minX, bounds.minY, bounds.maxX, bounds.maxY + cardDragIndicatorTop );
           newCardNode.mouseArea = newArea;
           newCardNode.touchArea = newArea;
           expandedCardNode = newCardNode;
