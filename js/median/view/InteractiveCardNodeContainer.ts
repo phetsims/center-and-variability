@@ -77,18 +77,17 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
     super( model, sceneModel, medianVisibleProperty, options );
 
+    const sortingRangeProperty = new Property( new Range( 0, this.model.cards.length - 1 ) );
+
     this.celebrationNode = new CelebrationNode( model, this.cardMap, this.sceneModel.resetEmitter );
     this.addChild( this.celebrationNode );
 
     const getNodeFromModelItem = ( cardModel: CardModel ) => this.cardMap.get( cardModel ) || null;
 
     this.groupSortInteractionView = new GroupSortInteractionView( model.groupSortInteractionModel, this, {
-      getNextSelectedGroupItem: ( unclampedDelta, selectedCardModel ) => {
+      getNextSelectedGroupItem: ( delta, selectedCardModel ) => {
         const currentIndex = selectedCardModel.indexProperty.value!;
         assert && assert( currentIndex !== null, 'need an index to be sorted' );
-
-        // TODO: MS! until range is dynamic, this could be outside of current cards (call getGroupItemToSelect() if the range changes to something that doesn't include the current selection's value) https://github.com/phetsims/center-and-variability/issues/605
-        const delta = new Range( 0, this.getActiveCardNodesInOrder().length - 1 ).clampDelta( currentIndex, unclampedDelta );
         const newIndex = currentIndex + delta;
         const cardNodes = this.getActiveCardNodesInOrder();
         const newCardNode = cardNodes[ newIndex ];
@@ -122,8 +121,9 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       grabReleaseCueOptions: {
         top: CAVConstants.CARD_DIMENSION + FOCUS_HIGHLIGHT_Y_MARGIN + 15
       },
-      sortingRange: new Range( 0, this.model.cards.length - 1 ) // TODO: Need to support Property(Range) https://github.com/phetsims/center-and-variability/issues/605
+      sortingRangeProperty: sortingRangeProperty
     } );
+
 
     this.cardMap.forEach( ( cardNode, cardModel ) => {
       // Update the position of all cards (via animation) whenever any card is dragged
@@ -221,6 +221,8 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
       const activeCardNodes = this.getActiveCardNodesInOrder();
 
+      sortingRangeProperty.value = new Range( 0, activeCardNodes.length - 1 );
+
       // When a user is focused on the card container but there are no cards yet, we want to ensure that a card gets focused
       // once there is a card.
       if ( model.groupSortInteractionModel.selectedGroupItemProperty.value === null &&
@@ -295,7 +297,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
     const swapCards = ( activeCards: CardNode[], focusedCard: CardNode, delta: number ) => {
       const currentIndex = activeCards.indexOf( focusedCard );
       assert && assert( focusedCard.model.indexProperty.value === currentIndex, 'sanity check' );
-      const targetIndex = Utils.clamp( currentIndex + delta, 0, activeCards.length - 1 );
+      const targetIndex = sortingRangeProperty.value.constrainValue( currentIndex + delta );
 
       if ( targetIndex !== currentIndex ) {
 
@@ -330,7 +332,8 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       const focusRect = Shape.rect( -marginX, -FOCUS_HIGHLIGHT_Y_MARGIN, focusHighlightWidth + 2 * marginX, CAVConstants.CARD_DIMENSION + 2 * FOCUS_HIGHLIGHT_Y_MARGIN + 9 );
       this.groupSortInteractionView.groupSortGroupFocusHighlightPath.setShape( focusRect );
       const cueNodeWidth = this.groupSortInteractionView.grabReleaseCueNode.width;
-      this.groupSortInteractionView.grabReleaseCueNode.centerX = Utils.clamp( focusRect.bounds.centerX, cueNodeWidth / 2, Math.max( this.width - cueNodeWidth / 2, cueNodeWidth ) );
+      const max = Math.max( this.width - cueNodeWidth / 2, cueNodeWidth );
+      this.groupSortInteractionView.grabReleaseCueNode.centerX = Utils.clamp( focusRect.bounds.centerX, cueNodeWidth / 2, max );
     } );
   }
 
