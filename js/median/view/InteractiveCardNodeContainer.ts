@@ -80,6 +80,8 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
     this.celebrationNode = new CelebrationNode( model, this.cardMap, this.sceneModel.resetEmitter );
     this.addChild( this.celebrationNode );
 
+    const getNodeFromModelItem = ( cardModel: CardModel ) => this.cardMap.get( cardModel ) || null;
+
     this.groupSortInteractionView = new GroupSortInteractionView( model.groupSortInteractionModel, this, {
       getNextSelectedGroupItem: ( unclampedDelta, selectedCardModel ) => {
         const currentIndex = selectedCardModel.indexProperty.value!;
@@ -115,7 +117,8 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
         const activeCards = this.getActiveCardNodesInOrder();
         return activeCards[ 0 ] ? activeCards[ 0 ].model : null;
       },
-      getNodeFromModelItem: cardModel => this.cardMap.get( cardModel ) || null,
+      getNodeFromModelItem: getNodeFromModelItem,
+      getHighlightNodeFromModelItem: cardModel => getNodeFromModelItem( cardModel )?.cardNode || null,
       grabReleaseCueOptions: {
         top: CAVConstants.CARD_DIMENSION + FOCUS_HIGHLIGHT_Y_MARGIN + 15
       },
