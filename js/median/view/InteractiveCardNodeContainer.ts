@@ -167,23 +167,30 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
     this.addChild( cardDragIndicatorNode );
 
-    // TODO: Do we perhaps have to update this based on position instead of selection? https://github.com/phetsims/center-and-variability/issues/605
-    model.groupSortInteractionModel.selectedGroupItemProperty.lazyLink( ( newCard, oldCard ) => {
+    let expandedCardNode: CardNode | null = null;
+    model.groupSortInteractionModel.mouseSortCueVisibleProperty.lazyLink( visible => {
 
-      if ( oldCard ) {
-        const oldCardNode = this.cardMap.get( oldCard )!;
-        oldCardNode.restorePointerAreas();
+      if ( !visible && expandedCardNode ) {
+        expandedCardNode.restorePointerAreas();
+        expandedCardNode = null;
       }
 
-      if ( newCard ) {
-        const newCardNode = this.cardMap.get( newCard )!;
+      if ( visible && !expandedCardNode ) {
+        const activeCards = this.getActiveCardNodesInOrder();
+        const card = activeCards[ 0 ]?.model || null;
+        if ( card ) {
 
-        const bounds = newCardNode.getLocalPointerAreaShape();
+          const newCardNode = this.cardMap.get( card )!;
 
-        // Expand the card's touch + mouse area to cover the hand. Much simpler than adding a DragListener.createForwardingListener
-        const newArea = new Bounds2( bounds.minX, bounds.minY, bounds.maxX, bounds.maxY + 30 );
-        newCardNode.mouseArea = newArea;
-        newCardNode.touchArea = newArea;
+          const bounds = newCardNode.getLocalPointerAreaShape();
+
+          // Expand the card's touch + mouse area to cover the hand. Much simpler than adding a DragListener.createForwardingListener
+          // TODO: use something from the cardDragIndicatorNode instead of 30, https://github.com/phetsims/center-and-variability/issues/605
+          const newArea = new Bounds2( bounds.minX, bounds.minY, bounds.maxX, bounds.maxY + 30 );
+          newCardNode.mouseArea = newArea;
+          newCardNode.touchArea = newArea;
+          expandedCardNode = newCardNode;
+        }
       }
     } );
 
