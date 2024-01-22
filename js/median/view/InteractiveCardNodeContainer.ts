@@ -116,6 +116,9 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
         return activeCards[ 0 ] ? activeCards[ 0 ].model : null;
       },
       getNodeFromModelItem: cardModel => this.cardMap.get( cardModel ) || null,
+      grabReleaseCueOptions: {
+        top: CAVConstants.CARD_DIMENSION + FOCUS_HIGHLIGHT_Y_MARGIN + 15
+      },
       sortingRange: new Range( 0, this.model.cards.length - 1 ) // TODO: Need to support Property(Range) https://github.com/phetsims/center-and-variability/issues/605
     } );
 
@@ -315,13 +318,6 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       }
     };
 
-    const grabReleaseCueNode = GroupSortInteractionView.createGrabReleaseCueNode( model.groupSortInteractionModel.grabReleaseCueVisibleProperty, {
-      top: CAVConstants.CARD_DIMENSION + FOCUS_HIGHLIGHT_Y_MARGIN + 15
-    } );
-
-    // TODO: MS! Discuss this as a design patter vs. handling visibility manually, https://github.com/phetsims/center-and-variability/issues/605
-    this.groupSortInteractionView.groupFocusHighlightPath.addChild( grabReleaseCueNode );
-
     const focusHighlightWidthProperty = new DerivedProperty( [ model.numActiveCardsProperty ], numActiveCards => {
       return model.getCardPositionX( numActiveCards === 0 ? 1 : numActiveCards );
     } );
@@ -329,9 +325,9 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
     const marginX = 7;
     focusHighlightWidthProperty.link( focusHighlightWidth => {
       const focusRect = Shape.rect( -marginX, -FOCUS_HIGHLIGHT_Y_MARGIN, focusHighlightWidth + 2 * marginX, CAVConstants.CARD_DIMENSION + 2 * FOCUS_HIGHLIGHT_Y_MARGIN + 9 );
-      this.groupSortInteractionView.groupFocusHighlightPath.setShape( focusRect );
-      const cueNodeWidth = grabReleaseCueNode.width;
-      grabReleaseCueNode.centerX = Utils.clamp( focusRect.bounds.centerX, cueNodeWidth / 2, Math.max( this.width - cueNodeWidth / 2, cueNodeWidth ) );
+      this.groupSortInteractionView.groupSortGroupFocusHighlightPath.setShape( focusRect );
+      const cueNodeWidth = this.groupSortInteractionView.grabReleaseCueNode.width;
+      this.groupSortInteractionView.grabReleaseCueNode.centerX = Utils.clamp( focusRect.bounds.centerX, cueNodeWidth / 2, Math.max( this.width - cueNodeWidth / 2, cueNodeWidth ) );
     } );
   }
 

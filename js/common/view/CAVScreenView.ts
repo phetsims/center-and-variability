@@ -395,8 +395,6 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
     this.screenViewRootNode.addChild( this.frontScreenViewLayer );
 
     this.addChild( this.screenViewRootNode );
-
-    this.addGrabReleaseCue();
   }
 
   // calculate where the top object is at a given value
