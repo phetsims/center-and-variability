@@ -24,7 +24,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import InteractiveCardContainerModel from '../model/InteractiveCardContainerModel.js';
 import Property from '../../../../axon/js/Property.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
-import { animatedPanZoomSingleton, Node, NodeTranslationOptions } from '../../../../scenery/js/imports.js';
+import { animatedPanZoomSingleton, NodeTranslationOptions } from '../../../../scenery/js/imports.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Range from '../../../../dot/js/Range.js';
 import CAVConstants from '../../common/CAVConstants.js';
@@ -269,9 +269,9 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
 
           focusedCardNode.model.isDraggingProperty.value = isCardGrabbed;
 
+          const focusHighlightOffset = 20; // empirically determined to preset below the of the card
           keyboardSortCueNode.centerBottom = new Vector2( focusedCardNode.centerX + CARD_LAYER_OFFSET + PICK_UP_DELTA_X / 2 + 1,
-            // TODO: MS: Help? https://github.com/phetsims/center-and-variability/issues/605
-            ( this.focusHighlight as unknown as Node ).bottom + 11 );
+            focusedCardNode.cardNode.bottom + focusHighlightOffset );
         }
       } );
 
