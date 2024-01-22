@@ -47,7 +47,9 @@ export default class CAVGroupSortInteractionModel extends SoccerCommonGroupSortI
 
     const selectedValue = this.selectedGroupItemProperty.value?.valueProperty.value ?? null;
 
-    if ( !this.isKeyboardFocusedProperty.value && selectedValue !== null ) {
+    if ( !this.isKeyboardFocusedProperty.value &&
+         !this.hasKeyboardSelectedGroupItemProperty.value &&
+         selectedValue !== null ) {
 
       const stackHeight = sceneModel.getStackAtValue( selectedValue ).length;
       if ( selectedValue === sceneModel.medianValueProperty.value || stackHeight > MAX_HEIGHT ) {
