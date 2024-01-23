@@ -70,8 +70,7 @@ export default class CardNode extends Node {
     } );
 
     const cardNode = new InteractiveHighlightingNode( {
-      children: [ rectangle, text ],
-      cursor: 'pointer'
+      children: [ rectangle, text ]
     } );
 
     const interactiveHighlight = new HighlightFromNode( cardNode );
@@ -105,6 +104,7 @@ export default class CardNode extends Node {
     const options = optionize<CardNodeOptions, SelfOptions, ParentOptions>()( {
       children: [ offsetContainer ],
       phetioVisiblePropertyInstrumented: false,
+      cursor: 'pointer',
       isDisposable: false
     }, providedOptions );
 
