@@ -40,8 +40,8 @@ In addition to this document, you are encouraged to read:
 This simulation makes use of a model-view transform to map model coordinates (horizontally: meters, vertically: number
 of data points) to view coordinates in the soccer
 area [CAVScreenView.ts](https://github.com/phetsims/center-and-variability/blob/main/js/common/view/CAVScreenView.ts),
-and in the charts which are shown in the accordion box and info dialogs. The plotNode model-view transform (`PLOT_NODE_TRANSFORM`) can be found
-in [CAVConstants.ts](../js/common/CAVConstants.ts).
+and in the charts which are shown in the accordion box and info dialogs. The plotNode model-view
+transform (`PLOT_NODE_TRANSFORM`) can be found in [CAVConstants.ts](../js/common/CAVConstants.ts).
 
 ### Query Parameters
 
@@ -65,7 +65,9 @@ The mathematical definitions of the statistical measures of center and spread ar
 
 In order to avoid performance problems and spurious intermediate values in the Variability screen, measures are computed
 as a batch, then signified via `updateDataMeasures` and `variabilityDataMeasuresUpdatedEmitter`.
-Likewise, `deltaStableProperty` in [IntervalToolModel.ts](https://github.com/phetsims/center-and-variability/blob/main/js/variability/model/IntervalToolModel.ts) works around inconsistent intermediate values.
+Likewise, `deltaStableProperty`
+in [IntervalToolModel.ts](https://github.com/phetsims/center-and-variability/blob/main/js/variability/model/IntervalToolModel.ts)
+works around inconsistent intermediate values.
 
 ## Main Architecture & Scenes
 
