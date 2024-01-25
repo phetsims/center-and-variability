@@ -92,8 +92,7 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
     } );
 
     this.totalDragDistanceProperty.link( totalDragDistance => {
-      this.groupSortInteractionModel.hasGroupItemBeenSortedProperty.value = totalDragDistance > 15 ||
-                                                                            this.groupSortInteractionModel.hasGroupItemBeenSortedProperty.value;
+      this.groupSortInteractionModel.setMouseSortedGroupItem( totalDragDistance > 15 );
     } );
 
     this.cardCellsChangedEmitter.addListener( () => {
