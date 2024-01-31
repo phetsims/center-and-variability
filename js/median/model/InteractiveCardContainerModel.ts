@@ -80,11 +80,7 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
   public constructor( medianModel: MedianModel, providedOptions: InteractiveCardContainerModelOptions ) {
     super( medianModel, providedOptions );
 
-    this.totalDragDistanceProperty = new NumberProperty( 0, {
-      tandem: providedOptions.tandem.createTandem( 'totalDragDistanceProperty' ),
-      phetioReadOnly: true, // controlled by the sim
-      phetioDocumentation: 'Accumulated card drag distance, for purposes of hiding the drag indicator node'
-    } );
+    this.totalDragDistanceProperty = new NumberProperty( 0 );
 
     this.groupSortInteractionModel = new GroupSortInteractionModel<CardModel>( {
       getValueProperty: cardModel => cardModel.indexProperty,
