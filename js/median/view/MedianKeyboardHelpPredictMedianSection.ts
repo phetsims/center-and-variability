@@ -6,7 +6,7 @@
  * - Moving the Predict Median using arrow keys.
  * - Making larger stepwise movements.
  * - Jumping to the start or end of the number line.
- * Icons associated with specific key commands are presented alongside these instructions for clear visual snackType.
+ * Icons associated with specific key commands are presented alongside these instructions for clear visual representation.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

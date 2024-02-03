@@ -2,7 +2,7 @@
 
 /**
  * CardNodeContainer oversees the lifecycle and behavior of individual CardNodes. It manages the layout, interactivity,
- * and statistical visual aids, such as median snackType, linked to the movement and positioning of the CardNodes.
+ * and statistical visual aids, such as median representation, linked to the movement and positioning of the CardNodes.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

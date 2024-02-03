@@ -1,13 +1,13 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * `MADNode` is a specialized plot node designed for the snackType of MAD (Mean Absolute Deviation)
+ * `MADNode` is a specialized plot node designed for the representation of MAD (Mean Absolute Deviation)
  * in the simulation. The node builds upon the generic `CAVPlotNode` and incorporates additional visual elements
- * tailored for MAD snackType, including:
+ * tailored for MAD representation, including:
  *
  * 1. Deviation lines: These lines represent the deviation of each data point from the mean.
  * 2. A MAD interval rectangle: Highlights the range of the MAD around the mean.
- * 3. Labels: To assist in understanding the snackType, especially when displaying mean and MAD values.
+ * 3. Labels: To assist in understanding the representation, especially when displaying mean and MAD values.
  * 4. Data point indicators: To illustrate points where deviation is exactly zero.
  *
  * The node is interactive and updates its presentation when the data points change, providing a dynamic visual

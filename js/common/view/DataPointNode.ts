@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * DataPointNode is responsible for rendering a graphical snackType (either a circle or an 'x') of a data point
+ * DataPointNode is responsible for rendering a graphical representation (either a circle or an 'x') of a data point
  * depending on the current plot type. Each DataPointNode is associated with a soccer ball to keep track of its value
  * on the plot. This node can also highlight the median data point when required.
  *
