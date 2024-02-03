@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2023-2024, University of Colorado Boulder
 
 /**
  * `MADInfoNode` displays the MAD (Mean Absolute Deviation) definition, its calculation, and visual representation

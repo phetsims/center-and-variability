@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2023-2024, University of Colorado Boulder
 
 /**
  * FractionNode is a visual representation of a mathematical fraction. It takes two expressions (both represented by Nodes) -
