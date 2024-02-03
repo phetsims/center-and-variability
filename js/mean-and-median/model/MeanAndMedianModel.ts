@@ -2,7 +2,7 @@
 
 /**
  * The MeanAndMedianModel class represents the model for the "Mean & Median" screen.
- * This model keeps track of the behaviors and Properties associated with the representation
+ * This model keeps track of the behaviors and Properties associated with the snackType
  * of mean and median values in a soccer scene.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)

@@ -1,9 +1,9 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * FractionNode is a visual representation of a mathematical fraction. It takes two expressions (both represented by Nodes) -
+ * FractionNode is a visual snackType of a mathematical fraction. It takes two expressions (both represented by Nodes) -
  * the numerator and the denominator - and displays them with a horizontal line (vinculum) in between.
- * This representation is aligned centrally, with the numerator and denominator centered with respect to the vinculum.
+ * This snackType is aligned centrally, with the numerator and denominator centered with respect to the vinculum.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

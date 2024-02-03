@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * `MADInfoNode` displays the MAD (Mean Absolute Deviation) definition, its calculation, and visual representation
+ * `MADInfoNode` displays the MAD (Mean Absolute Deviation) definition, its calculation, and visual snackType
  * using a plot node. This node helps users understand how MAD is determined from given data points.
  *
  * @author Sam Reid (PhET Interactive Simulations)

@@ -4,7 +4,7 @@
  * CAVScreenView serves as the primary base class for all ScreenViews within the simulation. It's designed to integrate
  * various components, including the play area, kicker images, and associated interactions. It also handles user interface
  * elements such as the eraser button, kick button group, and question bar. It works in conjunction with model data and
- * orchestrates the visual representation and interaction for the Center and Variability simulation's screens.
+ * orchestrates the visual snackType and interaction for the Center and Variability simulation's screens.
  *
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

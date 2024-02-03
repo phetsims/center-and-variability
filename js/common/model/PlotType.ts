@@ -1,7 +1,7 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
 /**
- * The `PlotType` class provides an enumeration to determine the representation of data in a plot.
+ * The `PlotType` class provides an enumeration to determine the snackType of data in a plot.
  * It helps decide whether the data should be displayed as dots or as lines on the plot.
  *
  * @author Sam Reid (PhET Interactive Simulations)

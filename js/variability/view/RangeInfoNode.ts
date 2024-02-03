@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * `RangeInfoNode`: Displays the range, its calculation, and visual representation on a plot.
+ * `RangeInfoNode`: Displays the range, its calculation, and visual snackType on a plot.
  * It showcases details about the range in a more informative view.
  *
  * @author Sam Reid (PhET Interactive Simulations)
