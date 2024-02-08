@@ -57,7 +57,7 @@ export default class CAVModel extends SoccerModel<CAVSoccerSceneModel> {
           soccerModel.selectedSceneStackedSoccerBallCountProperty,
           soccerModel.selectedSceneMaxKicksProperty,
           sceneModels, {
-            getValueProperty: soccerBall => soccerBall.valueProperty,
+            getGroupItemValue: soccerBall => soccerBall.valueProperty.value,
             enabledProperty: soccerModel.soccerBallsEnabledProperty,
             tandem: tandem
           } );

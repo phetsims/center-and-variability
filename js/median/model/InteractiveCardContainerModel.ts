@@ -83,7 +83,7 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
     this.totalDragDistanceProperty = new NumberProperty( 0 );
 
     this.groupSortInteractionModel = new GroupSortInteractionModel<CardModel>( {
-      getValueProperty: cardModel => cardModel.indexProperty,
+      getGroupItemValue: cardModel => cardModel.indexProperty.value,
       tandem: providedOptions.tandem.createTandem( 'groupSortInteractionModel' )
     } );
 
