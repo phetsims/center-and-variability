@@ -9,7 +9,6 @@
  */
 
 import SoccerObjectNode, { SoccerObjectNodeOptions } from '../../../../soccer-common/js/view/SoccerObjectNode.js';
-import soccerCommon from '../../../../soccer-common/js/soccerCommon.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import { Circle, Node, Path, TColor } from '../../../../scenery/js/imports.js';
@@ -25,6 +24,7 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import CAVSoccerBall from '../model/CAVSoccerBall.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import centerAndVariability from '../../centerAndVariability.js';
 
 type SelfOptions = {
 
@@ -120,4 +120,4 @@ export default class DataPointNode extends SoccerObjectNode {
   }
 }
 
-soccerCommon.register( 'DataPointNode', DataPointNode );
+centerAndVariability.register( 'DataPointNode', DataPointNode );

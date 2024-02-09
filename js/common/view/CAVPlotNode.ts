@@ -9,7 +9,6 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import soccerCommon from '../../../../soccer-common/js/soccerCommon.js';
 import { ManualConstraint, MatrixBetweenProperty, Node, NodeOptions, TColor, Text } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
@@ -21,6 +20,7 @@ import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import RepresentationContext from '../model/RepresentationContext.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import centerAndVariability from '../../centerAndVariability.js';
 
 type SelfOptions = {
 
@@ -142,4 +142,4 @@ export default class CAVPlotNode extends Node {
   }
 }
 
-soccerCommon.register( 'CAVPlotNode', CAVPlotNode );
+centerAndVariability.register( 'CAVPlotNode', CAVPlotNode );

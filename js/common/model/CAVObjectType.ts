@@ -10,8 +10,8 @@
 
 import Enumeration from '../../../../phet-core/js/Enumeration.js';
 import EnumerationValue from '../../../../phet-core/js/EnumerationValue.js';
-import soccerCommon from '../../../../soccer-common/js/soccerCommon.js';
 import SoccerCommonConstants from '../../../../soccer-common/js/SoccerCommonConstants.js';
+import centerAndVariability from '../../centerAndVariability.js';
 
 export default class CAVObjectType extends EnumerationValue {
   public readonly radius: number;
@@ -27,4 +27,4 @@ export default class CAVObjectType extends EnumerationValue {
   }
 }
 
-soccerCommon.register( 'CAVObjectType', CAVObjectType );
+centerAndVariability.register( 'CAVObjectType', CAVObjectType );
