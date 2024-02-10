@@ -1,4 +1,4 @@
-// Copyright 2022-2023, University of Colorado Boulder
+// Copyright 2022-2024, University of Colorado Boulder
 
 /**
  * CAVObjectType is a type that describes whether a data-linked object is a soccer ball or a data point on a plot.
