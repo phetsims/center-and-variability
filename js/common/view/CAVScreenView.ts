@@ -10,7 +10,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import optionize, { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVConstants from '../CAVConstants.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
@@ -60,7 +60,9 @@ import KickerPortrayalAfrica from '../../../../soccer-common/js/view/KickerPortr
 import KickerPortrayalAfricaModest from '../../../../soccer-common/js/view/KickerPortrayalAfricaModest.js';
 import GroupSortInteractionView from '../../../../scenery-phet/js/accessibility/group-sort/view/GroupSortInteractionView.js';
 
-type SelfOptions = EmptySelfOptions;
+type SelfOptions = {
+  questionBarOptions: StrictOmit<QuestionBarOptions, 'tandem'>;
+};
 
 export type CAVScreenViewOptions = SelfOptions & StrictOmit<SoccerScreenViewOptions, 'physicalRange' | 'chartViewWidth' | 'numberLineXMargin'>;
 
