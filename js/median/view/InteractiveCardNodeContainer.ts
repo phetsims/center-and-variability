@@ -248,31 +248,6 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       }
     } );
 
-    // When pdomFocusHighlightsVisibleProperty become false, interaction with a mouse has begun while using
-    // Interactive Highlighting. When that happens, clear the sim-specific state tracking 'focused' cards. See https://github.com/phetsims/center-and-variability/issues/557
-    // TODO: MK! Read through above issue and update best thoughts for moving forward, https://github.com/phetsims/scenery-phet/issues/815
-    phet.joist.sim.display.focusManager.pdomFocusHighlightsVisibleProperty.link( ( visible: boolean ) => {
-      if ( !visible ) {
-        if ( model.groupSortInteractionModel.selectedGroupItemProperty.value !== null ) {
-
-          // Before clearing out the focusedCardProperty the CardModel must be cleared out of it's
-          // dragging state.
-          model.groupSortInteractionModel.selectedGroupItemProperty.value.isDraggingProperty.set( false );
-
-          // Clear the 'focused' card so that there isn't a flicker to a highlight around that card when
-          // moving between the CardNode interactive highlight and the container group highlight (which has
-          // a custom highlight around the focused card).
-          model.groupSortInteractionModel.selectedGroupItemProperty.value = null;
-        }
-
-        model.groupSortInteractionModel.isGroupItemKeyboardGrabbedProperty.value = false;
-
-        // This controls the visibility of interaction cues (keyboard vs mouse), so we need to clear it when
-        // switching interaction modes.
-        model.groupSortInteractionModel.isKeyboardFocusedProperty.value = false;
-      }
-    } );
-
     Multilink.multilink( [ focusedCardNodeProperty, model.groupSortInteractionModel.isGroupItemKeyboardGrabbedProperty ],
       ( focusedCardNode, isCardGrabbed ) => {
         if ( focusedCardNode ) {
