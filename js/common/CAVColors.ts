@@ -38,14 +38,6 @@ const CAVColors = {
     default: '#dae6f7'
   } ),
 
-  // sky gradient, sampled from a screenshot
-  skyGradientTopColorProperty: new ProfileColorProperty( centerAndVariability, 'skyGradientTopColor', { default: '#365b9b' } ),
-  skyGradientMiddleColorProperty: new ProfileColorProperty( centerAndVariability, 'skyGradientMiddleColor', { default: '#81b5ea' } ),
-  skyGradientBottomColorProperty: new ProfileColorProperty( centerAndVariability, 'skyGradientBottomColor', { default: '#c9d9ef' } ),
-
-  // the ground
-  groundColorProperty: new ProfileColorProperty( centerAndVariability, 'groundColor', { default: '#009245' } ),
-
   medianColorProperty: new ProfileColorProperty( centerAndVariability, 'medianColor', { default: '#f03000' } ),
   meanColorProperty: new ProfileColorProperty( centerAndVariability, 'meanColor', { default: '#8500bd' } ),
 

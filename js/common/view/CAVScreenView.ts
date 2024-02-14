@@ -18,7 +18,7 @@ import { AlignBox, Image, ManualConstraint, Node, Text, VBox } from '../../../..
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import BackgroundNode from './BackgroundNode.js';
+import BackgroundNode from '../../../../soccer-common/js/view/BackgroundNode.js';
 import CAVAccordionBox from './CAVAccordionBox.js';
 import PredictionSlider from './PredictionSlider.js';
 import CAVColors from '../CAVColors.js';
