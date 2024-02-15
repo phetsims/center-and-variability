@@ -149,8 +149,8 @@ export default class IntervalToolNode extends Node {
 
     this.continuousPropertySoundClip = new ContinuousPropertySoundClip(
       intervalDistanceWithThresholdProperty,
-      intervalToolLoop_wav,
-      new Range( 1, 2 ), {
+      new Range( 1, 2 ),
+      intervalToolLoop_wav, {
         initialOutputLevel: 0.25,
         playbackRateCenterOffset: 0,
 
