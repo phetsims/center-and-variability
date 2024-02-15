@@ -26,7 +26,7 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
-import ContinuousPropertySoundGenerator from '../../../../tambo/js/sound-generators/ContinuousPropertySoundGenerator.js';
+import ContinuousPropertySoundClip from '../../../../tambo/js/sound-generators/ContinuousPropertySoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import intervalToolLoop_wav from '../../../sounds/intervalToolLoop_wav.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -36,7 +36,7 @@ export default class IntervalToolNode extends Node {
 
   public readonly rectangle: IntervalToolRectangle;
 
-  private readonly continuousPropertySoundGenerator: ContinuousPropertySoundGenerator;
+  private readonly continuousPropertySoundClip: ContinuousPropertySoundClip;
 
   public constructor( model: IntervalToolModel, resetInProgressProperty: TReadOnlyProperty<boolean>, modelViewTransform: ModelViewTransform2, accordionBoxTopProperty: TReadOnlyProperty<number>, tandem: Tandem ) {
     const handle1 = new IntervalToolPredictionSlider( model.handle1ValueProperty,
@@ -147,7 +147,7 @@ export default class IntervalToolNode extends Node {
       }
     } );
 
-    this.continuousPropertySoundGenerator = new ContinuousPropertySoundGenerator(
+    this.continuousPropertySoundClip = new ContinuousPropertySoundClip(
       intervalDistanceWithThresholdProperty,
       intervalToolLoop_wav,
       new Range( 1, 2 ), {
@@ -166,7 +166,7 @@ export default class IntervalToolNode extends Node {
       }
     );
 
-    soundManager.addSoundGenerator( this.continuousPropertySoundGenerator, { associatedViewNode: this } );
+    soundManager.addSoundGenerator( this.continuousPropertySoundClip, { associatedViewNode: this } );
 
     this.rectangle = rectangle;
 
@@ -174,7 +174,7 @@ export default class IntervalToolNode extends Node {
   }
 
   public step( dt: number ): void {
-    this.continuousPropertySoundGenerator.step( dt );
+    this.continuousPropertySoundClip.step( dt );
   }
 }
 
