@@ -69,7 +69,7 @@ export default class IntervalToolModel {
 
     // Prevent multitouch on the rectangle if the user is manipulating either of the handles, see https://github.com/phetsims/center-and-variability/issues/225
     this.isRectangleInputEnabledProperty = new DerivedProperty( [ this.isTranslationEnabledProperty, this.isHandle1BeingMouseDraggedProperty,
-    this.isHandle2BeingMouseDraggedProperty, this.isHandle1BeingKeyboardDraggedProperty, this.isHandle2BeingKeyboardDraggedProperty ],
+        this.isHandle2BeingMouseDraggedProperty, this.isHandle1BeingKeyboardDraggedProperty, this.isHandle2BeingKeyboardDraggedProperty ],
       ( isTranslationEnabled, isMouse1, isKeyboard1, isMouse2, isKeyboard2 ) => {
         return isTranslationEnabled && !isMouse1 && !isKeyboard1 && !isMouse2 && !isKeyboard2;
       } );

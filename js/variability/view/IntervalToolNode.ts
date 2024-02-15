@@ -29,7 +29,6 @@ import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 import ContinuousPropertySoundGenerator from '../../../../tambo/js/sound-generators/ContinuousPropertySoundGenerator.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import intervalToolLoop_wav from '../../../sounds/intervalToolLoop_wav.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 
 
@@ -39,7 +38,7 @@ export default class IntervalToolNode extends Node {
 
   private readonly continuousPropertySoundGenerator: ContinuousPropertySoundGenerator;
 
-  public constructor( model: IntervalToolModel, resetInProgressProperty: BooleanProperty, modelViewTransform: ModelViewTransform2, accordionBoxTopProperty: TReadOnlyProperty<number>, tandem: Tandem ) {
+  public constructor( model: IntervalToolModel, resetInProgressProperty: TReadOnlyProperty<boolean>, modelViewTransform: ModelViewTransform2, accordionBoxTopProperty: TReadOnlyProperty<number>, tandem: Tandem ) {
     const handle1 = new IntervalToolPredictionSlider( model.handle1ValueProperty,
       modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE, model.isHandle1BeingMouseDraggedProperty, model.isHandle1BeingKeyboardDraggedProperty,
       {
@@ -155,7 +154,7 @@ export default class IntervalToolNode extends Node {
         initialOutputLevel: 0.25,
         playbackRateCenterOffset: 0,
 
-        resetInProgressProperty: resetInProgressProperty,
+        enableControlProperties: [ DerivedProperty.not( resetInProgressProperty ) ],
         trimSilence: false, // a very precise sound file is used, so make sure it doesn't get changed
         fadeTime: 0.3,
         delayBeforeStop: 0.25,
