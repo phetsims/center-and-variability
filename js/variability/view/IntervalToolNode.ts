@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2023-2024, University of Colorado Boulder
 
 /**
  * IntervalToolNode is a graphical node that enables users to highlight a range of values on the soccer field as well

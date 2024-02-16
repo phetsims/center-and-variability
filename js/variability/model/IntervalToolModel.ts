@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2023-2024, University of Colorado Boulder
 
 /**
  * IntervalToolModel represents the underlying data model for the IntervalToolNode. It manages the values and
