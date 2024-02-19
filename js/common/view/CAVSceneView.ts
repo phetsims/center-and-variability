@@ -35,7 +35,7 @@ export default class CAVSceneView extends SoccerSceneView<CAVSoccerSceneModel> {
 
     super( model, sceneModel, keyboardSortCueNode,
       getKickerImageSet, modelViewTransform,
-      physicalRange, tandem );
+      physicalRange, { tandem: tandem } );
 
     const medianHighlightLayer = new MedianHighlightLayer( sceneModel.soccerBalls, modelViewTransform, model.isPlayAreaMedianVisibleProperty, {
       visibleProperty: model.isPlayAreaMedianVisibleProperty
