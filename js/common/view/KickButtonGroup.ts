@@ -99,10 +99,10 @@ export default class KickButtonGroup extends VBox {
       tandem: kick5ButtonTandem.createTandem( 'kick5PatternStringProperty' )
     } );
 
-    const numberOfUnkickedBallsProperty = new DynamicProperty<number, unknown, SoccerSceneModel>( selectedSceneModelProperty, {
-      derive: 'numberOfUnkickedBallsProperty'
+    const numberOfIdleBallsProperty = new DynamicProperty<number, unknown, SoccerSceneModel>( selectedSceneModelProperty, {
+      derive: 'numberOfIdleBallsProperty'
     } );
-    numberOfUnkickedBallsProperty.link( numberOfRemainingKickableObjects => {
+    numberOfIdleBallsProperty.link( numberOfRemainingKickableObjects => {
       const value = Math.max( Math.min( numberOfRemainingKickableObjects, 5 ), 1 );
       multiKickProperty.value = value;
     } );
