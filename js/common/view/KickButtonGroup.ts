@@ -11,7 +11,7 @@
 
 import centerAndVariability from '../../centerAndVariability.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
-import { AlignGroup, Node, Text, VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
+import { AlignGroup, Node, Text, VBox, VBoxOptions, createGatedVisibleProperty } from '../../../../scenery/js/imports.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -23,7 +23,6 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import SoccerSceneModel from '../../../../soccer-common/js/model/SoccerSceneModel.js';
 import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
-import { createGatedVisibleProperty } from '../model/createGatedVisibleProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 
