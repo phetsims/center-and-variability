@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2023-2024, University of Colorado Boulder
 
 /**
  * CAVSoccerSceneModel manages the scene's statistical Properties, specifically the median and the data range.

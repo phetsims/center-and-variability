@@ -1,4 +1,4 @@
-// Copyright 2022-2023, University of Colorado Boulder
+// Copyright 2022-2024, University of Colorado Boulder
 
 /**
  * VariabilitySceneModel represents an individual scene in the "Variability" screen. Each scene is characterized by

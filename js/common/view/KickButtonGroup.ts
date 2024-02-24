@@ -1,4 +1,4 @@
-// Copyright 2022-2023, University of Colorado Boulder
+// Copyright 2022-2024, University of Colorado Boulder
 
 /**
  * KickButtonGroup contains "Kick 1" and "Kick 5" buttons utilized in the soccer screens.
