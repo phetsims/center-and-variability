@@ -18,7 +18,7 @@ import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import CAVSoccerBall from '../../common/model/CAVSoccerBall.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import KickDistributionStrategy from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
+import KickDistributionStrategy, { KickDistributionStrategySpecification } from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
 import InteractiveCardContainerModel from './InteractiveCardContainerModel.js';
 import PreferencesModel from '../../../../joist/js/preferences/PreferencesModel.js';
 
@@ -54,16 +54,37 @@ export default class MedianModel extends CAVModel {
       phetioFeatured: true
     } );
 
+    const kickDistributionStrategySpecification: KickDistributionStrategySpecification = {
+      type: 'randomSkew',
+      skewType: KickDistributionStrategy.chooseSkewDirection(),
+      values: null
+    };
+
+    const sceneModelTandem = options.tandem.createTandem( 'sceneModel' );
+    const kickDistributionStrategy = new KickDistributionStrategy(
+      kickDistributionStrategySpecification.type,
+      kickDistributionStrategySpecification.values,
+      kickDistributionStrategySpecification.skewType, {
+        rightSkewedData: [
+          10, 25, 45, 30, 18,
+          12, 10, 5, 4, 4,
+          4, 4, 4, 4, 4
+        ],
+        valuesRange: CAVConstants.PHYSICAL_RANGE,
+        tandem: sceneModelTandem.createTandem( 'kickDistributionStrategy' ),
+        phetioFeatured: true
+      } );
+
     const sceneModel = new CAVSoccerSceneModel(
       maxKicksProperty,
       maxKicksAllowed,
-      { type: 'randomSkew', skewType: KickDistributionStrategy.chooseSkewDirection(), values: null },
+      kickDistributionStrategy,
       CAVConstants.PHYSICAL_RANGE,
       CAVSoccerBall.createSoccerBall,
 
       // The regionAndCulturePortrayalProperty will not be undefined since portrayals were passed into the PreferencesModel at startup.
       preferencesModel.localizationModel.regionAndCulturePortrayalProperty!,
-      { tandem: options.tandem.createTandem( 'sceneModel' ) }
+      { tandem: sceneModelTandem }
     );
 
     super( maxKicksProperty, [ sceneModel ], options );

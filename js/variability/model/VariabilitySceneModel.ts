@@ -21,7 +21,7 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import VariabilitySoccerBall from './VariabilitySoccerBall.js';
 import RegionAndCulturePortrayal from '../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
-import { KickDistributionStrategySpecification } from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
+import KickDistributionStrategy from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import { TColor } from '../../../../scenery/js/imports.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
@@ -55,12 +55,12 @@ export default class VariabilitySceneModel extends CAVSoccerSceneModel<Variabili
   // Fired when the data measures should be updated for the current set of stacked soccer balls
   public readonly variabilityDataMeasuresUpdatedEmitter: Emitter = new Emitter();
 
-  public constructor( maxKicksProperty: TReadOnlyProperty<number>, kickDistributionStrategySpecification: KickDistributionStrategySpecification,
+  public constructor( maxKicksProperty: TReadOnlyProperty<number>, kickDistributionStrategy: KickDistributionStrategy,
                       regionAndCultureProperty: Property<RegionAndCulturePortrayal>, public readonly kickerSceneColor: TColor, tandem: Tandem ) {
     super(
       maxKicksProperty,
       CAVConstants.MAX_KICKS_VALUES,
-      kickDistributionStrategySpecification,
+      kickDistributionStrategy,
       CAVConstants.PHYSICAL_RANGE,
       VariabilitySoccerBall.createSoccerBall,
       regionAndCultureProperty,

@@ -18,7 +18,7 @@ import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import CAVSoccerBall from './CAVSoccerBall.js';
 import RegionAndCulturePortrayal from '../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
-import { KickDistributionStrategySpecification } from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
+import KickDistributionStrategy from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import isResettingProperty from '../../../../soccer-common/js/model/isResettingProperty.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
@@ -33,7 +33,7 @@ export default class CAVSoccerSceneModel<T extends CAVSoccerBall = CAVSoccerBall
 
   public constructor( maxKicksProperty: TReadOnlyProperty<number>,
                       maxKicksChoices: number[],
-                      kickDistributionStrategySpecification: KickDistributionStrategySpecification,
+                      kickDistributionStrategy: KickDistributionStrategy,
                       physicalRange: Range,
                       soccerBallFactory: ( isFirstSoccerBall: boolean, tandem: Tandem ) => T,
                       regionAndCultureProperty: Property<RegionAndCulturePortrayal>,
@@ -41,7 +41,7 @@ export default class CAVSoccerSceneModel<T extends CAVSoccerBall = CAVSoccerBall
 
     const options = providedOptions;
 
-    super( maxKicksProperty, maxKicksChoices, kickDistributionStrategySpecification, physicalRange,
+    super( maxKicksProperty, maxKicksChoices, kickDistributionStrategy, physicalRange,
       soccerBallFactory, regionAndCultureProperty, options );
 
     this.medianValueProperty = new Property<number | null>( null, {

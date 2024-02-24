@@ -23,7 +23,7 @@ import CAVSoccerBall from '../../common/model/CAVSoccerBall.js';
 // eslint-disable-next-line no-view-imported-from-model
 import MedianAnimationTone from '../../median/view/MedianAnimationTone.js';
 import Property from '../../../../axon/js/Property.js';
-import KickDistributionStrategy from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
+import KickDistributionStrategy, { KickDistributionStrategySpecification } from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
 import NumberTone from '../../../../soccer-common/js/model/NumberTone.js';
 import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-players/checkboxCheckedSoundPlayer.js';
 import PreferencesModel from '../../../../joist/js/preferences/PreferencesModel.js';
@@ -58,16 +58,37 @@ export default class MeanAndMedianModel extends CAVModel {
       instrumentDataPointVisibilityProperty: true
     }, providedOptions );
 
+    const kickDistributionStrategySpecification: KickDistributionStrategySpecification = {
+      type: 'randomSkew',
+      skewType: KickDistributionStrategy.chooseSkewDirection(),
+      values: null
+    };
+
+    const sceneModelTandem = options.tandem.createTandem( 'sceneModel' );
+    const kickDistributionStrategy = new KickDistributionStrategy(
+      kickDistributionStrategySpecification.type,
+      kickDistributionStrategySpecification.values,
+      kickDistributionStrategySpecification.skewType, {
+        rightSkewedData: [
+          10, 25, 45, 30, 18,
+          12, 10, 5, 4, 4,
+          4, 4, 4, 4, 4
+        ],
+        valuesRange: CAVConstants.PHYSICAL_RANGE,
+        tandem: sceneModelTandem.createTandem( 'kickDistributionStrategy' ),
+        phetioFeatured: true
+      } );
+
     const sceneModel = new CAVSoccerSceneModel(
       MAX_KICKS_PROPERTY,
       CAVConstants.MAX_KICKS_VALUES,
-      { type: 'randomSkew', skewType: KickDistributionStrategy.chooseSkewDirection(), values: null },
+      kickDistributionStrategy,
       CAVConstants.PHYSICAL_RANGE,
       CAVSoccerBall.createSoccerBall,
 
       // The regionAndCulturePortrayalProperty will not be undefined since portrayals were passed into the PreferencesModel at startup.
       preferencesModel.localizationModel.regionAndCulturePortrayalProperty!,
-      { tandem: options.tandem.createTandem( 'sceneModel' ) }
+      { tandem: sceneModelTandem }
     );
 
     super( MAX_KICKS_PROPERTY, [ sceneModel ], options );

@@ -25,6 +25,8 @@ import Utils from '../../../../dot/js/Utils.js';
 import NumberTone from '../../../../soccer-common/js/model/NumberTone.js';
 import PreferencesModel from '../../../../joist/js/preferences/PreferencesModel.js';
 import IntervalToolModel from './IntervalToolModel.js';
+import KickDistributionStrategy, { KickDistributionStrategySpecification } from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
+import { TColor } from '../../../../scenery/js/imports.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
@@ -70,28 +72,52 @@ export default class VariabilityModel extends CAVModel {
 
     let sceneTandemIndex = 1;
 
+    const createVariabilitySceneModel = ( kickDistributionStrategySpecification: KickDistributionStrategySpecification,
+                                          kickerSceneColor: TColor ) => {
+
+      const sceneTandem = providedOptions.tandem.createTandem( `sceneKicker${sceneTandemIndex++}Model` );
+      const kickDistributionStrategy = new KickDistributionStrategy(
+        kickDistributionStrategySpecification.type,
+        kickDistributionStrategySpecification.values,
+        kickDistributionStrategySpecification.skewType, {
+          rightSkewedData: [
+            10, 25, 45, 30, 18,
+            12, 10, 5, 4, 4,
+            4, 4, 4, 4, 4
+          ],
+          valuesRange: CAVConstants.PHYSICAL_RANGE,
+          tandem: sceneTandem.createTandem( 'kickDistributionStrategy' ),
+          phetioFeatured: true
+        } );
+      return new VariabilitySceneModel( MAX_KICKS_PROPERTY,
+        kickDistributionStrategy,
+        regionAndCulturePortrayalProperty,
+        kickerSceneColor,
+        sceneTandem );
+    };
+
     // If a new variability scene model is added, a new color associated with that model needs to be added in CAVConstants as well.
     const sceneModels = [
-      new VariabilitySceneModel( MAX_KICKS_PROPERTY, {
+      createVariabilitySceneModel( {
         type: 'probabilityByDistance',
         values: [ 0, 0, 0, 1, 3, 12, 20, 32, 20, 12, 3, 1, 0, 0, 0 ],
         skewType: null
-      }, regionAndCulturePortrayalProperty, CAVConstants.VARIABILITY_KICKER_COLORS[ 0 ], providedOptions.tandem.createTandem( `sceneKicker${sceneTandemIndex++}Model` ) ),
-      new VariabilitySceneModel( MAX_KICKS_PROPERTY, {
+      }, CAVConstants.VARIABILITY_KICKER_COLORS[ 0 ] ),
+      createVariabilitySceneModel( {
         type: 'probabilityByDistance',
         values: [ 3, 5, 10, 10, 25, 32, 45, 65, 45, 32, 25, 10, 10, 5, 3 ],
         skewType: null
-      }, regionAndCulturePortrayalProperty, CAVConstants.VARIABILITY_KICKER_COLORS[ 1 ], providedOptions.tandem.createTandem( `sceneKicker${sceneTandemIndex++}Model` ) ),
-      new VariabilitySceneModel( MAX_KICKS_PROPERTY, {
+      }, CAVConstants.VARIABILITY_KICKER_COLORS[ 1 ] ),
+      createVariabilitySceneModel( {
         type: 'skew',
         values: null,
         skewType: 'right'
-      }, regionAndCulturePortrayalProperty, CAVConstants.VARIABILITY_KICKER_COLORS[ 2 ], providedOptions.tandem.createTandem( `sceneKicker${sceneTandemIndex++}Model` ) ),
-      new VariabilitySceneModel( MAX_KICKS_PROPERTY, {
+      }, CAVConstants.VARIABILITY_KICKER_COLORS[ 2 ] ),
+      createVariabilitySceneModel( {
         type: 'skew',
         values: null,
         skewType: 'left'
-      }, regionAndCulturePortrayalProperty, CAVConstants.VARIABILITY_KICKER_COLORS[ 3 ], providedOptions.tandem.createTandem( `sceneKicker${sceneTandemIndex++}Model` ) )
+      }, CAVConstants.VARIABILITY_KICKER_COLORS[ 3 ] )
     ];
 
     const accordionBoxTandem = providedOptions.tandem.createTandem( 'variabilityMeasureAccordionBox' );
