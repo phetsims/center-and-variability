@@ -21,10 +21,7 @@ import AccordionBoxCheckboxFactory from '../../common/view/AccordionBoxCheckboxF
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import Utils from '../../../../dot/js/Utils.js';
 import CAVColors from '../../common/CAVColors.js';
-import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import AccordionBoxTitleNode from '../../common/view/AccordionBoxTitleNode.js';
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
 import CAVInfoButton from '../../common/view/CAVInfoButton.js';
@@ -32,6 +29,7 @@ import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js'
 import PlotType from '../../common/model/PlotType.js';
 import ButtonNode from '../../../../sun/js/buttons/ButtonNode.js';
 import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
+import createValueReadoutStringProperty from '../../../../soccer-common/js/model/createValueReadoutStringProperty.js';
 
 export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
   public readonly infoButton: ButtonNode;
@@ -85,21 +83,13 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
     const createReadoutText = ( valueProperty: TReadOnlyProperty<number | null>, visibleProperty: TReadOnlyProperty<boolean>,
                                 patternStringProperty: TReadOnlyProperty<string>, unknownStringProperty: LocalizedStringProperty, fill: TPaint, decimalPlaces: number | null ) => {
 
-      const readoutProperty = new DerivedProperty( [ valueProperty, CenterAndVariabilityStrings.valueUnknownStringProperty ],
-        ( value, valueUnknownString ) => {
-          return value === null ? valueUnknownString : typeof decimalPlaces === 'number' ? Utils.toFixed( value, decimalPlaces ) : value;
-        } );
-
-      const valuePatternStringProperty = new PatternStringProperty( patternStringProperty, {
-        value: readoutProperty
-      } );
-      const readoutPatternStringProperty = DerivedProperty.deriveAny( [ unknownStringProperty, model.selectedSceneModelProperty, valueProperty ], () => {
-        const result = valueProperty.value;
-        return result === null ? unknownStringProperty.value : valuePatternStringProperty.value;
-      }, {
-        strictAxonDependencies: false //TODO https://github.com/phetsims/center-and-variability/issues/607
-      } );
-
+      const readoutPatternStringProperty = createValueReadoutStringProperty(
+        valueProperty,
+        patternStringProperty,
+        unknownStringProperty,
+        decimalPlaces,
+        [ model.selectedSceneModelProperty ]
+      );
       return new Text( readoutPatternStringProperty, {
         fill: fill,
         font: new PhetFont( 16 ),
