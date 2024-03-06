@@ -30,7 +30,7 @@ import CardNode from './CardNode.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import sortCelebration_mp3 from '../../../sounds/sortCelebration_mp3.js';
-import TEmitter from '../../../../axon/js/TEmitter.js';
+import { TReadOnlyEmitter } from '../../../../axon/js/TEmitter.js';
 
 const successSoundClip = new SoundClip( sortCelebration_mp3, {
   initialOutputLevel: 0.3
@@ -50,7 +50,7 @@ export default class CelebrationNode extends Panel {
 
   public constructor( private readonly cardContainerModel: InteractiveCardContainerModel,
                       private readonly cardMap: Map<CardModel, CardNode>,
-                      resetEmitter: TEmitter
+                      resetEmitter: TReadOnlyEmitter
   ) {
     const dataSortedTextNode = new Text( CenterAndVariabilityStrings.youSortedTheDataStringProperty, {
       font: new PhetFont( 15 ),
