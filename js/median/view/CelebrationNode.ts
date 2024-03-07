@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2023-2024, University of Colorado Boulder
 
 /**
  * CelebrationNode is a Panel in the PhET Interactive Simulations framework that animates and provides feedback when
