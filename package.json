@@ -30,9 +30,9 @@
       "supportsDynamicLocale": true,
       "supportsSound": true,
       "supportedRegionsAndCultures": [
-        "usa",
         "africa",
-        "africaModest"
+        "africaModest",
+        "usa"
       ]
     },
     "screenNameKeys": [
