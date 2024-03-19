@@ -34,9 +34,6 @@ const CAVColors = {
   variabilityQuestionBarFillColorProperty: new ProfileColorProperty( centerAndVariability, 'variabilityQuestionBarFill', {
     default: '#fdd10b'
   } ),
-  kickButtonFillColorProperty: new ProfileColorProperty( centerAndVariability, 'kickButtonFillColor', {
-    default: '#dae6f7'
-  } ),
 
   medianColorProperty: new ProfileColorProperty( centerAndVariability, 'medianColor', { default: '#f03000' } ),
   meanColorProperty: new ProfileColorProperty( centerAndVariability, 'meanColor', { default: '#8500bd' } ),

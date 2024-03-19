@@ -10,21 +10,18 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
-import { AlignGroup, Node, Text, VBox, VBoxOptions, createGatedVisibleProperty } from '../../../../scenery/js/imports.js';
+import { AlignGroup, createGatedVisibleProperty, Node, Text, VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import CAVColors from '../CAVColors.js';
-import CAVConstants from '../CAVConstants.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import SoccerSceneModel from '../../../../soccer-common/js/model/SoccerSceneModel.js';
-import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
+import KickButton, { KICK_BUTTON_FONT } from '../../../../soccer-common/js/view/KickButton.js';
 
 type SelfOptions = EmptySelfOptions;
 export type KickButtonGroupOptions = SelfOptions & VBoxOptions & PickRequired<VBoxOptions, 'tandem'>;
@@ -46,7 +43,7 @@ export default class KickButtonGroup extends VBox {
     const createLabel = ( label: PatternStringProperty<{ value: number }> ) => {
       const text = new Text( label, {
         maxWidth: TEXT_MAX_WIDTH,
-        font: CAVConstants.MAIN_FONT
+        font: KICK_BUTTON_FONT
       } );
       return alignGroup.createBox( text );
     };
@@ -57,30 +54,12 @@ export default class KickButtonGroup extends VBox {
         derive: 'hasKickableSoccerBallsStableProperty'
       } );
 
-      const touchAreaXDilation = 5;
-      const touchAreaYDilation = 4;
-
-      return new RectangularPushButton( {
+      return new KickButton( {
+        multiKick: multikick,
         visibleProperty: createGatedVisibleProperty( hasKickableSoccerBallsProperty, tandem ),
         content: content,
-        baseColor: CAVColors.kickButtonFillColorProperty,
-        xMargin: 12,
-        yMargin: 12,
         tandem: tandem,
-        listener: () => selectedSceneModelProperty.value.scheduleKicks( numberToKick ),
-
-        // The Kick 1 button can be held down for repeat kicks, but the Kick 5 cannot.
-        fireOnHold: !multikick,
-        fireOnHoldDelay: 750,
-
-        // This needs to be longer than CAVSceneModel.TIME_BETWEEN_RAPID_KICKS plus the poise time, see
-        // https://github.com/phetsims/center-and-variability/issues/102
-        fireOnHoldInterval: 650,
-
-        soundPlayer: nullSoundPlayer,
-        touchAreaXDilation: touchAreaXDilation,
-        touchAreaYDilation: touchAreaYDilation,
-        touchAreaYShift: multikick ? touchAreaYDilation : -touchAreaYDilation
+        listener: () => selectedSceneModelProperty.value.scheduleKicks( numberToKick )
       } );
     };
 
