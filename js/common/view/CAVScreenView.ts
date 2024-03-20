@@ -14,7 +14,7 @@ import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVConstants from '../CAVConstants.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import { AlignBox, Image, ManualConstraint, Node, Text, VBox } from '../../../../scenery/js/imports.js';
+import { AlignBox, Node, Text, VBox } from '../../../../scenery/js/imports.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
@@ -31,21 +31,17 @@ import KickButtonGroup from './KickButtonGroup.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import { KickerImageSet } from '../../../../soccer-common/js/view/KickerPortrayal.js';
 import Kicker from '../../../../soccer-common/js/model/Kicker.js';
-import CAVObjectType from '../model/CAVObjectType.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';
-import { SoccerBallPhase } from '../../../../soccer-common/js/model/SoccerBallPhase.js';
 import SoundClipPlayer from '../../../../tambo/js/sound-generators/SoundClipPlayer.js';
 import SoccerCommonConstants from '../../../../soccer-common/js/SoccerCommonConstants.js';
 import CAVSceneView from './CAVSceneView.js';
 import CAVNumberLineNode from './CAVNumberLineNode.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import dragIndicatorHand_png from '../../../../soccer-common/images/dragIndicatorHand_png.js';
 import SoccerSceneModel from '../../../../soccer-common/js/model/SoccerSceneModel.js';
-import SoccerScreenView, { DRAG_CUE_SCALE, SoccerScreenViewOptions } from '../../../../soccer-common/js/view/SoccerScreenView.js';
+import SoccerScreenView, { SoccerScreenViewOptions } from '../../../../soccer-common/js/view/SoccerScreenView.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import QuestionBar, { QuestionBarOptions } from '../../../../scenery-phet/js/QuestionBar.js';
@@ -58,7 +54,6 @@ import isResettingProperty from '../../../../soccer-common/js/model/isResettingP
 import KickerPortrayalUSA from '../../../../soccer-common/js/view/KickerPortrayalUSA.js';
 import KickerPortrayalAfrica from '../../../../soccer-common/js/view/KickerPortrayalAfrica.js';
 import KickerPortrayalAfricaModest from '../../../../soccer-common/js/view/KickerPortrayalAfricaModest.js';
-import GroupSortInteractionView from '../../../../scenery-phet/js/accessibility/group-sort/view/GroupSortInteractionView.js';
 
 type SelfOptions = {
   questionBarOptions: StrictOmit<QuestionBarOptions, 'tandem'>;
@@ -109,7 +104,6 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
   private readonly sceneViews: SoccerSceneView[];
 
   private readonly updateMedianNode: () => void;
-  private readonly updateMouseSortCueNode: () => void;
 
   protected readonly kickButtonGroup: KickButtonGroup;
 
@@ -119,6 +113,10 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
   // they are added.
   protected readonly questionBar: QuestionBar;
   protected readonly resetAllButton: ResetAllButton;
+
+  private readonly repositionNodeIfOverlappingAccordionBox: ( node: Node ) => void;
+  private readonly adjustMedianIndicatorBottom: ( topObjectPositionY: number ) => void;
+  private readonly playAreaMedianIndicatorNode: Node;
 
   protected constructor( model: CAVModel, providedOptions: CAVScreenViewOptions ) {
 
@@ -255,17 +253,8 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       }
     } );
 
-    const sortIndicatorArrowNode = GroupSortInteractionView.createSortCueNode(
-      model.groupSortInteractionModel.mouseSortCueVisibleProperty, DRAG_CUE_SCALE );
-
-    const mouseSortHandCueNode = new Image( dragIndicatorHand_png, {
-      scale: 0.07,
-      visibleProperty: model.groupSortInteractionModel.mouseSortCueVisibleProperty,
-      rotation: Math.PI / 4
-    } );
-
     // Utility function to prevent nodes from overlapping with the accordion box
-    const repositionNodeIfOverlappingAccordionBox = ( node: Node ) => {
+    this.repositionNodeIfOverlappingAccordionBox = ( node: Node ) => {
       if ( this.accordionBox ) {
         if ( node.top < this.accordionBox.bottom + INDICATOR_MARGIN ) {
           node.top = this.accordionBox.bottom + INDICATOR_MARGIN;
@@ -274,52 +263,11 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
     };
 
     // When cueing arrows are visible the bottom of the MedianIndicator may need to adjust.
-    const adjustMedianIndicatorBottom = ( topObjectPositionY: number ) => {
-      playAreaMedianIndicatorNode.bottom = topObjectPositionY - 15;
+    this.adjustMedianIndicatorBottom = ( topObjectPositionY: number ) => {
+      this.playAreaMedianIndicatorNode.bottom = topObjectPositionY - 15;
     };
 
-    this.updateMouseSortCueNode = () => {
-      const mouseSortCueVisible = model.groupSortInteractionModel.mouseSortCueVisibleProperty.value;
-      const selectedValue = model.groupSortInteractionModel.selectedGroupItemProperty.value?.valueProperty.value ?? null;
-
-      if ( mouseSortCueVisible && selectedValue !== null ) {
-        const topObjectPositionY = this.getTopObjectPositionY( selectedValue );
-        sortIndicatorArrowNode.center = new Vector2(
-          this.modelViewTransform.modelToViewX( selectedValue ),
-
-          // This value must be kept in sync with the other occurrences of GroupSortInteractionView.createSortCueNode()
-          // that are shown for the keyboard.
-          topObjectPositionY - 11.5
-        );
-
-        // If the drag indicator is visible and its stack matches the median stack, try to place the median indicator
-        // above the drag indicator, while avoiding overlap with the accordion box.
-        if ( model.selectedSceneModelProperty.value.medianValueProperty.value === selectedValue ) {
-          adjustMedianIndicatorBottom( topObjectPositionY );
-          repositionNodeIfOverlappingAccordionBox( playAreaMedianIndicatorNode );
-        }
-
-        // We never want the sortIndicatorArrowNode to overlap the accordion Box.
-        repositionNodeIfOverlappingAccordionBox( sortIndicatorArrowNode );
-      }
-    };
-
-    ManualConstraint.create( this, [ sortIndicatorArrowNode ], sortIndicatorArrowNodeProxy => {
-
-      // Pixel adjustments needed with rotation option on mouseSortHandCueNode and empirically determined to match design
-      mouseSortHandCueNode.right = sortIndicatorArrowNodeProxy.left + 22;
-      mouseSortHandCueNode.top = sortIndicatorArrowNodeProxy.bottom + Math.abs( this.modelViewTransform.modelToViewDeltaY( CAVObjectType.SOCCER_BALL.radius ) ) - 5;
-    } );
-
-    this.visibleBoundsProperty.link( this.updateMouseSortCueNode );
-    this.model.selectedSceneModelProperty.link( this.updateMouseSortCueNode );
-    this.model.sceneModels.forEach( sceneModel => {
-      sceneModel.medianValueProperty.link( this.updateMouseSortCueNode );
-      sceneModel.objectChangedEmitter.addListener( this.updateMouseSortCueNode );
-    } );
-    model.groupSortInteractionModel.registerUpdateSortCueNode( this.updateMouseSortCueNode );
-
-    const playAreaMedianIndicatorNode = new PlayAreaMedianIndicatorNode();
+    this.playAreaMedianIndicatorNode = new PlayAreaMedianIndicatorNode();
 
     const frontLayerToggleNode = new CAVToggleNode( model.selectedSceneModelProperty, this.sceneViews.map( sceneView => {
         return {
@@ -338,7 +286,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
         this.resetAllButton,
         this.questionBar,
         this.kickButtonGroup,
-        playAreaMedianIndicatorNode
+        this.playAreaMedianIndicatorNode
       ]
     } );
 
@@ -350,24 +298,24 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       if ( visible ) {
         const topObjectPositionY = this.getTopObjectPositionY( medianValue );
 
-        playAreaMedianIndicatorNode.centerX = this.modelViewTransform.modelToViewX( medianValue );
-        playAreaMedianIndicatorNode.bottom = topObjectPositionY;
+        this.playAreaMedianIndicatorNode.centerX = this.modelViewTransform.modelToViewX( medianValue );
+        this.playAreaMedianIndicatorNode.bottom = topObjectPositionY;
 
         // If cueing indicators are visible and their stack matches the median stack, adjustments needs to be made.
         if ( medianValue === model.groupSortInteractionModel.selectedGroupItemProperty.value?.valueProperty.value &&
              model.groupSortInteractionModel.mouseSortCueVisibleProperty.value ) {
-          adjustMedianIndicatorBottom( topObjectPositionY );
+          this.adjustMedianIndicatorBottom( topObjectPositionY );
 
         }
         if ( medianValue === model.groupSortInteractionModel.selectedGroupItemProperty.value?.valueProperty.value &&
              ( model.groupSortInteractionModel.keyboardSortCueVisibleProperty.value ) ) {
-          adjustMedianIndicatorBottom( topObjectPositionY );
+          this.adjustMedianIndicatorBottom( topObjectPositionY );
         }
 
         // The playAreaMedianIndicatorNode shouldn't overlap the accordion box
-        repositionNodeIfOverlappingAccordionBox( playAreaMedianIndicatorNode );
+        this.repositionNodeIfOverlappingAccordionBox( this.playAreaMedianIndicatorNode );
       }
-      playAreaMedianIndicatorNode.visible = visible;
+      this.playAreaMedianIndicatorNode.visible = visible;
     };
 
     Multilink.multilink( [ model.groupSortInteractionModel.mouseSortCueVisibleProperty,
@@ -380,13 +328,14 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
     this.model.selectedSceneModelProperty.link( this.updateMedianNode );
     this.model.sceneModels.forEach( sceneModel => {
       sceneModel.medianValueProperty.link( this.updateMedianNode );
+      sceneModel.medianValueProperty.link( this.updateMouseSortCueNode.bind( this ) );
       sceneModel.objectChangedEmitter.addListener( this.updateMedianNode );
     } );
     this.visibleBoundsProperty.link( this.updateMedianNode );
     model.isPlayAreaMedianVisibleProperty.link( this.updateMedianNode );
 
-    this.middleScreenViewLayer.addChild( sortIndicatorArrowNode );
-    this.middleScreenViewLayer.addChild( mouseSortHandCueNode );
+    this.middleScreenViewLayer.addChild( this.sortIndicatorArrowNode );
+    this.middleScreenViewLayer.addChild( this.mouseSortHandCueNode );
 
     // Add to screenViewRootNode for alternativeInput
     this.screenViewRootNode.addChild( this.backScreenViewLayer );
@@ -394,16 +343,6 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
     this.screenViewRootNode.addChild( this.frontScreenViewLayer );
 
     this.addChild( this.screenViewRootNode );
-  }
-
-  // calculate where the top object is at a given value
-  private getTopObjectPositionY( value: number ): number {
-    const sceneModel = this.model.selectedSceneModelProperty.value;
-    const ballsAtValue = sceneModel.soccerBalls.filter( soccerBall =>
-      soccerBall.valueProperty.value === value && soccerBall.soccerBallPhaseProperty.value === SoccerBallPhase.STACKED );
-    const modelHeight = ballsAtValue.length * CAVObjectType.SOCCER_BALL.radius * 2 * ( 1 - SoccerCommonConstants.SOCCER_BALL_OVERLAP );
-    const viewHeight = this.modelViewTransform.modelToViewDeltaY( modelHeight );
-    return this.modelViewTransform.modelToViewY( 0 ) + viewHeight;
   }
 
   private updateAccordionBoxPosition(): void {
@@ -434,7 +373,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
     this.updateAccordionBoxPosition();
 
     this.accordionBox.boundsProperty.link( this.updateMedianNode );
-    this.accordionBox.boundsProperty.link( this.updateMouseSortCueNode );
+    this.accordionBox.boundsProperty.link( this.updateMouseSortCueNode.bind( this ) );
     this.accordionBox.boundsProperty.link( () => {
       this.sceneViews.forEach( sceneView => sceneView.groupSortInteractionView.setGroupFocusHighlightTop( this.accordionBox!.bounds.bottom ) );
     } );
@@ -526,6 +465,26 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
 
       phetioFeatured: true
     } );
+  }
+
+  protected override updateMouseSortCueNode(): void {
+    super.updateMouseSortCueNode();
+
+    const mouseSortCueVisible = this.model.groupSortInteractionModel.mouseSortCueVisibleProperty.value;
+    const selectedValue = this.model.groupSortInteractionModel.selectedGroupItemProperty.value?.valueProperty.value ?? null;
+
+    if ( mouseSortCueVisible && selectedValue !== null ) {
+
+      // If the drag indicator is visible and its stack matches the median stack, try to place the median indicator
+      // above the drag indicator, while avoiding overlap with the accordion box.
+      if ( this.model.selectedSceneModelProperty.value.medianValueProperty.value === selectedValue ) {
+        this.adjustMedianIndicatorBottom( this.getTopObjectPositionY( selectedValue ) );
+        this.repositionNodeIfOverlappingAccordionBox( this.playAreaMedianIndicatorNode );
+      }
+
+      // We never want the sortIndicatorArrowNode to overlap the accordion Box.
+      this.repositionNodeIfOverlappingAccordionBox( this.sortIndicatorArrowNode );
+    }
   }
 }
 
