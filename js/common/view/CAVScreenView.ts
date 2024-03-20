@@ -43,7 +43,7 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import dragIndicatorHand_png from '../../../images/dragIndicatorHand_png.js';
+import dragIndicatorHand_png from '../../../../soccer-common/images/dragIndicatorHand_png.js';
 import SoccerSceneModel from '../../../../soccer-common/js/model/SoccerSceneModel.js';
 import SoccerScreenView, { DRAG_CUE_SCALE, SoccerScreenViewOptions } from '../../../../soccer-common/js/view/SoccerScreenView.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
