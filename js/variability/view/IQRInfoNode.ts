@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2023-2024, University of Colorado Boulder
 
 /**
  * `IQRInfoNode` presents the Interquartile Range (IQR) by visualizing its calculation and plotting quartile ranges.
