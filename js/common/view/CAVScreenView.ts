@@ -375,7 +375,8 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
     this.accordionBox.boundsProperty.link( this.updateMedianNode );
     this.accordionBox.boundsProperty.link( this.updateMouseSortCueNode.bind( this ) );
     this.accordionBox.boundsProperty.link( () => {
-      this.sceneViews.forEach( sceneView => sceneView.groupSortInteractionView.setGroupFocusHighlightTop( this.accordionBox!.bounds.bottom ) );
+      this.sceneViews.forEach( sceneView => sceneView.groupSortInteractionView.setGroupFocusHighlightTop(
+        this.accordionBox!.bounds.bottom, CAVConstants.PHYSICAL_RANGE ) );
     } );
   }
 
