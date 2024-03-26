@@ -16,7 +16,6 @@ import SimulationPreferencesContentNode from './common/view/SimulationPreference
 import PreferencesModel from '../../joist/js/preferences/PreferencesModel.js';
 import MeanAndMedianScreen from './mean-and-median/MeanAndMedianScreen.js';
 import VariabilityScreen from './variability/VariabilityScreen.js';
-import KickerImages from '../../soccer-common/js/view/KickerImages.js';
 
 const centerAndVariabilityTitleStringProperty = CenterAndVariabilityStrings[ 'center-and-variability' ].titleStringProperty;
 const preferencesModel = new PreferencesModel( {
@@ -24,9 +23,6 @@ const preferencesModel = new PreferencesModel( {
     customPreferences: [ {
       createContent: tandem => new SimulationPreferencesContentNode( phet.joist.sim.topLayer, tandem.createTandem( 'simPreferences' ) )
     } ]
-  },
-  localizationOptions: {
-    portrayals: KickerImages
   }
 } );
 
@@ -45,9 +41,9 @@ const simOptions: SimOptions = {
 
 simLauncher.launch( () => {
   const sim = new Sim( centerAndVariabilityTitleStringProperty, [
-    new MedianScreen( preferencesModel, { tandem: Tandem.ROOT.createTandem( 'medianScreen' ) } ),
-    new MeanAndMedianScreen( preferencesModel, { tandem: Tandem.ROOT.createTandem( 'meanAndMedianScreen' ) } ),
-    new VariabilityScreen( preferencesModel, { tandem: Tandem.ROOT.createTandem( 'variabilityScreen' ) } )
+    new MedianScreen( { tandem: Tandem.ROOT.createTandem( 'medianScreen' ) } ),
+    new MeanAndMedianScreen( { tandem: Tandem.ROOT.createTandem( 'meanAndMedianScreen' ) } ),
+    new VariabilityScreen( { tandem: Tandem.ROOT.createTandem( 'variabilityScreen' ) } )
   ], simOptions );
   sim.start();
 } );

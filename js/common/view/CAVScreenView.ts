@@ -29,8 +29,6 @@ import CAVModel from '../model/CAVModel.js';
 import SoccerSceneView from '../../../../soccer-common/js/view/SoccerSceneView.js';
 import KickButtonGroup from './KickButtonGroup.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import { KickerImageSet } from '../../../../soccer-common/js/view/KickerPortrayal.js';
-import Kicker from '../../../../soccer-common/js/model/Kicker.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';
 import SoundClipPlayer from '../../../../tambo/js/sound-generators/SoundClipPlayer.js';
@@ -40,7 +38,6 @@ import CAVNumberLineNode from './CAVNumberLineNode.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import SoccerSceneModel from '../../../../soccer-common/js/model/SoccerSceneModel.js';
 import SoccerScreenView, { SoccerScreenViewOptions } from '../../../../soccer-common/js/view/SoccerScreenView.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
@@ -51,9 +48,6 @@ import erase_mp3 from '../../../../scenery-phet/sounds/erase_mp3.js';
 import CAVToggleNode from './CAVToggleNode.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import isResettingProperty from '../../../../soccer-common/js/model/isResettingProperty.js';
-import KickerPortrayalUSA from '../../../../soccer-common/js/view/KickerPortrayalUSA.js';
-import KickerPortrayalAfrica from '../../../../soccer-common/js/view/KickerPortrayalAfrica.js';
-import KickerPortrayalAfricaModest from '../../../../soccer-common/js/view/KickerPortrayalAfricaModest.js';
 
 type SelfOptions = {
   questionBarOptions: StrictOmit<QuestionBarOptions, 'tandem'>;
@@ -64,25 +58,6 @@ export type CAVScreenViewOptions = SelfOptions & StrictOmit<SoccerScreenViewOpti
 // constants
 const GROUND_POSITION_Y = 515;
 const INDICATOR_MARGIN = 4;
-
-// Depending on how many characters a regionAndCulture RegionAndCulturePortrayal has will determine how we loop over the characters.
-// 30 Kickers must be loaded per screen.
-const KICKER_IMAGE_SETS: KickerImageSet[][] = [];
-
-for ( let i = 0; i < CAVConstants.MAX_KICKS_VALUES[ CAVConstants.MAX_KICKS_VALUES.length - 1 ]; i++ ) {
-  const locale1MaxNumberOfCharacters = KickerPortrayalUSA.unnumberedKickersCount;
-  const locale2MaxNumberOfCharacters = KickerPortrayalAfrica.unnumberedKickersCount;
-  const locale3MaxNumberOfCharacters = KickerPortrayalAfricaModest.unnumberedKickersCount;
-
-  const locale1CharacterIndex = i < locale1MaxNumberOfCharacters ? i : i % locale1MaxNumberOfCharacters;
-  const locale2CharacterIndex = i < locale2MaxNumberOfCharacters ? i : i % locale2MaxNumberOfCharacters;
-  const locale3CharacterIndex = i < locale3MaxNumberOfCharacters ? i : i % locale3MaxNumberOfCharacters;
-
-  KICKER_IMAGE_SETS.push( [ KickerPortrayalUSA.unnumberedKickerImages[ locale1CharacterIndex ],
-    KickerPortrayalAfrica.unnumberedKickerImages[ locale2CharacterIndex ],
-    KickerPortrayalAfricaModest.unnumberedKickerImages[ locale3CharacterIndex ]
-  ] );
-}
 
 export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel, CAVModel> {
 
@@ -180,7 +155,6 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       model,
       sceneModel,
       this.keyboardSortCueNode,
-      ( kicker, sceneModel ) => this.getKickerImageSets( kicker, sceneModel ),
       this.modelViewTransform,
       CAVConstants.PHYSICAL_RANGE,
 
@@ -440,10 +414,6 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       this.eraserButton,
       this.resetAllButton
     ];
-  }
-
-  public getKickerImageSets( kicker: Kicker, sceneModel: SoccerSceneModel ): KickerImageSet[] {
-    return KICKER_IMAGE_SETS[ kicker.initialPlaceInLine ];
   }
 
   /**

@@ -18,14 +18,13 @@ import CenterAndVariabilityStrings from '../CenterAndVariabilityStrings.js';
 import variabilityScreenIcon_png from '../../images/variabilityScreenIcon_png.js';
 import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
 import VariabilityKeyboardHelpNode from './view/VariabilityKeyboardHelpNode.js';
-import PreferencesModel from '../../../joist/js/preferences/PreferencesModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityScreenOptions = SelfOptions & StrictOmit<CAVScreenOptions, 'name' | 'homeScreenIcon' | 'createKeyboardHelpNode'>;
 
 export default class VariabilityScreen extends CAVScreen<VariabilityModel, VariabilityScreenView> {
 
-  public constructor( preferencesModel: PreferencesModel, providedOptions: VariabilityScreenOptions ) {
+  public constructor( providedOptions: VariabilityScreenOptions ) {
 
     const options = optionize<VariabilityScreenOptions, SelfOptions, CAVScreenOptions>()( {
       name: CenterAndVariabilityStrings.screen.variabilityStringProperty,
@@ -37,7 +36,7 @@ export default class VariabilityScreen extends CAVScreen<VariabilityModel, Varia
     }, providedOptions );
 
     super(
-      () => new VariabilityModel( preferencesModel, {
+      () => new VariabilityModel( {
         tandem: options.tandem.createTandem( 'model' )
       } ),
       ( model: VariabilityModel ) => new VariabilityScreenView( model, { tandem: options.tandem.createTandem( 'view' ) } ),

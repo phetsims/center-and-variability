@@ -22,18 +22,12 @@ import VariabilityAccordionBox from './VariabilityAccordionBox.js';
 import PlayAreaCheckboxFactory from '../../common/view/PlayAreaCheckboxFactory.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
-import Kicker from '../../../../soccer-common/js/model/Kicker.js';
-import { KickerImageSet } from '../../../../soccer-common/js/view/KickerPortrayal.js';
 import VariabilityInfoDialog from './VariabilityInfoDialog.js';
 import PredictionSlider from '../../common/view/PredictionSlider.js';
 import Property from '../../../../axon/js/Property.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Range from '../../../../dot/js/Range.js';
-import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import IntervalToolNode from './IntervalToolNode.js';
-import KickerPortrayalUSA from '../../../../soccer-common/js/view/KickerPortrayalUSA.js';
-import KickerPortrayalAfrica from '../../../../soccer-common/js/view/KickerPortrayalAfrica.js';
-import KickerPortrayalAfricaModest from '../../../../soccer-common/js/view/KickerPortrayalAfricaModest.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
@@ -152,15 +146,6 @@ export default class VariabilityScreenView extends CAVScreenView {
 
     this.cavSetPDOMOrder( controls, [ pointerSlider, this.intervalToolNode ], variabilityAccordionBox.infoButton,
       sceneKickerRadioButtonGroup, variabilityMeasureRadioButtonGroup );
-  }
-
-  public override getKickerImageSets( kicker: Kicker, sceneModel: CAVSoccerSceneModel ): KickerImageSet[] {
-    const index = this.model.sceneModels.indexOf( sceneModel );
-    return [
-      KickerPortrayalUSA.numberedKickerImages[ index ],
-      KickerPortrayalAfrica.numberedKickerImages[ index ],
-      KickerPortrayalAfricaModest.numberedKickerImages[ index ]
-    ];
   }
 
   public override step( dt: number ): void {

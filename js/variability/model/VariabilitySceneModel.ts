@@ -20,7 +20,6 @@ import Utils from '../../../../dot/js/Utils.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import VariabilitySoccerBall from './VariabilitySoccerBall.js';
-import RegionAndCulturePortrayal from '../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
 import KickDistributionStrategy from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import { TColor } from '../../../../scenery/js/imports.js';
@@ -56,14 +55,13 @@ export default class VariabilitySceneModel extends CAVSoccerSceneModel<Variabili
   public readonly variabilityDataMeasuresUpdatedEmitter: Emitter = new Emitter();
 
   public constructor( maxKicksProperty: TReadOnlyProperty<number>, kickDistributionStrategy: KickDistributionStrategy,
-                      regionAndCultureProperty: Property<RegionAndCulturePortrayal>, public readonly kickerSceneColor: TColor, tandem: Tandem ) {
+                      public readonly kickerSceneColor: TColor, tandem: Tandem ) {
     super(
       maxKicksProperty,
       CAVConstants.MAX_KICKS_VALUES,
       kickDistributionStrategy,
       CAVConstants.PHYSICAL_RANGE,
       VariabilitySoccerBall.createSoccerBall,
-      regionAndCultureProperty,
       {
         tandem: tandem,
         isSingleKickerScene: true

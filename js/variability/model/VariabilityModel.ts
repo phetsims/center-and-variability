@@ -23,7 +23,6 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import CAVConstants, { MAX_KICKS_PROPERTY } from '../../common/CAVConstants.js';
 import Utils from '../../../../dot/js/Utils.js';
 import NumberTone from '../../../../soccer-common/js/model/NumberTone.js';
-import PreferencesModel from '../../../../joist/js/preferences/PreferencesModel.js';
 import IntervalToolModel from './IntervalToolModel.js';
 import KickDistributionStrategy, { KickDistributionStrategySpecification } from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
 import { TColor } from '../../../../scenery/js/imports.js';
@@ -65,10 +64,7 @@ export default class VariabilityModel extends CAVModel {
 
   public readonly intervalToolModel: IntervalToolModel;
 
-  public constructor( preferencesModel: PreferencesModel, providedOptions: VariabilityModelOptions ) {
-
-    // The regionAndCulturePortrayalProperty will not be undefined since portrayals were passed into the PreferencesModel at startup.
-    const regionAndCulturePortrayalProperty = preferencesModel.localizationModel.regionAndCulturePortrayalProperty!;
+  public constructor( providedOptions: VariabilityModelOptions ) {
 
     let sceneTandemIndex = 1;
 
@@ -91,7 +87,6 @@ export default class VariabilityModel extends CAVModel {
         } );
       return new VariabilitySceneModel( MAX_KICKS_PROPERTY,
         kickDistributionStrategy,
-        regionAndCulturePortrayalProperty,
         kickerSceneColor,
         sceneTandem );
     };

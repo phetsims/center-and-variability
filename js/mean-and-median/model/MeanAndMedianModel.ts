@@ -26,7 +26,6 @@ import Property from '../../../../axon/js/Property.js';
 import KickDistributionStrategy, { KickDistributionStrategySpecification } from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
 import NumberTone from '../../../../soccer-common/js/model/NumberTone.js';
 import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-players/checkboxCheckedSoundPlayer.js';
-import PreferencesModel from '../../../../joist/js/preferences/PreferencesModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeanAndMedianModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
@@ -48,7 +47,7 @@ export default class MeanAndMedianModel extends CAVModel {
   public readonly predictMeanValueProperty: NumberProperty;
   public readonly isPredictMeanKeyboardDraggingProperty: Property<boolean>;
 
-  public constructor( preferencesModel: PreferencesModel, providedOptions: MeanAndMedianModelOptions ) {
+  public constructor( providedOptions: MeanAndMedianModelOptions ) {
 
     const accordionBoxTandem = providedOptions.tandem.createTandem( 'plotAccordionBox' );
 
@@ -85,9 +84,6 @@ export default class MeanAndMedianModel extends CAVModel {
       kickDistributionStrategy,
       CAVConstants.PHYSICAL_RANGE,
       CAVSoccerBall.createSoccerBall,
-
-      // The regionAndCulturePortrayalProperty will not be undefined since portrayals were passed into the PreferencesModel at startup.
-      preferencesModel.localizationModel.regionAndCulturePortrayalProperty!,
       { tandem: sceneModelTandem }
     );
 

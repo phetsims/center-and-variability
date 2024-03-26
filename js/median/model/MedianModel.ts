@@ -20,7 +20,6 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import KickDistributionStrategy, { KickDistributionStrategySpecification } from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
 import InteractiveCardContainerModel from './InteractiveCardContainerModel.js';
-import PreferencesModel from '../../../../joist/js/preferences/PreferencesModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type MedianModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
@@ -32,7 +31,7 @@ export default class MedianModel extends CAVModel {
   public readonly medianVisibleProperty: BooleanProperty;
   public readonly areCardsSortedProperty: BooleanProperty;
 
-  public constructor( preferencesModel: PreferencesModel, providedOptions: MedianModelOptions ) {
+  public constructor( providedOptions: MedianModelOptions ) {
 
     const accordionBoxTandem = providedOptions.tandem.createTandem( 'distanceAccordionBox' );
 
@@ -81,9 +80,6 @@ export default class MedianModel extends CAVModel {
       kickDistributionStrategy,
       CAVConstants.PHYSICAL_RANGE,
       CAVSoccerBall.createSoccerBall,
-
-      // The regionAndCulturePortrayalProperty will not be undefined since portrayals were passed into the PreferencesModel at startup.
-      preferencesModel.localizationModel.regionAndCulturePortrayalProperty!,
       { tandem: sceneModelTandem }
     );
 

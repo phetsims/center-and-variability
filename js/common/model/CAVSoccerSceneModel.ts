@@ -17,7 +17,6 @@ import Property from '../../../../axon/js/Property.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import CAVSoccerBall from './CAVSoccerBall.js';
-import RegionAndCulturePortrayal from '../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
 import KickDistributionStrategy from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import isResettingProperty from '../../../../soccer-common/js/model/isResettingProperty.js';
@@ -36,13 +35,12 @@ export default class CAVSoccerSceneModel<T extends CAVSoccerBall = CAVSoccerBall
                       kickDistributionStrategy: KickDistributionStrategy,
                       physicalRange: Range,
                       soccerBallFactory: ( isFirstSoccerBall: boolean, tandem: Tandem ) => T,
-                      regionAndCultureProperty: Property<RegionAndCulturePortrayal>,
                       providedOptions: SoccerSceneModelOptions ) {
 
     const options = providedOptions;
 
     super( maxKicksProperty, maxKicksChoices, kickDistributionStrategy, physicalRange,
-      soccerBallFactory, regionAndCultureProperty, options );
+      soccerBallFactory, options );
 
     this.medianValueProperty = new Property<number | null>( null, {
       tandem: options.tandem.createTandem( 'medianValueProperty' ),

@@ -18,14 +18,13 @@ import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import meanAndMedianScreenIcon_png from '../../images/meanAndMedianScreenIcon_png.js';
 import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
 import MeanAndMedianKeyboardHelpNode from './view/MeanAndMedianKeyboardHelpNode.js';
-import PreferencesModel from '../../../joist/js/preferences/PreferencesModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeanAndMedianScreenOptions = SelfOptions & StrictOmit<CAVScreenOptions, 'name' | 'homeScreenIcon' | 'createKeyboardHelpNode'>;
 
 export default class MeanAndMedianScreen extends CAVScreen<MeanAndMedianModel, MeanAndMedianScreenView> {
 
-  public constructor( preferencesModel: PreferencesModel, providedOptions: MeanAndMedianScreenOptions ) {
+  public constructor( providedOptions: MeanAndMedianScreenOptions ) {
 
     const options = optionize<MeanAndMedianScreenOptions, SelfOptions, CAVScreenOptions>()( {
       name: CenterAndVariabilityStrings.screen.meanAndMedianStringProperty,
@@ -37,7 +36,7 @@ export default class MeanAndMedianScreen extends CAVScreen<MeanAndMedianModel, M
     }, providedOptions );
 
     super(
-      () => new MeanAndMedianModel( preferencesModel, {
+      () => new MeanAndMedianModel( {
         tandem: options.tandem.createTandem( 'model' )
       } ),
       model => new MeanAndMedianScreenView( model, {
