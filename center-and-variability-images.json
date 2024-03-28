@@ -1,0 +1,44 @@
+{
+  "usa": {
+    "variabilityKicker01Standing": "../center-and-variability/images/usa/usaVariabilityKicker01Standing_svg.ts",
+    "variabilityKicker01PoisedToKick": "../center-and-variability/images/usa/usaVariabilityKicker01PoisedToKick_svg.ts",
+    "variabilityKicker01Kicking": "../center-and-variability/images/usa/usaVariabilityKicker01Kicking_svg.ts",
+    "variabilityKicker02Standing": "../center-and-variability/images/usa/usaVariabilityKicker02Standing_svg.ts",
+    "variabilityKicker02PoisedToKick": "../center-and-variability/images/usa/usaVariabilityKicker02PoisedToKick_svg.ts",
+    "variabilityKicker02Kicking": "../center-and-variability/images/usa/usaVariabilityKicker02Kicking_svg.ts",
+    "variabilityKicker03Standing": "../center-and-variability/images/usa/usaVariabilityKicker03Standing_svg.ts",
+    "variabilityKicker03PoisedToKick": "../center-and-variability/images/usa/usaVariabilityKicker03PoisedToKick_svg.ts",
+    "variabilityKicker03Kicking": "../center-and-variability/images/usa/usaVariabilityKicker03Kicking_svg.ts",
+    "variabilityKicker04Standing": "../center-and-variability/images/usa/usaVariabilityKicker04Standing_svg.ts",
+    "variabilityKicker04PoisedToKick": "../center-and-variability/images/usa/usaVariabilityKicker04PoisedToKick_svg.ts",
+    "variabilityKicker04Kicking": "../center-and-variability/images/usa/usaVariabilityKicker04Kicking_svg.ts"
+  },
+  "africa": {
+    "variabilityKicker01Standing": "../center-and-variability/images/africa/africaVariabilityKicker01Standing_svg.ts",
+    "variabilityKicker01PoisedToKick": "../center-and-variability/images/africa/africaVariabilityKicker01PoisedToKick_svg.ts",
+    "variabilityKicker01Kicking": "../center-and-variability/images/africa/africaVariabilityKicker01Kicking_svg.ts",
+    "variabilityKicker02Standing": "../center-and-variability/images/africa/africaVariabilityKicker02Standing_svg.ts",
+    "variabilityKicker02PoisedToKick": "../center-and-variability/images/africa/africaVariabilityKicker02PoisedToKick_svg.ts",
+    "variabilityKicker02Kicking": "../center-and-variability/images/africa/africaVariabilityKicker02Kicking_svg.ts",
+    "variabilityKicker03Standing": "../center-and-variability/images/africa/africaVariabilityKicker03Standing_svg.ts",
+    "variabilityKicker03PoisedToKick": "../center-and-variability/images/africa/africaVariabilityKicker03PoisedToKick_svg.ts",
+    "variabilityKicker03Kicking": "../center-and-variability/images/africa/africaVariabilityKicker03Kicking_svg.ts",
+    "variabilityKicker04Standing": "../center-and-variability/images/africa/africaVariabilityKicker04Standing_svg.ts",
+    "variabilityKicker04PoisedToKick": "../center-and-variability/images/africa/africaVariabilityKicker04PoisedToKick_svg.ts",
+    "variabilityKicker04Kicking": "../center-and-variability/images/africa/africaVariabilityKicker04Kicking_svg.ts"
+  },
+  "africaModest": {
+    "variabilityKicker01Standing": "../center-and-variability/images/africa/africaVariabilityKicker01Standing_svg.ts",
+    "variabilityKicker01PoisedToKick": "../center-and-variability/images/africa/africaVariabilityKicker01PoisedToKick_svg.ts",
+    "variabilityKicker01Kicking": "../center-and-variability/images/africa/africaVariabilityKicker01Kicking_svg.ts",
+    "variabilityKicker02Standing": "../center-and-variability/images/africaModest/africaModestVariabilityKicker02Standing_svg.ts",
+    "variabilityKicker02PoisedToKick": "../center-and-variability/images/africaModest/africaModestVariabilityKicker02PoisedToKick_svg.ts",
+    "variabilityKicker02Kicking": "../center-and-variability/images/africaModest/africaModestVariabilityKicker02Kicking_svg.ts",
+    "variabilityKicker03Standing": "../center-and-variability/images/africa/africaVariabilityKicker03Standing_svg.ts",
+    "variabilityKicker03PoisedToKick": "../center-and-variability/images/africa/africaVariabilityKicker03PoisedToKick_svg.ts",
+    "variabilityKicker03Kicking": "../center-and-variability/images/africa/africaVariabilityKicker03Kicking_svg.ts",
+    "variabilityKicker04Standing": "../center-and-variability/images/africa/africaVariabilityKicker04Standing_svg.ts",
+    "variabilityKicker04PoisedToKick": "../center-and-variability/images/africa/africaVariabilityKicker04PoisedToKick_svg.ts",
+    "variabilityKicker04Kicking": "../center-and-variability/images/africa/africaVariabilityKicker04Kicking_svg.ts"
+  }
+}

@@ -19,6 +19,7 @@ import Range from '../../../../dot/js/Range.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import { Node } from '../../../../scenery/js/imports.js';
+import { KickerImageSet } from '../../../../soccer-common/js/view/KickerImageSets.js';
 
 export default class CAVSceneView extends SoccerSceneView<CAVSoccerSceneModel> {
 
@@ -27,10 +28,11 @@ export default class CAVSceneView extends SoccerSceneView<CAVSoccerSceneModel> {
                       keyboardSortCueNode: Node,
                       modelViewTransform: ModelViewTransform2,
                       physicalRange: Range,
+                      kickerImageSets: KickerImageSet[],
                       tandem: Tandem ) {
 
     super( model, sceneModel, keyboardSortCueNode, modelViewTransform,
-      physicalRange, { tandem: tandem } );
+      physicalRange, kickerImageSets, { tandem: tandem } );
 
     const medianHighlightLayer = new MedianHighlightLayer( sceneModel.soccerBalls, modelViewTransform, model.isPlayAreaMedianVisibleProperty, {
       visibleProperty: model.isPlayAreaMedianVisibleProperty

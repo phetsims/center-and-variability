@@ -48,6 +48,8 @@ import erase_mp3 from '../../../../scenery-phet/sounds/erase_mp3.js';
 import CAVToggleNode from './CAVToggleNode.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import isResettingProperty from '../../../../soccer-common/js/model/isResettingProperty.js';
+import VariabilityKickerImageSets from '../../variability/view/VariabilityKickerImageSets.js';
+import KickerImageSets from '../../../../soccer-common/js/view/KickerImageSets.js';
 
 type SelfOptions = {
   questionBarOptions: StrictOmit<QuestionBarOptions, 'tandem'>;
@@ -160,6 +162,9 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
 
       // The variability screen has multiple scenes, and we want to connect these to a specific kicker, while the first
       // two screens have multiple kickers in the same scene.
+      model.sceneModels.length === 1 ?
+      KickerImageSets :
+        [ VariabilityKickerImageSets[ index ] ],
       model.sceneModels.length === 1 ?
       options.tandem.createTandem1Indexed( CAVConstants.SCENE_VIEW_TANDEM, index ) :
       options.tandem.createTandem( `sceneKicker${index + 1}View` )
