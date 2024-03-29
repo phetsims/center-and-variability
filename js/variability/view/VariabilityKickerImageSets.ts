@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2024, University of Colorado Boulder
 /**
  * The VariabilityKickerImageSets contains the image properties for the kickers with numbered jerseys in the
  * Variability screen.
