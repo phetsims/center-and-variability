@@ -1,10 +1,10 @@
 // Copyright 2024, University of Colorado Boulder
+
 /**
- * The VariabilityKickerImageSets contains the image properties for the kickers with numbered jerseys in the
- * Variability screen.
+ * VariabilityKickerImageSets defines the LocalizedImageProperty instances for the kickers with numbered jerseys in the
+ * Variability screen. This array is ordered by ascending kicker number.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
- *
  */
 
 import CenterAndVariabilityImages from '../../CenterAndVariabilityImages.js';
