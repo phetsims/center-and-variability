@@ -152,13 +152,11 @@ export default class IntervalToolNode extends Node {
       new Range( 1, 2 ),
       intervalToolLoop_wav, {
         initialOutputLevel: 0.25,
-        playbackRateCenterOffset: 0,
-
         enableControlProperties: [ DerivedProperty.not( resetInProgressProperty ) ],
         trimSilence: false, // a very precise sound file is used, so make sure it doesn't get changed
         fadeTime: 0.3,
         delayBeforeStop: 0.25,
-        playbackRateSpanOctaves: 1.5,
+        playbackRateRange: new Range( 0.6, 1.7 ), // about 1.5 octaves
         stopOnDisabled: true,
         additionalAudioNodes: [
           biquadFilterNode
