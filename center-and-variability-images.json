@@ -40,5 +40,47 @@
     "variabilityKicker04Standing": "../center-and-variability/images/africa/africaVariabilityKicker04Standing_svg.ts",
     "variabilityKicker04PoisedToKick": "../center-and-variability/images/africa/africaVariabilityKicker04PoisedToKick_svg.ts",
     "variabilityKicker04Kicking": "../center-and-variability/images/africa/africaVariabilityKicker04Kicking_svg.ts"
+  },
+  "asia": {
+    "variabilityKicker01Standing": "../center-and-variability/images/asia/asiaVariabilityKicker01Standing_svg.ts",
+    "variabilityKicker01PoisedToKick": "../center-and-variability/images/asia/asiaVariabilityKicker01PoisedToKick_svg.ts",
+    "variabilityKicker01Kicking": "../center-and-variability/images/asia/asiaVariabilityKicker01Kicking_svg.ts",
+    "variabilityKicker02Standing": "../center-and-variability/images/asia/asiaVariabilityKicker02Standing_svg.ts",
+    "variabilityKicker02PoisedToKick": "../center-and-variability/images/asia/asiaVariabilityKicker02PoisedToKick_svg.ts",
+    "variabilityKicker02Kicking": "../center-and-variability/images/asia/asiaVariabilityKicker02Kicking_svg.ts",
+    "variabilityKicker03Standing": "../center-and-variability/images/asia/asiaVariabilityKicker03Standing_svg.ts",
+    "variabilityKicker03PoisedToKick": "../center-and-variability/images/asia/asiaVariabilityKicker03PoisedToKick_svg.ts",
+    "variabilityKicker03Kicking": "../center-and-variability/images/asia/asiaVariabilityKicker03Kicking_svg.ts",
+    "variabilityKicker04Standing": "../center-and-variability/images/asia/asiaVariabilityKicker04Standing_svg.ts",
+    "variabilityKicker04PoisedToKick": "../center-and-variability/images/asia/asiaVariabilityKicker04PoisedToKick_svg.ts",
+    "variabilityKicker04Kicking": "../center-and-variability/images/asia/asiaVariabilityKicker04Kicking_svg.ts"
+  },
+  "latinAmerica": {
+    "variabilityKicker01Standing": "../center-and-variability/images/latinAmerica/latinAmericaVariabilityKicker01Standing_svg.ts",
+    "variabilityKicker01PoisedToKick": "../center-and-variability/images/latinAmerica/latinAmericaVariabilityKicker01PoisedToKick_svg.ts",
+    "variabilityKicker01Kicking": "../center-and-variability/images/latinAmerica/latinAmericaVariabilityKicker01Kicking_svg.ts",
+    "variabilityKicker02Standing": "../center-and-variability/images/latinAmerica/latinAmericaVariabilityKicker02Standing_svg.ts",
+    "variabilityKicker02PoisedToKick": "../center-and-variability/images/latinAmerica/latinAmericaVariabilityKicker02PoisedToKick_svg.ts",
+    "variabilityKicker02Kicking": "../center-and-variability/images/latinAmerica/latinAmericaVariabilityKicker02Kicking_svg.ts",
+    "variabilityKicker03Standing": "../center-and-variability/images/latinAmerica/latinAmericaVariabilityKicker03Standing_svg.ts",
+    "variabilityKicker03PoisedToKick": "../center-and-variability/images/latinAmerica/latinAmericaVariabilityKicker03PoisedToKick_svg.ts",
+    "variabilityKicker03Kicking": "../center-and-variability/images/latinAmerica/latinAmericaVariabilityKicker03Kicking_svg.ts",
+    "variabilityKicker04Standing": "../center-and-variability/images/latinAmerica/latinAmericaVariabilityKicker04Standing_svg.ts",
+    "variabilityKicker04PoisedToKick": "../center-and-variability/images/latinAmerica/latinAmericaVariabilityKicker04PoisedToKick_svg.ts",
+    "variabilityKicker04Kicking": "../center-and-variability/images/latinAmerica/latinAmericaVariabilityKicker04Kicking_svg.ts"
+  },
+  "oceania": {
+    "variabilityKicker01Standing": "../center-and-variability/images/oceania/oceaniaVariabilityKicker01Standing_svg.ts",
+    "variabilityKicker01PoisedToKick": "../center-and-variability/images/oceania/oceaniaVariabilityKicker01PoisedToKick_svg.ts",
+    "variabilityKicker01Kicking": "../center-and-variability/images/oceania/oceaniaVariabilityKicker01Kicking_svg.ts",
+    "variabilityKicker02Standing": "../center-and-variability/images/oceania/oceaniaVariabilityKicker02Standing_svg.ts",
+    "variabilityKicker02PoisedToKick": "../center-and-variability/images/oceania/oceaniaVariabilityKicker02PoisedToKick_svg.ts",
+    "variabilityKicker02Kicking": "../center-and-variability/images/oceania/oceaniaVariabilityKicker02Kicking_svg.ts",
+    "variabilityKicker03Standing": "../center-and-variability/images/asia/asiaVariabilityKicker03Standing_svg.ts",
+    "variabilityKicker03PoisedToKick": "../center-and-variability/images/asia/asiaVariabilityKicker03PoisedToKick_svg.ts",
+    "variabilityKicker03Kicking": "../center-and-variability/images/asia/asiaVariabilityKicker03Kicking_svg.ts",
+    "variabilityKicker04Standing": "../center-and-variability/images/asia/asiaVariabilityKicker04Standing_svg.ts",
+    "variabilityKicker04PoisedToKick": "../center-and-variability/images/asia/asiaVariabilityKicker04PoisedToKick_svg.ts",
+    "variabilityKicker04Kicking": "../center-and-variability/images/asia/asiaVariabilityKicker04Kicking_svg.ts"
   }
 }

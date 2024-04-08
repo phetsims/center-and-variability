@@ -32,6 +32,9 @@
       "supportedRegionsAndCultures": [
         "africa",
         "africaModest",
+        "asia",
+        "latinAmerica",
+        "oceania",
         "usa"
       ]
     },
