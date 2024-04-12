@@ -85,8 +85,8 @@ export default class VariabilityScreenView extends CAVScreenView {
         variabilityRadioButtonGroupWrapper.top = accordionBoxWrapper.top + 8;
       } );
 
-    this.intervalToolNode = new IntervalToolNode( model.intervalToolModel, model.variabilityModelResetInProgressProperty,
-      this.modelViewTransform, new DerivedProperty( [ variabilityAccordionBox.boundsProperty ], bounds => bounds.top ),
+    this.intervalToolNode = new IntervalToolNode( model.intervalToolModel, this.modelViewTransform,
+      new DerivedProperty( [ variabilityAccordionBox.boundsProperty ], bounds => bounds.top ),
       options.tandem.createTandem( 'intervalToolNode' ) );
 
     // To avoid a cycle during startup, we must create the AccordionBox and IntervalToolNode, then propagate the IntervalToolNode

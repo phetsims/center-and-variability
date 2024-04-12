@@ -30,6 +30,7 @@ import ContinuousPropertySoundClip from '../../../../tambo/js/sound-generators/C
 import soundManager from '../../../../tambo/js/soundManager.js';
 import intervalToolLoop_wav from '../../../sounds/intervalToolLoop_wav.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 
 
 export default class IntervalToolNode extends Node {
@@ -38,7 +39,7 @@ export default class IntervalToolNode extends Node {
 
   private readonly continuousPropertySoundClip: ContinuousPropertySoundClip;
 
-  public constructor( model: IntervalToolModel, resetInProgressProperty: TReadOnlyProperty<boolean>, modelViewTransform: ModelViewTransform2, accordionBoxTopProperty: TReadOnlyProperty<number>, tandem: Tandem ) {
+  public constructor( model: IntervalToolModel, modelViewTransform: ModelViewTransform2, accordionBoxTopProperty: TReadOnlyProperty<number>, tandem: Tandem ) {
     const handle1 = new IntervalToolPredictionSlider( model.handle1ValueProperty,
       modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE, model.isHandle1BeingMouseDraggedProperty, model.isHandle1BeingKeyboardDraggedProperty,
       {
@@ -152,7 +153,7 @@ export default class IntervalToolNode extends Node {
       new Range( 1, 2 ),
       intervalToolLoop_wav, {
         initialOutputLevel: 0.25,
-        enableControlProperties: [ DerivedProperty.not( resetInProgressProperty ) ],
+        enableControlProperties: [ DerivedProperty.not( ResetAllButton.isResettingAllProperty ) ],
         trimSilence: false, // a very precise sound file is used, so make sure it doesn't get changed
         fadeTime: 0.3,
         delayBeforeStop: 0.25,

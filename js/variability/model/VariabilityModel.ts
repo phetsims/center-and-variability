@@ -53,9 +53,6 @@ export default class VariabilityModel extends CAVModel {
   // Whether the pointer is currently being dragged by the keyboard. Used to avoid conflicts between keyboard and mouse/touch interaction.
   public readonly isPointerKeyboardDraggingProperty: Property<boolean>;
 
-  // Whether the variability model is currently in the process of resetting. Used to handle intermediate states.
-  public readonly variabilityModelResetInProgressProperty = new BooleanProperty( false );
-
   // Emitter that is fired on reset
   public readonly resetEmitter = new Emitter();
 
@@ -184,7 +181,6 @@ export default class VariabilityModel extends CAVModel {
   }
 
   public override reset(): void {
-    this.variabilityModelResetInProgressProperty.value = true;
     super.reset();
 
     this.selectedVariabilityMeasureProperty.reset();
@@ -198,8 +194,6 @@ export default class VariabilityModel extends CAVModel {
     this.isPointerVisibleProperty.reset();
 
     this.resetEmitter.emit();
-
-    this.variabilityModelResetInProgressProperty.value = false;
   }
 }
 
