@@ -30,7 +30,6 @@ import ContinuousPropertySoundClip from '../../../../tambo/js/sound-generators/C
 import soundManager from '../../../../tambo/js/soundManager.js';
 import intervalToolLoop_wav from '../../../sounds/intervalToolLoop_wav.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 
 
 export default class IntervalToolNode extends Node {
@@ -153,7 +152,6 @@ export default class IntervalToolNode extends Node {
       new Range( 1, 2 ),
       intervalToolLoop_wav, {
         initialOutputLevel: 0.25,
-        enableControlProperties: [ DerivedProperty.not( ResetAllButton.isResettingAllProperty ) ],
         trimSilence: false, // a very precise sound file is used, so make sure it doesn't get changed
         fadeTime: 0.3,
         delayBeforeStop: 0.25,
