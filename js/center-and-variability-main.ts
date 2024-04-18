@@ -32,7 +32,7 @@ const simOptions: SimOptions = {
     softwareDevelopment: 'Matthew Blackman, Chris Klusendorf, Sam Reid, Marla Schulz',
     team: 'Kelly Findley, Marilyn Hartzell, Ariel Paul, Kathy Perkins, David Webb',
     qualityAssurance: 'Jaron Droder, Clifford Hardin, Emily Miller, Devon Quispe, Nancy Salpepi, Kathryn Woessner',
-    graphicArts: 'Mariah Hermsmeyer'
+    graphicArts: 'Mariah Hermsmeyer, Amanda McGarry'
   },
   preferencesModel: preferencesModel,
   phetioDesigned: true,
