@@ -34,8 +34,6 @@ type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOption
 
 export default class VariabilityScreenView extends CAVScreenView {
 
-  private readonly intervalToolNode: IntervalToolNode;
-
   public constructor( model: VariabilityModel, providedOptions: VariabilityScreenViewOptions ) {
 
     const options = optionize<VariabilityScreenViewOptions, SelfOptions, CAVScreenViewOptions>()( {
@@ -85,18 +83,18 @@ export default class VariabilityScreenView extends CAVScreenView {
         variabilityRadioButtonGroupWrapper.top = accordionBoxWrapper.top + 8;
       } );
 
-    this.intervalToolNode = new IntervalToolNode( model.intervalToolModel, this.modelViewTransform,
+    const intervalToolNode = new IntervalToolNode( model.intervalToolModel, this.modelViewTransform,
       new DerivedProperty( [ variabilityAccordionBox.boundsProperty ], bounds => bounds.top ),
       options.tandem.createTandem( 'intervalToolNode' ) );
 
     // To avoid a cycle during startup, we must create the AccordionBox and IntervalToolNode, then propagate the IntervalToolNode
     // through so the one in the accordion box can share the same highlight region as the one in the play area.
-    variabilityAccordionBox.setFocusHighlightForIntervalTool( this.intervalToolNode.rectangle );
+    variabilityAccordionBox.setFocusHighlightForIntervalTool( intervalToolNode.rectangle );
 
     // Add play area tools to scene graph
     // this.backScreenViewLayer.addChild( handle1 );
     // this.backScreenViewLayer.addChild( handle2 );
-    this.intervalToolLayer.addChild( this.intervalToolNode );
+    this.intervalToolLayer.addChild( intervalToolNode );
 
     // pointer should always be in front of the interval tool so must be added after.
     this.backScreenViewLayer.addChild( pointerSlider );
@@ -144,13 +142,12 @@ export default class VariabilityScreenView extends CAVScreenView {
       } );
     } );
 
-    this.cavSetPDOMOrder( controls, [ pointerSlider, this.intervalToolNode ], variabilityAccordionBox.infoButton,
+    this.cavSetPDOMOrder( controls, [ pointerSlider, intervalToolNode ], variabilityAccordionBox.infoButton,
       sceneKickerRadioButtonGroup, variabilityMeasureRadioButtonGroup );
   }
 
   public override step( dt: number ): void {
     super.step( dt );
-    this.intervalToolNode.step( dt );
   }
 }
 

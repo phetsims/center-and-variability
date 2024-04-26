@@ -36,8 +36,6 @@ export default class IntervalToolNode extends Node {
 
   public readonly rectangle: IntervalToolRectangle;
 
-  private readonly continuousPropertySoundClip: ContinuousPropertySoundClip;
-
   public constructor( model: IntervalToolModel, modelViewTransform: ModelViewTransform2, accordionBoxTopProperty: TReadOnlyProperty<number>, tandem: Tandem ) {
     const handle1 = new IntervalToolPredictionSlider( model.handle1ValueProperty,
       modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE, model.isHandle1BeingMouseDraggedProperty, model.isHandle1BeingKeyboardDraggedProperty,
@@ -147,7 +145,7 @@ export default class IntervalToolNode extends Node {
       }
     } );
 
-    this.continuousPropertySoundClip = new ContinuousPropertySoundClip(
+    const continuousPropertySoundClip = new ContinuousPropertySoundClip(
       intervalDistanceWithThresholdProperty,
       new Range( 1, 2 ),
       intervalToolLoop_wav, {
@@ -163,15 +161,11 @@ export default class IntervalToolNode extends Node {
       }
     );
 
-    soundManager.addSoundGenerator( this.continuousPropertySoundClip, { associatedViewNode: this } );
+    soundManager.addSoundGenerator( continuousPropertySoundClip, { associatedViewNode: this } );
 
     this.rectangle = rectangle;
 
     this.pdomOrder = [ handle1, handle2, rectangle ];
-  }
-
-  public step( dt: number ): void {
-    this.continuousPropertySoundClip.step( dt );
   }
 }
 
