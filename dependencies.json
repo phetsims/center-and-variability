@@ -1,5 +1,5 @@
 {
-  "comment": "# center-and-variability 1.2.0-dev.3 Fri May 10 2024 17:44:47 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# center-and-variability 1.2.0-dev.4 Mon May 13 2024 09:14:52 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "9c7053e4ea4c05d1267b93aedf5f2ca1039a8853",
     "branch": "main"
@@ -17,11 +17,11 @@
     "branch": "main"
   },
   "center-and-variability": {
-    "sha": "61279c9936adf6fc5ee225329bd211c153a883f3",
+    "sha": "0122996c474d8164d5c04b511d3dfbfe13a65235",
     "branch": "main"
   },
   "chipper": {
-    "sha": "c16eff4a12882134f58386840fc3ca7d486bfbf1",
+    "sha": "2b22e9042fe588bf3dfbbaeba39c92a8377c5aa4",
     "branch": "main"
   },
   "dot": {
@@ -29,7 +29,7 @@
     "branch": "main"
   },
   "joist": {
-    "sha": "2e20f25cdb7344a181ea56317ac10c1d4f4882c5",
+    "sha": "f2cbaf15aa8e5b3a682f5a9caecca0c13337289e",
     "branch": "main"
   },
   "kite": {
