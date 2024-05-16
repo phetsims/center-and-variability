@@ -11,7 +11,7 @@
 import centerAndVariability from '../../centerAndVariability.js';
 import SortCueArrowNode from '../../../../scenery-phet/js/accessibility/group-sort/view/SortCueArrowNode.js';
 import { Image, Node, NodeOptions, NodeTranslationOptions } from '../../../../scenery/js/imports.js';
-import dragIndicatorHand_png from '../../../../soccer-common/images/dragIndicatorHand_png.js';
+import dragIndicatorHand_png from '../../../../scenery-phet/images/dragIndicatorHand_png.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
