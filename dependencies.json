@@ -5,7 +5,7 @@
     "branch": "HEAD"
   },
   "axon": {
-    "sha": "37cf0e70bea876a03aefa8833f75da23a25216a0",
+    "sha": "2637e770f323759987ee3671dda224cb28aa7bc9",
     "branch": "HEAD"
   },
   "bamboo": {
@@ -17,7 +17,7 @@
     "branch": "HEAD"
   },
   "center-and-variability": {
-    "sha": "e73b759bc06af17d11863454da9b4a2a3f2d6a19",
+    "sha": "3d7078538b15e0e7958e52eb3ee6612d5937b361",
     "branch": "1.1"
   },
   "chipper": {
@@ -29,7 +29,7 @@
     "branch": "HEAD"
   },
   "joist": {
-    "sha": "18096163913e51151f5efc807e3980f8b76f29e7",
+    "sha": "27355b55e44b7505297f425257e63f8795738656",
     "branch": "HEAD"
   },
   "kite": {
