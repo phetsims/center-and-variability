@@ -29,9 +29,9 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 import Emitter from '../../../../axon/js/Emitter.js';
-import isResettingProperty from '../../../../soccer-common/js/model/isResettingProperty.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 import GroupSortInteractionModel from '../../../../scenery-phet/js/accessibility/group-sort/model/GroupSortInteractionModel.js';
+import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 
 const cardMovementSounds = [
   cardMovement1_mp3,
@@ -48,7 +48,7 @@ const ENABLE_SOUND_IN_STEP_PROPERTY = new BooleanProperty( true );
 
 // A card sound should not be enabled during reset, state setting, or the first step call after either
 // of those processes.
-const cardSoundEnableProperty = new DerivedProperty( [ isResettingProperty, isSettingPhetioStateProperty, ENABLE_SOUND_IN_STEP_PROPERTY ], ( isResetting, isSettingState, isEnabled ) => {
+const cardSoundEnableProperty = new DerivedProperty( [ ResetAllButton.isResettingAllProperty, isSettingPhetioStateProperty, ENABLE_SOUND_IN_STEP_PROPERTY ], ( isResetting, isSettingState, isEnabled ) => {
   if ( isResetting || isSettingState ) {
     ENABLE_SOUND_IN_STEP_PROPERTY.value = false;
   }

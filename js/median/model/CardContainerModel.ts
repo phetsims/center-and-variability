@@ -26,7 +26,7 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import Property from '../../../../axon/js/Property.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import RepresentationContext from '../../common/model/RepresentationContext.js';
-import isResettingProperty from '../../../../soccer-common/js/model/isResettingProperty.js';
+import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 
 type SelfOptions = {
 
@@ -65,7 +65,7 @@ export default class CardContainerModel extends PhetioObject {
 
     // Allocate all the card models at start-up.
     this.cards = medianModel.selectedSceneModelProperty.value.soccerBalls.map( ( soccerBall, index ) => {
-      const card = new CardModel( this, soccerBall, new Vector2( 0, 0 ), {
+      const card: CardModel = new CardModel( this, soccerBall, new Vector2( 0, 0 ), {
         tandem: options.tandem.createTandem( 'cards' ).createTandem1Indexed( 'card', index )
       } );
 
@@ -195,7 +195,7 @@ export default class CardContainerModel extends PhetioObject {
     cardsSortedByValue.forEach( ( card, index ) => {
       card.indexProperty.value = index;
 
-      if ( isSettingPhetioStateProperty.value || this.medianModel.selectedSceneModelProperty.value.isClearingData || isResettingProperty.value ) {
+      if ( isSettingPhetioStateProperty.value || this.medianModel.selectedSceneModelProperty.value.isClearingData || ResetAllButton.isResettingAllProperty.value ) {
         this.setAtHomeCell( card );
       }
       else {

@@ -19,8 +19,8 @@ import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import CAVSoccerBall from './CAVSoccerBall.js';
 import KickDistributionStrategy from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import isResettingProperty from '../../../../soccer-common/js/model/isResettingProperty.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
+import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 
 export default class CAVSoccerSceneModel<T extends CAVSoccerBall = CAVSoccerBall> extends SoccerSceneModel<T> {
 
@@ -52,7 +52,7 @@ export default class CAVSoccerSceneModel<T extends CAVSoccerBall = CAVSoccerBall
 
     this.dataRangeProperty = new Property<Range | null>( null );
 
-    isResettingProperty.link( isResetting => {
+    ResetAllButton.isResettingAllProperty.link( isResetting => {
       if ( !isResetting ) {
         this.updateDataMeasures();
       }
