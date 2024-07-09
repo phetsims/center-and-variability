@@ -10,7 +10,7 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import { AlignGroup, createGatedVisibleProperty, Node, Text, VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
+import { AlignGroup, GatedVisibleProperty, Node, Text, VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -56,7 +56,7 @@ export default class KickButtonGroup extends VBox {
 
       return new KickButton( {
         multiKick: multikick,
-        visibleProperty: createGatedVisibleProperty( hasKickableSoccerBallsProperty, tandem ),
+        visibleProperty: new GatedVisibleProperty( hasKickableSoccerBallsProperty, tandem ),
         content: content,
         tandem: tandem,
         listener: () => selectedSceneModelProperty.value.scheduleKicks( numberToKick )
