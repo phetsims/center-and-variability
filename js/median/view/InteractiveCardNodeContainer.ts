@@ -71,9 +71,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
                       providedOptions: InteractiveCardNodeContainerOptions
   ) {
 
-    const options = optionize<InteractiveCardNodeContainerOptions, SelfOptions, CardNodeContainerOptions>()( {
-      focusable: true
-    }, providedOptions );
+    const options = optionize<InteractiveCardNodeContainerOptions, SelfOptions, CardNodeContainerOptions>()( {}, providedOptions );
 
     super( model, sceneModel, medianVisibleProperty, options );
 
@@ -123,7 +121,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       },
       sortingRangeProperty: sortingRangeProperty
     } );
-
+    this.accessibleName = 'Sort Cards';
 
     this.cardMap.forEach( ( cardNode, cardModel ) => {
       // Update the position of all cards (via animation) whenever any card is dragged
