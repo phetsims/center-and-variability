@@ -17,7 +17,6 @@ import CAVConstants from '../CAVConstants.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVColors from '../CAVColors.js';
 import PredictionThumbNode from './PredictionThumbNode.js';
-import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-players/checkboxCheckedSoundPlayer.js';
 import TSoundPlayer from '../../../../tambo/js/TSoundPlayer.js';
 import MeanIndicatorNode from './MeanIndicatorNode.js';
 import SoccerCommonColors from '../../../../soccer-common/js/SoccerCommonColors.js';
@@ -26,6 +25,7 @@ import VariabilityMeasureIconNode from '../../variability/view/VariabilityMeasur
 import NumberTone from '../../../../soccer-common/js/model/NumberTone.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import sharedSoundPlayers from '../../../../tambo/js/sharedSoundPlayers.js';
 
 // constants
 const TEXT_OPTIONS = {
@@ -66,6 +66,7 @@ export default class PlayAreaCheckboxFactory {
   }
 
   public static getMedianCheckedSoundPlayer( selectedSceneModelProperty: TReadOnlyProperty<CAVSoccerSceneModel> ): TSoundPlayer {
+    const checkboxCheckedSoundPlayer = sharedSoundPlayers.get( 'checkboxChecked' );
     return {
       play: () => {
         const median = selectedSceneModelProperty.value.medianValueProperty.value;
@@ -83,6 +84,7 @@ export default class PlayAreaCheckboxFactory {
   }
 
   public static getMeanCheckedSoundPlayer( selectedSceneModelProperty: TReadOnlyProperty<CAVSoccerSceneModel> ): TSoundPlayer {
+    const checkboxCheckedSoundPlayer = sharedSoundPlayers.get( 'checkboxChecked' );
     return {
       play: () => {
         const mean = selectedSceneModelProperty.value.meanValueProperty.value;

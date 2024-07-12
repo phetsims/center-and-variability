@@ -25,7 +25,7 @@ import MedianAnimationTone from '../../median/view/MedianAnimationTone.js';
 import Property from '../../../../axon/js/Property.js';
 import KickDistributionStrategy, { KickDistributionStrategySpecification } from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
 import NumberTone from '../../../../soccer-common/js/model/NumberTone.js';
-import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-players/checkboxCheckedSoundPlayer.js';
+import sharedSoundPlayers from '../../../../tambo/js/sharedSoundPlayers.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeanAndMedianModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
@@ -99,6 +99,9 @@ export default class MeanAndMedianModel extends CAVModel {
       tandem: accordionBoxTandem.createTandem( 'isMedianVisibleProperty' ),
       phetioFeatured: true
     } );
+
+    // sound generation
+    const checkboxCheckedSoundPlayer = sharedSoundPlayers.get( 'checkboxChecked' );
 
     // Don't show animation on startup or when setting PhET-iO state
     this.isMedianVisibleProperty.lazyLink( isMedianVisible => {

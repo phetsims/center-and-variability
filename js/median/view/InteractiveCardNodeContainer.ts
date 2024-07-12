@@ -37,13 +37,13 @@ import Multilink from '../../../../axon/js/Multilink.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import CelebrationNode from './CelebrationNode.js';
-import checkboxCheckedSoundPlayer from '../../../../tambo/js/shared-sound-players/checkboxCheckedSoundPlayer.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import CardDragIndicatorNode from './CardDragIndicatorNode.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import GroupSortInteractionView from '../../../../scenery-phet/js/accessibility/group-sort/view/GroupSortInteractionView.js';
 import CardModel from '../model/CardModel.js';
+import sharedSoundPlayers from '../../../../tambo/js/sharedSoundPlayers.js';
 
 const FOCUS_HIGHLIGHT_Y_MARGIN = CAVConstants.CARD_SPACING + 3;
 
@@ -195,6 +195,9 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
         }
       }
     } );
+
+    // for sound generation
+    const checkboxCheckedSoundPlayer = sharedSoundPlayers.get( 'checkboxChecked' );
 
     this.isSortingDataProperty.link( isSortingData => {
       if ( isSortingData ) {

@@ -21,7 +21,7 @@ import CAVColors from '../CAVColors.js';
 import Property from '../../../../axon/js/Property.js';
 import PlayAreaCheckboxFactory from './PlayAreaCheckboxFactory.js';
 import MeanIndicatorNode from './MeanIndicatorNode.js';
-import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
+import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
