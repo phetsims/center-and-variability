@@ -58,7 +58,7 @@ const cardSoundEnableProperty = new DerivedProperty( [ ResetAllButton.isResettin
 export const cardMovementSoundClips = cardMovementSounds.map( sound => new SoundClip( sound, {
   initialOutputLevel: 0.3,
   additionalAudioNodes: [],
-  enableControlProperties: [ cardSoundEnableProperty ]
+  enabledProperty: cardSoundEnableProperty
 } ) );
 cardMovementSoundClips.forEach( soundClip => soundManager.addSoundGenerator( soundClip ) );
 

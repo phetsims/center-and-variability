@@ -157,11 +157,12 @@ export default class IntervalToolNode extends Node {
         stopOnDisabled: true,
         additionalAudioNodes: [
           biquadFilterNode
-        ]
+        ],
+        associatedViewNode: this
       }
     );
 
-    soundManager.addSoundGenerator( continuousPropertySoundClip, { associatedViewNode: this } );
+    soundManager.addSoundGenerator( continuousPropertySoundClip );
 
     this.rectangle = rectangle;
 
