@@ -89,7 +89,7 @@ const CAVConstants = {
 
   PHYSICAL_RANGE: PHYSICAL_RANGE,
   VARIABILITY_DRAG_RANGE: new Range( 0, 16 ),
-  MAX_KICKS_VALUES: [ 5, 10, 15, 20, 25, 30 ],
+  MAX_KICKS_VALUES: [ 5, 10, 15, 20, 25, 30 ], // The order of these values should be from smallest to largest
 
   ACCORDION_BOX_CONTENTS_SHAPE_MEDIAN: Shape.rect( 0, 10, 983, 205 ),
   ACCORDION_BOX_CONTENTS_SHAPE_MEAN_AND_MEDIAN: Shape.rect( 0, 10, 983, 232 ),

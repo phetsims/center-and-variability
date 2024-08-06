@@ -76,6 +76,7 @@ export default class MeanAndMedianModel extends CAVModel {
         probabilityByDistanceDocumentationValues: '[0,0,1,3,5,7,3,3,1,1,0,0,0,0,1]',
         distanceByIndexDocumentationValues: '[5,11,9,12,10,2,7,3,4,14,1,15,8,13,2,4,12,10,6,1,13,9,3,14,5,6,11,8,7,15]',
         valuesRange: CAVConstants.PHYSICAL_RANGE,
+        maxKicks: CAVConstants.MAX_KICKS_VALUES[ CAVConstants.MAX_KICKS_VALUES.length - 1 ],
         tandem: sceneModelTandem.createTandem( 'kickDistributionStrategy' ),
         phetioFeatured: true
       } );
