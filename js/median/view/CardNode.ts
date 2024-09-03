@@ -76,7 +76,7 @@ export default class CardNode extends Node {
     const interactiveHighlight = new HighlightFromNode( cardNode );
     cardNode.setInteractiveHighlight( interactiveHighlight );
 
-    model.isDraggingProperty.link( isDragging => interactiveHighlight.makeDashed( isDragging ) );
+    model.isDraggingProperty.link( isDragging => interactiveHighlight.setDashed( isDragging ) );
 
     // For layout only, a bounding box that the card animates within for the "pick up" and "drop" effects.
     const offsetContainer = new Rectangle( PICK_UP_DELTA_X, PICK_UP_DELTA_Y, CAVConstants.CARD_DIMENSION - PICK_UP_DELTA_X, CAVConstants.CARD_DIMENSION - PICK_UP_DELTA_Y, {
