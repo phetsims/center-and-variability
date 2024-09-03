@@ -57,6 +57,8 @@ export default class CAVSoccerSceneModel<T extends CAVSoccerBall = CAVSoccerBall
         this.updateDataMeasures();
       }
     } );
+
+    // TODO: Most likely you should run this on stateSetEmitter() instead, https://github.com/phetsims/soccer-common/issues/20
     isSettingPhetioStateProperty.link( isSettingPhetioStateProperty => {
       if ( !isSettingPhetioStateProperty ) {
         this.updateDataMeasures();
