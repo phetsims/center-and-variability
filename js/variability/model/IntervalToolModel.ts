@@ -17,6 +17,7 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import phetioStateSetEmitter from '../../../../tandem/js/phetioStateSetEmitter.js';
 
 export default class IntervalToolModel {
 
@@ -77,7 +78,7 @@ export default class IntervalToolModel {
     this.deltaStableProperty = new NumberProperty( this.getIntervalToolWidth() );
 
     // https://github.com/phetsims/center-and-variability/issues/533
-    Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( () => {
+    phetioStateSetEmitter.addListener( () => {
       this.deltaStableProperty.value = this.getIntervalToolWidth();
     } );
   }
