@@ -77,7 +77,7 @@
         },
         "parserOptions": {
           "project": [
-            "../center-and-variability/tsconfig.json"
+            "../chipper/tsconfig/eslint-all/tsconfig.json"
           ]
         }
       }
