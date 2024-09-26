@@ -47,35 +47,5 @@
     "phet-io": {
       "compareDesignedAPIChanges": true
     }
-  },
-  "eslintConfig": {
-    "extends": "../chipper/eslint/sim_eslintrc.js",
-    "overrides": [
-      {
-        "files": [
-          "**/*.ts"
-        ],
-        "rules": {
-          "@typescript-eslint/ban-ts-comment": [
-            "error",
-            {
-              "ts-expect-error": true,
-              "ts-ignore": true,
-              "ts-check": true,
-              "ts-nocheck": true
-            }
-          ],
-          "no-object-spread-on-non-literals": "error",
-          "additional-bad-text": [
-            "error",
-            {
-              "forbiddenTextObjects": [
-                "dispose"
-              ]
-            }
-          ]
-        }
-      }
-    ]
   }
 }
