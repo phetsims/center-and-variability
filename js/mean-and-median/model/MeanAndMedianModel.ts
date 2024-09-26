@@ -20,7 +20,7 @@ import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioS
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import Utils from '../../../../dot/js/Utils.js';
 import CAVSoccerBall from '../../common/model/CAVSoccerBall.js';
-// eslint-disable-next-line no-view-imported-from-model
+// eslint-disable-next-line phet/no-view-imported-from-model
 import MedianAnimationTone from '../../median/view/MedianAnimationTone.js';
 import Property from '../../../../axon/js/Property.js';
 import KickDistributionStrategy, { KickDistributionStrategySpecification } from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
