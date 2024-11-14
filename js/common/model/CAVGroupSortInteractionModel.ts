@@ -11,7 +11,7 @@
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVSoccerSceneModel from './CAVSoccerSceneModel.js';
 import SoccerBall from '../../../../soccer-common/js/model/SoccerBall.js';
-import { GroupSortInteractionModelOptions } from '../../../../scenery-phet/js/accessibility/group-sort/model/GroupSortInteractionModel.js';
+import { GroupSelectModelOptions } from '../../../../scenery-phet/js/accessibility/group-sort/model/GroupSelectModel.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import SoccerCommonGroupSortInteractionModel from '../../../../soccer-common/js/model/SoccerCommonGroupSortInteractionModel.js';
@@ -25,7 +25,7 @@ export default class CAVGroupSortInteractionModel extends SoccerCommonGroupSortI
                       selectedSceneStackedSoccerBallCountProperty: TProperty<number>,
                       selectedSceneMaxKicksProperty: TProperty<number>,
                       sceneModels: CAVSoccerSceneModel[],
-                      providedOptions?: GroupSortInteractionModelOptions<SoccerBall> ) {
+                      providedOptions?: GroupSelectModelOptions<SoccerBall> ) {
     super(
       selectedSceneModelProperty,
       selectedSceneStackedSoccerBallCountProperty,

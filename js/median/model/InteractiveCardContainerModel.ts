@@ -30,7 +30,7 @@ import dotRandom from '../../../../dot/js/dotRandom.js';
 import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
-import GroupSortInteractionModel from '../../../../scenery-phet/js/accessibility/group-sort/model/GroupSortInteractionModel.js';
+import GroupSelectModel from '../../../../scenery-phet/js/accessibility/group-sort/model/GroupSelectModel.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 
 const cardMovementSounds = [
@@ -73,14 +73,14 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
 
   public readonly manuallySortedEmitter: Emitter;
 
-  public readonly groupSortInteractionModel: GroupSortInteractionModel<CardModel>;
+  public readonly groupSortInteractionModel: GroupSelectModel<CardModel>;
 
   public constructor( medianModel: MedianModel, providedOptions: InteractiveCardContainerModelOptions ) {
     super( medianModel, providedOptions );
 
     this.totalDragDistanceProperty = new NumberProperty( 0 );
 
-    this.groupSortInteractionModel = new GroupSortInteractionModel<CardModel>( {
+    this.groupSortInteractionModel = new GroupSelectModel<CardModel>( {
       getGroupItemValue: cardModel => cardModel.indexProperty.value,
       tandem: providedOptions.tandem.createTandem( 'groupSortInteractionModel' )
     } );
