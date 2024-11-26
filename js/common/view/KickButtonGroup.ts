@@ -9,19 +9,20 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import centerAndVariability from '../../centerAndVariability.js';
-import { AlignGroup, GatedVisibleProperty, Node, Text, VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import SoccerSceneModel from '../../../../soccer-common/js/model/SoccerSceneModel.js';
+import { GatedVisibleProperty } from '../../../../axon/js/GatedBooleanProperty.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import { AlignGroup, Node, Text, VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
+import SoccerSceneModel from '../../../../soccer-common/js/model/SoccerSceneModel.js';
 import KickButton, { KICK_BUTTON_FONT } from '../../../../soccer-common/js/view/KickButton.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
+import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 
 type SelfOptions = EmptySelfOptions;
 export type KickButtonGroupOptions = SelfOptions & VBoxOptions & PickRequired<VBoxOptions, 'tandem'>;
