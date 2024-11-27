@@ -8,7 +8,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
+import LocalizedStringProperty from '../../../../chipper/js/browser/LocalizedStringProperty.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import { Text, TextOptions } from '../../../../scenery/js/imports.js';
 import centerAndVariability from '../../centerAndVariability.js';

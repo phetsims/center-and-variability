@@ -14,7 +14,7 @@ import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
+import LocalizedStringProperty from '../../../../chipper/js/browser/LocalizedStringProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
 import { AlignBox, HighlightFromNode, LinearGradient, Rectangle, VBox } from '../../../../scenery/js/imports.js';
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';

@@ -10,7 +10,7 @@
 
 import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
+import LocalizedStringProperty from '../../../../chipper/js/browser/LocalizedStringProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { AlignBox, LinearGradient, Rectangle, Text, TPaint, VBox } from '../../../../scenery/js/imports.js';

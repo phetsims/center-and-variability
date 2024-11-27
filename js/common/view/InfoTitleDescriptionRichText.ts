@@ -7,7 +7,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
+import LocalizedStringProperty from '../../../../chipper/js/browser/LocalizedStringProperty.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { RichText } from '../../../../scenery/js/imports.js';
 import centerAndVariability from '../../centerAndVariability.js';
