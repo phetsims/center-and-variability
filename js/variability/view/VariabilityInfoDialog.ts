@@ -7,18 +7,18 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import centerAndVariability from '../../centerAndVariability.js';
-import VariabilityModel from '../model/VariabilityModel.js';
-import ToggleNode from '../../../../sun/js/ToggleNode.js';
-import VariabilityMeasure from '../model/VariabilityMeasure.js';
-import RangeInfoNode from './RangeInfoNode.js';
-import IQRInfoNode from './IQRInfoNode.js';
-import MADInfoNode from './MADInfoNode.js';
-import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
+import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import centerAndVariability from '../../centerAndVariability.js';
 import CAVDialog from '../../common/view/CAVDialog.js';
 import CAVToggleNode from '../../common/view/CAVToggleNode.js';
+import VariabilityMeasure from '../model/VariabilityMeasure.js';
+import VariabilityModel from '../model/VariabilityModel.js';
+import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
+import IQRInfoNode from './IQRInfoNode.js';
+import MADInfoNode from './MADInfoNode.js';
+import RangeInfoNode from './RangeInfoNode.js';
 
 export default class VariabilityInfoDialog extends CAVDialog {
   public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, tandem: Tandem ) {

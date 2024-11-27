@@ -11,25 +11,25 @@
  *
  */
 
-import { Node } from '../../../../scenery/js/imports.js';
-import centerAndVariability from '../../centerAndVariability.js';
-import IntervalToolPredictionSlider from './IntervalToolPredictionSlider.js';
-import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import CAVConstants from '../../common/CAVConstants.js';
-import IntervalToolModel from '../model/IntervalToolModel.js';
-import CAVColors from '../../common/CAVColors.js';
-import Property from '../../../../axon/js/Property.js';
-import Range from '../../../../dot/js/Range.js';
-import IntervalToolRectangle from './IntervalToolRectangle.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import Utils from '../../../../dot/js/Utils.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import Property from '../../../../axon/js/Property.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import Range from '../../../../dot/js/Range.js';
+import Utils from '../../../../dot/js/Utils.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import { Node } from '../../../../scenery/js/imports.js';
 import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 import ContinuousPropertySoundClip from '../../../../tambo/js/sound-generators/ContinuousPropertySoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
-import intervalToolLoop_wav from '../../../sounds/intervalToolLoop_wav.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import intervalToolLoop_wav from '../../../sounds/intervalToolLoop_wav.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CAVColors from '../../common/CAVColors.js';
+import CAVConstants from '../../common/CAVConstants.js';
+import IntervalToolModel from '../model/IntervalToolModel.js';
+import IntervalToolPredictionSlider from './IntervalToolPredictionSlider.js';
+import IntervalToolRectangle from './IntervalToolRectangle.js';
 
 
 export default class IntervalToolNode extends Node {

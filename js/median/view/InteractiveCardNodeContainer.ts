@@ -19,31 +19,31 @@
  *
  */
 
-import CardNodeContainer, { CARD_LAYER_OFFSET, CardNodeContainerOptions } from './CardNodeContainer.js';
-import centerAndVariability from '../../centerAndVariability.js';
-import InteractiveCardContainerModel from '../model/InteractiveCardContainerModel.js';
-import Property from '../../../../axon/js/Property.js';
-import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
-import { animatedPanZoomSingleton, NodeTranslationOptions } from '../../../../scenery/js/imports.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
-import Range from '../../../../dot/js/Range.js';
-import CAVConstants from '../../common/CAVConstants.js';
-import Bounds2 from '../../../../dot/js/Bounds2.js';
-import CardNode, { cardDropClip, cardPickUpSoundClip, PICK_UP_DELTA_X } from './CardNode.js';
-import Utils from '../../../../dot/js/Utils.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import { Shape } from '../../../../kite/js/imports.js';
 import Multilink from '../../../../axon/js/Multilink.js';
-import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
+import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import CelebrationNode from './CelebrationNode.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
+import Range from '../../../../dot/js/Range.js';
+import Utils from '../../../../dot/js/Utils.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
+import { Shape } from '../../../../kite/js/imports.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import CardDragIndicatorNode from './CardDragIndicatorNode.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import GroupSortInteractionView from '../../../../scenery-phet/js/accessibility/group-sort/view/GroupSortInteractionView.js';
-import CardModel from '../model/CardModel.js';
+import { animatedPanZoomSingleton, NodeTranslationOptions } from '../../../../scenery/js/imports.js';
 import sharedSoundPlayers from '../../../../tambo/js/sharedSoundPlayers.js';
+import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CAVConstants from '../../common/CAVConstants.js';
+import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
+import CardModel from '../model/CardModel.js';
+import InteractiveCardContainerModel from '../model/InteractiveCardContainerModel.js';
+import CardDragIndicatorNode from './CardDragIndicatorNode.js';
+import CardNode, { cardDropClip, cardPickUpSoundClip, PICK_UP_DELTA_X } from './CardNode.js';
+import CardNodeContainer, { CARD_LAYER_OFFSET, CardNodeContainerOptions } from './CardNodeContainer.js';
+import CelebrationNode from './CelebrationNode.js';
 
 const FOCUS_HIGHLIGHT_Y_MARGIN = CAVConstants.CARD_SPACING + 3;
 

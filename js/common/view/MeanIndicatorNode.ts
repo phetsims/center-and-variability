@@ -9,11 +9,11 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import centerAndVariability from '../../centerAndVariability.js';
-import { Path } from '../../../../scenery/js/imports.js';
 import { Shape } from '../../../../kite/js/imports.js';
-import CAVColors from '../CAVColors.js';
+import { Path } from '../../../../scenery/js/imports.js';
 import SoccerCommonColors from '../../../../soccer-common/js/SoccerCommonColors.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CAVColors from '../CAVColors.js';
 import CAVConstants from '../CAVConstants.js';
 
 

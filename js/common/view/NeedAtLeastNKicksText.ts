@@ -8,11 +8,11 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import centerAndVariability from '../../centerAndVariability.js';
-import { Text, TextOptions } from '../../../../scenery/js/imports.js';
-import CAVConstants from '../CAVConstants.js';
 import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
+import { Text, TextOptions } from '../../../../scenery/js/imports.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CAVConstants from '../CAVConstants.js';
 
 export default class NeedAtLeastNKicksText extends Text {
 

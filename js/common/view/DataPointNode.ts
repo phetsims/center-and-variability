@@ -8,23 +8,23 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import SoccerObjectNode, { SoccerObjectNodeOptions } from '../../../../soccer-common/js/view/SoccerObjectNode.js';
-import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import CAVObjectType from '../model/CAVObjectType.js';
-import { Circle, Node, Path, TColor } from '../../../../scenery/js/imports.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
-import timesSolidShape from '../../../../sherpa/js/fontawesome-5/timesSolidShape.js';
-import CAVConstants, { DATA_POINT_SCALE_PROPERTY } from '../CAVConstants.js';
-import PlotType from '../model/PlotType.js';
-import CAVColors from '../CAVColors.js';
-import Property from '../../../../axon/js/Property.js';
-import optionize from '../../../../phet-core/js/optionize.js';
-import { SoccerBallPhase } from '../../../../soccer-common/js/model/SoccerBallPhase.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import CAVSoccerBall from '../model/CAVSoccerBall.js';
+import Property from '../../../../axon/js/Property.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import { Circle, Node, Path, TColor } from '../../../../scenery/js/imports.js';
+import timesSolidShape from '../../../../sherpa/js/fontawesome-5/timesSolidShape.js';
+import { SoccerBallPhase } from '../../../../soccer-common/js/model/SoccerBallPhase.js';
+import SoccerObjectNode, { SoccerObjectNodeOptions } from '../../../../soccer-common/js/view/SoccerObjectNode.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
+import CAVColors from '../CAVColors.js';
+import CAVConstants, { DATA_POINT_SCALE_PROPERTY } from '../CAVConstants.js';
+import CAVObjectType from '../model/CAVObjectType.js';
+import CAVSoccerBall from '../model/CAVSoccerBall.js';
+import PlotType from '../model/PlotType.js';
 
 type SelfOptions = {
 

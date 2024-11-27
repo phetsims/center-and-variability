@@ -8,12 +8,12 @@
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 
-import centerAndVariability from '../../centerAndVariability.js';
-import { Node, ProfileColorProperty, Rectangle, Text } from '../../../../scenery/js/imports.js';
-import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import CAVConstants from '../../common/CAVConstants.js';
+import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
+import { Node, ProfileColorProperty, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import centerAndVariability from '../../centerAndVariability.js';
 import CAVColors from '../../common/CAVColors.js';
+import CAVConstants from '../../common/CAVConstants.js';
 
 export default class BoxWhiskerLabelNode extends Node {
 

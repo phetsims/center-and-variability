@@ -11,19 +11,19 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import centerAndVariability from '../../centerAndVariability.js';
-import { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
-import { AlignGroup, GridBox, Line, Node, Text } from '../../../../scenery/js/imports.js';
-import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import CAVConstants from '../CAVConstants.js';
-import MedianBarNode from './MedianBarNode.js';
-import CAVColors from '../CAVColors.js';
 import Property from '../../../../axon/js/Property.js';
-import PlayAreaCheckboxFactory from './PlayAreaCheckboxFactory.js';
-import MeanIndicatorNode from './MeanIndicatorNode.js';
-import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
-import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import { AlignGroup, GridBox, Line, Node, Text } from '../../../../scenery/js/imports.js';
+import { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
+import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
+import CAVColors from '../CAVColors.js';
+import CAVConstants from '../CAVConstants.js';
+import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
+import MeanIndicatorNode from './MeanIndicatorNode.js';
+import MedianBarNode from './MedianBarNode.js';
+import PlayAreaCheckboxFactory from './PlayAreaCheckboxFactory.js';
 
 // constants
 const ICON_WIDTH = CAVConstants.CHECKBOX_ICON_DIMENSION;

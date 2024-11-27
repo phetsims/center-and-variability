@@ -15,9 +15,9 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import PhetColorScheme from '../../../scenery-phet/js/PhetColorScheme.js';
 import { Color, ProfileColorProperty } from '../../../scenery/js/imports.js';
 import centerAndVariability from '../centerAndVariability.js';
-import PhetColorScheme from '../../../scenery-phet/js/PhetColorScheme.js';
 
 const CAVColors = {
 

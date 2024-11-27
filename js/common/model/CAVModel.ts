@@ -7,26 +7,26 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import centerAndVariability from '../../centerAndVariability.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
-import CAVConstants from '../CAVConstants.js';
+import Emitter from '../../../../axon/js/Emitter.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
-import IOType from '../../../../tandem/js/types/IOType.js';
-import CAVSoccerSceneModel from './CAVSoccerSceneModel.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import VoidIO from '../../../../tandem/js/types/VoidIO.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import NumberTone from '../../../../soccer-common/js/model/NumberTone.js';
+import SoccerModel, { SoccerModelOptions } from '../../../../soccer-common/js/model/SoccerModel.js';
+import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
+import IOType from '../../../../tandem/js/types/IOType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import ObjectLiteralIO from '../../../../tandem/js/types/ObjectLiteralIO.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import Emitter from '../../../../axon/js/Emitter.js';
-import SoccerModel, { SoccerModelOptions } from '../../../../soccer-common/js/model/SoccerModel.js';
-import NumberTone from '../../../../soccer-common/js/model/NumberTone.js';
+import VoidIO from '../../../../tandem/js/types/VoidIO.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CAVConstants from '../CAVConstants.js';
 import CAVGroupSortInteractionModel from './CAVGroupSortInteractionModel.js';
+import CAVSoccerSceneModel from './CAVSoccerSceneModel.js';
 
 type SelfOptions = {
   instrumentMeanProperty: boolean;

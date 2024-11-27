@@ -7,12 +7,12 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import InfoButton from '../../../../scenery-phet/js/buttons/InfoButton.js';
-import { BUTTON_AND_TITLE_MARGIN } from './CAVAccordionBox.js';
-import centerAndVariability from '../../centerAndVariability.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
-import { Shape } from '../../../../kite/js/imports.js';
 import Emitter from '../../../../axon/js/Emitter.js';
+import { Shape } from '../../../../kite/js/imports.js';
+import InfoButton from '../../../../scenery-phet/js/buttons/InfoButton.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import { BUTTON_AND_TITLE_MARGIN } from './CAVAccordionBox.js';
 
 export default class CAVInfoButton extends InfoButton {
   public constructor( infoButtonPressedEmitter: Emitter, backgroundShape: Shape, tandem: Tandem ) {

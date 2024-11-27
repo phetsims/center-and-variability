@@ -8,26 +8,26 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import Property from '../../../../axon/js/Property.js';
+import Range from '../../../../dot/js/Range.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import centerAndVariability from '../../centerAndVariability.js';
-import VariabilityModel from '../model/VariabilityModel.js';
-import CAVColors from '../../common/CAVColors.js';
-import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import { ManualConstraint } from '../../../../scenery/js/imports.js';
-import SceneKickerRadioButtonGroup from './SceneKickerRadioButtonGroup.js';
-import VariabilityMeasureRadioButtonGroup from './VariabilityMeasureRadioButtonGroup.js';
-import CAVScreenView, { CAVScreenViewOptions } from '../../common/view/CAVScreenView.js';
-import VariabilityAccordionBox from './VariabilityAccordionBox.js';
-import PlayAreaCheckboxFactory from '../../common/view/PlayAreaCheckboxFactory.js';
-import CAVConstants from '../../common/CAVConstants.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
-import VariabilityInfoDialog from './VariabilityInfoDialog.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
+import CAVColors from '../../common/CAVColors.js';
+import CAVConstants from '../../common/CAVConstants.js';
+import CAVScreenView, { CAVScreenViewOptions } from '../../common/view/CAVScreenView.js';
+import PlayAreaCheckboxFactory from '../../common/view/PlayAreaCheckboxFactory.js';
 import PredictionSlider from '../../common/view/PredictionSlider.js';
-import Property from '../../../../axon/js/Property.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import Range from '../../../../dot/js/Range.js';
+import VariabilityModel from '../model/VariabilityModel.js';
 import IntervalToolNode from './IntervalToolNode.js';
+import SceneKickerRadioButtonGroup from './SceneKickerRadioButtonGroup.js';
+import VariabilityAccordionBox from './VariabilityAccordionBox.js';
+import VariabilityInfoDialog from './VariabilityInfoDialog.js';
+import VariabilityMeasureRadioButtonGroup from './VariabilityMeasureRadioButtonGroup.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;

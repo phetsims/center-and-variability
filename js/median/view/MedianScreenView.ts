@@ -9,16 +9,16 @@
  */
 
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import centerAndVariability from '../../centerAndVariability.js';
-import MedianModel from '../model/MedianModel.js';
-import CAVColors from '../../common/CAVColors.js';
-import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import CAVScreenView, { CAVScreenViewOptions } from '../../common/view/CAVScreenView.js';
-import MedianAccordionBox from './MedianAccordionBox.js';
-import PlayAreaCheckboxFactory from '../../common/view/PlayAreaCheckboxFactory.js';
-import CAVConstants from '../../common/CAVConstants.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
+import CAVColors from '../../common/CAVColors.js';
+import CAVConstants from '../../common/CAVConstants.js';
+import CAVScreenView, { CAVScreenViewOptions } from '../../common/view/CAVScreenView.js';
+import PlayAreaCheckboxFactory from '../../common/view/PlayAreaCheckboxFactory.js';
+import MedianModel from '../model/MedianModel.js';
+import MedianAccordionBox from './MedianAccordionBox.js';
 import MedianInfoDialog from './MedianInfoDialog.js';
 
 type SelfOptions = EmptySelfOptions;

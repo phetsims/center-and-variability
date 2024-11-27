@@ -7,9 +7,9 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import SliderControlsKeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/SliderControlsKeyboardHelpSection.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import SliderControlsKeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/SliderControlsKeyboardHelpSection.js';
 
 export default class VariabilityKeyboardHelpSection extends SliderControlsKeyboardHelpSection {
   public constructor() {

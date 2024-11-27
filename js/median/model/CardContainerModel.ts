@@ -8,25 +8,25 @@
  *
  */
 
+import Emitter from '../../../../axon/js/Emitter.js';
+import Property from '../../../../axon/js/Property.js';
+import TEmitter from '../../../../axon/js/TEmitter.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
+import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
+import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
+import IOType from '../../../../tandem/js/types/IOType.js';
+import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import centerAndVariability from '../../centerAndVariability.js';
+import CAVConstants from '../../common/CAVConstants.js';
+import RepresentationContext from '../../common/model/RepresentationContext.js';
 import CardModel from './CardModel.js';
 
 import MedianModel from './MedianModel.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
-import CAVConstants from '../../common/CAVConstants.js';
-import TEmitter from '../../../../axon/js/TEmitter.js';
-import Emitter from '../../../../axon/js/Emitter.js';
-import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
-import IOType from '../../../../tandem/js/types/IOType.js';
-import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
-import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import optionize from '../../../../phet-core/js/optionize.js';
-import Property from '../../../../axon/js/Property.js';
-import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import RepresentationContext from '../../common/model/RepresentationContext.js';
-import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 
 type SelfOptions = {
 

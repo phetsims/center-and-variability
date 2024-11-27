@@ -8,28 +8,28 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
-import { AlignBox, LinearGradient, Rectangle, Text, TPaint, VBox } from '../../../../scenery/js/imports.js';
-import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import { AlignBox, LinearGradient, Rectangle, Text, TPaint, VBox } from '../../../../scenery/js/imports.js';
+import createValueReadoutStringProperty from '../../../../soccer-common/js/model/createValueReadoutStringProperty.js';
+import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
+import ButtonNode from '../../../../sun/js/buttons/ButtonNode.js';
+import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
+import CAVColors from '../../common/CAVColors.js';
+import CAVConstants from '../../common/CAVConstants.js';
+import PlotType from '../../common/model/PlotType.js';
+import AccordionBoxCheckboxFactory from '../../common/view/AccordionBoxCheckboxFactory.js';
+import AccordionBoxTitleNode from '../../common/view/AccordionBoxTitleNode.js';
+import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
+import CAVInfoButton from '../../common/view/CAVInfoButton.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
 import MeanAndMedianPlotNode from './MeanAndMedianPlotNode.js';
-import AccordionBoxCheckboxFactory from '../../common/view/AccordionBoxCheckboxFactory.js';
-import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
-import CAVConstants from '../../common/CAVConstants.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import CAVColors from '../../common/CAVColors.js';
-import AccordionBoxTitleNode from '../../common/view/AccordionBoxTitleNode.js';
-import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
-import CAVInfoButton from '../../common/view/CAVInfoButton.js';
-import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js';
-import PlotType from '../../common/model/PlotType.js';
-import ButtonNode from '../../../../sun/js/buttons/ButtonNode.js';
-import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
-import createValueReadoutStringProperty from '../../../../soccer-common/js/model/createValueReadoutStringProperty.js';
 
 export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
   public readonly infoButton: ButtonNode;

@@ -6,10 +6,10 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import centerAndVariability from '../../centerAndVariability.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
-import Dialog from '../../../../sun/js/Dialog.js';
 import { Node } from '../../../../scenery/js/imports.js';
+import Dialog from '../../../../sun/js/Dialog.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
+import centerAndVariability from '../../centerAndVariability.js';
 
 export default class CAVDialog extends Dialog {
   public constructor( node: Node, tandem: Tandem ) {

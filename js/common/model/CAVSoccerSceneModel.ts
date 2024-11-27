@@ -9,18 +9,18 @@
  *
  */
 
-import SoccerSceneModel, { SoccerSceneModelOptions } from '../../../../soccer-common/js/model/SoccerSceneModel.js';
-import centerAndVariability from '../../centerAndVariability.js';
+import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Range from '../../../../dot/js/Range.js';
-import Property from '../../../../axon/js/Property.js';
+import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
+import KickDistributionStrategy from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
+import SoccerSceneModel, { SoccerSceneModelOptions } from '../../../../soccer-common/js/model/SoccerSceneModel.js';
+import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
+import centerAndVariability from '../../centerAndVariability.js';
 import CAVSoccerBall from './CAVSoccerBall.js';
-import KickDistributionStrategy from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
-import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
-import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 
 export default class CAVSoccerSceneModel<T extends CAVSoccerBall = CAVSoccerBall> extends SoccerSceneModel<T> {
 

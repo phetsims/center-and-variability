@@ -8,14 +8,14 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import centerAndVariability from '../../centerAndVariability.js';
+import { combineOptions } from '../../../../phet-core/js/optionize.js';
+import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import { Circle, Line, Node, Path, PathOptions, Rectangle } from '../../../../scenery/js/imports.js';
-import CAVColors from '../../common/CAVColors.js';
 import timesSolidShape from '../../../../sherpa/js/fontawesome-5/timesSolidShape.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CAVColors from '../../common/CAVColors.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import PlotType from '../../common/model/PlotType.js';
-import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
-import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import CAVToggleNode from '../../common/view/CAVToggleNode.js';
 
 /**

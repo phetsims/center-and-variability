@@ -7,17 +7,17 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { Image } from '../../../scenery/js/imports.js';
-import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
-import centerAndVariability from '../centerAndVariability.js';
-import MeanAndMedianModel from './model/MeanAndMedianModel.js';
-import CAVScreen, { CAVScreenOptions } from '../common/CAVScreen.js';
-import MeanAndMedianScreenView from './view/MeanAndMedianScreenView.js';
-import CenterAndVariabilityStrings from '../CenterAndVariabilityStrings.js';
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
-import meanAndMedianScreenIcon_png from '../../images/meanAndMedianScreenIcon_png.js';
+import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
+import { Image } from '../../../scenery/js/imports.js';
+import meanAndMedianScreenIcon_png from '../../images/meanAndMedianScreenIcon_png.js';
+import centerAndVariability from '../centerAndVariability.js';
+import CenterAndVariabilityStrings from '../CenterAndVariabilityStrings.js';
+import CAVScreen, { CAVScreenOptions } from '../common/CAVScreen.js';
+import MeanAndMedianModel from './model/MeanAndMedianModel.js';
 import MeanAndMedianKeyboardHelpNode from './view/MeanAndMedianKeyboardHelpNode.js';
+import MeanAndMedianScreenView from './view/MeanAndMedianScreenView.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeanAndMedianScreenOptions = SelfOptions & StrictOmit<CAVScreenOptions, 'name' | 'homeScreenIcon' | 'createKeyboardHelpNode'>;

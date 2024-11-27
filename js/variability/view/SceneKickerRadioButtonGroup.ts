@@ -7,14 +7,14 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import RectangularRadioButtonGroup, { RectangularRadioButtonGroupOptions } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
-import centerAndVariability from '../../centerAndVariability.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Property from '../../../../axon/js/Property.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { Node, Path, TColor, Text } from '../../../../scenery/js/imports.js';
 import tshirtSolidShape from '../../../../sherpa/js/fontawesome-5/tshirtSolidShape.js';
-import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
+import RectangularRadioButtonGroup, { RectangularRadioButtonGroupOptions } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
+import centerAndVariability from '../../centerAndVariability.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
+import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type SceneKickerRadioButtonGroupOptions = SelfOptions & RectangularRadioButtonGroupOptions;

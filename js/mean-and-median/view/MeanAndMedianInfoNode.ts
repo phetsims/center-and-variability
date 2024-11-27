@@ -9,23 +9,23 @@
  *
  */
 
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
+import Utils from '../../../../dot/js/Utils.js';
+import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import { HBox, Text, VBox } from '../../../../scenery/js/imports.js';
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
+import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVConstants from '../../common/CAVConstants.js';
-import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
+import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import { PLOT_NODE_TOP_MARGIN } from '../../common/view/CAVPlotNode.js';
-import centerAndVariability from '../../centerAndVariability.js';
+import FractionNode from '../../common/view/FractionNode.js';
+import InfoTitleDescriptionRichText from '../../common/view/InfoTitleDescriptionRichText.js';
 import InfoValuesNode from '../../common/view/InfoValuesNode.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
-import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
-import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
-import InfoTitleDescriptionRichText from '../../common/view/InfoTitleDescriptionRichText.js';
 import MeanAndMedianInfoPlotNode from './MeanAndMedianInfoPlotNode.js';
-import Utils from '../../../../dot/js/Utils.js';
-import FractionNode from '../../common/view/FractionNode.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class MeanAndMedianInfoNode extends VBox {
   public constructor( model: MeanAndMedianModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, tandem: Tandem ) {

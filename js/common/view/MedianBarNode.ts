@@ -10,13 +10,13 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import centerAndVariability from '../../centerAndVariability.js';
-import { Path, PathOptions } from '../../../../scenery/js/imports.js';
-import optionize from '../../../../phet-core/js/optionize.js';
-import { Shape } from '../../../../kite/js/imports.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import CAVColors from '../CAVColors.js';
+import { Shape } from '../../../../kite/js/imports.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
+import { Path, PathOptions } from '../../../../scenery/js/imports.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CAVColors from '../CAVColors.js';
 
 export type BarStyle = 'continuous' | 'split';
 

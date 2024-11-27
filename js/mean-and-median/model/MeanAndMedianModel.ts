@@ -10,22 +10,22 @@
  */
 
 
-import centerAndVariability from '../../centerAndVariability.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import CAVConstants, { MAX_KICKS_PROPERTY } from '../../common/CAVConstants.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
-import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
-import Utils from '../../../../dot/js/Utils.js';
-import CAVSoccerBall from '../../common/model/CAVSoccerBall.js';
-// eslint-disable-next-line phet/no-view-imported-from-model
-import MedianAnimationTone from '../../median/view/MedianAnimationTone.js';
 import Property from '../../../../axon/js/Property.js';
+import Utils from '../../../../dot/js/Utils.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import KickDistributionStrategy, { KickDistributionStrategySpecification } from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
 import NumberTone from '../../../../soccer-common/js/model/NumberTone.js';
 import sharedSoundPlayers from '../../../../tambo/js/sharedSoundPlayers.js';
+import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CAVConstants, { MAX_KICKS_PROPERTY } from '../../common/CAVConstants.js';
+import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
+import CAVSoccerBall from '../../common/model/CAVSoccerBall.js';
+import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
+// eslint-disable-next-line phet/no-view-imported-from-model
+import MedianAnimationTone from '../../median/view/MedianAnimationTone.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeanAndMedianModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;

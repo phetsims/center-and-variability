@@ -9,11 +9,11 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import marimbaToneE3_mp3 from '../../../sounds/marimbaToneE3_mp3.js';
-import soundManager from '../../../../tambo/js/soundManager.js';
-import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import NumberTone, { toStepDiscrete } from '../../../../soccer-common/js/model/NumberTone.js';
+import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
+import soundManager from '../../../../tambo/js/soundManager.js';
+import marimbaToneE3_mp3 from '../../../sounds/marimbaToneE3_mp3.js';
+import centerAndVariability from '../../centerAndVariability.js';
 
 const INITIAL_OUTPUT_LEVEL = 0.2;
 

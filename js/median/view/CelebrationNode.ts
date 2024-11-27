@@ -9,28 +9,28 @@
  *
  */
 
-import Panel from '../../../../sun/js/Panel.js';
-import centerAndVariability from '../../centerAndVariability.js';
-import { LinearGradient, Text } from '../../../../scenery/js/imports.js';
-import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import CAVConstants from '../../common/CAVConstants.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
-import Matrix3 from '../../../../dot/js/Matrix3.js';
-import AsyncCounter from '../../common/model/AsyncCounter.js';
-import Animation from '../../../../twixt/js/Animation.js';
-import Easing from '../../../../twixt/js/Easing.js';
-import dotRandom from '../../../../dot/js/dotRandom.js';
-import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import stepTimer from '../../../../axon/js/stepTimer.js';
-import InteractiveCardContainerModel from '../model/InteractiveCardContainerModel.js';
-import CardModel from '../model/CardModel.js';
-import CardNode from './CardNode.js';
+import { TReadOnlyEmitter } from '../../../../axon/js/TEmitter.js';
+import dotRandom from '../../../../dot/js/dotRandom.js';
+import Matrix3 from '../../../../dot/js/Matrix3.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
+import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import { LinearGradient, Text } from '../../../../scenery/js/imports.js';
+import Panel from '../../../../sun/js/Panel.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
+import Animation from '../../../../twixt/js/Animation.js';
+import Easing from '../../../../twixt/js/Easing.js';
 import sortCelebration_mp3 from '../../../sounds/sortCelebration_mp3.js';
-import { TReadOnlyEmitter } from '../../../../axon/js/TEmitter.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
+import CAVConstants from '../../common/CAVConstants.js';
+import AsyncCounter from '../../common/model/AsyncCounter.js';
+import CardModel from '../model/CardModel.js';
+import InteractiveCardContainerModel from '../model/InteractiveCardContainerModel.js';
+import CardNode from './CardNode.js';
 
 const successSoundClip = new SoundClip( sortCelebration_mp3, {
   initialOutputLevel: 0.3

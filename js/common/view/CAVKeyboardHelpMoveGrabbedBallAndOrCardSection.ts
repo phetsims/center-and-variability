@@ -7,14 +7,14 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
 import KeyboardHelpIconFactory from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpIconFactory.js';
 import KeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpSection.js';
 import KeyboardHelpSectionRow from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpSectionRow.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import LetterKeyNode from '../../../../scenery-phet/js/keyboard/LetterKeyNode.js';
-import TextKeyNode from '../../../../scenery-phet/js/keyboard/TextKeyNode.js';
 import NumberKeyNode from '../../../../scenery-phet/js/keyboard/NumberKeyNode.js';
-import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
+import TextKeyNode from '../../../../scenery-phet/js/keyboard/TextKeyNode.js';
+import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import { SECTION_LABEL_OPTIONS } from './CAVKeyboardHelpNode.js';
 

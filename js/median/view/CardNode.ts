@@ -9,24 +9,24 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import centerAndVariability from '../../centerAndVariability.js';
-import { Color, DragListener, HighlightFromNode, InteractiveHighlightingNode, Node, NodeOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import SoccerBall from '../../../../soccer-common/js/model/SoccerBall.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
+import Matrix3 from '../../../../dot/js/Matrix3.js';
+import Range from '../../../../dot/js/Range.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import CardModel from '../model/CardModel.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import { Color, DragListener, HighlightFromNode, InteractiveHighlightingNode, Node, NodeOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import SoccerBall from '../../../../soccer-common/js/model/SoccerBall.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
-import cardPickup_mp3 from '../../../sounds/cardPickup_mp3.js';
-import cardDrop_mp3 from '../../../sounds/cardDrop_mp3.js';
-import CAVQueryParameters from '../../common/CAVQueryParameters.js';
-import CAVConstants from '../../common/CAVConstants.js';
-import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import Range from '../../../../dot/js/Range.js';
-import Matrix3 from '../../../../dot/js/Matrix3.js';
-import Bounds2 from '../../../../dot/js/Bounds2.js';
+import cardDrop_mp3 from '../../../sounds/cardDrop_mp3.js';
+import cardPickup_mp3 from '../../../sounds/cardPickup_mp3.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CAVConstants from '../../common/CAVConstants.js';
+import CAVQueryParameters from '../../common/CAVQueryParameters.js';
+import CardModel from '../model/CardModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type ParentOptions = WithRequired<NodeOptions, 'tandem'>;

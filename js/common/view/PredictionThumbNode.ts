@@ -7,16 +7,16 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { Line, Node, NodeOptions, TColor } from '../../../../scenery/js/imports.js';
-import centerAndVariability from '../../centerAndVariability.js';
-import ShadedSphereNode from '../../../../scenery-phet/js/ShadedSphereNode.js';
-import CAVColors from '../CAVColors.js';
-import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import optionize from '../../../../phet-core/js/optionize.js';
-import SoccerCommonColors from '../../../../soccer-common/js/SoccerCommonColors.js';
-import CAVConstants from '../CAVConstants.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
+import ShadedSphereNode from '../../../../scenery-phet/js/ShadedSphereNode.js';
+import { Line, Node, NodeOptions, TColor } from '../../../../scenery/js/imports.js';
+import SoccerCommonColors from '../../../../soccer-common/js/SoccerCommonColors.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CAVColors from '../CAVColors.js';
+import CAVConstants from '../CAVConstants.js';
 
 type SelfOptions = {
   color: TColor;

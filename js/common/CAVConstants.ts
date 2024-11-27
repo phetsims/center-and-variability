@@ -7,22 +7,22 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import EnumerationProperty from '../../../axon/js/EnumerationProperty.js';
-import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import Tandem from '../../../tandem/js/Tandem.js';
-import centerAndVariability from '../centerAndVariability.js';
-import CAVQueryParameters from './CAVQueryParameters.js';
-import PlotType from './model/PlotType.js';
-import ScreenView from '../../../joist/js/ScreenView.js';
-import Range from '../../../dot/js/Range.js';
-import { Shape } from '../../../kite/js/imports.js';
-import NumberProperty from '../../../axon/js/NumberProperty.js';
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../axon/js/DerivedProperty.js';
-import { AlignGroup } from '../../../scenery/js/imports.js';
-import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
+import EnumerationProperty from '../../../axon/js/EnumerationProperty.js';
+import NumberProperty from '../../../axon/js/NumberProperty.js';
 import Bounds2 from '../../../dot/js/Bounds2.js';
+import Range from '../../../dot/js/Range.js';
+import ScreenView from '../../../joist/js/ScreenView.js';
+import { Shape } from '../../../kite/js/imports.js';
+import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
+import PhetFont from '../../../scenery-phet/js/PhetFont.js';
+import { AlignGroup } from '../../../scenery/js/imports.js';
+import Tandem from '../../../tandem/js/Tandem.js';
+import centerAndVariability from '../centerAndVariability.js';
 import CAVColors from './CAVColors.js';
+import CAVQueryParameters from './CAVQueryParameters.js';
+import PlotType from './model/PlotType.js';
 
 const NUMBER_LINE_MARGIN_X = 207;
 

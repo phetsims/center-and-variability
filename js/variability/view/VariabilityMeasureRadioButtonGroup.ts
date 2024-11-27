@@ -6,14 +6,14 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import RectangularRadioButtonGroup, { RectangularRadioButtonGroupOptions } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
-import VariabilityMeasure from '../model/VariabilityMeasure.js';
-import centerAndVariability from '../../centerAndVariability.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Property from '../../../../axon/js/Property.js';
-import RangeIconNode from './RangeIconNode.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import RectangularRadioButtonGroup, { RectangularRadioButtonGroupOptions } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import IQRIconNode from './IQRIconNode.js';
 import MADIconNode from './MADIconNode.js';
+import RangeIconNode from './RangeIconNode.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityMeasureRadioButtonGroupOptions = SelfOptions & RectangularRadioButtonGroupOptions;

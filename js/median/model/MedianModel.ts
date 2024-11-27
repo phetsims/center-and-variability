@@ -9,16 +9,16 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import centerAndVariability from '../../centerAndVariability.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import CAVConstants, { MAX_KICKS_PROPERTY } from '../../common/CAVConstants.js';
-import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
-import CAVSoccerBall from '../../common/model/CAVSoccerBall.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import NumberIO from '../../../../tandem/js/types/NumberIO.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import KickDistributionStrategy, { KickDistributionStrategySpecification } from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
+import NumberIO from '../../../../tandem/js/types/NumberIO.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CAVConstants, { MAX_KICKS_PROPERTY } from '../../common/CAVConstants.js';
+import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
+import CAVSoccerBall from '../../common/model/CAVSoccerBall.js';
+import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import InteractiveCardContainerModel from './InteractiveCardContainerModel.js';
 
 type SelfOptions = EmptySelfOptions;

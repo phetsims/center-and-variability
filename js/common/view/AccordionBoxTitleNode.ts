@@ -12,9 +12,9 @@
  * @author Marla Schulz (PhET Interactive Simulations)
  */
 
-import centerAndVariability from '../../centerAndVariability.js';
-import { ManualConstraint, Node, Rectangle, TColor, Text } from '../../../../scenery/js/imports.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import { ManualConstraint, Node, Rectangle, TColor, Text } from '../../../../scenery/js/imports.js';
+import centerAndVariability from '../../centerAndVariability.js';
 import CAVConstants from '../CAVConstants.js';
 
 export default class AccordionBoxTitleNode extends Node {

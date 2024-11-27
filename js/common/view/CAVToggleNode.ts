@@ -1,11 +1,11 @@
 // Copyright 2023, University of Colorado Boulder
 
-import ToggleNode, { ToggleNodeElement, ToggleNodeOptions } from '../../../../sun/js/ToggleNode.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import { Node } from '../../../../scenery/js/imports.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import { Node } from '../../../../scenery/js/imports.js';
+import ToggleNode, { ToggleNodeElement, ToggleNodeOptions } from '../../../../sun/js/ToggleNode.js';
+import centerAndVariability from '../../centerAndVariability.js';
 
 /**
  * CAVToggleNode is a custom ToggleNode that excludes unselected children from the scene graph to enhance performance.

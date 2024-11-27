@@ -7,12 +7,12 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import ComboBox from '../../../../sun/js/ComboBox.js';
-import centerAndVariability from '../../centerAndVariability.js';
-import { Node, Text } from '../../../../scenery/js/imports.js';
-import CAVConstants from '../CAVConstants.js';
 import Property from '../../../../axon/js/Property.js';
+import { Node, Text } from '../../../../scenery/js/imports.js';
+import ComboBox from '../../../../sun/js/ComboBox.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CAVConstants from '../CAVConstants.js';
 
 export default class MaxKicksComboBox extends ComboBox<number> {
 

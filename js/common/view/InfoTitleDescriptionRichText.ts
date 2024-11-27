@@ -7,10 +7,10 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { RichText } from '../../../../scenery/js/imports.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import { RichText } from '../../../../scenery/js/imports.js';
+import centerAndVariability from '../../centerAndVariability.js';
 import CAVConstants from '../CAVConstants.js';
 
 export default class InfoTitleDescriptionRichText extends RichText {

@@ -1,5 +1,15 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import Emitter from '../../../../axon/js/Emitter.js';
+import Property from '../../../../axon/js/Property.js';
+import TEmitter from '../../../../axon/js/TEmitter.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
+import Vector2Property from '../../../../dot/js/Vector2Property.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 /**
  * CardModel is responsible for representing the individual cards in a card container, encapsulating their position,
  * active status, and the interactions related to a card, such as dragging and animations. It also monitors the state
@@ -9,26 +19,16 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 import SoccerBall from '../../../../soccer-common/js/model/SoccerBall.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
-import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
-import Vector2Property from '../../../../dot/js/Vector2Property.js';
-import Animation from '../../../../twixt/js/Animation.js';
-import Easing from '../../../../twixt/js/Easing.js';
-import CardContainerModel from './CardContainerModel.js';
-import TEmitter from '../../../../axon/js/TEmitter.js';
-import Emitter from '../../../../axon/js/Emitter.js';
-import Property from '../../../../axon/js/Property.js';
+import IOType from '../../../../tandem/js/types/IOType.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
-import IOType from '../../../../tandem/js/types/IOType.js';
+import Animation from '../../../../twixt/js/Animation.js';
+import Easing from '../../../../twixt/js/Easing.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CardContainerModel from './CardContainerModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type CardModelOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'>;

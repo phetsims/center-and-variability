@@ -7,15 +7,15 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import Property from '../../../../axon/js/Property.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import { combineOptions } from '../../../../phet-core/js/optionize.js';
+import { TColor, Text } from '../../../../scenery/js/imports.js';
 import Checkbox, { CheckboxOptions } from '../../../../sun/js/Checkbox.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import { TColor, Text } from '../../../../scenery/js/imports.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import AccordionBoxCheckboxFactory from '../../common/view/AccordionBoxCheckboxFactory.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import Property from '../../../../axon/js/Property.js';
 import VariabilityMeasureIconNode from './VariabilityMeasureIconNode.js';
-import { combineOptions } from '../../../../phet-core/js/optionize.js';
 
 export default class VariabilityMeasureCheckbox extends Checkbox {
   public constructor( property: Property<boolean>, stringProperty: TReadOnlyProperty<string>, color: TColor, options: CheckboxOptions ) {

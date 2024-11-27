@@ -9,11 +9,11 @@
  *
  */
 
-import centerAndVariability from '../../centerAndVariability.js';
-import { Line, Node, Path, PathOptions, Rectangle } from '../../../../scenery/js/imports.js';
-import CAVColors from '../CAVColors.js';
-import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import { Shape } from '../../../../kite/js/imports.js';
+import { combineOptions } from '../../../../phet-core/js/optionize.js';
+import { Line, Node, Path, PathOptions, Rectangle } from '../../../../scenery/js/imports.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CAVColors from '../CAVColors.js';
 
 const RECTANGLE_DIMENSION = 28;
 

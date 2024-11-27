@@ -8,35 +8,35 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import DerivedProperty, { UnknownDerivedProperty } from '../../../../axon/js/DerivedProperty.js';
+import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
+import Property from '../../../../axon/js/Property.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
+import Utils from '../../../../dot/js/Utils.js';
 import { AlignBox, HighlightFromNode, LinearGradient, Rectangle, VBox } from '../../../../scenery/js/imports.js';
-import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
+import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
+import ButtonNode from '../../../../sun/js/buttons/ButtonNode.js';
+import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import VariabilityModel from '../model/VariabilityModel.js';
-import VariabilityPlotNode from './VariabilityPlotNode.js';
-import VariabilityMeasure from '../model/VariabilityMeasure.js';
-import DerivedProperty, { UnknownDerivedProperty } from '../../../../axon/js/DerivedProperty.js';
-import ToggleNode from '../../../../sun/js/ToggleNode.js';
-import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import VariabilityReadoutText from './VariabilityReadoutText.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVColors from '../../common/CAVColors.js';
-import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
 import CAVConstants from '../../common/CAVConstants.js';
-import Utils from '../../../../dot/js/Utils.js';
-import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import VariabilityMeasureCheckbox from './VariabilityMeasureCheckbox.js';
-import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import AccordionBoxTitleNode from '../../common/view/AccordionBoxTitleNode.js';
-import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
+import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
 import CAVInfoButton from '../../common/view/CAVInfoButton.js';
-import ButtonNode from '../../../../sun/js/buttons/ButtonNode.js';
-import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
-import IntervalToolRectangle from './IntervalToolRectangle.js';
-import Property from '../../../../axon/js/Property.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import CAVToggleNode from '../../common/view/CAVToggleNode.js';
 import IntervalToolModel from '../model/IntervalToolModel.js';
+import VariabilityMeasure from '../model/VariabilityMeasure.js';
+import VariabilityModel from '../model/VariabilityModel.js';
+import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
+import IntervalToolRectangle from './IntervalToolRectangle.js';
+import VariabilityMeasureCheckbox from './VariabilityMeasureCheckbox.js';
+import VariabilityPlotNode from './VariabilityPlotNode.js';
+import VariabilityReadoutText from './VariabilityReadoutText.js';
 
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 

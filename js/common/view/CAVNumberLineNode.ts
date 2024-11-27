@@ -9,18 +9,18 @@
  */
 
 
-import NumberLineNode, { NumberLineNodeOptions } from '../../../../soccer-common/js/view/NumberLineNode.js';
-import centerAndVariability from '../../centerAndVariability.js';
-import { Path } from '../../../../scenery/js/imports.js';
-import { Shape } from '../../../../kite/js/imports.js';
 import Multilink from '../../../../axon/js/Multilink.js';
-import MeanIndicatorNode from './MeanIndicatorNode.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
-import CAVColors from '../CAVColors.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Range from '../../../../dot/js/Range.js';
-import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
+import { Shape } from '../../../../kite/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import { Path } from '../../../../scenery/js/imports.js';
+import NumberLineNode, { NumberLineNodeOptions } from '../../../../soccer-common/js/view/NumberLineNode.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CAVColors from '../CAVColors.js';
+import MeanIndicatorNode from './MeanIndicatorNode.js';
 
 type SelfOptions = {
 

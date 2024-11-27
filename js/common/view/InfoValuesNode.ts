@@ -7,16 +7,16 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import centerAndVariability from '../../centerAndVariability.js';
-import { HBox, ManualConstraint, Node, Text } from '../../../../scenery/js/imports.js';
-import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import CAVConstants from '../CAVConstants.js';
-import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
-import CAVColors from '../CAVColors.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
+import { HBox, ManualConstraint, Node, Text } from '../../../../scenery/js/imports.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
+import CAVColors from '../CAVColors.js';
+import CAVConstants from '../CAVConstants.js';
 import CAVSoccerBall from '../model/CAVSoccerBall.js';
+import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 
 export default class InfoValuesNode<T extends CAVSoccerBall> extends Node {
 

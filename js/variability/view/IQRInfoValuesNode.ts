@@ -8,14 +8,14 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import centerAndVariability from '../../centerAndVariability.js';
-import InfoValuesNode from '../../common/view/InfoValuesNode.js';
-import { Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
-import CAVColors from '../../common/CAVColors.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import VariabilitySoccerBall from '../model/VariabilitySoccerBall.js';
+import { Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CAVColors from '../../common/CAVColors.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
+import InfoValuesNode from '../../common/view/InfoValuesNode.js';
+import VariabilitySoccerBall from '../model/VariabilitySoccerBall.js';
 
 export default class IQRInfoValuesNode extends InfoValuesNode<VariabilitySoccerBall> {
 

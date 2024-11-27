@@ -9,18 +9,18 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { ManualConstraint, MatrixBetweenProperty, Node, NodeOptions, TColor, Text } from '../../../../scenery/js/imports.js';
+import TProperty from '../../../../axon/js/TProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import { ManualConstraint, MatrixBetweenProperty, Node, NodeOptions, TColor, Text } from '../../../../scenery/js/imports.js';
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
+import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVConstants from '../CAVConstants.js';
-import DataPointNode from './DataPointNode.js';
-import CAVNumberLineNode from './CAVNumberLineNode.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
-import TProperty from '../../../../axon/js/TProperty.js';
 import RepresentationContext from '../model/RepresentationContext.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import centerAndVariability from '../../centerAndVariability.js';
+import CAVNumberLineNode from './CAVNumberLineNode.js';
+import DataPointNode from './DataPointNode.js';
 
 type SelfOptions = {
 

@@ -9,11 +9,11 @@
 
 import Screen, { ScreenOptions } from '../../../joist/js/Screen.js';
 import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
-import CAVColors from '../common/CAVColors.js';
-import centerAndVariability from '../centerAndVariability.js';
-import CAVScreenView from './view/CAVScreenView.js';
 import PickRequired from '../../../phet-core/js/types/PickRequired.js';
+import centerAndVariability from '../centerAndVariability.js';
+import CAVColors from '../common/CAVColors.js';
 import CAVModel from './model/CAVModel.js';
+import CAVScreenView from './view/CAVScreenView.js';
 
 type SelfOptions = EmptySelfOptions;
 export type CAVScreenOptions = SelfOptions & PickRequired<ScreenOptions, 'tandem' | 'name' | 'homeScreenIcon' | 'createKeyboardHelpNode'>;

@@ -10,20 +10,20 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import centerAndVariability from '../../centerAndVariability.js';
-import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
-import CAVColors from '../../common/CAVColors.js';
-import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import Range from '../../../../dot/js/Range.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import CAVScreenView, { CAVScreenViewOptions } from '../../common/view/CAVScreenView.js';
-import MeanAndMedianAccordionBox from './MeanAndMedianAccordionBox.js';
-import PlayAreaCheckboxFactory from '../../common/view/PlayAreaCheckboxFactory.js';
-import CAVConstants from '../../common/CAVConstants.js';
-import PredictionSlider from '../../common/view/PredictionSlider.js';
 import Property from '../../../../axon/js/Property.js';
+import Range from '../../../../dot/js/Range.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
+import CAVColors from '../../common/CAVColors.js';
+import CAVConstants from '../../common/CAVConstants.js';
+import CAVScreenView, { CAVScreenViewOptions } from '../../common/view/CAVScreenView.js';
+import PlayAreaCheckboxFactory from '../../common/view/PlayAreaCheckboxFactory.js';
+import PredictionSlider from '../../common/view/PredictionSlider.js';
+import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
+import MeanAndMedianAccordionBox from './MeanAndMedianAccordionBox.js';
 import MeanAndMedianInfoDialog from './MeanAndMedianInfoDialog.js';
 
 type SelfOptions = EmptySelfOptions;

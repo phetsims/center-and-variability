@@ -10,22 +10,22 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import centerAndVariability from '../../centerAndVariability.js';
-import Property from '../../../../axon/js/Property.js';
-import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import VariabilityMeasure from './VariabilityMeasure.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
-import VariabilitySceneModel from './VariabilitySceneModel.js';
 import Emitter from '../../../../axon/js/Emitter.js';
+import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import CAVConstants, { MAX_KICKS_PROPERTY } from '../../common/CAVConstants.js';
+import Property from '../../../../axon/js/Property.js';
 import Utils from '../../../../dot/js/Utils.js';
-import NumberTone from '../../../../soccer-common/js/model/NumberTone.js';
-import IntervalToolModel from './IntervalToolModel.js';
-import KickDistributionStrategy, { KickDistributionStrategySpecification } from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { TColor } from '../../../../scenery/js/imports.js';
+import KickDistributionStrategy, { KickDistributionStrategySpecification } from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
+import NumberTone from '../../../../soccer-common/js/model/NumberTone.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CAVConstants, { MAX_KICKS_PROPERTY } from '../../common/CAVConstants.js';
+import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
+import IntervalToolModel from './IntervalToolModel.js';
+import VariabilityMeasure from './VariabilityMeasure.js';
+import VariabilitySceneModel from './VariabilitySceneModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;

@@ -8,10 +8,10 @@
  * @author Marla Schulz (PhET Interactive Simulations)
  */
 
-import SoccerBall from '../../../../soccer-common/js/model/SoccerBall.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import SoccerBall from '../../../../soccer-common/js/model/SoccerBall.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import centerAndVariability from '../../centerAndVariability.js';
 
 export default class CAVSoccerBall extends SoccerBall {
 

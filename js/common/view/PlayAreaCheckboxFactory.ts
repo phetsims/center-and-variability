@@ -8,24 +8,24 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import Property from '../../../../axon/js/Property.js';
-import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
-import centerAndVariability from '../../centerAndVariability.js';
-import { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
-import { AlignGroup, GridBox, Node, TColor, Text } from '../../../../scenery/js/imports.js';
-import CAVConstants from '../CAVConstants.js';
-import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import CAVColors from '../CAVColors.js';
-import PredictionThumbNode from './PredictionThumbNode.js';
-import TSoundPlayer from '../../../../tambo/js/TSoundPlayer.js';
-import MeanIndicatorNode from './MeanIndicatorNode.js';
-import SoccerCommonColors from '../../../../soccer-common/js/SoccerCommonColors.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
-import VariabilityMeasureIconNode from '../../variability/view/VariabilityMeasureIconNode.js';
-import NumberTone from '../../../../soccer-common/js/model/NumberTone.js';
-import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
+import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
+import { AlignGroup, GridBox, Node, TColor, Text } from '../../../../scenery/js/imports.js';
+import NumberTone from '../../../../soccer-common/js/model/NumberTone.js';
+import SoccerCommonColors from '../../../../soccer-common/js/SoccerCommonColors.js';
+import { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
 import sharedSoundPlayers from '../../../../tambo/js/sharedSoundPlayers.js';
+import TSoundPlayer from '../../../../tambo/js/TSoundPlayer.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
+import VariabilityMeasureIconNode from '../../variability/view/VariabilityMeasureIconNode.js';
+import CAVColors from '../CAVColors.js';
+import CAVConstants from '../CAVConstants.js';
+import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
+import MeanIndicatorNode from './MeanIndicatorNode.js';
+import PredictionThumbNode from './PredictionThumbNode.js';
 
 // constants
 const TEXT_OPTIONS = {

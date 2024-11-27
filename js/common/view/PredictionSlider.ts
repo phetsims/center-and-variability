@@ -8,18 +8,18 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import centerAndVariability from '../../centerAndVariability.js';
-import { DragListener, Node, NodeOptions, SceneryConstants } from '../../../../scenery/js/imports.js';
-import optionize from '../../../../phet-core/js/optionize.js';
 import Property from '../../../../axon/js/Property.js';
-import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
-import PredictionThumbNode, { PredictionThumbNodeOptions } from './PredictionThumbNode.js';
-import AccessibleSlider, { AccessibleSliderOptions } from '../../../../sun/js/accessibility/AccessibleSlider.js';
-import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import Vector2Property from '../../../../dot/js/Vector2Property.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import { DragListener, Node, NodeOptions, SceneryConstants } from '../../../../scenery/js/imports.js';
+import AccessibleSlider, { AccessibleSliderOptions } from '../../../../sun/js/accessibility/AccessibleSlider.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import PredictionThumbNode, { PredictionThumbNodeOptions } from './PredictionThumbNode.js';
 
 type SelfOptions = {
 

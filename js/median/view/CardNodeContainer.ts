@@ -8,19 +8,19 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import centerAndVariability from '../../centerAndVariability.js';
-import { InteractiveHighlightingNode, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
-import CardNode, { PICK_UP_DELTA_X, PICK_UP_DELTA_Y } from './CardNode.js';
-import Panel from '../../../../sun/js/Panel.js';
-import CAVConstants from '../../common/CAVConstants.js';
-import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import MedianBarNode from '../../common/view/MedianBarNode.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Property from '../../../../axon/js/Property.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import { InteractiveHighlightingNode, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
+import Panel from '../../../../sun/js/Panel.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
+import CAVConstants from '../../common/CAVConstants.js';
+import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
+import MedianBarNode from '../../common/view/MedianBarNode.js';
 import CardContainerModel from '../model/CardContainerModel.js';
 import CardModel from '../model/CardModel.js';
-import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
+import CardNode, { PICK_UP_DELTA_X, PICK_UP_DELTA_Y } from './CardNode.js';
 
 export type CardNodeContainerOptions = EmptySelfOptions & NodeOptions;
 

@@ -1,5 +1,6 @@
 // Copyright 2023, University of Colorado Boulder
 
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 /**
  * The MedianInfoNode is a visual component designed to display the content for the Median Info dialog.
  * It provides a comprehensive definition of the median along with a visualization of sorted cards, which are for
@@ -8,17 +9,16 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 import { VBox } from '../../../../scenery/js/imports.js';
-import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import centerAndVariability from '../../centerAndVariability.js';
-import MedianModel from '../model/MedianModel.js';
-import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
-import InfoValuesNode from '../../common/view/InfoValuesNode.js';
-import CardNodeContainer from './CardNodeContainer.js';
-import InfoTitleDescriptionRichText from '../../common/view/InfoTitleDescriptionRichText.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import CardContainerModel from '../model/CardContainerModel.js';
-import NeedAtLeastNKicksText from '../../common/view/NeedAtLeastNKicksText.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
+import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
+import InfoTitleDescriptionRichText from '../../common/view/InfoTitleDescriptionRichText.js';
+import InfoValuesNode from '../../common/view/InfoValuesNode.js';
+import NeedAtLeastNKicksText from '../../common/view/NeedAtLeastNKicksText.js';
+import CardContainerModel from '../model/CardContainerModel.js';
+import MedianModel from '../model/MedianModel.js';
+import CardNodeContainer from './CardNodeContainer.js';
 
 export default class MedianInfoNode extends VBox {
   public constructor( model: MedianModel, sceneModel: CAVSoccerSceneModel, tandem: Tandem ) {

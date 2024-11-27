@@ -12,20 +12,20 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
-import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import MedianModel from '../model/MedianModel.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
-import centerAndVariability from '../../centerAndVariability.js';
-import AccordionBoxCheckboxFactory from '../../common/view/AccordionBoxCheckboxFactory.js';
-import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
-import CAVConstants from '../../common/CAVConstants.js';
-import AccordionBoxTitleNode from '../../common/view/AccordionBoxTitleNode.js';
-import CAVColors from '../../common/CAVColors.js';
-import CAVInfoButton from '../../common/view/CAVInfoButton.js';
 import { AlignBox } from '../../../../scenery/js/imports.js';
 import ButtonNode from '../../../../sun/js/buttons/ButtonNode.js';
+import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
+import CAVColors from '../../common/CAVColors.js';
+import CAVConstants from '../../common/CAVConstants.js';
+import AccordionBoxCheckboxFactory from '../../common/view/AccordionBoxCheckboxFactory.js';
+import AccordionBoxTitleNode from '../../common/view/AccordionBoxTitleNode.js';
+import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
+import CAVInfoButton from '../../common/view/CAVInfoButton.js';
+import MedianModel from '../model/MedianModel.js';
 import InteractiveCardNodeContainer from './InteractiveCardNodeContainer.js';
 
 export default class MedianAccordionBox extends CAVAccordionBox {

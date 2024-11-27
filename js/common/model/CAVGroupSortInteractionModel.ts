@@ -8,13 +8,13 @@
  * @author Marla Schulz (PhET Interactive Simulations)
  */
 
+import Multilink from '../../../../axon/js/Multilink.js';
+import TProperty from '../../../../axon/js/TProperty.js';
+import { GroupSelectModelOptions } from '../../../../scenery-phet/js/accessibility/group-sort/model/GroupSelectModel.js';
+import SoccerBall from '../../../../soccer-common/js/model/SoccerBall.js';
+import SoccerCommonGroupSortInteractionModel from '../../../../soccer-common/js/model/SoccerCommonGroupSortInteractionModel.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVSoccerSceneModel from './CAVSoccerSceneModel.js';
-import SoccerBall from '../../../../soccer-common/js/model/SoccerBall.js';
-import { GroupSelectModelOptions } from '../../../../scenery-phet/js/accessibility/group-sort/model/GroupSelectModel.js';
-import TProperty from '../../../../axon/js/TProperty.js';
-import Multilink from '../../../../axon/js/Multilink.js';
-import SoccerCommonGroupSortInteractionModel from '../../../../soccer-common/js/model/SoccerCommonGroupSortInteractionModel.js';
 
 // Empirically determined based on height of AccordionBox and play area. This may need to be adjusted if those change.
 const MAX_HEIGHT = 8;

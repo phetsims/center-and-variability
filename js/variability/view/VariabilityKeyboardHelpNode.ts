@@ -7,11 +7,11 @@
  */
 
 import centerAndVariability from '../../centerAndVariability.js';
-import CAVKeyboardHelpNode from '../../common/view/CAVKeyboardHelpNode.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVKeyboardHelpGrabOrReleaseSection from '../../common/view/CAVKeyboardHelpGrabOrReleaseSection.js';
 import CAVKeyboardHelpMoveGrabbedBallAndOrCardSection from '../../common/view/CAVKeyboardHelpMoveGrabbedBallAndOrCardSection.js';
+import CAVKeyboardHelpNode from '../../common/view/CAVKeyboardHelpNode.js';
 import VariabilityKeyboardHelpSection from './VariabilityKeyboardHelpSection.js';
-import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 
 export default class VariabilityKeyboardHelpNode extends CAVKeyboardHelpNode {
 

@@ -10,19 +10,19 @@
  *
  */
 
-import MeanAndMedianPlotNode, { MeanAndMedianPlotNodeOptions } from './MeanAndMedianPlotNode.js';
-import centerAndVariability from '../../centerAndVariability.js';
-import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
-import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
-import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
+import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
+import centerAndVariability from '../../centerAndVariability.js';
 import CAVColors from '../../common/CAVColors.js';
-import MedianBarNode from '../../common/view/MedianBarNode.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
 import { DATA_POINT_SCALE_PROPERTY } from '../../common/CAVConstants.js';
+import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import MeanIndicatorNode from '../../common/view/MeanIndicatorNode.js';
+import MedianBarNode from '../../common/view/MedianBarNode.js';
+import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
+import MeanAndMedianPlotNode, { MeanAndMedianPlotNodeOptions } from './MeanAndMedianPlotNode.js';
 
 
 type MeanAndMedianInfoPlotNodeOptions = StrictOmit<MeanAndMedianPlotNodeOptions, 'representationContext' | 'dataPointFill'> & EmptySelfOptions;

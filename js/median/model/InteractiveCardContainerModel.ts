@@ -9,9 +9,18 @@
  *
  */
 
-import CardContainerModel, { CardContainerModelOptions } from './CardContainerModel.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import Emitter from '../../../../axon/js/Emitter.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import Property from '../../../../axon/js/Property.js';
+import dotRandom from '../../../../dot/js/dotRandom.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import GroupSelectModel from '../../../../scenery-phet/js/accessibility/group-sort/model/GroupSelectModel.js';
+import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
+import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 import cardMovement1_mp3 from '../../../sounds/cardMovement1_mp3.js';
 import cardMovement2_mp3 from '../../../sounds/cardMovement2_mp3.js';
 import cardMovement3_mp3 from '../../../sounds/cardMovement3_mp3.js';
@@ -19,19 +28,10 @@ import cardMovement4_mp3 from '../../../sounds/cardMovement4_mp3.js';
 import cardMovement5_mp3 from '../../../sounds/cardMovement5_mp3.js';
 import cardMovement6_mp3 from '../../../sounds/cardMovement6_mp3.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import MedianModel from './MedianModel.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import Property from '../../../../axon/js/Property.js';
-import CardModel from './CardModel.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import dotRandom from '../../../../dot/js/dotRandom.js';
 import CAVQueryParameters from '../../common/CAVQueryParameters.js';
-import Emitter from '../../../../axon/js/Emitter.js';
-import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
-import GroupSelectModel from '../../../../scenery-phet/js/accessibility/group-sort/model/GroupSelectModel.js';
-import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
+import CardContainerModel, { CardContainerModelOptions } from './CardContainerModel.js';
+import CardModel from './CardModel.js';
+import MedianModel from './MedianModel.js';
 
 const cardMovementSounds = [
   cardMovement1_mp3,

@@ -8,21 +8,21 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import centerAndVariability from '../../centerAndVariability.js';
-import { Node, NodeOptions } from '../../../../scenery/js/imports.js';
-import VariabilityModel from '../model/VariabilityModel.js';
-import RangeNode from './RangeNode.js';
-import IQRNode from './IQRNode.js';
-import MADNode from './MADNode.js';
-import VariabilityMeasure from '../model/VariabilityMeasure.js';
-import ToggleNode from '../../../../sun/js/ToggleNode.js';
-import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
-import CAVPlotNode from '../../common/view/CAVPlotNode.js';
-import IntervalToolRectangle from './IntervalToolRectangle.js';
 import NumberLineNode from '.../../../../soccer-common/js/view/NumberLineNode.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
+import { Node, NodeOptions } from '../../../../scenery/js/imports.js';
+import ToggleNode from '../../../../sun/js/ToggleNode.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CAVPlotNode from '../../common/view/CAVPlotNode.js';
 import CAVToggleNode from '../../common/view/CAVToggleNode.js';
+import VariabilityMeasure from '../model/VariabilityMeasure.js';
+import VariabilityModel from '../model/VariabilityModel.js';
+import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
+import IntervalToolRectangle from './IntervalToolRectangle.js';
+import IQRNode from './IQRNode.js';
+import MADNode from './MADNode.js';
+import RangeNode from './RangeNode.js';
 
 export type CAVPlotOptions = NodeOptions;
 

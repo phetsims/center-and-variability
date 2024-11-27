@@ -8,22 +8,22 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import SoccerSceneModel from '../../../../soccer-common/js/model/SoccerSceneModel.js';
-import centerAndVariability from '../../centerAndVariability.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import CAVConstants from '../../common/CAVConstants.js';
-import Property from '../../../../axon/js/Property.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import Emitter from '../../../../axon/js/Emitter.js';
+import Property from '../../../../axon/js/Property.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import Utils from '../../../../dot/js/Utils.js';
+import { TColor } from '../../../../scenery/js/imports.js';
+import KickDistributionStrategy from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
+import SoccerSceneModel from '../../../../soccer-common/js/model/SoccerSceneModel.js';
+import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import Utils from '../../../../dot/js/Utils.js';
-import Emitter from '../../../../axon/js/Emitter.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CAVConstants from '../../common/CAVConstants.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import VariabilitySoccerBall from './VariabilitySoccerBall.js';
-import KickDistributionStrategy from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
-import { TColor } from '../../../../scenery/js/imports.js';
-import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 
 export default class VariabilitySceneModel extends CAVSoccerSceneModel<VariabilitySoccerBall> {
 

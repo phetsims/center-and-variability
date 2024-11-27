@@ -7,17 +7,17 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { Image } from '../../../scenery/js/imports.js';
-import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
-import centerAndVariability from '../centerAndVariability.js';
-import MedianModel from './model/MedianModel.js';
-import CAVScreen, { CAVScreenOptions } from '../common/CAVScreen.js';
-import MedianScreenView from './view/MedianScreenView.js';
-import CenterAndVariabilityStrings from '../CenterAndVariabilityStrings.js';
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
-import medianScreenIcon_png from '../../images/medianScreenIcon_png.js';
+import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
+import { Image } from '../../../scenery/js/imports.js';
+import medianScreenIcon_png from '../../images/medianScreenIcon_png.js';
+import centerAndVariability from '../centerAndVariability.js';
+import CenterAndVariabilityStrings from '../CenterAndVariabilityStrings.js';
+import CAVScreen, { CAVScreenOptions } from '../common/CAVScreen.js';
+import MedianModel from './model/MedianModel.js';
 import MedianKeyboardHelpNode from './view/MedianKeyboardHelpNode.js';
+import MedianScreenView from './view/MedianScreenView.js';
 
 type SelfOptions = EmptySelfOptions;
 type MedianScreenOptions = SelfOptions & StrictOmit<CAVScreenOptions, 'name' | 'homeScreenIcon' | 'createKeyboardHelpNode'>;

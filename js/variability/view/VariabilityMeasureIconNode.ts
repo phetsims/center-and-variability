@@ -10,8 +10,8 @@
 
 import { Color, Node, Rectangle, TColor } from '../../../../scenery/js/imports.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import IconArrowNode from './IconArrowNode.js';
 import CAVConstants from '../../common/CAVConstants.js';
+import IconArrowNode from './IconArrowNode.js';
 
 export default class VariabilityMeasureIconNode extends Node {
 

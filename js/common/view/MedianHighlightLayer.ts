@@ -10,14 +10,14 @@
  * @author Matt Blackman (PhET Interactive Simulations)
  */
 
-import { Circle, Node, NodeOptions } from '../../../../scenery/js/imports.js';
-import centerAndVariability from '../../centerAndVariability.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import CAVObjectType from '../model/CAVObjectType.js';
-import CAVColors from '../CAVColors.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import { Circle, Node, NodeOptions } from '../../../../scenery/js/imports.js';
 import SoccerCommonConstants from '../../../../soccer-common/js/SoccerCommonConstants.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CAVColors from '../CAVColors.js';
+import CAVObjectType from '../model/CAVObjectType.js';
 import CAVSoccerBall from '../model/CAVSoccerBall.js';
 
 type SelfOptions = EmptySelfOptions;

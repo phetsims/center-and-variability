@@ -8,23 +8,23 @@
  * @author Sam Reid (PhET Interactive Simulations);
  */
 
-import centerAndVariability from '../../centerAndVariability.js';
-import { DragListener, Line, Node, NodeOptions, Rectangle } from '../../../../scenery/js/imports.js';
-import CAVColors from '../../common/CAVColors.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import Multilink from '../../../../axon/js/Multilink.js';
-import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import Property from '../../../../axon/js/Property.js';
-import Bounds2 from '../../../../dot/js/Bounds2.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
-import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import AccessibleSlider, { AccessibleSliderOptions } from '../../../../sun/js/accessibility/AccessibleSlider.js';
-import Range from '../../../../dot/js/Range.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
+import Multilink from '../../../../axon/js/Multilink.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import Property from '../../../../axon/js/Property.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
+import Range from '../../../../dot/js/Range.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import { DragListener, Line, Node, NodeOptions, Rectangle } from '../../../../scenery/js/imports.js';
+import AccessibleSlider, { AccessibleSliderOptions } from '../../../../sun/js/accessibility/AccessibleSlider.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CAVColors from '../../common/CAVColors.js';
 
 type SelfOptions = EmptySelfOptions;
 type ParentOptions = NodeOptions & AccessibleSliderOptions;

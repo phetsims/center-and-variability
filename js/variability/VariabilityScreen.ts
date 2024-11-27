@@ -7,17 +7,17 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
-import { Image } from '../../../scenery/js/imports.js';
-import centerAndVariability from '../centerAndVariability.js';
-import VariabilityModel from './model/VariabilityModel.js';
-import CAVScreen, { CAVScreenOptions } from '../common/CAVScreen.js';
-import VariabilityScreenView from './view/VariabilityScreenView.js';
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
-import CenterAndVariabilityStrings from '../CenterAndVariabilityStrings.js';
-import variabilityScreenIcon_png from '../../images/variabilityScreenIcon_png.js';
+import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
+import { Image } from '../../../scenery/js/imports.js';
+import variabilityScreenIcon_png from '../../images/variabilityScreenIcon_png.js';
+import centerAndVariability from '../centerAndVariability.js';
+import CenterAndVariabilityStrings from '../CenterAndVariabilityStrings.js';
+import CAVScreen, { CAVScreenOptions } from '../common/CAVScreen.js';
+import VariabilityModel from './model/VariabilityModel.js';
 import VariabilityKeyboardHelpNode from './view/VariabilityKeyboardHelpNode.js';
+import VariabilityScreenView from './view/VariabilityScreenView.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityScreenOptions = SelfOptions & StrictOmit<CAVScreenOptions, 'name' | 'homeScreenIcon' | 'createKeyboardHelpNode'>;

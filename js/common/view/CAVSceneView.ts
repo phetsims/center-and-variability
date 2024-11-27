@@ -10,16 +10,16 @@
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 
-import SoccerSceneView from '../../../../soccer-common/js/view/SoccerSceneView.js';
-import centerAndVariability from '../../centerAndVariability.js';
-import MedianHighlightLayer from './MedianHighlightLayer.js';
-import CAVModel from '../model/CAVModel.js';
-import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Range from '../../../../dot/js/Range.js';
-import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import { KickerImageSet } from '../../../../soccer-common/js/view/KickerImageSets.js';
+import SoccerSceneView from '../../../../soccer-common/js/view/SoccerSceneView.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CAVModel from '../model/CAVModel.js';
+import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
+import MedianHighlightLayer from './MedianHighlightLayer.js';
 
 export default class CAVSceneView extends SoccerSceneView<CAVSoccerSceneModel> {
 

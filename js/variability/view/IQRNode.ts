@@ -9,25 +9,25 @@
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 
-import { Line, ManualConstraint, Node, Path, Rectangle, Text } from '../../../../scenery/js/imports.js';
-import { Shape } from '../../../../kite/js/imports.js';
-import centerAndVariability from '../../centerAndVariability.js';
-import VariabilityModel from '../model/VariabilityModel.js';
-import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import CAVPlotNode, { CAVPlotNodeOptions, MIN_KICKS_TEXT_OFFSET } from '../../common/view/CAVPlotNode.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import CAVColors from '../../common/CAVColors.js';
-import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
-import CAVConstants, { SHOW_OUTLIERS_PROPERTY } from '../../common/CAVConstants.js';
-import optionize from '../../../../phet-core/js/optionize.js';
-import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
-import IntervalBarNode from '../../common/view/IntervalBarNode.js';
-import TProperty from '../../../../axon/js/TProperty.js';
-import NeedAtLeastNKicksText from '../../common/view/NeedAtLeastNKicksText.js';
-import RepresentationContext from '../../common/model/RepresentationContext.js';
-import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
+import TProperty from '../../../../axon/js/TProperty.js';
+import { Shape } from '../../../../kite/js/imports.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import { Line, ManualConstraint, Node, Path, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
+import CAVColors from '../../common/CAVColors.js';
+import CAVConstants, { SHOW_OUTLIERS_PROPERTY } from '../../common/CAVConstants.js';
+import RepresentationContext from '../../common/model/RepresentationContext.js';
+import CAVPlotNode, { CAVPlotNodeOptions, MIN_KICKS_TEXT_OFFSET } from '../../common/view/CAVPlotNode.js';
+import IntervalBarNode from '../../common/view/IntervalBarNode.js';
+import NeedAtLeastNKicksText from '../../common/view/NeedAtLeastNKicksText.js';
+import VariabilityMeasure from '../model/VariabilityMeasure.js';
+import VariabilityModel from '../model/VariabilityModel.js';
+import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import BoxWhiskerLabelNode from './BoxWhiskerLabelNode.js';
 
 type SelfOptions = {

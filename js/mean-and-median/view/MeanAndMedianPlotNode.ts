@@ -9,22 +9,22 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import centerAndVariability from '../../centerAndVariability.js';
-import MedianBarNode from '../../common/view/MedianBarNode.js';
-import CAVPlotNode, { CAVPlotNodeOptions, MIN_KICKS_TEXT_OFFSET } from '../../common/view/CAVPlotNode.js';
-import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
-import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
-import { SoccerBallPhase } from '../../../../soccer-common/js/model/SoccerBallPhase.js';
-import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
-import { ManualConstraint } from '../../../../scenery/js/imports.js';
-import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import CAVConstants from '../../common/CAVConstants.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import TProperty from '../../../../axon/js/TProperty.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import TProperty from '../../../../axon/js/TProperty.js';
-import NeedAtLeastNKicksText from '../../common/view/NeedAtLeastNKicksText.js';
+import { ManualConstraint } from '../../../../scenery/js/imports.js';
+import { SoccerBallPhase } from '../../../../soccer-common/js/model/SoccerBallPhase.js';
+import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
+import CAVConstants from '../../common/CAVConstants.js';
+import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import RepresentationContext from '../../common/model/RepresentationContext.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import CAVPlotNode, { CAVPlotNodeOptions, MIN_KICKS_TEXT_OFFSET } from '../../common/view/CAVPlotNode.js';
+import MedianBarNode from '../../common/view/MedianBarNode.js';
+import NeedAtLeastNKicksText from '../../common/view/NeedAtLeastNKicksText.js';
+import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
 
 type SelfOptions = {
   representationContext: RepresentationContext;
