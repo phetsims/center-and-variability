@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2023-2024, University of Colorado Boulder
 
 /**
  * `IntervalToolRectangle` visualizes a draggable rectangular area in the play area, representing the

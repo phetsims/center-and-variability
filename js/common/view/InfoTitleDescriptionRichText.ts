@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2023-2024, University of Colorado Boulder
 
 /**
  * InfoTitleDescriptionRichText visualizes the title (bold) and description (normal) for an info dialog using the RichText component.

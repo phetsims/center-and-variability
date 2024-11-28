@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2023-2024, University of Colorado Boulder
 
 /**
  * MedianHighlightLayer displays visual highlights for soccer balls that represent the median.

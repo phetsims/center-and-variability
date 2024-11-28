@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2023-2024, University of Colorado Boulder
 
 /**
  * CAVNumberLineNode extends the basic NumberLineNode by integrating a MeanIndicator and a RangeNode.

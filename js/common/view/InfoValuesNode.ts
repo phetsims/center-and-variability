@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2023-2024, University of Colorado Boulder
 
 /**
  * InfoValuesNode displays a sequence like "Values: 1,3,4,5" and highlights the median with an arrow.

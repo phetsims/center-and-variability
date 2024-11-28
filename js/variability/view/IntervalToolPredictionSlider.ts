@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2023-2024, University of Colorado Boulder
 
 /**
  * IntervalToolPredictionSlider represents the handle component of the Interval Tool. Each handle acts as a slider

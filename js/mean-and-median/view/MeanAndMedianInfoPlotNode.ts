@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2023-2024, University of Colorado Boulder
 
 /**
  * MeanAndMedianInfoPlotNode is a specialized graphical node that represents data on the "Mean and Median Screen".

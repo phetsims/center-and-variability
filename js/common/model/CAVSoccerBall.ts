@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2023-2024, University of Colorado Boulder
 
 /**
  * CAVSoccerBall is an extension of the basic `SoccerBall. This class serves two additional roles:

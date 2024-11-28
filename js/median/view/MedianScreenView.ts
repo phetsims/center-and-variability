@@ -1,4 +1,4 @@
-// Copyright 2022-2023, University of Colorado Boulder
+// Copyright 2022-2024, University of Colorado Boulder
 
 /**
  * The MedianScreenView displays the Median screen in a simulation. It features a question bar, an accordion box,

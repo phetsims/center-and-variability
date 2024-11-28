@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2023-2024, University of Colorado Boulder
 
 /**
  * `RangeIconNode`: An icon for the range radio button. This icon can dynamically switch

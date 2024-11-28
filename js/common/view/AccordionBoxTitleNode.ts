@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2023-2024, University of Colorado Boulder
 
 /**
  * AccordionBoxTitleNode is a visual node that displays the title within an accordion box.

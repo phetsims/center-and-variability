@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2023-2024, University of Colorado Boulder
 
 /**
  * MaxKicksComboBox provides a dropdown selection in the PreferencesDialog for users to choose the maximum

@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2023-2024, University of Colorado Boulder
 
 /**
  * The MedianAnimationTone class contains static methods for playing the corresponding notes for the median animation

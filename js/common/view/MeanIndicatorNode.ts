@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2023-2024, University of Colorado Boulder
 
 /**
  * MeanIndicatorNode displays an upward-pointing triangle shape to represent the value of the mean.
