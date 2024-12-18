@@ -17,7 +17,6 @@ import Property from '../../../../axon/js/Property.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import GroupSelectModel from '../../../../scenery-phet/js/accessibility/group-sort/model/GroupSelectModel.js';
-import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
@@ -32,6 +31,7 @@ import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 import CardContainerModel, { CardContainerModelOptions } from './CardContainerModel.js';
 import CardModel from './CardModel.js';
 import MedianModel from './MedianModel.js';
+import isResettingAllProperty from '../../../../scenery-phet/js/isResettingAllProperty.js';
 
 const cardMovementSounds = [
   cardMovement1_mp3,
@@ -48,7 +48,7 @@ const ENABLE_SOUND_IN_STEP_PROPERTY = new BooleanProperty( true );
 
 // A card sound should not be enabled during reset, state setting, or the first step call after either
 // of those processes.
-const cardSoundEnableProperty = new DerivedProperty( [ ResetAllButton.isResettingAllProperty, isSettingPhetioStateProperty, ENABLE_SOUND_IN_STEP_PROPERTY ], ( isResetting, isSettingState, isEnabled ) => {
+const cardSoundEnableProperty = new DerivedProperty( [ isResettingAllProperty, isSettingPhetioStateProperty, ENABLE_SOUND_IN_STEP_PROPERTY ], ( isResetting, isSettingState, isEnabled ) => {
   if ( isResetting || isSettingState ) {
     ENABLE_SOUND_IN_STEP_PROPERTY.value = false;
   }

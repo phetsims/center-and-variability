@@ -15,7 +15,6 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
@@ -27,6 +26,7 @@ import RepresentationContext from '../../common/model/RepresentationContext.js';
 import CardModel from './CardModel.js';
 
 import MedianModel from './MedianModel.js';
+import isResettingAllProperty from '../../../../scenery-phet/js/isResettingAllProperty.js';
 
 type SelfOptions = {
 
@@ -195,7 +195,7 @@ export default class CardContainerModel extends PhetioObject {
     cardsSortedByValue.forEach( ( card, index ) => {
       card.indexProperty.value = index;
 
-      if ( isSettingPhetioStateProperty.value || this.medianModel.selectedSceneModelProperty.value.isClearingData || ResetAllButton.isResettingAllProperty.value ) {
+      if ( isSettingPhetioStateProperty.value || this.medianModel.selectedSceneModelProperty.value.isClearingData || isResettingAllProperty.value ) {
         this.setAtHomeCell( card );
       }
       else {
