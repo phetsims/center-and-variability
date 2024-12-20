@@ -76,6 +76,7 @@ export default class AccordionBoxCheckboxFactory {
       tandemName: 'medianCheckbox',
 
       options: {
+        phetioDisplayOnlyPropertyInstrumented: true,
 
         // Sound managed in the MedianAnimationTone
         checkedSoundPlayer: nullSoundPlayer
@@ -117,7 +118,8 @@ export default class AccordionBoxCheckboxFactory {
       property: isTopMeanVisibleProperty,
       tandemName: 'meanCheckbox',
       options: {
-        checkedSoundPlayer: PlayAreaCheckboxFactory.getMeanCheckedSoundPlayer( selectedSceneModelProperty )
+        checkedSoundPlayer: PlayAreaCheckboxFactory.getMeanCheckedSoundPlayer( selectedSceneModelProperty ),
+        phetioDisplayOnlyPropertyInstrumented: true
       }
     };
   }

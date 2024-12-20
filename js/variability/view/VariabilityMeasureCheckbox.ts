@@ -28,7 +28,8 @@ export default class VariabilityMeasureCheckbox extends Checkbox {
     super( property, content, combineOptions<CheckboxOptions>( {
       isDisposable: false,
       touchAreaXDilation: 5,
-      touchAreaYDilation: 5
+      touchAreaYDilation: 5,
+      phetioDisplayOnlyPropertyInstrumented: true
     }, options ) );
   }
 }

@@ -61,7 +61,10 @@ export default class PlayAreaCheckboxFactory {
         );
       },
       property: isIntervalToolVisibleProperty,
-      tandemName: 'intervalToolCheckbox'
+      tandemName: 'intervalToolCheckbox',
+      options: {
+        phetioDisplayOnlyPropertyInstrumented: true
+      }
     };
   }
 
@@ -120,7 +123,8 @@ export default class PlayAreaCheckboxFactory {
       tandemName: 'medianCheckbox',
 
       options: {
-        checkedSoundPlayer: PlayAreaCheckboxFactory.getMedianCheckedSoundPlayer( selectedSceneModelProperty )
+        checkedSoundPlayer: PlayAreaCheckboxFactory.getMedianCheckedSoundPlayer( selectedSceneModelProperty ),
+        phetioDisplayOnlyPropertyInstrumented: true
       }
     };
   }
@@ -132,7 +136,8 @@ export default class PlayAreaCheckboxFactory {
       property: isPlayAreaMeanVisibleProperty,
       tandemName: 'meanCheckbox',
       options: {
-        checkedSoundPlayer: PlayAreaCheckboxFactory.getMeanCheckedSoundPlayer( selectedSceneModelProperty )
+        checkedSoundPlayer: PlayAreaCheckboxFactory.getMeanCheckedSoundPlayer( selectedSceneModelProperty ),
+        phetioDisplayOnlyPropertyInstrumented: true
       }
     };
   }
@@ -146,7 +151,10 @@ export default class PlayAreaCheckboxFactory {
           new PredictionThumbNode( { color: color, maxHeight: 24, pickable: false, style: 'arrow' } ) );
       },
       property: selectedProperty,
-      tandemName: tandemName
+      tandemName: tandemName,
+      options: {
+        phetioDisplayOnlyPropertyInstrumented: true
+      }
     };
   }
 
