@@ -17,7 +17,7 @@
     "branch": "HEAD"
   },
   "center-and-variability": {
-    "sha": "5b35c0aad041f38a94a7ce39a2976e4ff0ce5e0b",
+    "sha": "2d1d37e14c5783887f2fc62bff9b3b57aba2505e",
     "branch": "1.1"
   },
   "chipper": {
@@ -45,7 +45,7 @@
     "branch": "HEAD"
   },
   "phet-io": {
-    "sha": "2c59d0c6fa3ae9dbdb3287d9d598b5a9aa2ffc70",
+    "sha": "060234b420766f251d76e807cf8a57b380a222d1",
     "branch": "HEAD"
   },
   "phet-io-sim-specific": {
