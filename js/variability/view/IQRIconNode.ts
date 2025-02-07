@@ -7,7 +7,9 @@
  */
 
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
-import { Line, Node, Rectangle, RectangleOptions } from '../../../../scenery/js/imports.js';
+import Line from '../../../../scenery/js/nodes/Line.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import Rectangle, { RectangleOptions } from '../../../../scenery/js/nodes/Rectangle.js';
 import centerAndVariability from '../../centerAndVariability.js';
 
 

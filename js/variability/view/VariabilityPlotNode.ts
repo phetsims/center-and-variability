@@ -11,7 +11,7 @@
 import NumberLineNode from '.../../../../soccer-common/js/view/NumberLineNode.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
-import { Node, NodeOptions } from '../../../../scenery/js/imports.js';
+import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVPlotNode from '../../common/view/CAVPlotNode.js';

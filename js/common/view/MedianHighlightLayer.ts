@@ -13,7 +13,8 @@
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import { Circle, Node, NodeOptions } from '../../../../scenery/js/imports.js';
+import Circle from '../../../../scenery/js/nodes/Circle.js';
+import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import SoccerCommonConstants from '../../../../soccer-common/js/SoccerCommonConstants.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVColors from '../CAVColors.js';

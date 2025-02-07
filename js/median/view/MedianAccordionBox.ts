@@ -13,7 +13,7 @@
  */
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import { AlignBox } from '../../../../scenery/js/imports.js';
+import AlignBox from '../../../../scenery/js/layout/nodes/AlignBox.js';
 import ButtonNode from '../../../../sun/js/buttons/ButtonNode.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 import Tandem from '../../../../tandem/js/Tandem.js';

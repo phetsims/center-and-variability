@@ -8,7 +8,7 @@
  */
 
 import Emitter from '../../../../axon/js/Emitter.js';
-import { Shape } from '../../../../kite/js/imports.js';
+import Shape from '../../../../kite/js/Shape.js';
 import InfoButton from '../../../../scenery-phet/js/buttons/InfoButton.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';

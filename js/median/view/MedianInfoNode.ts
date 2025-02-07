@@ -8,7 +8,7 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-import { VBox } from '../../../../scenery/js/imports.js';
+import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';

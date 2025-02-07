@@ -10,7 +10,7 @@
 
 import LocalizedStringProperty from '../../../../chipper/js/browser/LocalizedStringProperty.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
-import { Text, TextOptions } from '../../../../scenery/js/imports.js';
+import Text, { TextOptions } from '../../../../scenery/js/nodes/Text.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVConstants from '../CAVConstants.js';
 

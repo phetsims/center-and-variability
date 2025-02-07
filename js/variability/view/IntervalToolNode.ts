@@ -18,7 +18,7 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import { Node } from '../../../../scenery/js/imports.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
 import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 import ContinuousPropertySoundClip from '../../../../tambo/js/sound-generators/ContinuousPropertySoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';

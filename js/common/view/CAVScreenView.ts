@@ -25,7 +25,10 @@ import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.j
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import QuestionBar, { QuestionBarOptions } from '../../../../scenery-phet/js/QuestionBar.js';
 import erase_mp3 from '../../../../scenery-phet/sounds/erase_mp3.js';
-import { AlignBox, Node, Text, VBox } from '../../../../scenery/js/imports.js';
+import AlignBox from '../../../../scenery/js/layout/nodes/AlignBox.js';
+import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
 import SoccerCommonConstants from '../../../../soccer-common/js/SoccerCommonConstants.js';
 import BackgroundNode from '../../../../soccer-common/js/view/BackgroundNode.js';
 import KickerImageSets from '../../../../soccer-common/js/view/KickerImageSets.js';

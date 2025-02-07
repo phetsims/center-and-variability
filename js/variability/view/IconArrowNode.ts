@@ -7,7 +7,7 @@
  */
 
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
-import { Rectangle } from '../../../../scenery/js/imports.js';
+import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import centerAndVariability from '../../centerAndVariability.js';
 
 

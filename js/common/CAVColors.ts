@@ -16,7 +16,8 @@
  */
 
 import PhetColorScheme from '../../../scenery-phet/js/PhetColorScheme.js';
-import { Color, ProfileColorProperty } from '../../../scenery/js/imports.js';
+import Color from '../../../scenery/js/util/Color.js';
+import ProfileColorProperty from '../../../scenery/js/util/ProfileColorProperty.js';
 import centerAndVariability from '../centerAndVariability.js';
 
 const CAVColors = {

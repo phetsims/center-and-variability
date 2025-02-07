@@ -12,7 +12,7 @@
 
 import Range from '../../../../dot/js/Range.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import { Node } from '../../../../scenery/js/imports.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
 import { KickerImageSet } from '../../../../soccer-common/js/view/KickerImageSets.js';
 import SoccerSceneView from '../../../../soccer-common/js/view/SoccerSceneView.js';
 import Tandem from '../../../../tandem/js/Tandem.js';

@@ -10,7 +10,7 @@
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { Text, TextOptions } from '../../../../scenery/js/imports.js';
+import Text, { TextOptions } from '../../../../scenery/js/nodes/Text.js';
 import centerAndVariability from '../../centerAndVariability.js';
 
 type SelfOptions = EmptySelfOptions;

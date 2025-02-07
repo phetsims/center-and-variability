@@ -10,7 +10,7 @@
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
-import { Image } from '../../../scenery/js/imports.js';
+import Image from '../../../scenery/js/nodes/Image.js';
 import medianScreenIcon_png from '../../images/medianScreenIcon_png.js';
 import centerAndVariability from '../centerAndVariability.js';
 import CenterAndVariabilityStrings from '../CenterAndVariabilityStrings.js';

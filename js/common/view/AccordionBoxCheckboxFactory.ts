@@ -13,7 +13,11 @@
 
 import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import { AlignGroup, GridBox, Line, Node, Text } from '../../../../scenery/js/imports.js';
+import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
+import GridBox from '../../../../scenery/js/layout/nodes/GridBox.js';
+import Line from '../../../../scenery/js/nodes/Line.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
 import { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
 import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
 import centerAndVariability from '../../centerAndVariability.js';

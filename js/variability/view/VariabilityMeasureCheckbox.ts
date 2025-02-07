@@ -10,7 +10,8 @@
 import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
-import { TColor, Text } from '../../../../scenery/js/imports.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
+import TColor from '../../../../scenery/js/util/TColor.js';
 import Checkbox, { CheckboxOptions } from '../../../../sun/js/Checkbox.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVConstants from '../../common/CAVConstants.js';

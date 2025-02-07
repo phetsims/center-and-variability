@@ -12,7 +12,8 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import dragIndicatorHand_png from '../../../../scenery-phet/images/dragIndicatorHand_png.js';
 import SortCueArrowNode from '../../../../scenery-phet/js/accessibility/group-sort/view/SortCueArrowNode.js';
-import { Image, Node, NodeOptions, NodeTranslationOptions } from '../../../../scenery/js/imports.js';
+import Image from '../../../../scenery/js/nodes/Image.js';
+import Node, { NodeOptions, NodeTranslationOptions } from '../../../../scenery/js/nodes/Node.js';
 import centerAndVariability from '../../centerAndVariability.js';
 
 type SelfOptions = EmptySelfOptions;

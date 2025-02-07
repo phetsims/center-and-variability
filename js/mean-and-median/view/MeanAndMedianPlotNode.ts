@@ -13,7 +13,7 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import { ManualConstraint } from '../../../../scenery/js/imports.js';
+import ManualConstraint from '../../../../scenery/js/layout/constraints/ManualConstraint.js';
 import { SoccerBallPhase } from '../../../../soccer-common/js/model/SoccerBallPhase.js';
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
 import centerAndVariability from '../../centerAndVariability.js';

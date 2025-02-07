@@ -3,7 +3,7 @@
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import { Node } from '../../../../scenery/js/imports.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
 import ToggleNode, { ToggleNodeElement, ToggleNodeOptions } from '../../../../sun/js/ToggleNode.js';
 import centerAndVariability from '../../centerAndVariability.js';
 
