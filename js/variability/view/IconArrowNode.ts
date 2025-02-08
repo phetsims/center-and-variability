@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2023-2025, University of Colorado Boulder
 
 /**
  * IconArrowNode represents the arrow icon used for the interval tool and variability measure UIs.

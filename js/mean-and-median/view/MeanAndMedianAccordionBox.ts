@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2025, University of Colorado Boulder
 
 /**
  * MeanAndMedianAccordionBox is a UI component for the Mean and Median Screen. It provides an interactive accordion box that

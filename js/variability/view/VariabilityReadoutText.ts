@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2025, University of Colorado Boulder
 
 /**
  * VariabilityReadoutText shows the readouts on the left of the dot plot in the Variability screen accordion box.

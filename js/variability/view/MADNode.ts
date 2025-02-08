@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2025, University of Colorado Boulder
 
 /**
  * `MADNode` is a specialized plot node designed for the representation of MAD (Mean Absolute Deviation)

@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2025, University of Colorado Boulder
 
 /**
  * The `IQRNode` class extends the plot node visuals to display specifics of the Interquartile Range (IQR).

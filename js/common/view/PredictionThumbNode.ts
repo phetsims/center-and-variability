@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2025, University of Colorado Boulder
 
 /**
  * PredictionThumbNode is a visual handle for the PredictionSlider. Is made up of an Arrow and ShadedSphere.

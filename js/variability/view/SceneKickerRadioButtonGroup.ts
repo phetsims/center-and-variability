@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2025, University of Colorado Boulder
 
 /**
  * SceneKickerRadioButtonGroup provides radio buttons for users to select different scenes.

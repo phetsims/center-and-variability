@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2025, University of Colorado Boulder
 
 /**
  * DataPointNode is responsible for rendering a graphical representation (either a circle or an 'x') of a data point

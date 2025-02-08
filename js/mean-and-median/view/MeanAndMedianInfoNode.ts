@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2025, University of Colorado Boulder
 
 /**
  * MeanAndMedianInfoNode is a UI component that displays detailed information regarding mean and median calculations.
