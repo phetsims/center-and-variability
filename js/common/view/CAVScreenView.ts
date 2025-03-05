@@ -24,7 +24,6 @@ import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import QuestionBar, { QuestionBarOptions } from '../../../../scenery-phet/js/QuestionBar.js';
-import erase_mp3 from '../../../../scenery-phet/sounds/erase_mp3.js';
 import AlignBox from '../../../../scenery/js/layout/nodes/AlignBox.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
@@ -36,7 +35,6 @@ import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js'
 import SoccerSceneView from '../../../../soccer-common/js/view/SoccerSceneView.js';
 import SoccerScreenView, { SoccerScreenViewOptions } from '../../../../soccer-common/js/view/SoccerScreenView.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
-import SoundClipPlayer from '../../../../tambo/js/sound-generators/SoundClipPlayer.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
@@ -205,9 +203,6 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       iconWidth: 26,
       right: this.resetAllButton.left - SoccerCommonConstants.SCREEN_VIEW_X_MARGIN,
       centerY: this.resetAllButton.centerY,
-      soundPlayer: new SoundClipPlayer( erase_mp3, {
-        soundClipOptions: { initialOutputLevel: 0.22 }
-      } ),
       touchAreaXDilation: 6,
       touchAreaYDilation: 6
     } );
