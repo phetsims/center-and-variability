@@ -13,6 +13,7 @@ import Property from '../../../../axon/js/Property.js';
 import TEmitter from '../../../../axon/js/TEmitter.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
@@ -222,7 +223,7 @@ export default class CardContainerModel extends PhetioObject {
     return true;
   }
 
-  private static CardContainerModelIO = new IOType( 'CardContainerModelIO', {
+  private static CardContainerModelIO = new IOType<IntentionalAny, IntentionalAny>( 'CardContainerModelIO', {
     valueType: CardContainerModel,
     methods: {
       getData: {

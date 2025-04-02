@@ -13,6 +13,7 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import NumberTone from '../../../../soccer-common/js/model/NumberTone.js';
 import SoccerModel, { SoccerModelOptions } from '../../../../soccer-common/js/model/SoccerModel.js';
@@ -151,7 +152,7 @@ export default class CAVModel extends SoccerModel<CAVSoccerSceneModel> {
   }
 }
 
-const CAVModelIO = new IOType( 'CAVModelIO', {
+const CAVModelIO = new IOType<IntentionalAny, IntentionalAny>( 'CAVModelIO', {
   valueType: CAVModel,
   methods: {
     setDataPoints: {

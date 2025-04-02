@@ -9,6 +9,7 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 /**
  * CardModel is responsible for representing the individual cards in a card container, encapsulating their position,
@@ -139,7 +140,7 @@ export default class CardModel extends PhetioObject {
     this.animation.start();
   }
 
-  public static CardModelIO = new IOType( 'CardModelIO', {
+  public static CardModelIO = new IOType<IntentionalAny, IntentionalAny>( 'CardModelIO', {
     valueType: CardModel
   } );
 }
