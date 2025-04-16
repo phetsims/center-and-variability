@@ -1,6 +1,5 @@
 // Copyright 2023-2025, University of Colorado Boulder
 
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 /**
  * The MedianInfoNode is a visual component designed to display the content for the Median Info dialog.
  * It provides a comprehensive definition of the median along with a visualization of sorted cards, which are for
@@ -8,6 +7,7 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';

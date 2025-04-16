@@ -1,15 +1,15 @@
 // Copyright 2023-2025, University of Colorado Boulder
 
-import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
-import Line from '../../../../scenery/js/nodes/Line.js';
-import Node from '../../../../scenery/js/nodes/Node.js';
-import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 /**
  * `MADIconNode` represents the icon for the MAD radio button. This icon displays a vertical line at the center
  * of a purple background rectangle, accompanied by horizontal double-headed arrows on both sides.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
+import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
+import Line from '../../../../scenery/js/nodes/Line.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import centerAndVariability from '../../centerAndVariability.js';
 
 export default class MADIconNode extends Node {

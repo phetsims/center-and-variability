@@ -1,5 +1,13 @@
 // Copyright 2022-2025, University of Colorado Boulder
 
+/**
+ * CardModel is responsible for representing the individual cards in a card container, encapsulating their position,
+ * active status, and the interactions related to a card, such as dragging and animations. It also monitors the state
+ * of the associated SoccerBall and reflects its changes in the card.
+ *
+ * @author Chris Klusendorf (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
@@ -11,14 +19,6 @@ import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-/**
- * CardModel is responsible for representing the individual cards in a card container, encapsulating their position,
- * active status, and the interactions related to a card, such as dragging and animations. It also monitors the state
- * of the associated SoccerBall and reflects its changes in the card.
- *
- * @author Chris Klusendorf (PhET Interactive Simulations)
- * @author Sam Reid (PhET Interactive Simulations)
- */
 import SoccerBall from '../../../../soccer-common/js/model/SoccerBall.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
