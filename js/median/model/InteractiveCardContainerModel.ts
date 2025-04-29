@@ -14,33 +14,15 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
-import dotRandom from '../../../../dot/js/dotRandom.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import GroupSelectModel from '../../../../scenery-phet/js/accessibility/group-sort/model/GroupSelectModel.js';
-import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
-import soundManager from '../../../../tambo/js/soundManager.js';
+import isResettingAllProperty from '../../../../scenery-phet/js/isResettingAllProperty.js';
+import CardSounds from '../../../../tambo/js/sound-generators/CardSounds.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
-import cardMovement1_mp3 from '../../../../tambo/sounds/cardMovement1_mp3.js';
-import cardMovement2_mp3 from '../../../../tambo/sounds/cardMovement2_mp3.js';
-import cardMovement3_mp3 from '../../../../tambo/sounds/cardMovement3_mp3.js';
-import cardMovement4_mp3 from '../../../../tambo/sounds/cardMovement4_mp3.js';
-import cardMovement5_mp3 from '../../../../tambo/sounds/cardMovement5_mp3.js';
-import cardMovement6_mp3 from '../../../../tambo/sounds/cardMovement6_mp3.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 import CardContainerModel, { CardContainerModelOptions } from './CardContainerModel.js';
 import CardModel from './CardModel.js';
 import MedianModel from './MedianModel.js';
-import isResettingAllProperty from '../../../../scenery-phet/js/isResettingAllProperty.js';
-
-const cardMovementSounds = [
-  cardMovement1_mp3,
-  cardMovement2_mp3,
-  cardMovement3_mp3,
-  cardMovement4_mp3,
-  cardMovement5_mp3,
-  cardMovement6_mp3
-];
 
 // This property determines when the card sound can be enabled after reset. In this case it is enabled
 // after one step has been completed.
@@ -55,12 +37,9 @@ const cardSoundEnableProperty = new DerivedProperty( [ isResettingAllProperty, i
   return !isResetting && !isSettingState && isEnabled;
 } );
 
-export const cardMovementSoundClips = cardMovementSounds.map( sound => new SoundClip( sound, {
-  initialOutputLevel: 0.3,
-  additionalAudioNodes: [],
-  enabledProperty: cardSoundEnableProperty
-} ) );
-cardMovementSoundClips.forEach( soundClip => soundManager.addSoundGenerator( soundClip ) );
+cardSoundEnableProperty.link( enabled => {
+  CardSounds.CARD_MOVEMENT_SOUNDS_ENABLED_PROPERTY.value = enabled;
+} );
 
 type InteractiveCardContainerModelOptions = EmptySelfOptions & CardContainerModelOptions;
 
@@ -137,7 +116,7 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
     const oldList = this.lastStepOrder.filter( cardNode => newOrder.includes( cardNode ) );
     const newList = newOrder.filter( cardNode => this.lastStepOrder.includes( cardNode ) );
 
-    const swappedPairs: Array<{ first: CardModel; second: CardModel; direction: string }> = [];
+    const swappedPairs: Array<{ first: CardModel; second: CardModel; direction: 'left' | 'right' }> = [];
 
     // Compare the old list and the new list
     for ( let i = 0; i < oldList.length; i++ ) {
@@ -170,19 +149,7 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
 
       const directionToPlay = directionToPlayFromInteraction !== 'none' ? directionToPlayFromInteraction : directionToPlayFromAnimation;
 
-      const availableSoundClips = cardMovementSoundClips.filter( clip => !clip.isPlayingProperty.value );
-
-      if ( ( directionToPlay === 'left' || directionToPlay === 'right' || directionToPlay === 'both' ) && availableSoundClips.length > 0 ) {
-
-        const randomClip = availableSoundClips[ dotRandom.nextInt( availableSoundClips.length ) ];
-
-        // Moving to the right, go up in pitch by 4 semitones
-        randomClip.setPlaybackRate( CAVQueryParameters.cardMovementSoundPlaybackRate *
-                                    ( directionToPlay === 'left' ? 1 :
-                                      directionToPlay === 'right' ? Math.pow( 2, 4 / 12 ) :
-                                      directionToPlay === 'both' ? Math.pow( 2, 2 / 12 ) : 0 ) );
-        randomClip.play();
-      }
+      CardSounds.playCardMovementSound( directionToPlay );
     } );
 
     this.lastStepOrder = newOrder;

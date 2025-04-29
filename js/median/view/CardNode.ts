@@ -24,14 +24,14 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import SoccerBall from '../../../../soccer-common/js/model/SoccerBall.js';
+import CardSounds from '../../../../tambo/js/sound-generators/CardSounds.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import cardDrop_mp3 from '../../../../tambo/sounds/cardDrop_mp3.js';
 import cardPickup_mp3 from '../../../../tambo/sounds/cardPickup_mp3.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVConstants from '../../common/CAVConstants.js';
-import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 import CardModel from '../model/CardModel.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -40,13 +40,13 @@ export type CardNodeOptions = SelfOptions & ParentOptions;
 
 export const cardPickUpSoundClip = new SoundClip( cardPickup_mp3, {
   initialOutputLevel: 0.4,
-  initialPlaybackRate: CAVQueryParameters.cardMovementSoundPlaybackRate
+  initialPlaybackRate: CardSounds.PLAYBACK_RATE
 } );
 soundManager.addSoundGenerator( cardPickUpSoundClip );
 
 export const cardDropClip = new SoundClip( cardDrop_mp3, {
   initialOutputLevel: 0.2,
-  initialPlaybackRate: CAVQueryParameters.cardMovementSoundPlaybackRate * 1.3
+  initialPlaybackRate: CardSounds.PLAYBACK_RATE * 1.3
 } );
 soundManager.addSoundGenerator( cardDropClip );
 

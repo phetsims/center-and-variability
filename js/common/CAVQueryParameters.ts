@@ -33,12 +33,6 @@ const CAVQueryParameters = QueryStringMachine.getAll( {
   showOutliers: {
     type: 'flag',
     public: true
-  },
-
-  // Affects the pitch of sounds played when picking up, moving, or dropping a card in the accordion box of the 'Median' screen
-  cardMovementSoundPlaybackRate: {
-    type: 'number',
-    defaultValue: 1.5
   }
 } );
 
