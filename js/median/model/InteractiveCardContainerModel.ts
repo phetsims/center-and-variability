@@ -20,12 +20,12 @@ import GroupSelectModel from '../../../../scenery-phet/js/accessibility/group-so
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
-import cardMovement1_mp3 from '../../../sounds/cardMovement1_mp3.js';
-import cardMovement2_mp3 from '../../../sounds/cardMovement2_mp3.js';
-import cardMovement3_mp3 from '../../../sounds/cardMovement3_mp3.js';
-import cardMovement4_mp3 from '../../../sounds/cardMovement4_mp3.js';
-import cardMovement5_mp3 from '../../../sounds/cardMovement5_mp3.js';
-import cardMovement6_mp3 from '../../../sounds/cardMovement6_mp3.js';
+import cardMovement1_mp3 from '../../../../tambo/sounds/cardMovement1_mp3.js';
+import cardMovement2_mp3 from '../../../../tambo/sounds/cardMovement2_mp3.js';
+import cardMovement3_mp3 from '../../../../tambo/sounds/cardMovement3_mp3.js';
+import cardMovement4_mp3 from '../../../../tambo/sounds/cardMovement4_mp3.js';
+import cardMovement5_mp3 from '../../../../tambo/sounds/cardMovement5_mp3.js';
+import cardMovement6_mp3 from '../../../../tambo/sounds/cardMovement6_mp3.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVQueryParameters from '../../common/CAVQueryParameters.js';
 import CardContainerModel, { CardContainerModelOptions } from './CardContainerModel.js';
