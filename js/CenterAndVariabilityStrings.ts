@@ -74,7 +74,6 @@ type StringsType = {
   'madEqualsMADMetersPatternStringProperty': LocalizedStringProperty;
   'rangeEqualsMaxMinusMinPatternStringProperty': LocalizedStringProperty;
   'rangeEqualsRangeUnitsPatternStringProperty': LocalizedStringProperty;
-  'needAtLeastOneKickStringProperty': LocalizedStringProperty;
   'needAtLeastFiveKicksStringProperty': LocalizedStringProperty;
   'maxKicksStringProperty': LocalizedStringProperty;
   'maxKicksDescriptionStringProperty': LocalizedStringProperty;

@@ -19,6 +19,7 @@ import NeedAtLeastNKicksText from '../../common/view/NeedAtLeastNKicksText.js';
 import CardContainerModel from '../model/CardContainerModel.js';
 import MedianModel from '../model/MedianModel.js';
 import CardNodeContainer from './CardNodeContainer.js';
+import SoccerCommonStrings from '../../../../soccer-common/js/SoccerCommonStrings.js';
 
 export default class MedianInfoNode extends VBox {
   public constructor( model: MedianModel, sceneModel: CAVSoccerSceneModel, tandem: Tandem ) {
@@ -45,7 +46,7 @@ export default class MedianInfoNode extends VBox {
       excludeInvisibleChildrenFromBounds: true
     } );
 
-    const needAtLeastOneKickText = new NeedAtLeastNKicksText( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty, {
+    const needAtLeastOneKickText = new NeedAtLeastNKicksText( SoccerCommonStrings.needAtLeastOneKickStringProperty, {
       visibleProperty: hasZeroKicksProperty
     } );
 

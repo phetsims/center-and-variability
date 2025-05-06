@@ -17,7 +17,6 @@ import ManualConstraint from '../../../../scenery/js/layout/constraints/ManualCo
 import { SoccerBallPhase } from '../../../../soccer-common/js/model/SoccerBallPhase.js';
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import RepresentationContext from '../../common/model/RepresentationContext.js';
@@ -25,6 +24,7 @@ import CAVPlotNode, { CAVPlotNodeOptions, MIN_KICKS_TEXT_OFFSET } from '../../co
 import MedianBarNode from '../../common/view/MedianBarNode.js';
 import NeedAtLeastNKicksText from '../../common/view/NeedAtLeastNKicksText.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
+import SoccerCommonStrings from '../../../../soccer-common/js/SoccerCommonStrings.js';
 
 type SelfOptions = {
   representationContext: RepresentationContext;
@@ -42,7 +42,7 @@ export default class MeanAndMedianPlotNode extends CAVPlotNode {
     const options = optionize<MeanAndMedianPlotNodeOptions, SelfOptions, CAVPlotNodeOptions>()( {}, providedOptions );
     super( true, sceneModel, playAreaNumberLineNode, isDataPointLayerVisibleProperty, options.representationContext === 'accordion' ? model.isMeanVisibleProperty : new BooleanProperty( true ), options );
 
-    const needAtLeastOneKickText = new NeedAtLeastNKicksText( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty );
+    const needAtLeastOneKickText = new NeedAtLeastNKicksText( SoccerCommonStrings.needAtLeastOneKickStringProperty );
     ManualConstraint.create( this, [ needAtLeastOneKickText ], textProxy => {
       textProxy.center = this.modelViewTransform.modelToViewXY( CAVConstants.PHYSICAL_RANGE.getCenter(), MIN_KICKS_TEXT_OFFSET );
     } );

@@ -42,6 +42,7 @@ import NeedAtLeastNKicksText from '../../common/view/NeedAtLeastNKicksText.js';
 import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
+import SoccerCommonStrings from '../../../../soccer-common/js/SoccerCommonStrings.js';
 
 type SelfOptions = {
   representationContext: RepresentationContext;
@@ -57,7 +58,7 @@ export default class MADNode extends CAVPlotNode {
     }, providedOptions );
     super( false, sceneModel, playAreaNumberLineNode, isDataPointLayerVisibleProperty, DerivedProperty.valueEqualsConstant( model.selectedVariabilityMeasureProperty, VariabilityMeasure.MAD ), options );
 
-    const needAtLeastOneKickText = new NeedAtLeastNKicksText( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty );
+    const needAtLeastOneKickText = new NeedAtLeastNKicksText( SoccerCommonStrings.needAtLeastOneKickStringProperty );
     ManualConstraint.create( this, [ needAtLeastOneKickText ], textProxy => {
       textProxy.center = this.modelViewTransform.modelToViewXY( CAVConstants.PHYSICAL_RANGE.getCenter(), MIN_KICKS_TEXT_OFFSET );
     } );

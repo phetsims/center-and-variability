@@ -17,7 +17,6 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import SoccerBall from '../../../../soccer-common/js/model/SoccerBall.js';
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVColors from '../../common/CAVColors.js';
 import CAVConstants, { DATA_POINT_SCALE_PROPERTY } from '../../common/CAVConstants.js';
 import CAVObjectType from '../../common/model/CAVObjectType.js';
@@ -28,6 +27,7 @@ import NeedAtLeastNKicksText from '../../common/view/NeedAtLeastNKicksText.js';
 import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
+import SoccerCommonStrings from '../../../../soccer-common/js/SoccerCommonStrings.js';
 
 type SelfOptions = {
   representationContext: RepresentationContext;
@@ -43,7 +43,7 @@ export default class RangeNode extends CAVPlotNode {
 
     super( false, sceneModel, playAreaNumberLineNode, isDataPointLayerVisibleProperty, DerivedProperty.valueEqualsConstant( model.selectedVariabilityMeasureProperty, VariabilityMeasure.MAD ), options );
 
-    const needAtLeastOneKickText = new NeedAtLeastNKicksText( CenterAndVariabilityStrings.needAtLeastOneKickStringProperty );
+    const needAtLeastOneKickText = new NeedAtLeastNKicksText( SoccerCommonStrings.needAtLeastOneKickStringProperty );
 
     ManualConstraint.create( this, [ needAtLeastOneKickText ], () => {
       needAtLeastOneKickText.center = this.modelViewTransform.modelToViewXY( CAVConstants.PHYSICAL_RANGE.getCenter(), MIN_KICKS_TEXT_OFFSET );
