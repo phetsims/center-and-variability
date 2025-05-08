@@ -30,7 +30,7 @@ const simOptions: SimOptions = {
   credits: {
     leadDesign: 'Cathy Carter, Amanda McGarry',
     softwareDevelopment: 'Matthew Blackman, Chris Klusendorf, Sam Reid, Marla Schulz',
-    team: 'Kelly Findley, Marilyn Hartzell, Ariel Paul, Kathy Perkins, David Webb',
+    team: 'Kelly Findley, Marilyn Hartzell, Ariel Paul, Kathy Perkins, Taliesin Smith, David Webb',
     qualityAssurance: 'Jaron Droder, Clifford Hardin, Emily Miller, Devon Quispe, Nancy Salpepi, Kathryn Woessner',
     graphicArts: 'Mariah Hermsmeyer, Amanda McGarry'
   },
