@@ -112,6 +112,55 @@ type StringsType = {
       'movePointerIntervalHandleOrIntervalBlockStringProperty': LocalizedStringProperty;
       'objectStringProperty': LocalizedStringProperty;
     }
+  };
+  'a11y': {
+    'medianButtonHelpTextStringProperty': LocalizedStringProperty;
+    'meanAndMedianButtonHelpTextStringProperty': LocalizedStringProperty;
+    'variabilityButtonHelpTextStringProperty': LocalizedStringProperty;
+    'common': {
+      'kick1SoccerBallStringProperty': LocalizedStringProperty;
+      'kick5SoccerBallsStringProperty': LocalizedStringProperty;
+      'predictMedianCheckBox': {
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      };
+      'medianCheckbox': {
+        'accessibleNameStringProperty': LocalizedStringProperty;
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      };
+      'medianPredictionPointer': {
+        'accessibleNameStringProperty': LocalizedStringProperty;
+      }
+    };
+    'median': {
+      'playAreaStringProperty': LocalizedStringProperty;
+      'controlAreaStringProperty': LocalizedStringProperty;
+      'currentDetailsStringProperty': LocalizedStringProperty;
+      'details': {
+        'isStringProperty': LocalizedStringProperty;
+        'areStringProperty': LocalizedStringProperty;
+        'ballStringProperty': LocalizedStringProperty;
+        'ballsStringProperty': LocalizedStringProperty;
+      };
+      'interactionHintStringProperty': LocalizedStringProperty;
+      'distanceAccordionBox': {
+        'accessibleNameStringProperty': LocalizedStringProperty;
+      };
+      'dataCardsGroup': {
+        'chooseAccessibleNameStringProperty': LocalizedStringProperty;
+        'moveAccessibleNameStringProperty': LocalizedStringProperty;
+        'chooseAccessibleHelpTextStringProperty': LocalizedStringProperty;
+        'moveAccessibleHelpTextStringProperty': LocalizedStringProperty;
+        'cardStateStringProperty': LocalizedStringProperty;
+      };
+      'sortDataCards': {
+        'accessibleNameStringProperty': LocalizedStringProperty;
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      };
+      'showMedianOnDataCards': {
+        'accessibleNameStringProperty': LocalizedStringProperty;
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      }
+    }
   }
 };
 

@@ -32,6 +32,7 @@ export default class MedianScreen extends CAVScreen<MedianModel, MedianScreenVie
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1
       } ),
+      screenButtonsHelpText: CenterAndVariabilityStrings.a11y.medianButtonHelpTextStringProperty,
       createKeyboardHelpNode: () => new MedianKeyboardHelpNode()
     }, providedOptions );
 

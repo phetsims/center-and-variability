@@ -265,5 +265,108 @@
   },
   "keyboardHelpDialog.variabilityScreen.object": {
     "value": "object"
+  },
+  "a11y": {
+    "medianButtonHelpText": {
+      "value": "Explore what a median is and how to find its value among a data set."
+    },
+    "meanAndMedianButtonHelpText": {
+      "value": "Kick soccer balls to create a data set where the mean and median can be compared."
+    },
+    "variabilityButtonHelpText": {
+      "value": "Kick soccer balls to create a data set where the mean and median can be compared."
+    },
+    "common": {
+      "kick1SoccerBall": {
+        "value": "Kick 1 Soccer Ball"
+      },
+      "kick5SoccerBalls": {
+        "value": "Kick 5 Soccer Balls"
+      },
+      "predictMedianCheckBox": {
+        "accessibleHelpText": {
+          "value": "Show movable prediction pointer."
+        }
+      },
+      "medianCheckbox": {
+        "accessibleName": {
+          "value": "Show Median on Field"
+        },
+        "accessibleHelpText": {
+          "value": "Highlight middle soccer ball{{s}} and point to median kick distance on number line."
+        }
+      },
+      "medianPredictionPointer": {
+        "accessibleName": {
+          "value": "Median Prediction Pointer"
+        }
+      }
+    },
+    "median": {
+      "playArea": {
+        "value": "In Play Area: There is a field with kickers ready to kick {{maxBalls}} soccer balls a random distance from 1 to 15 meters. Each time a kicker kicks a ball, a data card appears with the distance that the ball was kicked."
+      },
+      "controlArea": {
+        "value": "In Control Area: There are options to show info about the median and clear the field. Reset the sim to start over."
+      },
+      "currentDetails": {
+        "value": "Currently, there {{isAre}} {{number}} of {{maxBalls}} kicked soccer {{ball}} on the field. The data cards list the kick distances as {{distances}}."
+      },
+      "details": {
+        "is": {
+          "value": "is"
+        },
+        "are": {
+          "value": "are"
+        },
+        "ball": {
+          "value": "ball"
+        },
+        "balls": {
+          "value": "balls"
+        }
+      },
+      "interactionHint": {
+        "value": "Kick a soccer ball to start creating and exploring a data set. Try to answer the guiding question, “How spread out are the kick distances?” If needed, check out keyboard shortcuts under Sim Resources."
+      },
+      "distanceAccordionBox": {
+        "accessibleName": {
+          "value": "Distance (in meters) sortable list"
+        }
+      },
+      "dataCardsGroup": {
+        "chooseAccessibleName": {
+          "value": "Grab Data Card"
+        },
+        "moveAccessibleName": {
+          "value": "Data Card {{distance}}"
+        },
+        "chooseAccessibleHelpText": {
+          "value": "Choose card to grab or release to sort data"
+        },
+        "moveAccessibleHelpText": {
+          "value": "Move card to sort data"
+        },
+        "cardState": {
+          "value": "position {{position}} of {{total}}"
+        }
+      },
+      "sortDataCards": {
+        "accessibleName": {
+            "value": "Sort Data Cards"
+        },
+        "accessibleHelpText": {
+            "value": "View data sorted numerically."
+        }
+      },
+      "showMedianOnDataCards": {
+        "accessibleName": {
+            "value": "Show Median on Data Cards"
+        },
+        "accessibleHelpText": {
+            "value": "View median value above data cards with location if data is sorted."
+        }
+      }
+    }
   }
 }
