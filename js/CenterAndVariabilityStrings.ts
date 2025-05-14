@@ -118,8 +118,6 @@ type StringsType = {
     'meanAndMedianButtonHelpTextStringProperty': LocalizedStringProperty;
     'variabilityButtonHelpTextStringProperty': LocalizedStringProperty;
     'common': {
-      'kick1SoccerBallStringProperty': LocalizedStringProperty;
-      'kick5SoccerBallsStringProperty': LocalizedStringProperty;
       'predictMedianCheckBox': {
         'accessibleHelpTextStringProperty': LocalizedStringProperty;
       };

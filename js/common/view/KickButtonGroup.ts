@@ -18,7 +18,6 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
 import VBox, { VBoxOptions } from '../../../../scenery/js/layout/nodes/VBox.js';
-import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import SoccerSceneModel from '../../../../soccer-common/js/model/SoccerSceneModel.js';
 import KickButton, { KICK_BUTTON_FONT } from '../../../../soccer-common/js/view/KickButton.js';
@@ -52,8 +51,8 @@ export default class KickButtonGroup extends VBox {
       return alignGroup.createBox( text );
     };
 
-    const createKickButton = ( content: Node, tandem: Tandem, numberToKick: number, multikick: boolean ) => {
-
+    const createKickButton = ( label: PatternStringProperty<{ value: number }>, tandem: Tandem, numberToKick: number, multikick: boolean ) => {
+      const content = createLabel( label );
       const hasKickableSoccerBallsProperty = new DynamicProperty<boolean, unknown, SoccerSceneModel>( selectedSceneModelProperty, {
         derive: 'hasKickableSoccerBallsStableProperty'
       } );
@@ -63,7 +62,8 @@ export default class KickButtonGroup extends VBox {
         visibleProperty: new GatedVisibleProperty( hasKickableSoccerBallsProperty, tandem ),
         content: content,
         tandem: tandem,
-        listener: () => selectedSceneModelProperty.value.scheduleKicks( numberToKick )
+        listener: () => selectedSceneModelProperty.value.scheduleKicks( numberToKick ),
+        accessibleName: label
       } );
     };
 
@@ -75,7 +75,6 @@ export default class KickButtonGroup extends VBox {
     const kick1PatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.kickValuePatternStringProperty, { value: 1 }, {
       tandem: kick1ButtonTandem.createTandem( 'kick1PatternStringProperty' )
     } );
-    const kick1Label = createLabel( kick1PatternStringProperty );
 
     const multiKickProperty = new NumberProperty( 5 );
     const kick5PatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.kickValuePatternStringProperty, { value: multiKickProperty }, {
@@ -89,11 +88,10 @@ export default class KickButtonGroup extends VBox {
       const value = Math.max( Math.min( numberOfRemainingKickableObjects, 5 ), 1 );
       multiKickProperty.value = value;
     } );
-    const kick5Label = createLabel( kick5PatternStringProperty );
 
     options.children = [
-      createKickButton( kick1Label, kick1ButtonTandem, 1, false ),
-      createKickButton( kick5Label, kick5ButtonTandem, 5, true )
+      createKickButton( kick1PatternStringProperty, kick1ButtonTandem, 1, false ),
+      createKickButton( kick5PatternStringProperty, kick5ButtonTandem, 5, true )
     ];
 
     super( options );

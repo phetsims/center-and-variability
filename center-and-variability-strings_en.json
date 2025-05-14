@@ -277,12 +277,6 @@
       "value": "Kick soccer balls to create a data set where the mean and median can be compared."
     },
     "common": {
-      "kick1SoccerBall": {
-        "value": "Kick 1 Soccer Ball"
-      },
-      "kick5SoccerBalls": {
-        "value": "Kick 5 Soccer Balls"
-      },
       "predictMedianCheckBox": {
         "accessibleHelpText": {
           "value": "Show movable prediction pointer."
