@@ -399,7 +399,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
 
   // Set the pdom order. Only the variability screen has sceneRadioButtons and variabilityMeasureRadioButtons
   protected cavSetPDOMOrder( bottomControls: Node, predictionTools: Node[], infoButton: Node, sceneKickerRadioButtonGroup?: Node, variabilityMeasureRadioButtonGroup?: Node ): void {
-    this.screenViewRootNode.pdomOrder = [
+    this.pdomPlayAreaNode.setPDOMOrder( [
       ...( sceneKickerRadioButtonGroup ? [ sceneKickerRadioButtonGroup ] : [] ),
       this.kickButtonGroup,
       this.backScreenViewLayer,
@@ -407,7 +407,9 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       ...predictionTools,
       this.intervalToolLayer,
       ...( variabilityMeasureRadioButtonGroup ? [ variabilityMeasureRadioButtonGroup ] : [] ),
-      this.accordionBox,
+      this.accordionBox
+      ] );
+    this.pdomControlAreaNode.pdomOrder = [
       infoButton,
       this.eraserButton,
       this.resetAllButton
