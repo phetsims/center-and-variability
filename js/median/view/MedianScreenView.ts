@@ -20,6 +20,7 @@ import PlayAreaCheckboxFactory from '../../common/view/PlayAreaCheckboxFactory.j
 import MedianModel from '../model/MedianModel.js';
 import MedianAccordionBox from './MedianAccordionBox.js';
 import MedianInfoDialog from './MedianInfoDialog.js';
+import CAVScreenSummaryContent from '../../common/view/CAVScreenSummaryContent.js';
 
 type SelfOptions = EmptySelfOptions;
 type MedianScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
@@ -32,7 +33,8 @@ export default class MedianScreenView extends CAVScreenView {
       questionBarOptions: {
         barFill: CAVColors.medianQuestionBarFillColorProperty,
         questionString: CenterAndVariabilityStrings.medianQuestionStringProperty
-      }
+      },
+      screenSummaryContent: new CAVScreenSummaryContent( model )
     }, providedOptions );
 
     super( model, options );

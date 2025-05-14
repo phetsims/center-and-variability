@@ -140,6 +140,7 @@ type StringsType = {
         'areStringProperty': LocalizedStringProperty;
         'ballStringProperty': LocalizedStringProperty;
         'ballsStringProperty': LocalizedStringProperty;
+        'dataCardDistancesStringProperty': LocalizedStringProperty;
       };
       'interactionHintStringProperty': LocalizedStringProperty;
       'distanceAccordionBox': {

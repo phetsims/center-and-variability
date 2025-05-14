@@ -304,13 +304,13 @@
     },
     "median": {
       "playArea": {
-        "value": "In Play Area: There is a field with kickers ready to kick {{maxBalls}} soccer balls a random distance from 1 to 15 meters. Each time a kicker kicks a ball, a data card appears with the distance that the ball was kicked."
+        "value": "There is a field with kickers ready to kick {{maxBalls}} soccer balls a random distance from 1 to 15 meters. Each time a kicker kicks a ball, a data card appears with the distance that the ball was kicked."
       },
       "controlArea": {
-        "value": "In Control Area: There are options to show info about the median and clear the field. Reset the sim to start over."
+        "value": "There are options to show info about the median and clear the field. Reset the sim to start over."
       },
       "currentDetails": {
-        "value": "Currently, there {{isAre}} {{number}} of {{maxBalls}} kicked soccer {{ball}} on the field. The data cards list the kick distances as {{distances}}."
+        "value": "Currently, there {{isAre}} {{number}} of {{maxBalls}} kicked soccer {{ball}} on the field. {{dataCardDistances}}"
       },
       "details": {
         "is": {
@@ -324,10 +324,13 @@
         },
         "balls": {
           "value": "balls"
+        },
+        "dataCardDistances": {
+            "value": "The data cards list the kick distances as {{distances}}."
         }
       },
       "interactionHint": {
-        "value": "Kick a soccer ball to start creating and exploring a data set. Try to answer the guiding question, “How spread out are the kick distances?” If needed, check out keyboard shortcuts under Sim Resources."
+        "value": "Kick a soccer ball to start creating and exploring a data set. Try to answer the guiding question, “How spread out are the kick distances?”"
       },
       "distanceAccordionBox": {
         "accessibleName": {
