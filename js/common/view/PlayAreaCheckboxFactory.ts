@@ -157,7 +157,8 @@ export default class PlayAreaCheckboxFactory {
       property: selectedProperty,
       tandemName: tandemName,
       options: {
-        phetioDisplayOnlyPropertyInstrumented: true
+        phetioDisplayOnlyPropertyInstrumented: true,
+        accessibleHelpText: CenterAndVariabilityStrings.a11y.common.predictionPointerHelpTextStringProperty
       }
     };
   }

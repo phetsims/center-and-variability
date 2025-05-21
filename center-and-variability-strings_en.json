@@ -277,10 +277,8 @@
       "value": "Kick soccer balls to create a data set where the mean and median can be compared."
     },
     "common": {
-      "predictMedianCheckBox": {
-        "accessibleHelpText": {
-          "value": "Show movable prediction pointer."
-        }
+      "predictionPointerHelpText": {
+        "value": "Show movable prediction pointer."
       },
       "medianCheckbox": {
         "accessibleName": {
@@ -320,7 +318,7 @@
           "value": "balls"
         },
         "dataCardDistances": {
-            "value": "The data cards list the kick distances as {{distances}}."
+          "value": "The data cards list the kick distances as {{distances}}."
         }
       },
       "interactionHint": {
@@ -350,18 +348,18 @@
       },
       "sortDataCards": {
         "accessibleName": {
-            "value": "Sort Data Cards"
+          "value": "Sort Data Cards"
         },
         "accessibleHelpText": {
-            "value": "View data sorted numerically."
+          "value": "View data sorted numerically."
         }
       },
       "showMedianOnDataCards": {
         "accessibleName": {
-            "value": "Show Median on Data Cards"
+          "value": "Show Median on Data Cards"
         },
         "accessibleHelpText": {
-            "value": "View median value above data cards with location if data is sorted."
+          "value": "View median value above data cards with location if data is sorted."
         }
       }
     }
