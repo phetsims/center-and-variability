@@ -268,13 +268,13 @@
   },
   "a11y": {
     "medianButtonHelpText": {
-      "value": "Explore what a median is and how to find its value among a data set."
+      "value": "Kick soccer balls and explore data set to find value of median. "
     },
     "meanAndMedianButtonHelpText": {
-      "value": "Kick soccer balls to create a data set where the mean and median can be compared."
+      "value": "Kick soccer balls and explore data set to compare mean and median."
     },
     "variabilityButtonHelpText": {
-      "value": "Kick soccer balls to create a data set where the mean and median can be compared."
+      "value": "Kick soccer balls and explore data sets to compare measures of variability."
     },
     "common": {
       "predictionPointerHelpText": {
@@ -296,10 +296,10 @@
     },
     "median": {
       "playArea": {
-        "value": "There is a field with kickers ready to kick {{maxBalls}} soccer balls a random distance from 1 to 15 meters. Each time a kicker kicks a ball, a data card appears with the distance that the ball was kicked."
+        "value": "At edge of field, up to {{maxBalls}} kickers are ready to kick a soccer ball a random distance between 1 and 15 meters. Stacks of balls form when kicked balls land at the same distance. A sortable data card appears for each kicked ball recording the kick distance. Each balls can be moved to adjust its kick distance. There are checkboxes to auto-sort the data cards and highlight or predict the median. Guiding question: “What is the typical kick distance?”"
       },
       "controlArea": {
-        "value": "There are options to show info about the median and clear the field. Reset the sim to start over."
+        "value": "Additionally, access detailed median information, clear data set, and reset the sim to start over."
       },
       "currentDetails": {
         "value": "Currently, there {{isAre}} {{number}} of {{maxBalls}} kicked soccer {{ball}} on the field. {{dataCardDistances}}"
