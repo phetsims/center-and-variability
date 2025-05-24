@@ -359,20 +359,17 @@
         }
       },
       "dataCardsGroup": {
-        "chooseAccessibleName": {
-          "value": "Grab Data Card"
+        "selectAccessibleName": {
+          "value": "Kick Distance {{value}}, card {{index}} of {{total}}"
         },
-        "moveAccessibleName": {
-          "value": "Data Card {{distance}}"
+        "sortAccessibleName": {
+          "value": "Kick Distance {{value}}, position {{index}} of {{total}}"
         },
-        "chooseAccessibleHelpText": {
+        "selectAccessibleHelpText": {
           "value": "Choose card to grab or release to sort data"
         },
-        "moveAccessibleHelpText": {
+        "sortAccessibleHelpText": {
           "value": "Move card to sort data"
-        },
-        "cardState": {
-          "value": "position {{position}} of {{total}}"
         }
       },
       "sortDataCheckbox": {

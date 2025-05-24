@@ -158,11 +158,10 @@ type StringsType = {
         'accessibleNameStringProperty': LocalizedStringProperty;
       };
       'dataCardsGroup': {
-        'chooseAccessibleNameStringProperty': LocalizedStringProperty;
-        'moveAccessibleNameStringProperty': LocalizedStringProperty;
-        'chooseAccessibleHelpTextStringProperty': LocalizedStringProperty;
-        'moveAccessibleHelpTextStringProperty': LocalizedStringProperty;
-        'cardStateStringProperty': LocalizedStringProperty;
+        'selectAccessibleNameStringProperty': LocalizedStringProperty;
+        'sortAccessibleNameStringProperty': LocalizedStringProperty;
+        'selectAccessibleHelpTextStringProperty': LocalizedStringProperty;
+        'sortAccessibleHelpTextStringProperty': LocalizedStringProperty;
       };
       'sortDataCheckbox': {
         'accessibleNameStringProperty': LocalizedStringProperty;

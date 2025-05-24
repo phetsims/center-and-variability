@@ -45,6 +45,11 @@ import CardDragIndicatorNode from './CardDragIndicatorNode.js';
 import CardNode, { cardDropClip, cardPickUpSoundClip, PICK_UP_DELTA_X } from './CardNode.js';
 import CardNodeContainer, { CARD_LAYER_OFFSET, CardNodeContainerOptions } from './CardNodeContainer.js';
 import CelebrationNode from './CelebrationNode.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
+import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
+import TinyProperty from '../../../../axon/js/TinyProperty.js';
+import SoccerCommonStrings from '../../../../soccer-common/js/SoccerCommonStrings.js';
 
 const FOCUS_HIGHLIGHT_Y_MARGIN = CAVConstants.CARD_SPACING + 3;
 
@@ -122,7 +127,6 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       },
       sortingRangeProperty: sortingRangeProperty
     } );
-    this.accessibleName = 'Sort Cards';
 
     this.cardMap.forEach( ( cardNode, cardModel ) => {
       // Update the position of all cards (via animation) whenever any card is dragged
@@ -322,6 +326,48 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       const max = Math.max( this.width - cueNodeWidth / 2, cueNodeWidth );
       this.groupSortInteractionView.grabReleaseCueNode.centerX = Utils.clamp( focusRect.bounds.centerX, cueNodeWidth / 2, max );
     } );
+
+    const selectedItemValueProperty = new DynamicProperty<number | null, TReadOnlyProperty<number | null>, TReadOnlyProperty<number | null>>( new DerivedProperty( [ model.groupSortInteractionModel.selectedGroupItemProperty ], item => {
+      return item ? item.soccerBall.valueProperty : new TinyProperty( null );
+    } ) );
+    const selectedItemIndexProperty = new DynamicProperty<number | null, TReadOnlyProperty<number | null>, TReadOnlyProperty<number | null>>(
+      new DerivedProperty( [ model.groupSortInteractionModel.selectedGroupItemProperty ], item => {
+      return item ? item.indexProperty : new TinyProperty( null );
+    } ) );
+    const selectNamePatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.a11y.median.dataCardsGroup.selectAccessibleNameStringProperty, {
+      value: selectedItemValueProperty,
+      index: selectedItemIndexProperty,
+      total: sceneModel.numberOfDataPointsProperty
+    }, {
+      maps: {
+        value: value => value === null ? 0 : value,
+        index: index => index === null ? 0 : index + 1
+      }
+    } );
+
+    const sortNamePatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.a11y.median.dataCardsGroup.sortAccessibleNameStringProperty, {
+      value: selectedItemValueProperty,
+      index: selectedItemIndexProperty,
+      total: sceneModel.numberOfDataPointsProperty
+    } );
+
+    Multilink.multilink( [
+        model.groupSortInteractionModel.isGroupItemKeyboardGrabbedProperty,
+        sceneModel.numberOfDataPointsProperty,
+        model.groupSortInteractionModel.selectedGroupItemProperty
+      ],
+      ( isGrabbed, numberOfDataPoints ) => {
+
+        if ( numberOfDataPoints === 0 ) {
+          this.accessibleName = SoccerCommonStrings.a11y.noSoccerBallsToGrabStringProperty;
+        }
+        else {
+          this.accessibleName = isGrabbed ? sortNamePatternStringProperty :
+                                                    selectNamePatternStringProperty;
+          this.accessibleHelpText = isGrabbed ? CenterAndVariabilityStrings.a11y.median.dataCardsGroup.sortAccessibleHelpTextStringProperty :
+                                    CenterAndVariabilityStrings.a11y.median.dataCardsGroup.selectAccessibleHelpTextStringProperty;
+        }
+      } );
   }
 
   // The listener which is linked to the cardNode.positionProperty
