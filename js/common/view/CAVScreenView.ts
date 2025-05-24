@@ -427,6 +427,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
         color: CAVColors.medianColorProperty,
         style: 'arrow'
       },
+      accessibleName: CenterAndVariabilityStrings.a11y.common.medianPredictionSlider.accessibleNameStringProperty,
       valueProperty: predictMedianValueProperty,
       enabledRangeProperty: new Property<Range>( CAVConstants.PHYSICAL_RANGE ),
       roundToInterval: 0.5,
