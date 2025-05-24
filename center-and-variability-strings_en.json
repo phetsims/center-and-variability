@@ -303,6 +303,14 @@
           "value": "Show or hide red highlights marking middle soccer ball or balls and arrow pointing to median kick distance."
         }
       },
+      "meanCheckbox": {
+        "accessibleName": {
+          "value": "Mean on Field"
+        },
+        "accessibleHelpText": {
+          "value": "Point to mean kick distance on number line."
+        }
+      },
       "predictMedianCheckbox": {
         "accessibleName": {
           "value": "Predict Median Pointer"
@@ -391,6 +399,27 @@
       "medianDetails": {
         "accessibleName": {
           "value": "Median Details"
+        }
+      }
+    },
+    "mean": {
+      "accordionBoxHelpText": {
+        "value": "Kick distance (meters) graph."
+      },
+      "graphMedianCheckbox": {
+        "accessibleName": {
+          "value": "Show Median on Graph"
+        },
+        "accessibleHelpText": {
+          "value": "View median value, and point to location on graph."
+        }
+      },
+      "graphMeanCheckbox": {
+        "accessibleName": {
+          "value": "Show Mean on Graph"
+        },
+        "accessibleHelpText": {
+          "value": "View mean value, and point to location on graph."
         }
       }
     }

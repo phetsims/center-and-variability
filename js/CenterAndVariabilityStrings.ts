@@ -132,6 +132,10 @@ type StringsType = {
         'accessibleNameStringProperty': LocalizedStringProperty;
         'accessibleHelpTextStringProperty': LocalizedStringProperty;
       };
+      'meanCheckbox': {
+        'accessibleNameStringProperty': LocalizedStringProperty;
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      };
       'predictMedianCheckbox': {
         'accessibleNameStringProperty': LocalizedStringProperty;
         'accessibleHelpTextStringProperty': LocalizedStringProperty;
@@ -173,6 +177,17 @@ type StringsType = {
       };
       'medianDetails': {
         'accessibleNameStringProperty': LocalizedStringProperty;
+      }
+    };
+    'mean': {
+      'accordionBoxHelpTextStringProperty': LocalizedStringProperty;
+      'graphMedianCheckbox': {
+        'accessibleNameStringProperty': LocalizedStringProperty;
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      };
+      'graphMeanCheckbox': {
+        'accessibleNameStringProperty': LocalizedStringProperty;
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
       }
     }
   }

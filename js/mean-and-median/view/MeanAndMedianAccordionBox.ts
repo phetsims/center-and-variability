@@ -143,7 +143,8 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
         top: top,
         centerX: layoutBounds.centerX,
         expandedProperty: model.isAccordionBoxExpandedProperty,
-        fill: CAVColors.meanAndMedianAccordionBoxFillProperty
+        fill: CAVColors.meanAndMedianAccordionBoxFillProperty,
+        accessibleHelpText: CenterAndVariabilityStrings.a11y.mean.accordionBoxHelpTextStringProperty
       }
     );
 

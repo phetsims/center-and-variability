@@ -143,7 +143,9 @@ export default class PlayAreaCheckboxFactory {
       tandemName: 'meanCheckbox',
       options: {
         checkedSoundPlayer: PlayAreaCheckboxFactory.getMeanCheckedSoundPlayer( selectedSceneModelProperty ),
-        phetioDisplayOnlyPropertyInstrumented: true
+        phetioDisplayOnlyPropertyInstrumented: true,
+        accessibleName: CenterAndVariabilityStrings.a11y.common.meanCheckbox.accessibleNameStringProperty,
+        accessibleHelpText: CenterAndVariabilityStrings.a11y.common.meanCheckbox.accessibleHelpTextStringProperty
       }
     };
   }
