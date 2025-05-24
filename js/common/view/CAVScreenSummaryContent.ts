@@ -16,6 +16,7 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import MedianModel from '../../median/model/MedianModel.js';
 import Property from '../../../../axon/js/Property.js';
 import TinyProperty from '../../../../axon/js/TinyProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 export default class CAVScreenSummaryContent extends ScreenSummaryContent {
 
@@ -62,6 +63,10 @@ export default class CAVScreenSummaryContent extends ScreenSummaryContent {
       dataCardDistances: dataCardDistancesStringProperty
     } );
 
+    const interactionHintStringProperty = new DynamicProperty<string, string, TReadOnlyProperty<string>>( new DerivedProperty( [ model.selectedSceneStackedSoccerBallCountProperty ],
+      count => {
+        return count === 0 ? CenterAndVariabilityStrings.a11y.median.interactionHintNoBallsStringProperty : CenterAndVariabilityStrings.a11y.median.interactionHintSomeBallsStringProperty;
+      } ) );
 
     super( {
       playAreaContent: playAreaPatternStringProperty,
@@ -69,7 +74,7 @@ export default class CAVScreenSummaryContent extends ScreenSummaryContent {
       currentDetailsContent: [
         currentDetailsPatternStringProperty
       ],
-      interactionHintContent: CenterAndVariabilityStrings.a11y.median.interactionHintStringProperty
+      interactionHintContent: interactionHintStringProperty
     } );
   }
 }

@@ -277,20 +277,38 @@
       "value": "Kick soccer balls and explore data sets to compare measures of variability."
     },
     "common": {
-      "predictionPointerHelpText": {
-        "value": "Show movable prediction pointer."
+      "medianPredictionSlider": {
+        "accessibleName": {
+          "value": "Median Prediction"
+        }
+      },
+      "meanPredictionSlider": {
+        "accessibleName": {
+          "value": "Mean Prediction"
+        }
       },
       "medianCheckbox": {
         "accessibleName": {
-          "value": "Show Median on Field"
+          "value": "Median on Field"
         },
         "accessibleHelpText": {
-          "value": "Highlight middle soccer ball{{s}} and point to median kick distance on number line."
+          "value": "Show or hide red highlights marking middle soccer ball or balls and arrow pointing to median kick distance."
         }
       },
-      "medianPredictionPointer": {
+      "predictMedianCheckbox": {
         "accessibleName": {
-          "value": "Median Prediction Pointer"
+          "value": "Predict Median Pointer"
+        },
+        "accessibleHelpText": {
+          "value": "Show or hide movable prediction pointer on field."
+        }
+      },
+      "predictMeanCheckbox": {
+        "accessibleName": {
+          "value": "Predict Mean Pointer"
+        },
+        "accessibleHelpText": {
+          "value": "Show or hide movable prediction pointer on field."
         }
       }
     },
@@ -321,8 +339,11 @@
           "value": "The data cards list the kick distances as {{distances}}."
         }
       },
-      "interactionHint": {
-        "value": "Kick a soccer ball to start creating and exploring a data set. Try to answer the guiding question, “How spread out are the kick distances?”"
+      "interactionHintNoBalls": {
+        "value": "Kick soccer balls to create a data set."
+      },
+      "interactionHintSomeBalls": {
+        "value": "Move soccer balls or sort distance data cards to explore data."
       },
       "distanceAccordionBox": {
         "accessibleName": {
@@ -346,20 +367,20 @@
           "value": "position {{position}} of {{total}}"
         }
       },
-      "sortDataCards": {
+      "sortDataCheckbox": {
         "accessibleName": {
           "value": "Sort Data Cards"
         },
         "accessibleHelpText": {
-          "value": "View data sorted numerically."
+          "value": "Explore with or without data sorted numerically."
         }
       },
-      "showMedianOnDataCards": {
+      "cardsMedianCheckbox": {
         "accessibleName": {
-          "value": "Show Median on Data Cards"
+          "value": "Median on Data Cards"
         },
         "accessibleHelpText": {
-          "value": "View median value above data cards with location if data is sorted."
+          "value": "Analyze data cards with or without median value shown and located if data is sorted."
         }
       }
     }

@@ -118,13 +118,23 @@ type StringsType = {
     'meanAndMedianButtonHelpTextStringProperty': LocalizedStringProperty;
     'variabilityButtonHelpTextStringProperty': LocalizedStringProperty;
     'common': {
-      'predictionPointerHelpTextStringProperty': LocalizedStringProperty;
+      'medianPredictionSlider': {
+        'accessibleNameStringProperty': LocalizedStringProperty;
+      };
+      'meanPredictionSlider': {
+        'accessibleNameStringProperty': LocalizedStringProperty;
+      };
       'medianCheckbox': {
         'accessibleNameStringProperty': LocalizedStringProperty;
         'accessibleHelpTextStringProperty': LocalizedStringProperty;
       };
-      'medianPredictionPointer': {
+      'predictMedianCheckbox': {
         'accessibleNameStringProperty': LocalizedStringProperty;
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      };
+      'predictMeanCheckbox': {
+        'accessibleNameStringProperty': LocalizedStringProperty;
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
       }
     };
     'median': {
@@ -138,7 +148,8 @@ type StringsType = {
         'ballsStringProperty': LocalizedStringProperty;
         'dataCardDistancesStringProperty': LocalizedStringProperty;
       };
-      'interactionHintStringProperty': LocalizedStringProperty;
+      'interactionHintNoBallsStringProperty': LocalizedStringProperty;
+      'interactionHintSomeBallsStringProperty': LocalizedStringProperty;
       'distanceAccordionBox': {
         'accessibleNameStringProperty': LocalizedStringProperty;
       };
@@ -149,11 +160,11 @@ type StringsType = {
         'moveAccessibleHelpTextStringProperty': LocalizedStringProperty;
         'cardStateStringProperty': LocalizedStringProperty;
       };
-      'sortDataCards': {
+      'sortDataCheckbox': {
         'accessibleNameStringProperty': LocalizedStringProperty;
         'accessibleHelpTextStringProperty': LocalizedStringProperty;
       };
-      'showMedianOnDataCards': {
+      'cardsMedianCheckbox': {
         'accessibleNameStringProperty': LocalizedStringProperty;
         'accessibleHelpTextStringProperty': LocalizedStringProperty;
       }

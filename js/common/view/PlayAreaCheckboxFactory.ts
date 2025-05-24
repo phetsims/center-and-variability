@@ -128,6 +128,8 @@ export default class PlayAreaCheckboxFactory {
 
       options: {
         checkedSoundPlayer: PlayAreaCheckboxFactory.getMedianCheckedSoundPlayer( selectedSceneModelProperty ),
+        accessibleName: CenterAndVariabilityStrings.a11y.common.medianCheckbox.accessibleNameStringProperty,
+        accessibleHelpText: CenterAndVariabilityStrings.a11y.common.medianCheckbox.accessibleHelpTextStringProperty,
         phetioDisplayOnlyPropertyInstrumented: true
       }
     };
@@ -146,8 +148,9 @@ export default class PlayAreaCheckboxFactory {
     };
   }
 
-  private static createPredictionItem( selectedProperty: Property<boolean>, stringProperty: PhetioProperty<string>, color: TColor,
-                                       tandemName: string ): VerticalCheckboxGroupItem {
+  private static createPredictionItem( selectedProperty: Property<boolean>, stringProperty: PhetioProperty<string>,
+                                       accessibleNameProperty: TReadOnlyProperty<string>, accessibleHelpText: TReadOnlyProperty<string> | null,
+                                       color: TColor, tandemName: string ): VerticalCheckboxGroupItem {
     return {
       createNode: () => {
         return PlayAreaCheckboxFactory.createGridBox(
@@ -158,7 +161,8 @@ export default class PlayAreaCheckboxFactory {
       tandemName: tandemName,
       options: {
         phetioDisplayOnlyPropertyInstrumented: true,
-        accessibleHelpText: CenterAndVariabilityStrings.a11y.common.predictionPointerHelpTextStringProperty
+        accessibleName: accessibleNameProperty,
+        accessibleHelpText: accessibleHelpText
       }
     };
   }
@@ -167,6 +171,8 @@ export default class PlayAreaCheckboxFactory {
     return PlayAreaCheckboxFactory.createPredictionItem(
       isPredictMedianVisibleProperty,
       CenterAndVariabilityStrings.predictMedianStringProperty,
+      CenterAndVariabilityStrings.a11y.common.predictMedianCheckbox.accessibleNameStringProperty,
+      CenterAndVariabilityStrings.a11y.common.predictMedianCheckbox.accessibleHelpTextStringProperty,
       CAVColors.medianColorProperty,
       'predictMedianCheckbox'
     );
@@ -176,6 +182,8 @@ export default class PlayAreaCheckboxFactory {
     return PlayAreaCheckboxFactory.createPredictionItem(
       isPredictMeanVisibleProperty,
       CenterAndVariabilityStrings.predictMeanStringProperty,
+      CenterAndVariabilityStrings.a11y.common.predictMeanCheckbox.accessibleNameStringProperty,
+      CenterAndVariabilityStrings.a11y.common.predictMeanCheckbox.accessibleHelpTextStringProperty,
       CAVColors.meanColorProperty,
       'predictMeanCheckbox'
     );
@@ -185,6 +193,8 @@ export default class PlayAreaCheckboxFactory {
     return PlayAreaCheckboxFactory.createPredictionItem(
       isPointerVisibleProperty,
       CenterAndVariabilityStrings.pointerStringProperty,
+      CenterAndVariabilityStrings.pointerStringProperty,
+      null,
       CAVColors.pointerColorProperty,
       'pointerCheckbox'
     );

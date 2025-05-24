@@ -60,7 +60,9 @@ export default class AccordionBoxCheckboxFactory {
       options: {
 
         // Sound will be played in the model based on whether the data is already sorted or not
-        checkedSoundPlayer: nullSoundPlayer
+        checkedSoundPlayer: nullSoundPlayer,
+        accessibleName: CenterAndVariabilityStrings.a11y.median.sortDataCheckbox.accessibleNameStringProperty,
+        accessibleHelpText: CenterAndVariabilityStrings.a11y.median.sortDataCheckbox.accessibleHelpTextStringProperty
       }
     };
   }
@@ -94,7 +96,9 @@ export default class AccordionBoxCheckboxFactory {
       property: medianVisibleProperty,
       tandemName: 'medianCheckbox',
       options: {
-        checkedSoundPlayer: PlayAreaCheckboxFactory.getMedianCheckedSoundPlayer( selectedSceneModelProperty )
+        checkedSoundPlayer: PlayAreaCheckboxFactory.getMedianCheckedSoundPlayer( selectedSceneModelProperty ),
+        accessibleName: CenterAndVariabilityStrings.a11y.median.cardsMedianCheckbox.accessibleNameStringProperty,
+        accessibleHelpText: CenterAndVariabilityStrings.a11y.median.cardsMedianCheckbox.accessibleHelpTextStringProperty
       }
     };
   }
