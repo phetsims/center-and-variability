@@ -118,6 +118,10 @@ type StringsType = {
     'meanAndMedianButtonHelpTextStringProperty': LocalizedStringProperty;
     'variabilityButtonHelpTextStringProperty': LocalizedStringProperty;
     'common': {
+      'eraseButton': {
+        'accessibleNameStringProperty': LocalizedStringProperty;
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      };
       'medianPredictionSlider': {
         'accessibleNameStringProperty': LocalizedStringProperty;
       };
@@ -167,6 +171,9 @@ type StringsType = {
       'cardsMedianCheckbox': {
         'accessibleNameStringProperty': LocalizedStringProperty;
         'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      };
+      'medianDetails': {
+        'accessibleNameStringProperty': LocalizedStringProperty;
       }
     }
   }

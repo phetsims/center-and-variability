@@ -204,7 +204,9 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
       right: this.resetAllButton.left - SoccerCommonConstants.SCREEN_VIEW_X_MARGIN,
       centerY: this.resetAllButton.centerY,
       touchAreaXDilation: 6,
-      touchAreaYDilation: 6
+      touchAreaYDilation: 6,
+      accessibleName: CenterAndVariabilityStrings.a11y.common.eraseButton.accessibleNameStringProperty,
+      accessibleHelpText: CenterAndVariabilityStrings.a11y.common.eraseButton.accessibleHelpTextStringProperty
     } );
 
     this.questionBar.visibleProperty.link( () => this.updateAccordionBoxPosition() );

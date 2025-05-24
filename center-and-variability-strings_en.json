@@ -277,6 +277,14 @@
       "value": "Kick soccer balls and explore data sets to compare measures of variability."
     },
     "common": {
+      "eraseButton": {
+        "accessibleName": {
+          "value": "Erase Current Data"
+        },
+        "accessibleHelpText": {
+          "value": "Remove soccer balls from field."
+        }
+      },
       "medianPredictionSlider": {
         "accessibleName": {
           "value": "Median Prediction"
@@ -381,6 +389,11 @@
         },
         "accessibleHelpText": {
           "value": "Analyze data cards with or without median value shown and located if data is sorted."
+        }
+      },
+      "medianDetails": {
+        "accessibleName": {
+          "value": "Median Details"
         }
       }
     }

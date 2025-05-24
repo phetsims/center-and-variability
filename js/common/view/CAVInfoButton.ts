@@ -13,6 +13,7 @@ import InfoButton from '../../../../scenery-phet/js/buttons/InfoButton.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import { BUTTON_AND_TITLE_MARGIN } from './CAVAccordionBox.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 
 export default class CAVInfoButton extends InfoButton {
   public constructor( infoButtonPressedEmitter: Emitter, backgroundShape: Shape, tandem: Tandem ) {
@@ -27,7 +28,8 @@ export default class CAVInfoButton extends InfoButton {
       },
       top: backgroundShape.bounds.top + BUTTON_AND_TITLE_MARGIN,
       right: backgroundShape.bounds.right,
-      isDisposable: false
+      isDisposable: false,
+      accessibleName: CenterAndVariabilityStrings.a11y.median.medianDetails.accessibleNameStringProperty
     } );
   }
 }
