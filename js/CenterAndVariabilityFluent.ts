@@ -112,6 +112,7 @@ const fluentKeyToStringPropertyMap = new Map( [
   ['a11y_median_interactionHintNoBalls', CenterAndVariabilityStrings.a11y.median.interactionHintNoBallsStringProperty],
   ['a11y_median_interactionHintSomeBalls', CenterAndVariabilityStrings.a11y.median.interactionHintSomeBallsStringProperty],
   ['a11y_median_distanceAccordionBox_accessibleName', CenterAndVariabilityStrings.a11y.median.distanceAccordionBox.accessibleNameStringProperty],
+  ['a11y_median_dataCardsGroup_noCardsAccessibleName', CenterAndVariabilityStrings.a11y.median.dataCardsGroup.noCardsAccessibleNameStringProperty],
   ['a11y_median_dataCardsGroup_selectAccessibleName', CenterAndVariabilityStrings.a11y.median.dataCardsGroup.selectAccessibleNameStringProperty],
   ['a11y_median_dataCardsGroup_sortAccessibleName', CenterAndVariabilityStrings.a11y.median.dataCardsGroup.sortAccessibleNameStringProperty],
   ['a11y_median_dataCardsGroup_selectAccessibleHelpText', CenterAndVariabilityStrings.a11y.median.dataCardsGroup.selectAccessibleHelpTextStringProperty],
@@ -272,6 +273,7 @@ const CenterAndVariabilityFluent = {
         accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_median_distanceAccordionBox_accessibleName' )
       },
       dataCardsGroup: {
+        noCardsAccessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_median_dataCardsGroup_noCardsAccessibleName' ),
         selectAccessibleName: new FluentPattern<{ index: IntentionalAny, total: IntentionalAny, value: IntentionalAny }>( fluentSupport.bundleProperty, 'a11y_median_dataCardsGroup_selectAccessibleName' ),
         sortAccessibleName: new FluentPattern<{ index: IntentionalAny, total: IntentionalAny, value: IntentionalAny }>( fluentSupport.bundleProperty, 'a11y_median_dataCardsGroup_sortAccessibleName' ),
         selectAccessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_median_dataCardsGroup_selectAccessibleHelpText' ),

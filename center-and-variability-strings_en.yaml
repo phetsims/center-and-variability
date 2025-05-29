@@ -8,7 +8,7 @@ screen.variability: Variability
 
 # common strings
 kickValuePattern: Kick {{value}}
-distanceInMetersAccordionBoxTitle: Distance (in meters)
+distanceInMetersAccordionBoxTitle: Kick Distance (meters)
 distanceInMetersChartLabel: Distance (in meters)
 meanEqualsValueMetersPattern: Mean = {{value}} meters
 meanEqualsValueMPattern: Mean = {{value}} m
@@ -133,11 +133,10 @@ a11y:
       accessibleHelpText: Show or hide movable prediction pointer on field.
   median:
     playArea: >-
-      At edge of field, up to {$maxBalls} kickers are ready to kick a soccer ball a
-       random distance between 1 and 15 meters. Stacks of balls form when they land at the same distance.
-       A sortable data card appears for each kicked ball recording the kick distance.
-       Each ball can be moved to adjust its kick distance. There are checkboxes to auto-sort the data cards and
-       highlight or predict the median.
+      At edge of field, up to {$maxBalls} kickers are ready to kick a soccer ball a random distance between 1 and 15
+      meters. Stacks of balls form when they land at the same distance. A sortable data card appears for each kicked
+      ball recording the kick distance. Each ball can be moved to adjust its kick distance. There are checkboxes to
+      auto-sort the data cards and highlight or predict the median.
     controlArea: Additionally, access detailed median information, clear data set, and reset the sim to start over.
     currentDetails: |- 
       Currently, { NUMBER($number, type: "cardinal") ->
@@ -150,6 +149,7 @@ a11y:
     distanceAccordionBox:
       accessibleName: Distance (in meters) sortable list
     dataCardsGroup:
+      noCardsAccessibleName: No cards to grab
       selectAccessibleName: Kick Distance {$value}, card {$index} of {$total}
       sortAccessibleName: Kick Distance {$value}, position {$index} of {$total}
       selectAccessibleHelpText: Choose card to grab or release to sort data

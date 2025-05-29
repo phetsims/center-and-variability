@@ -49,7 +49,7 @@ import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import TinyProperty from '../../../../axon/js/TinyProperty.js';
-import SoccerCommonStrings from '../../../../soccer-common/js/SoccerCommonStrings.js';
+import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 
 const FOCUS_HIGHLIGHT_Y_MARGIN = CAVConstants.CARD_SPACING + 3;
 
@@ -332,8 +332,8 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
     } ) );
     const selectedItemIndexProperty = new DynamicProperty<number | null, TReadOnlyProperty<number | null>, TReadOnlyProperty<number | null>>(
       new DerivedProperty( [ model.groupSortInteractionModel.selectedGroupItemProperty ], item => {
-      return item ? item.indexProperty : new TinyProperty( null );
-    } ) );
+        return item ? item.indexProperty : new TinyProperty( null );
+      } ) );
     const selectNamePatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.a11y.median.dataCardsGroup.selectAccessibleNameStringProperty, {
       value: selectedItemValueProperty,
       index: selectedItemIndexProperty,
@@ -359,11 +359,11 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       ( isGrabbed, numberOfDataPoints ) => {
 
         if ( numberOfDataPoints === 0 ) {
-          this.accessibleName = SoccerCommonStrings.a11y.noSoccerBallsToGrabStringProperty;
+          this.accessibleName = CenterAndVariabilityFluent.a11y.median.dataCardsGroup.noCardsAccessibleNameStringProperty;
         }
         else {
           this.accessibleName = isGrabbed ? sortNamePatternStringProperty :
-                                                    selectNamePatternStringProperty;
+                                selectNamePatternStringProperty;
           this.accessibleHelpText = isGrabbed ? CenterAndVariabilityStrings.a11y.median.dataCardsGroup.sortAccessibleHelpTextStringProperty :
                                     CenterAndVariabilityStrings.a11y.median.dataCardsGroup.selectAccessibleHelpTextStringProperty;
         }

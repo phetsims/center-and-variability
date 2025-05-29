@@ -156,6 +156,7 @@ type StringsType = {
         'accessibleNameStringProperty': LocalizedStringProperty;
       };
       'dataCardsGroup': {
+        'noCardsAccessibleNameStringProperty': LocalizedStringProperty;
         'selectAccessibleNameStringProperty': LocalizedStringProperty;
         'sortAccessibleNameStringProperty': LocalizedStringProperty;
         'selectAccessibleHelpTextStringProperty': LocalizedStringProperty;
