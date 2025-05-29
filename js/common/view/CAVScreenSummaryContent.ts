@@ -8,36 +8,28 @@
 
 import ScreenSummaryContent from '../../../../joist/js/ScreenSummaryContent.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import { MAX_KICKS_PROPERTY } from '../CAVConstants.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import MedianModel from '../../median/model/MedianModel.js';
 import Property from '../../../../axon/js/Property.js';
-import TinyProperty from '../../../../axon/js/TinyProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 
 export default class CAVScreenSummaryContent extends ScreenSummaryContent {
 
   public constructor( model: MedianModel ) {
-    const playAreaPatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.a11y.median.playAreaStringProperty, {
+    const playAreaPatternStringProperty = CenterAndVariabilityFluent.a11y.median.playArea.createProperty( {
       maxBalls: MAX_KICKS_PROPERTY
+    } );
+    const guidingQuestionStringProperty = CenterAndVariabilityFluent.a11y.common.guidingQuestion.createProperty( {
+      question: CenterAndVariabilityFluent.medianQuestionStringProperty
     } );
 
     /**
      * Create the details strings for the current details content.
      */
-
-    const isAreStringProperty = new DynamicProperty( new DerivedProperty( [ model.selectedSceneStackedSoccerBallCountProperty ],
-      count => {
-        return count === 1 ? CenterAndVariabilityStrings.a11y.median.details.isStringProperty : CenterAndVariabilityStrings.a11y.median.details.areStringProperty;
-      } ) );
-    const ballStringProperty = new DynamicProperty( new DerivedProperty( [ model.selectedSceneStackedSoccerBallCountProperty ],
-      count => {
-        return count === 1 ? CenterAndVariabilityStrings.a11y.median.details.ballStringProperty : CenterAndVariabilityStrings.a11y.median.details.ballsStringProperty;
-      } ) );
-
     const ballValueProperties: Property<number | null>[] = model.selectedSceneModelProperty.value.soccerBalls.map( ball => ball.valueProperty );
     const distancesStringProperty = DerivedProperty.deriveAny( ballValueProperties,
       () => {
@@ -45,22 +37,9 @@ export default class CAVScreenSummaryContent extends ScreenSummaryContent {
           .map( valueProperty => valueProperty.value );
         return distances.length > 0 ? distances.join( ', ' ) : '';
       } );
-    const dataCardDistancesPatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.a11y.median.details.dataCardDistancesStringProperty, {
-      distances: distancesStringProperty
-    } );
-
-    // If there are no balls, use an empty string to avoid showing the data card distances.
-    const emptyStringProperty = new TinyProperty( '' );
-    const dataCardDistancesStringProperty = new DynamicProperty( new DerivedProperty( [ model.selectedSceneStackedSoccerBallCountProperty ],
-      count => {
-        return count === 0 ? emptyStringProperty : dataCardDistancesPatternStringProperty;
-      } ) );
-    const currentDetailsPatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.a11y.median.currentDetailsStringProperty, {
-      isAre: isAreStringProperty,
+    const currentDetailsPatternStringProperty = CenterAndVariabilityFluent.a11y.median.currentDetails.createProperty( {
       number: model.selectedSceneStackedSoccerBallCountProperty,
-      maxBalls: MAX_KICKS_PROPERTY,
-      ball: ballStringProperty,
-      dataCardDistances: dataCardDistancesStringProperty
+      distances: distancesStringProperty
     } );
 
     const interactionHintStringProperty = new DynamicProperty<string, string, TReadOnlyProperty<string>>( new DerivedProperty( [ model.selectedSceneStackedSoccerBallCountProperty ],
@@ -69,7 +48,7 @@ export default class CAVScreenSummaryContent extends ScreenSummaryContent {
       } ) );
 
     super( {
-      playAreaContent: playAreaPatternStringProperty,
+      playAreaContent: [ playAreaPatternStringProperty, guidingQuestionStringProperty ],
       controlAreaContent: CenterAndVariabilityStrings.a11y.median.controlAreaStringProperty,
       currentDetailsContent: [
         currentDetailsPatternStringProperty

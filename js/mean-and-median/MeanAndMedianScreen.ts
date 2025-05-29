@@ -33,7 +33,7 @@ export default class MeanAndMedianScreen extends CAVScreen<MeanAndMedianModel, M
         maxIconHeightProportion: 1
       } ),
       createKeyboardHelpNode: () => new MeanAndMedianKeyboardHelpNode(),
-      screenButtonsHelpText: CenterAndVariabilityStrings.a11y.meanAndMedianButtonHelpTextStringProperty
+      screenButtonsHelpText: CenterAndVariabilityStrings.a11y.meanAndMedianScreenHelpTextStringProperty
     }, providedOptions );
 
     super(

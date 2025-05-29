@@ -20,31 +20,46 @@ type StringsType = {
     'meanAndMedianStringProperty': LocalizedStringProperty;
     'variabilityStringProperty': LocalizedStringProperty;
   };
-  'medianQuestionStringProperty': LocalizedStringProperty;
-  'meanAndMedianQuestionStringProperty': LocalizedStringProperty;
-  'variabilityQuestionStringProperty': LocalizedStringProperty;
   'kickValuePatternStringProperty': LocalizedStringProperty;
   'distanceInMetersAccordionBoxTitleStringProperty': LocalizedStringProperty;
   'distanceInMetersChartLabelStringProperty': LocalizedStringProperty;
-  'sortDataStringProperty': LocalizedStringProperty;
+  'meanEqualsValueMetersPatternStringProperty': LocalizedStringProperty;
   'meanEqualsValueMPatternStringProperty': LocalizedStringProperty;
   'meanEqualsUnknownStringProperty': LocalizedStringProperty;
-  'meanEqualsValueMetersPatternStringProperty': LocalizedStringProperty;
   'medianEqualsValuePatternStringProperty': LocalizedStringProperty;
   'medianEqualsValueMPatternStringProperty': LocalizedStringProperty;
   'medianEqualsUnknownStringProperty': LocalizedStringProperty;
   'medianEqualsValueUnitsPatternStringProperty': LocalizedStringProperty;
+  'plotTypeStringProperty': LocalizedStringProperty;
+  'dotPlotStringProperty': LocalizedStringProperty;
+  'linePlotStringProperty': LocalizedStringProperty;
+  'medianStringProperty': LocalizedStringProperty;
+  'meanStringProperty': LocalizedStringProperty;
+  'meanEqualsStringProperty': LocalizedStringProperty;
+  'valueUnknownStringProperty': LocalizedStringProperty;
+  'metersStringProperty': LocalizedStringProperty;
+  'meterStringProperty': LocalizedStringProperty;
+  'needAtLeastFiveKicksStringProperty': LocalizedStringProperty;
+  'maxKicksStringProperty': LocalizedStringProperty;
+  'maxKicksDescriptionStringProperty': LocalizedStringProperty;
+  'outliersStringProperty': LocalizedStringProperty;
+  'outliersDescriptionStringProperty': LocalizedStringProperty;
+  'valueKicksPatternStringProperty': LocalizedStringProperty;
+  'pointerStringProperty': LocalizedStringProperty;
+  'medianQuestionStringProperty': LocalizedStringProperty;
+  'sortDataStringProperty': LocalizedStringProperty;
+  'youSortedTheDataStringProperty': LocalizedStringProperty;
+  'medianDescriptionStringProperty': LocalizedStringProperty;
+  'meanAndMedianQuestionStringProperty': LocalizedStringProperty;
+  'meanDescriptionStringProperty': LocalizedStringProperty;
+  'variabilityQuestionStringProperty': LocalizedStringProperty;
   'iqrEqualsValueMPatternStringProperty': LocalizedStringProperty;
   'iqrEqualsUnknownStringProperty': LocalizedStringProperty;
   'rangeEqualsValueMPatternStringProperty': LocalizedStringProperty;
   'rangeEqualsUnknownStringProperty': LocalizedStringProperty;
   'madEqualsValueMPatternStringProperty': LocalizedStringProperty;
   'madEqualsUnknownStringProperty': LocalizedStringProperty;
-  'plotTypeStringProperty': LocalizedStringProperty;
-  'dotPlotStringProperty': LocalizedStringProperty;
-  'linePlotStringProperty': LocalizedStringProperty;
-  'medianStringProperty': LocalizedStringProperty;
-  'meanStringProperty': LocalizedStringProperty;
+  'madEqualsStringProperty': LocalizedStringProperty;
   'rangeStringProperty': LocalizedStringProperty;
   'interquartileRangeIQRStringProperty': LocalizedStringProperty;
   'iqrStringProperty': LocalizedStringProperty;
@@ -57,30 +72,15 @@ type StringsType = {
   'intervalToolStringProperty': LocalizedStringProperty;
   'predictMeanStringProperty': LocalizedStringProperty;
   'predictMedianStringProperty': LocalizedStringProperty;
-  'valueUnknownStringProperty': LocalizedStringProperty;
-  'youSortedTheDataStringProperty': LocalizedStringProperty;
-  'medianDescriptionStringProperty': LocalizedStringProperty;
-  'meanDescriptionStringProperty': LocalizedStringProperty;
-  'meanEqualsStringProperty': LocalizedStringProperty;
   'rangeDescriptionStringProperty': LocalizedStringProperty;
   'iqrDescriptionStringProperty': LocalizedStringProperty;
   'dataValuesInMetersStringProperty': LocalizedStringProperty;
   'iqrEqualsQ3MinusQ3PatternStringProperty': LocalizedStringProperty;
   'iqrEqualsIQRUnitsPatternStringProperty': LocalizedStringProperty;
-  'metersStringProperty': LocalizedStringProperty;
-  'meterStringProperty': LocalizedStringProperty;
   'madDescriptionStringProperty': LocalizedStringProperty;
-  'madEqualsStringProperty': LocalizedStringProperty;
   'madEqualsMADMetersPatternStringProperty': LocalizedStringProperty;
   'rangeEqualsMaxMinusMinPatternStringProperty': LocalizedStringProperty;
   'rangeEqualsRangeUnitsPatternStringProperty': LocalizedStringProperty;
-  'needAtLeastFiveKicksStringProperty': LocalizedStringProperty;
-  'maxKicksStringProperty': LocalizedStringProperty;
-  'maxKicksDescriptionStringProperty': LocalizedStringProperty;
-  'outliersStringProperty': LocalizedStringProperty;
-  'outliersDescriptionStringProperty': LocalizedStringProperty;
-  'valueKicksPatternStringProperty': LocalizedStringProperty;
-  'pointerStringProperty': LocalizedStringProperty;
   'keyboardHelpDialog': {
     'moveStringProperty': LocalizedStringProperty;
     'endOfNumberLineStringProperty': LocalizedStringProperty;
@@ -114,10 +114,11 @@ type StringsType = {
     }
   };
   'a11y': {
-    'medianButtonHelpTextStringProperty': LocalizedStringProperty;
-    'meanAndMedianButtonHelpTextStringProperty': LocalizedStringProperty;
-    'variabilityButtonHelpTextStringProperty': LocalizedStringProperty;
+    'medianScreenHelpTextStringProperty': LocalizedStringProperty;
+    'meanAndMedianScreenHelpTextStringProperty': LocalizedStringProperty;
+    'variabilityScreenHelpTextStringProperty': LocalizedStringProperty;
     'common': {
+      'guidingQuestionStringProperty': LocalizedStringProperty;
       'eraseButton': {
         'accessibleNameStringProperty': LocalizedStringProperty;
         'accessibleHelpTextStringProperty': LocalizedStringProperty;
@@ -149,13 +150,6 @@ type StringsType = {
       'playAreaStringProperty': LocalizedStringProperty;
       'controlAreaStringProperty': LocalizedStringProperty;
       'currentDetailsStringProperty': LocalizedStringProperty;
-      'details': {
-        'isStringProperty': LocalizedStringProperty;
-        'areStringProperty': LocalizedStringProperty;
-        'ballStringProperty': LocalizedStringProperty;
-        'ballsStringProperty': LocalizedStringProperty;
-        'dataCardDistancesStringProperty': LocalizedStringProperty;
-      };
       'interactionHintNoBallsStringProperty': LocalizedStringProperty;
       'interactionHintSomeBallsStringProperty': LocalizedStringProperty;
       'distanceAccordionBox': {

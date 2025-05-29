@@ -11,15 +11,6 @@
   "screen.variability": {
     "value": "Variability"
   },
-  "medianQuestion": {
-    "value": "What is the typical kick distance?"
-  },
-  "meanAndMedianQuestion": {
-    "value": "How does each kick influence the mean and median?"
-  },
-  "variabilityQuestion": {
-    "value": "How spread out are the kick distances?"
-  },
   "kickValuePattern": {
     "value": "Kick {{value}}"
   },
@@ -29,17 +20,14 @@
   "distanceInMetersChartLabel": {
     "value": "Distance (in meters)"
   },
-  "sortData": {
-    "value": "Sort Data"
+  "meanEqualsValueMetersPattern": {
+    "value": "Mean = {{value}} meters"
   },
   "meanEqualsValueMPattern": {
     "value": "Mean = {{value}} m"
   },
   "meanEqualsUnknown": {
     "value": "Mean = ?"
-  },
-  "meanEqualsValueMetersPattern": {
-    "value": "Mean = {{value}} meters"
   },
   "medianEqualsValuePattern": {
     "value": "Median = {{value}}"
@@ -52,6 +40,75 @@
   },
   "medianEqualsValueUnitsPattern": {
     "value": "Median = {{value}} {{units}}"
+  },
+  "plotType": {
+    "value": "Plot Type"
+  },
+  "dotPlot": {
+    "value": "Dot Plot"
+  },
+  "linePlot": {
+    "value": "Line Plot"
+  },
+  "median": {
+    "value": "Median"
+  },
+  "mean": {
+    "value": "Mean"
+  },
+  "meanEquals": {
+    "value": "Mean ="
+  },
+  "valueUnknown": {
+    "value": "?"
+  },
+  "meters": {
+    "value": "meters"
+  },
+  "meter": {
+    "value": "meter"
+  },
+  "needAtLeastFiveKicks": {
+    "value": "Need at least five kicks"
+  },
+  "maxKicks": {
+    "value": "Max Kicks"
+  },
+  "maxKicksDescription": {
+    "value": "Determines the maximum number of kicks allowed for all screens. The maximum number of kicks on the Median screen is 15."
+  },
+  "outliers": {
+    "value": "Outliers"
+  },
+  "outliersDescription": {
+    "value": "Shows outliers on the boxplot as markings rather than being included in the whisker."
+  },
+  "valueKicksPattern": {
+    "value": "{{value}} Kicks"
+  },
+  "pointer": {
+    "value": "Pointer"
+  },
+  "medianQuestion": {
+    "value": "What is the typical kick distance?"
+  },
+  "sortData": {
+    "value": "Sort Data"
+  },
+  "youSortedTheData": {
+    "value": "You sorted the data!"
+  },
+  "medianDescription": {
+    "value": "<strong>Median</strong> is the number that splits a sorted data set in half."
+  },
+  "meanAndMedianQuestion": {
+    "value": "How does each kick influence the mean and median?"
+  },
+  "meanDescription": {
+    "value": "<strong>Mean</strong> is the average of all values in any data set."
+  },
+  "variabilityQuestion": {
+    "value": "How spread out are the kick distances?"
   },
   "iqrEqualsValueMPattern": {
     "value": "IQR = {{value}} m"
@@ -71,20 +128,8 @@
   "madEqualsUnknown": {
     "value": "MAD = ?"
   },
-  "plotType": {
-    "value": "Plot Type"
-  },
-  "dotPlot": {
-    "value": "Dot Plot"
-  },
-  "linePlot": {
-    "value": "Line Plot"
-  },
-  "median": {
-    "value": "Median"
-  },
-  "mean": {
-    "value": "Mean"
+  "madEquals": {
+    "value": "MAD ="
   },
   "range": {
     "value": "Range"
@@ -122,21 +167,6 @@
   "predictMedian": {
     "value": "Predict Median"
   },
-  "valueUnknown": {
-    "value": "?"
-  },
-  "youSortedTheData": {
-    "value": "You sorted the data!"
-  },
-  "medianDescription": {
-    "value": "<strong>Median</strong> is the number that splits a sorted data set in half."
-  },
-  "meanDescription": {
-    "value": "<strong>Mean</strong> is the average of all values in any data set."
-  },
-  "meanEquals": {
-    "value": "Mean ="
-  },
   "rangeDescription": {
     "value": "<strong>Range</strong> is the distance between the minimum and maximum data points."
   },
@@ -152,17 +182,8 @@
   "iqrEqualsIQRUnitsPattern": {
     "value": "IQR = {{iqr}} {{units}}"
   },
-  "meters": {
-    "value": "meters"
-  },
-  "meter": {
-    "value": "meter"
-  },
   "madDescription": {
     "value": "<strong>Mean absolute deviation (MAD)</strong> is the average distance from each data point to the mean."
-  },
-  "madEquals": {
-    "value": "MAD ="
   },
   "madEqualsMADMetersPattern": {
     "value": "MAD = {{mad}} meters"
@@ -172,27 +193,6 @@
   },
   "rangeEqualsRangeUnitsPattern": {
     "value": "Range = {{range}} {{units}}"
-  },
-  "needAtLeastFiveKicks": {
-    "value": "Need at least five kicks"
-  },
-  "maxKicks": {
-    "value": "Max Kicks"
-  },
-  "maxKicksDescription": {
-    "value": "Determines the maximum number of kicks allowed for all screens. The maximum number of kicks on the Median screen is 15."
-  },
-  "outliers": {
-    "value": "Outliers"
-  },
-  "outliersDescription": {
-    "value": "Shows outliers on the boxplot as markings rather than being included in the whisker."
-  },
-  "valueKicksPattern": {
-    "value": "{{value}} Kicks"
-  },
-  "pointer": {
-    "value": "Pointer"
   },
   "keyboardHelpDialog.move": {
     "value": "Move"
@@ -267,16 +267,19 @@
     "value": "object"
   },
   "a11y": {
-    "medianButtonHelpText": {
-      "value": "Kick soccer balls and explore data set to find value of median. "
+    "medianScreenHelpText": {
+      "value": "Kick soccer balls and explore data set to find value of median."
     },
-    "meanAndMedianButtonHelpText": {
+    "meanAndMedianScreenHelpText": {
       "value": "Kick soccer balls and explore data set to compare mean and median."
     },
-    "variabilityButtonHelpText": {
+    "variabilityScreenHelpText": {
       "value": "Kick soccer balls and explore data sets to compare measures of variability."
     },
     "common": {
+      "guidingQuestion": {
+        "value": "Guiding question: \"{$question}\""
+      },
       "eraseButton": {
         "accessibleName": {
           "value": "Erase Current Data"
@@ -300,7 +303,7 @@
           "value": "Median on Field"
         },
         "accessibleHelpText": {
-          "value": "Show or hide red highlights marking middle soccer ball or balls and arrow pointing to median kick distance."
+          "value": "Show or hide red highlights marking middle soccer\n ball or balls and arrow pointing to median kick distance."
         }
       },
       "meanCheckbox": {
@@ -330,30 +333,13 @@
     },
     "median": {
       "playArea": {
-        "value": "At edge of field, up to {{maxBalls}} kickers are ready to kick a soccer ball a random distance between 1 and 15 meters. Stacks of balls form when kicked balls land at the same distance. A sortable data card appears for each kicked ball recording the kick distance. Each balls can be moved to adjust its kick distance. There are checkboxes to auto-sort the data cards and highlight or predict the median. Guiding question: “What is the typical kick distance?”"
+        "value": "At edge of field, up to {$maxBalls} kickers are ready to kick a soccer ball a\n random distance between 1 and 15 meters. Stacks of balls form when they land at the same distance.\n A sortable data card appears for each kicked ball recording the kick distance.\n Each ball can be moved to adjust its kick distance. There are checkboxes to auto-sort the data cards and\n highlight or predict the median."
       },
       "controlArea": {
         "value": "Additionally, access detailed median information, clear data set, and reset the sim to start over."
       },
       "currentDetails": {
-        "value": "Currently, there {{isAre}} {{number}} of {{maxBalls}} kicked soccer {{ball}} on the field. {{dataCardDistances}}"
-      },
-      "details": {
-        "is": {
-          "value": "is"
-        },
-        "are": {
-          "value": "are"
-        },
-        "ball": {
-          "value": "ball"
-        },
-        "balls": {
-          "value": "balls"
-        },
-        "dataCardDistances": {
-          "value": "The data cards list the kick distances as {{distances}}."
-        }
+        "value": "Currently, { NUMBER($number, type: \"cardinal\") ->\n[0] 0 soccer balls on field. 0 data cards are listed.\n[1] 1 soccer ball on field. 1 data card lists the kick distance as {$distances}.\n*[other] {$number} soccer balls on field. {$number} data cards list the kick distances as {$distances}.\n}"
       },
       "interactionHintNoBalls": {
         "value": "Kick soccer balls to create a data set."
@@ -368,10 +354,10 @@
       },
       "dataCardsGroup": {
         "selectAccessibleName": {
-          "value": "Kick Distance {{value}}, card {{index}} of {{total}}"
+          "value": "Kick Distance {$value}, card {$index} of {$total}"
         },
         "sortAccessibleName": {
-          "value": "Kick Distance {{value}}, position {{index}} of {{total}}"
+          "value": "Kick Distance {$value}, position {$index} of {$total}"
         },
         "selectAccessibleHelpText": {
           "value": "Choose card to grab or release to sort data"
@@ -398,7 +384,7 @@
       },
       "medianDetails": {
         "accessibleName": {
-          "value": "Median Details"
+          "value": "Median Detail"
         }
       }
     },
