@@ -15,7 +15,6 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import LocalizedStringProperty from '../../../../chipper/js/browser/LocalizedStringProperty.js';
-import Utils from '../../../../dot/js/Utils.js';
 import HighlightFromNode from '../../../../scenery/js/accessibility/HighlightFromNode.js';
 import AlignBox from '../../../../scenery/js/layout/nodes/AlignBox.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
@@ -41,6 +40,8 @@ import IntervalToolRectangle from './IntervalToolRectangle.js';
 import VariabilityMeasureCheckbox from './VariabilityMeasureCheckbox.js';
 import VariabilityPlotNode from './VariabilityPlotNode.js';
 import VariabilityReadoutText from './VariabilityReadoutText.js';
+import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
+import { toFixed } from '../../../../dot/js/util/toFixed.js';
 
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 
@@ -90,17 +91,26 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     const checkboxToggleNode = new AlignBox( new CAVToggleNode( model.selectedVariabilityMeasureProperty, [ {
       createNode: () => CAVConstants.ACCORDION_BOX_VERTICAL_CHECKBOX_GROUP.createBox( new VariabilityMeasureCheckbox( model.isRangeVisibleProperty,
         CenterAndVariabilityStrings.rangeStringProperty, CAVColors.rangeFillProperty,
-        { tandem: checkboxesTandem.createTandem( 'rangeCheckbox' ) } ), { yAlign: 'top' } ),
+        {
+          tandem: checkboxesTandem.createTandem( 'rangeCheckbox' ),
+          accessibleHelpText: CenterAndVariabilityFluent.a11y.variability.rangeCheckbox.accessibleHelpTextStringProperty
+        } ), { yAlign: 'top' } ),
       value: VariabilityMeasure.RANGE
     }, {
       createNode: () => CAVConstants.ACCORDION_BOX_VERTICAL_CHECKBOX_GROUP.createBox( new VariabilityMeasureCheckbox( model.isIQRVisibleProperty,
         CenterAndVariabilityStrings.iqrStringProperty, CAVColors.iqrColorProperty,
-        { tandem: checkboxesTandem.createTandem( 'iqrCheckbox' ) } ), { yAlign: 'top' } ),
+        {
+          tandem: checkboxesTandem.createTandem( 'iqrCheckbox' ),
+          accessibleHelpText: CenterAndVariabilityFluent.a11y.variability.iqrCheckbox.accessibleHelpTextStringProperty
+        } ), { yAlign: 'top' } ),
       value: VariabilityMeasure.IQR
     }, {
       createNode: () => CAVConstants.ACCORDION_BOX_VERTICAL_CHECKBOX_GROUP.createBox( new VariabilityMeasureCheckbox( model.isMADVisibleProperty,
         CenterAndVariabilityStrings.madStringProperty, CAVColors.madRectangleColorProperty,
-        { tandem: checkboxesTandem.createTandem( 'madCheckbox' ) } ), { yAlign: 'top' } ),
+        {
+          tandem: checkboxesTandem.createTandem( 'madCheckbox' ),
+          accessibleHelpText: CenterAndVariabilityFluent.a11y.variability.madCheckbox.accessibleHelpTextStringProperty
+        } ), { yAlign: 'top' } ),
       value: VariabilityMeasure.MAD
     } ], {
       alignChildren: ToggleNode.RIGHT
@@ -124,7 +134,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         const value = accessor( model.selectedSceneModelProperty.value as VariabilitySceneModel ).value;
         return value === null ? CenterAndVariabilityStrings.valueUnknownStringProperty.value :
                roundToDecimal === null ? value :
-               Utils.toFixed( value, roundToDecimal );
+               toFixed( value, roundToDecimal );
       } );
     };
 
@@ -267,6 +277,14 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
       // Leave space for the radio buttons at the left
       left: 65,
       fill: CAVColors.variabilityAccordionBoxFillProperty
+    } );
+
+    model.selectedVariabilityMeasureProperty.link( selectedVariabilityMeasure => {
+      this.accessibleHelpText = selectedVariabilityMeasure === VariabilityMeasure.RANGE ?
+                                CenterAndVariabilityFluent.a11y.variability.measureAccordionBox.rangeAccessibleHelpTextStringProperty :
+                                selectedVariabilityMeasure === VariabilityMeasure.IQR ?
+                                CenterAndVariabilityFluent.a11y.variability.measureAccordionBox.iqrAccessibleHelpTextStringProperty :
+                                CenterAndVariabilityFluent.a11y.variability.measureAccordionBox.madAccessibleHelpTextStringProperty;
     } );
 
     // for pdom order

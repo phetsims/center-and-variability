@@ -25,6 +25,7 @@ import PredictionSlider from '../../common/view/PredictionSlider.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
 import MeanAndMedianAccordionBox from './MeanAndMedianAccordionBox.js';
 import MeanAndMedianInfoDialog from './MeanAndMedianInfoDialog.js';
+import { roundToInterval } from '../../../../dot/js/util/roundToInterval.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeanAndMedianScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
@@ -76,6 +77,8 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
         enabledRangeProperty: new Property<Range>( CAVConstants.PHYSICAL_RANGE ),
         roundToInterval: null, // continuous
         visibleProperty: model.isPredictMeanVisibleProperty,
+        accessibleName: CenterAndVariabilityStrings.a11y.common.meanPredictionSlider.accessibleNameStringProperty,
+        pdomMapPDOMValue: value => roundToInterval( value, 0.1 ),
         tandem: predictMeanTandem,
 
         // It is rare to feature a NodeIO, but in this case it is important since the only other featured children

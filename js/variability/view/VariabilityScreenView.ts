@@ -28,6 +28,8 @@ import SceneKickerRadioButtonGroup from './SceneKickerRadioButtonGroup.js';
 import VariabilityAccordionBox from './VariabilityAccordionBox.js';
 import VariabilityInfoDialog from './VariabilityInfoDialog.js';
 import VariabilityMeasureRadioButtonGroup from './VariabilityMeasureRadioButtonGroup.js';
+import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
+import { roundToInterval } from '../../../../dot/js/util/roundToInterval.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
@@ -63,6 +65,8 @@ export default class VariabilityScreenView extends CAVScreenView {
         enabledRangeProperty: new Property<Range>( CAVConstants.VARIABILITY_DRAG_RANGE ),
         roundToInterval: null, // continuous
         visibleProperty: model.isPointerVisibleProperty,
+        accessibleName: CenterAndVariabilityFluent.a11y.variability.predictionPointer.accessibleNameStringProperty,
+        pdomMapPDOMValue: value => roundToInterval( value, 0.1 ),
         tandem: pointerTandem,
 
         // It is rare to feature a NodeIO, but in this case it is important since the only other featured children

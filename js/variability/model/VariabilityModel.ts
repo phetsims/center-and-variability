@@ -26,6 +26,8 @@ import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
 import IntervalToolModel from './IntervalToolModel.js';
 import VariabilityMeasure from './VariabilityMeasure.js';
 import VariabilitySceneModel from './VariabilitySceneModel.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
@@ -66,7 +68,7 @@ export default class VariabilityModel extends CAVModel {
     let sceneTandemIndex = 1;
 
     const createVariabilitySceneModel = ( kickDistributionStrategySpecification: KickDistributionStrategySpecification,
-                                          kickerSceneColor: TColor ) => {
+                                          kickerSceneColor: TColor, accessibleName: TReadOnlyProperty<string> ) => {
 
       const sceneTandem = providedOptions.tandem.createTandem( `sceneKicker${sceneTandemIndex++}Model` );
       const kickDistributionStrategy = new KickDistributionStrategy(
@@ -88,6 +90,7 @@ export default class VariabilityModel extends CAVModel {
       return new VariabilitySceneModel( MAX_KICKS_PROPERTY,
         kickDistributionStrategy,
         kickerSceneColor,
+        accessibleName,
         sceneTandem );
     };
 
@@ -97,22 +100,26 @@ export default class VariabilityModel extends CAVModel {
         type: 'probabilityByDistance',
         values: [ 0, 0, 0, 1, 3, 12, 20, 32, 20, 12, 3, 1, 0, 0, 0 ],
         skewType: null
-      }, CAVConstants.VARIABILITY_KICKER_COLORS[ 0 ] ),
+      }, CAVConstants.VARIABILITY_KICKER_COLORS[ 0 ],
+        CenterAndVariabilityFluent.a11y.variability.sceneRadioButtonGroup.scene1AccessibleNameStringProperty ),
       createVariabilitySceneModel( {
         type: 'probabilityByDistance',
         values: [ 3, 5, 10, 10, 25, 32, 45, 65, 45, 32, 25, 10, 10, 5, 3 ],
         skewType: null
-      }, CAVConstants.VARIABILITY_KICKER_COLORS[ 1 ] ),
+      }, CAVConstants.VARIABILITY_KICKER_COLORS[ 1 ],
+        CenterAndVariabilityFluent.a11y.variability.sceneRadioButtonGroup.scene2AccessibleNameStringProperty ),
       createVariabilitySceneModel( {
         type: 'skew',
         values: null,
         skewType: 'right'
-      }, CAVConstants.VARIABILITY_KICKER_COLORS[ 2 ] ),
+      }, CAVConstants.VARIABILITY_KICKER_COLORS[ 2 ],
+        CenterAndVariabilityFluent.a11y.variability.sceneRadioButtonGroup.scene3AccessibleNameStringProperty ),
       createVariabilitySceneModel( {
         type: 'skew',
         values: null,
         skewType: 'left'
-      }, CAVConstants.VARIABILITY_KICKER_COLORS[ 3 ] )
+      }, CAVConstants.VARIABILITY_KICKER_COLORS[ 3 ],
+        CenterAndVariabilityFluent.a11y.variability.sceneRadioButtonGroup.scene4AccessibleNameStringProperty )
     ];
 
     const accordionBoxTandem = providedOptions.tandem.createTandem( 'variabilityMeasureAccordionBox' );

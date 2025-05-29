@@ -119,6 +119,7 @@ type StringsType = {
     'variabilityScreenHelpTextStringProperty': LocalizedStringProperty;
     'common': {
       'guidingQuestionStringProperty': LocalizedStringProperty;
+      'interactionHintNoBallsStringProperty': LocalizedStringProperty;
       'eraseButton': {
         'accessibleNameStringProperty': LocalizedStringProperty;
         'accessibleHelpTextStringProperty': LocalizedStringProperty;
@@ -150,7 +151,6 @@ type StringsType = {
       'playAreaStringProperty': LocalizedStringProperty;
       'controlAreaStringProperty': LocalizedStringProperty;
       'currentDetailsStringProperty': LocalizedStringProperty;
-      'interactionHintNoBallsStringProperty': LocalizedStringProperty;
       'interactionHintSomeBallsStringProperty': LocalizedStringProperty;
       'distanceAccordionBox': {
         'accessibleNameStringProperty': LocalizedStringProperty;
@@ -170,18 +170,67 @@ type StringsType = {
         'accessibleNameStringProperty': LocalizedStringProperty;
         'accessibleHelpTextStringProperty': LocalizedStringProperty;
       };
-      'medianDetails': {
+      'details': {
         'accessibleNameStringProperty': LocalizedStringProperty;
       }
     };
-    'mean': {
+    'meanAndMedian': {
+      'playAreaStringProperty': LocalizedStringProperty;
+      'controlAreaStringProperty': LocalizedStringProperty;
       'accordionBoxHelpTextStringProperty': LocalizedStringProperty;
-      'graphMedianCheckbox': {
+      'plotMedianCheckbox': {
         'accessibleNameStringProperty': LocalizedStringProperty;
         'accessibleHelpTextStringProperty': LocalizedStringProperty;
       };
-      'graphMeanCheckbox': {
+      'plotMeanCheckbox': {
         'accessibleNameStringProperty': LocalizedStringProperty;
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      };
+      'details': {
+        'accessibleNameStringProperty': LocalizedStringProperty;
+      }
+    };
+    'variability': {
+      'playAreaStringProperty': LocalizedStringProperty;
+      'controlAreaStringProperty': LocalizedStringProperty;
+      'sceneRadioButtonGroup': {
+        'groupNameStringProperty': LocalizedStringProperty;
+        'scene1AccessibleNameStringProperty': LocalizedStringProperty;
+        'scene2AccessibleNameStringProperty': LocalizedStringProperty;
+        'scene3AccessibleNameStringProperty': LocalizedStringProperty;
+        'scene4AccessibleNameStringProperty': LocalizedStringProperty;
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      };
+      'pointerCheckbox': {
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      };
+      'predictionPointer': {
+        'accessibleNameStringProperty': LocalizedStringProperty;
+      };
+      'measuresRadioButtonGroup': {
+        'groupNameStringProperty': LocalizedStringProperty;
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      };
+      'measureAccordionBox': {
+        'rangeAccessibleHelpTextStringProperty': LocalizedStringProperty;
+        'iqrAccessibleHelpTextStringProperty': LocalizedStringProperty;
+        'madAccessibleHelpTextStringProperty': LocalizedStringProperty;
+      };
+      'rangeCheckbox': {
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      };
+      'iqrCheckbox': {
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      };
+      'madCheckbox': {
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      };
+      'details': {
+        'accessibleNamePatternStringProperty': LocalizedStringProperty;
+      }
+    };
+    'preferences': {
+      'plotType': {
         'accessibleHelpTextStringProperty': LocalizedStringProperty;
       }
     }

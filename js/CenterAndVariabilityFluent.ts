@@ -94,6 +94,7 @@ const fluentKeyToStringPropertyMap = new Map( [
   ['a11y_meanAndMedianScreenHelpText', CenterAndVariabilityStrings.a11y.meanAndMedianScreenHelpTextStringProperty],
   ['a11y_variabilityScreenHelpText', CenterAndVariabilityStrings.a11y.variabilityScreenHelpTextStringProperty],
   ['a11y_common_guidingQuestion', CenterAndVariabilityStrings.a11y.common.guidingQuestionStringProperty],
+  ['a11y_common_interactionHintNoBalls', CenterAndVariabilityStrings.a11y.common.interactionHintNoBallsStringProperty],
   ['a11y_common_eraseButton_accessibleName', CenterAndVariabilityStrings.a11y.common.eraseButton.accessibleNameStringProperty],
   ['a11y_common_eraseButton_accessibleHelpText', CenterAndVariabilityStrings.a11y.common.eraseButton.accessibleHelpTextStringProperty],
   ['a11y_common_medianPredictionSlider_accessibleName', CenterAndVariabilityStrings.a11y.common.medianPredictionSlider.accessibleNameStringProperty],
@@ -109,7 +110,6 @@ const fluentKeyToStringPropertyMap = new Map( [
   ['a11y_median_playArea', CenterAndVariabilityStrings.a11y.median.playAreaStringProperty],
   ['a11y_median_controlArea', CenterAndVariabilityStrings.a11y.median.controlAreaStringProperty],
   ['a11y_median_currentDetails', CenterAndVariabilityStrings.a11y.median.currentDetailsStringProperty],
-  ['a11y_median_interactionHintNoBalls', CenterAndVariabilityStrings.a11y.median.interactionHintNoBallsStringProperty],
   ['a11y_median_interactionHintSomeBalls', CenterAndVariabilityStrings.a11y.median.interactionHintSomeBallsStringProperty],
   ['a11y_median_distanceAccordionBox_accessibleName', CenterAndVariabilityStrings.a11y.median.distanceAccordionBox.accessibleNameStringProperty],
   ['a11y_median_dataCardsGroup_noCardsAccessibleName', CenterAndVariabilityStrings.a11y.median.dataCardsGroup.noCardsAccessibleNameStringProperty],
@@ -121,12 +121,35 @@ const fluentKeyToStringPropertyMap = new Map( [
   ['a11y_median_sortDataCheckbox_accessibleHelpText', CenterAndVariabilityStrings.a11y.median.sortDataCheckbox.accessibleHelpTextStringProperty],
   ['a11y_median_cardsMedianCheckbox_accessibleName', CenterAndVariabilityStrings.a11y.median.cardsMedianCheckbox.accessibleNameStringProperty],
   ['a11y_median_cardsMedianCheckbox_accessibleHelpText', CenterAndVariabilityStrings.a11y.median.cardsMedianCheckbox.accessibleHelpTextStringProperty],
-  ['a11y_median_medianDetails_accessibleName', CenterAndVariabilityStrings.a11y.median.medianDetails.accessibleNameStringProperty],
-  ['a11y_mean_accordionBoxHelpText', CenterAndVariabilityStrings.a11y.mean.accordionBoxHelpTextStringProperty],
-  ['a11y_mean_graphMedianCheckbox_accessibleName', CenterAndVariabilityStrings.a11y.mean.graphMedianCheckbox.accessibleNameStringProperty],
-  ['a11y_mean_graphMedianCheckbox_accessibleHelpText', CenterAndVariabilityStrings.a11y.mean.graphMedianCheckbox.accessibleHelpTextStringProperty],
-  ['a11y_mean_graphMeanCheckbox_accessibleName', CenterAndVariabilityStrings.a11y.mean.graphMeanCheckbox.accessibleNameStringProperty],
-  ['a11y_mean_graphMeanCheckbox_accessibleHelpText', CenterAndVariabilityStrings.a11y.mean.graphMeanCheckbox.accessibleHelpTextStringProperty]
+  ['a11y_median_details_accessibleName', CenterAndVariabilityStrings.a11y.median.details.accessibleNameStringProperty],
+  ['a11y_meanAndMedian_playArea', CenterAndVariabilityStrings.a11y.meanAndMedian.playAreaStringProperty],
+  ['a11y_meanAndMedian_controlArea', CenterAndVariabilityStrings.a11y.meanAndMedian.controlAreaStringProperty],
+  ['a11y_meanAndMedian_accordionBoxHelpText', CenterAndVariabilityStrings.a11y.meanAndMedian.accordionBoxHelpTextStringProperty],
+  ['a11y_meanAndMedian_plotMedianCheckbox_accessibleName', CenterAndVariabilityStrings.a11y.meanAndMedian.plotMedianCheckbox.accessibleNameStringProperty],
+  ['a11y_meanAndMedian_plotMedianCheckbox_accessibleHelpText', CenterAndVariabilityStrings.a11y.meanAndMedian.plotMedianCheckbox.accessibleHelpTextStringProperty],
+  ['a11y_meanAndMedian_plotMeanCheckbox_accessibleName', CenterAndVariabilityStrings.a11y.meanAndMedian.plotMeanCheckbox.accessibleNameStringProperty],
+  ['a11y_meanAndMedian_plotMeanCheckbox_accessibleHelpText', CenterAndVariabilityStrings.a11y.meanAndMedian.plotMeanCheckbox.accessibleHelpTextStringProperty],
+  ['a11y_meanAndMedian_details_accessibleName', CenterAndVariabilityStrings.a11y.meanAndMedian.details.accessibleNameStringProperty],
+  ['a11y_variability_playArea', CenterAndVariabilityStrings.a11y.variability.playAreaStringProperty],
+  ['a11y_variability_controlArea', CenterAndVariabilityStrings.a11y.variability.controlAreaStringProperty],
+  ['a11y_variability_sceneRadioButtonGroup_groupName', CenterAndVariabilityStrings.a11y.variability.sceneRadioButtonGroup.groupNameStringProperty],
+  ['a11y_variability_sceneRadioButtonGroup_scene1AccessibleName', CenterAndVariabilityStrings.a11y.variability.sceneRadioButtonGroup.scene1AccessibleNameStringProperty],
+  ['a11y_variability_sceneRadioButtonGroup_scene2AccessibleName', CenterAndVariabilityStrings.a11y.variability.sceneRadioButtonGroup.scene2AccessibleNameStringProperty],
+  ['a11y_variability_sceneRadioButtonGroup_scene3AccessibleName', CenterAndVariabilityStrings.a11y.variability.sceneRadioButtonGroup.scene3AccessibleNameStringProperty],
+  ['a11y_variability_sceneRadioButtonGroup_scene4AccessibleName', CenterAndVariabilityStrings.a11y.variability.sceneRadioButtonGroup.scene4AccessibleNameStringProperty],
+  ['a11y_variability_sceneRadioButtonGroup_accessibleHelpText', CenterAndVariabilityStrings.a11y.variability.sceneRadioButtonGroup.accessibleHelpTextStringProperty],
+  ['a11y_variability_pointerCheckbox_accessibleHelpText', CenterAndVariabilityStrings.a11y.variability.pointerCheckbox.accessibleHelpTextStringProperty],
+  ['a11y_variability_predictionPointer_accessibleName', CenterAndVariabilityStrings.a11y.variability.predictionPointer.accessibleNameStringProperty],
+  ['a11y_variability_measuresRadioButtonGroup_groupName', CenterAndVariabilityStrings.a11y.variability.measuresRadioButtonGroup.groupNameStringProperty],
+  ['a11y_variability_measuresRadioButtonGroup_accessibleHelpText', CenterAndVariabilityStrings.a11y.variability.measuresRadioButtonGroup.accessibleHelpTextStringProperty],
+  ['a11y_variability_measureAccordionBox_rangeAccessibleHelpText', CenterAndVariabilityStrings.a11y.variability.measureAccordionBox.rangeAccessibleHelpTextStringProperty],
+  ['a11y_variability_measureAccordionBox_iqrAccessibleHelpText', CenterAndVariabilityStrings.a11y.variability.measureAccordionBox.iqrAccessibleHelpTextStringProperty],
+  ['a11y_variability_measureAccordionBox_madAccessibleHelpText', CenterAndVariabilityStrings.a11y.variability.measureAccordionBox.madAccessibleHelpTextStringProperty],
+  ['a11y_variability_rangeCheckbox_accessibleHelpText', CenterAndVariabilityStrings.a11y.variability.rangeCheckbox.accessibleHelpTextStringProperty],
+  ['a11y_variability_iqrCheckbox_accessibleHelpText', CenterAndVariabilityStrings.a11y.variability.iqrCheckbox.accessibleHelpTextStringProperty],
+  ['a11y_variability_madCheckbox_accessibleHelpText', CenterAndVariabilityStrings.a11y.variability.madCheckbox.accessibleHelpTextStringProperty],
+  ['a11y_variability_details_accessibleNamePattern', CenterAndVariabilityStrings.a11y.variability.details.accessibleNamePatternStringProperty],
+  ['a11y_preferences_plotType_accessibleHelpText', CenterAndVariabilityStrings.a11y.preferences.plotType.accessibleHelpTextStringProperty]
 ] );
 
 // A function that creates contents for a new Fluent file, which will be needed if any string changes.
@@ -236,6 +259,7 @@ const CenterAndVariabilityFluent = {
     variabilityScreenHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variabilityScreenHelpText' ),
     common: {
       guidingQuestion: new FluentPattern<{ question: IntentionalAny }>( fluentSupport.bundleProperty, 'a11y_common_guidingQuestion' ),
+      interactionHintNoBallsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_common_interactionHintNoBalls' ),
       eraseButton: {
         accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_common_eraseButton_accessibleName' ),
         accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_common_eraseButton_accessibleHelpText' )
@@ -267,7 +291,6 @@ const CenterAndVariabilityFluent = {
       playArea: new FluentPattern<{ maxBalls: IntentionalAny }>( fluentSupport.bundleProperty, 'a11y_median_playArea' ),
       controlAreaStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_median_controlArea' ),
       currentDetails: new FluentPattern<{ distances: IntentionalAny, number: IntentionalAny }>( fluentSupport.bundleProperty, 'a11y_median_currentDetails' ),
-      interactionHintNoBallsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_median_interactionHintNoBalls' ),
       interactionHintSomeBallsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_median_interactionHintSomeBalls' ),
       distanceAccordionBox: {
         accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_median_distanceAccordionBox_accessibleName' )
@@ -287,19 +310,68 @@ const CenterAndVariabilityFluent = {
         accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_median_cardsMedianCheckbox_accessibleName' ),
         accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_median_cardsMedianCheckbox_accessibleHelpText' )
       },
-      medianDetails: {
-        accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_median_medianDetails_accessibleName' )
+      details: {
+        accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_median_details_accessibleName' )
       }
     },
-    mean: {
-      accordionBoxHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_mean_accordionBoxHelpText' ),
-      graphMedianCheckbox: {
-        accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_mean_graphMedianCheckbox_accessibleName' ),
-        accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_mean_graphMedianCheckbox_accessibleHelpText' )
+    meanAndMedian: {
+      playArea: new FluentPattern<{ maxBalls: IntentionalAny }>( fluentSupport.bundleProperty, 'a11y_meanAndMedian_playArea' ),
+      controlAreaStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_meanAndMedian_controlArea' ),
+      accordionBoxHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_meanAndMedian_accordionBoxHelpText' ),
+      plotMedianCheckbox: {
+        accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_meanAndMedian_plotMedianCheckbox_accessibleName' ),
+        accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_meanAndMedian_plotMedianCheckbox_accessibleHelpText' )
       },
-      graphMeanCheckbox: {
-        accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_mean_graphMeanCheckbox_accessibleName' ),
-        accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_mean_graphMeanCheckbox_accessibleHelpText' )
+      plotMeanCheckbox: {
+        accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_meanAndMedian_plotMeanCheckbox_accessibleName' ),
+        accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_meanAndMedian_plotMeanCheckbox_accessibleHelpText' )
+      },
+      details: {
+        accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_meanAndMedian_details_accessibleName' )
+      }
+    },
+    variability: {
+      playArea: new FluentPattern<{ maxBalls: IntentionalAny }>( fluentSupport.bundleProperty, 'a11y_variability_playArea' ),
+      controlAreaStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_controlArea' ),
+      sceneRadioButtonGroup: {
+        groupNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_sceneRadioButtonGroup_groupName' ),
+        scene1AccessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_sceneRadioButtonGroup_scene1AccessibleName' ),
+        scene2AccessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_sceneRadioButtonGroup_scene2AccessibleName' ),
+        scene3AccessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_sceneRadioButtonGroup_scene3AccessibleName' ),
+        scene4AccessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_sceneRadioButtonGroup_scene4AccessibleName' ),
+        accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_sceneRadioButtonGroup_accessibleHelpText' )
+      },
+      pointerCheckbox: {
+        accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_pointerCheckbox_accessibleHelpText' )
+      },
+      predictionPointer: {
+        accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_predictionPointer_accessibleName' )
+      },
+      measuresRadioButtonGroup: {
+        groupNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_measuresRadioButtonGroup_groupName' ),
+        accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_measuresRadioButtonGroup_accessibleHelpText' )
+      },
+      measureAccordionBox: {
+        rangeAccessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_measureAccordionBox_rangeAccessibleHelpText' ),
+        iqrAccessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_measureAccordionBox_iqrAccessibleHelpText' ),
+        madAccessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_measureAccordionBox_madAccessibleHelpText' )
+      },
+      rangeCheckbox: {
+        accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_rangeCheckbox_accessibleHelpText' )
+      },
+      iqrCheckbox: {
+        accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_iqrCheckbox_accessibleHelpText' )
+      },
+      madCheckbox: {
+        accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_madCheckbox_accessibleHelpText' )
+      },
+      details: {
+        accessibleNamePattern: new FluentPattern<{ measure: IntentionalAny }>( fluentSupport.bundleProperty, 'a11y_variability_details_accessibleNamePattern' )
+      }
+    },
+    preferences: {
+      plotType: {
+        accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_preferences_plotType_accessibleHelpText' )
       }
     }
   }

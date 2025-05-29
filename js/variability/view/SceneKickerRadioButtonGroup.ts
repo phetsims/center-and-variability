@@ -18,6 +18,7 @@ import RectangularRadioButtonGroup, { RectangularRadioButtonGroupOptions } from 
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
+import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 
 type SelfOptions = EmptySelfOptions;
 type SceneKickerRadioButtonGroupOptions = SelfOptions & RectangularRadioButtonGroupOptions;
@@ -31,7 +32,9 @@ export default class SceneKickerRadioButtonGroup extends RectangularRadioButtonG
       },
       isDisposable: false,
       touchAreaXDilation: 5,
-      touchAreaYDilation: 4
+      touchAreaYDilation: 4,
+      accessibleName: CenterAndVariabilityFluent.a11y.variability.sceneRadioButtonGroup.groupNameStringProperty,
+      accessibleHelpText: CenterAndVariabilityFluent.a11y.variability.sceneRadioButtonGroup.accessibleHelpTextStringProperty
     }, providedOptions );
 
     const createTShirtIcon = ( label: string, fill: TColor ) => {
@@ -63,7 +66,10 @@ export default class SceneKickerRadioButtonGroup extends RectangularRadioButtonG
         return {
           value: sceneModel,
           createNode: () => createTShirtIcon( `${i + 1}`, sceneModel.kickerSceneColor ),
-          tandemName: `kicker${i + 1}RadioButton`
+          tandemName: `kicker${i + 1}RadioButton`,
+          options: {
+            accessibleName: sceneModel.accessibleName
+          }
         };
       } ), options );
   }

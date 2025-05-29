@@ -14,6 +14,7 @@ import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import IQRIconNode from './IQRIconNode.js';
 import MADIconNode from './MADIconNode.js';
 import RangeIconNode from './RangeIconNode.js';
+import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityMeasureRadioButtonGroupOptions = SelfOptions & RectangularRadioButtonGroupOptions;
@@ -33,21 +34,32 @@ export default class VariabilityMeasureRadioButtonGroup extends RectangularRadio
       },
       isDisposable: false,
       touchAreaXDilation: 5,
-      touchAreaYDilation: 2.5
+      touchAreaYDilation: 2.5,
+      accessibleName: CenterAndVariabilityFluent.a11y.variability.measuresRadioButtonGroup.groupNameStringProperty,
+      accessibleHelpText: CenterAndVariabilityFluent.a11y.variability.measuresRadioButtonGroup.accessibleHelpTextStringProperty
     }, providedOptions );
 
     super( property, [ {
         value: VariabilityMeasure.RANGE,
         createNode: () => new RangeIconNode(),
-        tandemName: 'rangeRadioButton'
+        tandemName: 'rangeRadioButton',
+        options: {
+          accessibleName: CenterAndVariabilityFluent.rangeStringProperty
+        }
       }, {
         value: VariabilityMeasure.IQR,
         createNode: () => new IQRIconNode(),
-        tandemName: 'iqrRadioButton'
+        tandemName: 'iqrRadioButton',
+        options: {
+          accessibleName: CenterAndVariabilityFluent.interquartileRangeIQRStringProperty
+        }
       }, {
         value: VariabilityMeasure.MAD,
         createNode: () => new MADIconNode(),
-        tandemName: 'madRadioButton'
+        tandemName: 'madRadioButton',
+        options: {
+          accessibleName: CenterAndVariabilityFluent.meanAbsoluteDeviationMADStringProperty
+        }
       } ],
       options
     );

@@ -86,8 +86,8 @@ export default class AccordionBoxCheckboxFactory {
 
         // Sound managed in the MedianAnimationTone
         checkedSoundPlayer: nullSoundPlayer,
-        accessibleName: CenterAndVariabilityStrings.a11y.mean.graphMedianCheckbox.accessibleNameStringProperty,
-        accessibleHelpText: CenterAndVariabilityStrings.a11y.mean.graphMedianCheckbox.accessibleHelpTextStringProperty
+        accessibleName: CenterAndVariabilityStrings.a11y.meanAndMedian.plotMedianCheckbox.accessibleNameStringProperty,
+        accessibleHelpText: CenterAndVariabilityStrings.a11y.meanAndMedian.plotMedianCheckbox.accessibleHelpTextStringProperty
       }
     };
   }
@@ -129,8 +129,8 @@ export default class AccordionBoxCheckboxFactory {
       tandemName: 'meanCheckbox',
       options: {
         checkedSoundPlayer: PlayAreaCheckboxFactory.getMeanCheckedSoundPlayer( selectedSceneModelProperty ),
-        accessibleName: CenterAndVariabilityStrings.a11y.mean.graphMeanCheckbox.accessibleNameStringProperty,
-        accessibleHelpText: CenterAndVariabilityStrings.a11y.mean.graphMeanCheckbox.accessibleHelpTextStringProperty,
+        accessibleName: CenterAndVariabilityStrings.a11y.meanAndMedian.plotMeanCheckbox.accessibleNameStringProperty,
+        accessibleHelpText: CenterAndVariabilityStrings.a11y.meanAndMedian.plotMeanCheckbox.accessibleHelpTextStringProperty,
         phetioDisplayOnlyPropertyInstrumented: true
       }
     };

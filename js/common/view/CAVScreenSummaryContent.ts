@@ -44,7 +44,7 @@ export default class CAVScreenSummaryContent extends ScreenSummaryContent {
 
     const interactionHintStringProperty = new DynamicProperty<string, string, TReadOnlyProperty<string>>( new DerivedProperty( [ model.selectedSceneStackedSoccerBallCountProperty ],
       count => {
-        return count === 0 ? CenterAndVariabilityStrings.a11y.median.interactionHintNoBallsStringProperty : CenterAndVariabilityStrings.a11y.median.interactionHintSomeBallsStringProperty;
+        return count === 0 ? CenterAndVariabilityStrings.a11y.common.interactionHintNoBallsStringProperty : CenterAndVariabilityStrings.a11y.median.interactionHintSomeBallsStringProperty;
       } ) );
 
     super( {

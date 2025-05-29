@@ -30,6 +30,7 @@ import CAVConstants from '../CAVConstants.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 import MeanIndicatorNode from './MeanIndicatorNode.js';
 import PredictionThumbNode from './PredictionThumbNode.js';
+import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 
 // constants
 const TEXT_OPTIONS = {
@@ -151,7 +152,7 @@ export default class PlayAreaCheckboxFactory {
   }
 
   private static createPredictionItem( selectedProperty: Property<boolean>, stringProperty: PhetioProperty<string>,
-                                       accessibleNameProperty: TReadOnlyProperty<string>, accessibleHelpText: TReadOnlyProperty<string> | null,
+                                       accessibleNameProperty: TReadOnlyProperty<string>, accessibleHelpText: TReadOnlyProperty<string>,
                                        color: TColor, tandemName: string ): VerticalCheckboxGroupItem {
     return {
       createNode: () => {
@@ -196,7 +197,7 @@ export default class PlayAreaCheckboxFactory {
       isPointerVisibleProperty,
       CenterAndVariabilityStrings.pointerStringProperty,
       CenterAndVariabilityStrings.pointerStringProperty,
-      null,
+      CenterAndVariabilityFluent.a11y.variability.pointerCheckbox.accessibleHelpTextStringProperty,
       CAVColors.pointerColorProperty,
       'pointerCheckbox'
     );

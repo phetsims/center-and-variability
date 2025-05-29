@@ -29,7 +29,7 @@ export default class CAVInfoButton extends InfoButton {
       top: backgroundShape.bounds.top + BUTTON_AND_TITLE_MARGIN,
       right: backgroundShape.bounds.right,
       isDisposable: false,
-      accessibleName: CenterAndVariabilityStrings.a11y.median.medianDetails.accessibleNameStringProperty
+      accessibleName: CenterAndVariabilityStrings.a11y.median.details.accessibleNameStringProperty
     } );
   }
 }
