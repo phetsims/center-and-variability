@@ -50,6 +50,7 @@ import CAVToggleNode from './CAVToggleNode.js';
 import KickButtonGroup from './KickButtonGroup.js';
 import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';
 import PredictionSlider from './PredictionSlider.js';
+import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 
 type SelfOptions = {
   questionBarOptions: StrictOmit<QuestionBarOptions, 'tandem'>;
@@ -94,6 +95,11 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
   private readonly repositionNodeIfOverlappingAccordionBox: ( node: Node ) => void;
   private readonly adjustMedianIndicatorBottom: ( topObjectPositionY: number ) => void;
   private readonly playAreaMedianIndicatorNode: Node;
+
+  // PDOM
+  private readonly soccerFieldHeading: Node = new Node( {
+    accessibleHeading: CenterAndVariabilityFluent.a11y.common.soccerFieldStringProperty
+  } );
 
   protected constructor( model: CAVModel, providedOptions: CAVScreenViewOptions ) {
 
@@ -317,6 +323,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
     this.screenViewRootNode.addChild( this.frontScreenViewLayer );
 
     this.addChild( this.screenViewRootNode );
+    this.addChild( this.soccerFieldHeading );
   }
 
   private updateAccordionBoxPosition(): void {
@@ -402,6 +409,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
   // Set the pdom order. Only the variability screen has sceneRadioButtons and variabilityMeasureRadioButtons
   protected cavSetPDOMOrder( bottomControls: Node, predictionTools: Node[], infoButton: Node, sceneKickerRadioButtonGroup?: Node, variabilityMeasureRadioButtonGroup?: Node ): void {
     this.pdomPlayAreaNode.setPDOMOrder( [
+      this.soccerFieldHeading,
       ...( sceneKickerRadioButtonGroup ? [ sceneKickerRadioButtonGroup ] : [] ),
       this.kickButtonGroup,
       this.backScreenViewLayer,

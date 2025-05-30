@@ -28,6 +28,8 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import AccessibleSlider, { AccessibleSliderOptions } from '../../../../sun/js/accessibility/AccessibleSlider.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVColors from '../../common/CAVColors.js';
+import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
+import { roundToInterval } from '../../../../dot/js/util/roundToInterval.js';
 
 type SelfOptions = EmptySelfOptions;
 type ParentOptions = NodeOptions & AccessibleSliderOptions;
@@ -81,6 +83,15 @@ export default class IntervalToolRectangle extends AccessibleSlider( Node, 0 ) {
     const endDrag = () => {
       isBeingDraggedProperty.value = false;
     };
+    const roundedIntervalToolValue1Property = new DerivedProperty( [ intervalToolValue1Property ], value => roundToInterval( value, 0.1 ) );
+    const roundedIntervalToolValue2Property = new DerivedProperty( [ intervalToolValue2Property ], value => roundToInterval( value, 0.1 ) );
+    const widthProperty = new DerivedProperty( [ roundedIntervalToolValue1Property, roundedIntervalToolValue2Property ],
+      ( value1, value2 ) => Math.abs( value2 - value1 ) );
+    const ariaValueStringProperty = CenterAndVariabilityFluent.a11y.variability.intervalTool.rectangleValuePattern.createProperty( {
+      valueA: roundedIntervalToolValue1Property,
+      valueB: roundedIntervalToolValue2Property,
+      width: widthProperty
+    } );
 
     const options = optionize<IntervalToolNodeOptions, SelfOptions, ParentOptions>()( {
       children: [
@@ -103,8 +114,8 @@ export default class IntervalToolRectangle extends AccessibleSlider( Node, 0 ) {
 
     super( options );
 
-    Multilink.multilink( [ intervalToolValue1Property, intervalToolValue2Property, topAlignmentProperty ],
-      ( value1, value2, topAlignment ) => {
+    Multilink.multilink( [ intervalToolValue1Property, intervalToolValue2Property, topAlignmentProperty, ariaValueStringProperty ],
+      ( value1, value2, topAlignment, ariaValueString ) => {
         const viewX1 = modelViewTransform.modelToViewX( value1 );
         const viewX2 = modelViewTransform.modelToViewX( value2 );
         const rectBottom = modelViewTransform.modelToViewY( 0 );
@@ -115,6 +126,7 @@ export default class IntervalToolRectangle extends AccessibleSlider( Node, 0 ) {
         rectangleNode.setRect( Math.min( viewX1, viewX2 ), rectBottom - rectHeight, Math.abs( viewX2 - viewX1 ), rectHeight );
         leftEdge.setLine( viewX1, rectBottom, viewX1, rectTop );
         rightEdge.setLine( viewX2, rectBottom, viewX2, rectTop );
+        this.ariaValueText = ariaValueString;
       } );
 
     const updateDragBounds = () => {

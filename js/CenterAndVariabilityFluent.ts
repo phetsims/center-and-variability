@@ -94,6 +94,7 @@ const fluentKeyToStringPropertyMap = new Map( [
   ['a11y_meanAndMedianScreenHelpText', CenterAndVariabilityStrings.a11y.meanAndMedianScreenHelpTextStringProperty],
   ['a11y_variabilityScreenHelpText', CenterAndVariabilityStrings.a11y.variabilityScreenHelpTextStringProperty],
   ['a11y_common_guidingQuestion', CenterAndVariabilityStrings.a11y.common.guidingQuestionStringProperty],
+  ['a11y_common_soccerField', CenterAndVariabilityStrings.a11y.common.soccerFieldStringProperty],
   ['a11y_common_interactionHintNoBalls', CenterAndVariabilityStrings.a11y.common.interactionHintNoBallsStringProperty],
   ['a11y_common_eraseButton_accessibleName', CenterAndVariabilityStrings.a11y.common.eraseButton.accessibleNameStringProperty],
   ['a11y_common_eraseButton_accessibleHelpText', CenterAndVariabilityStrings.a11y.common.eraseButton.accessibleHelpTextStringProperty],
@@ -149,6 +150,12 @@ const fluentKeyToStringPropertyMap = new Map( [
   ['a11y_variability_iqrCheckbox_accessibleHelpText', CenterAndVariabilityStrings.a11y.variability.iqrCheckbox.accessibleHelpTextStringProperty],
   ['a11y_variability_madCheckbox_accessibleHelpText', CenterAndVariabilityStrings.a11y.variability.madCheckbox.accessibleHelpTextStringProperty],
   ['a11y_variability_details_accessibleNamePattern', CenterAndVariabilityStrings.a11y.variability.details.accessibleNamePatternStringProperty],
+  ['a11y_variability_intervalTool_heading', CenterAndVariabilityStrings.a11y.variability.intervalTool.headingStringProperty],
+  ['a11y_variability_intervalTool_accessibleHelpText', CenterAndVariabilityStrings.a11y.variability.intervalTool.accessibleHelpTextStringProperty],
+  ['a11y_variability_intervalTool_handle1AccessibleName', CenterAndVariabilityStrings.a11y.variability.intervalTool.handle1AccessibleNameStringProperty],
+  ['a11y_variability_intervalTool_handle2AccessibleName', CenterAndVariabilityStrings.a11y.variability.intervalTool.handle2AccessibleNameStringProperty],
+  ['a11y_variability_intervalTool_rectangleAccessibleName', CenterAndVariabilityStrings.a11y.variability.intervalTool.rectangleAccessibleNameStringProperty],
+  ['a11y_variability_intervalTool_rectangleValuePattern', CenterAndVariabilityStrings.a11y.variability.intervalTool.rectangleValuePatternStringProperty],
   ['a11y_preferences_plotType_accessibleHelpText', CenterAndVariabilityStrings.a11y.preferences.plotType.accessibleHelpTextStringProperty]
 ] );
 
@@ -259,6 +266,7 @@ const CenterAndVariabilityFluent = {
     variabilityScreenHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variabilityScreenHelpText' ),
     common: {
       guidingQuestion: new FluentPattern<{ question: IntentionalAny }>( fluentSupport.bundleProperty, 'a11y_common_guidingQuestion' ),
+      soccerFieldStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_common_soccerField' ),
       interactionHintNoBallsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_common_interactionHintNoBalls' ),
       eraseButton: {
         accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_common_eraseButton_accessibleName' ),
@@ -367,6 +375,14 @@ const CenterAndVariabilityFluent = {
       },
       details: {
         accessibleNamePattern: new FluentPattern<{ measure: IntentionalAny }>( fluentSupport.bundleProperty, 'a11y_variability_details_accessibleNamePattern' )
+      },
+      intervalTool: {
+        headingStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_intervalTool_heading' ),
+        accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_intervalTool_accessibleHelpText' ),
+        handle1AccessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_intervalTool_handle1AccessibleName' ),
+        handle2AccessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_intervalTool_handle2AccessibleName' ),
+        rectangleAccessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_intervalTool_rectangleAccessibleName' ),
+        rectangleValuePattern: new FluentPattern<{ valueA: IntentionalAny, valueB: IntentionalAny, width: IntentionalAny }>( fluentSupport.bundleProperty, 'a11y_variability_intervalTool_rectangleValuePattern' )
       }
     },
     preferences: {

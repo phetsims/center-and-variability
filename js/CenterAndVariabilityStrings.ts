@@ -119,6 +119,7 @@ type StringsType = {
     'variabilityScreenHelpTextStringProperty': LocalizedStringProperty;
     'common': {
       'guidingQuestionStringProperty': LocalizedStringProperty;
+      'soccerFieldStringProperty': LocalizedStringProperty;
       'interactionHintNoBallsStringProperty': LocalizedStringProperty;
       'eraseButton': {
         'accessibleNameStringProperty': LocalizedStringProperty;
@@ -227,6 +228,14 @@ type StringsType = {
       };
       'details': {
         'accessibleNamePatternStringProperty': LocalizedStringProperty;
+      };
+      'intervalTool': {
+        'headingStringProperty': LocalizedStringProperty;
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+        'handle1AccessibleNameStringProperty': LocalizedStringProperty;
+        'handle2AccessibleNameStringProperty': LocalizedStringProperty;
+        'rectangleAccessibleNameStringProperty': LocalizedStringProperty;
+        'rectangleValuePatternStringProperty': LocalizedStringProperty;
       }
     };
     'preferences': {

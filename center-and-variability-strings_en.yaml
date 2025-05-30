@@ -110,6 +110,7 @@ a11y:
   variabilityScreenHelpText: Kick soccer balls and explore data sets to compare measures of variability.
   common:
     guidingQuestion: 'Guiding question: "{$question}"'
+    soccerField: Soccer Field
     interactionHintNoBalls: Kick soccer balls to create a data set.
     eraseButton:
       accessibleName: Erase Current Data
@@ -211,6 +212,15 @@ a11y:
       accessibleHelpText: Explore with or without MAD highlighted on plot.
     details:
       accessibleNamePattern: "{$measure} Details"
+    intervalTool:
+      heading: Interval Tool Controls
+      accessibleHelpText: >- 
+        Define boundaries of interval region. Shift interval region to estimate distribution variability or future kick
+        locations.
+      handle1AccessibleName: Boundary A
+      handle2AccessibleName: Boundary B
+      rectangleAccessibleName: Interval Region
+      rectangleValuePattern: Bounded by {$valueA} and {$valueB}, width {$width}
   preferences:
     plotType:
       accessibleHelpText: Determines whether an x or dot marks a kick distance on the plot.

@@ -30,11 +30,15 @@ import VariabilityInfoDialog from './VariabilityInfoDialog.js';
 import VariabilityMeasureRadioButtonGroup from './VariabilityMeasureRadioButtonGroup.js';
 import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 import { roundToInterval } from '../../../../dot/js/util/roundToInterval.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
 
 export default class VariabilityScreenView extends CAVScreenView {
+
+  //PDOM
+  private readonly intervalToolHeading: Node;
 
   public constructor( model: VariabilityModel, providedOptions: VariabilityScreenViewOptions ) {
 
@@ -51,6 +55,11 @@ export default class VariabilityScreenView extends CAVScreenView {
     } );
 
     super( model, options );
+    this.intervalToolHeading = new Node( {
+      visibleProperty: model.intervalToolModel.isVisibleProperty,
+      accessibleHeading: CenterAndVariabilityFluent.a11y.variability.intervalTool.headingStringProperty,
+      accessibleParagraph: CenterAndVariabilityFluent.a11y.variability.intervalTool.accessibleHelpTextStringProperty
+    } );
 
     const accordionBoxTandem = options.tandem.createTandem( 'variabilityMeasureAccordionBox' );
 
@@ -145,8 +154,9 @@ export default class VariabilityScreenView extends CAVScreenView {
         }
       } );
     } );
+    this.addChild( this.intervalToolHeading );
 
-    this.cavSetPDOMOrder( controls, [ pointerSlider, intervalToolNode ], variabilityAccordionBox.infoButton,
+    this.cavSetPDOMOrder( controls, [ pointerSlider, this.intervalToolHeading, intervalToolNode ], variabilityAccordionBox.infoButton,
       sceneKickerRadioButtonGroup, variabilityMeasureRadioButtonGroup );
   }
 

@@ -280,6 +280,9 @@
       "guidingQuestion": {
         "value": "Guiding question: \"{$question}\""
       },
+      "soccerField": {
+        "value": "Soccer Field"
+      },
       "interactionHintNoBalls": {
         "value": "Kick soccer balls to create a data set."
       },
@@ -497,6 +500,26 @@
       "details": {
         "accessibleNamePattern": {
           "value": "{$measure} Details"
+        }
+      },
+      "intervalTool": {
+        "heading": {
+          "value": "Interval Tool Controls"
+        },
+        "accessibleHelpText": {
+          "value": "Define boundaries of interval region. Shift interval region to estimate distribution variability or future kick locations."
+        },
+        "handle1AccessibleName": {
+          "value": "Boundary A"
+        },
+        "handle2AccessibleName": {
+          "value": "Boundary B"
+        },
+        "rectangleAccessibleName": {
+          "value": "Interval Region"
+        },
+        "rectangleValuePattern": {
+          "value": "Bounded by {$valueA} and {$valueB}, width {$width}"
         }
       }
     },

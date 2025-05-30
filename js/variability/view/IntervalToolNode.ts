@@ -30,6 +30,7 @@ import CAVConstants from '../../common/CAVConstants.js';
 import IntervalToolModel from '../model/IntervalToolModel.js';
 import IntervalToolPredictionSlider from './IntervalToolPredictionSlider.js';
 import IntervalToolRectangle from './IntervalToolRectangle.js';
+import { roundToInterval } from '../../../../dot/js/util/roundToInterval.js';
 
 
 export default class IntervalToolNode extends Node {
@@ -47,7 +48,7 @@ export default class IntervalToolNode extends Node {
         },
         enabledRangeProperty: new Property<Range>( CAVConstants.VARIABILITY_DRAG_RANGE ),
         roundToInterval: null, // continuous
-
+        pdomMapPDOMValue: value => roundToInterval( value, 0.1 ),
         tandem: tandem.createTandem( 'handle1' ),
         phetioVisiblePropertyInstrumented: true,
         visiblePropertyOptions: {
@@ -65,7 +66,7 @@ export default class IntervalToolNode extends Node {
         },
         enabledRangeProperty: new Property<Range>( CAVConstants.VARIABILITY_DRAG_RANGE ),
         roundToInterval: null, // continuous
-
+        pdomMapPDOMValue: value => roundToInterval( value, 0.1 ),
         tandem: tandem.createTandem( 'handle2' ),
         phetioVisiblePropertyInstrumented: true,
         visiblePropertyOptions: {
