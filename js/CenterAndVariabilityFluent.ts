@@ -171,10 +171,14 @@ const createFluentFile = (): string => {
 const fluentSupport = new FluentContainer( createFluentFile, Array.from(fluentKeyToStringPropertyMap.values()) );
 
 const CenterAndVariabilityFluent = {
-  "center-and-variability.titleStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'center_and_variability_title' ),
-  "screen.medianStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'screen_median' ),
-  "screen.meanAndMedianStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'screen_meanAndMedian' ),
-  "screen.variabilityStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'screen_variability' ),
+  "center-and-variability": {
+    titleStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'center_and_variability_title' )
+  },
+  screen: {
+    medianStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'screen_median' ),
+    meanAndMedianStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'screen_meanAndMedian' ),
+    variabilityStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'screen_variability' )
+  },
   kickValuePatternStringProperty: CenterAndVariabilityStrings.kickValuePatternStringProperty,
   distanceInMetersAccordionBoxTitleStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'distanceInMetersAccordionBoxTitle' ),
   distanceInMetersChartLabelStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'distanceInMetersChartLabel' ),
@@ -236,30 +240,38 @@ const CenterAndVariabilityFluent = {
   madEqualsMADMetersPatternStringProperty: CenterAndVariabilityStrings.madEqualsMADMetersPatternStringProperty,
   rangeEqualsMaxMinusMinPatternStringProperty: CenterAndVariabilityStrings.rangeEqualsMaxMinusMinPatternStringProperty,
   rangeEqualsRangeUnitsPatternStringProperty: CenterAndVariabilityStrings.rangeEqualsRangeUnitsPatternStringProperty,
-  "keyboardHelpDialog.moveStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_move' ),
-  "keyboardHelpDialog.endOfNumberLineStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_endOfNumberLine' ),
-  "keyboardHelpDialog.startOfNumberLineStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_startOfNumberLine' ),
-  "keyboardHelpDialog.grabOrReleaseBallStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_grabOrReleaseBall' ),
-  "keyboardHelpDialog.moveGrabbedBallTitleStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_moveGrabbedBallTitle' ),
-  "keyboardHelpDialog.moveGrabbedBallStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_moveGrabbedBall' ),
-  "keyboardHelpDialog.grabOrReleaseStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_grabOrRelease' ),
-  "keyboardHelpDialog.jumpToStartOfNumberLineStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_jumpToStartOfNumberLine' ),
-  "keyboardHelpDialog.jumpToEndOfNumberLineStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_jumpToEndOfNumberLine' ),
-  "keyboardHelpDialog.jumpBallToTickMarkStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_jumpBallToTickMark' ),
-  "keyboardHelpDialog.moveInLargerStepsStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_moveInLargerSteps' ),
-  "keyboardHelpDialog.medianScreen.grabOrReleaseBallOrCardStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_medianScreen_grabOrReleaseBallOrCard' ),
-  "keyboardHelpDialog.medianScreen.movePredictMedianStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_medianScreen_movePredictMedian' ),
-  "keyboardHelpDialog.medianScreen.predictMedianStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_medianScreen_predictMedian' ),
-  "keyboardHelpDialog.medianScreen.moveGrabbedBallOrCardTitleStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_medianScreen_moveGrabbedBallOrCardTitle' ),
-  "keyboardHelpDialog.medianScreen.moveGrabbedBallOrCardStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_medianScreen_moveGrabbedBallOrCard' ),
-  "keyboardHelpDialog.medianScreen.jumpToStartOfCardsOrNumberLineStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_medianScreen_jumpToStartOfCardsOrNumberLine' ),
-  "keyboardHelpDialog.medianScreen.jumpToEndOfCardsOrNumberLineStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_medianScreen_jumpToEndOfCardsOrNumberLine' ),
-  "keyboardHelpDialog.meanAndMedianScreen.movePredictMeanOrMedianStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_meanAndMedianScreen_movePredictMeanOrMedian' ),
-  "keyboardHelpDialog.meanAndMedianScreen.movePredictionPointerStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_meanAndMedianScreen_movePredictionPointer' ),
-  "keyboardHelpDialog.meanAndMedianScreen.movePredictMeanInSmallerStepsStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_meanAndMedianScreen_movePredictMeanInSmallerSteps' ),
-  "keyboardHelpDialog.meanAndMedianScreen.moveInLargerStepsStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_meanAndMedianScreen_moveInLargerSteps' ),
-  "keyboardHelpDialog.variabilityScreen.movePointerIntervalHandleOrIntervalBlockStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_variabilityScreen_movePointerIntervalHandleOrIntervalBlock' ),
-  "keyboardHelpDialog.variabilityScreen.objectStringProperty": new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_variabilityScreen_object' ),
+  keyboardHelpDialog: {
+    moveStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_move' ),
+    endOfNumberLineStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_endOfNumberLine' ),
+    startOfNumberLineStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_startOfNumberLine' ),
+    grabOrReleaseBallStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_grabOrReleaseBall' ),
+    moveGrabbedBallTitleStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_moveGrabbedBallTitle' ),
+    moveGrabbedBallStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_moveGrabbedBall' ),
+    grabOrReleaseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_grabOrRelease' ),
+    jumpToStartOfNumberLineStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_jumpToStartOfNumberLine' ),
+    jumpToEndOfNumberLineStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_jumpToEndOfNumberLine' ),
+    jumpBallToTickMarkStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_jumpBallToTickMark' ),
+    moveInLargerStepsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_moveInLargerSteps' ),
+    medianScreen: {
+      grabOrReleaseBallOrCardStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_medianScreen_grabOrReleaseBallOrCard' ),
+      movePredictMedianStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_medianScreen_movePredictMedian' ),
+      predictMedianStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_medianScreen_predictMedian' ),
+      moveGrabbedBallOrCardTitleStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_medianScreen_moveGrabbedBallOrCardTitle' ),
+      moveGrabbedBallOrCardStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_medianScreen_moveGrabbedBallOrCard' ),
+      jumpToStartOfCardsOrNumberLineStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_medianScreen_jumpToStartOfCardsOrNumberLine' ),
+      jumpToEndOfCardsOrNumberLineStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_medianScreen_jumpToEndOfCardsOrNumberLine' )
+    },
+    meanAndMedianScreen: {
+      movePredictMeanOrMedianStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_meanAndMedianScreen_movePredictMeanOrMedian' ),
+      movePredictionPointerStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_meanAndMedianScreen_movePredictionPointer' ),
+      movePredictMeanInSmallerStepsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_meanAndMedianScreen_movePredictMeanInSmallerSteps' ),
+      moveInLargerStepsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_meanAndMedianScreen_moveInLargerSteps' )
+    },
+    variabilityScreen: {
+      movePointerIntervalHandleOrIntervalBlockStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_variabilityScreen_movePointerIntervalHandleOrIntervalBlock' ),
+      objectStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_variabilityScreen_object' )
+    }
+  },
   a11y: {
     medianScreenHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_medianScreenHelpText' ),
     meanAndMedianScreenHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_meanAndMedianScreenHelpText' ),
