@@ -25,7 +25,6 @@ import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Range from '../../../../dot/js/Range.js';
-import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Shape from '../../../../kite/js/Shape.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
@@ -46,10 +45,10 @@ import CardNode, { cardDropClip, cardPickUpSoundClip, PICK_UP_DELTA_X } from './
 import CardNodeContainer, { CARD_LAYER_OFFSET, CardNodeContainerOptions } from './CardNodeContainer.js';
 import CelebrationNode from './CelebrationNode.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import TinyProperty from '../../../../axon/js/TinyProperty.js';
 import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
+import { clamp } from '../../../../dot/js/util/clamp.js';
 
 const FOCUS_HIGHLIGHT_Y_MARGIN = CAVConstants.CARD_SPACING + 3;
 
@@ -324,28 +323,23 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       this.groupSortInteractionView.groupSortGroupFocusHighlightPath.setShape( focusRect );
       const cueNodeWidth = this.groupSortInteractionView.grabReleaseCueNode.width;
       const max = Math.max( this.width - cueNodeWidth / 2, cueNodeWidth );
-      this.groupSortInteractionView.grabReleaseCueNode.centerX = Utils.clamp( focusRect.bounds.centerX, cueNodeWidth / 2, max );
+      this.groupSortInteractionView.grabReleaseCueNode.centerX = clamp( focusRect.bounds.centerX, cueNodeWidth / 2, max );
     } );
 
-    const selectedItemValueProperty = new DynamicProperty<number | null, TReadOnlyProperty<number | null>, TReadOnlyProperty<number | null>>( new DerivedProperty( [ model.groupSortInteractionModel.selectedGroupItemProperty ], item => {
-      return item ? item.soccerBall.valueProperty : new TinyProperty( null );
+    const selectedItemValueProperty = new DynamicProperty<number | string | null, TReadOnlyProperty<number | string>, TReadOnlyProperty<string | number | null>>( new DerivedProperty( [ model.groupSortInteractionModel.selectedGroupItemProperty ], item => {
+      return item ? item.soccerBall.valueProperty : new TinyProperty( 'NO CARD SELECTED' );
     } ) );
-    const selectedItemIndexProperty = new DynamicProperty<number | null, TReadOnlyProperty<number | null>, TReadOnlyProperty<number | null>>(
+    const selectedItemIndexProperty = new DynamicProperty<number | string | null, TReadOnlyProperty<number | string>, TReadOnlyProperty<string | number | null>>(
       new DerivedProperty( [ model.groupSortInteractionModel.selectedGroupItemProperty ], item => {
-        return item ? item.indexProperty : new TinyProperty( null );
+        return item ? item.indexProperty : new TinyProperty( 'NO CARD SELECTED' );
       } ) );
-    const selectNamePatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.a11y.median.dataCardsGroup.selectAccessibleNameStringProperty, {
+    const selectNamePatternStringProperty = CenterAndVariabilityFluent.a11y.median.dataCardsGroup.selectAccessibleName.createProperty( {
       value: selectedItemValueProperty,
       index: selectedItemIndexProperty,
       total: sceneModel.numberOfDataPointsProperty
-    }, {
-      maps: {
-        value: value => value === null ? 0 : value,
-        index: index => index === null ? 0 : index + 1
-      }
     } );
 
-    const sortNamePatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.a11y.median.dataCardsGroup.sortAccessibleNameStringProperty, {
+    const sortNamePatternStringProperty = CenterAndVariabilityFluent.a11y.median.dataCardsGroup.sortAccessibleName.createProperty( {
       value: selectedItemValueProperty,
       index: selectedItemIndexProperty,
       total: sceneModel.numberOfDataPointsProperty
