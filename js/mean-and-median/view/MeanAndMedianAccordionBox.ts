@@ -35,6 +35,7 @@ import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
 import CAVInfoButton from '../../common/view/CAVInfoButton.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
 import MeanAndMedianPlotNode from './MeanAndMedianPlotNode.js';
+import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 
 export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
   public readonly infoButton: ButtonNode;
@@ -82,7 +83,10 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
     const gradientRectangle = new Rectangle( 0, backgroundShape.bounds.minY, backgroundShape.bounds.maxX, backgroundShape.bounds.minY + 5, { fill: topGradient } );
     backgroundNode.addChild( gradientRectangle );
 
-    const infoButton = new CAVInfoButton( model.infoButtonPressedEmitter, backgroundShape, tandem.createTandem( 'infoButton' ) );
+    const infoButton = new CAVInfoButton( model.infoButtonPressedEmitter, backgroundShape, {
+      tandem: tandem.createTandem( 'infoButton' ),
+      accessibleName: CenterAndVariabilityFluent.a11y.meanAndMedian.details.accessibleNameStringProperty
+    } );
     backgroundNode.addChild( infoButton );
 
     const createReadoutText = ( valueProperty: TReadOnlyProperty<number | null>, visibleProperty: TReadOnlyProperty<boolean>,

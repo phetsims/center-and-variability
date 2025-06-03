@@ -27,6 +27,7 @@ import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
 import CAVInfoButton from '../../common/view/CAVInfoButton.js';
 import MedianModel from '../model/MedianModel.js';
 import InteractiveCardNodeContainer from './InteractiveCardNodeContainer.js';
+import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 
 export default class MedianAccordionBox extends CAVAccordionBox {
   public readonly infoButton: ButtonNode;
@@ -61,7 +62,10 @@ export default class MedianAccordionBox extends CAVAccordionBox {
       yAlign: 'center'
     } );
 
-    const infoButton = new CAVInfoButton( model.infoButtonPressedEmitter, backgroundShape, tandem.createTandem( 'infoButton' ) );
+    const infoButton = new CAVInfoButton( model.infoButtonPressedEmitter, backgroundShape, {
+      tandem: tandem.createTandem( 'infoButton' ),
+      accessibleName: CenterAndVariabilityFluent.a11y.median.details.accessibleNameStringProperty
+    } );
 
     backgroundNode.addChild( infoButton );
     backgroundNode.addChild( cardNodeContainer );

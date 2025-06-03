@@ -162,7 +162,7 @@ a11y:
       accessibleName: Median on Data Cards
       accessibleHelpText: Analyze data cards with or without median value shown and located if data is sorted.
     details:
-      accessibleName: Median Detail
+      accessibleName: Median Details
   meanAndMedian:
     playArea: >-
       At edge of field, up to {$maxBalls} kickers are ready to kick a soccer ball a random distance between 1 and 15
@@ -187,7 +187,7 @@ a11y:
       range (IQR), and mean absolute deviation (MAD) for each kicker’s kick distribution.
     controlArea: Additionally, access detailed variability information, clear data set, and reset the sim to start over.
     sceneRadioButtonGroup:
-      groupName: Select Kicker
+      groupName: Choose Kicker
       scene1AccessibleName: Green Jersey 1
       scene2AccessibleName: Blue Jersey 2
       scene3AccessibleName: Red Jersey 3

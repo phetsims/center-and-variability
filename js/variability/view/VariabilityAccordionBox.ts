@@ -126,7 +126,12 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     const gradientRectangle = new Rectangle( 0, backgroundShape.bounds.minY, backgroundShape.bounds.maxX, backgroundShape.bounds.minY + 5, { fill: topGradient } );
     backgroundNode.addChild( gradientRectangle );
 
-    const infoButton = new CAVInfoButton( model.infoButtonPressedEmitter, backgroundShape, tandem.createTandem( 'infoButton' ) );
+    const infoButton = new CAVInfoButton( model.infoButtonPressedEmitter, backgroundShape, {
+      tandem: tandem.createTandem( 'infoButton' ),
+      accessibleName: CenterAndVariabilityFluent.a11y.variability.details.accessibleNamePattern.createProperty( {
+        measure: accordionBoxTitleProperty
+      } )
+    } );
     backgroundNode.addChild( infoButton );
 
     const createDerivedValueProperty = ( accessor: ( sceneModel: VariabilitySceneModel ) => TReadOnlyProperty<number | null>, roundToDecimal: number | null ) => {

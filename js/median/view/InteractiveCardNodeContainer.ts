@@ -326,10 +326,10 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       this.groupSortInteractionView.grabReleaseCueNode.centerX = clamp( focusRect.bounds.centerX, cueNodeWidth / 2, max );
     } );
 
-    const selectedItemValueProperty = new DynamicProperty<number | string | null, TReadOnlyProperty<number | string>, TReadOnlyProperty<string | number | null>>( new DerivedProperty( [ model.groupSortInteractionModel.selectedGroupItemProperty ], item => {
+    const selectedItemValueProperty = new DynamicProperty<number | string, TReadOnlyProperty<number | string>, TReadOnlyProperty<string | number | null>>( new DerivedProperty( [ model.groupSortInteractionModel.selectedGroupItemProperty ], item => {
       return item ? item.soccerBall.valueProperty : new TinyProperty( 'NO CARD SELECTED' );
     } ) );
-    const selectedItemIndexProperty = new DynamicProperty<number | string | null, TReadOnlyProperty<number | string>, TReadOnlyProperty<string | number | null>>(
+    const selectedItemIndexProperty = new DynamicProperty<number | string, TReadOnlyProperty<number | string>, TReadOnlyProperty<string | number | null>>(
       new DerivedProperty( [ model.groupSortInteractionModel.selectedGroupItemProperty ], item => {
         return item ? item.indexProperty : new TinyProperty( 'NO CARD SELECTED' );
       } ) );
