@@ -6,10 +6,10 @@
 /* @formatter:off */
 
 import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
-import type { FluentVariable } from '../../chipper/js/browser/FluentPattern.js';
 import FluentPattern from '../../chipper/js/browser/FluentPattern.js';
 import FluentContainer from '../../chipper/js/browser/FluentContainer.js';
 import FluentConstant from '../../chipper/js/browser/FluentConstant.js';
+import IntentionalAny from '../../phet-core/js/types/IntentionalAny.js';
 import centerAndVariability from './centerAndVariability.js';
 import CenterAndVariabilityStrings from './CenterAndVariabilityStrings.js';
 
@@ -277,7 +277,7 @@ const CenterAndVariabilityFluent = {
     meanAndMedianScreenHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_meanAndMedianScreenHelpText' ),
     variabilityScreenHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variabilityScreenHelpText' ),
     common: {
-      guidingQuestion: new FluentPattern<{ question: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_common_guidingQuestion' ),
+      guidingQuestion: new FluentPattern<{ question: IntentionalAny }>( fluentSupport.bundleProperty, 'a11y_common_guidingQuestion' ),
       soccerFieldStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_common_soccerField' ),
       interactionHintNoBallsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_common_interactionHintNoBalls' ),
       eraseButton: {
@@ -308,17 +308,17 @@ const CenterAndVariabilityFluent = {
       }
     },
     median: {
-      playArea: new FluentPattern<{ maxBalls: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_median_playArea' ),
+      playArea: new FluentPattern<{ maxBalls: IntentionalAny }>( fluentSupport.bundleProperty, 'a11y_median_playArea' ),
       controlAreaStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_median_controlArea' ),
-      currentDetails: new FluentPattern<{ distances: FluentVariable, number: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_median_currentDetails' ),
+      currentDetails: new FluentPattern<{ distances: IntentionalAny, number: IntentionalAny }>( fluentSupport.bundleProperty, 'a11y_median_currentDetails' ),
       interactionHintSomeBallsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_median_interactionHintSomeBalls' ),
       distanceAccordionBox: {
         accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_median_distanceAccordionBox_accessibleName' )
       },
       dataCardsGroup: {
         noCardsAccessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_median_dataCardsGroup_noCardsAccessibleName' ),
-        selectAccessibleName: new FluentPattern<{ index: FluentVariable, total: FluentVariable, value: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_median_dataCardsGroup_selectAccessibleName' ),
-        sortAccessibleName: new FluentPattern<{ index: FluentVariable, total: FluentVariable, value: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_median_dataCardsGroup_sortAccessibleName' ),
+        selectAccessibleName: new FluentPattern<{ index: IntentionalAny, total: IntentionalAny, value: IntentionalAny }>( fluentSupport.bundleProperty, 'a11y_median_dataCardsGroup_selectAccessibleName' ),
+        sortAccessibleName: new FluentPattern<{ index: IntentionalAny, total: IntentionalAny, value: IntentionalAny }>( fluentSupport.bundleProperty, 'a11y_median_dataCardsGroup_sortAccessibleName' ),
         selectAccessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_median_dataCardsGroup_selectAccessibleHelpText' ),
         sortAccessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_median_dataCardsGroup_sortAccessibleHelpText' )
       },
@@ -335,7 +335,7 @@ const CenterAndVariabilityFluent = {
       }
     },
     meanAndMedian: {
-      playArea: new FluentPattern<{ maxBalls: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_meanAndMedian_playArea' ),
+      playArea: new FluentPattern<{ maxBalls: IntentionalAny }>( fluentSupport.bundleProperty, 'a11y_meanAndMedian_playArea' ),
       controlAreaStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_meanAndMedian_controlArea' ),
       accordionBoxHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_meanAndMedian_accordionBoxHelpText' ),
       plotMedianCheckbox: {
@@ -351,7 +351,7 @@ const CenterAndVariabilityFluent = {
       }
     },
     variability: {
-      playArea: new FluentPattern<{ maxBalls: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_variability_playArea' ),
+      playArea: new FluentPattern<{ maxBalls: IntentionalAny }>( fluentSupport.bundleProperty, 'a11y_variability_playArea' ),
       controlAreaStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_controlArea' ),
       sceneRadioButtonGroup: {
         groupNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_sceneRadioButtonGroup_groupName' ),
@@ -386,7 +386,7 @@ const CenterAndVariabilityFluent = {
         accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_madCheckbox_accessibleHelpText' )
       },
       details: {
-        accessibleNamePattern: new FluentPattern<{ measure: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_variability_details_accessibleNamePattern' )
+        accessibleNamePattern: new FluentPattern<{ measure: IntentionalAny }>( fluentSupport.bundleProperty, 'a11y_variability_details_accessibleNamePattern' )
       },
       intervalTool: {
         headingStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_intervalTool_heading' ),
@@ -394,7 +394,7 @@ const CenterAndVariabilityFluent = {
         handle1AccessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_intervalTool_handle1AccessibleName' ),
         handle2AccessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_intervalTool_handle2AccessibleName' ),
         rectangleAccessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_intervalTool_rectangleAccessibleName' ),
-        rectangleValuePattern: new FluentPattern<{ valueA: FluentVariable, valueB: FluentVariable, width: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_variability_intervalTool_rectangleValuePattern' )
+        rectangleValuePattern: new FluentPattern<{ valueA: IntentionalAny, valueB: IntentionalAny, width: IntentionalAny }>( fluentSupport.bundleProperty, 'a11y_variability_intervalTool_rectangleValuePattern' )
       }
     },
     preferences: {
