@@ -345,7 +345,15 @@
         "value": "Additionally, access detailed median information, clear data set, and reset the sim to start over."
       },
       "currentDetails": {
-        "value": "Currently, { NUMBER($number, type: \"cardinal\") ->\n[0] 0 soccer balls on field. 0 data cards are listed.\n[1] 1 soccer ball on field. 1 data card lists the kick distance as {$distances}.\n*[other] {$number} soccer balls on field. {$number} data cards list the kick distances as {$distances}.\n}"
+        "soccerBalls": {
+          "value": "Currently, { NUMBER($number, type: \"cardinal\") ->\n[0] 0 soccer balls on field.\n[1] 1 soccer ball on field:\n*[other] {$number} soccer balls on field:\n}"
+        },
+        "listItemPattern": {
+          "value": "{$number} at meter {$distance}."
+        },
+        "cards": {
+          "value": "{ NUMBER($number, type: \"cardinal\") ->\n[0] 0 data cards are listed.\n[1] 1 data card lists the kick distance as {$distances}.\n*[other] {$number} data cards list the kick distances as {$distances}.\n}"
+        }
       },
       "interactionHintSomeBalls": {
         "value": "Move soccer balls or sort distance data cards to explore data."

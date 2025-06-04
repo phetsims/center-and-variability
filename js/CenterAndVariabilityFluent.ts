@@ -110,7 +110,9 @@ const fluentKeyToStringPropertyMap = new Map( [
   ['a11y_common_predictMeanCheckbox_accessibleHelpText', CenterAndVariabilityStrings.a11y.common.predictMeanCheckbox.accessibleHelpTextStringProperty],
   ['a11y_median_playArea', CenterAndVariabilityStrings.a11y.median.playAreaStringProperty],
   ['a11y_median_controlArea', CenterAndVariabilityStrings.a11y.median.controlAreaStringProperty],
-  ['a11y_median_currentDetails', CenterAndVariabilityStrings.a11y.median.currentDetailsStringProperty],
+  ['a11y_median_currentDetails_soccerBalls', CenterAndVariabilityStrings.a11y.median.currentDetails.soccerBallsStringProperty],
+  ['a11y_median_currentDetails_listItemPattern', CenterAndVariabilityStrings.a11y.median.currentDetails.listItemPatternStringProperty],
+  ['a11y_median_currentDetails_cards', CenterAndVariabilityStrings.a11y.median.currentDetails.cardsStringProperty],
   ['a11y_median_interactionHintSomeBalls', CenterAndVariabilityStrings.a11y.median.interactionHintSomeBallsStringProperty],
   ['a11y_median_distanceAccordionBox_accessibleName', CenterAndVariabilityStrings.a11y.median.distanceAccordionBox.accessibleNameStringProperty],
   ['a11y_median_dataCardsGroup_noCardsAccessibleName', CenterAndVariabilityStrings.a11y.median.dataCardsGroup.noCardsAccessibleNameStringProperty],
@@ -310,7 +312,11 @@ const CenterAndVariabilityFluent = {
     median: {
       playArea: new FluentPattern<{ maxBalls: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_median_playArea' ),
       controlAreaStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_median_controlArea' ),
-      currentDetails: new FluentPattern<{ distances: FluentVariable, number: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_median_currentDetails' ),
+      currentDetails: {
+        soccerBalls: new FluentPattern<{ number: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_median_currentDetails_soccerBalls' ),
+        listItemPattern: new FluentPattern<{ distance: FluentVariable, number: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_median_currentDetails_listItemPattern' ),
+        cards: new FluentPattern<{ distances: FluentVariable, number: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_median_currentDetails_cards' )
+      },
       interactionHintSomeBallsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_median_interactionHintSomeBalls' ),
       distanceAccordionBox: {
         accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_median_distanceAccordionBox_accessibleName' )

@@ -140,12 +140,20 @@ a11y:
       ball recording the kick distance. Each ball can be moved to adjust its kick distance. There are checkboxes to
       auto-sort the data cards and highlight or predict the median.
     controlArea: Additionally, access detailed median information, clear data set, and reset the sim to start over.
-    currentDetails: |-
-      Currently, { NUMBER($number, type: "cardinal") ->
-      [0] 0 soccer balls on field. 0 data cards are listed.
-      [1] 1 soccer ball on field. 1 data card lists the kick distance as {$distances}.
-      *[other] {$number} soccer balls on field. {$number} data cards list the kick distances as {$distances}.
-      }
+    currentDetails:
+      soccerBalls: |-
+        Currently, { NUMBER($number, type: "cardinal") ->
+        [0] 0 soccer balls on field.
+        [1] 1 soccer ball on field:
+        *[other] {$number} soccer balls on field:
+        }
+      listItemPattern: "{$number} at meter {$distance}."
+      cards: |-
+        { NUMBER($number, type: "cardinal") ->
+        [0] 0 data cards are listed.
+        [1] 1 data card lists the kick distance as {$distances}.
+        *[other] {$number} data cards list the kick distances as {$distances}.
+        }
     interactionHintSomeBalls: Move soccer balls or sort distance data cards to explore data.
     distanceAccordionBox:
       accessibleName: Distance (in meters) sortable list
@@ -214,7 +222,7 @@ a11y:
       accessibleNamePattern: "{$measure} Details"
     intervalTool:
       heading: Interval Tool Controls
-      accessibleHelpText: >- 
+      accessibleHelpText: >-
         Define boundaries of interval region. Shift interval region to estimate distribution variability or future kick
         locations.
       handle1AccessibleName: Boundary A

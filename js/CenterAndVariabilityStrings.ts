@@ -151,7 +151,11 @@ type StringsType = {
     'median': {
       'playAreaStringProperty': LocalizedStringProperty;
       'controlAreaStringProperty': LocalizedStringProperty;
-      'currentDetailsStringProperty': LocalizedStringProperty;
+      'currentDetails': {
+        'soccerBallsStringProperty': LocalizedStringProperty;
+        'listItemPatternStringProperty': LocalizedStringProperty;
+        'cardsStringProperty': LocalizedStringProperty;
+      };
       'interactionHintSomeBallsStringProperty': LocalizedStringProperty;
       'distanceAccordionBox': {
         'accessibleNameStringProperty': LocalizedStringProperty;

@@ -9,17 +9,19 @@
 import ScreenSummaryContent from '../../../../joist/js/ScreenSummaryContent.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import { MAX_KICKS_PROPERTY } from '../CAVConstants.js';
+import CAVConstants, { MAX_KICKS_PROPERTY } from '../CAVConstants.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import MedianModel from '../../median/model/MedianModel.js';
 import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
 
 export default class CAVScreenSummaryContent extends ScreenSummaryContent {
 
   public constructor( model: MedianModel ) {
+    const sceneModel = model.sceneModels[ 0 ];
     const playAreaPatternStringProperty = CenterAndVariabilityFluent.a11y.median.playArea.createProperty( {
       maxBalls: MAX_KICKS_PROPERTY
     } );
@@ -31,15 +33,53 @@ export default class CAVScreenSummaryContent extends ScreenSummaryContent {
      * Create the details strings for the current details content.
      */
     const ballValueProperties: Property<number | null>[] = model.selectedSceneModelProperty.value.soccerBalls.map( ball => ball.valueProperty );
+
+    const meters = _.range( CAVConstants.PHYSICAL_RANGE.min, CAVConstants.PHYSICAL_RANGE.max );
+    const meterStackHeightProperties = meters.map( meter =>
+      DerivedProperty.deriveAny( ballValueProperties, () => {
+        return sceneModel.getStackAtValue( meter ).length;
+      } )
+    );
+    const listItems = meters.map( meter => {
+      const index = meter - CAVConstants.PHYSICAL_RANGE.min;
+      return new Node( {
+        tagName: 'li',
+        visibleProperty: DerivedProperty.valueNotEqualsConstant( meterStackHeightProperties[ index ], 0 ),
+        accessibleName: CenterAndVariabilityFluent.a11y.median.currentDetails.listItemPattern.createProperty( {
+          number: meterStackHeightProperties[ index ],
+          distance: meter
+        } )
+      } );
+    } );
+
     const distancesStringProperty = DerivedProperty.deriveAny( ballValueProperties,
       () => {
         const distances = ballValueProperties.filter( valueProperty => valueProperty.value !== null )
           .map( valueProperty => valueProperty.value );
         return distances.length > 0 ? distances.join( ', ' ) : '';
       } );
-    const currentDetailsPatternStringProperty = CenterAndVariabilityFluent.a11y.median.currentDetails.createProperty( {
+    const currentCardDetailsPatternStringProperty = CenterAndVariabilityFluent.a11y.median.currentDetails.cards.createProperty( {
       number: model.selectedSceneStackedSoccerBallCountProperty,
       distances: distancesStringProperty
+    } );
+
+    const currentDetailsNode = new Node( {
+      children: [
+        new Node( {
+          tagName: 'p',
+          accessibleName: CenterAndVariabilityFluent.a11y.median.currentDetails.soccerBalls.createProperty( {
+            number: model.selectedSceneStackedSoccerBallCountProperty
+          } )
+        } ),
+        new Node( {
+          tagName: 'ul',
+          children: listItems
+        } ),
+        new Node( {
+          tagName: 'p',
+          accessibleName: currentCardDetailsPatternStringProperty
+        } )
+      ]
     } );
 
     const interactionHintStringProperty = new DynamicProperty<string, string, TReadOnlyProperty<string>>( new DerivedProperty( [ model.selectedSceneStackedSoccerBallCountProperty ],
@@ -50,9 +90,9 @@ export default class CAVScreenSummaryContent extends ScreenSummaryContent {
     super( {
       playAreaContent: [ playAreaPatternStringProperty, guidingQuestionStringProperty ],
       controlAreaContent: CenterAndVariabilityStrings.a11y.median.controlAreaStringProperty,
-      currentDetailsContent: [
-        currentDetailsPatternStringProperty
-      ],
+      currentDetailsContent: {
+        node: currentDetailsNode
+      },
       interactionHintContent: interactionHintStringProperty
     } );
   }
