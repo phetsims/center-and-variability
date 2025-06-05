@@ -26,6 +26,7 @@ import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
 import MeanAndMedianAccordionBox from './MeanAndMedianAccordionBox.js';
 import MeanAndMedianInfoDialog from './MeanAndMedianInfoDialog.js';
 import { roundToInterval } from '../../../../dot/js/util/roundToInterval.js';
+import MeanAndMedianScreenSummary from './MeanAndMedianScreenSummary.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeanAndMedianScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
@@ -38,7 +39,8 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
       questionBarOptions: {
         barFill: CAVColors.meanAndMedianQuestionBarFillColorProperty,
         questionString: CenterAndVariabilityStrings.meanAndMedianQuestionStringProperty
-      }
+      },
+      screenSummaryContent: new MeanAndMedianScreenSummary( model )
     }, providedOptions );
 
     super( model, options );

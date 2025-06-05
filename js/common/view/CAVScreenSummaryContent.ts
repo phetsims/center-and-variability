@@ -1,100 +1,78 @@
 // Copyright 2025, University of Colorado Boulder
 /**
- * Implements the screen summary for center-and-variability.
+ * Consolidates the common aspects of screen summaries for the Center and Variability simulation.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
  *
  */
 
-import ScreenSummaryContent from '../../../../joist/js/ScreenSummaryContent.js';
+import ScreenSummaryContent, { ScreenSummaryContentOptions, SectionContent } from '../../../../joist/js/ScreenSummaryContent.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import CAVConstants, { MAX_KICKS_PROPERTY } from '../CAVConstants.js';
-import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
+import CAVConstants from '../CAVConstants.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import MedianModel from '../../median/model/MedianModel.js';
-import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 
+type SelfOptions = EmptySelfOptions;
+type CAVScreenSummaryContentOptions = SelfOptions & WithRequired<ScreenSummaryContentOptions, 'playAreaContent' | 'interactionHintContent'>;
 export default class CAVScreenSummaryContent extends ScreenSummaryContent {
+  protected static readonly METERS = _.range( CAVConstants.PHYSICAL_RANGE.min, CAVConstants.PHYSICAL_RANGE.max + 1 );
 
-  public constructor( model: MedianModel ) {
-    const sceneModel = model.sceneModels[ 0 ];
-    const playAreaPatternStringProperty = CenterAndVariabilityFluent.a11y.median.playArea.createProperty( {
-      maxBalls: MAX_KICKS_PROPERTY
-    } );
-    const guidingQuestionStringProperty = CenterAndVariabilityFluent.a11y.common.guidingQuestion.createProperty( {
-      question: CenterAndVariabilityFluent.medianQuestionStringProperty
-    } );
+  protected constructor(
+    meterStackHeightProperties: TReadOnlyProperty<number>[],
+    currentDetailsStringProperty: TReadOnlyProperty<string>,
+    remainingDetailsNode: Node,
+    providedOptions: CAVScreenSummaryContentOptions ) {
 
-    /**
-     * Create the details strings for the current details content.
-     */
-    const ballValueProperties: Property<number | null>[] = model.selectedSceneModelProperty.value.soccerBalls.map( ball => ball.valueProperty );
-
-    const meters = _.range( CAVConstants.PHYSICAL_RANGE.min, CAVConstants.PHYSICAL_RANGE.max );
-    const meterStackHeightProperties = meters.map( meter =>
-      DerivedProperty.deriveAny( ballValueProperties, () => {
-        return sceneModel.getStackAtValue( meter ).length;
-      } )
-    );
-    const listItems = meters.map( meter => {
+    const listItems = CAVScreenSummaryContent.METERS.map( meter => {
       const index = meter - CAVConstants.PHYSICAL_RANGE.min;
       return new Node( {
         tagName: 'li',
         visibleProperty: DerivedProperty.valueNotEqualsConstant( meterStackHeightProperties[ index ], 0 ),
-        accessibleName: CenterAndVariabilityFluent.a11y.median.currentDetails.listItemPattern.createProperty( {
+        accessibleName: CenterAndVariabilityFluent.a11y.common.currentDetails.listItemPattern.createProperty( {
           number: meterStackHeightProperties[ index ],
           distance: meter
         } )
       } );
     } );
 
-    const distancesStringProperty = DerivedProperty.deriveAny( ballValueProperties,
-      () => {
-        const distances = ballValueProperties.filter( valueProperty => valueProperty.value !== null )
-          .map( valueProperty => valueProperty.value );
-        return distances.length > 0 ? distances.join( ', ' ) : '';
-      } );
-    const currentCardDetailsPatternStringProperty = CenterAndVariabilityFluent.a11y.median.currentDetails.cards.createProperty( {
-      number: model.selectedSceneStackedSoccerBallCountProperty,
-      distances: distancesStringProperty
-    } );
-
     const currentDetailsNode = new Node( {
       children: [
         new Node( {
           tagName: 'p',
-          accessibleName: CenterAndVariabilityFluent.a11y.median.currentDetails.soccerBalls.createProperty( {
-            number: model.selectedSceneStackedSoccerBallCountProperty
-          } )
+          accessibleName: currentDetailsStringProperty
         } ),
         new Node( {
           tagName: 'ul',
           children: listItems
         } ),
-        new Node( {
-          tagName: 'p',
-          accessibleName: currentCardDetailsPatternStringProperty
-        } )
+        remainingDetailsNode
       ]
     } );
 
-    const interactionHintStringProperty = new DynamicProperty<string, string, TReadOnlyProperty<string>>( new DerivedProperty( [ model.selectedSceneStackedSoccerBallCountProperty ],
-      count => {
-        return count === 0 ? CenterAndVariabilityStrings.a11y.common.interactionHintNoBallsStringProperty : CenterAndVariabilityStrings.a11y.median.interactionHintSomeBallsStringProperty;
-      } ) );
-
-    super( {
-      playAreaContent: [ playAreaPatternStringProperty, guidingQuestionStringProperty ],
+    const options = optionize<CAVScreenSummaryContentOptions, SelfOptions, ScreenSummaryContentOptions>()( {
       controlAreaContent: CenterAndVariabilityStrings.a11y.median.controlAreaStringProperty,
       currentDetailsContent: {
         node: currentDetailsNode
-      },
-      interactionHintContent: interactionHintStringProperty
-    } );
+      }
+    }, providedOptions );
+
+    super( options );
+  }
+
+  protected static createInteractionHintContent(
+    someBallsStringProperty: TReadOnlyProperty<string>,
+    stackSoccerBallCountProperty: TReadOnlyProperty<number> ): SectionContent {
+    return new DynamicProperty<string, string, TReadOnlyProperty<string>>(
+      new DerivedProperty( [ stackSoccerBallCountProperty ], count => {
+        return count === 0 ? CenterAndVariabilityStrings.a11y.common.interactionHintNoBallsStringProperty :
+               someBallsStringProperty;
+      } ) );
   }
 }
 

@@ -277,6 +277,11 @@
       "value": "Kick soccer balls and explore data sets to compare measures of variability."
     },
     "common": {
+      "currentDetails": {
+        "listItemPattern": {
+          "value": "{$number} at meter {$distance}."
+        }
+      },
       "guidingQuestion": {
         "value": "Guiding question: \"{$question}\""
       },
@@ -348,9 +353,6 @@
         "soccerBalls": {
           "value": "Currently, { NUMBER($number, type: \"cardinal\") ->\n[0] 0 soccer balls on field.\n[1] 1 soccer ball on field:\n*[other] {$number} soccer balls on field:\n}"
         },
-        "listItemPattern": {
-          "value": "{$number} at meter {$distance}."
-        },
         "cards": {
           "value": "{ NUMBER($number, type: \"cardinal\") ->\n[0] 0 data cards are listed.\n[1] 1 data card lists the kick distance as {$distances}.\n*[other] {$number} data cards list the kick distances as {$distances}.\n}"
         }
@@ -406,6 +408,14 @@
       "playArea": {
         "value": "At edge of field, up to {$maxBalls} kickers are ready to kick a soccer ball a random distance between 1 and 15 meters. Stacks of balls form when they land at the same distance. A mark appears on a plot for each kicked ball recording the kick distance. Each ball can be moved to adjust its kick distance. There are checkboxes to highlight or predict the median and mean."
       },
+      "currentDetails": {
+        "soccerBalls": {
+          "value": "Currently, { NUMBER($number, type: \"cardinal\") ->\n[0] 0 soccer balls on field.\n[1] 1 soccer ball on field:\n*[other] {$number} soccer balls on field:\n}"
+        },
+        "plot": {
+          "value": "{ NUMBER($number, type: \"cardinal\") ->\n[0] 0 {$plotType} on plot.\n[1] 1 {$plotType} also marks kick distance on plot.\n*[other] {$number} {$plotType} mark kick distances on plot.\n}"
+        }
+      },
       "controlArea": {
         "value": "Additionally, access detailed mean and median information, clear data set, and reset the sim to start over."
       },
@@ -432,11 +442,22 @@
         "accessibleName": {
           "value": "Median and Mean Details"
         }
+      },
+      "interactionHintSomeBalls": {
+        "value": "Move soccer balls or explore plot to analyze data."
       }
     },
     "variability": {
       "playArea": {
         "value": "At edge of field, up to {$maxBalls} kickers are ready to kick a soccer ball a random distance between 1 and 15 meters. Stacks of balls form when they land at the same distance. A mark appears on a plot for each kicked ball recording the kick distance. Each ball can be moved to adjust its kick distance. Explore the range, interquartile range (IQR), and mean absolute deviation (MAD) for each kicker’s kick distribution."
+      },
+      "currentDetails": {
+        "soccerBalls": {
+          "value": "{$kicker} kicker selected. Currently, { NUMBER($number, type: \"cardinal\") ->\n[0] 0 soccer balls on field.\n[1] 1 soccer ball on field:\n*[other] {$number} soccer balls on field:\n}"
+        },
+        "measure": {
+          "value": "{$measure} is being explored."
+        }
       },
       "controlArea": {
         "value": "Additionally, access detailed variability information, clear data set, and reset the sim to start over."

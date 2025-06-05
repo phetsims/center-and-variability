@@ -118,6 +118,9 @@ type StringsType = {
     'meanAndMedianScreenHelpTextStringProperty': LocalizedStringProperty;
     'variabilityScreenHelpTextStringProperty': LocalizedStringProperty;
     'common': {
+      'currentDetails': {
+        'listItemPatternStringProperty': LocalizedStringProperty;
+      };
       'guidingQuestionStringProperty': LocalizedStringProperty;
       'soccerFieldStringProperty': LocalizedStringProperty;
       'interactionHintNoBallsStringProperty': LocalizedStringProperty;
@@ -153,7 +156,6 @@ type StringsType = {
       'controlAreaStringProperty': LocalizedStringProperty;
       'currentDetails': {
         'soccerBallsStringProperty': LocalizedStringProperty;
-        'listItemPatternStringProperty': LocalizedStringProperty;
         'cardsStringProperty': LocalizedStringProperty;
       };
       'interactionHintSomeBallsStringProperty': LocalizedStringProperty;
@@ -181,6 +183,10 @@ type StringsType = {
     };
     'meanAndMedian': {
       'playAreaStringProperty': LocalizedStringProperty;
+      'currentDetails': {
+        'soccerBallsStringProperty': LocalizedStringProperty;
+        'plotStringProperty': LocalizedStringProperty;
+      };
       'controlAreaStringProperty': LocalizedStringProperty;
       'accordionBoxHelpTextStringProperty': LocalizedStringProperty;
       'plotMedianCheckbox': {
@@ -193,10 +199,15 @@ type StringsType = {
       };
       'details': {
         'accessibleNameStringProperty': LocalizedStringProperty;
-      }
+      };
+      'interactionHintSomeBallsStringProperty': LocalizedStringProperty;
     };
     'variability': {
       'playAreaStringProperty': LocalizedStringProperty;
+      'currentDetails': {
+        'soccerBallsStringProperty': LocalizedStringProperty;
+        'measureStringProperty': LocalizedStringProperty;
+      };
       'controlAreaStringProperty': LocalizedStringProperty;
       'sceneRadioButtonGroup': {
         'groupNameStringProperty': LocalizedStringProperty;

@@ -93,6 +93,7 @@ const fluentKeyToStringPropertyMap = new Map( [
   ['a11y_medianScreenHelpText', CenterAndVariabilityStrings.a11y.medianScreenHelpTextStringProperty],
   ['a11y_meanAndMedianScreenHelpText', CenterAndVariabilityStrings.a11y.meanAndMedianScreenHelpTextStringProperty],
   ['a11y_variabilityScreenHelpText', CenterAndVariabilityStrings.a11y.variabilityScreenHelpTextStringProperty],
+  ['a11y_common_currentDetails_listItemPattern', CenterAndVariabilityStrings.a11y.common.currentDetails.listItemPatternStringProperty],
   ['a11y_common_guidingQuestion', CenterAndVariabilityStrings.a11y.common.guidingQuestionStringProperty],
   ['a11y_common_soccerField', CenterAndVariabilityStrings.a11y.common.soccerFieldStringProperty],
   ['a11y_common_interactionHintNoBalls', CenterAndVariabilityStrings.a11y.common.interactionHintNoBallsStringProperty],
@@ -111,7 +112,6 @@ const fluentKeyToStringPropertyMap = new Map( [
   ['a11y_median_playArea', CenterAndVariabilityStrings.a11y.median.playAreaStringProperty],
   ['a11y_median_controlArea', CenterAndVariabilityStrings.a11y.median.controlAreaStringProperty],
   ['a11y_median_currentDetails_soccerBalls', CenterAndVariabilityStrings.a11y.median.currentDetails.soccerBallsStringProperty],
-  ['a11y_median_currentDetails_listItemPattern', CenterAndVariabilityStrings.a11y.median.currentDetails.listItemPatternStringProperty],
   ['a11y_median_currentDetails_cards', CenterAndVariabilityStrings.a11y.median.currentDetails.cardsStringProperty],
   ['a11y_median_interactionHintSomeBalls', CenterAndVariabilityStrings.a11y.median.interactionHintSomeBallsStringProperty],
   ['a11y_median_distanceAccordionBox_accessibleName', CenterAndVariabilityStrings.a11y.median.distanceAccordionBox.accessibleNameStringProperty],
@@ -126,6 +126,8 @@ const fluentKeyToStringPropertyMap = new Map( [
   ['a11y_median_cardsMedianCheckbox_accessibleHelpText', CenterAndVariabilityStrings.a11y.median.cardsMedianCheckbox.accessibleHelpTextStringProperty],
   ['a11y_median_details_accessibleName', CenterAndVariabilityStrings.a11y.median.details.accessibleNameStringProperty],
   ['a11y_meanAndMedian_playArea', CenterAndVariabilityStrings.a11y.meanAndMedian.playAreaStringProperty],
+  ['a11y_meanAndMedian_currentDetails_soccerBalls', CenterAndVariabilityStrings.a11y.meanAndMedian.currentDetails.soccerBallsStringProperty],
+  ['a11y_meanAndMedian_currentDetails_plot', CenterAndVariabilityStrings.a11y.meanAndMedian.currentDetails.plotStringProperty],
   ['a11y_meanAndMedian_controlArea', CenterAndVariabilityStrings.a11y.meanAndMedian.controlAreaStringProperty],
   ['a11y_meanAndMedian_accordionBoxHelpText', CenterAndVariabilityStrings.a11y.meanAndMedian.accordionBoxHelpTextStringProperty],
   ['a11y_meanAndMedian_plotMedianCheckbox_accessibleName', CenterAndVariabilityStrings.a11y.meanAndMedian.plotMedianCheckbox.accessibleNameStringProperty],
@@ -133,7 +135,10 @@ const fluentKeyToStringPropertyMap = new Map( [
   ['a11y_meanAndMedian_plotMeanCheckbox_accessibleName', CenterAndVariabilityStrings.a11y.meanAndMedian.plotMeanCheckbox.accessibleNameStringProperty],
   ['a11y_meanAndMedian_plotMeanCheckbox_accessibleHelpText', CenterAndVariabilityStrings.a11y.meanAndMedian.plotMeanCheckbox.accessibleHelpTextStringProperty],
   ['a11y_meanAndMedian_details_accessibleName', CenterAndVariabilityStrings.a11y.meanAndMedian.details.accessibleNameStringProperty],
+  ['a11y_meanAndMedian_interactionHintSomeBalls', CenterAndVariabilityStrings.a11y.meanAndMedian.interactionHintSomeBallsStringProperty],
   ['a11y_variability_playArea', CenterAndVariabilityStrings.a11y.variability.playAreaStringProperty],
+  ['a11y_variability_currentDetails_soccerBalls', CenterAndVariabilityStrings.a11y.variability.currentDetails.soccerBallsStringProperty],
+  ['a11y_variability_currentDetails_measure', CenterAndVariabilityStrings.a11y.variability.currentDetails.measureStringProperty],
   ['a11y_variability_controlArea', CenterAndVariabilityStrings.a11y.variability.controlAreaStringProperty],
   ['a11y_variability_sceneRadioButtonGroup_groupName', CenterAndVariabilityStrings.a11y.variability.sceneRadioButtonGroup.groupNameStringProperty],
   ['a11y_variability_sceneRadioButtonGroup_scene1AccessibleName', CenterAndVariabilityStrings.a11y.variability.sceneRadioButtonGroup.scene1AccessibleNameStringProperty],
@@ -279,6 +284,9 @@ const CenterAndVariabilityFluent = {
     meanAndMedianScreenHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_meanAndMedianScreenHelpText' ),
     variabilityScreenHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variabilityScreenHelpText' ),
     common: {
+      currentDetails: {
+        listItemPattern: new FluentPattern<{ distance: FluentVariable, number: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_common_currentDetails_listItemPattern' )
+      },
       guidingQuestion: new FluentPattern<{ question: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_common_guidingQuestion' ),
       soccerFieldStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_common_soccerField' ),
       interactionHintNoBallsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_common_interactionHintNoBalls' ),
@@ -314,7 +322,6 @@ const CenterAndVariabilityFluent = {
       controlAreaStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_median_controlArea' ),
       currentDetails: {
         soccerBalls: new FluentPattern<{ number: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_median_currentDetails_soccerBalls' ),
-        listItemPattern: new FluentPattern<{ distance: FluentVariable, number: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_median_currentDetails_listItemPattern' ),
         cards: new FluentPattern<{ distances: FluentVariable, number: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_median_currentDetails_cards' )
       },
       interactionHintSomeBallsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_median_interactionHintSomeBalls' ),
@@ -342,6 +349,10 @@ const CenterAndVariabilityFluent = {
     },
     meanAndMedian: {
       playArea: new FluentPattern<{ maxBalls: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_meanAndMedian_playArea' ),
+      currentDetails: {
+        soccerBalls: new FluentPattern<{ number: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_meanAndMedian_currentDetails_soccerBalls' ),
+        plot: new FluentPattern<{ number: FluentVariable, plotType: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_meanAndMedian_currentDetails_plot' )
+      },
       controlAreaStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_meanAndMedian_controlArea' ),
       accordionBoxHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_meanAndMedian_accordionBoxHelpText' ),
       plotMedianCheckbox: {
@@ -354,10 +365,15 @@ const CenterAndVariabilityFluent = {
       },
       details: {
         accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_meanAndMedian_details_accessibleName' )
-      }
+      },
+      interactionHintSomeBallsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_meanAndMedian_interactionHintSomeBalls' )
     },
     variability: {
       playArea: new FluentPattern<{ maxBalls: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_variability_playArea' ),
+      currentDetails: {
+        soccerBalls: new FluentPattern<{ kicker: FluentVariable, number: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_variability_currentDetails_soccerBalls' ),
+        measure: new FluentPattern<{ measure: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_variability_currentDetails_measure' )
+      },
       controlAreaStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_controlArea' ),
       sceneRadioButtonGroup: {
         groupNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_sceneRadioButtonGroup_groupName' ),
