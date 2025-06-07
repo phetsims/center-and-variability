@@ -34,10 +34,10 @@ type SelfOptions = {
   instrumentDataPointVisibilityProperty: boolean;
   accordionBoxTandem: Tandem;
 } & PickRequired<PhetioObjectOptions, 'tandem'>;
-type ParentOptions = SoccerModelOptions<CAVSoccerSceneModel>;
-export type CAVModelOptions = SelfOptions & ParentOptions;
+type ParentOptions<T extends CAVSoccerSceneModel> = SoccerModelOptions<T>;
+export type CAVModelOptions<T extends CAVSoccerSceneModel = CAVSoccerSceneModel> = SelfOptions & ParentOptions<T>;
 
-export default class CAVModel extends SoccerModel<CAVSoccerSceneModel> {
+export default class CAVModel<T extends CAVSoccerSceneModel = CAVSoccerSceneModel> extends SoccerModel<T> {
 
   public readonly isPlayAreaMedianVisibleProperty: BooleanProperty; // Screens 1-3
   public readonly isPlayAreaMeanVisibleProperty: BooleanProperty;  // Screens 2-3
@@ -49,11 +49,11 @@ export default class CAVModel extends SoccerModel<CAVSoccerSceneModel> {
 
   public readonly infoButtonPressedEmitter: Emitter;
 
-  public constructor( public readonly maxKicksProperty: TReadOnlyProperty<number>, sceneModels: CAVSoccerSceneModel[], providedOptions: CAVModelOptions ) {
+  public constructor( public readonly maxKicksProperty: TReadOnlyProperty<number>, sceneModels: T[], providedOptions: CAVModelOptions ) {
 
-    const options = optionize<CAVModelOptions, SelfOptions, ParentOptions>()( {
+    const options = optionize<CAVModelOptions, SelfOptions, ParentOptions<T>>()( {
       createGroupSortInteractionModel: ( soccerModel, tandem ) => {
-        return new CAVGroupSortInteractionModel(
+        return new CAVGroupSortInteractionModel<T>(
           soccerModel.selectedSceneModelProperty,
           soccerModel.selectedSceneStackedSoccerBallCountProperty,
           soccerModel.selectedSceneMaxKicksProperty,

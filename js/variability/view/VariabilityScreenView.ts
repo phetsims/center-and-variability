@@ -31,11 +31,13 @@ import VariabilityMeasureRadioButtonGroup from './VariabilityMeasureRadioButtonG
 import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 import { roundToInterval } from '../../../../dot/js/util/roundToInterval.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
+import VariabilityScreenSummaryContent from './VariabilityScreenSummaryContent.js';
+import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityScreenViewOptions = SelfOptions & StrictOmit<CAVScreenViewOptions, 'questionBarOptions'>;
 
-export default class VariabilityScreenView extends CAVScreenView {
+export default class VariabilityScreenView extends CAVScreenView<VariabilitySceneModel> {
 
   //PDOM
   private readonly intervalToolHeading: Node;
@@ -46,7 +48,8 @@ export default class VariabilityScreenView extends CAVScreenView {
       questionBarOptions: {
         barFill: CAVColors.variabilityQuestionBarFillColorProperty,
         questionString: CenterAndVariabilityStrings.variabilityQuestionStringProperty
-      }
+      },
+      screenSummaryContent: new VariabilityScreenSummaryContent( model )
     }, providedOptions );
 
     const variabilityMeasureRadioButtonGroup = new VariabilityMeasureRadioButtonGroup( model.selectedVariabilityMeasureProperty, {

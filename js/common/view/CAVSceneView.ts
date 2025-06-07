@@ -21,10 +21,10 @@ import CAVModel from '../model/CAVModel.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 import MedianHighlightLayer from './MedianHighlightLayer.js';
 
-export default class CAVSceneView extends SoccerSceneView<CAVSoccerSceneModel> {
+export default class CAVSceneView<T extends CAVSoccerSceneModel> extends SoccerSceneView<T> {
 
-  public constructor( model: CAVModel,
-                      sceneModel: CAVSoccerSceneModel,
+  public constructor( model: CAVModel<T>,
+                      sceneModel: T,
                       keyboardSortCueNode: Node,
                       modelViewTransform: ModelViewTransform2,
                       physicalRange: Range,

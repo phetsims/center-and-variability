@@ -550,6 +550,9 @@
         "rectangleValuePattern": {
           "value": "Bounded by {$valueA} and {$valueB}, width {$width}"
         }
+      },
+      "interactionHintSomeBalls": {
+        "value": "Move soccer balls or explore plot to analyze data."
       }
     },
     "preferences": {

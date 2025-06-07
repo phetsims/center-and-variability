@@ -251,7 +251,8 @@ type StringsType = {
         'handle2AccessibleNameStringProperty': LocalizedStringProperty;
         'rectangleAccessibleNameStringProperty': LocalizedStringProperty;
         'rectangleValuePatternStringProperty': LocalizedStringProperty;
-      }
+      };
+      'interactionHintSomeBallsStringProperty': LocalizedStringProperty;
     };
     'preferences': {
       'plotType': {

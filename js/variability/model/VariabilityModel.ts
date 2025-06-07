@@ -30,9 +30,9 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 
 type SelfOptions = EmptySelfOptions;
-type VariabilityModelOptions = SelfOptions & Pick<CAVModelOptions, 'tandem'>;
+type VariabilityModelOptions = SelfOptions & Pick<CAVModelOptions<VariabilitySceneModel>, 'tandem'>;
 
-export default class VariabilityModel extends CAVModel {
+export default class VariabilityModel extends CAVModel<VariabilitySceneModel> {
 
   // The variability measure that is currently selected to display in the accordion box
   public readonly selectedVariabilityMeasureProperty: Property<VariabilityMeasure>;

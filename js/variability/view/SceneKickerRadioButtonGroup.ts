@@ -16,16 +16,15 @@ import TColor from '../../../../scenery/js/util/TColor.js';
 import tshirtSolidShape from '../../../../sherpa/js/fontawesome-5/tshirtSolidShape.js';
 import RectangularRadioButtonGroup, { RectangularRadioButtonGroupOptions } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 
 type SelfOptions = EmptySelfOptions;
 type SceneKickerRadioButtonGroupOptions = SelfOptions & RectangularRadioButtonGroupOptions;
 
-export default class SceneKickerRadioButtonGroup extends RectangularRadioButtonGroup<CAVSoccerSceneModel> {
+export default class SceneKickerRadioButtonGroup extends RectangularRadioButtonGroup<VariabilitySceneModel> {
 
-  public constructor( sceneModels: VariabilitySceneModel[], property: Property<CAVSoccerSceneModel>, providedOptions: SceneKickerRadioButtonGroupOptions ) {
+  public constructor( sceneModels: VariabilitySceneModel[], property: Property<VariabilitySceneModel>, providedOptions: SceneKickerRadioButtonGroupOptions ) {
     const options = optionize<SceneKickerRadioButtonGroupOptions, SelfOptions, RectangularRadioButtonGroupOptions>()( {
       radioButtonOptions: {
         baseColor: 'white'

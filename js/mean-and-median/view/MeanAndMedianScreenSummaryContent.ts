@@ -16,7 +16,7 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import PlotType from '../../common/model/PlotType.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 
-export default class MeanAndMedianScreenSummary extends CAVScreenSummaryContent {
+export default class MeanAndMedianScreenSummaryContent extends CAVScreenSummaryContent {
 
   public constructor( model: MeanAndMedianModel ) {
     const sceneModel = model.sceneModels[ 0 ];
@@ -48,11 +48,16 @@ export default class MeanAndMedianScreenSummary extends CAVScreenSummaryContent 
       tagName: 'p',
       accessibleName: currentPlotDetailsPatternStringProperty
     } );
-   super( meterStackHeightProperties, currentDetailsStringProperty, remainingDetailsNode, {
+
+    const listNode = new Node( {
+      tagName: 'ul',
+      children: CAVScreenSummaryContent.createListItems( meterStackHeightProperties )
+    } );
+   super( [ listNode ], currentDetailsStringProperty, remainingDetailsNode, {
      playAreaContent: [ playAreaPatternStringProperty, guidingQuestionStringProperty ],
       interactionHintContent: CAVScreenSummaryContent.createInteractionHintContent( CenterAndVariabilityFluent.a11y.meanAndMedian.interactionHintSomeBallsStringProperty, model.selectedSceneStackedSoccerBallCountProperty )
    } );
   }
 }
 
-centerAndVariability.register( 'MeanAndMedianScreenSummary', MeanAndMedianScreenSummary );
+centerAndVariability.register( 'MeanAndMedianScreenSummaryContent', MeanAndMedianScreenSummaryContent );

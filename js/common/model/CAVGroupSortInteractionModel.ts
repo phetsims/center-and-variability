@@ -19,12 +19,12 @@ import CAVSoccerSceneModel from './CAVSoccerSceneModel.js';
 // Empirically determined based on height of AccordionBox and play area. This may need to be adjusted if those change.
 const MAX_HEIGHT = 8;
 
-export default class CAVGroupSortInteractionModel extends SoccerCommonGroupSortInteractionModel<CAVSoccerSceneModel> {
+export default class CAVGroupSortInteractionModel<T extends CAVSoccerSceneModel = CAVSoccerSceneModel> extends SoccerCommonGroupSortInteractionModel<T> {
 
-  public constructor( selectedSceneModelProperty: TProperty<CAVSoccerSceneModel>,
+  public constructor( selectedSceneModelProperty: TProperty<T>,
                       selectedSceneStackedSoccerBallCountProperty: TProperty<number>,
                       selectedSceneMaxKicksProperty: TProperty<number>,
-                      sceneModels: CAVSoccerSceneModel[],
+                      sceneModels: T[],
                       providedOptions?: GroupSelectModelOptions<SoccerBall> ) {
     super(
       selectedSceneModelProperty,
@@ -42,7 +42,7 @@ export default class CAVGroupSortInteractionModel extends SoccerCommonGroupSortI
 
   // This is an algorithm that can be used to get the best guess about where the sort indicator should be set to based
   // on the current state of the soccer balls. This selection will apply both to the mouse cue location and the group sort selection.
-  public override updateSelectedGroupItem( sceneModel: CAVSoccerSceneModel ): void {
+  public override updateSelectedGroupItem( sceneModel: T ): void {
     super.updateSelectedGroupItem( sceneModel );
 
     const selectedValue = this.selectedGroupItemProperty.value?.valueProperty.value ?? null;

@@ -252,6 +252,7 @@ a11y:
       handle2AccessibleName: Boundary B
       rectangleAccessibleName: Interval Region
       rectangleValuePattern: Bounded by {$valueA} and {$valueB}, width {$width}
+    interactionHintSomeBalls: Move soccer balls or explore plot to analyze data.
   preferences:
     plotType:
       accessibleHelpText: Determines whether an x or dot marks a kick distance on the plot.

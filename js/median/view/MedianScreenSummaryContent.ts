@@ -56,9 +56,13 @@ export default class MedianScreenSummaryContent extends CAVScreenSummaryContent 
       tagName: 'p',
       accessibleName: currentCardDetailsPatternStringProperty
     } );
+    const listNode = new Node( {
+      tagName: 'ul',
+      children: CAVScreenSummaryContent.createListItems( meterStackHeightProperties )
+    } );
 
     super(
-      meterStackHeightProperties,
+      [ listNode ],
       currentDetailsStringProperty,
       remainingDetailsNode,
       {

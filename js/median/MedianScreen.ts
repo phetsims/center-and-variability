@@ -18,11 +18,12 @@ import CAVScreen, { CAVScreenOptions } from '../common/CAVScreen.js';
 import MedianModel from './model/MedianModel.js';
 import MedianKeyboardHelpNode from './view/MedianKeyboardHelpNode.js';
 import MedianScreenView from './view/MedianScreenView.js';
+import CAVSoccerSceneModel from '../common/model/CAVSoccerSceneModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type MedianScreenOptions = SelfOptions & StrictOmit<CAVScreenOptions, 'name' | 'homeScreenIcon' | 'createKeyboardHelpNode'>;
 
-export default class MedianScreen extends CAVScreen<MedianModel, MedianScreenView> {
+export default class MedianScreen extends CAVScreen<CAVSoccerSceneModel, MedianModel, MedianScreenView> {
 
   public constructor( providedOptions: MedianScreenOptions ) {
 

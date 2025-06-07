@@ -24,22 +24,10 @@ export default class CAVScreenSummaryContent extends ScreenSummaryContent {
   protected static readonly METERS = _.range( CAVConstants.PHYSICAL_RANGE.min, CAVConstants.PHYSICAL_RANGE.max + 1 );
 
   protected constructor(
-    meterStackHeightProperties: TReadOnlyProperty<number>[],
+    listNodes: Node[],
     currentDetailsStringProperty: TReadOnlyProperty<string>,
     remainingDetailsNode: Node,
     providedOptions: CAVScreenSummaryContentOptions ) {
-
-    const listItems = CAVScreenSummaryContent.METERS.map( meter => {
-      const index = meter - CAVConstants.PHYSICAL_RANGE.min;
-      return new Node( {
-        tagName: 'li',
-        visibleProperty: DerivedProperty.valueNotEqualsConstant( meterStackHeightProperties[ index ], 0 ),
-        accessibleName: CenterAndVariabilityFluent.a11y.common.currentDetails.listItemPattern.createProperty( {
-          number: meterStackHeightProperties[ index ],
-          distance: meter
-        } )
-      } );
-    } );
 
     const currentDetailsNode = new Node( {
       children: [
@@ -47,10 +35,7 @@ export default class CAVScreenSummaryContent extends ScreenSummaryContent {
           tagName: 'p',
           accessibleName: currentDetailsStringProperty
         } ),
-        new Node( {
-          tagName: 'ul',
-          children: listItems
-        } ),
+        ...listNodes,
         remainingDetailsNode
       ]
     } );
@@ -63,6 +48,20 @@ export default class CAVScreenSummaryContent extends ScreenSummaryContent {
     }, providedOptions );
 
     super( options );
+  }
+
+  protected static createListItems( meterStackHeightProperties: TReadOnlyProperty<number>[] ): Node[] {
+    return CAVScreenSummaryContent.METERS.map( meter => {
+      const index = meter - CAVConstants.PHYSICAL_RANGE.min;
+      return new Node( {
+        tagName: 'li',
+        visibleProperty: DerivedProperty.valueNotEqualsConstant( meterStackHeightProperties[ index ], 0 ),
+        accessibleName: CenterAndVariabilityFluent.a11y.common.currentDetails.listItemPattern.createProperty( {
+          number: meterStackHeightProperties[ index ],
+          distance: meter
+        } )
+      } );
+    } );
   }
 
   protected static createInteractionHintContent(

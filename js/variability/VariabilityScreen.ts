@@ -18,11 +18,12 @@ import CAVScreen, { CAVScreenOptions } from '../common/CAVScreen.js';
 import VariabilityModel from './model/VariabilityModel.js';
 import VariabilityKeyboardHelpNode from './view/VariabilityKeyboardHelpNode.js';
 import VariabilityScreenView from './view/VariabilityScreenView.js';
+import VariabilitySceneModel from './model/VariabilitySceneModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityScreenOptions = SelfOptions & StrictOmit<CAVScreenOptions, 'name' | 'homeScreenIcon' | 'createKeyboardHelpNode'>;
 
-export default class VariabilityScreen extends CAVScreen<VariabilityModel, VariabilityScreenView> {
+export default class VariabilityScreen extends CAVScreen<VariabilitySceneModel, VariabilityModel, VariabilityScreenView> {
 
   public constructor( providedOptions: VariabilityScreenOptions ) {
 

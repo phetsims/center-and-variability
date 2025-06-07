@@ -62,7 +62,7 @@ export type CAVScreenViewOptions = SelfOptions & StrictOmit<SoccerScreenViewOpti
 const GROUND_POSITION_Y = 515;
 const INDICATOR_MARGIN = 4;
 
-export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel, CAVModel> {
+export default class CAVScreenView<T extends CAVSoccerSceneModel = CAVSoccerSceneModel> extends SoccerScreenView<T, CAVModel<T>> {
 
   // Subclasses add to the backScreenViewLayer for correct z-ordering and correct tab navigation order
   // Soccer balls go behind the accordion box after they land
@@ -101,7 +101,7 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
     accessibleHeading: CenterAndVariabilityFluent.a11y.common.soccerFieldStringProperty
   } );
 
-  protected constructor( model: CAVModel, providedOptions: CAVScreenViewOptions ) {
+  protected constructor( model: CAVModel<T>, providedOptions: CAVScreenViewOptions ) {
 
     const options = optionize<CAVScreenViewOptions, SelfOptions, SoccerScreenViewOptions>()( {
       physicalRange: CAVConstants.PHYSICAL_RANGE,
@@ -138,12 +138,12 @@ export default class CAVScreenView extends SoccerScreenView<CAVSoccerSceneModel,
     this.soccerAreaTandem = options.tandem.createTandem( 'soccerArea' );
 
     this.playAreaNumberLineNode = new CAVNumberLineNode(
-      new DynamicProperty( model.selectedSceneModelProperty, {
+      new DynamicProperty<number | null, number | null, CAVSoccerSceneModel>( model.selectedSceneModelProperty, {
         derive: 'meanValueProperty'
       } ),
       this.modelViewTransform,
       model.isPlayAreaMeanVisibleProperty,
-      new DynamicProperty( model.selectedSceneModelProperty, {
+      new DynamicProperty<Range | null, Range | null, CAVSoccerSceneModel>( model.selectedSceneModelProperty, {
         derive: 'dataRangeProperty'
       } ),
       CAVConstants.CHART_VIEW_WIDTH,
