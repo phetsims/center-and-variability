@@ -31,6 +31,7 @@ import IntervalToolModel from '../model/IntervalToolModel.js';
 import IntervalToolPredictionSlider from './IntervalToolPredictionSlider.js';
 import IntervalToolRectangle from './IntervalToolRectangle.js';
 import { roundToInterval } from '../../../../dot/js/util/roundToInterval.js';
+import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 
 
 export default class IntervalToolNode extends Node {
@@ -42,6 +43,7 @@ export default class IntervalToolNode extends Node {
       modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE, model.isHandle1BeingMouseDraggedProperty, model.isHandle1BeingKeyboardDraggedProperty,
       {
         valueProperty: model.handle1ValueProperty,
+        accessibleName: CenterAndVariabilityFluent.a11y.variability.intervalTool.handle1AccessibleNameStringProperty,
         predictionThumbNodeOptions: {
           color: CAVColors.intervalToolIconShadedSphereMainColorProperty,
           style: 'line' as const
@@ -60,6 +62,7 @@ export default class IntervalToolNode extends Node {
       modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE, model.isHandle2BeingMouseDraggedProperty, model.isHandle2BeingKeyboardDraggedProperty,
       {
         valueProperty: model.handle2ValueProperty,
+        accessibleName: CenterAndVariabilityFluent.a11y.variability.intervalTool.handle2AccessibleNameStringProperty,
         predictionThumbNodeOptions: {
           color: CAVColors.intervalToolIconShadedSphereMainColorProperty,
           style: 'line' as const
