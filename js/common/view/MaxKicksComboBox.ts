@@ -14,6 +14,7 @@ import ComboBox from '../../../../sun/js/ComboBox.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVConstants from '../CAVConstants.js';
+import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 
 export default class MaxKicksComboBox extends ComboBox<number> {
 
@@ -28,6 +29,8 @@ export default class MaxKicksComboBox extends ComboBox<number> {
     } ), listParent, {
       tandem: tandem,
       isDisposable: false,
+      accessibleName: CenterAndVariabilityFluent.maxKicksStringProperty,
+      accessibleHelpText: CenterAndVariabilityFluent.maxKicksDescriptionStringProperty,
 
       // Show or hide the entire row, not just the combo box
       phetioVisiblePropertyInstrumented: false

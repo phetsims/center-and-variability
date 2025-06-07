@@ -26,6 +26,7 @@ import CAVConstants, { MAX_KICKS_PROPERTY, SHOW_OUTLIERS_PROPERTY } from '../CAV
 import PlotType from '../model/PlotType.js';
 import MaxKicksComboBox from './MaxKicksComboBox.js';
 import PlotIcon, { VIEW_RADIUS } from './PlotIcon.js';
+import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 
 export default class SimulationPreferencesContentNode extends PreferencesPanelContentNode {
 
@@ -38,11 +39,17 @@ export default class SimulationPreferencesContentNode extends PreferencesPanelCo
     const plotTypeRadioButtonGroup = new RectangularRadioButtonGroup<PlotType>( CAVConstants.PLOT_TYPE_PROPERTY, [ {
       createNode: () => new PlotIcon( timesSolidShape ),
       value: PlotType.LINE_PLOT,
-      tandemName: 'linePlotRadioButton'
+      tandemName: 'linePlotRadioButton',
+      options: {
+        accessibleName: CenterAndVariabilityFluent.linePlotStringProperty
+      }
     }, {
       createNode: () => new PlotIcon( Shape.circle( VIEW_RADIUS * 0.93 ) ),
       value: PlotType.DOT_PLOT,
-      tandemName: 'dotPlotRadioButton'
+      tandemName: 'dotPlotRadioButton',
+      options: {
+        accessibleName: CenterAndVariabilityFluent.dotPlotStringProperty
+      }
     } ], {
       radioButtonOptions: {
         baseColor: CAVColors.radioButtonBackgroundColorProperty
@@ -50,6 +57,8 @@ export default class SimulationPreferencesContentNode extends PreferencesPanelCo
       orientation: 'horizontal',
       tandem: plotTypeControlTandem.createTandem( 'radioButtonGroup' ),
       isDisposable: false,
+      accessibleName: CenterAndVariabilityFluent.plotTypeStringProperty,
+      accessibleHelpText: CenterAndVariabilityFluent.a11y.preferences.plotType.accessibleHelpTextStringProperty,
 
       // Hide or show the entire row, not just the radio button
       phetioVisiblePropertyInstrumented: false
@@ -85,6 +94,8 @@ export default class SimulationPreferencesContentNode extends PreferencesPanelCo
     const outliersDescription = new RichText( CenterAndVariabilityStrings.outliersDescriptionStringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS );
 
     const outliersSwitch = new ToggleSwitch( SHOW_OUTLIERS_PROPERTY, false, true, combineOptions<ToggleSwitchOptions>( {}, PreferencesDialogConstants.TOGGLE_SWITCH_OPTIONS, {
+      accessibleName: CenterAndVariabilityFluent.outliersStringProperty,
+      accessibleHelpText: CenterAndVariabilityFluent.outliersDescriptionStringProperty,
       tandem: outliersControlTandem.createTandem( 'toggleSwitch' ),
 
       // Show or hide the entire row, not just the toggle switch
