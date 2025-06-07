@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2025, University of Colorado Boulder
 
 /**
  * CAVGroupSortInteractionModel is a subclass that adds logic to place the drag cue in a

@@ -1,4 +1,4 @@
-// Copyright 2024, University of Colorado Boulder
+// Copyright 2025, University of Colorado Boulder
 /**
  * Implements the screen summary for the Variability screen in the Center and Variability simulation.
  *
