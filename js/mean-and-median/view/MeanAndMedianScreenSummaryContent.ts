@@ -15,6 +15,8 @@ import Property from '../../../../axon/js/Property.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import PlotType from '../../common/model/PlotType.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
+import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 export default class MeanAndMedianScreenSummaryContent extends CAVScreenSummaryContent {
 
@@ -38,11 +40,12 @@ export default class MeanAndMedianScreenSummaryContent extends CAVScreenSummaryC
         return sceneModel.getStackAtValue( meter ).length;
       } )
     );
-    const plotTypeCharacterProperty = new DerivedProperty( [ CAVConstants.PLOT_TYPE_PROPERTY ], plotType =>
-    plotType === PlotType.LINE_PLOT ? 'x' : '•' );
+    const plotTypeProperty = new DynamicProperty<string, string, TReadOnlyProperty<string>>( new DerivedProperty( [ CAVConstants.PLOT_TYPE_PROPERTY ], plotType =>
+    plotType === PlotType.LINE_PLOT ? CenterAndVariabilityFluent.a11y.meanAndMedian.currentDetails.plotType.xStringProperty :
+    CenterAndVariabilityFluent.a11y.meanAndMedian.currentDetails.plotType.dotStringProperty ) );
     const currentPlotDetailsPatternStringProperty = CenterAndVariabilityFluent.a11y.meanAndMedian.currentDetails.plot.createProperty( {
       number: model.selectedSceneStackedSoccerBallCountProperty,
-      plotType: plotTypeCharacterProperty
+      plotType: plotTypeProperty
     } );
     const remainingDetailsNode = new Node( {
       tagName: 'p',

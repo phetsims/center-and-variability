@@ -413,7 +413,15 @@
           "value": "Currently, { NUMBER($number, type: \"cardinal\") ->\n[0] 0 soccer balls on field.\n[1] 1 soccer ball on field:\n*[other] {$number} soccer balls on field:\n}"
         },
         "plot": {
-          "value": "{ NUMBER($number, type: \"cardinal\") ->\n[0] 0 {$plotType} on plot.\n[1] 1 {$plotType} also marks kick distance on plot.\n*[other] {$number} {$plotType} mark kick distances on plot.\n}"
+          "value": "{ NUMBER($number, type: \"cardinal\") ->\n[0] 0 {$plotType}'s on plot.\n[1] 1 {$plotType} also marks kick distance on plot.\n*[other] {$number} {$plotType}'s also mark kick distances on plot.\n}"
+        },
+        "plotType": {
+          "x": {
+            "value": "x"
+          },
+          "dot": {
+            "value": "dot"
+          }
         }
       },
       "controlArea": {

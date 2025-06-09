@@ -186,6 +186,10 @@ type StringsType = {
       'currentDetails': {
         'soccerBallsStringProperty': LocalizedStringProperty;
         'plotStringProperty': LocalizedStringProperty;
+        'plotType': {
+          'xStringProperty': LocalizedStringProperty;
+          'dotStringProperty': LocalizedStringProperty;
+        }
       };
       'controlAreaStringProperty': LocalizedStringProperty;
       'accordionBoxHelpTextStringProperty': LocalizedStringProperty;
