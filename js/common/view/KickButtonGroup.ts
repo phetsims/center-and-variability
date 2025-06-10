@@ -85,8 +85,7 @@ export default class KickButtonGroup extends VBox {
       derive: 'numberOfIdleBallsProperty'
     } );
     numberOfIdleBallsProperty.link( numberOfRemainingKickableObjects => {
-      const value = Math.max( Math.min( numberOfRemainingKickableObjects, 5 ), 1 );
-      multiKickProperty.value = value;
+      multiKickProperty.value = Math.max( Math.min( numberOfRemainingKickableObjects, 5 ), 1 );
     } );
 
     options.children = [
