@@ -279,7 +279,7 @@
     "common": {
       "currentDetails": {
         "listItemPattern": {
-          "value": "{$number} at meter {$distance}."
+          "value": "{$number} at meter {$distance}"
         }
       },
       "guidingQuestion": {

@@ -17,6 +17,7 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
+import AccessibleListNode from '../../../../scenery-phet/js/accessibility/AccessibleListNode.js';
 
 type SelfOptions = EmptySelfOptions;
 type CAVScreenSummaryContentOptions = SelfOptions & WithRequired<ScreenSummaryContentOptions, 'playAreaContent' | 'interactionHintContent'>;
@@ -50,18 +51,19 @@ export default class CAVScreenSummaryContent extends ScreenSummaryContent {
     super( options );
   }
 
-  protected static createListItems( meterStackHeightProperties: TReadOnlyProperty<number>[] ): Node[] {
-    return CAVScreenSummaryContent.METERS.map( meter => {
+  // Create an AccessibleListNode to provide information about the kicked soccer balls.
+  protected static createListItems( meterStackHeightProperties: TReadOnlyProperty<number>[], visibleProperty?: TReadOnlyProperty<boolean> ): Node {
+    const listItems = CAVScreenSummaryContent.METERS.map( meter => {
       const index = meter - CAVConstants.PHYSICAL_RANGE.min;
-      return new Node( {
-        tagName: 'li',
-        visibleProperty: DerivedProperty.valueNotEqualsConstant( meterStackHeightProperties[ index ], 0 ),
-        accessibleName: CenterAndVariabilityFluent.a11y.common.currentDetails.listItemPattern.createProperty( {
+      return {
+        stringProperty: CenterAndVariabilityFluent.a11y.common.currentDetails.listItemPattern.createProperty( {
           number: meterStackHeightProperties[ index ],
           distance: meter
-        } )
-      } );
+        } ),
+        visibleProperty: DerivedProperty.valueNotEqualsConstant( meterStackHeightProperties[ index ], 0 )
+      };
     } );
+    return new AccessibleListNode( listItems, { punctuationStyle: 'semicolon', visibleProperty: visibleProperty } );
   }
 
   protected static createInteractionHintContent(

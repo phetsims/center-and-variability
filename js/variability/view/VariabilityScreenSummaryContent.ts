@@ -42,24 +42,22 @@ export default class VariabilityScreenSummaryContent extends CAVScreenSummaryCon
     const sceneModelMeterStackHeightProperties = model.sceneModels.map( sceneModel => {
       const ballValueProperties: Property<number | null>[] = sceneModel.soccerBalls.map( ball => ball.valueProperty );
       return CAVScreenSummaryContent.METERS.map( meter =>
-          DerivedProperty.deriveAny( ballValueProperties, () => {
-            return sceneModel.getStackAtValue( meter ).length;
-          } )
+        DerivedProperty.deriveAny( ballValueProperties, () => {
+          return sceneModel.getStackAtValue( meter ).length;
+        } )
       );
     } );
     const listNodes = model.sceneModels.map( ( sceneModel, i ) =>
-    new Node( {
-      tagName: 'ul',
-      visibleProperty: DerivedProperty.valueEqualsConstant( model.selectedSceneModelProperty, sceneModel ),
-      children: CAVScreenSummaryContent.createListItems( sceneModelMeterStackHeightProperties[ i ] )
-    } ) );
+      CAVScreenSummaryContent.createListItems( sceneModelMeterStackHeightProperties[ i ],
+        DerivedProperty.valueEqualsConstant( model.selectedSceneModelProperty, sceneModel ) )
+    );
 
     // create the remaining details node
     const measureStringProperty = new DynamicProperty<string, string, FluentConstant>(
       new DerivedProperty( [ model.selectedVariabilityMeasureProperty ],
-    measure => measure === VariabilityMeasure.RANGE ? CenterAndVariabilityFluent.rangeStringProperty :
-               measure === VariabilityMeasure.IQR ? CenterAndVariabilityFluent.interquartileRangeIQRStringProperty :
-               CenterAndVariabilityFluent.meanAbsoluteDeviationMADStringProperty ) );
+        measure => measure === VariabilityMeasure.RANGE ? CenterAndVariabilityFluent.rangeStringProperty :
+                   measure === VariabilityMeasure.IQR ? CenterAndVariabilityFluent.interquartileRangeIQRStringProperty :
+                   CenterAndVariabilityFluent.meanAbsoluteDeviationMADStringProperty ) );
     const remainingDetailsNode = new Node( {
       tagName: 'p',
       accessibleName: CenterAndVariabilityFluent.a11y.variability.currentDetails.measure.createProperty( {

@@ -30,8 +30,8 @@ export default class MeanAndMedianScreenSummaryContent extends CAVScreenSummaryC
     } );
     const currentDetailsStringProperty = CenterAndVariabilityFluent.a11y.meanAndMedian.currentDetails.soccerBalls
       .createProperty( {
-      number: model.selectedSceneStackedSoccerBallCountProperty
-    } );
+        number: model.selectedSceneStackedSoccerBallCountProperty
+      } );
 
     const ballValueProperties: Property<number | null>[] = model.selectedSceneModelProperty.value.soccerBalls
       .map( ball => ball.valueProperty );
@@ -41,8 +41,8 @@ export default class MeanAndMedianScreenSummaryContent extends CAVScreenSummaryC
       } )
     );
     const plotTypeProperty = new DynamicProperty<string, string, TReadOnlyProperty<string>>( new DerivedProperty( [ CAVConstants.PLOT_TYPE_PROPERTY ], plotType =>
-    plotType === PlotType.LINE_PLOT ? CenterAndVariabilityFluent.a11y.meanAndMedian.currentDetails.plotType.xStringProperty :
-    CenterAndVariabilityFluent.a11y.meanAndMedian.currentDetails.plotType.dotStringProperty ) );
+      plotType === PlotType.LINE_PLOT ? CenterAndVariabilityFluent.a11y.meanAndMedian.currentDetails.plotType.xStringProperty :
+      CenterAndVariabilityFluent.a11y.meanAndMedian.currentDetails.plotType.dotStringProperty ) );
     const currentPlotDetailsPatternStringProperty = CenterAndVariabilityFluent.a11y.meanAndMedian.currentDetails.plot.createProperty( {
       number: model.selectedSceneStackedSoccerBallCountProperty,
       plotType: plotTypeProperty
@@ -52,14 +52,12 @@ export default class MeanAndMedianScreenSummaryContent extends CAVScreenSummaryC
       accessibleName: currentPlotDetailsPatternStringProperty
     } );
 
-    const listNode = new Node( {
-      tagName: 'ul',
-      children: CAVScreenSummaryContent.createListItems( meterStackHeightProperties )
-    } );
-   super( [ listNode ], currentDetailsStringProperty, remainingDetailsNode, {
-     playAreaContent: [ playAreaPatternStringProperty, guidingQuestionStringProperty ],
+    const listNode = CAVScreenSummaryContent.createListItems( meterStackHeightProperties );
+
+    super( [ listNode ], currentDetailsStringProperty, remainingDetailsNode, {
+      playAreaContent: [ playAreaPatternStringProperty, guidingQuestionStringProperty ],
       interactionHintContent: CAVScreenSummaryContent.createInteractionHintContent( CenterAndVariabilityFluent.a11y.meanAndMedian.interactionHintSomeBallsStringProperty, model.selectedSceneStackedSoccerBallCountProperty )
-   } );
+    } );
   }
 }
 

@@ -110,7 +110,7 @@ a11y:
   variabilityScreenHelpText: Kick soccer balls and explore data sets to compare measures of variability.
   common:
     currentDetails:
-      listItemPattern: "{$number} at meter {$distance}."
+      listItemPattern: "{$number} at meter {$distance}"
     guidingQuestion: 'Guiding question: "{$question}"'
     soccerField: Soccer Field
     interactionHintNoBalls: Kick soccer balls to create a data set.
