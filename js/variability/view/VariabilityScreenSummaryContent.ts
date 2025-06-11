@@ -18,6 +18,7 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import VariabilityMeasure from '../model/VariabilityMeasure.js';
 import FluentConstant from '../../../../chipper/js/browser/FluentConstant.js';
+import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 
 export default class VariabilityScreenSummaryContent extends CAVScreenSummaryContent {
 
@@ -58,10 +59,14 @@ export default class VariabilityScreenSummaryContent extends CAVScreenSummaryCon
         measure => measure === VariabilityMeasure.RANGE ? CenterAndVariabilityFluent.rangeStringProperty :
                    measure === VariabilityMeasure.IQR ? CenterAndVariabilityFluent.interquartileRangeIQRStringProperty :
                    CenterAndVariabilityFluent.meanAbsoluteDeviationMADStringProperty ) );
+    const selectedSceneNumberOfDataPointsProperty = new DynamicProperty<number, number, CAVSoccerSceneModel>( model.selectedSceneModelProperty, {
+      derive: 'numberOfDataPointsProperty'
+    } );
     const remainingDetailsNode = new Node( {
       tagName: 'p',
-      accessibleName: CenterAndVariabilityFluent.a11y.variability.currentDetails.measure.createProperty( {
-        measure: measureStringProperty
+      accessibleName: CenterAndVariabilityFluent.a11y.variability.currentDetails.plot.createProperty( {
+        measure: measureStringProperty,
+        number: selectedSceneNumberOfDataPointsProperty
       } )
     } );
     super( listNodes, currentDetailsStringProperty, remainingDetailsNode, {

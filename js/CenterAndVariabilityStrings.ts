@@ -206,7 +206,7 @@ type StringsType = {
       'playAreaStringProperty': LocalizedStringProperty;
       'currentDetails': {
         'soccerBallsStringProperty': LocalizedStringProperty;
-        'measureStringProperty': LocalizedStringProperty;
+        'plotStringProperty': LocalizedStringProperty;
       };
       'controlAreaStringProperty': LocalizedStringProperty;
       'sceneRadioButtonGroup': {

@@ -147,7 +147,7 @@ addToMapIfDefined( 'a11y_meanAndMedian_details_accessibleName', CenterAndVariabi
 addToMapIfDefined( 'a11y_meanAndMedian_interactionHintSomeBalls', CenterAndVariabilityStrings?.["a11y"]?.["meanAndMedian"]?.["interactionHintSomeBallsStringProperty"] );
 addToMapIfDefined( 'a11y_variability_playArea', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["playAreaStringProperty"] );
 addToMapIfDefined( 'a11y_variability_currentDetails_soccerBalls', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["currentDetails"]?.["soccerBallsStringProperty"] );
-addToMapIfDefined( 'a11y_variability_currentDetails_measure', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["currentDetails"]?.["measureStringProperty"] );
+addToMapIfDefined( 'a11y_variability_currentDetails_plot', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["currentDetails"]?.["plotStringProperty"] );
 addToMapIfDefined( 'a11y_variability_controlArea', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["controlAreaStringProperty"] );
 addToMapIfDefined( 'a11y_variability_sceneRadioButtonGroup_groupName', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["sceneRadioButtonGroup"]?.["groupNameStringProperty"] );
 addToMapIfDefined( 'a11y_variability_sceneRadioButtonGroup_scene1AccessibleName', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["sceneRadioButtonGroup"]?.["scene1AccessibleNameStringProperty"] );
@@ -381,7 +381,7 @@ const CenterAndVariabilityFluent = {
       playArea: new FluentPattern<{ maxBalls: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_variability_playArea' ),
       currentDetails: {
         soccerBalls: new FluentPattern<{ kicker: FluentVariable, number: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_variability_currentDetails_soccerBalls' ),
-        measure: new FluentPattern<{ measure: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_variability_currentDetails_measure' )
+        plot: new FluentPattern<{ measure: FluentVariable, number: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_variability_currentDetails_plot' )
       },
       controlAreaStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_controlArea' ),
       sceneRadioButtonGroup: {

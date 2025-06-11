@@ -413,7 +413,7 @@
           "value": "Currently, { NUMBER($number, type: \"cardinal\") ->\n[0] 0 soccer balls on field.\n[1] 1 soccer ball on field:\n*[other] {$number} soccer balls on field:\n}"
         },
         "plot": {
-          "value": "{ NUMBER($number, type: \"cardinal\") ->\n[0] 0 marks on kick distance plot match field.\n[1] 1 mark on kick distance plot matches field.\n*[other] {$number} marks on kick distance plot match field.\n}"
+          "value": "{ NUMBER($number, type: \"cardinal\") ->\n[0] 0 marks on plot.\n[1] 1 mark on plot matches kick distance on field.\n*[other] {$number} marks on plot match kick distances on field.\n}"
         }
       },
       "controlArea": {
@@ -455,8 +455,8 @@
         "soccerBalls": {
           "value": "{$kicker} kicker selected. Currently, { NUMBER($number, type: \"cardinal\") ->\n[0] 0 soccer balls on field.\n[1] 1 soccer ball on field:\n*[other] {$number} soccer balls on field:\n}"
         },
-        "measure": {
-          "value": "{$measure} is being explored."
+        "plot": {
+          "value": "{ NUMBER($number, type: \"cardinal\") ->\n[0] 0 marks on plot.\n[1] 1 mark on plot matches kick distance on field.\n*[other] {$number} marks on plot match kick distances on field.\n}, and {$measure} is being explored."
         }
       },
       "controlArea": {

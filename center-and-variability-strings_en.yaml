@@ -187,9 +187,9 @@ a11y:
         }
       plot: |-
         { NUMBER($number, type: "cardinal") ->
-        [0] 0 marks on kick distance plot match field.
-        [1] 1 mark on kick distance plot matches field.
-        *[other] {$number} marks on kick distance plot match field.
+        [0] 0 marks on plot.
+        [1] 1 mark on plot matches kick distance on field.
+        *[other] {$number} marks on plot match kick distances on field.
         }
     controlArea: Additionally, access detailed mean and median information, clear data set, and reset the sim to start over.
     accordionBoxHelpText: Kick distance (meters) plot.
@@ -215,7 +215,12 @@ a11y:
           [1] 1 soccer ball on field:
           *[other] {$number} soccer balls on field:
           }
-        measure: "{$measure} is being explored."
+        plot: |-
+          { NUMBER($number, type: "cardinal") ->
+          [0] 0 marks on plot.
+          [1] 1 mark on plot matches kick distance on field.
+          *[other] {$number} marks on plot match kick distances on field.
+          }, and {$measure} is being explored.
     controlArea: Additionally, access detailed variability information, clear data set, and reset the sim to start over.
     sceneRadioButtonGroup:
       groupName: Choose Kicker
