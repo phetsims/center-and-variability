@@ -187,13 +187,10 @@ a11y:
         }
       plot: |-
         { NUMBER($number, type: "cardinal") ->
-        [0] 0 {$plotType}s on plot.
-        [1] 1 {$plotType} also marks kick distance on plot.
-        *[other] {$number} {$plotType}s also mark kick distances on plot.
+        [0] 0 marks on kick distance plot match field.
+        [1] 1 mark on kick distance plot matches field.
+        *[other] {$number} marks on kick distance plot match field.
         }
-      plotType:
-        x: x
-        dot: dot
     controlArea: Additionally, access detailed mean and median information, clear data set, and reset the sim to start over.
     accordionBoxHelpText: Kick distance (meters) plot.
     plotMedianCheckbox:

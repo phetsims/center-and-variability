@@ -137,8 +137,6 @@ addToMapIfDefined( 'a11y_median_details_accessibleName', CenterAndVariabilityStr
 addToMapIfDefined( 'a11y_meanAndMedian_playArea', CenterAndVariabilityStrings?.["a11y"]?.["meanAndMedian"]?.["playAreaStringProperty"] );
 addToMapIfDefined( 'a11y_meanAndMedian_currentDetails_soccerBalls', CenterAndVariabilityStrings?.["a11y"]?.["meanAndMedian"]?.["currentDetails"]?.["soccerBallsStringProperty"] );
 addToMapIfDefined( 'a11y_meanAndMedian_currentDetails_plot', CenterAndVariabilityStrings?.["a11y"]?.["meanAndMedian"]?.["currentDetails"]?.["plotStringProperty"] );
-addToMapIfDefined( 'a11y_meanAndMedian_currentDetails_plotType_x', CenterAndVariabilityStrings?.["a11y"]?.["meanAndMedian"]?.["currentDetails"]?.["plotType"]?.["xStringProperty"] );
-addToMapIfDefined( 'a11y_meanAndMedian_currentDetails_plotType_dot', CenterAndVariabilityStrings?.["a11y"]?.["meanAndMedian"]?.["currentDetails"]?.["plotType"]?.["dotStringProperty"] );
 addToMapIfDefined( 'a11y_meanAndMedian_controlArea', CenterAndVariabilityStrings?.["a11y"]?.["meanAndMedian"]?.["controlAreaStringProperty"] );
 addToMapIfDefined( 'a11y_meanAndMedian_accordionBoxHelpText', CenterAndVariabilityStrings?.["a11y"]?.["meanAndMedian"]?.["accordionBoxHelpTextStringProperty"] );
 addToMapIfDefined( 'a11y_meanAndMedian_plotMedianCheckbox_accessibleName', CenterAndVariabilityStrings?.["a11y"]?.["meanAndMedian"]?.["plotMedianCheckbox"]?.["accessibleNameStringProperty"] );
@@ -362,11 +360,7 @@ const CenterAndVariabilityFluent = {
       playArea: new FluentPattern<{ maxBalls: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_meanAndMedian_playArea' ),
       currentDetails: {
         soccerBalls: new FluentPattern<{ number: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_meanAndMedian_currentDetails_soccerBalls' ),
-        plot: new FluentPattern<{ number: FluentVariable, plotType: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_meanAndMedian_currentDetails_plot' ),
-        plotType: {
-          xStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_meanAndMedian_currentDetails_plotType_x' ),
-          dotStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_meanAndMedian_currentDetails_plotType_dot' )
-        }
+        plot: new FluentPattern<{ number: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_meanAndMedian_currentDetails_plot' )
       },
       controlAreaStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_meanAndMedian_controlArea' ),
       accordionBoxHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_meanAndMedian_accordionBoxHelpText' ),
