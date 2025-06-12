@@ -136,7 +136,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
 
     const createDerivedValueProperty = ( accessor: ( sceneModel: VariabilitySceneModel ) => TReadOnlyProperty<number | null>, roundToDecimal: number | null ) => {
       return DerivedProperty.deriveAny( [ model.selectedSceneModelProperty, ...model.variabilitySceneModels.map( accessor ), CenterAndVariabilityStrings.valueUnknownStringProperty ], () => {
-        const value = accessor( model.selectedSceneModelProperty.value as VariabilitySceneModel ).value;
+        const value = accessor( model.selectedSceneModelProperty.value ).value;
         return value === null ? CenterAndVariabilityStrings.valueUnknownStringProperty.value :
                roundToDecimal === null ? value :
                toFixed( value, roundToDecimal );
@@ -174,7 +174,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         value: UnknownDerivedProperty<number | string>;
       }> ) => {
       return DerivedProperty.deriveAny( [ model.selectedSceneModelProperty, ...model.variabilitySceneModels.map( accessor ), valuePatternStringProperty, valueUnknownStringProperty ], () => {
-        const result = accessor( model.selectedSceneModelProperty.value as VariabilitySceneModel ).value;
+        const result = accessor( model.selectedSceneModelProperty.value ).value;
         return result === null ? valueUnknownStringProperty.value : valuePatternStringProperty.value;
       } );
     };
