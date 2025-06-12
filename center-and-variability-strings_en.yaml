@@ -217,9 +217,9 @@ a11y:
           }
         plot: |-
           { NUMBER($number, type: "cardinal") ->
-          [0] 0 marks on plot.
-          [1] 1 mark on plot matches kick distance on field.
-          *[other] {$number} marks on plot match kick distances on field.
+          [0] 0 marks on plot
+          [1] 1 mark on plot matches kick distance on field
+          *[other] {$number} marks on plot match kick distances on field
           }, and {$measure} is being explored.
     controlArea: Additionally, access detailed variability information, clear data set, and reset the sim to start over.
     sceneRadioButtonGroup:
