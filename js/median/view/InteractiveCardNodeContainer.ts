@@ -46,7 +46,6 @@ import CardNodeContainer, { CARD_LAYER_OFFSET, CardNodeContainerOptions } from '
 import CelebrationNode from './CelebrationNode.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import TinyProperty from '../../../../axon/js/TinyProperty.js';
 import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 import { clamp } from '../../../../dot/js/util/clamp.js';
 
@@ -327,12 +326,13 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
     } );
 
     const selectedItemValueProperty = new DynamicProperty<number | string, TReadOnlyProperty<number | string>, TReadOnlyProperty<string | number | null>>( new DerivedProperty( [ model.groupSortInteractionModel.selectedGroupItemProperty ], item => {
-      return item ? item.soccerBall.valueProperty : new TinyProperty( 'NO CARD SELECTED' );
+      return item ? item.soccerBall.valueProperty : CenterAndVariabilityFluent.a11y.common.nullStringProperty;
     } ) );
-    const selectedItemIndexProperty = new DynamicProperty<number | string, TReadOnlyProperty<number | string>, TReadOnlyProperty<string | number | null>>(
-      new DerivedProperty( [ model.groupSortInteractionModel.selectedGroupItemProperty ], item => {
-        return item ? item.indexProperty : new TinyProperty( 'NO CARD SELECTED' );
-      } ) );
+    const indexDependencies = model.cards.map( card => card.indexProperty );
+    const selectedItemIndexProperty = DerivedProperty.deriveAny( [ model.groupSortInteractionModel.selectedGroupItemProperty, ...indexDependencies, CenterAndVariabilityFluent.a11y.common.nullStringProperty ], () => {
+      const item = model.groupSortInteractionModel.selectedGroupItemProperty.value;
+      return item && item.indexProperty.value !== null ? item.indexProperty.value + 1 : CenterAndVariabilityFluent.a11y.common.nullStringProperty.value;
+    } );
     const selectNamePatternStringProperty = CenterAndVariabilityFluent.a11y.median.dataCardsGroup.selectAccessibleName.createProperty( {
       value: selectedItemValueProperty,
       index: selectedItemIndexProperty,

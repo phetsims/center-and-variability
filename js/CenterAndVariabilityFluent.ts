@@ -103,6 +103,7 @@ addToMapIfDefined( 'keyboardHelpDialog_variabilityScreen_object', 'keyboardHelpD
 addToMapIfDefined( 'a11y_medianScreenHelpText', 'a11y.medianScreenHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_meanAndMedianScreenHelpText', 'a11y.meanAndMedianScreenHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_variabilityScreenHelpText', 'a11y.variabilityScreenHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_common_null', 'a11y.common.nullStringProperty' );
 addToMapIfDefined( 'a11y_common_currentDetails_listItemPattern', 'a11y.common.currentDetails.listItemPatternStringProperty' );
 addToMapIfDefined( 'a11y_common_guidingQuestion', 'a11y.common.guidingQuestionStringProperty' );
 addToMapIfDefined( 'a11y_common_soccerField', 'a11y.common.soccerFieldStringProperty' );
@@ -293,6 +294,7 @@ const CenterAndVariabilityFluent = {
     meanAndMedianScreenHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_meanAndMedianScreenHelpText', _.get( CenterAndVariabilityStrings, 'a11y.meanAndMedianScreenHelpTextStringProperty' ) ),
     variabilityScreenHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variabilityScreenHelpText', _.get( CenterAndVariabilityStrings, 'a11y.variabilityScreenHelpTextStringProperty' ) ),
     common: {
+      nullStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_common_null', _.get( CenterAndVariabilityStrings, 'a11y.common.nullStringProperty' ) ),
       currentDetails: {
         listItemPattern: new FluentPattern<{ distance: FluentVariable, number: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_common_currentDetails_listItemPattern', _.get( CenterAndVariabilityStrings, 'a11y.common.currentDetails.listItemPatternStringProperty' ) )
       },

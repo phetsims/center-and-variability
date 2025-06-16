@@ -118,6 +118,7 @@ type StringsType = {
     'meanAndMedianScreenHelpTextStringProperty': LocalizedStringProperty;
     'variabilityScreenHelpTextStringProperty': LocalizedStringProperty;
     'common': {
+      'nullStringProperty': LocalizedStringProperty;
       'currentDetails': {
         'listItemPatternStringProperty': LocalizedStringProperty;
       };

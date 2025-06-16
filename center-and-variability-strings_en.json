@@ -277,6 +277,9 @@
       "value": "Kick soccer balls and explore data sets to compare measures of variability."
     },
     "common": {
+      "null": {
+        "value": "null"
+      },
       "currentDetails": {
         "listItemPattern": {
           "value": "{$number} at meter {$distance}"

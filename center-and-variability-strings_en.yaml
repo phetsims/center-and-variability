@@ -109,6 +109,7 @@ a11y:
   meanAndMedianScreenHelpText: Kick soccer balls and explore data set to compare mean and median.
   variabilityScreenHelpText: Kick soccer balls and explore data sets to compare measures of variability.
   common:
+    null: null
     currentDetails:
       listItemPattern: "{$number} at meter {$distance}"
     guidingQuestion: 'Guiding question: "{$question}"'
