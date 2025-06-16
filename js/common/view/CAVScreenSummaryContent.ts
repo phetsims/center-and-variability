@@ -20,7 +20,7 @@ import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import AccessibleListNode from '../../../../scenery-phet/js/accessibility/AccessibleListNode.js';
 
 type SelfOptions = EmptySelfOptions;
-type CAVScreenSummaryContentOptions = SelfOptions & WithRequired<ScreenSummaryContentOptions, 'playAreaContent' | 'interactionHintContent'>;
+type CAVScreenSummaryContentOptions = SelfOptions & WithRequired<ScreenSummaryContentOptions, 'playAreaContent' | 'interactionHintContent' | 'controlAreaContent'>;
 export default class CAVScreenSummaryContent extends ScreenSummaryContent {
   protected static readonly METERS = _.range( CAVConstants.PHYSICAL_RANGE.min, CAVConstants.PHYSICAL_RANGE.max + 1 );
 
@@ -42,7 +42,6 @@ export default class CAVScreenSummaryContent extends ScreenSummaryContent {
     } );
 
     const options = optionize<CAVScreenSummaryContentOptions, SelfOptions, ScreenSummaryContentOptions>()( {
-      controlAreaContent: CenterAndVariabilityStrings.a11y.median.controlAreaStringProperty,
       currentDetailsContent: {
         node: currentDetailsNode
       }

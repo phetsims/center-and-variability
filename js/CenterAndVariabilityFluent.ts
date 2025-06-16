@@ -175,6 +175,154 @@ addToMapIfDefined( 'a11y_variability_intervalTool_rectangleAccessibleName', 'a11
 addToMapIfDefined( 'a11y_variability_intervalTool_rectangleValuePattern', 'a11y.variability.intervalTool.rectangleValuePatternStringProperty' );
 addToMapIfDefined( 'a11y_variability_interactionHintSomeBalls', 'a11y.variability.interactionHintSomeBallsStringProperty' );
 addToMapIfDefined( 'a11y_preferences_plotType_accessibleHelpText', 'a11y.preferences.plotType.accessibleHelpTextStringProperty' );
+addToMapIfDefined( 'center_and_variability_title', CenterAndVariabilityStrings?.["center-and-variability"]?.["titleStringProperty"] );
+addToMapIfDefined( 'screen_median', CenterAndVariabilityStrings?.["screen"]?.["medianStringProperty"] );
+addToMapIfDefined( 'screen_meanAndMedian', CenterAndVariabilityStrings?.["screen"]?.["meanAndMedianStringProperty"] );
+addToMapIfDefined( 'screen_variability', CenterAndVariabilityStrings?.["screen"]?.["variabilityStringProperty"] );
+addToMapIfDefined( 'distanceInMetersAccordionBoxTitle', CenterAndVariabilityStrings?.["distanceInMetersAccordionBoxTitleStringProperty"] );
+addToMapIfDefined( 'distanceInMetersChartLabel', CenterAndVariabilityStrings?.["distanceInMetersChartLabelStringProperty"] );
+addToMapIfDefined( 'meanEqualsUnknown', CenterAndVariabilityStrings?.["meanEqualsUnknownStringProperty"] );
+addToMapIfDefined( 'medianEqualsUnknown', CenterAndVariabilityStrings?.["medianEqualsUnknownStringProperty"] );
+addToMapIfDefined( 'plotType', CenterAndVariabilityStrings?.["plotTypeStringProperty"] );
+addToMapIfDefined( 'dotPlot', CenterAndVariabilityStrings?.["dotPlotStringProperty"] );
+addToMapIfDefined( 'linePlot', CenterAndVariabilityStrings?.["linePlotStringProperty"] );
+addToMapIfDefined( 'median', CenterAndVariabilityStrings?.["medianStringProperty"] );
+addToMapIfDefined( 'mean', CenterAndVariabilityStrings?.["meanStringProperty"] );
+addToMapIfDefined( 'meanEquals', CenterAndVariabilityStrings?.["meanEqualsStringProperty"] );
+addToMapIfDefined( 'valueUnknown', CenterAndVariabilityStrings?.["valueUnknownStringProperty"] );
+addToMapIfDefined( 'meters', CenterAndVariabilityStrings?.["metersStringProperty"] );
+addToMapIfDefined( 'meter', CenterAndVariabilityStrings?.["meterStringProperty"] );
+addToMapIfDefined( 'needAtLeastFiveKicks', CenterAndVariabilityStrings?.["needAtLeastFiveKicksStringProperty"] );
+addToMapIfDefined( 'maxKicks', CenterAndVariabilityStrings?.["maxKicksStringProperty"] );
+addToMapIfDefined( 'maxKicksDescription', CenterAndVariabilityStrings?.["maxKicksDescriptionStringProperty"] );
+addToMapIfDefined( 'outliers', CenterAndVariabilityStrings?.["outliersStringProperty"] );
+addToMapIfDefined( 'outliersDescription', CenterAndVariabilityStrings?.["outliersDescriptionStringProperty"] );
+addToMapIfDefined( 'pointer', CenterAndVariabilityStrings?.["pointerStringProperty"] );
+addToMapIfDefined( 'medianQuestion', CenterAndVariabilityStrings?.["medianQuestionStringProperty"] );
+addToMapIfDefined( 'sortData', CenterAndVariabilityStrings?.["sortDataStringProperty"] );
+addToMapIfDefined( 'youSortedTheData', CenterAndVariabilityStrings?.["youSortedTheDataStringProperty"] );
+addToMapIfDefined( 'medianDescription', CenterAndVariabilityStrings?.["medianDescriptionStringProperty"] );
+addToMapIfDefined( 'meanAndMedianQuestion', CenterAndVariabilityStrings?.["meanAndMedianQuestionStringProperty"] );
+addToMapIfDefined( 'meanDescription', CenterAndVariabilityStrings?.["meanDescriptionStringProperty"] );
+addToMapIfDefined( 'variabilityQuestion', CenterAndVariabilityStrings?.["variabilityQuestionStringProperty"] );
+addToMapIfDefined( 'iqrEqualsUnknown', CenterAndVariabilityStrings?.["iqrEqualsUnknownStringProperty"] );
+addToMapIfDefined( 'rangeEqualsUnknown', CenterAndVariabilityStrings?.["rangeEqualsUnknownStringProperty"] );
+addToMapIfDefined( 'madEqualsUnknown', CenterAndVariabilityStrings?.["madEqualsUnknownStringProperty"] );
+addToMapIfDefined( 'madEquals', CenterAndVariabilityStrings?.["madEqualsStringProperty"] );
+addToMapIfDefined( 'range', CenterAndVariabilityStrings?.["rangeStringProperty"] );
+addToMapIfDefined( 'interquartileRangeIQR', CenterAndVariabilityStrings?.["interquartileRangeIQRStringProperty"] );
+addToMapIfDefined( 'iqr', CenterAndVariabilityStrings?.["iqrStringProperty"] );
+addToMapIfDefined( 'min', CenterAndVariabilityStrings?.["minStringProperty"] );
+addToMapIfDefined( 'max', CenterAndVariabilityStrings?.["maxStringProperty"] );
+addToMapIfDefined( 'q1', CenterAndVariabilityStrings?.["q1StringProperty"] );
+addToMapIfDefined( 'q3', CenterAndVariabilityStrings?.["q3StringProperty"] );
+addToMapIfDefined( 'meanAbsoluteDeviationMAD', CenterAndVariabilityStrings?.["meanAbsoluteDeviationMADStringProperty"] );
+addToMapIfDefined( 'mad', CenterAndVariabilityStrings?.["madStringProperty"] );
+addToMapIfDefined( 'intervalTool', CenterAndVariabilityStrings?.["intervalToolStringProperty"] );
+addToMapIfDefined( 'predictMean', CenterAndVariabilityStrings?.["predictMeanStringProperty"] );
+addToMapIfDefined( 'predictMedian', CenterAndVariabilityStrings?.["predictMedianStringProperty"] );
+addToMapIfDefined( 'rangeDescription', CenterAndVariabilityStrings?.["rangeDescriptionStringProperty"] );
+addToMapIfDefined( 'iqrDescription', CenterAndVariabilityStrings?.["iqrDescriptionStringProperty"] );
+addToMapIfDefined( 'dataValuesInMeters', CenterAndVariabilityStrings?.["dataValuesInMetersStringProperty"] );
+addToMapIfDefined( 'madDescription', CenterAndVariabilityStrings?.["madDescriptionStringProperty"] );
+addToMapIfDefined( 'keyboardHelpDialog_move', CenterAndVariabilityStrings?.["keyboardHelpDialog"]?.["moveStringProperty"] );
+addToMapIfDefined( 'keyboardHelpDialog_endOfNumberLine', CenterAndVariabilityStrings?.["keyboardHelpDialog"]?.["endOfNumberLineStringProperty"] );
+addToMapIfDefined( 'keyboardHelpDialog_startOfNumberLine', CenterAndVariabilityStrings?.["keyboardHelpDialog"]?.["startOfNumberLineStringProperty"] );
+addToMapIfDefined( 'keyboardHelpDialog_grabOrReleaseBall', CenterAndVariabilityStrings?.["keyboardHelpDialog"]?.["grabOrReleaseBallStringProperty"] );
+addToMapIfDefined( 'keyboardHelpDialog_moveGrabbedBallTitle', CenterAndVariabilityStrings?.["keyboardHelpDialog"]?.["moveGrabbedBallTitleStringProperty"] );
+addToMapIfDefined( 'keyboardHelpDialog_moveGrabbedBall', CenterAndVariabilityStrings?.["keyboardHelpDialog"]?.["moveGrabbedBallStringProperty"] );
+addToMapIfDefined( 'keyboardHelpDialog_grabOrRelease', CenterAndVariabilityStrings?.["keyboardHelpDialog"]?.["grabOrReleaseStringProperty"] );
+addToMapIfDefined( 'keyboardHelpDialog_jumpToStartOfNumberLine', CenterAndVariabilityStrings?.["keyboardHelpDialog"]?.["jumpToStartOfNumberLineStringProperty"] );
+addToMapIfDefined( 'keyboardHelpDialog_jumpToEndOfNumberLine', CenterAndVariabilityStrings?.["keyboardHelpDialog"]?.["jumpToEndOfNumberLineStringProperty"] );
+addToMapIfDefined( 'keyboardHelpDialog_jumpBallToTickMark', CenterAndVariabilityStrings?.["keyboardHelpDialog"]?.["jumpBallToTickMarkStringProperty"] );
+addToMapIfDefined( 'keyboardHelpDialog_moveInLargerSteps', CenterAndVariabilityStrings?.["keyboardHelpDialog"]?.["moveInLargerStepsStringProperty"] );
+addToMapIfDefined( 'keyboardHelpDialog_medianScreen_grabOrReleaseBallOrCard', CenterAndVariabilityStrings?.["keyboardHelpDialog"]?.["medianScreen"]?.["grabOrReleaseBallOrCardStringProperty"] );
+addToMapIfDefined( 'keyboardHelpDialog_medianScreen_movePredictMedian', CenterAndVariabilityStrings?.["keyboardHelpDialog"]?.["medianScreen"]?.["movePredictMedianStringProperty"] );
+addToMapIfDefined( 'keyboardHelpDialog_medianScreen_predictMedian', CenterAndVariabilityStrings?.["keyboardHelpDialog"]?.["medianScreen"]?.["predictMedianStringProperty"] );
+addToMapIfDefined( 'keyboardHelpDialog_medianScreen_moveGrabbedBallOrCardTitle', CenterAndVariabilityStrings?.["keyboardHelpDialog"]?.["medianScreen"]?.["moveGrabbedBallOrCardTitleStringProperty"] );
+addToMapIfDefined( 'keyboardHelpDialog_medianScreen_moveGrabbedBallOrCard', CenterAndVariabilityStrings?.["keyboardHelpDialog"]?.["medianScreen"]?.["moveGrabbedBallOrCardStringProperty"] );
+addToMapIfDefined( 'keyboardHelpDialog_medianScreen_jumpToStartOfCardsOrNumberLine', CenterAndVariabilityStrings?.["keyboardHelpDialog"]?.["medianScreen"]?.["jumpToStartOfCardsOrNumberLineStringProperty"] );
+addToMapIfDefined( 'keyboardHelpDialog_medianScreen_jumpToEndOfCardsOrNumberLine', CenterAndVariabilityStrings?.["keyboardHelpDialog"]?.["medianScreen"]?.["jumpToEndOfCardsOrNumberLineStringProperty"] );
+addToMapIfDefined( 'keyboardHelpDialog_meanAndMedianScreen_movePredictMeanOrMedian', CenterAndVariabilityStrings?.["keyboardHelpDialog"]?.["meanAndMedianScreen"]?.["movePredictMeanOrMedianStringProperty"] );
+addToMapIfDefined( 'keyboardHelpDialog_meanAndMedianScreen_movePredictionPointer', CenterAndVariabilityStrings?.["keyboardHelpDialog"]?.["meanAndMedianScreen"]?.["movePredictionPointerStringProperty"] );
+addToMapIfDefined( 'keyboardHelpDialog_meanAndMedianScreen_movePredictMeanInSmallerSteps', CenterAndVariabilityStrings?.["keyboardHelpDialog"]?.["meanAndMedianScreen"]?.["movePredictMeanInSmallerStepsStringProperty"] );
+addToMapIfDefined( 'keyboardHelpDialog_meanAndMedianScreen_moveInLargerSteps', CenterAndVariabilityStrings?.["keyboardHelpDialog"]?.["meanAndMedianScreen"]?.["moveInLargerStepsStringProperty"] );
+addToMapIfDefined( 'keyboardHelpDialog_variabilityScreen_movePointerIntervalHandleOrIntervalBlock', CenterAndVariabilityStrings?.["keyboardHelpDialog"]?.["variabilityScreen"]?.["movePointerIntervalHandleOrIntervalBlockStringProperty"] );
+addToMapIfDefined( 'keyboardHelpDialog_variabilityScreen_object', CenterAndVariabilityStrings?.["keyboardHelpDialog"]?.["variabilityScreen"]?.["objectStringProperty"] );
+addToMapIfDefined( 'a11y_medianScreenHelpText', CenterAndVariabilityStrings?.["a11y"]?.["medianScreenHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_meanAndMedianScreenHelpText', CenterAndVariabilityStrings?.["a11y"]?.["meanAndMedianScreenHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_variabilityScreenHelpText', CenterAndVariabilityStrings?.["a11y"]?.["variabilityScreenHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_common_currentDetails_listItemPattern', CenterAndVariabilityStrings?.["a11y"]?.["common"]?.["currentDetails"]?.["listItemPatternStringProperty"] );
+addToMapIfDefined( 'a11y_common_guidingQuestion', CenterAndVariabilityStrings?.["a11y"]?.["common"]?.["guidingQuestionStringProperty"] );
+addToMapIfDefined( 'a11y_common_soccerField', CenterAndVariabilityStrings?.["a11y"]?.["common"]?.["soccerFieldStringProperty"] );
+addToMapIfDefined( 'a11y_common_interactionHintNoBalls', CenterAndVariabilityStrings?.["a11y"]?.["common"]?.["interactionHintNoBallsStringProperty"] );
+addToMapIfDefined( 'a11y_common_eraseButton_accessibleName', CenterAndVariabilityStrings?.["a11y"]?.["common"]?.["eraseButton"]?.["accessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_common_eraseButton_accessibleHelpText', CenterAndVariabilityStrings?.["a11y"]?.["common"]?.["eraseButton"]?.["accessibleHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_common_medianPredictionSlider_accessibleName', CenterAndVariabilityStrings?.["a11y"]?.["common"]?.["medianPredictionSlider"]?.["accessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_common_meanPredictionSlider_accessibleName', CenterAndVariabilityStrings?.["a11y"]?.["common"]?.["meanPredictionSlider"]?.["accessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_common_medianCheckbox_accessibleName', CenterAndVariabilityStrings?.["a11y"]?.["common"]?.["medianCheckbox"]?.["accessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_common_medianCheckbox_accessibleHelpText', CenterAndVariabilityStrings?.["a11y"]?.["common"]?.["medianCheckbox"]?.["accessibleHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_common_meanCheckbox_accessibleName', CenterAndVariabilityStrings?.["a11y"]?.["common"]?.["meanCheckbox"]?.["accessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_common_meanCheckbox_accessibleHelpText', CenterAndVariabilityStrings?.["a11y"]?.["common"]?.["meanCheckbox"]?.["accessibleHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_common_predictMedianCheckbox_accessibleName', CenterAndVariabilityStrings?.["a11y"]?.["common"]?.["predictMedianCheckbox"]?.["accessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_common_predictMedianCheckbox_accessibleHelpText', CenterAndVariabilityStrings?.["a11y"]?.["common"]?.["predictMedianCheckbox"]?.["accessibleHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_common_predictMeanCheckbox_accessibleName', CenterAndVariabilityStrings?.["a11y"]?.["common"]?.["predictMeanCheckbox"]?.["accessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_common_predictMeanCheckbox_accessibleHelpText', CenterAndVariabilityStrings?.["a11y"]?.["common"]?.["predictMeanCheckbox"]?.["accessibleHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_median_playArea', CenterAndVariabilityStrings?.["a11y"]?.["median"]?.["playAreaStringProperty"] );
+addToMapIfDefined( 'a11y_median_controlArea', CenterAndVariabilityStrings?.["a11y"]?.["median"]?.["controlAreaStringProperty"] );
+addToMapIfDefined( 'a11y_median_currentDetails_soccerBalls', CenterAndVariabilityStrings?.["a11y"]?.["median"]?.["currentDetails"]?.["soccerBallsStringProperty"] );
+addToMapIfDefined( 'a11y_median_currentDetails_cards', CenterAndVariabilityStrings?.["a11y"]?.["median"]?.["currentDetails"]?.["cardsStringProperty"] );
+addToMapIfDefined( 'a11y_median_interactionHintSomeBalls', CenterAndVariabilityStrings?.["a11y"]?.["median"]?.["interactionHintSomeBallsStringProperty"] );
+addToMapIfDefined( 'a11y_median_dataCardsGroup_noCardsAccessibleName', CenterAndVariabilityStrings?.["a11y"]?.["median"]?.["dataCardsGroup"]?.["noCardsAccessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_median_dataCardsGroup_selectAccessibleName', CenterAndVariabilityStrings?.["a11y"]?.["median"]?.["dataCardsGroup"]?.["selectAccessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_median_dataCardsGroup_sortAccessibleName', CenterAndVariabilityStrings?.["a11y"]?.["median"]?.["dataCardsGroup"]?.["sortAccessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_median_dataCardsGroup_selectAccessibleHelpText', CenterAndVariabilityStrings?.["a11y"]?.["median"]?.["dataCardsGroup"]?.["selectAccessibleHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_median_dataCardsGroup_sortAccessibleHelpText', CenterAndVariabilityStrings?.["a11y"]?.["median"]?.["dataCardsGroup"]?.["sortAccessibleHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_median_sortDataCheckbox_accessibleName', CenterAndVariabilityStrings?.["a11y"]?.["median"]?.["sortDataCheckbox"]?.["accessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_median_sortDataCheckbox_accessibleHelpText', CenterAndVariabilityStrings?.["a11y"]?.["median"]?.["sortDataCheckbox"]?.["accessibleHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_median_cardsMedianCheckbox_accessibleName', CenterAndVariabilityStrings?.["a11y"]?.["median"]?.["cardsMedianCheckbox"]?.["accessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_median_cardsMedianCheckbox_accessibleHelpText', CenterAndVariabilityStrings?.["a11y"]?.["median"]?.["cardsMedianCheckbox"]?.["accessibleHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_median_details_accessibleName', CenterAndVariabilityStrings?.["a11y"]?.["median"]?.["details"]?.["accessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_meanAndMedian_playArea', CenterAndVariabilityStrings?.["a11y"]?.["meanAndMedian"]?.["playAreaStringProperty"] );
+addToMapIfDefined( 'a11y_meanAndMedian_currentDetails_soccerBalls', CenterAndVariabilityStrings?.["a11y"]?.["meanAndMedian"]?.["currentDetails"]?.["soccerBallsStringProperty"] );
+addToMapIfDefined( 'a11y_meanAndMedian_currentDetails_plot', CenterAndVariabilityStrings?.["a11y"]?.["meanAndMedian"]?.["currentDetails"]?.["plotStringProperty"] );
+addToMapIfDefined( 'a11y_meanAndMedian_controlArea', CenterAndVariabilityStrings?.["a11y"]?.["meanAndMedian"]?.["controlAreaStringProperty"] );
+addToMapIfDefined( 'a11y_meanAndMedian_accordionBoxHelpText', CenterAndVariabilityStrings?.["a11y"]?.["meanAndMedian"]?.["accordionBoxHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_meanAndMedian_plotMedianCheckbox_accessibleName', CenterAndVariabilityStrings?.["a11y"]?.["meanAndMedian"]?.["plotMedianCheckbox"]?.["accessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_meanAndMedian_plotMedianCheckbox_accessibleHelpText', CenterAndVariabilityStrings?.["a11y"]?.["meanAndMedian"]?.["plotMedianCheckbox"]?.["accessibleHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_meanAndMedian_plotMeanCheckbox_accessibleName', CenterAndVariabilityStrings?.["a11y"]?.["meanAndMedian"]?.["plotMeanCheckbox"]?.["accessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_meanAndMedian_plotMeanCheckbox_accessibleHelpText', CenterAndVariabilityStrings?.["a11y"]?.["meanAndMedian"]?.["plotMeanCheckbox"]?.["accessibleHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_meanAndMedian_details_accessibleName', CenterAndVariabilityStrings?.["a11y"]?.["meanAndMedian"]?.["details"]?.["accessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_meanAndMedian_interactionHintSomeBalls', CenterAndVariabilityStrings?.["a11y"]?.["meanAndMedian"]?.["interactionHintSomeBallsStringProperty"] );
+addToMapIfDefined( 'a11y_variability_playArea', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["playAreaStringProperty"] );
+addToMapIfDefined( 'a11y_variability_currentDetails_soccerBalls', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["currentDetails"]?.["soccerBallsStringProperty"] );
+addToMapIfDefined( 'a11y_variability_currentDetails_plot', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["currentDetails"]?.["plotStringProperty"] );
+addToMapIfDefined( 'a11y_variability_controlArea', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["controlAreaStringProperty"] );
+addToMapIfDefined( 'a11y_variability_sceneRadioButtonGroup_groupName', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["sceneRadioButtonGroup"]?.["groupNameStringProperty"] );
+addToMapIfDefined( 'a11y_variability_sceneRadioButtonGroup_scene1AccessibleName', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["sceneRadioButtonGroup"]?.["scene1AccessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_variability_sceneRadioButtonGroup_scene2AccessibleName', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["sceneRadioButtonGroup"]?.["scene2AccessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_variability_sceneRadioButtonGroup_scene3AccessibleName', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["sceneRadioButtonGroup"]?.["scene3AccessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_variability_sceneRadioButtonGroup_scene4AccessibleName', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["sceneRadioButtonGroup"]?.["scene4AccessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_variability_sceneRadioButtonGroup_accessibleHelpText', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["sceneRadioButtonGroup"]?.["accessibleHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_variability_pointerCheckbox_accessibleHelpText', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["pointerCheckbox"]?.["accessibleHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_variability_predictionPointer_accessibleName', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["predictionPointer"]?.["accessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_variability_measuresRadioButtonGroup_groupName', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["measuresRadioButtonGroup"]?.["groupNameStringProperty"] );
+addToMapIfDefined( 'a11y_variability_measuresRadioButtonGroup_accessibleHelpText', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["measuresRadioButtonGroup"]?.["accessibleHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_variability_measureAccordionBox_rangeAccessibleHelpText', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["measureAccordionBox"]?.["rangeAccessibleHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_variability_measureAccordionBox_iqrAccessibleHelpText', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["measureAccordionBox"]?.["iqrAccessibleHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_variability_measureAccordionBox_madAccessibleHelpText', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["measureAccordionBox"]?.["madAccessibleHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_variability_rangeCheckbox_accessibleHelpText', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["rangeCheckbox"]?.["accessibleHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_variability_iqrCheckbox_accessibleHelpText', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["iqrCheckbox"]?.["accessibleHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_variability_madCheckbox_accessibleHelpText', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["madCheckbox"]?.["accessibleHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_variability_details_accessibleNamePattern', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["details"]?.["accessibleNamePatternStringProperty"] );
+addToMapIfDefined( 'a11y_variability_intervalTool_heading', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["intervalTool"]?.["headingStringProperty"] );
+addToMapIfDefined( 'a11y_variability_intervalTool_accessibleHelpText', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["intervalTool"]?.["accessibleHelpTextStringProperty"] );
+addToMapIfDefined( 'a11y_variability_intervalTool_handle1AccessibleName', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["intervalTool"]?.["handle1AccessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_variability_intervalTool_handle2AccessibleName', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["intervalTool"]?.["handle2AccessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_variability_intervalTool_rectangleAccessibleName', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["intervalTool"]?.["rectangleAccessibleNameStringProperty"] );
+addToMapIfDefined( 'a11y_variability_intervalTool_rectangleValuePattern', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["intervalTool"]?.["rectangleValuePatternStringProperty"] );
+addToMapIfDefined( 'a11y_variability_interactionHintSomeBalls', CenterAndVariabilityStrings?.["a11y"]?.["variability"]?.["interactionHintSomeBallsStringProperty"] );
+addToMapIfDefined( 'a11y_preferences_plotType_accessibleHelpText', CenterAndVariabilityStrings?.["a11y"]?.["preferences"]?.["plotType"]?.["accessibleHelpTextStringProperty"] );
 
 // A function that creates contents for a new Fluent file, which will be needed if any string changes.
 const createFluentFile = (): string => {
@@ -334,9 +482,9 @@ const CenterAndVariabilityFluent = {
         soccerBalls: new FluentPattern<{ number: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_median_currentDetails_soccerBalls', _.get( CenterAndVariabilityStrings, 'a11y.median.currentDetails.soccerBallsStringProperty' ) ),
         cards: new FluentPattern<{ distances: FluentVariable, number: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_median_currentDetails_cards', _.get( CenterAndVariabilityStrings, 'a11y.median.currentDetails.cardsStringProperty' ) )
       },
-      interactionHintSomeBallsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_median_interactionHintSomeBalls', _.get( CenterAndVariabilityStrings, 'a11y.median.interactionHintSomeBallsStringProperty' ) ),
+      interactionHintSomeBallsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_median_interactionHintSomeBalls' ),
       distanceAccordionBox: {
-        accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_median_distanceAccordionBox_accessibleName', _.get( CenterAndVariabilityStrings, 'a11y.median.distanceAccordionBox.accessibleNameStringProperty' ) )
+        accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_median_distanceAccordionBox_accessibleName' )
       },
       dataCardsGroup: {
         noCardsAccessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_median_dataCardsGroup_noCardsAccessibleName', _.get( CenterAndVariabilityStrings, 'a11y.median.dataCardsGroup.noCardsAccessibleNameStringProperty' ) ),

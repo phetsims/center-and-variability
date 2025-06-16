@@ -49,7 +49,8 @@ export default class MeanAndMedianScreenSummaryContent extends CAVScreenSummaryC
 
     super( [ listNode ], currentDetailsStringProperty, remainingDetailsNode, {
       playAreaContent: [ playAreaPatternStringProperty, guidingQuestionStringProperty ],
-      interactionHintContent: CAVScreenSummaryContent.createInteractionHintContent( CenterAndVariabilityFluent.a11y.meanAndMedian.interactionHintSomeBallsStringProperty, model.selectedSceneStackedSoccerBallCountProperty )
+      interactionHintContent: CAVScreenSummaryContent.createInteractionHintContent( CenterAndVariabilityFluent.a11y.meanAndMedian.interactionHintSomeBallsStringProperty, model.selectedSceneStackedSoccerBallCountProperty ),
+      controlAreaContent: CenterAndVariabilityFluent.a11y.meanAndMedian.controlAreaStringProperty
     } );
   }
 }

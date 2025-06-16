@@ -159,9 +159,6 @@ type StringsType = {
         'cardsStringProperty': LocalizedStringProperty;
       };
       'interactionHintSomeBallsStringProperty': LocalizedStringProperty;
-      'distanceAccordionBox': {
-        'accessibleNameStringProperty': LocalizedStringProperty;
-      };
       'dataCardsGroup': {
         'noCardsAccessibleNameStringProperty': LocalizedStringProperty;
         'selectAccessibleNameStringProperty': LocalizedStringProperty;

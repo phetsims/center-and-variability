@@ -360,11 +360,6 @@
       "interactionHintSomeBalls": {
         "value": "Move soccer balls or sort distance data cards to explore data."
       },
-      "distanceAccordionBox": {
-        "accessibleName": {
-          "value": "Distance (in meters) sortable list"
-        }
-      },
       "dataCardsGroup": {
         "noCardsAccessibleName": {
           "value": "No cards to grab"

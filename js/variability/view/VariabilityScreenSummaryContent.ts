@@ -23,7 +23,7 @@ import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 export default class VariabilityScreenSummaryContent extends CAVScreenSummaryContent {
 
   public constructor( model: VariabilityModel ) {
-    const playAreaPatternStringProperty = CenterAndVariabilityFluent.a11y.meanAndMedian.playArea.createProperty( {
+    const playAreaPatternStringProperty = CenterAndVariabilityFluent.a11y.variability.playArea.createProperty( {
       maxBalls: MAX_KICKS_PROPERTY
     } );
     const guidingQuestionStringProperty = CenterAndVariabilityFluent.a11y.common.guidingQuestion.createProperty( {
@@ -73,7 +73,8 @@ export default class VariabilityScreenSummaryContent extends CAVScreenSummaryCon
       playAreaContent: [ playAreaPatternStringProperty, guidingQuestionStringProperty ],
       interactionHintContent: CAVScreenSummaryContent.createInteractionHintContent(
         CenterAndVariabilityFluent.a11y.variability.interactionHintSomeBallsStringProperty,
-        model.selectedSceneStackedSoccerBallCountProperty )
+        model.selectedSceneStackedSoccerBallCountProperty ),
+      controlAreaContent: CenterAndVariabilityFluent.a11y.variability.controlAreaStringProperty
     } );
   }
 }

@@ -66,7 +66,8 @@ export default class MedianScreenSummaryContent extends CAVScreenSummaryContent 
         playAreaContent: [ playAreaPatternStringProperty, guidingQuestionStringProperty ],
         interactionHintContent: CAVScreenSummaryContent.createInteractionHintContent(
           CenterAndVariabilityFluent.a11y.median.interactionHintSomeBallsStringProperty,
-          model.selectedSceneStackedSoccerBallCountProperty )
+          model.selectedSceneStackedSoccerBallCountProperty ),
+        controlAreaContent: CenterAndVariabilityFluent.a11y.median.controlAreaStringProperty
       } );
   }
 }

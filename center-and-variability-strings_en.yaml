@@ -156,8 +156,6 @@ a11y:
         *[other] {$number} data cards list the kick distances as {$distances}.
         }
     interactionHintSomeBalls: Move soccer balls or sort distance data cards to explore data.
-    distanceAccordionBox:
-      accessibleName: Distance (in meters) sortable list
     dataCardsGroup:
       noCardsAccessibleName: No cards to grab
       selectAccessibleName: Kick Distance {$value}, card {$index} of {$total}
