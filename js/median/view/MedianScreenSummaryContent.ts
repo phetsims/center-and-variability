@@ -35,16 +35,16 @@ export default class MedianScreenSummaryContent extends CAVScreenSummaryContent 
      */
     const ballValueProperties: Property<number | null>[] = model.selectedSceneModelProperty.value.soccerBalls
       .map( ball => ball.valueProperty );
+    const cardIndexProperties: Property<number | null>[] = model.interactiveCardContainerModel.cards.map( card => card.indexProperty );
 
     const meterStackHeightProperties = CAVScreenSummaryContent.METERS.map( meter =>
       DerivedProperty.deriveAny( ballValueProperties, () => {
         return sceneModel.getStackAtValue( meter ).length;
       } )
     );
-    const distancesStringProperty = DerivedProperty.deriveAny( ballValueProperties,
+    const distancesStringProperty = DerivedProperty.deriveAny( [ ...ballValueProperties, ...cardIndexProperties ],
       () => {
-        const distances = ballValueProperties.filter( valueProperty => valueProperty.value !== null )
-          .map( valueProperty => valueProperty.value );
+        const distances = model.interactiveCardContainerModel.getCardsInCellOrder().map( card => card.soccerBall.valueProperty.value );
         return distances.length > 0 ? distances.join( ', ' ) : '';
       } );
     const currentCardDetailsPatternStringProperty = CenterAndVariabilityFluent.a11y.median.currentDetails.cards.createProperty( {
