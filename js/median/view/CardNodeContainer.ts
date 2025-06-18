@@ -37,7 +37,12 @@ export default class CardNodeContainer extends InteractiveHighlightingNode {
   } );
 
   // Add padding to the card layer to give space for the medianBarNode
-  protected readonly cardLayer = new Node( { x: CARD_LAYER_OFFSET } );
+  protected readonly cardLayer = new Node( {
+    x: CARD_LAYER_OFFSET,
+
+    // Invisible cards should not be part of the final layout.
+    excludeInvisibleChildrenFromBounds: true
+  } );
 
   public constructor( model: CardContainerModel,
                       protected readonly sceneModel: CAVSoccerSceneModel,

@@ -30,9 +30,6 @@ export default class MedianInfoNode extends VBox {
     const cardContainerModel = new CardContainerModel( model, { representationContext: 'info', tandem: tandem } );
     const cardNodeContainer = new CardNodeContainer( cardContainerModel, model.selectedSceneModelProperty.value,
       model.medianVisibleProperty, {
-
-        // So it will remain centered in the dialog
-        excludeInvisibleChildrenFromBounds: true,
         visibleProperty: DerivedProperty.not( hasZeroKicksProperty )
       } );
 
