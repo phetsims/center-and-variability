@@ -12,6 +12,7 @@ import CAVKeyboardHelpGrabOrReleaseSection from '../../common/view/CAVKeyboardHe
 import CAVKeyboardHelpMoveGrabbedBallAndOrCardSection from '../../common/view/CAVKeyboardHelpMoveGrabbedBallAndOrCardSection.js';
 import CAVKeyboardHelpNode from '../../common/view/CAVKeyboardHelpNode.js';
 import VariabilityKeyboardHelpSection from './VariabilityKeyboardHelpSection.js';
+import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 
 export default class VariabilityKeyboardHelpNode extends CAVKeyboardHelpNode {
 
@@ -22,7 +23,9 @@ export default class VariabilityKeyboardHelpNode extends CAVKeyboardHelpNode {
         CenterAndVariabilityStrings.keyboardHelpDialog.moveGrabbedBallTitleStringProperty,
         CenterAndVariabilityStrings.keyboardHelpDialog.moveGrabbedBallStringProperty,
         CenterAndVariabilityStrings.keyboardHelpDialog.jumpToStartOfNumberLineStringProperty,
-        CenterAndVariabilityStrings.keyboardHelpDialog.jumpToEndOfNumberLineStringProperty
+        CenterAndVariabilityStrings.keyboardHelpDialog.jumpToEndOfNumberLineStringProperty,
+        CenterAndVariabilityFluent.a11y.keyboardHelp.ballStringProperty,
+        CenterAndVariabilityFluent.a11y.keyboardHelp.numberLineStringProperty
       )
     ], new VariabilityKeyboardHelpSection() );
   }

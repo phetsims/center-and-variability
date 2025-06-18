@@ -175,6 +175,15 @@ addToMapIfDefined( 'a11y_variability_intervalTool_rectangleAccessibleName', 'a11
 addToMapIfDefined( 'a11y_variability_intervalTool_rectangleValuePattern', 'a11y.variability.intervalTool.rectangleValuePatternStringProperty' );
 addToMapIfDefined( 'a11y_variability_interactionHintSomeBalls', 'a11y.variability.interactionHintSomeBallsStringProperty' );
 addToMapIfDefined( 'a11y_preferences_plotType_accessibleHelpText', 'a11y.preferences.plotType.accessibleHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_keyboardHelp_moveGrabbedObjects', 'a11y.keyboardHelp.moveGrabbedObjectsStringProperty' );
+addToMapIfDefined( 'a11y_keyboardHelp_ballOrCard', 'a11y.keyboardHelp.ballOrCardStringProperty' );
+addToMapIfDefined( 'a11y_keyboardHelp_ball', 'a11y.keyboardHelp.ballStringProperty' );
+addToMapIfDefined( 'a11y_keyboardHelp_moveInLargerSteps', 'a11y.keyboardHelp.moveInLargerStepsStringProperty' );
+addToMapIfDefined( 'a11y_keyboardHelp_jumpToStart', 'a11y.keyboardHelp.jumpToStartStringProperty' );
+addToMapIfDefined( 'a11y_keyboardHelp_jumpToEnd', 'a11y.keyboardHelp.jumpToEndStringProperty' );
+addToMapIfDefined( 'a11y_keyboardHelp_cardsOrNumberLine', 'a11y.keyboardHelp.cardsOrNumberLineStringProperty' );
+addToMapIfDefined( 'a11y_keyboardHelp_numberLine', 'a11y.keyboardHelp.numberLineStringProperty' );
+addToMapIfDefined( 'a11y_keyboardHelp_jumpBallToTickMark', 'a11y.keyboardHelp.jumpBallToTickMarkStringProperty' );
 
 // A function that creates contents for a new Fluent file, which will be needed if any string changes.
 const createFluentFile = (): string => {
@@ -432,6 +441,17 @@ const CenterAndVariabilityFluent = {
       plotType: {
         accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_preferences_plotType_accessibleHelpText', _.get( CenterAndVariabilityStrings, 'a11y.preferences.plotType.accessibleHelpTextStringProperty' ) )
       }
+    },
+    keyboardHelp: {
+      moveGrabbedObjects: new FluentPattern<{ object: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_keyboardHelp_moveGrabbedObjects', _.get( CenterAndVariabilityStrings, 'a11y.keyboardHelp.moveGrabbedObjectsStringProperty' ) ),
+      ballOrCardStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_ballOrCard', _.get( CenterAndVariabilityStrings, 'a11y.keyboardHelp.ballOrCardStringProperty' ) ),
+      ballStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_ball', _.get( CenterAndVariabilityStrings, 'a11y.keyboardHelp.ballStringProperty' ) ),
+      moveInLargerStepsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_moveInLargerSteps', _.get( CenterAndVariabilityStrings, 'a11y.keyboardHelp.moveInLargerStepsStringProperty' ) ),
+      jumpToStart: new FluentPattern<{ location: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_keyboardHelp_jumpToStart', _.get( CenterAndVariabilityStrings, 'a11y.keyboardHelp.jumpToStartStringProperty' ) ),
+      jumpToEnd: new FluentPattern<{ location: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_keyboardHelp_jumpToEnd', _.get( CenterAndVariabilityStrings, 'a11y.keyboardHelp.jumpToEndStringProperty' ) ),
+      cardsOrNumberLineStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_cardsOrNumberLine', _.get( CenterAndVariabilityStrings, 'a11y.keyboardHelp.cardsOrNumberLineStringProperty' ) ),
+      numberLineStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_numberLine', _.get( CenterAndVariabilityStrings, 'a11y.keyboardHelp.numberLineStringProperty' ) ),
+      jumpBallToTickMarkStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_jumpBallToTickMark', _.get( CenterAndVariabilityStrings, 'a11y.keyboardHelp.jumpBallToTickMarkStringProperty' ) )
     }
   }
 };

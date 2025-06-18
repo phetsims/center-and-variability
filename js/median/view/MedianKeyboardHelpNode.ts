@@ -17,6 +17,7 @@ import CAVKeyboardHelpGrabOrReleaseSection from '../../common/view/CAVKeyboardHe
 import CAVKeyboardHelpMoveGrabbedBallAndOrCardSection from '../../common/view/CAVKeyboardHelpMoveGrabbedBallAndOrCardSection.js';
 import CAVKeyboardHelpNode from '../../common/view/CAVKeyboardHelpNode.js';
 import MedianKeyboardHelpPredictMedianSection from './MedianKeyboardHelpPredictMedianSection.js';
+import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 
 export default class MedianKeyboardHelpNode extends CAVKeyboardHelpNode {
 
@@ -27,7 +28,9 @@ export default class MedianKeyboardHelpNode extends CAVKeyboardHelpNode {
         CenterAndVariabilityStrings.keyboardHelpDialog.medianScreen.moveGrabbedBallOrCardTitleStringProperty,
         CenterAndVariabilityStrings.keyboardHelpDialog.medianScreen.moveGrabbedBallOrCardStringProperty,
         CenterAndVariabilityStrings.keyboardHelpDialog.medianScreen.jumpToStartOfCardsOrNumberLineStringProperty,
-        CenterAndVariabilityStrings.keyboardHelpDialog.medianScreen.jumpToEndOfCardsOrNumberLineStringProperty
+        CenterAndVariabilityStrings.keyboardHelpDialog.medianScreen.jumpToEndOfCardsOrNumberLineStringProperty,
+        CenterAndVariabilityFluent.a11y.keyboardHelp.ballOrCardStringProperty,
+        CenterAndVariabilityFluent.a11y.keyboardHelp.cardsOrNumberLineStringProperty
       )
     ], new MedianKeyboardHelpPredictMedianSection() );
   }

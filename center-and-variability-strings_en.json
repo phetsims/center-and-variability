@@ -228,7 +228,7 @@
     "value": "Move in larger steps"
   },
   "keyboardHelpDialog.medianScreen.grabOrReleaseBallOrCard": {
-    "value": "Grab or Release Ball or Card"
+    "value": "Ball or Card"
   },
   "keyboardHelpDialog.medianScreen.movePredictMedian": {
     "value": "Move Predict Median"
@@ -558,6 +558,35 @@
         "accessibleHelpText": {
           "value": "Determines whether an x or dot marks a kick distance on the plot."
         }
+      }
+    },
+    "keyboardHelp": {
+      "moveGrabbedObjects": {
+        "value": "Move grabbed {$object} with Left and Right arrow keys, or A and D keys, or Up and Down arrow keys or W and S keys."
+      },
+      "ballOrCard": {
+        "value": "ball or card"
+      },
+      "ball": {
+        "value": "ball"
+      },
+      "moveInLargerSteps": {
+        "value": "Move in larger steps with Page Up or Page Down key."
+      },
+      "jumpToStart": {
+        "value": "Jump to start of {$location} with Home key."
+      },
+      "jumpToEnd": {
+        "value": "Jump to end of {$location} with End jey."
+      },
+      "cardsOrNumberLine": {
+        "value": "cards or number line"
+      },
+      "numberLine": {
+        "value": "number line"
+      },
+      "jumpBallToTickMark": {
+        "value": "Jump ball to tick mark with number Zero through Nine keys."
       }
     }
   }

@@ -8,19 +8,13 @@
  */
 
 import LocalizedStringProperty from '../../../../chipper/js/browser/LocalizedStringProperty.js';
-import KeyboardHelpIconFactory from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpIconFactory.js';
-import KeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpSection.js';
-import KeyboardHelpSectionRow from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpSectionRow.js';
+import GrabReleaseKeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/GrabReleaseKeyboardHelpSection.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
+import Property from '../../../../axon/js/Property.js';
 
-export default class CAVKeyboardHelpGrabOrReleaseSection extends KeyboardHelpSection {
+export default class CAVKeyboardHelpGrabOrReleaseSection extends GrabReleaseKeyboardHelpSection {
   public constructor( title: LocalizedStringProperty ) {
-    super( title, [
-      KeyboardHelpSectionRow.labelWithIcon(
-        CenterAndVariabilityStrings.keyboardHelpDialog.grabOrReleaseStringProperty,
-        KeyboardHelpIconFactory.spaceOrEnter()
-      ) ] );
+    super( title, new Property( '' ) );
   }
 }
 

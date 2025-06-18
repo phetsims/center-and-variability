@@ -256,6 +256,17 @@ type StringsType = {
       'plotType': {
         'accessibleHelpTextStringProperty': LocalizedStringProperty;
       }
+    };
+    'keyboardHelp': {
+      'moveGrabbedObjectsStringProperty': LocalizedStringProperty;
+      'ballOrCardStringProperty': LocalizedStringProperty;
+      'ballStringProperty': LocalizedStringProperty;
+      'moveInLargerStepsStringProperty': LocalizedStringProperty;
+      'jumpToStartStringProperty': LocalizedStringProperty;
+      'jumpToEndStringProperty': LocalizedStringProperty;
+      'cardsOrNumberLineStringProperty': LocalizedStringProperty;
+      'numberLineStringProperty': LocalizedStringProperty;
+      'jumpBallToTickMarkStringProperty': LocalizedStringProperty;
     }
   }
 };

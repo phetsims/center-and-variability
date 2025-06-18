@@ -89,7 +89,7 @@ keyboardHelpDialog.jumpToStartOfNumberLine: Jump to start of number line
 keyboardHelpDialog.jumpToEndOfNumberLine: Jump to end of number line
 keyboardHelpDialog.jumpBallToTickMark: Jump ball to tick mark
 keyboardHelpDialog.moveInLargerSteps: Move in larger steps
-keyboardHelpDialog.medianScreen.grabOrReleaseBallOrCard: Grab or Release Ball or Card
+keyboardHelpDialog.medianScreen.grabOrReleaseBallOrCard: Ball or Card
 keyboardHelpDialog.medianScreen.movePredictMedian: Move Predict Median
 keyboardHelpDialog.medianScreen.predictMedian: predict median
 keyboardHelpDialog.medianScreen.moveGrabbedBallOrCardTitle: Move Grabbed Ball or Card
@@ -260,3 +260,13 @@ a11y:
   preferences:
     plotType:
       accessibleHelpText: Determines whether an x or dot marks a kick distance on the plot.
+  keyboardHelp:
+    moveGrabbedObjects: Move grabbed {$object} with Left and Right arrow keys, or A and D keys, or Up and Down arrow keys or W and S keys.
+    ballOrCard: ball or card
+    ball: ball
+    moveInLargerSteps: Move in larger steps with Page Up or Page Down key.
+    jumpToStart: Jump to start of {$location} with Home key.
+    jumpToEnd: Jump to end of {$location} with End jey.
+    cardsOrNumberLine: cards or number line
+    numberLine: number line
+    jumpBallToTickMark: Jump ball to tick mark with number Zero through Nine keys.
