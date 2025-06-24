@@ -10,6 +10,7 @@ import type { FluentVariable } from '../../chipper/js/browser/FluentPattern.js';
 import FluentPattern from '../../chipper/js/browser/FluentPattern.js';
 import FluentContainer from '../../chipper/js/browser/FluentContainer.js';
 import FluentConstant from '../../chipper/js/browser/FluentConstant.js';
+import FluentComment from '../../chipper/js/browser/FluentComment.js';
 import centerAndVariability from './centerAndVariability.js';
 import CenterAndVariabilityStrings from './CenterAndVariabilityStrings.js';
 
@@ -198,23 +199,26 @@ const fluentSupport = new FluentContainer( createFluentFile, Array.from(fluentKe
 
 const CenterAndVariabilityFluent = {
   "center-and-variability": {
+    _comment_1: new FluentComment( {"comment":"sim name","lineNumber":1,"associatedKey":"center-and-variability.title"} ),
     titleStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'center_and_variability_title', _.get( CenterAndVariabilityStrings, 'center-and-variability.titleStringProperty' ) )
   },
   screen: {
+    _comment_4: new FluentComment( {"comment":"screen names","lineNumber":4,"associatedKey":"screen.median"} ),
     medianStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'screen_median', _.get( CenterAndVariabilityStrings, 'screen.medianStringProperty' ) ),
     meanAndMedianStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'screen_meanAndMedian', _.get( CenterAndVariabilityStrings, 'screen.meanAndMedianStringProperty' ) ),
     variabilityStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'screen_variability', _.get( CenterAndVariabilityStrings, 'screen.variabilityStringProperty' ) )
   },
-  kickValuePatternStringProperty: _.get( CenterAndVariabilityStrings, 'kickValuePatternStringProperty' ) ,
+  _comment_9: new FluentComment( {"comment":"common strings","lineNumber":9,"associatedKey":"kickValuePattern"} ),
+  kickValuePatternStringProperty: _.get( CenterAndVariabilityStrings, 'kickValuePatternStringProperty' ),
   distanceInMetersAccordionBoxTitleStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'distanceInMetersAccordionBoxTitle', _.get( CenterAndVariabilityStrings, 'distanceInMetersAccordionBoxTitleStringProperty' ) ),
   distanceInMetersChartLabelStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'distanceInMetersChartLabel', _.get( CenterAndVariabilityStrings, 'distanceInMetersChartLabelStringProperty' ) ),
-  meanEqualsValueMetersPatternStringProperty: _.get( CenterAndVariabilityStrings, 'meanEqualsValueMetersPatternStringProperty' ) ,
-  meanEqualsValueMPatternStringProperty: _.get( CenterAndVariabilityStrings, 'meanEqualsValueMPatternStringProperty' ) ,
+  meanEqualsValueMetersPatternStringProperty: _.get( CenterAndVariabilityStrings, 'meanEqualsValueMetersPatternStringProperty' ),
+  meanEqualsValueMPatternStringProperty: _.get( CenterAndVariabilityStrings, 'meanEqualsValueMPatternStringProperty' ),
   meanEqualsUnknownStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'meanEqualsUnknown', _.get( CenterAndVariabilityStrings, 'meanEqualsUnknownStringProperty' ) ),
-  medianEqualsValuePatternStringProperty: _.get( CenterAndVariabilityStrings, 'medianEqualsValuePatternStringProperty' ) ,
-  medianEqualsValueMPatternStringProperty: _.get( CenterAndVariabilityStrings, 'medianEqualsValueMPatternStringProperty' ) ,
+  medianEqualsValuePatternStringProperty: _.get( CenterAndVariabilityStrings, 'medianEqualsValuePatternStringProperty' ),
+  medianEqualsValueMPatternStringProperty: _.get( CenterAndVariabilityStrings, 'medianEqualsValueMPatternStringProperty' ),
   medianEqualsUnknownStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'medianEqualsUnknown', _.get( CenterAndVariabilityStrings, 'medianEqualsUnknownStringProperty' ) ),
-  medianEqualsValueUnitsPatternStringProperty: _.get( CenterAndVariabilityStrings, 'medianEqualsValueUnitsPatternStringProperty' ) ,
+  medianEqualsValueUnitsPatternStringProperty: _.get( CenterAndVariabilityStrings, 'medianEqualsValueUnitsPatternStringProperty' ),
   plotTypeStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'plotType', _.get( CenterAndVariabilityStrings, 'plotTypeStringProperty' ) ),
   dotPlotStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'dotPlot', _.get( CenterAndVariabilityStrings, 'dotPlotStringProperty' ) ),
   linePlotStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'linePlot', _.get( CenterAndVariabilityStrings, 'linePlotStringProperty' ) ),
@@ -229,20 +233,23 @@ const CenterAndVariabilityFluent = {
   maxKicksDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'maxKicksDescription', _.get( CenterAndVariabilityStrings, 'maxKicksDescriptionStringProperty' ) ),
   outliersStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'outliers', _.get( CenterAndVariabilityStrings, 'outliersStringProperty' ) ),
   outliersDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'outliersDescription', _.get( CenterAndVariabilityStrings, 'outliersDescriptionStringProperty' ) ),
-  valueKicksPatternStringProperty: _.get( CenterAndVariabilityStrings, 'valueKicksPatternStringProperty' ) ,
+  valueKicksPatternStringProperty: _.get( CenterAndVariabilityStrings, 'valueKicksPatternStringProperty' ),
   pointerStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'pointer', _.get( CenterAndVariabilityStrings, 'pointerStringProperty' ) ),
+  _comment_39: new FluentComment( {"comment":"median strings","lineNumber":39,"associatedKey":"medianQuestion"} ),
   medianQuestionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'medianQuestion', _.get( CenterAndVariabilityStrings, 'medianQuestionStringProperty' ) ),
   sortDataStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'sortData', _.get( CenterAndVariabilityStrings, 'sortDataStringProperty' ) ),
   youSortedTheDataStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'youSortedTheData', _.get( CenterAndVariabilityStrings, 'youSortedTheDataStringProperty' ) ),
   medianDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'medianDescription', _.get( CenterAndVariabilityStrings, 'medianDescriptionStringProperty' ) ),
+  _comment_45: new FluentComment( {"comment":"mean and median strings","lineNumber":45,"associatedKey":"meanAndMedianQuestion"} ),
   meanAndMedianQuestionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'meanAndMedianQuestion', _.get( CenterAndVariabilityStrings, 'meanAndMedianQuestionStringProperty' ) ),
   meanDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'meanDescription', _.get( CenterAndVariabilityStrings, 'meanDescriptionStringProperty' ) ),
+  _comment_49: new FluentComment( {"comment":"variability strings","lineNumber":49,"associatedKey":"variabilityQuestion"} ),
   variabilityQuestionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'variabilityQuestion', _.get( CenterAndVariabilityStrings, 'variabilityQuestionStringProperty' ) ),
-  iqrEqualsValueMPatternStringProperty: _.get( CenterAndVariabilityStrings, 'iqrEqualsValueMPatternStringProperty' ) ,
+  iqrEqualsValueMPatternStringProperty: _.get( CenterAndVariabilityStrings, 'iqrEqualsValueMPatternStringProperty' ),
   iqrEqualsUnknownStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'iqrEqualsUnknown', _.get( CenterAndVariabilityStrings, 'iqrEqualsUnknownStringProperty' ) ),
-  rangeEqualsValueMPatternStringProperty: _.get( CenterAndVariabilityStrings, 'rangeEqualsValueMPatternStringProperty' ) ,
+  rangeEqualsValueMPatternStringProperty: _.get( CenterAndVariabilityStrings, 'rangeEqualsValueMPatternStringProperty' ),
   rangeEqualsUnknownStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'rangeEqualsUnknown', _.get( CenterAndVariabilityStrings, 'rangeEqualsUnknownStringProperty' ) ),
-  madEqualsValueMPatternStringProperty: _.get( CenterAndVariabilityStrings, 'madEqualsValueMPatternStringProperty' ) ,
+  madEqualsValueMPatternStringProperty: _.get( CenterAndVariabilityStrings, 'madEqualsValueMPatternStringProperty' ),
   madEqualsUnknownStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'madEqualsUnknown', _.get( CenterAndVariabilityStrings, 'madEqualsUnknownStringProperty' ) ),
   madEqualsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'madEquals', _.get( CenterAndVariabilityStrings, 'madEqualsStringProperty' ) ),
   rangeStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'range', _.get( CenterAndVariabilityStrings, 'rangeStringProperty' ) ),
@@ -260,13 +267,14 @@ const CenterAndVariabilityFluent = {
   rangeDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'rangeDescription', _.get( CenterAndVariabilityStrings, 'rangeDescriptionStringProperty' ) ),
   iqrDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'iqrDescription', _.get( CenterAndVariabilityStrings, 'iqrDescriptionStringProperty' ) ),
   dataValuesInMetersStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'dataValuesInMeters', _.get( CenterAndVariabilityStrings, 'dataValuesInMetersStringProperty' ) ),
-  iqrEqualsQ3MinusQ3PatternStringProperty: _.get( CenterAndVariabilityStrings, 'iqrEqualsQ3MinusQ3PatternStringProperty' ) ,
-  iqrEqualsIQRUnitsPatternStringProperty: _.get( CenterAndVariabilityStrings, 'iqrEqualsIQRUnitsPatternStringProperty' ) ,
+  iqrEqualsQ3MinusQ3PatternStringProperty: _.get( CenterAndVariabilityStrings, 'iqrEqualsQ3MinusQ3PatternStringProperty' ),
+  iqrEqualsIQRUnitsPatternStringProperty: _.get( CenterAndVariabilityStrings, 'iqrEqualsIQRUnitsPatternStringProperty' ),
   madDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'madDescription', _.get( CenterAndVariabilityStrings, 'madDescriptionStringProperty' ) ),
-  madEqualsMADMetersPatternStringProperty: _.get( CenterAndVariabilityStrings, 'madEqualsMADMetersPatternStringProperty' ) ,
-  rangeEqualsMaxMinusMinPatternStringProperty: _.get( CenterAndVariabilityStrings, 'rangeEqualsMaxMinusMinPatternStringProperty' ) ,
-  rangeEqualsRangeUnitsPatternStringProperty: _.get( CenterAndVariabilityStrings, 'rangeEqualsRangeUnitsPatternStringProperty' ) ,
+  madEqualsMADMetersPatternStringProperty: _.get( CenterAndVariabilityStrings, 'madEqualsMADMetersPatternStringProperty' ),
+  rangeEqualsMaxMinusMinPatternStringProperty: _.get( CenterAndVariabilityStrings, 'rangeEqualsMaxMinusMinPatternStringProperty' ),
+  rangeEqualsRangeUnitsPatternStringProperty: _.get( CenterAndVariabilityStrings, 'rangeEqualsRangeUnitsPatternStringProperty' ),
   keyboardHelpDialog: {
+    _comment_80: new FluentComment( {"comment":"keyboard help dialog strings","lineNumber":80,"associatedKey":"keyboardHelpDialog.move"} ),
     moveStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_move', _.get( CenterAndVariabilityStrings, 'keyboardHelpDialog.moveStringProperty' ) ),
     endOfNumberLineStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_endOfNumberLine', _.get( CenterAndVariabilityStrings, 'keyboardHelpDialog.endOfNumberLineStringProperty' ) ),
     startOfNumberLineStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_startOfNumberLine', _.get( CenterAndVariabilityStrings, 'keyboardHelpDialog.startOfNumberLineStringProperty' ) ),
@@ -298,6 +306,7 @@ const CenterAndVariabilityFluent = {
       objectStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_variabilityScreen_object', _.get( CenterAndVariabilityStrings, 'keyboardHelpDialog.variabilityScreen.objectStringProperty' ) )
     }
   },
+  _comment_106: new FluentComment( {"comment":"accessibility strings","lineNumber":106,"associatedKey":"a11y"} ),
   a11y: {
     medianScreenHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_medianScreenHelpText', _.get( CenterAndVariabilityStrings, 'a11y.medianScreenHelpTextStringProperty' ) ),
     meanAndMedianScreenHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_meanAndMedianScreenHelpText', _.get( CenterAndVariabilityStrings, 'a11y.meanAndMedianScreenHelpTextStringProperty' ) ),
@@ -305,9 +314,9 @@ const CenterAndVariabilityFluent = {
     common: {
       nullStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_common_null', _.get( CenterAndVariabilityStrings, 'a11y.common.nullStringProperty' ) ),
       currentDetails: {
-        listItemPattern: new FluentPattern<{ distance: FluentVariable, number: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_common_currentDetails_listItemPattern', _.get( CenterAndVariabilityStrings, 'a11y.common.currentDetails.listItemPatternStringProperty' ) )
+        listItemPattern: new FluentPattern<{ distance: FluentVariable, number: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_common_currentDetails_listItemPattern', _.get( CenterAndVariabilityStrings, 'a11y.common.currentDetails.listItemPatternStringProperty' ), [{"name":"distance"},{"name":"number"}] )
       },
-      guidingQuestion: new FluentPattern<{ question: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_common_guidingQuestion', _.get( CenterAndVariabilityStrings, 'a11y.common.guidingQuestionStringProperty' ) ),
+      guidingQuestion: new FluentPattern<{ question: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_common_guidingQuestion', _.get( CenterAndVariabilityStrings, 'a11y.common.guidingQuestionStringProperty' ), [{"name":"question"}] ),
       soccerFieldStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_common_soccerField', _.get( CenterAndVariabilityStrings, 'a11y.common.soccerFieldStringProperty' ) ),
       interactionHintNoBallsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_common_interactionHintNoBalls', _.get( CenterAndVariabilityStrings, 'a11y.common.interactionHintNoBallsStringProperty' ) ),
       eraseButton: {
@@ -338,17 +347,17 @@ const CenterAndVariabilityFluent = {
       }
     },
     median: {
-      playArea: new FluentPattern<{ maxBalls: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_median_playArea', _.get( CenterAndVariabilityStrings, 'a11y.median.playAreaStringProperty' ) ),
+      playArea: new FluentPattern<{ maxBalls: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_median_playArea', _.get( CenterAndVariabilityStrings, 'a11y.median.playAreaStringProperty' ), [{"name":"maxBalls"}] ),
       controlAreaStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_median_controlArea', _.get( CenterAndVariabilityStrings, 'a11y.median.controlAreaStringProperty' ) ),
       currentDetails: {
-        soccerBalls: new FluentPattern<{ number: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_median_currentDetails_soccerBalls', _.get( CenterAndVariabilityStrings, 'a11y.median.currentDetails.soccerBallsStringProperty' ) ),
-        cards: new FluentPattern<{ distances: FluentVariable, number: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_median_currentDetails_cards', _.get( CenterAndVariabilityStrings, 'a11y.median.currentDetails.cardsStringProperty' ) )
+        soccerBalls: new FluentPattern<{ number: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_median_currentDetails_soccerBalls', _.get( CenterAndVariabilityStrings, 'a11y.median.currentDetails.soccerBallsStringProperty' ), [{"name":"number"}] ),
+        cards: new FluentPattern<{ distances: FluentVariable, number: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_median_currentDetails_cards', _.get( CenterAndVariabilityStrings, 'a11y.median.currentDetails.cardsStringProperty' ), [{"name":"distances"},{"name":"number"}] )
       },
       interactionHintSomeBallsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_median_interactionHintSomeBalls', _.get( CenterAndVariabilityStrings, 'a11y.median.interactionHintSomeBallsStringProperty' ) ),
       dataCardsGroup: {
         noCardsAccessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_median_dataCardsGroup_noCardsAccessibleName', _.get( CenterAndVariabilityStrings, 'a11y.median.dataCardsGroup.noCardsAccessibleNameStringProperty' ) ),
-        selectAccessibleName: new FluentPattern<{ index: FluentVariable, total: FluentVariable, value: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_median_dataCardsGroup_selectAccessibleName', _.get( CenterAndVariabilityStrings, 'a11y.median.dataCardsGroup.selectAccessibleNameStringProperty' ) ),
-        sortAccessibleName: new FluentPattern<{ index: FluentVariable, total: FluentVariable, value: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_median_dataCardsGroup_sortAccessibleName', _.get( CenterAndVariabilityStrings, 'a11y.median.dataCardsGroup.sortAccessibleNameStringProperty' ) ),
+        selectAccessibleName: new FluentPattern<{ index: FluentVariable, total: FluentVariable, value: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_median_dataCardsGroup_selectAccessibleName', _.get( CenterAndVariabilityStrings, 'a11y.median.dataCardsGroup.selectAccessibleNameStringProperty' ), [{"name":"index"},{"name":"total"},{"name":"value"}] ),
+        sortAccessibleName: new FluentPattern<{ index: FluentVariable, total: FluentVariable, value: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_median_dataCardsGroup_sortAccessibleName', _.get( CenterAndVariabilityStrings, 'a11y.median.dataCardsGroup.sortAccessibleNameStringProperty' ), [{"name":"index"},{"name":"total"},{"name":"value"}] ),
         selectAccessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_median_dataCardsGroup_selectAccessibleHelpText', _.get( CenterAndVariabilityStrings, 'a11y.median.dataCardsGroup.selectAccessibleHelpTextStringProperty' ) ),
         sortAccessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_median_dataCardsGroup_sortAccessibleHelpText', _.get( CenterAndVariabilityStrings, 'a11y.median.dataCardsGroup.sortAccessibleHelpTextStringProperty' ) )
       },
@@ -365,10 +374,10 @@ const CenterAndVariabilityFluent = {
       }
     },
     meanAndMedian: {
-      playArea: new FluentPattern<{ maxBalls: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_meanAndMedian_playArea', _.get( CenterAndVariabilityStrings, 'a11y.meanAndMedian.playAreaStringProperty' ) ),
+      playArea: new FluentPattern<{ maxBalls: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_meanAndMedian_playArea', _.get( CenterAndVariabilityStrings, 'a11y.meanAndMedian.playAreaStringProperty' ), [{"name":"maxBalls"}] ),
       currentDetails: {
-        soccerBalls: new FluentPattern<{ number: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_meanAndMedian_currentDetails_soccerBalls', _.get( CenterAndVariabilityStrings, 'a11y.meanAndMedian.currentDetails.soccerBallsStringProperty' ) ),
-        plot: new FluentPattern<{ number: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_meanAndMedian_currentDetails_plot', _.get( CenterAndVariabilityStrings, 'a11y.meanAndMedian.currentDetails.plotStringProperty' ) )
+        soccerBalls: new FluentPattern<{ number: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_meanAndMedian_currentDetails_soccerBalls', _.get( CenterAndVariabilityStrings, 'a11y.meanAndMedian.currentDetails.soccerBallsStringProperty' ), [{"name":"number"}] ),
+        plot: new FluentPattern<{ number: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_meanAndMedian_currentDetails_plot', _.get( CenterAndVariabilityStrings, 'a11y.meanAndMedian.currentDetails.plotStringProperty' ), [{"name":"number"}] )
       },
       controlAreaStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_meanAndMedian_controlArea', _.get( CenterAndVariabilityStrings, 'a11y.meanAndMedian.controlAreaStringProperty' ) ),
       accordionBoxHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_meanAndMedian_accordionBoxHelpText', _.get( CenterAndVariabilityStrings, 'a11y.meanAndMedian.accordionBoxHelpTextStringProperty' ) ),
@@ -386,10 +395,10 @@ const CenterAndVariabilityFluent = {
       interactionHintSomeBallsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_meanAndMedian_interactionHintSomeBalls', _.get( CenterAndVariabilityStrings, 'a11y.meanAndMedian.interactionHintSomeBallsStringProperty' ) )
     },
     variability: {
-      playArea: new FluentPattern<{ maxBalls: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_variability_playArea', _.get( CenterAndVariabilityStrings, 'a11y.variability.playAreaStringProperty' ) ),
+      playArea: new FluentPattern<{ maxBalls: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_variability_playArea', _.get( CenterAndVariabilityStrings, 'a11y.variability.playAreaStringProperty' ), [{"name":"maxBalls"}] ),
       currentDetails: {
-        soccerBalls: new FluentPattern<{ kicker: FluentVariable, number: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_variability_currentDetails_soccerBalls', _.get( CenterAndVariabilityStrings, 'a11y.variability.currentDetails.soccerBallsStringProperty' ) ),
-        plot: new FluentPattern<{ measure: FluentVariable, number: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_variability_currentDetails_plot', _.get( CenterAndVariabilityStrings, 'a11y.variability.currentDetails.plotStringProperty' ) )
+        soccerBalls: new FluentPattern<{ kicker: FluentVariable, number: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_variability_currentDetails_soccerBalls', _.get( CenterAndVariabilityStrings, 'a11y.variability.currentDetails.soccerBallsStringProperty' ), [{"name":"kicker"},{"name":"number"}] ),
+        plot: new FluentPattern<{ measure: FluentVariable, number: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_variability_currentDetails_plot', _.get( CenterAndVariabilityStrings, 'a11y.variability.currentDetails.plotStringProperty' ), [{"name":"measure"},{"name":"number"}] )
       },
       controlAreaStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_controlArea', _.get( CenterAndVariabilityStrings, 'a11y.variability.controlAreaStringProperty' ) ),
       sceneRadioButtonGroup: {
@@ -425,7 +434,7 @@ const CenterAndVariabilityFluent = {
         accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_madCheckbox_accessibleHelpText', _.get( CenterAndVariabilityStrings, 'a11y.variability.madCheckbox.accessibleHelpTextStringProperty' ) )
       },
       details: {
-        accessibleNamePattern: new FluentPattern<{ measure: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_variability_details_accessibleNamePattern', _.get( CenterAndVariabilityStrings, 'a11y.variability.details.accessibleNamePatternStringProperty' ) )
+        accessibleNamePattern: new FluentPattern<{ measure: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_variability_details_accessibleNamePattern', _.get( CenterAndVariabilityStrings, 'a11y.variability.details.accessibleNamePatternStringProperty' ), [{"name":"measure"}] )
       },
       intervalTool: {
         headingStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_intervalTool_heading', _.get( CenterAndVariabilityStrings, 'a11y.variability.intervalTool.headingStringProperty' ) ),
@@ -433,7 +442,7 @@ const CenterAndVariabilityFluent = {
         handle1AccessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_intervalTool_handle1AccessibleName', _.get( CenterAndVariabilityStrings, 'a11y.variability.intervalTool.handle1AccessibleNameStringProperty' ) ),
         handle2AccessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_intervalTool_handle2AccessibleName', _.get( CenterAndVariabilityStrings, 'a11y.variability.intervalTool.handle2AccessibleNameStringProperty' ) ),
         rectangleAccessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_intervalTool_rectangleAccessibleName', _.get( CenterAndVariabilityStrings, 'a11y.variability.intervalTool.rectangleAccessibleNameStringProperty' ) ),
-        rectangleValuePattern: new FluentPattern<{ valueA: FluentVariable, valueB: FluentVariable, width: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_variability_intervalTool_rectangleValuePattern', _.get( CenterAndVariabilityStrings, 'a11y.variability.intervalTool.rectangleValuePatternStringProperty' ) )
+        rectangleValuePattern: new FluentPattern<{ valueA: FluentVariable, valueB: FluentVariable, width: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_variability_intervalTool_rectangleValuePattern', _.get( CenterAndVariabilityStrings, 'a11y.variability.intervalTool.rectangleValuePatternStringProperty' ), [{"name":"valueA"},{"name":"valueB"},{"name":"width"}] )
       },
       interactionHintSomeBallsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variability_interactionHintSomeBalls', _.get( CenterAndVariabilityStrings, 'a11y.variability.interactionHintSomeBallsStringProperty' ) )
     },
@@ -443,12 +452,12 @@ const CenterAndVariabilityFluent = {
       }
     },
     keyboardHelp: {
-      moveGrabbedObjects: new FluentPattern<{ object: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_keyboardHelp_moveGrabbedObjects', _.get( CenterAndVariabilityStrings, 'a11y.keyboardHelp.moveGrabbedObjectsStringProperty' ) ),
+      moveGrabbedObjects: new FluentPattern<{ object: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_keyboardHelp_moveGrabbedObjects', _.get( CenterAndVariabilityStrings, 'a11y.keyboardHelp.moveGrabbedObjectsStringProperty' ), [{"name":"object"}] ),
       ballOrCardStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_ballOrCard', _.get( CenterAndVariabilityStrings, 'a11y.keyboardHelp.ballOrCardStringProperty' ) ),
       ballStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_ball', _.get( CenterAndVariabilityStrings, 'a11y.keyboardHelp.ballStringProperty' ) ),
       moveInLargerStepsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_moveInLargerSteps', _.get( CenterAndVariabilityStrings, 'a11y.keyboardHelp.moveInLargerStepsStringProperty' ) ),
-      jumpToStart: new FluentPattern<{ location: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_keyboardHelp_jumpToStart', _.get( CenterAndVariabilityStrings, 'a11y.keyboardHelp.jumpToStartStringProperty' ) ),
-      jumpToEnd: new FluentPattern<{ location: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_keyboardHelp_jumpToEnd', _.get( CenterAndVariabilityStrings, 'a11y.keyboardHelp.jumpToEndStringProperty' ) ),
+      jumpToStart: new FluentPattern<{ location: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_keyboardHelp_jumpToStart', _.get( CenterAndVariabilityStrings, 'a11y.keyboardHelp.jumpToStartStringProperty' ), [{"name":"location"}] ),
+      jumpToEnd: new FluentPattern<{ location: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_keyboardHelp_jumpToEnd', _.get( CenterAndVariabilityStrings, 'a11y.keyboardHelp.jumpToEndStringProperty' ), [{"name":"location"}] ),
       cardsOrNumberLineStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_cardsOrNumberLine', _.get( CenterAndVariabilityStrings, 'a11y.keyboardHelp.cardsOrNumberLineStringProperty' ) ),
       numberLineStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_numberLine', _.get( CenterAndVariabilityStrings, 'a11y.keyboardHelp.numberLineStringProperty' ) ),
       jumpBallToTickMarkStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_jumpBallToTickMark', _.get( CenterAndVariabilityStrings, 'a11y.keyboardHelp.jumpBallToTickMarkStringProperty' ) )
