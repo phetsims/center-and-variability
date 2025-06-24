@@ -85,7 +85,7 @@ export default class CardContainerModel extends PhetioObject {
 
         // A ball landed OR a value changed
         if ( ( medianModel.isSortingDataProperty.value && value !== null ) || options.representationContext === 'info' ) {
-          this.sortData( 'valueChanged' );
+          this.sortData( true );
         }
 
         if ( options.representationContext === 'accordion' ) {
@@ -96,7 +96,7 @@ export default class CardContainerModel extends PhetioObject {
       card.isActiveProperty.lazyLink( isActive => {
         this.numActiveCardsProperty.value = this.getActiveCards().length;
 
-        if ( isActive && !isSettingPhetioStateProperty.value ) {
+        if ( isActive ) {
           const cardCells = this.getCardsInCellOrder();
           let targetIndex = cardCells.length;
 
@@ -119,16 +119,11 @@ export default class CardContainerModel extends PhetioObject {
 
           card.timeSinceLanded = 0;
           card.indexProperty.value = targetIndex;
-          this.setAtHomeCell( card );
-
-          // Animate all displaced cards
 
           // Animate all displaced cards
           for ( let i = targetIndex; i < this.getCardsInCellOrder().length; i++ ) {
             const cardCells = this.getCardsInCellOrder();
             cardCells[ i ].indexProperty.value = i;
-            cardCells[ i ].positionProperty.value = cardCells[ i ].positionProperty.value.plusXY( 1, 0 );
-            this.animateToHomeCell( cardCells[ i ], 0.3 );
           }
 
           this.cardCellsChangedEmitter.emit();
@@ -155,8 +150,8 @@ export default class CardContainerModel extends PhetioObject {
     card.positionProperty.value = this.getHomePosition( card );
   }
 
-  public animateToHomeCell( card: CardModel, duration: number, animationReason: 'valueChanged' | null = null ): void {
-    card.animateTo( this.getHomePosition( card ), duration, animationReason );
+  public animateToHomeCell( card: CardModel, duration: number ): void {
+    card.animateTo( this.getHomePosition( card ), duration );
   }
 
   /**
@@ -189,18 +184,21 @@ export default class CardContainerModel extends PhetioObject {
     return _.sortBy( cardsInCells, card => card.indexProperty.value );
   }
 
-  public sortData( animationReason: 'valueChanged' | null = null ): void {
+  public sortData( valueChange = false ): void {
 
     // If the card is visible, the value Property should be non-null.
     const cardsSortedByValue = _.sortBy( this.getCardsInCells(), card => card.soccerBall.valueProperty.value );
     cardsSortedByValue.forEach( ( card, index ) => {
+
+      // we do not want the card swap sound to play if we are sorting data due to a value change.
+      card.animationSoundEnabled = !valueChange;
       card.indexProperty.value = index;
 
       if ( isSettingPhetioStateProperty.value || this.medianModel.selectedSceneModelProperty.value.isClearingData || isResettingAllProperty.value ) {
         this.setAtHomeCell( card );
       }
       else {
-        this.animateToHomeCell( card, 0.5, animationReason );
+        this.animateToHomeCell( card, 0.5 );
       }
     } );
     this.cardCellsChangedEmitter.emit();

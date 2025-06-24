@@ -52,8 +52,8 @@ export default class CardModel extends PhetioObject {
   // Avoid sound effects for cards that landed recently, since cards sometimes swap when a new soccer ball lands and "sort data" is checked.
   public timeSinceLanded = 0;
 
-  // We can also specify a reason for the animation, in order to 'mute' sound effects for this card.
-  public animationReason: 'valueChanged' | null = null;
+  // We can also 'mute' sound effects for this card for certain scenarios.
+  public animationSoundEnabled = true;
   public animation: Animation | null = null;
   private animationTo: Vector2 | null = null;
 
@@ -90,13 +90,17 @@ export default class CardModel extends PhetioObject {
 
     this.positionProperty = new Vector2Property( position, {
       phetioReadOnly: true,
+
+      // We do not want state to track the position, but clients may want access via the API. This change also came
+      // after the sim was published with PhET-iO, and it does not seem worth a migration rule to remove it.
+      phetioState: false,
       tandem: options.tandem.createTandem( 'positionProperty' ),
       valueComparisonStrategy: 'equalsFunction'
     } );
     this.addLinkedElement( this.soccerBall );
   }
 
-  public animateTo( destination: Vector2, duration: number, animationReason: 'valueChanged' | null = null ): void {
+  public animateTo( destination: Vector2, duration: number ): void {
 
     if ( this.animation ) {
 
@@ -105,7 +109,6 @@ export default class CardModel extends PhetioObject {
       if ( destination.equals( this.animationTo! ) ) {
 
         // Already moving to the desired destination.
-        this.animationReason = animationReason;
         return;
       }
       else {
@@ -119,7 +122,6 @@ export default class CardModel extends PhetioObject {
         return;
       }
     }
-    this.animationReason = animationReason;
 
     this.animation = new Animation( {
       duration: duration,
@@ -134,7 +136,7 @@ export default class CardModel extends PhetioObject {
     this.animation.endedEmitter.addListener( () => {
       this.animation = null;
       this.animationTo = null;
-      this.animationReason = null;
+      this.animationSoundEnabled = true;
     } );
 
     this.animation.start();

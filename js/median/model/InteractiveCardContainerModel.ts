@@ -107,7 +107,7 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
   public step( dt: number ): void {
 
     // Only consider cards that landed more than 0.1 seconds ago, to avoid an edge case that was mistakenly playing audio when soccer balls land
-    const activeCards = this.cards.filter( card => card.isActiveProperty.value && card.timeSinceLanded > 0.1 && card.animationReason !== 'valueChanged' );
+    const activeCards = this.cards.filter( card => card.isActiveProperty.value && card.timeSinceLanded > 0.1 && card.animationSoundEnabled );
 
     // Determine the sort order to see which cards have swapped
     const newOrder = _.sortBy( activeCards, card => card.positionProperty.value.x );
