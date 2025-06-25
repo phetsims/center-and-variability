@@ -7,13 +7,13 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import LocalizedStringProperty from '../../../../chipper/js/browser/LocalizedStringProperty.js';
+import Property from '../../../../axon/js/Property.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import GrabReleaseKeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/GrabReleaseKeyboardHelpSection.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import Property from '../../../../axon/js/Property.js';
 
 export default class CAVKeyboardHelpGrabOrReleaseSection extends GrabReleaseKeyboardHelpSection {
-  public constructor( title: LocalizedStringProperty ) {
+  public constructor( title: TReadOnlyProperty<string> ) {
     super( title, new Property( '' ) );
   }
 }

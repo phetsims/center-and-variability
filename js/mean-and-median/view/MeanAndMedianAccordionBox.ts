@@ -10,7 +10,6 @@
 
 import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import LocalizedStringProperty from '../../../../chipper/js/browser/LocalizedStringProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import AlignBox from '../../../../scenery/js/layout/nodes/AlignBox.js';
@@ -25,6 +24,7 @@ import ButtonNode from '../../../../sun/js/buttons/ButtonNode.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
+import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVColors from '../../common/CAVColors.js';
 import CAVConstants from '../../common/CAVConstants.js';
@@ -35,7 +35,6 @@ import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
 import CAVInfoButton from '../../common/view/CAVInfoButton.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
 import MeanAndMedianPlotNode from './MeanAndMedianPlotNode.js';
-import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 
 export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
   public readonly infoButton: ButtonNode;
@@ -90,7 +89,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
     backgroundNode.addChild( infoButton );
 
     const createReadoutText = ( valueProperty: TReadOnlyProperty<number | null>, visibleProperty: TReadOnlyProperty<boolean>,
-                                patternStringProperty: TReadOnlyProperty<string>, unknownStringProperty: LocalizedStringProperty, fill: TPaint, decimalPlaces: number | null ) => {
+                                patternStringProperty: TReadOnlyProperty<string>, unknownStringProperty: TReadOnlyProperty<string>, fill: TPaint, decimalPlaces: number | null ) => {
 
       const readoutPatternStringProperty = createValueReadoutStringProperty(
         valueProperty,

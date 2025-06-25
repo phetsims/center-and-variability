@@ -7,14 +7,14 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import LocalizedStringProperty from '../../../../chipper/js/browser/LocalizedStringProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import RichText from '../../../../scenery/js/nodes/RichText.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CAVConstants from '../CAVConstants.js';
 
 export default class InfoTitleDescriptionRichText extends RichText {
-  public constructor( stringProperty: LocalizedStringProperty ) {
+  public constructor( stringProperty: TReadOnlyProperty<string> ) {
     super( stringProperty, {
       font: new PhetFont( CAVConstants.INFO_DIALOG_TITLE_FONT_SIZE ),
       maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,

@@ -14,7 +14,7 @@ import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import LocalizedStringProperty from '../../../../chipper/js/browser/LocalizedStringProperty.js';
+import { toFixed } from '../../../../dot/js/util/toFixed.js';
 import HighlightFromNode from '../../../../scenery/js/accessibility/HighlightFromNode.js';
 import AlignBox from '../../../../scenery/js/layout/nodes/AlignBox.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
@@ -25,6 +25,7 @@ import ButtonNode from '../../../../sun/js/buttons/ButtonNode.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
+import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVColors from '../../common/CAVColors.js';
 import CAVConstants from '../../common/CAVConstants.js';
@@ -40,8 +41,6 @@ import IntervalToolRectangle from './IntervalToolRectangle.js';
 import VariabilityMeasureCheckbox from './VariabilityMeasureCheckbox.js';
 import VariabilityPlotNode from './VariabilityPlotNode.js';
 import VariabilityReadoutText from './VariabilityReadoutText.js';
-import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
-import { toFixed } from '../../../../dot/js/util/toFixed.js';
 
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 
@@ -170,7 +169,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     } );
 
     const deriveStringProperty = ( accessor: ( variabilitySceneModel: VariabilitySceneModel ) => TReadOnlyProperty<number | null>,
-                                   valueUnknownStringProperty: LocalizedStringProperty, valuePatternStringProperty: PatternStringProperty<{
+                                   valueUnknownStringProperty: TReadOnlyProperty<string>, valuePatternStringProperty: PatternStringProperty<{
         value: UnknownDerivedProperty<number | string>;
       }> ) => {
       return DerivedProperty.deriveAny( [ model.selectedSceneModelProperty, ...model.variabilitySceneModels.map( accessor ), valuePatternStringProperty, valueUnknownStringProperty ], () => {

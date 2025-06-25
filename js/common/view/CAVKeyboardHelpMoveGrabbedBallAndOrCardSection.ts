@@ -7,26 +7,25 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import LocalizedStringProperty from '../../../../chipper/js/browser/LocalizedStringProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import KeyboardHelpIconFactory from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpIconFactory.js';
 import KeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpSection.js';
+import KeyboardHelpSectionRow, { LabelWithIconOptions } from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpSectionRow.js';
 import LetterKeyNode from '../../../../scenery-phet/js/keyboard/LetterKeyNode.js';
 import NumberKeyNode from '../../../../scenery-phet/js/keyboard/NumberKeyNode.js';
 import TextKeyNode from '../../../../scenery-phet/js/keyboard/TextKeyNode.js';
 import centerAndVariability from '../../centerAndVariability.js';
+import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import { SECTION_LABEL_OPTIONS } from './CAVKeyboardHelpNode.js';
-import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
-import { combineOptions } from '../../../../phet-core/js/optionize.js';
-import KeyboardHelpSectionRow, { LabelWithIconOptions } from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpSectionRow.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 export default class CAVKeyboardHelpMoveGrabbedBallAndOrCardSection extends KeyboardHelpSection {
   public constructor(
-    titleStringProperty: LocalizedStringProperty,
-    moveMessageStringProperty: LocalizedStringProperty,
-    jumpStartMessageStringProperty: LocalizedStringProperty,
-    jumpEndMessageStringProperty: LocalizedStringProperty,
+    titleStringProperty: TReadOnlyProperty<string>,
+    moveMessageStringProperty: TReadOnlyProperty<string>,
+    jumpStartMessageStringProperty: TReadOnlyProperty<string>,
+    jumpEndMessageStringProperty: TReadOnlyProperty<string>,
     objectStringProperty: TReadOnlyProperty<string>,
     locationStringProperty: TReadOnlyProperty<string>
   ) {
