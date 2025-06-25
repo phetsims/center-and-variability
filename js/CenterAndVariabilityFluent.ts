@@ -199,16 +199,16 @@ const fluentSupport = new FluentContainer( createFluentFile, Array.from(fluentKe
 
 const CenterAndVariabilityFluent = {
   "center-and-variability": {
-    _comment_1: new FluentComment( {"comment":"sim name","lineNumber":1,"associatedKey":"center-and-variability.title"} ),
+    _comment_0: new FluentComment( {"comment":"sim name","associatedKey":"center-and-variability.title"} ),
     titleStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'center_and_variability_title', _.get( CenterAndVariabilityStrings, 'center-and-variability.titleStringProperty' ) )
   },
   screen: {
-    _comment_4: new FluentComment( {"comment":"screen names","lineNumber":4,"associatedKey":"screen.median"} ),
+    _comment_0: new FluentComment( {"comment":"screen names","associatedKey":"screen.median"} ),
     medianStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'screen_median', _.get( CenterAndVariabilityStrings, 'screen.medianStringProperty' ) ),
     meanAndMedianStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'screen_meanAndMedian', _.get( CenterAndVariabilityStrings, 'screen.meanAndMedianStringProperty' ) ),
     variabilityStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'screen_variability', _.get( CenterAndVariabilityStrings, 'screen.variabilityStringProperty' ) )
   },
-  _comment_9: new FluentComment( {"comment":"common strings","lineNumber":9,"associatedKey":"kickValuePattern"} ),
+  _comment_0: new FluentComment( {"comment":"common strings","associatedKey":"kickValuePattern"} ),
   kickValuePatternStringProperty: _.get( CenterAndVariabilityStrings, 'kickValuePatternStringProperty' ),
   distanceInMetersAccordionBoxTitleStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'distanceInMetersAccordionBoxTitle', _.get( CenterAndVariabilityStrings, 'distanceInMetersAccordionBoxTitleStringProperty' ) ),
   distanceInMetersChartLabelStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'distanceInMetersChartLabel', _.get( CenterAndVariabilityStrings, 'distanceInMetersChartLabelStringProperty' ) ),
@@ -235,15 +235,15 @@ const CenterAndVariabilityFluent = {
   outliersDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'outliersDescription', _.get( CenterAndVariabilityStrings, 'outliersDescriptionStringProperty' ) ),
   valueKicksPatternStringProperty: _.get( CenterAndVariabilityStrings, 'valueKicksPatternStringProperty' ),
   pointerStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'pointer', _.get( CenterAndVariabilityStrings, 'pointerStringProperty' ) ),
-  _comment_39: new FluentComment( {"comment":"median strings","lineNumber":39,"associatedKey":"medianQuestion"} ),
+  _comment_1: new FluentComment( {"comment":"median strings","associatedKey":"medianQuestion"} ),
   medianQuestionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'medianQuestion', _.get( CenterAndVariabilityStrings, 'medianQuestionStringProperty' ) ),
   sortDataStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'sortData', _.get( CenterAndVariabilityStrings, 'sortDataStringProperty' ) ),
   youSortedTheDataStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'youSortedTheData', _.get( CenterAndVariabilityStrings, 'youSortedTheDataStringProperty' ) ),
   medianDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'medianDescription', _.get( CenterAndVariabilityStrings, 'medianDescriptionStringProperty' ) ),
-  _comment_45: new FluentComment( {"comment":"mean and median strings","lineNumber":45,"associatedKey":"meanAndMedianQuestion"} ),
+  _comment_2: new FluentComment( {"comment":"mean and median strings","associatedKey":"meanAndMedianQuestion"} ),
   meanAndMedianQuestionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'meanAndMedianQuestion', _.get( CenterAndVariabilityStrings, 'meanAndMedianQuestionStringProperty' ) ),
   meanDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'meanDescription', _.get( CenterAndVariabilityStrings, 'meanDescriptionStringProperty' ) ),
-  _comment_49: new FluentComment( {"comment":"variability strings","lineNumber":49,"associatedKey":"variabilityQuestion"} ),
+  _comment_3: new FluentComment( {"comment":"variability strings","associatedKey":"variabilityQuestion"} ),
   variabilityQuestionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'variabilityQuestion', _.get( CenterAndVariabilityStrings, 'variabilityQuestionStringProperty' ) ),
   iqrEqualsValueMPatternStringProperty: _.get( CenterAndVariabilityStrings, 'iqrEqualsValueMPatternStringProperty' ),
   iqrEqualsUnknownStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'iqrEqualsUnknown', _.get( CenterAndVariabilityStrings, 'iqrEqualsUnknownStringProperty' ) ),
@@ -274,7 +274,7 @@ const CenterAndVariabilityFluent = {
   rangeEqualsMaxMinusMinPatternStringProperty: _.get( CenterAndVariabilityStrings, 'rangeEqualsMaxMinusMinPatternStringProperty' ),
   rangeEqualsRangeUnitsPatternStringProperty: _.get( CenterAndVariabilityStrings, 'rangeEqualsRangeUnitsPatternStringProperty' ),
   keyboardHelpDialog: {
-    _comment_80: new FluentComment( {"comment":"keyboard help dialog strings","lineNumber":80,"associatedKey":"keyboardHelpDialog.move"} ),
+    _comment_0: new FluentComment( {"comment":"keyboard help dialog strings","associatedKey":"keyboardHelpDialog.move"} ),
     moveStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_move', _.get( CenterAndVariabilityStrings, 'keyboardHelpDialog.moveStringProperty' ) ),
     endOfNumberLineStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_endOfNumberLine', _.get( CenterAndVariabilityStrings, 'keyboardHelpDialog.endOfNumberLineStringProperty' ) ),
     startOfNumberLineStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_startOfNumberLine', _.get( CenterAndVariabilityStrings, 'keyboardHelpDialog.startOfNumberLineStringProperty' ) ),
@@ -306,7 +306,7 @@ const CenterAndVariabilityFluent = {
       objectStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'keyboardHelpDialog_variabilityScreen_object', _.get( CenterAndVariabilityStrings, 'keyboardHelpDialog.variabilityScreen.objectStringProperty' ) )
     }
   },
-  _comment_106: new FluentComment( {"comment":"accessibility strings","lineNumber":106,"associatedKey":"a11y"} ),
+  _comment_4: new FluentComment( {"comment":"accessibility strings","associatedKey":"a11y"} ),
   a11y: {
     medianScreenHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_medianScreenHelpText', _.get( CenterAndVariabilityStrings, 'a11y.medianScreenHelpTextStringProperty' ) ),
     meanAndMedianScreenHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_meanAndMedianScreenHelpText', _.get( CenterAndVariabilityStrings, 'a11y.meanAndMedianScreenHelpTextStringProperty' ) ),
