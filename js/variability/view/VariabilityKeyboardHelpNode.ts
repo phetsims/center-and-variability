@@ -24,8 +24,9 @@ export default class VariabilityKeyboardHelpNode extends CAVKeyboardHelpNode {
         CenterAndVariabilityStrings.keyboardHelpDialog.moveGrabbedBallStringProperty,
         CenterAndVariabilityStrings.keyboardHelpDialog.jumpToStartOfNumberLineStringProperty,
         CenterAndVariabilityStrings.keyboardHelpDialog.jumpToEndOfNumberLineStringProperty,
-        CenterAndVariabilityFluent.a11y.keyboardHelp.ballStringProperty,
-        CenterAndVariabilityFluent.a11y.keyboardHelp.numberLineStringProperty
+        CenterAndVariabilityFluent.a11y.keyboardHelp.jumpToStartOfNumberLineDescriptionStringProperty,
+        CenterAndVariabilityFluent.a11y.keyboardHelp.jumpToEndOfNumberLineDescriptionStringProperty,
+        CenterAndVariabilityFluent.a11y.keyboardHelp.moveGrabbedBallDescriptionStringProperty
       )
     ], new VariabilityKeyboardHelpSection() );
   }

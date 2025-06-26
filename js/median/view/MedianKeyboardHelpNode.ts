@@ -29,8 +29,9 @@ export default class MedianKeyboardHelpNode extends CAVKeyboardHelpNode {
         CenterAndVariabilityStrings.keyboardHelpDialog.medianScreen.moveGrabbedBallOrCardStringProperty,
         CenterAndVariabilityStrings.keyboardHelpDialog.medianScreen.jumpToStartOfCardsOrNumberLineStringProperty,
         CenterAndVariabilityStrings.keyboardHelpDialog.medianScreen.jumpToEndOfCardsOrNumberLineStringProperty,
-        CenterAndVariabilityFluent.a11y.keyboardHelp.ballOrCardStringProperty,
-        CenterAndVariabilityFluent.a11y.keyboardHelp.cardsOrNumberLineStringProperty
+        CenterAndVariabilityFluent.a11y.keyboardHelp.jumpToStartOfCardsOrNumberLineDescriptionStringProperty,
+        CenterAndVariabilityFluent.a11y.keyboardHelp.jumpToEndOfCardsOrNumberLineDescriptionStringProperty,
+        CenterAndVariabilityFluent.a11y.keyboardHelp.moveGrabbedBallOrCardDescriptionStringProperty
       )
     ], new MedianKeyboardHelpPredictMedianSection() );
   }

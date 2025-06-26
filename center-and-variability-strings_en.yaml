@@ -293,12 +293,14 @@ a11y:
 
   # Content for the Keyboard Help dialog.
   keyboardHelp:
-    moveGrabbedObjects: Move grabbed {$object} with Left and Right arrow keys, or A and D keys, or Up and Down arrow keys or W and S keys.
-    ballOrCard: ball or card
-    ball: ball
-    moveInLargerSteps: Move in larger steps with Page Up or Page Down key.
-    jumpToStart: Jump to start of {$location} with Home key.
-    jumpToEnd: Jump to end of {$location} with End jey.
-    cardsOrNumberLine: cards or number line
-    numberLine: number line
-    jumpBallToTickMark: Jump ball to tick mark with number Zero through Nine keys.
+    moveGrabbedBallOrCardDescription: Move grabbed ball or card with Left and Right arrow keys, or A and D keys, or Up and Down arrow keys or W and S keys.
+    moveGrabbedBallDescription: Move grabbed ball with Left and Right arrow keys, or A and D keys, or Up and Down arrow keys or W and S keys.
+    moveInLargerStepsDescription: Move in larger steps with Page Up or Page Down key.
+
+    jumpToStartOfNumberLineDescription: Jump to start of number line with Home key.
+    jumpToEndOfNumberLineDescription: Jump to end of number line with End key.
+
+    jumpToStartOfCardsOrNumberLineDescription: Jump to start of cards or number line with Home key.
+    jumpToEndOfCardsOrNumberLineDescription: Jump to end of cards or number line with End key.
+
+    jumpBallToTickMarkDescription: Jump ball to tick mark with number Zero through Nine keys.

@@ -290,15 +290,14 @@ type StringsType = {
       }
     };
     'keyboardHelp': {
-      'moveGrabbedObjectsStringProperty': LocalizedStringProperty;
-      'ballOrCardStringProperty': LocalizedStringProperty;
-      'ballStringProperty': LocalizedStringProperty;
-      'moveInLargerStepsStringProperty': LocalizedStringProperty;
-      'jumpToStartStringProperty': LocalizedStringProperty;
-      'jumpToEndStringProperty': LocalizedStringProperty;
-      'cardsOrNumberLineStringProperty': LocalizedStringProperty;
-      'numberLineStringProperty': LocalizedStringProperty;
-      'jumpBallToTickMarkStringProperty': LocalizedStringProperty;
+      'moveGrabbedBallOrCardDescriptionStringProperty': LocalizedStringProperty;
+      'moveGrabbedBallDescriptionStringProperty': LocalizedStringProperty;
+      'moveInLargerStepsDescriptionStringProperty': LocalizedStringProperty;
+      'jumpToStartOfNumberLineDescriptionStringProperty': LocalizedStringProperty;
+      'jumpToEndOfNumberLineDescriptionStringProperty': LocalizedStringProperty;
+      'jumpToStartOfCardsOrNumberLineDescriptionStringProperty': LocalizedStringProperty;
+      'jumpToEndOfCardsOrNumberLineDescriptionStringProperty': LocalizedStringProperty;
+      'jumpBallToTickMarkDescriptionStringProperty': LocalizedStringProperty;
     }
   }
 };

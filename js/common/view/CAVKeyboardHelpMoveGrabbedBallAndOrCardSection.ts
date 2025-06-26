@@ -26,8 +26,9 @@ export default class CAVKeyboardHelpMoveGrabbedBallAndOrCardSection extends Keyb
     moveMessageStringProperty: TReadOnlyProperty<string>,
     jumpStartMessageStringProperty: TReadOnlyProperty<string>,
     jumpEndMessageStringProperty: TReadOnlyProperty<string>,
-    objectStringProperty: TReadOnlyProperty<string>,
-    locationStringProperty: TReadOnlyProperty<string>
+    jumpStartDescriptionStringProperty: TReadOnlyProperty<string>,
+    jumpEndDescriptionStringProperty: TReadOnlyProperty<string>,
+    moveGrabbedObjectsStringProperty: TReadOnlyProperty<string>
   ) {
 
     super( titleStringProperty, [
@@ -38,27 +39,21 @@ export default class CAVKeyboardHelpMoveGrabbedBallAndOrCardSection extends Keyb
         KeyboardHelpIconFactory.iconOrIcon(
           KeyboardHelpIconFactory.upDownArrowKeysRowIcon(),
           KeyboardHelpIconFactory.iconRow( [ LetterKeyNode.w(), LetterKeyNode.s() ], { spacing: 1.3 } ) ) ], {
-        labelInnerContent: CenterAndVariabilityFluent.a11y.keyboardHelp.moveGrabbedObjects.createProperty( {
-          object: objectStringProperty
-        } )
+        labelInnerContent: moveGrabbedObjectsStringProperty
       } ),
       KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.keyboardHelpDialog.moveInLargerStepsStringProperty, KeyboardHelpIconFactory.pageUpPageDownRowIcon(), {
-        labelInnerContent: CenterAndVariabilityFluent.a11y.keyboardHelp.moveInLargerStepsStringProperty
+        labelInnerContent: CenterAndVariabilityFluent.a11y.keyboardHelp.moveInLargerStepsDescriptionStringProperty
       } ),
 
       KeyboardHelpSectionRow.labelWithIcon( jumpStartMessageStringProperty, TextKeyNode.home(), combineOptions<LabelWithIconOptions>( SECTION_LABEL_OPTIONS, {
-        labelInnerContent: CenterAndVariabilityFluent.a11y.keyboardHelp.jumpToStart.createProperty( {
-          location: locationStringProperty
-        } )
+        labelInnerContent: jumpStartDescriptionStringProperty
       } ) ),
       KeyboardHelpSectionRow.labelWithIcon( jumpEndMessageStringProperty, TextKeyNode.end(), combineOptions<LabelWithIconOptions>( SECTION_LABEL_OPTIONS, {
-        labelInnerContent: CenterAndVariabilityFluent.a11y.keyboardHelp.jumpToEnd.createProperty( {
-          location: locationStringProperty
-        } )
+        labelInnerContent: jumpEndDescriptionStringProperty
       } ) ),
       KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.keyboardHelpDialog.jumpBallToTickMarkStringProperty,
         KeyboardHelpIconFactory.iconToIcon( new NumberKeyNode( 0 ), new NumberKeyNode( 9 ) ), {
-          labelInnerContent: CenterAndVariabilityFluent.a11y.keyboardHelp.jumpBallToTickMarkStringProperty
+          labelInnerContent: CenterAndVariabilityFluent.a11y.keyboardHelp.jumpBallToTickMarkDescriptionStringProperty
         }
       ) ] );
   }
