@@ -87,7 +87,7 @@ export default class IntervalToolRectangle extends AccessibleSlider( Node, 0 ) {
     const roundedIntervalToolValue2Property = new DerivedProperty( [ intervalToolValue2Property ], value => roundToInterval( value, 0.1 ) );
     const widthProperty = new DerivedProperty( [ roundedIntervalToolValue1Property, roundedIntervalToolValue2Property ],
       ( value1, value2 ) => Math.abs( value2 - value1 ) );
-    const ariaValueStringProperty = CenterAndVariabilityFluent.a11y.variabilityScreen.intervalTool.rectangleObjectResponsePattern.createProperty( {
+    const accessibleObjectResponseStringProperty = CenterAndVariabilityFluent.a11y.variabilityScreen.intervalTool.rectangleObjectResponsePattern.createProperty( {
       valueA: roundedIntervalToolValue1Property,
       valueB: roundedIntervalToolValue2Property,
       width: widthProperty
@@ -115,7 +115,7 @@ export default class IntervalToolRectangle extends AccessibleSlider( Node, 0 ) {
 
     super( options );
 
-    Multilink.multilink( [ intervalToolValue1Property, intervalToolValue2Property, topAlignmentProperty, ariaValueStringProperty ],
+    Multilink.multilink( [ intervalToolValue1Property, intervalToolValue2Property, topAlignmentProperty, accessibleObjectResponseStringProperty ],
       ( value1, value2, topAlignment, ariaValueString ) => {
         const viewX1 = modelViewTransform.modelToViewX( value1 );
         const viewX2 = modelViewTransform.modelToViewX( value2 );
