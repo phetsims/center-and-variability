@@ -81,7 +81,7 @@ rangeEqualsRangeUnitsPattern: Range = {{range}} {{units}}
 keyboardHelpDialog.move: Move
 keyboardHelpDialog.endOfNumberLine: end of number line
 keyboardHelpDialog.startOfNumberLine: start of number line
-keyboardHelpDialog.grabOrReleaseBall: Grab or Release Ball
+keyboardHelpDialog.grabOrReleaseBall: Ball
 keyboardHelpDialog.moveGrabbedBallTitle: Move Grabbed Ball
 keyboardHelpDialog.moveGrabbedBall: Move grabbed ball
 keyboardHelpDialog.grabOrRelease: Grab or release
