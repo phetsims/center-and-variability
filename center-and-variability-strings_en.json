@@ -582,7 +582,7 @@
             "value": "Interval Region"
           }
         },
-        "rectangleValuePattern": {
+        "rectangleObjectResponsePattern": {
           "value": "Bounded by {$valueA} and {$valueB}, width {$width}"
         }
       }

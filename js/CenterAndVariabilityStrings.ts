@@ -283,7 +283,7 @@ type StringsType = {
         'rectangle': {
           'accessibleNameStringProperty': LocalizedStringProperty;
         };
-        'rectangleValuePatternStringProperty': LocalizedStringProperty;
+        'rectangleObjectResponsePatternStringProperty': LocalizedStringProperty;
       }
     };
     'preferences': {

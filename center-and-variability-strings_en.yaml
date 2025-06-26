@@ -285,7 +285,7 @@ a11y:
         accessibleName: BoundaryB
       rectangle:
         accessibleName: Interval Region
-      rectangleValuePattern: Bounded by {$valueA} and {$valueB}, width {$width}
+      rectangleObjectResponsePattern: Bounded by {$valueA} and {$valueB}, width {$width}
 
   # Content for the Preferences dialog.
   preferences:

@@ -174,7 +174,7 @@ addToMapIfDefined( 'a11y_variabilityScreen_intervalTool_accessibleHelpText', 'a1
 addToMapIfDefined( 'a11y_variabilityScreen_intervalTool_handle1_accessibleName', 'a11y.variabilityScreen.intervalTool.handle1.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_variabilityScreen_intervalTool_handle2_accessibleName', 'a11y.variabilityScreen.intervalTool.handle2.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_variabilityScreen_intervalTool_rectangle_accessibleName', 'a11y.variabilityScreen.intervalTool.rectangle.accessibleNameStringProperty' );
-addToMapIfDefined( 'a11y_variabilityScreen_intervalTool_rectangleValuePattern', 'a11y.variabilityScreen.intervalTool.rectangleValuePatternStringProperty' );
+addToMapIfDefined( 'a11y_variabilityScreen_intervalTool_rectangleObjectResponsePattern', 'a11y.variabilityScreen.intervalTool.rectangleObjectResponsePatternStringProperty' );
 addToMapIfDefined( 'a11y_preferences_plotTypeRadioButtonGroup_accessibleHelpText', 'a11y.preferences.plotTypeRadioButtonGroup.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_keyboardHelp_moveGrabbedBallOrCardDescription', 'a11y.keyboardHelp.moveGrabbedBallOrCardDescriptionStringProperty' );
 addToMapIfDefined( 'a11y_keyboardHelp_moveGrabbedBallDescription', 'a11y.keyboardHelp.moveGrabbedBallDescriptionStringProperty' );
@@ -488,7 +488,7 @@ const CenterAndVariabilityFluent = {
         rectangle: {
           accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variabilityScreen_intervalTool_rectangle_accessibleName', _.get( CenterAndVariabilityStrings, 'a11y.variabilityScreen.intervalTool.rectangle.accessibleNameStringProperty' ) )
         },
-        rectangleValuePattern: new FluentPattern<{ valueA: FluentVariable, valueB: FluentVariable, width: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_variabilityScreen_intervalTool_rectangleValuePattern', _.get( CenterAndVariabilityStrings, 'a11y.variabilityScreen.intervalTool.rectangleValuePatternStringProperty' ), [{"name":"valueA"},{"name":"valueB"},{"name":"width"}] )
+        rectangleObjectResponsePattern: new FluentPattern<{ valueA: FluentVariable, valueB: FluentVariable, width: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_variabilityScreen_intervalTool_rectangleObjectResponsePattern', _.get( CenterAndVariabilityStrings, 'a11y.variabilityScreen.intervalTool.rectangleObjectResponsePatternStringProperty' ), [{"name":"valueA"},{"name":"valueB"},{"name":"width"}] )
       }
     },
     _comment_6: new FluentComment( {"comment":"Content for the Preferences dialog.","associatedKey":"preferences"} ),
