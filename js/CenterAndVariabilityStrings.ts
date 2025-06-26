@@ -126,7 +126,9 @@ type StringsType = {
       }
     };
     'nullStringProperty': LocalizedStringProperty;
-    'soccerFieldStringProperty': LocalizedStringProperty;
+    'soccerField': {
+      'accessibleHeadingStringProperty': LocalizedStringProperty;
+    };
     'eraseButton': {
       'accessibleNameStringProperty': LocalizedStringProperty;
       'accessibleHelpTextStringProperty': LocalizedStringProperty;

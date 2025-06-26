@@ -105,7 +105,7 @@ addToMapIfDefined( 'a11y_screenSummary_playArea_guidingQuestion', 'a11y.screenSu
 addToMapIfDefined( 'a11y_screenSummary_currentDetails_countAtMeter', 'a11y.screenSummary.currentDetails.countAtMeterStringProperty' );
 addToMapIfDefined( 'a11y_screenSummary_interactionHint_noBalls', 'a11y.screenSummary.interactionHint.noBallsStringProperty' );
 addToMapIfDefined( 'a11y_null', 'a11y.nullStringProperty' );
-addToMapIfDefined( 'a11y_soccerField', 'a11y.soccerFieldStringProperty' );
+addToMapIfDefined( 'a11y_soccerField_accessibleHeading', 'a11y.soccerField.accessibleHeadingStringProperty' );
 addToMapIfDefined( 'a11y_eraseButton_accessibleName', 'a11y.eraseButton.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_eraseButton_accessibleHelpText', 'a11y.eraseButton.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_medianPredictionSlider_accessibleName', 'a11y.medianPredictionSlider.accessibleNameStringProperty' );
@@ -325,7 +325,9 @@ const CenterAndVariabilityFluent = {
     _comment_1: new FluentComment( {"comment":"A (hopefully) unused string for when there is no selected item.","associatedKey":"null"} ),
     nullStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_null', _.get( CenterAndVariabilityStrings, 'a11y.nullStringProperty' ) ),
     _comment_2: new FluentComment( {"comment":"Strings for components that are used in all screens.","associatedKey":"soccerField"} ),
-    soccerFieldStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soccerField', _.get( CenterAndVariabilityStrings, 'a11y.soccerFieldStringProperty' ) ),
+    soccerField: {
+      accessibleHeadingStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soccerField_accessibleHeading', _.get( CenterAndVariabilityStrings, 'a11y.soccerField.accessibleHeadingStringProperty' ) )
+    },
     eraseButton: {
       accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_eraseButton_accessibleName', _.get( CenterAndVariabilityStrings, 'a11y.eraseButton.accessibleNameStringProperty' ) ),
       accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_eraseButton_accessibleHelpText', _.get( CenterAndVariabilityStrings, 'a11y.eraseButton.accessibleHelpTextStringProperty' ) )

@@ -98,7 +98,7 @@ export default class CAVScreenView<T extends CAVSoccerSceneModel = CAVSoccerScen
 
   // PDOM
   private readonly soccerFieldHeading: Node = new Node( {
-    accessibleHeading: CenterAndVariabilityFluent.a11y.soccerFieldStringProperty
+    accessibleHeading: CenterAndVariabilityFluent.a11y.soccerField.accessibleHeadingStringProperty
   } );
 
   protected constructor( model: CAVModel<T>, providedOptions: CAVScreenViewOptions ) {
