@@ -105,7 +105,7 @@ export default class IntervalToolRectangle extends AccessibleSlider( Node, 0 ) {
       endDrag: endDrag,
       phetioEnabledPropertyInstrumented: true,
       isDisposable: false,
-      accessibleName: CenterAndVariabilityFluent.a11y.variabilityScreen.intervalTool.rectangleAccessibleNameStringProperty,
+      accessibleName: CenterAndVariabilityFluent.a11y.variabilityScreen.intervalTool.rectangle.accessibleNameStringProperty,
 
       // This tool is very large and panning in all directions so that the viewport follows the center of the Node
       // means that important content is shifted off screen. Instead, we only pan horizontally as this Node moves.
