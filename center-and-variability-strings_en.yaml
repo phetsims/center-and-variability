@@ -105,58 +105,68 @@ keyboardHelpDialog.variabilityScreen.object: object
 
 # accessibility strings
 a11y:
-  medianScreenHelpText: Kick soccer balls and explore data set to find value of median.
-  meanAndMedianScreenHelpText: Kick soccer balls and explore data set to compare mean and median.
-  variabilityScreenHelpText: Kick soccer balls and explore data sets to compare measures of variability.
-  common:
-    null: null
+
+  # Screen summary content that appears in each screen.
+  screenSummary:
+    playArea:
+      guidingQuestion: 'Guiding question: "{$question}"'
     currentDetails:
-      listItemPattern: "{$number} at meter {$distance}"
-    guidingQuestion: 'Guiding question: "{$question}"'
-    soccerField: Soccer Field
-    interactionHintNoBalls: Kick soccer balls to create a data set.
-    eraseButton:
-      accessibleName: Erase Current Data
-      accessibleHelpText: Remove soccer balls from field.
-    medianPredictionSlider:
-      accessibleName: Median Prediction
-    meanPredictionSlider:
-      accessibleName: Mean Prediction
-    medianCheckbox:
-      accessibleName: Median on Field
-      accessibleHelpText: >-
-        Show or hide red highlights marking middle soccer
-         ball or balls and arrow pointing to median kick distance.
-    meanCheckbox:
-      accessibleName: Mean on Field
-      accessibleHelpText: Show or hide purple triangle indicating mean kick distance.
-    predictMedianCheckbox:
-      accessibleName: Predict Median Pointer
-      accessibleHelpText: Show or hide movable prediction pointer on field.
-    predictMeanCheckbox:
-      accessibleName: Predict Mean Pointer
-      accessibleHelpText: Show or hide movable prediction pointer on field.
-  median:
-    playArea: >-
-      At edge of field, up to {$maxBalls} kickers are ready to kick a soccer ball a random distance between 1 and 15
-      meters. Stacks of balls form when they land at the same distance. A sortable data card appears for each kicked
-      ball recording the kick distance. Each ball can be moved to adjust its kick distance. There are checkboxes to
-      auto-sort the data cards and highlight or predict the median.
-    controlArea: Additionally, access detailed median information, clear data set, and reset the sim to start over.
-    currentDetails:
-      soccerBalls: |-
-        Currently, { NUMBER($number, type: "cardinal") ->
-        [0] 0 soccer balls on field.
-        [1] 1 soccer ball on field:
-        *[other] {$number} soccer balls on field:
-        }
-      cards: |-
-        { NUMBER($number, type: "cardinal") ->
-        [0] 0 data cards are listed.
-        [1] 1 data card lists the kick distance as {$distances}.
-        *[other] {$number} data cards list the kick distances as {$distances}.
-        }
-    interactionHintSomeBalls: Move soccer balls or sort distance data cards to explore data.
+      countAtMeter: "{$number} at meter {$distance}"
+    interactionHint:
+      noBalls: Kick soccer balls to create a data set.
+
+  # A (hopefully) unused string for when there is no selected item.
+  null: null
+
+  # Strings for components that are used in all screens.
+  soccerField: Soccer Field
+  eraseButton:
+    accessibleName: Erase Current Data
+    accessibleHelpText: Remove soccer balls from field.
+  medianPredictionSlider:
+    accessibleName: Median Prediction
+  meanPredictionSlider:
+    accessibleName: Mean Prediction
+  medianCheckbox:
+    accessibleName: Median on Field
+    accessibleHelpText: >-
+      Show or hide red highlights marking middle soccer
+       ball or balls and arrow pointing to median kick distance.
+  meanCheckbox:
+    accessibleName: Mean on Field
+    accessibleHelpText: Show or hide purple triangle indicating mean kick distance.
+  predictMedianCheckbox:
+    accessibleName: Predict Median Pointer
+    accessibleHelpText: Show or hide movable prediction pointer on field.
+  predictMeanCheckbox:
+    accessibleName: Predict Mean Pointer
+    accessibleHelpText: Show or hide movable prediction pointer on field.
+
+  # Content for the Median screen.
+  medianScreen:
+    screenButtonsHelpText: Kick soccer balls and explore data set to find value of median.
+    screenSummary:
+      playArea: >-
+        At edge of field, up to {$maxBalls} kickers are ready to kick a soccer ball a random distance between 1 and 15
+        meters. Stacks of balls form when they land at the same distance. A sortable data card appears for each kicked
+        ball recording the kick distance. Each ball can be moved to adjust its kick distance. There are checkboxes to
+        auto-sort the data cards and highlight or predict the median.
+      controlArea: Additionally, access detailed median information, clear data set, and reset the sim to start over.
+      currentDetails:
+        soccerBalls: |-
+          Currently, { NUMBER($number, type: "cardinal") ->
+          [0] 0 soccer balls on field.
+          [1] 1 soccer ball on field:
+          *[other] {$number} soccer balls on field:
+          }
+        cards: |-
+          { NUMBER($number, type: "cardinal") ->
+          [0] 0 data cards are listed.
+          [1] 1 data card lists the kick distance as {$distances}.
+          *[other] {$number} data cards list the kick distances as {$distances}.
+          }
+      interactionHint:
+        someBalls: Move soccer balls or sort distance data cards to explore data.
     dataCardsGroup:
       noCardsAccessibleName: No cards to grab
       selectAccessibleName: Kick Distance {$value}, card {$index} of {$total}
@@ -166,74 +176,90 @@ a11y:
     sortDataCheckbox:
       accessibleName: Sort Data Cards
       accessibleHelpText: Explore with or without data sorted numerically.
-    cardsMedianCheckbox:
+    medianCheckbox:
       accessibleName: Median on Data Cards
       accessibleHelpText: Analyze data cards with or without median value shown and located if data is sorted.
-    details:
+    infoButton:
       accessibleName: Median Details
-  meanAndMedian:
-    playArea: >-
-      At edge of field, up to {$maxBalls} kickers are ready to kick a soccer ball a random distance between 1 and 15
-      meters. Stacks of balls form when they land at the same distance. A mark appears on a plot for each kicked ball
-      recording the kick distance. Each ball can be moved to adjust its kick distance. There are checkboxes to highlight
-      or predict the median and mean.
-    currentDetails:
-      soccerBalls: |-
-        Currently, { NUMBER($number, type: "cardinal") ->
-        [0] 0 soccer balls on field.
-        [1] 1 soccer ball on field:
-        *[other] {$number} soccer balls on field:
-        }
-      plot: |-
-        { NUMBER($number, type: "cardinal") ->
-        [0] 0 marks on plot.
-        [1] 1 mark on plot matches kick distance on field.
-        *[other] {$number} marks on plot match kick distances on field.
-        }
-    controlArea: Additionally, access detailed mean and median information, clear data set, and reset the sim to start over.
-    accordionBoxHelpText: Kick distance (meters) plot.
-    plotMedianCheckbox:
-      accessibleName: Median on Plot
-      accessibleHelpText: Analyze data with or without median value shown and located on plot.
-    plotMeanCheckbox:
-      accessibleName: Mean on Plot
-      accessibleHelpText: Analyze data with or without mean value shown and located on plot.
-    details:
-      accessibleName: Median and Mean Details
-    interactionHintSomeBalls: Move soccer balls or explore plot to analyze data.
-  variability:
-    playArea: >-
-      At edge of field, up to {$maxBalls} kickers are ready to kick a soccer ball a random distance between 1 and 15
-      meters. Stacks of balls form when they land at the same distance. A mark appears on a plot for each kicked ball
-      recording the kick distance. Each ball can be moved to adjust its kick distance. Explore the range, interquartile
-      range (IQR), and mean absolute deviation (MAD) for each kicker’s kick distribution.
-    currentDetails:
+
+  # Content for the Mean and Median screen.
+  meanAndMedianScreen:
+    screenButtonsHelpText: Kick soccer balls and explore data set to compare mean and median.
+    screenSummary:
+      playArea: >-
+        At edge of field, up to {$maxBalls} kickers are ready to kick a soccer ball a random distance between 1 and 15
+        meters. Stacks of balls form when they land at the same distance. A mark appears on a plot for each kicked ball
+        recording the kick distance. Each ball can be moved to adjust its kick distance. There are checkboxes to highlight
+        or predict the median and mean.
+      currentDetails:
         soccerBalls: |-
-          {$kicker} kicker selected. Currently, { NUMBER($number, type: "cardinal") ->
+          Currently, { NUMBER($number, type: "cardinal") ->
           [0] 0 soccer balls on field.
           [1] 1 soccer ball on field:
           *[other] {$number} soccer balls on field:
           }
         plot: |-
           { NUMBER($number, type: "cardinal") ->
-          [0] 0 marks on plot
-          [1] 1 mark on plot matches kick distance on field
-          *[other] {$number} marks on plot match kick distances on field
-          }, and {$measure} is being explored.
-    controlArea: Additionally, access detailed variability information, clear data set, and reset the sim to start over.
-    sceneRadioButtonGroup:
-      groupName: Choose Kicker
-      scene1AccessibleName: Green Jersey 1
-      scene2AccessibleName: Blue Jersey 2
-      scene3AccessibleName: Red Jersey 3
-      scene4AccessibleName: Yellow Jersey 4
+          [0] 0 marks on plot.
+          [1] 1 mark on plot matches kick distance on field.
+          *[other] {$number} marks on plot match kick distances on field.
+          }
+      controlArea: Additionally, access detailed mean and median information, clear data set, and reset the sim to start over.
+      interactionHint:
+        someBalls: Move soccer balls or explore plot to analyze data.
+    meanAndMedianAccordionBox:
+      accessibleHelpText: Kick distance (meters) plot.
+    plotMedianCheckbox:
+      accessibleName: Median on Plot
+      accessibleHelpText: Analyze data with or without median value shown and located on plot.
+    meanCheckbox:
+      accessibleName: Mean on Plot
+      accessibleHelpText: Analyze data with or without mean value shown and located on plot.
+    infoButton:
+      accessibleName: Median and Mean Details
+
+  # Content for the Variability screen.
+  variabilityScreen:
+    screenButtonsHelpText: Kick soccer balls and explore data sets to compare measures of variability.
+    screenSummary:
+      playArea: >-
+        At edge of field, up to {$maxBalls} kickers are ready to kick a soccer ball a random distance between 1 and 15
+        meters. Stacks of balls form when they land at the same distance. A mark appears on a plot for each kicked ball
+        recording the kick distance. Each ball can be moved to adjust its kick distance. Explore the range, interquartile
+        range (IQR), and mean absolute deviation (MAD) for each kicker’s kick distribution.
+      currentDetails:
+          soccerBalls: |-
+            {$kicker} kicker selected. Currently, { NUMBER($number, type: "cardinal") ->
+            [0] 0 soccer balls on field.
+            [1] 1 soccer ball on field:
+            *[other] {$number} soccer balls on field:
+            }
+          plot: |-
+            { NUMBER($number, type: "cardinal") ->
+            [0] 0 marks on plot
+            [1] 1 mark on plot matches kick distance on field
+            *[other] {$number} marks on plot match kick distances on field
+            }, and {$measure} is being explored.
+      controlArea: Additionally, access detailed variability information, clear data set, and reset the sim to start over.
+      interactionHint:
+        someBalls: Move soccer balls or explore plot to analyze data.
+    sceneKickerRadioButtonGroup:
+      accessibleName: Choose Kicker
       accessibleHelpText: Compare kick distance distributions of four different kickers.
+      kicker1RadioButton:
+        accessibleName: Green Jersey 1
+      kicker2RadioButton:
+        accessibleName: Blue Jersey 2
+      kicker3RadioButton:
+        accessibleName: Red Jersey 3
+      kicker4RadioButton:
+        accessibleName: Yellow Jersey 4
     pointerCheckbox:
       accessibleHelpText: Show or hide movable prediction pointer on field.
-    predictionPointer:
+    pointerNode:
       accessibleName: Prediction Pointer
     measuresRadioButtonGroup:
-      groupName: Variability Measures
+      accessibleName: Variability Measures
       accessibleHelpText: Explore measures of variability.
     measureAccordionBox:
       rangeAccessibleHelpText: Predict and view range of kick distribution.
@@ -245,21 +271,27 @@ a11y:
       accessibleHelpText: Explore with or without IQR highlighted on plot.
     madCheckbox:
       accessibleHelpText: Explore with or without MAD highlighted on plot.
-    details:
-      accessibleNamePattern: "{$measure} Details"
+    infoButton:
+      accessibleName: "{$measure} Details"
     intervalTool:
-      heading: Interval Tool Controls
+      accessibleHeading: Interval Tool Controls
       accessibleHelpText: >-
         Define boundaries of interval region. Shift interval region to estimate distribution variability or future kick
         locations.
-      handle1AccessibleName: Boundary A
-      handle2AccessibleName: Boundary B
-      rectangleAccessibleName: Interval Region
+      handle1:
+        accessibleName: BoundaryA
+      handle2:
+        accessibleName: BoundaryB
+      rectangle:
+        accessibleName: Interval Region
       rectangleValuePattern: Bounded by {$valueA} and {$valueB}, width {$width}
-    interactionHintSomeBalls: Move soccer balls or explore plot to analyze data.
+
+  # Content for the Preferences dialog.
   preferences:
-    plotType:
+    plotTypeRadioButtonGroup:
       accessibleHelpText: Determines whether an x or dot marks a kick distance on the plot.
+
+  # Content for the Keyboard Help dialog.
   keyboardHelp:
     moveGrabbedObjects: Move grabbed {$object} with Left and Right arrow keys, or A and D keys, or Up and Down arrow keys or W and S keys.
     ballOrCard: ball or card

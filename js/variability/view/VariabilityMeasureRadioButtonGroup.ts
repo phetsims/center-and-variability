@@ -35,8 +35,8 @@ export default class VariabilityMeasureRadioButtonGroup extends RectangularRadio
       isDisposable: false,
       touchAreaXDilation: 5,
       touchAreaYDilation: 2.5,
-      accessibleName: CenterAndVariabilityFluent.a11y.variability.measuresRadioButtonGroup.groupNameStringProperty,
-      accessibleHelpText: CenterAndVariabilityFluent.a11y.variability.measuresRadioButtonGroup.accessibleHelpTextStringProperty
+      accessibleName: CenterAndVariabilityFluent.a11y.variabilityScreen.measuresRadioButtonGroup.groupNameStringProperty,
+      accessibleHelpText: CenterAndVariabilityFluent.a11y.variabilityScreen.measuresRadioButtonGroup.accessibleHelpTextStringProperty
     }, providedOptions );
 
     super( property, [ {

@@ -98,7 +98,7 @@ export default class CAVScreenView<T extends CAVSoccerSceneModel = CAVSoccerScen
 
   // PDOM
   private readonly soccerFieldHeading: Node = new Node( {
-    accessibleHeading: CenterAndVariabilityFluent.a11y.common.soccerFieldStringProperty
+    accessibleHeading: CenterAndVariabilityFluent.a11y.soccerFieldStringProperty
   } );
 
   protected constructor( model: CAVModel<T>, providedOptions: CAVScreenViewOptions ) {
@@ -211,8 +211,8 @@ export default class CAVScreenView<T extends CAVSoccerSceneModel = CAVSoccerScen
       centerY: this.resetAllButton.centerY,
       touchAreaXDilation: 6,
       touchAreaYDilation: 6,
-      accessibleName: CenterAndVariabilityStrings.a11y.common.eraseButton.accessibleNameStringProperty,
-      accessibleHelpText: CenterAndVariabilityStrings.a11y.common.eraseButton.accessibleHelpTextStringProperty
+      accessibleName: CenterAndVariabilityStrings.a11y.eraseButton.accessibleNameStringProperty,
+      accessibleHelpText: CenterAndVariabilityStrings.a11y.eraseButton.accessibleHelpTextStringProperty
     } );
 
     this.questionBar.visibleProperty.link( () => this.updateAccordionBoxPosition() );
@@ -435,7 +435,7 @@ export default class CAVScreenView<T extends CAVSoccerSceneModel = CAVSoccerScen
         color: CAVColors.medianColorProperty,
         style: 'arrow'
       },
-      accessibleName: CenterAndVariabilityStrings.a11y.common.medianPredictionSlider.accessibleNameStringProperty,
+      accessibleName: CenterAndVariabilityStrings.a11y.medianPredictionSlider.accessibleNameStringProperty,
       valueProperty: predictMedianValueProperty,
       enabledRangeProperty: new Property<Range>( CAVConstants.PHYSICAL_RANGE ),
       roundToInterval: 0.5,

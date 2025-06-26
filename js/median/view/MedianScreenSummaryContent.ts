@@ -6,26 +6,26 @@
  *
  */
 
-import CAVScreenSummaryContent from '../../common/view/CAVScreenSummaryContent.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import Property from '../../../../axon/js/Property.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import MedianModel from '../model/MedianModel.js';
 import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 import { MAX_KICKS_PROPERTY } from '../../common/CAVConstants.js';
-import Property from '../../../../axon/js/Property.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import Node from '../../../../scenery/js/nodes/Node.js';
+import CAVScreenSummaryContent from '../../common/view/CAVScreenSummaryContent.js';
+import MedianModel from '../model/MedianModel.js';
 
 export default class MedianScreenSummaryContent extends CAVScreenSummaryContent {
 
   public constructor( model: MedianModel ) {
     const sceneModel = model.sceneModels[ 0 ];
-    const playAreaPatternStringProperty = CenterAndVariabilityFluent.a11y.median.playArea.createProperty( {
+    const playAreaPatternStringProperty = CenterAndVariabilityFluent.a11y.medianScreen.screenSummary.playArea.createProperty( {
       maxBalls: MAX_KICKS_PROPERTY
     } );
-    const guidingQuestionStringProperty = CenterAndVariabilityFluent.a11y.common.guidingQuestion.createProperty( {
+    const guidingQuestionStringProperty = CenterAndVariabilityFluent.a11y.screenSummary.playArea.guidingQuestion.createProperty( {
       question: CenterAndVariabilityFluent.medianQuestionStringProperty
     } );
-    const currentDetailsStringProperty = CenterAndVariabilityFluent.a11y.median.currentDetails.soccerBalls
+    const currentDetailsStringProperty = CenterAndVariabilityFluent.a11y.medianScreen.screenSummary.currentDetails.soccerBalls
       .createProperty( {
       number: model.selectedSceneStackedSoccerBallCountProperty
     } );
@@ -47,7 +47,7 @@ export default class MedianScreenSummaryContent extends CAVScreenSummaryContent 
         const distances = model.interactiveCardContainerModel.getCardsInCellOrder().map( card => card.soccerBall.valueProperty.value );
         return distances.length > 0 ? distances.join( ', ' ) : '';
       } );
-    const currentCardDetailsPatternStringProperty = CenterAndVariabilityFluent.a11y.median.currentDetails.cards.createProperty( {
+    const currentCardDetailsPatternStringProperty = CenterAndVariabilityFluent.a11y.medianScreen.screenSummary.currentDetails.cards.createProperty( {
       number: model.selectedSceneStackedSoccerBallCountProperty,
       distances: distancesStringProperty
     } );
@@ -65,9 +65,9 @@ export default class MedianScreenSummaryContent extends CAVScreenSummaryContent 
       {
         playAreaContent: [ playAreaPatternStringProperty, guidingQuestionStringProperty ],
         interactionHintContent: CAVScreenSummaryContent.createInteractionHintContent(
-          CenterAndVariabilityFluent.a11y.median.interactionHintSomeBallsStringProperty,
+          CenterAndVariabilityFluent.a11y.medianScreen.screenSummary.interactionHint.someBallsStringProperty,
           model.selectedSceneStackedSoccerBallCountProperty ),
-        controlAreaContent: CenterAndVariabilityFluent.a11y.median.controlAreaStringProperty
+        controlAreaContent: CenterAndVariabilityFluent.a11y.medianScreen.screenSummary.controlAreaStringProperty
       } );
   }
 }

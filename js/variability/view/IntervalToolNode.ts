@@ -43,7 +43,7 @@ export default class IntervalToolNode extends Node {
       modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE, model.isHandle1BeingMouseDraggedProperty, model.isHandle1BeingKeyboardDraggedProperty,
       {
         valueProperty: model.handle1ValueProperty,
-        accessibleName: CenterAndVariabilityFluent.a11y.variability.intervalTool.handle1AccessibleNameStringProperty,
+        accessibleName: CenterAndVariabilityFluent.a11y.variabilityScreen.intervalTool.handle1.accessibleNameStringProperty,
         predictionThumbNodeOptions: {
           color: CAVColors.intervalToolIconShadedSphereMainColorProperty,
           style: 'line' as const
@@ -62,7 +62,7 @@ export default class IntervalToolNode extends Node {
       modelViewTransform, CAVConstants.VARIABILITY_DRAG_RANGE, model.isHandle2BeingMouseDraggedProperty, model.isHandle2BeingKeyboardDraggedProperty,
       {
         valueProperty: model.handle2ValueProperty,
-        accessibleName: CenterAndVariabilityFluent.a11y.variability.intervalTool.handle2AccessibleNameStringProperty,
+        accessibleName: CenterAndVariabilityFluent.a11y.variabilityScreen.intervalTool.handle2.accessibleNameStringProperty,
         predictionThumbNodeOptions: {
           color: CAVColors.intervalToolIconShadedSphereMainColorProperty,
           style: 'line' as const

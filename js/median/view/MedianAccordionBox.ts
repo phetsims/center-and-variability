@@ -64,7 +64,7 @@ export default class MedianAccordionBox extends CAVAccordionBox {
 
     const infoButton = new CAVInfoButton( model.infoButtonPressedEmitter, backgroundShape, {
       tandem: tandem.createTandem( 'infoButton' ),
-      accessibleName: CenterAndVariabilityFluent.a11y.median.details.accessibleNameStringProperty
+      accessibleName: CenterAndVariabilityFluent.a11y.medianScreen.infoButton.accessibleNameStringProperty
     } );
 
     backgroundNode.addChild( infoButton );

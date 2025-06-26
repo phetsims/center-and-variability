@@ -92,7 +92,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         CenterAndVariabilityStrings.rangeStringProperty, CAVColors.rangeFillProperty,
         {
           tandem: checkboxesTandem.createTandem( 'rangeCheckbox' ),
-          accessibleHelpText: CenterAndVariabilityFluent.a11y.variability.rangeCheckbox.accessibleHelpTextStringProperty
+          accessibleHelpText: CenterAndVariabilityFluent.a11y.variabilityScreen.rangeCheckbox.accessibleHelpTextStringProperty
         } ), { yAlign: 'top' } ),
       value: VariabilityMeasure.RANGE
     }, {
@@ -100,7 +100,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         CenterAndVariabilityStrings.iqrStringProperty, CAVColors.iqrColorProperty,
         {
           tandem: checkboxesTandem.createTandem( 'iqrCheckbox' ),
-          accessibleHelpText: CenterAndVariabilityFluent.a11y.variability.iqrCheckbox.accessibleHelpTextStringProperty
+          accessibleHelpText: CenterAndVariabilityFluent.a11y.variabilityScreen.iqrCheckbox.accessibleHelpTextStringProperty
         } ), { yAlign: 'top' } ),
       value: VariabilityMeasure.IQR
     }, {
@@ -108,7 +108,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         CenterAndVariabilityStrings.madStringProperty, CAVColors.madRectangleColorProperty,
         {
           tandem: checkboxesTandem.createTandem( 'madCheckbox' ),
-          accessibleHelpText: CenterAndVariabilityFluent.a11y.variability.madCheckbox.accessibleHelpTextStringProperty
+          accessibleHelpText: CenterAndVariabilityFluent.a11y.variabilityScreen.madCheckbox.accessibleHelpTextStringProperty
         } ), { yAlign: 'top' } ),
       value: VariabilityMeasure.MAD
     } ], {
@@ -127,7 +127,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
 
     const infoButton = new CAVInfoButton( model.infoButtonPressedEmitter, backgroundShape, {
       tandem: tandem.createTandem( 'infoButton' ),
-      accessibleName: CenterAndVariabilityFluent.a11y.variability.details.accessibleNamePattern.createProperty( {
+      accessibleName: CenterAndVariabilityFluent.a11y.variabilityScreen.infoButton.accessibleName.createProperty( {
         measure: accordionBoxTitleProperty
       } )
     } );
@@ -285,10 +285,10 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
 
     model.selectedVariabilityMeasureProperty.link( selectedVariabilityMeasure => {
       this.accessibleHelpText = selectedVariabilityMeasure === VariabilityMeasure.RANGE ?
-                                CenterAndVariabilityFluent.a11y.variability.measureAccordionBox.rangeAccessibleHelpTextStringProperty :
+                                CenterAndVariabilityFluent.a11y.variabilityScreen.measureAccordionBox.rangeAccessibleHelpTextStringProperty :
                                 selectedVariabilityMeasure === VariabilityMeasure.IQR ?
-                                CenterAndVariabilityFluent.a11y.variability.measureAccordionBox.iqrAccessibleHelpTextStringProperty :
-                                CenterAndVariabilityFluent.a11y.variability.measureAccordionBox.madAccessibleHelpTextStringProperty;
+                                CenterAndVariabilityFluent.a11y.variabilityScreen.measureAccordionBox.iqrAccessibleHelpTextStringProperty :
+                                CenterAndVariabilityFluent.a11y.variabilityScreen.measureAccordionBox.madAccessibleHelpTextStringProperty;
     } );
 
     // for pdom order

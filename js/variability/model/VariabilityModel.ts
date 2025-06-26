@@ -101,25 +101,25 @@ export default class VariabilityModel extends CAVModel<VariabilitySceneModel> {
         values: [ 0, 0, 0, 1, 3, 12, 20, 32, 20, 12, 3, 1, 0, 0, 0 ],
         skewType: null
       }, CAVConstants.VARIABILITY_KICKER_COLORS[ 0 ],
-        CenterAndVariabilityFluent.a11y.variability.sceneRadioButtonGroup.scene1AccessibleNameStringProperty ),
+        CenterAndVariabilityFluent.a11y.variabilityScreen.sceneKickerRadioButtonGroup.kicker1RadioButton.accessibleNameStringProperty ),
       createVariabilitySceneModel( {
         type: 'probabilityByDistance',
         values: [ 3, 5, 10, 10, 25, 32, 45, 65, 45, 32, 25, 10, 10, 5, 3 ],
         skewType: null
       }, CAVConstants.VARIABILITY_KICKER_COLORS[ 1 ],
-        CenterAndVariabilityFluent.a11y.variability.sceneRadioButtonGroup.scene2AccessibleNameStringProperty ),
+        CenterAndVariabilityFluent.a11y.variabilityScreen.sceneKickerRadioButtonGroup.kicker2RadioButton.accessibleNameStringProperty ),
       createVariabilitySceneModel( {
         type: 'skew',
         values: null,
         skewType: 'right'
       }, CAVConstants.VARIABILITY_KICKER_COLORS[ 2 ],
-        CenterAndVariabilityFluent.a11y.variability.sceneRadioButtonGroup.scene3AccessibleNameStringProperty ),
+        CenterAndVariabilityFluent.a11y.variabilityScreen.sceneKickerRadioButtonGroup.kicker3RadioButton.accessibleNameStringProperty ),
       createVariabilitySceneModel( {
         type: 'skew',
         values: null,
         skewType: 'left'
       }, CAVConstants.VARIABILITY_KICKER_COLORS[ 3 ],
-        CenterAndVariabilityFluent.a11y.variability.sceneRadioButtonGroup.scene4AccessibleNameStringProperty )
+        CenterAndVariabilityFluent.a11y.variabilityScreen.sceneKickerRadioButtonGroup.kicker4RadioButton.accessibleNameStringProperty )
     ];
 
     const accordionBoxTandem = providedOptions.tandem.createTandem( 'variabilityMeasureAccordionBox' );

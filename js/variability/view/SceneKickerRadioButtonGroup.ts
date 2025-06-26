@@ -32,8 +32,8 @@ export default class SceneKickerRadioButtonGroup extends RectangularRadioButtonG
       isDisposable: false,
       touchAreaXDilation: 5,
       touchAreaYDilation: 4,
-      accessibleName: CenterAndVariabilityFluent.a11y.variability.sceneRadioButtonGroup.groupNameStringProperty,
-      accessibleHelpText: CenterAndVariabilityFluent.a11y.variability.sceneRadioButtonGroup.accessibleHelpTextStringProperty
+      accessibleName: CenterAndVariabilityFluent.a11y.variabilityScreen.sceneKickerRadioButtonGroup.accessibleNameStringProperty,
+      accessibleHelpText: CenterAndVariabilityFluent.a11y.variabilityScreen.sceneKickerRadioButtonGroup.accessibleHelpTextStringProperty
     }, providedOptions );
 
     const createTShirtIcon = ( label: string, fill: TColor ) => {

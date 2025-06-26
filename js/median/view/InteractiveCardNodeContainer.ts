@@ -337,20 +337,20 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
     } );
 
     const selectedItemValueProperty = new DynamicProperty<number | string, TReadOnlyProperty<number | string>, TReadOnlyProperty<string | number | null>>( new DerivedProperty( [ model.groupSortInteractionModel.selectedGroupItemProperty ], item => {
-      return item ? item.soccerBall.valueProperty : CenterAndVariabilityFluent.a11y.common.nullStringProperty;
+      return item ? item.soccerBall.valueProperty : CenterAndVariabilityFluent.a11y.nullStringProperty;
     } ) );
     const indexDependencies = model.cards.map( card => card.indexProperty );
-    const selectedItemIndexProperty = DerivedProperty.deriveAny( [ model.groupSortInteractionModel.selectedGroupItemProperty, ...indexDependencies, CenterAndVariabilityFluent.a11y.common.nullStringProperty ], () => {
+    const selectedItemIndexProperty = DerivedProperty.deriveAny( [ model.groupSortInteractionModel.selectedGroupItemProperty, ...indexDependencies, CenterAndVariabilityFluent.a11y.nullStringProperty ], () => {
       const item = model.groupSortInteractionModel.selectedGroupItemProperty.value;
-      return item && item.indexProperty.value !== null ? item.indexProperty.value + 1 : CenterAndVariabilityFluent.a11y.common.nullStringProperty.value;
+      return item && item.indexProperty.value !== null ? item.indexProperty.value + 1 : CenterAndVariabilityFluent.a11y.nullStringProperty.value;
     } );
-    const selectNamePatternStringProperty = CenterAndVariabilityFluent.a11y.median.dataCardsGroup.selectAccessibleName.createProperty( {
+    const selectNamePatternStringProperty = CenterAndVariabilityFluent.a11y.medianScreen.dataCardsGroup.selectAccessibleName.createProperty( {
       value: selectedItemValueProperty,
       index: selectedItemIndexProperty,
       total: sceneModel.numberOfDataPointsProperty
     } );
 
-    const sortNamePatternStringProperty = CenterAndVariabilityFluent.a11y.median.dataCardsGroup.sortAccessibleName.createProperty( {
+    const sortNamePatternStringProperty = CenterAndVariabilityFluent.a11y.medianScreen.dataCardsGroup.sortAccessibleName.createProperty( {
       value: selectedItemValueProperty,
       index: selectedItemIndexProperty,
       total: sceneModel.numberOfDataPointsProperty
@@ -364,13 +364,13 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       ( isGrabbed, numberOfDataPoints ) => {
 
         if ( numberOfDataPoints === 0 ) {
-          this.accessibleName = CenterAndVariabilityFluent.a11y.median.dataCardsGroup.noCardsAccessibleNameStringProperty;
+          this.accessibleName = CenterAndVariabilityFluent.a11y.medianScreen.dataCardsGroup.noCardsAccessibleNameStringProperty;
         }
         else {
           this.accessibleName = isGrabbed ? sortNamePatternStringProperty :
                                 selectNamePatternStringProperty;
-          this.accessibleHelpText = isGrabbed ? CenterAndVariabilityStrings.a11y.median.dataCardsGroup.sortAccessibleHelpTextStringProperty :
-                                    CenterAndVariabilityStrings.a11y.median.dataCardsGroup.selectAccessibleHelpTextStringProperty;
+          this.accessibleHelpText = isGrabbed ? CenterAndVariabilityStrings.a11y.medianScreen.dataCardsGroup.sortAccessibleHelpTextStringProperty :
+                                    CenterAndVariabilityStrings.a11y.medianScreen.dataCardsGroup.selectAccessibleHelpTextStringProperty;
         }
       } );
   }

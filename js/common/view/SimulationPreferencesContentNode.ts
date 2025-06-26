@@ -58,7 +58,7 @@ export default class SimulationPreferencesContentNode extends PreferencesPanelCo
       tandem: plotTypeControlTandem.createTandem( 'radioButtonGroup' ),
       isDisposable: false,
       accessibleName: CenterAndVariabilityFluent.plotTypeStringProperty,
-      accessibleHelpText: CenterAndVariabilityFluent.a11y.preferences.plotType.accessibleHelpTextStringProperty,
+      accessibleHelpText: CenterAndVariabilityFluent.a11y.preferences.plotTypeRadioButtonGroup.accessibleHelpTextStringProperty,
 
       // Hide or show the entire row, not just the radio button
       phetioVisiblePropertyInstrumented: false

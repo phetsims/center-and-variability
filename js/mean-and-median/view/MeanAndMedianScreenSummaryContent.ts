@@ -19,13 +19,13 @@ export default class MeanAndMedianScreenSummaryContent extends CAVScreenSummaryC
 
   public constructor( model: MeanAndMedianModel ) {
     const sceneModel = model.sceneModels[ 0 ];
-    const playAreaPatternStringProperty = CenterAndVariabilityFluent.a11y.meanAndMedian.playArea.createProperty( {
+    const playAreaPatternStringProperty = CenterAndVariabilityFluent.a11y.meanAndMedianScreen.screenSummary.playArea.createProperty( {
       maxBalls: MAX_KICKS_PROPERTY
     } );
-    const guidingQuestionStringProperty = CenterAndVariabilityFluent.a11y.common.guidingQuestion.createProperty( {
+    const guidingQuestionStringProperty = CenterAndVariabilityFluent.a11y.screenSummary.playArea.guidingQuestion.createProperty( {
       question: CenterAndVariabilityFluent.meanAndMedianQuestionStringProperty
     } );
-    const currentDetailsStringProperty = CenterAndVariabilityFluent.a11y.meanAndMedian.currentDetails.soccerBalls
+    const currentDetailsStringProperty = CenterAndVariabilityFluent.a11y.meanAndMedianScreen.screenSummary.currentDetails.soccerBalls
       .createProperty( {
         number: model.selectedSceneStackedSoccerBallCountProperty
       } );
@@ -37,7 +37,7 @@ export default class MeanAndMedianScreenSummaryContent extends CAVScreenSummaryC
         return sceneModel.getStackAtValue( meter ).length;
       } )
     );
-    const currentPlotDetailsPatternStringProperty = CenterAndVariabilityFluent.a11y.meanAndMedian.currentDetails.plot.createProperty( {
+    const currentPlotDetailsPatternStringProperty = CenterAndVariabilityFluent.a11y.meanAndMedianScreen.screenSummary.currentDetails.plot.createProperty( {
       number: model.selectedSceneStackedSoccerBallCountProperty
     } );
     const remainingDetailsNode = new Node( {
@@ -49,8 +49,8 @@ export default class MeanAndMedianScreenSummaryContent extends CAVScreenSummaryC
 
     super( [ listNode ], currentDetailsStringProperty, remainingDetailsNode, {
       playAreaContent: [ playAreaPatternStringProperty, guidingQuestionStringProperty ],
-      interactionHintContent: CAVScreenSummaryContent.createInteractionHintContent( CenterAndVariabilityFluent.a11y.meanAndMedian.interactionHintSomeBallsStringProperty, model.selectedSceneStackedSoccerBallCountProperty ),
-      controlAreaContent: CenterAndVariabilityFluent.a11y.meanAndMedian.controlAreaStringProperty
+      interactionHintContent: CAVScreenSummaryContent.createInteractionHintContent( CenterAndVariabilityFluent.a11y.meanAndMedianScreen.screenSummary.interactionHint.someBallsStringProperty, model.selectedSceneStackedSoccerBallCountProperty ),
+      controlAreaContent: CenterAndVariabilityFluent.a11y.meanAndMedianScreen.screenSummary.controlAreaStringProperty
     } );
   }
 }

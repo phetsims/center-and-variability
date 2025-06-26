@@ -33,7 +33,7 @@ export default class MedianScreen extends CAVScreen<CAVSoccerSceneModel, MedianM
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1
       } ),
-      screenButtonsHelpText: CenterAndVariabilityStrings.a11y.medianScreenHelpTextStringProperty,
+      screenButtonsHelpText: CenterAndVariabilityStrings.a11y.medianScreen.screenButtonsHelpTextStringProperty,
       createKeyboardHelpNode: () => new MedianKeyboardHelpNode()
     }, providedOptions );
 

@@ -55,7 +55,7 @@ export default class CAVScreenSummaryContent extends ScreenSummaryContent {
     const listItems = CAVScreenSummaryContent.METERS.map( meter => {
       const index = meter - CAVConstants.PHYSICAL_RANGE.min;
       return {
-        stringProperty: CenterAndVariabilityFluent.a11y.common.currentDetails.listItemPattern.createProperty( {
+        stringProperty: CenterAndVariabilityFluent.a11y.screenSummary.currentDetails.countAtMeter.createProperty( {
           number: meterStackHeightProperties[ index ],
           distance: meter
         } ),
@@ -70,7 +70,7 @@ export default class CAVScreenSummaryContent extends ScreenSummaryContent {
     stackSoccerBallCountProperty: TReadOnlyProperty<number> ): SectionContent {
     return new DynamicProperty<string, string, TReadOnlyProperty<string>>(
       new DerivedProperty( [ stackSoccerBallCountProperty ], count => {
-        return count === 0 ? CenterAndVariabilityStrings.a11y.common.interactionHintNoBallsStringProperty :
+        return count === 0 ? CenterAndVariabilityStrings.a11y.screenSummary.interactionHint.noBallsStringProperty :
                someBallsStringProperty;
       } ) );
   }

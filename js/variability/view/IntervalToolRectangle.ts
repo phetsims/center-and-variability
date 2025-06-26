@@ -87,7 +87,7 @@ export default class IntervalToolRectangle extends AccessibleSlider( Node, 0 ) {
     const roundedIntervalToolValue2Property = new DerivedProperty( [ intervalToolValue2Property ], value => roundToInterval( value, 0.1 ) );
     const widthProperty = new DerivedProperty( [ roundedIntervalToolValue1Property, roundedIntervalToolValue2Property ],
       ( value1, value2 ) => Math.abs( value2 - value1 ) );
-    const ariaValueStringProperty = CenterAndVariabilityFluent.a11y.variability.intervalTool.rectangleValuePattern.createProperty( {
+    const ariaValueStringProperty = CenterAndVariabilityFluent.a11y.variabilityScreen.intervalTool.rectangleValuePattern.createProperty( {
       valueA: roundedIntervalToolValue1Property,
       valueB: roundedIntervalToolValue2Property,
       width: widthProperty
@@ -105,7 +105,7 @@ export default class IntervalToolRectangle extends AccessibleSlider( Node, 0 ) {
       endDrag: endDrag,
       phetioEnabledPropertyInstrumented: true,
       isDisposable: false,
-      accessibleName: CenterAndVariabilityFluent.a11y.variability.intervalTool.rectangleAccessibleNameStringProperty,
+      accessibleName: CenterAndVariabilityFluent.a11y.variabilityScreen.intervalTool.rectangleAccessibleNameStringProperty,
 
       // This tool is very large and panning in all directions so that the viewport follows the center of the Node
       // means that important content is shifted off screen. Instead, we only pan horizontally as this Node moves.

@@ -79,7 +79,7 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
         enabledRangeProperty: new Property<Range>( CAVConstants.PHYSICAL_RANGE ),
         roundToInterval: null, // continuous
         visibleProperty: model.isPredictMeanVisibleProperty,
-        accessibleName: CenterAndVariabilityStrings.a11y.common.meanPredictionSlider.accessibleNameStringProperty,
+        accessibleName: CenterAndVariabilityStrings.a11y.meanPredictionSlider.accessibleNameStringProperty,
         pdomMapPDOMValue: value => roundToInterval( value, 0.1 ),
         tandem: predictMeanTandem,
 

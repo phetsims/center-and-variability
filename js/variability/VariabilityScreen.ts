@@ -34,7 +34,7 @@ export default class VariabilityScreen extends CAVScreen<VariabilitySceneModel, 
         maxIconHeightProportion: 1
       } ),
       createKeyboardHelpNode: () => new VariabilityKeyboardHelpNode(),
-      screenButtonsHelpText: CenterAndVariabilityStrings.a11y.variabilityScreenHelpTextStringProperty
+      screenButtonsHelpText: CenterAndVariabilityStrings.a11y.variabilityScreen.screenButtonsHelpTextStringProperty
     }, providedOptions );
 
     super(

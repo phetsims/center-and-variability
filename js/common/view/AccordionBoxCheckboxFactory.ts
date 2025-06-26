@@ -61,8 +61,8 @@ export default class AccordionBoxCheckboxFactory {
 
         // Sound will be played in the model based on whether the data is already sorted or not
         checkedSoundPlayer: nullSoundPlayer,
-        accessibleName: CenterAndVariabilityStrings.a11y.median.sortDataCheckbox.accessibleNameStringProperty,
-        accessibleHelpText: CenterAndVariabilityStrings.a11y.median.sortDataCheckbox.accessibleHelpTextStringProperty
+        accessibleName: CenterAndVariabilityStrings.a11y.medianScreen.sortDataCheckbox.accessibleNameStringProperty,
+        accessibleHelpText: CenterAndVariabilityStrings.a11y.medianScreen.sortDataCheckbox.accessibleHelpTextStringProperty
       }
     };
   }
@@ -86,8 +86,8 @@ export default class AccordionBoxCheckboxFactory {
 
         // Sound managed in the MedianAnimationTone
         checkedSoundPlayer: nullSoundPlayer,
-        accessibleName: CenterAndVariabilityStrings.a11y.meanAndMedian.plotMedianCheckbox.accessibleNameStringProperty,
-        accessibleHelpText: CenterAndVariabilityStrings.a11y.meanAndMedian.plotMedianCheckbox.accessibleHelpTextStringProperty
+        accessibleName: CenterAndVariabilityStrings.a11y.meanAndMedianScreen.plotMedianCheckbox.accessibleNameStringProperty,
+        accessibleHelpText: CenterAndVariabilityStrings.a11y.meanAndMedianScreen.plotMedianCheckbox.accessibleHelpTextStringProperty
       }
     };
   }
@@ -99,8 +99,8 @@ export default class AccordionBoxCheckboxFactory {
       tandemName: 'medianCheckbox',
       options: {
         checkedSoundPlayer: PlayAreaCheckboxFactory.getMedianCheckedSoundPlayer( selectedSceneModelProperty ),
-        accessibleName: CenterAndVariabilityStrings.a11y.median.cardsMedianCheckbox.accessibleNameStringProperty,
-        accessibleHelpText: CenterAndVariabilityStrings.a11y.median.cardsMedianCheckbox.accessibleHelpTextStringProperty
+        accessibleName: CenterAndVariabilityStrings.a11y.medianScreen.medianCheckbox.accessibleNameStringProperty,
+        accessibleHelpText: CenterAndVariabilityStrings.a11y.medianScreen.medianCheckbox.accessibleHelpTextStringProperty
       }
     };
   }
@@ -129,8 +129,8 @@ export default class AccordionBoxCheckboxFactory {
       tandemName: 'meanCheckbox',
       options: {
         checkedSoundPlayer: PlayAreaCheckboxFactory.getMeanCheckedSoundPlayer( selectedSceneModelProperty ),
-        accessibleName: CenterAndVariabilityStrings.a11y.meanAndMedian.plotMeanCheckbox.accessibleNameStringProperty,
-        accessibleHelpText: CenterAndVariabilityStrings.a11y.meanAndMedian.plotMeanCheckbox.accessibleHelpTextStringProperty,
+        accessibleName: CenterAndVariabilityStrings.a11y.meanAndMedianScreen.meanCheckbox.accessibleNameStringProperty,
+        accessibleHelpText: CenterAndVariabilityStrings.a11y.meanAndMedianScreen.meanCheckbox.accessibleHelpTextStringProperty,
         phetioDisplayOnlyPropertyInstrumented: true
       }
     };

@@ -60,8 +60,8 @@ export default class VariabilityScreenView extends CAVScreenView<VariabilityScen
     super( model, options );
     this.intervalToolHeading = new Node( {
       visibleProperty: model.intervalToolModel.isVisibleProperty,
-      accessibleHeading: CenterAndVariabilityFluent.a11y.variability.intervalTool.headingStringProperty,
-      accessibleParagraph: CenterAndVariabilityFluent.a11y.variability.intervalTool.accessibleHelpTextStringProperty
+      accessibleHeading: CenterAndVariabilityFluent.a11y.variabilityScreen.intervalTool.accessibleHeadingStringProperty,
+      accessibleParagraph: CenterAndVariabilityFluent.a11y.variabilityScreen.intervalTool.accessibleHelpTextStringProperty
     } );
 
     const accordionBoxTandem = options.tandem.createTandem( 'variabilityMeasureAccordionBox' );
@@ -77,7 +77,7 @@ export default class VariabilityScreenView extends CAVScreenView<VariabilityScen
         enabledRangeProperty: new Property<Range>( CAVConstants.VARIABILITY_DRAG_RANGE ),
         roundToInterval: null, // continuous
         visibleProperty: model.isPointerVisibleProperty,
-        accessibleName: CenterAndVariabilityFluent.a11y.variability.predictionPointer.accessibleNameStringProperty,
+        accessibleName: CenterAndVariabilityFluent.a11y.variabilityScreen.pointerNode.accessibleNameStringProperty,
         pdomMapPDOMValue: value => roundToInterval( value, 0.1 ),
         tandem: pointerTandem,
 

@@ -114,52 +114,58 @@ type StringsType = {
     }
   };
   'a11y': {
-    'medianScreenHelpTextStringProperty': LocalizedStringProperty;
-    'meanAndMedianScreenHelpTextStringProperty': LocalizedStringProperty;
-    'variabilityScreenHelpTextStringProperty': LocalizedStringProperty;
-    'common': {
-      'nullStringProperty': LocalizedStringProperty;
+    'screenSummary': {
+      'playArea': {
+        'guidingQuestionStringProperty': LocalizedStringProperty;
+      };
       'currentDetails': {
-        'listItemPatternStringProperty': LocalizedStringProperty;
+        'countAtMeterStringProperty': LocalizedStringProperty;
       };
-      'guidingQuestionStringProperty': LocalizedStringProperty;
-      'soccerFieldStringProperty': LocalizedStringProperty;
-      'interactionHintNoBallsStringProperty': LocalizedStringProperty;
-      'eraseButton': {
-        'accessibleNameStringProperty': LocalizedStringProperty;
-        'accessibleHelpTextStringProperty': LocalizedStringProperty;
-      };
-      'medianPredictionSlider': {
-        'accessibleNameStringProperty': LocalizedStringProperty;
-      };
-      'meanPredictionSlider': {
-        'accessibleNameStringProperty': LocalizedStringProperty;
-      };
-      'medianCheckbox': {
-        'accessibleNameStringProperty': LocalizedStringProperty;
-        'accessibleHelpTextStringProperty': LocalizedStringProperty;
-      };
-      'meanCheckbox': {
-        'accessibleNameStringProperty': LocalizedStringProperty;
-        'accessibleHelpTextStringProperty': LocalizedStringProperty;
-      };
-      'predictMedianCheckbox': {
-        'accessibleNameStringProperty': LocalizedStringProperty;
-        'accessibleHelpTextStringProperty': LocalizedStringProperty;
-      };
-      'predictMeanCheckbox': {
-        'accessibleNameStringProperty': LocalizedStringProperty;
-        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      'interactionHint': {
+        'noBallsStringProperty': LocalizedStringProperty;
       }
     };
-    'median': {
-      'playAreaStringProperty': LocalizedStringProperty;
-      'controlAreaStringProperty': LocalizedStringProperty;
-      'currentDetails': {
-        'soccerBallsStringProperty': LocalizedStringProperty;
-        'cardsStringProperty': LocalizedStringProperty;
+    'nullStringProperty': LocalizedStringProperty;
+    'soccerFieldStringProperty': LocalizedStringProperty;
+    'eraseButton': {
+      'accessibleNameStringProperty': LocalizedStringProperty;
+      'accessibleHelpTextStringProperty': LocalizedStringProperty;
+    };
+    'medianPredictionSlider': {
+      'accessibleNameStringProperty': LocalizedStringProperty;
+    };
+    'meanPredictionSlider': {
+      'accessibleNameStringProperty': LocalizedStringProperty;
+    };
+    'medianCheckbox': {
+      'accessibleNameStringProperty': LocalizedStringProperty;
+      'accessibleHelpTextStringProperty': LocalizedStringProperty;
+    };
+    'meanCheckbox': {
+      'accessibleNameStringProperty': LocalizedStringProperty;
+      'accessibleHelpTextStringProperty': LocalizedStringProperty;
+    };
+    'predictMedianCheckbox': {
+      'accessibleNameStringProperty': LocalizedStringProperty;
+      'accessibleHelpTextStringProperty': LocalizedStringProperty;
+    };
+    'predictMeanCheckbox': {
+      'accessibleNameStringProperty': LocalizedStringProperty;
+      'accessibleHelpTextStringProperty': LocalizedStringProperty;
+    };
+    'medianScreen': {
+      'screenButtonsHelpTextStringProperty': LocalizedStringProperty;
+      'screenSummary': {
+        'playAreaStringProperty': LocalizedStringProperty;
+        'controlAreaStringProperty': LocalizedStringProperty;
+        'currentDetails': {
+          'soccerBallsStringProperty': LocalizedStringProperty;
+          'cardsStringProperty': LocalizedStringProperty;
+        };
+        'interactionHint': {
+          'someBallsStringProperty': LocalizedStringProperty;
+        }
       };
-      'interactionHintSomeBallsStringProperty': LocalizedStringProperty;
       'dataCardsGroup': {
         'noCardsAccessibleNameStringProperty': LocalizedStringProperty;
         'selectAccessibleNameStringProperty': LocalizedStringProperty;
@@ -171,58 +177,79 @@ type StringsType = {
         'accessibleNameStringProperty': LocalizedStringProperty;
         'accessibleHelpTextStringProperty': LocalizedStringProperty;
       };
-      'cardsMedianCheckbox': {
+      'medianCheckbox': {
         'accessibleNameStringProperty': LocalizedStringProperty;
         'accessibleHelpTextStringProperty': LocalizedStringProperty;
       };
-      'details': {
+      'infoButton': {
         'accessibleNameStringProperty': LocalizedStringProperty;
       }
     };
-    'meanAndMedian': {
-      'playAreaStringProperty': LocalizedStringProperty;
-      'currentDetails': {
-        'soccerBallsStringProperty': LocalizedStringProperty;
-        'plotStringProperty': LocalizedStringProperty;
+    'meanAndMedianScreen': {
+      'screenButtonsHelpTextStringProperty': LocalizedStringProperty;
+      'screenSummary': {
+        'playAreaStringProperty': LocalizedStringProperty;
+        'currentDetails': {
+          'soccerBallsStringProperty': LocalizedStringProperty;
+          'plotStringProperty': LocalizedStringProperty;
+        };
+        'controlAreaStringProperty': LocalizedStringProperty;
+        'interactionHint': {
+          'someBallsStringProperty': LocalizedStringProperty;
+        }
       };
-      'controlAreaStringProperty': LocalizedStringProperty;
-      'accordionBoxHelpTextStringProperty': LocalizedStringProperty;
+      'meanAndMedianAccordionBox': {
+        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      };
       'plotMedianCheckbox': {
         'accessibleNameStringProperty': LocalizedStringProperty;
         'accessibleHelpTextStringProperty': LocalizedStringProperty;
       };
-      'plotMeanCheckbox': {
+      'meanCheckbox': {
         'accessibleNameStringProperty': LocalizedStringProperty;
         'accessibleHelpTextStringProperty': LocalizedStringProperty;
       };
-      'details': {
+      'infoButton': {
         'accessibleNameStringProperty': LocalizedStringProperty;
-      };
-      'interactionHintSomeBallsStringProperty': LocalizedStringProperty;
+      }
     };
-    'variability': {
-      'playAreaStringProperty': LocalizedStringProperty;
-      'currentDetails': {
-        'soccerBallsStringProperty': LocalizedStringProperty;
-        'plotStringProperty': LocalizedStringProperty;
+    'variabilityScreen': {
+      'screenButtonsHelpTextStringProperty': LocalizedStringProperty;
+      'screenSummary': {
+        'playAreaStringProperty': LocalizedStringProperty;
+        'currentDetails': {
+          'soccerBallsStringProperty': LocalizedStringProperty;
+          'plotStringProperty': LocalizedStringProperty;
+        };
+        'controlAreaStringProperty': LocalizedStringProperty;
+        'interactionHint': {
+          'someBallsStringProperty': LocalizedStringProperty;
+        }
       };
-      'controlAreaStringProperty': LocalizedStringProperty;
-      'sceneRadioButtonGroup': {
-        'groupNameStringProperty': LocalizedStringProperty;
-        'scene1AccessibleNameStringProperty': LocalizedStringProperty;
-        'scene2AccessibleNameStringProperty': LocalizedStringProperty;
-        'scene3AccessibleNameStringProperty': LocalizedStringProperty;
-        'scene4AccessibleNameStringProperty': LocalizedStringProperty;
+      'sceneKickerRadioButtonGroup': {
+        'accessibleNameStringProperty': LocalizedStringProperty;
         'accessibleHelpTextStringProperty': LocalizedStringProperty;
+        'kicker1RadioButton': {
+          'accessibleNameStringProperty': LocalizedStringProperty;
+        };
+        'kicker2RadioButton': {
+          'accessibleNameStringProperty': LocalizedStringProperty;
+        };
+        'kicker3RadioButton': {
+          'accessibleNameStringProperty': LocalizedStringProperty;
+        };
+        'kicker4RadioButton': {
+          'accessibleNameStringProperty': LocalizedStringProperty;
+        }
       };
       'pointerCheckbox': {
         'accessibleHelpTextStringProperty': LocalizedStringProperty;
       };
-      'predictionPointer': {
+      'pointerNode': {
         'accessibleNameStringProperty': LocalizedStringProperty;
       };
       'measuresRadioButtonGroup': {
-        'groupNameStringProperty': LocalizedStringProperty;
+        'accessibleNameStringProperty': LocalizedStringProperty;
         'accessibleHelpTextStringProperty': LocalizedStringProperty;
       };
       'measureAccordionBox': {
@@ -239,21 +266,26 @@ type StringsType = {
       'madCheckbox': {
         'accessibleHelpTextStringProperty': LocalizedStringProperty;
       };
-      'details': {
-        'accessibleNamePatternStringProperty': LocalizedStringProperty;
+      'infoButton': {
+        'accessibleNameStringProperty': LocalizedStringProperty;
       };
       'intervalTool': {
-        'headingStringProperty': LocalizedStringProperty;
+        'accessibleHeadingStringProperty': LocalizedStringProperty;
         'accessibleHelpTextStringProperty': LocalizedStringProperty;
-        'handle1AccessibleNameStringProperty': LocalizedStringProperty;
-        'handle2AccessibleNameStringProperty': LocalizedStringProperty;
-        'rectangleAccessibleNameStringProperty': LocalizedStringProperty;
+        'handle1': {
+          'accessibleNameStringProperty': LocalizedStringProperty;
+        };
+        'handle2': {
+          'accessibleNameStringProperty': LocalizedStringProperty;
+        };
+        'rectangle': {
+          'accessibleNameStringProperty': LocalizedStringProperty;
+        };
         'rectangleValuePatternStringProperty': LocalizedStringProperty;
-      };
-      'interactionHintSomeBallsStringProperty': LocalizedStringProperty;
+      }
     };
     'preferences': {
-      'plotType': {
+      'plotTypeRadioButtonGroup': {
         'accessibleHelpTextStringProperty': LocalizedStringProperty;
       }
     };

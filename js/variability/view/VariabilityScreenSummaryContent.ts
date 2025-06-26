@@ -23,17 +23,17 @@ import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 export default class VariabilityScreenSummaryContent extends CAVScreenSummaryContent {
 
   public constructor( model: VariabilityModel ) {
-    const playAreaPatternStringProperty = CenterAndVariabilityFluent.a11y.variability.playArea.createProperty( {
+    const playAreaPatternStringProperty = CenterAndVariabilityFluent.a11y.variabilityScreen.screenSummary.playArea.createProperty( {
       maxBalls: MAX_KICKS_PROPERTY
     } );
-    const guidingQuestionStringProperty = CenterAndVariabilityFluent.a11y.common.guidingQuestion.createProperty( {
+    const guidingQuestionStringProperty = CenterAndVariabilityFluent.a11y.screenSummary.playArea.guidingQuestion.createProperty( {
       question: CenterAndVariabilityFluent.variabilityQuestionStringProperty
     } );
     const selectedSceneAccessibleNameProperty = new DynamicProperty<string, string, VariabilitySceneModel>(
       model.selectedSceneModelProperty, {
         derive: 'accessibleName'
       } );
-    const currentDetailsStringProperty = CenterAndVariabilityFluent.a11y.variability.currentDetails.soccerBalls
+    const currentDetailsStringProperty = CenterAndVariabilityFluent.a11y.variabilityScreen.screenSummary.currentDetails.soccerBalls
       .createProperty( {
         kicker: selectedSceneAccessibleNameProperty,
         number: model.selectedSceneStackedSoccerBallCountProperty
@@ -64,7 +64,7 @@ export default class VariabilityScreenSummaryContent extends CAVScreenSummaryCon
     } );
     const remainingDetailsNode = new Node( {
       tagName: 'p',
-      accessibleName: CenterAndVariabilityFluent.a11y.variability.currentDetails.plot.createProperty( {
+      accessibleName: CenterAndVariabilityFluent.a11y.variabilityScreen.screenSummary.currentDetails.plot.createProperty( {
         measure: measureStringProperty,
         number: selectedSceneNumberOfDataPointsProperty
       } )
@@ -72,9 +72,9 @@ export default class VariabilityScreenSummaryContent extends CAVScreenSummaryCon
     super( listNodes, currentDetailsStringProperty, remainingDetailsNode, {
       playAreaContent: [ playAreaPatternStringProperty, guidingQuestionStringProperty ],
       interactionHintContent: CAVScreenSummaryContent.createInteractionHintContent(
-        CenterAndVariabilityFluent.a11y.variability.interactionHintSomeBallsStringProperty,
+        CenterAndVariabilityFluent.a11y.variabilityScreen.screenSummary.interactionHint.someBallsStringProperty,
         model.selectedSceneStackedSoccerBallCountProperty ),
-      controlAreaContent: CenterAndVariabilityFluent.a11y.variability.controlAreaStringProperty
+      controlAreaContent: CenterAndVariabilityFluent.a11y.variabilityScreen.screenSummary.controlAreaStringProperty
     } );
   }
 }

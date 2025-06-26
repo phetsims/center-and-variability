@@ -84,7 +84,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
 
     const infoButton = new CAVInfoButton( model.infoButtonPressedEmitter, backgroundShape, {
       tandem: tandem.createTandem( 'infoButton' ),
-      accessibleName: CenterAndVariabilityFluent.a11y.meanAndMedian.details.accessibleNameStringProperty
+      accessibleName: CenterAndVariabilityFluent.a11y.meanAndMedianScreen.infoButton.accessibleNameStringProperty
     } );
     backgroundNode.addChild( infoButton );
 
@@ -147,7 +147,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
         centerX: layoutBounds.centerX,
         expandedProperty: model.isAccordionBoxExpandedProperty,
         fill: CAVColors.meanAndMedianAccordionBoxFillProperty,
-        accessibleHelpText: CenterAndVariabilityStrings.a11y.meanAndMedian.accordionBoxHelpTextStringProperty
+        accessibleHelpText: CenterAndVariabilityStrings.a11y.meanAndMedianScreen.meanAndMedianAccordionBox.accessibleHelpTextStringProperty
       }
     );
 
