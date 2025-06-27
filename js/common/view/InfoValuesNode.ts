@@ -20,6 +20,7 @@ import CAVColors from '../CAVColors.js';
 import CAVConstants from '../CAVConstants.js';
 import CAVSoccerBall from '../model/CAVSoccerBall.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
+import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 
 export default class InfoValuesNode<T extends CAVSoccerBall> extends Node {
 
@@ -27,14 +28,24 @@ export default class InfoValuesNode<T extends CAVSoccerBall> extends Node {
   private readonly dataValuesContainer: HBox;
   private medianTextNodes: Node[] = [];
 
-  public constructor( private readonly sceneModel: Pick<CAVSoccerSceneModel<T>, 'numberOfDataPointsProperty' | 'getSortedStackedObjects'> ) {
+  public constructor( private readonly sceneModel: CAVSoccerSceneModel<T> ) {
 
     const hasAtLeastOneDataPointProperty = new DerivedProperty( [ sceneModel.numberOfDataPointsProperty ], numberOfDataPoints => numberOfDataPoints >= 1 );
+
+    const valueDependencies = sceneModel.soccerBalls.map( soccerBall => soccerBall.valueProperty );
+    const valuesStringProperty = DerivedProperty.deriveAny( valueDependencies, () => {
+      const numberOfDataPoints = sceneModel.numberOfDataPointsProperty.value;
+      const values = numberOfDataPoints > 0 ? sceneModel.getDataValues() : [];
+      return values.length > 0 ? values.join( ', ' ) : '';
+    } );
 
     const dataValuesLabel = new Text( CenterAndVariabilityStrings.dataValuesInMetersStringProperty, {
       visibleProperty: hasAtLeastOneDataPointProperty,
       fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE,
-      maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH
+      maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
+      accessibleParagraph: CenterAndVariabilityFluent.a11y.medianScreen.infoDialog.dataValues.createProperty( {
+        values: valuesStringProperty
+      } )
     } );
 
     const dataValuesContainer = new HBox( {

@@ -185,6 +185,9 @@ type StringsType = {
       };
       'infoButton': {
         'accessibleNameStringProperty': LocalizedStringProperty;
+      };
+      'infoDialog': {
+        'dataValuesStringProperty': LocalizedStringProperty;
       }
     };
     'meanAndMedianScreen': {

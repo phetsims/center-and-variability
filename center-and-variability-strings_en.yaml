@@ -182,6 +182,8 @@ a11y:
       accessibleHelpText: Analyze data cards with or without median value shown and located if data is sorted.
     infoButton:
       accessibleName: Median Details
+    infoDialog:
+      dataValues: 'Data Values (in meters): {$values}'
 
   # Content for the Mean and Median screen.
   meanAndMedianScreen:

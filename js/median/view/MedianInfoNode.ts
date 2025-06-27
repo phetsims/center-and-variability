@@ -44,7 +44,8 @@ export default class MedianInfoNode extends VBox {
     } );
 
     const needAtLeastOneKickText = new NeedAtLeastNKicksText( SoccerCommonStrings.needAtLeastOneKickStringProperty, {
-      visibleProperty: hasZeroKicksProperty
+      visibleProperty: hasZeroKicksProperty,
+      accessibleParagraph: SoccerCommonStrings.needAtLeastOneKickStringProperty
     } );
 
     super( {

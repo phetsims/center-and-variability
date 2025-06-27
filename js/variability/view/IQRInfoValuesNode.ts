@@ -33,7 +33,7 @@ export default class IQRInfoValuesNode extends InfoValuesNode<VariabilitySoccerB
   // The text nodes being highlighted as part of the Q3 boundary
   private q3TextNodes: Node[] = [];
 
-  public constructor( sceneModel: Pick<CAVSoccerSceneModel<VariabilitySoccerBall>, 'numberOfDataPointsProperty' | 'getSortedStackedObjects'>, hasEnoughDataForIQRProperty: TReadOnlyProperty<boolean> ) {
+  public constructor( sceneModel: CAVSoccerSceneModel<VariabilitySoccerBall>, hasEnoughDataForIQRProperty: TReadOnlyProperty<boolean> ) {
     super( sceneModel );
 
     const createDataValuesRect = () => new Rectangle( 0, 0, 0, 0, {
