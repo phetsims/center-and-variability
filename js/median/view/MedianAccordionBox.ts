@@ -82,6 +82,12 @@ export default class MedianAccordionBox extends CAVAccordionBox {
 
     // for pdom order
     this.infoButton = infoButton;
+
+    backgroundNode.setPDOMOrder( [
+      cardNodeContainer.medianTextNode,
+      cardNodeContainer,
+      checkboxGroupAlignBox
+    ] );
   }
 }
 

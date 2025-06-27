@@ -23,7 +23,8 @@ export default class VariabilityReadoutText extends Text {
     const options = optionize<ValueReadoutTextOptions, SelfOptions, TextOptions>()( {
       font: new PhetFont( 16 ),
       maxWidth: 100,
-      isDisposable: false
+      isDisposable: false,
+      accessibleParagraph: stringProperty
     }, providedOptions );
 
     super( stringProperty, options );

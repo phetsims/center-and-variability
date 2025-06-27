@@ -102,7 +102,8 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
         fill: fill,
         font: new PhetFont( 16 ),
         maxWidth: 170,
-        visibleProperty: visibleProperty
+        visibleProperty: visibleProperty,
+        accessibleParagraph: readoutPatternStringProperty
       } );
     };
 
@@ -153,6 +154,12 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
 
     // for pdom order
     this.infoButton = infoButton;
+
+    backgroundNode.setPDOMOrder( [
+      readoutsNode,
+      meanAndMedianPlotNode,
+      checkboxGroupAlignBox
+    ] );
   }
 }
 

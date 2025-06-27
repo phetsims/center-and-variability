@@ -294,6 +294,12 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     // for pdom order
     this.infoButton = infoButton;
     this.intervalToolNode = intervalToolNode;
+
+    backgroundNode.setPDOMOrder( [
+      readoutsToggleNode,
+      plotToggleNode,
+      checkboxToggleNode
+    ] );
   }
 
   /**

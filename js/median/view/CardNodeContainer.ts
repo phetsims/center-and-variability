@@ -44,6 +44,8 @@ export default class CardNodeContainer extends InteractiveHighlightingNode {
     excludeInvisibleChildrenFromBounds: true
   } );
 
+  public readonly medianTextNode: Node;
+
   public constructor( model: CardContainerModel,
                       protected readonly sceneModel: CAVSoccerSceneModel,
                       protected readonly medianVisibleProperty: Property<boolean>,
@@ -78,14 +80,17 @@ export default class CardNodeContainer extends InteractiveHighlightingNode {
     this.addChild( this.medianBarNode );
     this.addChild( this.cardLayer );
 
-    const medianTextNode = new Text( new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty, { value: this.sceneModel.medianValueProperty }, {
+    const medianPatternStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValuePatternStringProperty, { value: this.sceneModel.medianValueProperty }, {
       maps: {
         value: CAVConstants.STRING_VALUE_NULL_MAP
       }
-    } ), {
-      font: CAVConstants.MAIN_FONT,
-      maxWidth: 300
     } );
+    const medianTextNode = new Text( medianPatternStringProperty, {
+      font: CAVConstants.MAIN_FONT,
+      maxWidth: 300,
+      accessibleParagraph: medianPatternStringProperty
+    } );
+    this.medianTextNode = medianTextNode;
     const medianReadoutText = new Panel( medianTextNode, {
       stroke: 'lightgray',
       lineWidth: 0.6,
