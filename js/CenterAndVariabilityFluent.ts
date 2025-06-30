@@ -119,6 +119,7 @@ addToMapIfDefined( 'a11y_predictMedianCheckbox_accessibleHelpText', 'a11y.predic
 addToMapIfDefined( 'a11y_predictMeanCheckbox_accessibleName', 'a11y.predictMeanCheckbox.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_predictMeanCheckbox_accessibleHelpText', 'a11y.predictMeanCheckbox.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_infoDialog_dataValues', 'a11y.infoDialog.dataValuesStringProperty' );
+addToMapIfDefined( 'a11y_noKicksLeftResponse', 'a11y.noKicksLeftResponseStringProperty' );
 addToMapIfDefined( 'a11y_medianScreen_screenButtonsHelpText', 'a11y.medianScreen.screenButtonsHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_medianScreen_screenSummary_playArea', 'a11y.medianScreen.screenSummary.playAreaStringProperty' );
 addToMapIfDefined( 'a11y_medianScreen_screenSummary_controlArea', 'a11y.medianScreen.screenSummary.controlAreaStringProperty' );
@@ -364,6 +365,7 @@ const CenterAndVariabilityFluent = {
     infoDialog: {
       dataValues: new FluentPattern<{ values: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_infoDialog_dataValues', _.get( CenterAndVariabilityStrings, 'a11y.infoDialog.dataValuesStringProperty' ), [{"name":"values"}] )
     },
+    noKicksLeftResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_noKicksLeftResponse', _.get( CenterAndVariabilityStrings, 'a11y.noKicksLeftResponseStringProperty' ) ),
     _comment_3: new FluentComment( {"comment":"Content for the Median screen.","associatedKey":"medianScreen"} ),
     medianScreen: {
       screenButtonsHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_medianScreen_screenButtonsHelpText', _.get( CenterAndVariabilityStrings, 'a11y.medianScreen.screenButtonsHelpTextStringProperty' ) ),

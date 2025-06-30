@@ -158,6 +158,7 @@ type StringsType = {
     'infoDialog': {
       'dataValuesStringProperty': LocalizedStringProperty;
     };
+    'noKicksLeftResponseStringProperty': LocalizedStringProperty;
     'medianScreen': {
       'screenButtonsHelpTextStringProperty': LocalizedStringProperty;
       'screenSummary': {

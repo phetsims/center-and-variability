@@ -25,6 +25,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
+import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 
 type SelfOptions = EmptySelfOptions;
 export type KickButtonGroupOptions = SelfOptions & VBoxOptions & PickRequired<VBoxOptions, 'tandem'>;
@@ -50,13 +51,12 @@ export default class KickButtonGroup extends VBox {
       } );
       return alignGroup.createBox( text );
     };
+    const hasKickableSoccerBallsProperty = new DynamicProperty<boolean, unknown, SoccerSceneModel>( selectedSceneModelProperty, {
+      derive: 'hasKickableSoccerBallsStableProperty'
+    } );
 
     const createKickButton = ( label: PatternStringProperty<{ value: number }>, tandem: Tandem, numberToKick: number, multikick: boolean ) => {
       const content = createLabel( label );
-      const hasKickableSoccerBallsProperty = new DynamicProperty<boolean, unknown, SoccerSceneModel>( selectedSceneModelProperty, {
-        derive: 'hasKickableSoccerBallsStableProperty'
-      } );
-
       return new KickButton( {
         multiKick: multikick,
         visibleProperty: new GatedVisibleProperty( hasKickableSoccerBallsProperty, tandem ),
@@ -94,6 +94,12 @@ export default class KickButtonGroup extends VBox {
     ];
 
     super( options );
+
+    hasKickableSoccerBallsProperty.link( hasKickableSoccerBalls => {
+      if ( !hasKickableSoccerBalls ) {
+        this.addAccessibleContextResponse( CenterAndVariabilityFluent.a11y.noKicksLeftResponseStringProperty );
+      }
+    } );
   }
 }
 

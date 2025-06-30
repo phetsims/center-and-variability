@@ -347,6 +347,9 @@
         "value": "Data Values (in meters): {$values}"
       }
     },
+    "noKicksLeftResponse": {
+      "value": "No kicks left"
+    },
     "medianScreen": {
       "screenButtonsHelpText": {
         "value": "Kick soccer balls and explore data set to find value of median."

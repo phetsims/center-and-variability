@@ -144,6 +144,7 @@ a11y:
     accessibleHelpText: Show or hide movable prediction pointer on field.
   infoDialog:
     dataValues: 'Data Values (in meters): {$values}'
+  noKicksLeftResponse: No kicks left
   # Content for the Median screen.
   medianScreen:
     screenButtonsHelpText: Kick soccer balls and explore data set to find value of median.
