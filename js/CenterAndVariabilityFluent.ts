@@ -118,6 +118,7 @@ addToMapIfDefined( 'a11y_predictMedianCheckbox_accessibleName', 'a11y.predictMed
 addToMapIfDefined( 'a11y_predictMedianCheckbox_accessibleHelpText', 'a11y.predictMedianCheckbox.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_predictMeanCheckbox_accessibleName', 'a11y.predictMeanCheckbox.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_predictMeanCheckbox_accessibleHelpText', 'a11y.predictMeanCheckbox.accessibleHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_infoDialog_dataValues', 'a11y.infoDialog.dataValuesStringProperty' );
 addToMapIfDefined( 'a11y_medianScreen_screenButtonsHelpText', 'a11y.medianScreen.screenButtonsHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_medianScreen_screenSummary_playArea', 'a11y.medianScreen.screenSummary.playAreaStringProperty' );
 addToMapIfDefined( 'a11y_medianScreen_screenSummary_controlArea', 'a11y.medianScreen.screenSummary.controlAreaStringProperty' );
@@ -134,7 +135,6 @@ addToMapIfDefined( 'a11y_medianScreen_sortDataCheckbox_accessibleHelpText', 'a11
 addToMapIfDefined( 'a11y_medianScreen_medianCheckbox_accessibleName', 'a11y.medianScreen.medianCheckbox.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_medianScreen_medianCheckbox_accessibleHelpText', 'a11y.medianScreen.medianCheckbox.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_medianScreen_infoButton_accessibleName', 'a11y.medianScreen.infoButton.accessibleNameStringProperty' );
-addToMapIfDefined( 'a11y_medianScreen_infoDialog_dataValues', 'a11y.medianScreen.infoDialog.dataValuesStringProperty' );
 addToMapIfDefined( 'a11y_meanAndMedianScreen_screenButtonsHelpText', 'a11y.meanAndMedianScreen.screenButtonsHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_meanAndMedianScreen_screenSummary_playArea', 'a11y.meanAndMedianScreen.screenSummary.playAreaStringProperty' );
 addToMapIfDefined( 'a11y_meanAndMedianScreen_screenSummary_currentDetails_soccerBalls', 'a11y.meanAndMedianScreen.screenSummary.currentDetails.soccerBallsStringProperty' );
@@ -171,6 +171,7 @@ addToMapIfDefined( 'a11y_variabilityScreen_rangeCheckbox_accessibleHelpText', 'a
 addToMapIfDefined( 'a11y_variabilityScreen_iqrCheckbox_accessibleHelpText', 'a11y.variabilityScreen.iqrCheckbox.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_variabilityScreen_madCheckbox_accessibleHelpText', 'a11y.variabilityScreen.madCheckbox.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_variabilityScreen_infoButton_accessibleName', 'a11y.variabilityScreen.infoButton.accessibleNameStringProperty' );
+addToMapIfDefined( 'a11y_variabilityScreen_infoDialog_rangeMinusPattern', 'a11y.variabilityScreen.infoDialog.rangeMinusPatternStringProperty' );
 addToMapIfDefined( 'a11y_variabilityScreen_intervalTool_accessibleHeading', 'a11y.variabilityScreen.intervalTool.accessibleHeadingStringProperty' );
 addToMapIfDefined( 'a11y_variabilityScreen_intervalTool_accessibleHelpText', 'a11y.variabilityScreen.intervalTool.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_variabilityScreen_intervalTool_handle1_accessibleName', 'a11y.variabilityScreen.intervalTool.handle1.accessibleNameStringProperty' );
@@ -356,6 +357,9 @@ const CenterAndVariabilityFluent = {
       accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_predictMeanCheckbox_accessibleName', _.get( CenterAndVariabilityStrings, 'a11y.predictMeanCheckbox.accessibleNameStringProperty' ) ),
       accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_predictMeanCheckbox_accessibleHelpText', _.get( CenterAndVariabilityStrings, 'a11y.predictMeanCheckbox.accessibleHelpTextStringProperty' ) )
     },
+    infoDialog: {
+      dataValues: new FluentPattern<{ values: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_infoDialog_dataValues', _.get( CenterAndVariabilityStrings, 'a11y.infoDialog.dataValuesStringProperty' ), [{"name":"values"}] )
+    },
     _comment_3: new FluentComment( {"comment":"Content for the Median screen.","associatedKey":"medianScreen"} ),
     medianScreen: {
       screenButtonsHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_medianScreen_screenButtonsHelpText', _.get( CenterAndVariabilityStrings, 'a11y.medianScreen.screenButtonsHelpTextStringProperty' ) ),
@@ -388,9 +392,6 @@ const CenterAndVariabilityFluent = {
       },
       infoButton: {
         accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_medianScreen_infoButton_accessibleName', _.get( CenterAndVariabilityStrings, 'a11y.medianScreen.infoButton.accessibleNameStringProperty' ) )
-      },
-      infoDialog: {
-        dataValues: new FluentPattern<{ values: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_medianScreen_infoDialog_dataValues', _.get( CenterAndVariabilityStrings, 'a11y.medianScreen.infoDialog.dataValuesStringProperty' ), [{"name":"values"}] )
       }
     },
     _comment_4: new FluentComment( {"comment":"Content for the Mean and Median screen.","associatedKey":"meanAndMedianScreen"} ),
@@ -483,6 +484,9 @@ const CenterAndVariabilityFluent = {
       },
       infoButton: {
         accessibleName: new FluentPattern<{ measure: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_variabilityScreen_infoButton_accessibleName', _.get( CenterAndVariabilityStrings, 'a11y.variabilityScreen.infoButton.accessibleNameStringProperty' ), [{"name":"measure"}] )
+      },
+      infoDialog: {
+        rangeMinusPattern: new FluentPattern<{ max: FluentVariable, min: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_variabilityScreen_infoDialog_rangeMinusPattern', _.get( CenterAndVariabilityStrings, 'a11y.variabilityScreen.infoDialog.rangeMinusPatternStringProperty' ), [{"name":"max"},{"name":"min"}] )
       },
       intervalTool: {
         accessibleHeadingStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variabilityScreen_intervalTool_accessibleHeading', _.get( CenterAndVariabilityStrings, 'a11y.variabilityScreen.intervalTool.accessibleHeadingStringProperty' ) ),
