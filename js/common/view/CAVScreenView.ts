@@ -37,6 +37,7 @@ import SoccerScreenView, { SoccerScreenViewOptions } from '../../../../soccer-co
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
+import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import VariabilityKickerImageSets from '../../variability/view/VariabilityKickerImageSets.js';
 import CAVColors from '../CAVColors.js';
@@ -50,7 +51,6 @@ import CAVToggleNode from './CAVToggleNode.js';
 import KickButtonGroup from './KickButtonGroup.js';
 import PlayAreaMedianIndicatorNode from './PlayAreaMedianIndicatorNode.js';
 import PredictionSlider from './PredictionSlider.js';
-import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 
 type SelfOptions = {
   questionBarOptions: StrictOmit<QuestionBarOptions, 'tandem'>;
@@ -96,8 +96,9 @@ export default class CAVScreenView<T extends CAVSoccerSceneModel = CAVSoccerScen
   private readonly adjustMedianIndicatorBottom: ( topObjectPositionY: number ) => void;
   private readonly playAreaMedianIndicatorNode: Node;
 
-  // PDOM
-  private readonly soccerFieldHeading: Node = new Node( {
+  // PDOM - A container for accessible content that should be grouped under the soccer field. See how the pdomOrder
+  // is set below because it can't use the default scene graph order.
+  private readonly soccerFieldContainer: Node = new Node( {
     accessibleHeading: CenterAndVariabilityFluent.a11y.soccerField.accessibleHeadingStringProperty
   } );
 
@@ -324,7 +325,7 @@ export default class CAVScreenView<T extends CAVSoccerSceneModel = CAVSoccerScen
     this.screenViewRootNode.addChild( this.frontScreenViewLayer );
 
     this.addChild( this.screenViewRootNode );
-    this.addChild( this.soccerFieldHeading );
+    this.addChild( this.soccerFieldContainer );
   }
 
   private updateAccordionBoxPosition(): void {
@@ -409,17 +410,23 @@ export default class CAVScreenView<T extends CAVSoccerSceneModel = CAVSoccerScen
 
   // Set the pdom order. Only the variability screen has sceneRadioButtons and variabilityMeasureRadioButtons
   protected cavSetPDOMOrder( bottomControls: Node, predictionTools: Node[], infoButton: Node, sceneKickerRadioButtonGroup?: Node, variabilityMeasureRadioButtonGroup?: Node ): void {
-    this.pdomPlayAreaNode.setPDOMOrder( [
-      this.soccerFieldHeading,
+
+    // The logical container for everything related to the soccer field, so that scenery knows how to order and compute
+    // the heading levels.
+    this.soccerFieldContainer.pdomOrder = [
       ...( sceneKickerRadioButtonGroup ? [ sceneKickerRadioButtonGroup ] : [] ),
       this.kickButtonGroup,
       this.backScreenViewLayer,
       bottomControls,
       ...predictionTools,
-      this.intervalToolLayer,
+      this.intervalToolLayer
+    ];
+
+    this.pdomPlayAreaNode.setPDOMOrder( [
+      this.soccerFieldContainer,
       ...( variabilityMeasureRadioButtonGroup ? [ variabilityMeasureRadioButtonGroup ] : [] ),
       this.accordionBox
-      ] );
+    ] );
     this.pdomControlAreaNode.pdomOrder = [
       infoButton,
       this.eraserButton,
