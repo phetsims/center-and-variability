@@ -124,6 +124,7 @@ a11y:
   eraseButton:
     accessibleName:     Erase Current Data
     accessibleHelpText: Remove soccer balls from field.
+    contextResponse:    Field cleared.
   medianPredictionSlider:
     accessibleName: Median Prediction
   meanPredictionSlider:

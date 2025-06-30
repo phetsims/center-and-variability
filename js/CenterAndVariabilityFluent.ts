@@ -108,6 +108,7 @@ addToMapIfDefined( 'a11y_null', 'a11y.nullStringProperty' );
 addToMapIfDefined( 'a11y_soccerField_accessibleHeading', 'a11y.soccerField.accessibleHeadingStringProperty' );
 addToMapIfDefined( 'a11y_eraseButton_accessibleName', 'a11y.eraseButton.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_eraseButton_accessibleHelpText', 'a11y.eraseButton.accessibleHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_eraseButton_contextResponse', 'a11y.eraseButton.contextResponseStringProperty' );
 addToMapIfDefined( 'a11y_medianPredictionSlider_accessibleName', 'a11y.medianPredictionSlider.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_meanPredictionSlider_accessibleName', 'a11y.meanPredictionSlider.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_medianCheckbox_accessibleName', 'a11y.medianCheckbox.accessibleNameStringProperty' );
@@ -338,7 +339,8 @@ const CenterAndVariabilityFluent = {
     },
     eraseButton: {
       accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_eraseButton_accessibleName', _.get( CenterAndVariabilityStrings, 'a11y.eraseButton.accessibleNameStringProperty' ) ),
-      accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_eraseButton_accessibleHelpText', _.get( CenterAndVariabilityStrings, 'a11y.eraseButton.accessibleHelpTextStringProperty' ) )
+      accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_eraseButton_accessibleHelpText', _.get( CenterAndVariabilityStrings, 'a11y.eraseButton.accessibleHelpTextStringProperty' ) ),
+      contextResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_eraseButton_contextResponse', _.get( CenterAndVariabilityStrings, 'a11y.eraseButton.contextResponseStringProperty' ) )
     },
     medianPredictionSlider: {
       accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_medianPredictionSlider_accessibleName', _.get( CenterAndVariabilityStrings, 'a11y.medianPredictionSlider.accessibleNameStringProperty' ) )

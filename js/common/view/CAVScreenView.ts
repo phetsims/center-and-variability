@@ -212,7 +212,8 @@ export default class CAVScreenView<T extends CAVSoccerSceneModel = CAVSoccerScen
       touchAreaXDilation: 6,
       touchAreaYDilation: 6,
       accessibleName: CenterAndVariabilityStrings.a11y.eraseButton.accessibleNameStringProperty,
-      accessibleHelpText: CenterAndVariabilityStrings.a11y.eraseButton.accessibleHelpTextStringProperty
+      accessibleHelpText: CenterAndVariabilityStrings.a11y.eraseButton.accessibleHelpTextStringProperty,
+      accessibleContextResponse: CenterAndVariabilityFluent.a11y.eraseButton.contextResponseStringProperty
     } );
 
     this.questionBar.visibleProperty.link( () => this.updateAccordionBoxPosition() );

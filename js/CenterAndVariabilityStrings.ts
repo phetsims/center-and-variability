@@ -132,6 +132,7 @@ type StringsType = {
     'eraseButton': {
       'accessibleNameStringProperty': LocalizedStringProperty;
       'accessibleHelpTextStringProperty': LocalizedStringProperty;
+      'contextResponseStringProperty': LocalizedStringProperty;
     };
     'medianPredictionSlider': {
       'accessibleNameStringProperty': LocalizedStringProperty;
