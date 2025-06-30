@@ -33,8 +33,8 @@ export default class InfoValuesNode<T extends CAVSoccerBall> extends Node {
     const hasAtLeastOneDataPointProperty = new DerivedProperty( [ sceneModel.numberOfDataPointsProperty ], numberOfDataPoints => numberOfDataPoints >= 1 );
 
     const valueDependencies = sceneModel.soccerBalls.map( soccerBall => soccerBall.valueProperty );
-    const valuesStringProperty = DerivedProperty.deriveAny( [ ...valueDependencies, sceneModel.numberOfDataPointsProperty ], () => {
-      const numberOfDataPoints = sceneModel.numberOfDataPointsProperty.value;
+    const valuesStringProperty = DerivedProperty.deriveAny( [ ...valueDependencies ], () => {
+      const numberOfDataPoints = sceneModel.getSortedStackedObjects().length;
       const values = numberOfDataPoints > 0 ? sceneModel.getDataValues() : [];
       return values.length > 0 ? values.join( ', ' ) : '';
     } );

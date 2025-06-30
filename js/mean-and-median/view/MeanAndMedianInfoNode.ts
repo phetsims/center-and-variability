@@ -85,13 +85,13 @@ export default class MeanAndMedianInfoNode extends VBox {
 
     // Create derived Properties for pdom.
     const valuesDependencies = sceneModel.soccerBalls.map( soccerBall => soccerBall.valueProperty );
-    const valuesInAdditionFormatProperty = DerivedProperty.deriveAny( [ ...valuesDependencies, sceneModel.numberOfDataPointsProperty ], () => {
-      const numberOfDataPoints = sceneModel.numberOfDataPointsProperty.value;
+    const valuesInAdditionFormatProperty = DerivedProperty.deriveAny( [ ...valuesDependencies ], () => {
+      const numberOfDataPoints = sceneModel.getSortedStackedObjects().length;
       const values = numberOfDataPoints > 0 ? sceneModel.getDataValues() : [];
       return values.length > 0 ? values.join( ' + ' ) : '';
     } );
-    const valuesSumProperty = DerivedProperty.deriveAny( [ ...valuesDependencies, sceneModel.numberOfDataPointsProperty ], () => {
-      const numberOfDataPoints = sceneModel.numberOfDataPointsProperty.value;
+    const valuesSumProperty = DerivedProperty.deriveAny( [ ...valuesDependencies ], () => {
+      const numberOfDataPoints = sceneModel.getSortedStackedObjects().length;
       const values = numberOfDataPoints > 0 ? sceneModel.getDataValues() : [];
       return values.length > 0 ? _.sum( values ) : 0;
     } );

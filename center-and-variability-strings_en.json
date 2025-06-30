@@ -573,6 +573,22 @@
       "infoDialog": {
         "rangeMinusPattern": {
           "value": "Range = {$max} minus {$min}"
+        },
+        "iqrMinusPattern": {
+          "value": "IQR = {$q3} minus {$q1}"
+        },
+        "boxPlot": {
+          "accessibleParagraph": {
+            "value": "There is a box plot with arrows pointing to min, Q1, median, Q3, and max. IQR = Q3 minus Q1."
+          }
+        },
+        "madEquationDescription": {
+          "value": "MAD = the quantity {$madValues} all over {$total}, which equals {$numerator} over {$total}."
+        },
+        "madPlot": {
+          "accessibleParagraph": {
+            "value": "There is a diagram showing distances from each kick to left and right of mean. MAD = average of these distances."
+          }
         }
       },
       "intervalTool": {

@@ -1,107 +1,107 @@
 # sim name
-center-and-variability.title: Center and Variability
+center-and-variability.title:                                                  Center and Variability
 
 # screen names
-screen.median: Median
-screen.meanAndMedian: Mean & Median
-screen.variability: Variability
+screen.median:                                                                 Median
+screen.meanAndMedian:                                                          Mean & Median
+screen.variability:                                                            Variability
 
 # common strings
-kickValuePattern: Kick {{value}}
-distanceInMetersAccordionBoxTitle: Kick Distance (meters)
-distanceInMetersChartLabel: Distance (in meters)
-meanEqualsValueMetersPattern: Mean = {{value}} meters
-meanEqualsValueMPattern: Mean = {{value}} m
-meanEqualsUnknown: Mean = ?
-medianEqualsValuePattern: Median = {{value}}
-medianEqualsValueMPattern: Median = {{value}} m
-medianEqualsUnknown: Median = ?
-medianEqualsValueUnitsPattern: Median = {{value}} {{units}}
-plotType: Plot Type
-dotPlot: Dot Plot
-linePlot: Line Plot
-median: Median
-mean: Mean
-meanEquals: Mean =
-valueUnknown: "?"
-meters: meters
-meter: meter
-needAtLeastFiveKicks: Need at least five kicks
-maxKicks: Max Kicks
-maxKicksDescription: >-
-  Determines the maximum number of kicks allowed for all screens.
-  The maximum number of kicks on the Median screen is 15.
-outliers: Outliers
-outliersDescription: Shows outliers on the boxplot as markings rather than being included in the whisker.
-valueKicksPattern: "{{value}} Kicks"
-pointer: Pointer
+kickValuePattern:                                                              Kick {{value}}
+distanceInMetersAccordionBoxTitle:                                             Kick Distance (meters)
+distanceInMetersChartLabel:                                                    Distance (in meters)
+meanEqualsValueMetersPattern:                                                  Mean = {{value}} meters
+meanEqualsValueMPattern:                                                       Mean = {{value}} m
+meanEqualsUnknown:                                                             Mean = ?
+medianEqualsValuePattern:                                                      Median = {{value}}
+medianEqualsValueMPattern:                                                     Median = {{value}} m
+medianEqualsUnknown:                                                           Median = ?
+medianEqualsValueUnitsPattern:                                                 Median = {{value}} {{units}}
+plotType:                                                                      Plot Type
+dotPlot:                                                                       Dot Plot
+linePlot:                                                                      Line Plot
+median:                                                                        Median
+mean:                                                                          Mean
+meanEquals:                                                                    Mean =
+valueUnknown:                                                                  "?"
+meters:                                                                        meters
+meter:                                                                         meter
+needAtLeastFiveKicks:                                                          Need at least five kicks
+maxKicks:                                                                      Max Kicks
+maxKicksDescription:                                                           >-
+                                                                               Determines the maximum number of kicks allowed for all screens.
+                                                                               The maximum number of kicks on the Median screen is 15.
+outliers:                                                                      Outliers
+outliersDescription:                                                           Shows outliers on the boxplot as markings rather than being included in the whisker.
+valueKicksPattern:                                                             "{{value}} Kicks"
+pointer:                                                                       Pointer
 
 # median strings
-medianQuestion: What is the typical kick distance?
-sortData: Sort Data
-youSortedTheData: You sorted the data!
-medianDescription: <strong>Median</strong> is the number that splits a sorted data set in half.
+medianQuestion:                                                                What is the typical kick distance?
+sortData:                                                                      Sort Data
+youSortedTheData:                                                              You sorted the data!
+medianDescription:                                                             <strong>Median</strong> is the number that splits a sorted data set in half.
 
 # mean and median strings
-meanAndMedianQuestion: How does each kick influence the mean and median?
-meanDescription: <strong>Mean</strong> is the average of all values in any data set.
+meanAndMedianQuestion:                                                         How does each kick influence the mean and median?
+meanDescription:                                                               <strong>Mean</strong> is the average of all values in any data set.
 
 # variability strings
-variabilityQuestion: How spread out are the kick distances?
-iqrEqualsValueMPattern: IQR = {{value}} m
-iqrEqualsUnknown: IQR = ?
-rangeEqualsValueMPattern: Range = {{value}} m
-rangeEqualsUnknown: Range = ?
-madEqualsValueMPattern: MAD = {{value}} m
-madEqualsUnknown: MAD = ?
-madEquals: MAD =
-range: Range
-interquartileRangeIQR: Interquartile Range (IQR)
-iqr: IQR
-min: min
-max: max
-q1: Q1
-q3: Q3
-meanAbsoluteDeviationMAD: Mean Absolute Deviation (MAD)
-mad: MAD
-intervalTool: Interval Tool
-predictMean: Predict Mean
-predictMedian: Predict Median
-rangeDescription: <strong>Range</strong> is the distance between the minimum and maximum data points.
-iqrDescription: <strong>Interquartile range (IQR)</strong> is the middle 50% of the data.
-dataValuesInMeters: "Data Values (in meters):"
-iqrEqualsQ3MinusQ3Pattern: IQR = {{q3}} – {{q1}}
-iqrEqualsIQRUnitsPattern: IQR = {{iqr}} {{units}}
-madDescription: <strong>Mean absolute deviation (MAD)</strong> is the average distance from each data point to the mean.
-madEqualsMADMetersPattern: MAD = {{mad}} meters
-rangeEqualsMaxMinusMinPattern: Range = {{max}} – {{min}}
-rangeEqualsRangeUnitsPattern: Range = {{range}} {{units}}
+variabilityQuestion:                                                           How spread out are the kick distances?
+iqrEqualsValueMPattern:                                                        IQR = {{value}} m
+iqrEqualsUnknown:                                                              IQR = ?
+rangeEqualsValueMPattern:                                                      Range = {{value}} m
+rangeEqualsUnknown:                                                            Range = ?
+madEqualsValueMPattern:                                                        MAD = {{value}} m
+madEqualsUnknown:                                                              MAD = ?
+madEquals:                                                                     MAD =
+range:                                                                         Range
+interquartileRangeIQR:                                                         Interquartile Range (IQR)
+iqr:                                                                           IQR
+min:                                                                           min
+max:                                                                           max
+q1:                                                                            Q1
+q3:                                                                            Q3
+meanAbsoluteDeviationMAD:                                                      Mean Absolute Deviation (MAD)
+mad:                                                                           MAD
+intervalTool:                                                                  Interval Tool
+predictMean:                                                                   Predict Mean
+predictMedian:                                                                 Predict Median
+rangeDescription:                                                              <strong>Range</strong> is the distance between the minimum and maximum data points.
+iqrDescription:                                                                <strong>Interquartile range (IQR)</strong> is the middle 50% of the data.
+dataValuesInMeters:                                                            "Data Values (in meters):"
+iqrEqualsQ3MinusQ3Pattern:                                                     IQR = {{q3}} – {{q1}}
+iqrEqualsIQRUnitsPattern:                                                      IQR = {{iqr}} {{units}}
+madDescription:                                                                <strong>Mean absolute deviation (MAD)</strong> is the average distance from each data point to the mean.
+madEqualsMADMetersPattern:                                                     MAD = {{mad}} meters
+rangeEqualsMaxMinusMinPattern:                                                 Range = {{max}} – {{min}}
+rangeEqualsRangeUnitsPattern:                                                  Range = {{range}} {{units}}
 
 # keyboard help dialog strings
-keyboardHelpDialog.move: Move
-keyboardHelpDialog.endOfNumberLine: end of number line
-keyboardHelpDialog.startOfNumberLine: start of number line
-keyboardHelpDialog.grabOrReleaseBall: Ball
-keyboardHelpDialog.moveGrabbedBallTitle: Move Grabbed Ball
-keyboardHelpDialog.moveGrabbedBall: Move grabbed ball
-keyboardHelpDialog.grabOrRelease: Grab or release
-keyboardHelpDialog.jumpToStartOfNumberLine: Jump to start of number line
-keyboardHelpDialog.jumpToEndOfNumberLine: Jump to end of number line
-keyboardHelpDialog.jumpBallToTickMark: Jump ball to tick mark
-keyboardHelpDialog.moveInLargerSteps: Move in larger steps
-keyboardHelpDialog.medianScreen.grabOrReleaseBallOrCard: Ball or Card
-keyboardHelpDialog.medianScreen.movePredictMedian: Move Predict Median
-keyboardHelpDialog.medianScreen.predictMedian: predict median
-keyboardHelpDialog.medianScreen.moveGrabbedBallOrCardTitle: Move Grabbed Ball or Card
-keyboardHelpDialog.medianScreen.moveGrabbedBallOrCard: Move grabbed ball or card
-keyboardHelpDialog.medianScreen.jumpToStartOfCardsOrNumberLine: Jump to start of cards or number line
-keyboardHelpDialog.medianScreen.jumpToEndOfCardsOrNumberLine: Jump to end of cards or number line
-keyboardHelpDialog.meanAndMedianScreen.movePredictMeanOrMedian: Move Predict Mean or Median
-keyboardHelpDialog.meanAndMedianScreen.movePredictionPointer: Move prediction pointer
-keyboardHelpDialog.meanAndMedianScreen.movePredictMeanInSmallerSteps: Move predict mean in smaller steps
-keyboardHelpDialog.meanAndMedianScreen.moveInLargerSteps: Move in larger steps
+keyboardHelpDialog.move:                                                       Move
+keyboardHelpDialog.endOfNumberLine:                                            end of number line
+keyboardHelpDialog.startOfNumberLine:                                          start of number line
+keyboardHelpDialog.grabOrReleaseBall:                                          Ball
+keyboardHelpDialog.moveGrabbedBallTitle:                                       Move Grabbed Ball
+keyboardHelpDialog.moveGrabbedBall:                                            Move grabbed ball
+keyboardHelpDialog.grabOrRelease:                                              Grab or release
+keyboardHelpDialog.jumpToStartOfNumberLine:                                    Jump to start of number line
+keyboardHelpDialog.jumpToEndOfNumberLine:                                      Jump to end of number line
+keyboardHelpDialog.jumpBallToTickMark:                                         Jump ball to tick mark
+keyboardHelpDialog.moveInLargerSteps:                                          Move in larger steps
+keyboardHelpDialog.medianScreen.grabOrReleaseBallOrCard:                       Ball or Card
+keyboardHelpDialog.medianScreen.movePredictMedian:                             Move Predict Median
+keyboardHelpDialog.medianScreen.predictMedian:                                 predict median
+keyboardHelpDialog.medianScreen.moveGrabbedBallOrCardTitle:                    Move Grabbed Ball or Card
+keyboardHelpDialog.medianScreen.moveGrabbedBallOrCard:                         Move grabbed ball or card
+keyboardHelpDialog.medianScreen.jumpToStartOfCardsOrNumberLine:                Jump to start of cards or number line
+keyboardHelpDialog.medianScreen.jumpToEndOfCardsOrNumberLine:                  Jump to end of cards or number line
+keyboardHelpDialog.meanAndMedianScreen.movePredictMeanOrMedian:                Move Predict Mean or Median
+keyboardHelpDialog.meanAndMedianScreen.movePredictionPointer:                  Move prediction pointer
+keyboardHelpDialog.meanAndMedianScreen.movePredictMeanInSmallerSteps:          Move predict mean in smaller steps
+keyboardHelpDialog.meanAndMedianScreen.moveInLargerSteps:                      Move in larger steps
 keyboardHelpDialog.variabilityScreen.movePointerIntervalHandleOrIntervalBlock: Move Pointer, Interval Handles, or Interval Block
-keyboardHelpDialog.variabilityScreen.object: object
+keyboardHelpDialog.variabilityScreen.object:                                   object
 
 # accessibility strings
 a11y:
@@ -122,25 +122,25 @@ a11y:
   soccerField:
     accessibleHeading: Soccer Field
   eraseButton:
-    accessibleName: Erase Current Data
+    accessibleName:     Erase Current Data
     accessibleHelpText: Remove soccer balls from field.
   medianPredictionSlider:
     accessibleName: Median Prediction
   meanPredictionSlider:
     accessibleName: Mean Prediction
   medianCheckbox:
-    accessibleName: Median on Field
+    accessibleName:     Median on Field
     accessibleHelpText: >-
-      Show or hide red highlights marking middle soccer
-       ball or balls and arrow pointing to median kick distance.
+                        Show or hide red highlights marking middle soccer
+                         ball or balls and arrow pointing to median kick distance.
   meanCheckbox:
-    accessibleName: Mean on Field
+    accessibleName:     Mean on Field
     accessibleHelpText: Show or hide purple triangle indicating mean kick distance.
   predictMedianCheckbox:
-    accessibleName: Predict Median Pointer
+    accessibleName:     Predict Median Pointer
     accessibleHelpText: Show or hide movable prediction pointer on field.
   predictMeanCheckbox:
-    accessibleName: Predict Mean Pointer
+    accessibleName:     Predict Mean Pointer
     accessibleHelpText: Show or hide movable prediction pointer on field.
   infoDialog:
     dataValues: 'Data Values (in meters): {$values}'
@@ -148,38 +148,38 @@ a11y:
   medianScreen:
     screenButtonsHelpText: Kick soccer balls and explore data set to find value of median.
     screenSummary:
-      playArea: >-
-        At edge of field, up to {$maxBalls} kickers are ready to kick a soccer ball a random distance between 1 and 15
-        meters. Stacks of balls form when they land at the same distance. A sortable data card appears for each kicked
-        ball recording the kick distance. Each ball can be moved to adjust its kick distance. There are checkboxes to
-        auto-sort the data cards and highlight or predict the median.
+      playArea:    >-
+                   At edge of field, up to {$maxBalls} kickers are ready to kick a soccer ball a random distance between 1 and 15
+                   meters. Stacks of balls form when they land at the same distance. A sortable data card appears for each kicked
+                   ball recording the kick distance. Each ball can be moved to adjust its kick distance. There are checkboxes to
+                   auto-sort the data cards and highlight or predict the median.
       controlArea: Additionally, access detailed median information, clear data set, and reset the sim to start over.
       currentDetails:
         soccerBalls: |-
-          Currently, { NUMBER($number, type: "cardinal") ->
-          [0] 0 soccer balls on field.
-          [1] 1 soccer ball on field:
-          *[other] {$number} soccer balls on field:
-          }
-        cards: |-
-          { NUMBER($number, type: "cardinal") ->
-          [0] 0 data cards are listed.
-          [1] 1 data card lists the kick distance as {$distances}.
-          *[other] {$number} data cards list the kick distances as {$distances}.
-          }
+                     Currently, { NUMBER($number, type: "cardinal") ->
+                     [0] 0 soccer balls on field.
+                     [1] 1 soccer ball on field:
+                     *[other] {$number} soccer balls on field:
+                     }
+        cards:       |-
+                     { NUMBER($number, type: "cardinal") ->
+                     [0] 0 data cards are listed.
+                     [1] 1 data card lists the kick distance as {$distances}.
+                     *[other] {$number} data cards list the kick distances as {$distances}.
+                     }
       interactionHint:
         someBalls: Move soccer balls or sort distance data cards to explore data.
     dataCardsGroup:
-      noCardsAccessibleName: No cards to grab
-      selectAccessibleName: Kick Distance {$value}, card {$index} of {$total}
-      sortAccessibleName: Kick Distance {$value}, position {$index} of {$total}
+      noCardsAccessibleName:    No cards to grab
+      selectAccessibleName:     Kick Distance {$value}, card {$index} of {$total}
+      sortAccessibleName:       Kick Distance {$value}, position {$index} of {$total}
       selectAccessibleHelpText: Choose card to grab or release to sort data
-      sortAccessibleHelpText: Move card to sort data
+      sortAccessibleHelpText:   Move card to sort data
     sortDataCheckbox:
-      accessibleName: Sort Data Cards
+      accessibleName:     Sort Data Cards
       accessibleHelpText: Explore with or without data sorted numerically.
     medianCheckbox:
-      accessibleName: Median on Data Cards
+      accessibleName:     Median on Data Cards
       accessibleHelpText: Analyze data cards with or without median value shown and located if data is sorted.
     infoButton:
       accessibleName: Median Details
@@ -188,34 +188,34 @@ a11y:
   meanAndMedianScreen:
     screenButtonsHelpText: Kick soccer balls and explore data set to compare mean and median.
     screenSummary:
-      playArea: >-
-        At edge of field, up to {$maxBalls} kickers are ready to kick a soccer ball a random distance between 1 and 15
-        meters. Stacks of balls form when they land at the same distance. A mark appears on a plot for each kicked ball
-        recording the kick distance. Each ball can be moved to adjust its kick distance. There are checkboxes to highlight
-        or predict the median and mean.
+      playArea:    >-
+                   At edge of field, up to {$maxBalls} kickers are ready to kick a soccer ball a random distance between 1 and 15
+                   meters. Stacks of balls form when they land at the same distance. A mark appears on a plot for each kicked ball
+                   recording the kick distance. Each ball can be moved to adjust its kick distance. There are checkboxes to highlight
+                   or predict the median and mean.
       currentDetails:
         soccerBalls: |-
-          Currently, { NUMBER($number, type: "cardinal") ->
-          [0] 0 soccer balls on field.
-          [1] 1 soccer ball on field:
-          *[other] {$number} soccer balls on field:
-          }
-        plot: |-
-          { NUMBER($number, type: "cardinal") ->
-          [0] 0 marks on plot.
-          [1] 1 mark on plot matches kick distance on field.
-          *[other] {$number} marks on plot match kick distances on field.
-          }
+                     Currently, { NUMBER($number, type: "cardinal") ->
+                     [0] 0 soccer balls on field.
+                     [1] 1 soccer ball on field:
+                     *[other] {$number} soccer balls on field:
+                     }
+        plot:        |-
+                     { NUMBER($number, type: "cardinal") ->
+                     [0] 0 marks on plot.
+                     [1] 1 mark on plot matches kick distance on field.
+                     *[other] {$number} marks on plot match kick distances on field.
+                     }
       controlArea: Additionally, access detailed mean and median information, clear data set, and reset the sim to start over.
       interactionHint:
         someBalls: Move soccer balls or explore plot to analyze data.
     meanAndMedianAccordionBox:
       accessibleHelpText: Kick distance (meters) plot.
     plotMedianCheckbox:
-      accessibleName: Median on Plot
+      accessibleName:     Median on Plot
       accessibleHelpText: Analyze data with or without median value shown and located on plot.
     meanCheckbox:
-      accessibleName: Mean on Plot
+      accessibleName:     Mean on Plot
       accessibleHelpText: Analyze data with or without mean value shown and located on plot.
     infoButton:
       accessibleName: Median and Mean Details
@@ -226,29 +226,29 @@ a11y:
   variabilityScreen:
     screenButtonsHelpText: Kick soccer balls and explore data sets to compare measures of variability.
     screenSummary:
-      playArea: >-
-        At edge of field, up to {$maxBalls} kickers are ready to kick a soccer ball a random distance between 1 and 15
-        meters. Stacks of balls form when they land at the same distance. A mark appears on a plot for each kicked ball
-        recording the kick distance. Each ball can be moved to adjust its kick distance. Explore the range, interquartile
-        range (IQR), and mean absolute deviation (MAD) for each kicker’s kick distribution.
+      playArea:    >-
+                   At edge of field, up to {$maxBalls} kickers are ready to kick a soccer ball a random distance between 1 and 15
+                   meters. Stacks of balls form when they land at the same distance. A mark appears on a plot for each kicked ball
+                   recording the kick distance. Each ball can be moved to adjust its kick distance. Explore the range, interquartile
+                   range (IQR), and mean absolute deviation (MAD) for each kicker’s kick distribution.
       currentDetails:
-          soccerBalls: |-
-            {$kicker} kicker selected. Currently, { NUMBER($number, type: "cardinal") ->
-            [0] 0 soccer balls on field.
-            [1] 1 soccer ball on field:
-            *[other] {$number} soccer balls on field:
-            }
-          plot: |-
-            { NUMBER($number, type: "cardinal") ->
-            [0] 0 marks on plot
-            [1] 1 mark on plot matches kick distance on field
-            *[other] {$number} marks on plot match kick distances on field
-            }, and {$measure} is being explored.
+        soccerBalls: |-
+                     {$kicker} kicker selected. Currently, { NUMBER($number, type: "cardinal") ->
+                     [0] 0 soccer balls on field.
+                     [1] 1 soccer ball on field:
+                     *[other] {$number} soccer balls on field:
+                     }
+        plot:        |-
+                     { NUMBER($number, type: "cardinal") ->
+                     [0] 0 marks on plot
+                     [1] 1 mark on plot matches kick distance on field
+                     *[other] {$number} marks on plot match kick distances on field
+                     }, and {$measure} is being explored.
       controlArea: Additionally, access detailed variability information, clear data set, and reset the sim to start over.
       interactionHint:
         someBalls: Move soccer balls or explore plot to analyze data.
     sceneKickerRadioButtonGroup:
-      accessibleName: Choose Kicker
+      accessibleName:     Choose Kicker
       accessibleHelpText: Compare kick distance distributions of four different kickers.
       kicker1RadioButton:
         accessibleName: Green Jersey 1
@@ -263,12 +263,12 @@ a11y:
     pointerNode:
       accessibleName: Prediction Pointer
     measuresRadioButtonGroup:
-      accessibleName: Variability Measures
+      accessibleName:     Variability Measures
       accessibleHelpText: Explore measures of variability.
     measureAccordionBox:
       rangeAccessibleHelpText: Predict and view range of kick distribution.
-      iqrAccessibleHelpText: Predict and view IQR of kick distribution.
-      madAccessibleHelpText: Predict and view MAD of kick distribution.
+      iqrAccessibleHelpText:   Predict and view IQR of kick distribution.
+      madAccessibleHelpText:   Predict and view MAD of kick distribution.
     rangeCheckbox:
       accessibleHelpText: Explore with or without range highlighted on plot.
     iqrCheckbox:
@@ -279,11 +279,17 @@ a11y:
       accessibleName: "{$measure} Details"
     infoDialog:
       rangeMinusPattern: Range = {$max} minus {$min}
+      iqrMinusPattern:   IQR = {$q3} minus {$q1}
+      boxPlot:
+        accessibleParagraph: There is a box plot with arrows pointing to min, Q1, median, Q3, and max. IQR = Q3 minus Q1.
+      madEquationDescription: MAD = the quantity {$madValues} all over {$total}, which equals {$numerator} over {$total}.
+      madPlot:
+        accessibleParagraph: There is a diagram showing distances from each kick to left and right of mean. MAD = average of these distances.
     intervalTool:
-      accessibleHeading: Interval Tool Controls
-      accessibleHelpText: >-
-        Define boundaries of interval region. Shift interval region to estimate distribution variability or future kick
-        locations.
+      accessibleHeading:              Interval Tool Controls
+      accessibleHelpText:             >-
+                                      Define boundaries of interval region. Shift interval region to estimate distribution variability or future kick
+                                      locations.
       handle1:
         accessibleName: BoundaryA
       handle2:
@@ -299,14 +305,14 @@ a11y:
 
   # Content for the Keyboard Help dialog.
   keyboardHelp:
-    moveGrabbedBallOrCardDescription: Move grabbed ball or card with Left and Right arrow keys, or A and D keys, or Up and Down arrow keys or W and S keys.
-    moveGrabbedBallDescription: Move grabbed ball with Left and Right arrow keys, or A and D keys, or Up and Down arrow keys or W and S keys.
-    moveInLargerStepsDescription: Move in larger steps with Page Up or Page Down key.
+    moveGrabbedBallOrCardDescription:          Move grabbed ball or card with Left and Right arrow keys, or A and D keys, or Up and Down arrow keys or W and S keys.
+    moveGrabbedBallDescription:                Move grabbed ball with Left and Right arrow keys, or A and D keys, or Up and Down arrow keys or W and S keys.
+    moveInLargerStepsDescription:              Move in larger steps with Page Up or Page Down key.
 
-    jumpToStartOfNumberLineDescription: Jump to start of number line with Home key.
-    jumpToEndOfNumberLineDescription: Jump to end of number line with End key.
+    jumpToStartOfNumberLineDescription:        Jump to start of number line with Home key.
+    jumpToEndOfNumberLineDescription:          Jump to end of number line with End key.
 
     jumpToStartOfCardsOrNumberLineDescription: Jump to start of cards or number line with Home key.
-    jumpToEndOfCardsOrNumberLineDescription: Jump to end of cards or number line with End key.
+    jumpToEndOfCardsOrNumberLineDescription:   Jump to end of cards or number line with End key.
 
-    jumpBallToTickMarkDescription: Jump ball to tick mark with number Zero through Nine keys.
+    jumpBallToTickMarkDescription:             Jump ball to tick mark with number Zero through Nine keys.

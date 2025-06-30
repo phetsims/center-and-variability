@@ -9,6 +9,8 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
+import StringProperty from '../../../../axon/js/StringProperty.js';
+import { toFixed } from '../../../../dot/js/util/toFixed.js';
 import Utils from '../../../../dot/js/Utils.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
@@ -17,6 +19,7 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
+import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import { PLOT_NODE_TOP_MARGIN } from '../../common/view/CAVPlotNode.js';
@@ -31,21 +34,38 @@ export default class MADInfoNode extends VBox {
 
     const hasEnoughDataProperty = new DerivedProperty( [ sceneModel.numberOfDataPointsProperty ], numberOfDataPoints => numberOfDataPoints >= 1 );
 
+    const madValuesProperty = new StringProperty( '' );
+    const totalProperty = sceneModel.numberOfDataPointsProperty;
+    const resultNumeratorTextProperty = new StringProperty( '' );
+
     // Limit the width of the sum in the numerator since it can get very wide
-    const numeratorText = new Text( '', { fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE, maxWidth: 700 } );
+    const numeratorText = new Text( madValuesProperty, { fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE, maxWidth: 700 } );
     const denominatorText = new Text( '', { fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE } );
 
-    const resultNumeratorText = new Text( '', { fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE } );
+    const resultNumeratorText = new Text( resultNumeratorTextProperty, { fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE } );
     const resultDenominatorText = new Text( '', { fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE } );
+
+    const accessibleParagraphStringProperty = CenterAndVariabilityFluent.a11y.variabilityScreen.infoDialog.madEquationDescription.createProperty( {
+      madValues: madValuesProperty,
+      total: totalProperty,
+      numerator: resultNumeratorTextProperty
+    } );
+
+    const madCalculationStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.madEqualsMADMetersPatternStringProperty, {
+
+      // See CAVConstants.STRING_VALUE_NULL_MAP
+      mad: new DerivedProperty( [ sceneModel.madValueProperty ], madValue => madValue === null ? 'null' : toFixed( madValue, 1 ) )
+    }, {
+      tandem: tandem.createTandem( 'madCalculationStringProperty' )
+    } );
 
     sceneModel.variabilityDataMeasuresUpdatedEmitter.addListener( () => {
       const deviations = sceneModel.getDeviationTenths();
       const denominator = sceneModel.getSortedStackedObjects().length;
 
-      numeratorText.string = deviations.map( deviation => Utils.toFixed( deviation, 1 ) ).join( ' + ' );
+      madValuesProperty.value = deviations.map( deviation => toFixed( deviation, 1 ) ).join( ' + ' );
       denominatorText.string = denominator.toString();
-
-      resultNumeratorText.string = Utils.toFixed( sceneModel.getSumOfDeviationTenths(), 1 );
+      resultNumeratorTextProperty.value = toFixed( sceneModel.getSumOfDeviationTenths(), 1 );
       resultDenominatorText.string = denominator.toString();
     } );
 
@@ -67,29 +87,26 @@ export default class MADInfoNode extends VBox {
                 new Text( MathSymbols.EQUAL_TO, { fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE } ),
                 new FractionNode( resultNumeratorText, resultDenominatorText )
               ],
-              visibleProperty: hasEnoughDataProperty
+              visibleProperty: hasEnoughDataProperty,
+              accessibleParagraph: accessibleParagraphStringProperty
             } )
           ],
           layoutOptions: { topMargin: 5 }
         } ),
 
-        new Text( new PatternStringProperty( CenterAndVariabilityStrings.madEqualsMADMetersPatternStringProperty, {
-
-          // See CAVConstants.STRING_VALUE_NULL_MAP
-          mad: new DerivedProperty( [ sceneModel.madValueProperty ], madValue => madValue === null ? 'null' : Utils.toFixed( madValue, 1 ) )
-        }, {
-          tandem: tandem.createTandem( 'madCalculationStringProperty' )
-        } ), {
+        new Text( madCalculationStringProperty, {
           fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE,
           visibleProperty: hasEnoughDataProperty,
           maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
-          layoutOptions: { topMargin: 5 }
+          layoutOptions: { topMargin: 5 },
+          accessibleParagraph: madCalculationStringProperty
         } ),
 
         new MADNode( model, sceneModel, playAreaNumberLineNode, model.isDataPointLayerVisibleProperty, {
           representationContext: 'info',
           layoutOptions: { topMargin: PLOT_NODE_TOP_MARGIN },
-          tandem: tandem.createTandem( 'madNode' )
+          tandem: tandem.createTandem( 'madNode' ),
+          accessibleParagraph: CenterAndVariabilityFluent.a11y.variabilityScreen.infoDialog.madPlot.accessibleParagraphStringProperty
         } )
       ],
       isDisposable: false

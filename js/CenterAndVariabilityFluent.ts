@@ -172,6 +172,10 @@ addToMapIfDefined( 'a11y_variabilityScreen_iqrCheckbox_accessibleHelpText', 'a11
 addToMapIfDefined( 'a11y_variabilityScreen_madCheckbox_accessibleHelpText', 'a11y.variabilityScreen.madCheckbox.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_variabilityScreen_infoButton_accessibleName', 'a11y.variabilityScreen.infoButton.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_variabilityScreen_infoDialog_rangeMinusPattern', 'a11y.variabilityScreen.infoDialog.rangeMinusPatternStringProperty' );
+addToMapIfDefined( 'a11y_variabilityScreen_infoDialog_iqrMinusPattern', 'a11y.variabilityScreen.infoDialog.iqrMinusPatternStringProperty' );
+addToMapIfDefined( 'a11y_variabilityScreen_infoDialog_boxPlot_accessibleParagraph', 'a11y.variabilityScreen.infoDialog.boxPlot.accessibleParagraphStringProperty' );
+addToMapIfDefined( 'a11y_variabilityScreen_infoDialog_madEquationDescription', 'a11y.variabilityScreen.infoDialog.madEquationDescriptionStringProperty' );
+addToMapIfDefined( 'a11y_variabilityScreen_infoDialog_madPlot_accessibleParagraph', 'a11y.variabilityScreen.infoDialog.madPlot.accessibleParagraphStringProperty' );
 addToMapIfDefined( 'a11y_variabilityScreen_intervalTool_accessibleHeading', 'a11y.variabilityScreen.intervalTool.accessibleHeadingStringProperty' );
 addToMapIfDefined( 'a11y_variabilityScreen_intervalTool_accessibleHelpText', 'a11y.variabilityScreen.intervalTool.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_variabilityScreen_intervalTool_handle1_accessibleName', 'a11y.variabilityScreen.intervalTool.handle1.accessibleNameStringProperty' );
@@ -486,7 +490,15 @@ const CenterAndVariabilityFluent = {
         accessibleName: new FluentPattern<{ measure: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_variabilityScreen_infoButton_accessibleName', _.get( CenterAndVariabilityStrings, 'a11y.variabilityScreen.infoButton.accessibleNameStringProperty' ), [{"name":"measure"}] )
       },
       infoDialog: {
-        rangeMinusPattern: new FluentPattern<{ max: FluentVariable, min: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_variabilityScreen_infoDialog_rangeMinusPattern', _.get( CenterAndVariabilityStrings, 'a11y.variabilityScreen.infoDialog.rangeMinusPatternStringProperty' ), [{"name":"max"},{"name":"min"}] )
+        rangeMinusPattern: new FluentPattern<{ max: FluentVariable, min: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_variabilityScreen_infoDialog_rangeMinusPattern', _.get( CenterAndVariabilityStrings, 'a11y.variabilityScreen.infoDialog.rangeMinusPatternStringProperty' ), [{"name":"max"},{"name":"min"}] ),
+        iqrMinusPattern: new FluentPattern<{ q1: FluentVariable, q3: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_variabilityScreen_infoDialog_iqrMinusPattern', _.get( CenterAndVariabilityStrings, 'a11y.variabilityScreen.infoDialog.iqrMinusPatternStringProperty' ), [{"name":"q1"},{"name":"q3"}] ),
+        boxPlot: {
+          accessibleParagraphStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variabilityScreen_infoDialog_boxPlot_accessibleParagraph', _.get( CenterAndVariabilityStrings, 'a11y.variabilityScreen.infoDialog.boxPlot.accessibleParagraphStringProperty' ) )
+        },
+        madEquationDescription: new FluentPattern<{ madValues: FluentVariable, numerator: FluentVariable, total: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_variabilityScreen_infoDialog_madEquationDescription', _.get( CenterAndVariabilityStrings, 'a11y.variabilityScreen.infoDialog.madEquationDescriptionStringProperty' ), [{"name":"madValues"},{"name":"numerator"},{"name":"total"}] ),
+        madPlot: {
+          accessibleParagraphStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variabilityScreen_infoDialog_madPlot_accessibleParagraph', _.get( CenterAndVariabilityStrings, 'a11y.variabilityScreen.infoDialog.madPlot.accessibleParagraphStringProperty' ) )
+        }
       },
       intervalTool: {
         accessibleHeadingStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variabilityScreen_intervalTool_accessibleHeading', _.get( CenterAndVariabilityStrings, 'a11y.variabilityScreen.intervalTool.accessibleHeadingStringProperty' ) ),

@@ -279,6 +279,14 @@ type StringsType = {
       };
       'infoDialog': {
         'rangeMinusPatternStringProperty': LocalizedStringProperty;
+        'iqrMinusPatternStringProperty': LocalizedStringProperty;
+        'boxPlot': {
+          'accessibleParagraphStringProperty': LocalizedStringProperty;
+        };
+        'madEquationDescriptionStringProperty': LocalizedStringProperty;
+        'madPlot': {
+          'accessibleParagraphStringProperty': LocalizedStringProperty;
+        }
       };
       'intervalTool': {
         'accessibleHeadingStringProperty': LocalizedStringProperty;
