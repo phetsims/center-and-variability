@@ -155,6 +155,9 @@ type StringsType = {
       'accessibleNameStringProperty': LocalizedStringProperty;
       'accessibleHelpTextStringProperty': LocalizedStringProperty;
     };
+    'infoDialog': {
+      'dataValuesStringProperty': LocalizedStringProperty;
+    };
     'medianScreen': {
       'screenButtonsHelpTextStringProperty': LocalizedStringProperty;
       'screenSummary': {
@@ -185,9 +188,6 @@ type StringsType = {
       };
       'infoButton': {
         'accessibleNameStringProperty': LocalizedStringProperty;
-      };
-      'infoDialog': {
-        'dataValuesStringProperty': LocalizedStringProperty;
       }
     };
     'meanAndMedianScreen': {
@@ -276,6 +276,9 @@ type StringsType = {
       };
       'infoButton': {
         'accessibleNameStringProperty': LocalizedStringProperty;
+      };
+      'infoDialog': {
+        'rangeMinusPatternStringProperty': LocalizedStringProperty;
       };
       'intervalTool': {
         'accessibleHeadingStringProperty': LocalizedStringProperty;

@@ -21,11 +21,30 @@ import InfoTitleDescriptionRichText from '../../common/view/InfoTitleDescription
 import VariabilityModel from '../model/VariabilityModel.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import RangeNode from './RangeNode.js';
+import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 
 export default class RangeInfoNode extends VBox {
   public constructor( model: VariabilityModel, sceneModel: VariabilitySceneModel, playAreaNumberLineNode: NumberLineNode, tandem: Tandem ) {
 
     const hasEnoughDataProperty = new DerivedProperty( [ sceneModel.numberOfDataPointsProperty ], numberOfDataPoints => numberOfDataPoints >= 1 );
+    const maxValueNullMapProperty = new DerivedProperty( [ sceneModel.maxValueProperty ], CAVConstants.STRING_VALUE_NULL_MAP );
+    const minValueNullMapProperty = new DerivedProperty( [ sceneModel.minValueProperty ], CAVConstants.STRING_VALUE_NULL_MAP );
+    const rangeCalculationResultStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.rangeEqualsRangeUnitsPatternStringProperty, {
+      range: sceneModel.rangeValueProperty,
+
+      // Show "1 meter" but "1.5 meters"
+      units: new DerivedProperty( [
+        sceneModel.rangeValueProperty,
+        CenterAndVariabilityStrings.meterStringProperty,
+        CenterAndVariabilityStrings.metersStringProperty
+      ], rangeValue => rangeValue === 1 ? CenterAndVariabilityStrings.meterStringProperty.value : CenterAndVariabilityStrings.metersStringProperty.value )
+    }, {
+      maps: {
+        range: CAVConstants.STRING_VALUE_NULL_MAP
+      },
+      tandem: tandem.createTandem( 'rangeCalculationResultStringProperty' )
+    } );
+
     super( {
       align: 'left',
       spacing: 5,
@@ -44,31 +63,19 @@ export default class RangeInfoNode extends VBox {
           fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE,
           visibleProperty: hasEnoughDataProperty,
           maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
-          layoutOptions: { topMargin: 5 }
+          layoutOptions: { topMargin: 5 },
+          accessibleParagraph: CenterAndVariabilityFluent.a11y.variabilityScreen.infoDialog.rangeMinusPattern.createProperty( {
+            max: maxValueNullMapProperty,
+            min: minValueNullMapProperty
+          } )
         } ),
-
-
-        new Text( new PatternStringProperty( CenterAndVariabilityStrings.rangeEqualsRangeUnitsPatternStringProperty, {
-          range: sceneModel.rangeValueProperty,
-
-          // Show "1 meter" but "1.5 meters"
-          units: new DerivedProperty( [
-            sceneModel.rangeValueProperty,
-            CenterAndVariabilityStrings.meterStringProperty,
-            CenterAndVariabilityStrings.metersStringProperty
-          ], rangeValue => rangeValue === 1 ? CenterAndVariabilityStrings.meterStringProperty.value : CenterAndVariabilityStrings.metersStringProperty.value )
-        }, {
-          maps: {
-            range: CAVConstants.STRING_VALUE_NULL_MAP
-          },
-          tandem: tandem.createTandem( 'rangeCalculationResultStringProperty' )
-        } ), {
+        new Text( rangeCalculationResultStringProperty, {
           fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE,
           visibleProperty: hasEnoughDataProperty,
           maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
-          layoutOptions: { topMargin: 5 }
+          layoutOptions: { topMargin: 5 },
+          accessibleParagraph: rangeCalculationResultStringProperty
         } ),
-
         new RangeNode( model, sceneModel, playAreaNumberLineNode, model.isDataPointLayerVisibleProperty, {
           representationContext: 'info',
           layoutOptions: { topMargin: PLOT_NODE_TOP_MARGIN }

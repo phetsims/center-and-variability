@@ -43,7 +43,7 @@ export default class InfoValuesNode<T extends CAVSoccerBall> extends Node {
       visibleProperty: hasAtLeastOneDataPointProperty,
       fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE,
       maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
-      accessibleParagraph: CenterAndVariabilityFluent.a11y.medianScreen.infoDialog.dataValues.createProperty( {
+      accessibleParagraph: CenterAndVariabilityFluent.a11y.infoDialog.dataValues.createProperty( {
         values: valuesStringProperty
       } )
     } );

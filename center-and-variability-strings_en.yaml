@@ -142,7 +142,8 @@ a11y:
   predictMeanCheckbox:
     accessibleName: Predict Mean Pointer
     accessibleHelpText: Show or hide movable prediction pointer on field.
-
+  infoDialog:
+    dataValues: 'Data Values (in meters): {$values}'
   # Content for the Median screen.
   medianScreen:
     screenButtonsHelpText: Kick soccer balls and explore data set to find value of median.
@@ -182,8 +183,6 @@ a11y:
       accessibleHelpText: Analyze data cards with or without median value shown and located if data is sorted.
     infoButton:
       accessibleName: Median Details
-    infoDialog:
-      dataValues: 'Data Values (in meters): {$values}'
 
   # Content for the Mean and Median screen.
   meanAndMedianScreen:
@@ -278,6 +277,8 @@ a11y:
       accessibleHelpText: Explore with or without MAD highlighted on plot.
     infoButton:
       accessibleName: "{$measure} Details"
+    infoDialog:
+      rangeMinusPattern: Range = {$max} minus {$min}
     intervalTool:
       accessibleHeading: Interval Tool Controls
       accessibleHelpText: >-
