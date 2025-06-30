@@ -147,6 +147,7 @@ addToMapIfDefined( 'a11y_meanAndMedianScreen_plotMedianCheckbox_accessibleHelpTe
 addToMapIfDefined( 'a11y_meanAndMedianScreen_meanCheckbox_accessibleName', 'a11y.meanAndMedianScreen.meanCheckbox.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_meanAndMedianScreen_meanCheckbox_accessibleHelpText', 'a11y.meanAndMedianScreen.meanCheckbox.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_meanAndMedianScreen_infoButton_accessibleName', 'a11y.meanAndMedianScreen.infoButton.accessibleNameStringProperty' );
+addToMapIfDefined( 'a11y_meanAndMedianScreen_infoDialog_meanEquationDescription', 'a11y.meanAndMedianScreen.infoDialog.meanEquationDescriptionStringProperty' );
 addToMapIfDefined( 'a11y_variabilityScreen_screenButtonsHelpText', 'a11y.variabilityScreen.screenButtonsHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_variabilityScreen_screenSummary_playArea', 'a11y.variabilityScreen.screenSummary.playAreaStringProperty' );
 addToMapIfDefined( 'a11y_variabilityScreen_screenSummary_currentDetails_soccerBalls', 'a11y.variabilityScreen.screenSummary.currentDetails.soccerBallsStringProperty' );
@@ -420,6 +421,9 @@ const CenterAndVariabilityFluent = {
       },
       infoButton: {
         accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_meanAndMedianScreen_infoButton_accessibleName', _.get( CenterAndVariabilityStrings, 'a11y.meanAndMedianScreen.infoButton.accessibleNameStringProperty' ) )
+      },
+      infoDialog: {
+        meanEquationDescription: new FluentPattern<{ sum: FluentVariable, total: FluentVariable, values: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_meanAndMedianScreen_infoDialog_meanEquationDescription', _.get( CenterAndVariabilityStrings, 'a11y.meanAndMedianScreen.infoDialog.meanEquationDescriptionStringProperty' ), [{"name":"sum"},{"name":"total"},{"name":"values"}] )
       }
     },
     _comment_5: new FluentComment( {"comment":"Content for the Variability screen.","associatedKey":"variabilityScreen"} ),

@@ -216,6 +216,9 @@ type StringsType = {
       };
       'infoButton': {
         'accessibleNameStringProperty': LocalizedStringProperty;
+      };
+      'infoDialog': {
+        'meanEquationDescriptionStringProperty': LocalizedStringProperty;
       }
     };
     'variabilityScreen': {

@@ -11,7 +11,6 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
-import Utils from '../../../../dot/js/Utils.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
@@ -28,6 +27,8 @@ import InfoTitleDescriptionRichText from '../../common/view/InfoTitleDescription
 import InfoValuesNode from '../../common/view/InfoValuesNode.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
 import MeanAndMedianInfoPlotNode from './MeanAndMedianInfoPlotNode.js';
+import { toFixed } from '../../../../dot/js/util/toFixed.js';
+import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 
 export default class MeanAndMedianInfoNode extends VBox {
   public constructor( model: MeanAndMedianModel, sceneModel: CAVSoccerSceneModel, playAreaNumberLineNode: NumberLineNode, tandem: Tandem ) {
@@ -55,31 +56,58 @@ export default class MeanAndMedianInfoNode extends VBox {
       }
     } );
 
+    // Create string Properties for text readouts
+    const medianUnitsStringProperty = new DerivedProperty( [
+      sceneModel.medianValueProperty,
+      CenterAndVariabilityStrings.meterStringProperty,
+      CenterAndVariabilityStrings.metersStringProperty
+    ], medianValue => medianValue === 1 ? CenterAndVariabilityStrings.meterStringProperty.value : CenterAndVariabilityStrings.metersStringProperty.value );
+    const medianEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValueUnitsPatternStringProperty, {
+      value: sceneModel.medianValueProperty,
+
+      // Show "1 meter" but "1.5 meters"
+      units: medianUnitsStringProperty
+    }, {
+      maps: {
+        value: CAVConstants.STRING_VALUE_NULL_MAP
+      },
+      tandem: tandem.createTandem( 'medianEqualsValueStringProperty' )
+    } );
+
+    const meanEqualsValueStringProperty = new PatternStringProperty( CenterAndVariabilityStrings.meanEqualsValueMetersPatternStringProperty, {
+      value: sceneModel.meanValueProperty
+    }, {
+      maps: {
+        value: value => value === null ? 'null' : toFixed( value, 1 )
+      },
+      tandem: tandem.createTandem( 'meanEqualsValueStringProperty' )
+    } );
+
+    // Create derived Properties for pdom.
+    const valuesDependencies = sceneModel.soccerBalls.map( soccerBall => soccerBall.valueProperty );
+    const valuesInAdditionFormatProperty = DerivedProperty.deriveAny( [ ...valuesDependencies, sceneModel.numberOfDataPointsProperty ], () => {
+      const numberOfDataPoints = sceneModel.numberOfDataPointsProperty.value;
+      const values = numberOfDataPoints > 0 ? sceneModel.getDataValues() : [];
+      return values.length > 0 ? values.join( ' + ' ) : '';
+    } );
+    const valuesSumProperty = DerivedProperty.deriveAny( [ ...valuesDependencies, sceneModel.numberOfDataPointsProperty ], () => {
+      const numberOfDataPoints = sceneModel.numberOfDataPointsProperty.value;
+      const values = numberOfDataPoints > 0 ? sceneModel.getDataValues() : [];
+      return values.length > 0 ? _.sum( values ) : 0;
+    } );
+
     super( {
       align: 'left',
       spacing: 5,
       children: [
         new InfoTitleDescriptionRichText( CenterAndVariabilityStrings.medianDescriptionStringProperty ),
         medianInfoValuesNode,
-        new Text( new PatternStringProperty( CenterAndVariabilityStrings.medianEqualsValueUnitsPatternStringProperty, {
-          value: sceneModel.medianValueProperty,
-
-          // Show "1 meter" but "1.5 meters"
-          units: new DerivedProperty( [
-            sceneModel.medianValueProperty,
-            CenterAndVariabilityStrings.meterStringProperty,
-            CenterAndVariabilityStrings.metersStringProperty
-          ], medianValue => medianValue === 1 ? CenterAndVariabilityStrings.meterStringProperty.value : CenterAndVariabilityStrings.metersStringProperty.value )
-        }, {
-          maps: {
-            value: CAVConstants.STRING_VALUE_NULL_MAP
-          },
-          tandem: tandem.createTandem( 'medianEqualsValueStringProperty' )
-        } ), {
+        new Text( medianEqualsValueStringProperty, {
           fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE,
           visibleProperty: hasEnoughDataProperty,
           maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
-          layoutOptions: { topMargin: 5 }
+          layoutOptions: { topMargin: 5 },
+          accessibleParagraph: medianEqualsValueStringProperty
         } ),
         new InfoTitleDescriptionRichText( CenterAndVariabilityStrings.meanDescriptionStringProperty ),
         new HBox( {
@@ -90,24 +118,20 @@ export default class MeanAndMedianInfoNode extends VBox {
             new Text( MathSymbols.EQUAL_TO, { fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE } ),
             new FractionNode( resultNumeratorText, resultDenominatorText )
           ],
-          visibleProperty: hasEnoughDataProperty
+          visibleProperty: hasEnoughDataProperty,
+          accessibleParagraph: CenterAndVariabilityFluent.a11y.meanAndMedianScreen.infoDialog.meanEquationDescription.createProperty( {
+            values: valuesInAdditionFormatProperty,
+            total: sceneModel.numberOfDataPointsProperty,
+            sum: valuesSumProperty
+          } )
         } ),
-        new Text( new PatternStringProperty( CenterAndVariabilityStrings.meanEqualsValueMetersPatternStringProperty, {
-          value: sceneModel.meanValueProperty
-        }, {
-          maps: {
-            value: value => value === null ? 'null' : Utils.toFixed( value, 1 )
-          },
-          tandem: tandem.createTandem( 'meanEqualsValueStringProperty' )
-        } ), {
+        new Text( meanEqualsValueStringProperty, {
           fontSize: CAVConstants.INFO_DIALOG_FONT_SIZE,
           visibleProperty: hasEnoughDataProperty,
           maxWidth: CAVConstants.INFO_DIALOG_MAX_TEXT_WIDTH,
-          layoutOptions: { topMargin: 5 }
+          layoutOptions: { topMargin: 5 },
+          accessibleParagraph: meanEqualsValueStringProperty
         } ),
-
-        //test change 2
-
         new MeanAndMedianInfoPlotNode( model, sceneModel, playAreaNumberLineNode, {
           layoutOptions: { topMargin: PLOT_NODE_TOP_MARGIN }
         } )

@@ -220,6 +220,8 @@ a11y:
       accessibleHelpText: Analyze data with or without mean value shown and located on plot.
     infoButton:
       accessibleName: Median and Mean Details
+    infoDialog:
+      meanEquationDescription: Mean = {$values} all over {$total}, which equals {$sum} over {$total}
 
   # Content for the Variability screen.
   variabilityScreen:
