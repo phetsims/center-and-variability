@@ -115,9 +115,6 @@ a11y:
     interactionHint:
       noBalls: Kick soccer balls to create a data set.
 
-  # A (hopefully) unused string for when there is no selected item.
-  null: null
-
   # Strings for components that are used in all screens.
   soccerField:
     accessibleHeading: Soccer Field

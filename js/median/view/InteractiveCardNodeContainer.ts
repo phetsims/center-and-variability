@@ -337,12 +337,12 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
     } );
 
     const selectedItemValueProperty = new DynamicProperty<number | string, TReadOnlyProperty<number | string>, TReadOnlyProperty<string | number | null>>( new DerivedProperty( [ model.groupSortInteractionModel.selectedGroupItemProperty ], item => {
-      return item ? item.soccerBall.valueProperty : CenterAndVariabilityFluent.a11y.nullStringProperty;
+      return item ? item.soccerBall.valueProperty : new Property( 'null' );
     } ) );
     const indexDependencies = model.cards.map( card => card.indexProperty );
-    const selectedItemIndexProperty = DerivedProperty.deriveAny( [ model.groupSortInteractionModel.selectedGroupItemProperty, ...indexDependencies, CenterAndVariabilityFluent.a11y.nullStringProperty ], () => {
+    const selectedItemIndexProperty = DerivedProperty.deriveAny( [ model.groupSortInteractionModel.selectedGroupItemProperty, ...indexDependencies ], () => {
       const item = model.groupSortInteractionModel.selectedGroupItemProperty.value;
-      return item && item.indexProperty.value !== null ? item.indexProperty.value + 1 : CenterAndVariabilityFluent.a11y.nullStringProperty.value;
+      return item && item.indexProperty.value !== null ? item.indexProperty.value + 1 : 'null';
     } );
     const selectNamePatternStringProperty = CenterAndVariabilityFluent.a11y.medianScreen.dataCardsGroup.selectAccessibleName.createProperty( {
       value: selectedItemValueProperty,

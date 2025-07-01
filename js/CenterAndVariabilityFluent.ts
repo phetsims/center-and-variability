@@ -104,7 +104,6 @@ addToMapIfDefined( 'keyboardHelpDialog_variabilityScreen_object', 'keyboardHelpD
 addToMapIfDefined( 'a11y_screenSummary_playArea_guidingQuestion', 'a11y.screenSummary.playArea.guidingQuestionStringProperty' );
 addToMapIfDefined( 'a11y_screenSummary_currentDetails_countAtMeter', 'a11y.screenSummary.currentDetails.countAtMeterStringProperty' );
 addToMapIfDefined( 'a11y_screenSummary_interactionHint_noBalls', 'a11y.screenSummary.interactionHint.noBallsStringProperty' );
-addToMapIfDefined( 'a11y_null', 'a11y.nullStringProperty' );
 addToMapIfDefined( 'a11y_soccerField_accessibleHeading', 'a11y.soccerField.accessibleHeadingStringProperty' );
 addToMapIfDefined( 'a11y_eraseButton_accessibleName', 'a11y.eraseButton.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_eraseButton_accessibleHelpText', 'a11y.eraseButton.accessibleHelpTextStringProperty' );
@@ -331,9 +330,7 @@ const CenterAndVariabilityFluent = {
         noBallsStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_screenSummary_interactionHint_noBalls', _.get( CenterAndVariabilityStrings, 'a11y.screenSummary.interactionHint.noBallsStringProperty' ) )
       }
     },
-    _comment_1: new FluentComment( {"comment":"A (hopefully) unused string for when there is no selected item.","associatedKey":"null"} ),
-    nullStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_null', _.get( CenterAndVariabilityStrings, 'a11y.nullStringProperty' ) ),
-    _comment_2: new FluentComment( {"comment":"Strings for components that are used in all screens.","associatedKey":"soccerField"} ),
+    _comment_1: new FluentComment( {"comment":"Strings for components that are used in all screens.","associatedKey":"soccerField"} ),
     soccerField: {
       accessibleHeadingStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_soccerField_accessibleHeading', _.get( CenterAndVariabilityStrings, 'a11y.soccerField.accessibleHeadingStringProperty' ) )
     },
@@ -368,7 +365,7 @@ const CenterAndVariabilityFluent = {
       dataValues: new FluentPattern<{ values: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_infoDialog_dataValues', _.get( CenterAndVariabilityStrings, 'a11y.infoDialog.dataValuesStringProperty' ), [{"name":"values"}] )
     },
     noKicksLeftResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_noKicksLeftResponse', _.get( CenterAndVariabilityStrings, 'a11y.noKicksLeftResponseStringProperty' ) ),
-    _comment_3: new FluentComment( {"comment":"Content for the Median screen.","associatedKey":"medianScreen"} ),
+    _comment_2: new FluentComment( {"comment":"Content for the Median screen.","associatedKey":"medianScreen"} ),
     medianScreen: {
       screenButtonsHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_medianScreen_screenButtonsHelpText', _.get( CenterAndVariabilityStrings, 'a11y.medianScreen.screenButtonsHelpTextStringProperty' ) ),
       _comment_0: new FluentComment( {"comment":"Screen summary content that appears in each screen.","associatedKey":"screenSummary"} ),
@@ -402,7 +399,7 @@ const CenterAndVariabilityFluent = {
         accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_medianScreen_infoButton_accessibleName', _.get( CenterAndVariabilityStrings, 'a11y.medianScreen.infoButton.accessibleNameStringProperty' ) )
       }
     },
-    _comment_4: new FluentComment( {"comment":"Content for the Mean and Median screen.","associatedKey":"meanAndMedianScreen"} ),
+    _comment_3: new FluentComment( {"comment":"Content for the Mean and Median screen.","associatedKey":"meanAndMedianScreen"} ),
     meanAndMedianScreen: {
       screenButtonsHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_meanAndMedianScreen_screenButtonsHelpText', _.get( CenterAndVariabilityStrings, 'a11y.meanAndMedianScreen.screenButtonsHelpTextStringProperty' ) ),
       _comment_0: new FluentComment( {"comment":"Screen summary content that appears in each screen.","associatedKey":"screenSummary"} ),
@@ -435,7 +432,7 @@ const CenterAndVariabilityFluent = {
         meanEquationDescription: new FluentPattern<{ sum: FluentVariable, total: FluentVariable, values: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_meanAndMedianScreen_infoDialog_meanEquationDescription', _.get( CenterAndVariabilityStrings, 'a11y.meanAndMedianScreen.infoDialog.meanEquationDescriptionStringProperty' ), [{"name":"sum"},{"name":"total"},{"name":"values"}] )
       }
     },
-    _comment_5: new FluentComment( {"comment":"Content for the Variability screen.","associatedKey":"variabilityScreen"} ),
+    _comment_4: new FluentComment( {"comment":"Content for the Variability screen.","associatedKey":"variabilityScreen"} ),
     variabilityScreen: {
       screenButtonsHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variabilityScreen_screenButtonsHelpText', _.get( CenterAndVariabilityStrings, 'a11y.variabilityScreen.screenButtonsHelpTextStringProperty' ) ),
       _comment_0: new FluentComment( {"comment":"Screen summary content that appears in each screen.","associatedKey":"screenSummary"} ),
@@ -519,13 +516,13 @@ const CenterAndVariabilityFluent = {
         rectangleObjectResponsePattern: new FluentPattern<{ valueA: FluentVariable, valueB: FluentVariable, width: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_variabilityScreen_intervalTool_rectangleObjectResponsePattern', _.get( CenterAndVariabilityStrings, 'a11y.variabilityScreen.intervalTool.rectangleObjectResponsePatternStringProperty' ), [{"name":"valueA"},{"name":"valueB"},{"name":"width"}] )
       }
     },
-    _comment_6: new FluentComment( {"comment":"Content for the Preferences dialog.","associatedKey":"preferences"} ),
+    _comment_5: new FluentComment( {"comment":"Content for the Preferences dialog.","associatedKey":"preferences"} ),
     preferences: {
       plotTypeRadioButtonGroup: {
         accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_preferences_plotTypeRadioButtonGroup_accessibleHelpText', _.get( CenterAndVariabilityStrings, 'a11y.preferences.plotTypeRadioButtonGroup.accessibleHelpTextStringProperty' ) )
       }
     },
-    _comment_7: new FluentComment( {"comment":"Content for the Keyboard Help dialog.","associatedKey":"keyboardHelp"} ),
+    _comment_6: new FluentComment( {"comment":"Content for the Keyboard Help dialog.","associatedKey":"keyboardHelp"} ),
     keyboardHelp: {
       moveGrabbedBallOrCardDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_moveGrabbedBallOrCardDescription', _.get( CenterAndVariabilityStrings, 'a11y.keyboardHelp.moveGrabbedBallOrCardDescriptionStringProperty' ) ),
       moveGrabbedBallDescriptionStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_keyboardHelp_moveGrabbedBallDescription', _.get( CenterAndVariabilityStrings, 'a11y.keyboardHelp.moveGrabbedBallDescriptionStringProperty' ) ),

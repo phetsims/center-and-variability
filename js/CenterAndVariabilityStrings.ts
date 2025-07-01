@@ -125,7 +125,6 @@ type StringsType = {
         'noBallsStringProperty': LocalizedStringProperty;
       }
     };
-    'nullStringProperty': LocalizedStringProperty;
     'soccerField': {
       'accessibleHeadingStringProperty': LocalizedStringProperty;
     };
