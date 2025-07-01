@@ -35,6 +35,8 @@ import CAVAccordionBox from '../../common/view/CAVAccordionBox.js';
 import CAVInfoButton from '../../common/view/CAVInfoButton.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
 import MeanAndMedianPlotNode from './MeanAndMedianPlotNode.js';
+import { PDOMValueType } from '../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
   public readonly infoButton: ButtonNode;
@@ -89,7 +91,8 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
     backgroundNode.addChild( infoButton );
 
     const createReadoutText = ( valueProperty: TReadOnlyProperty<number | null>, visibleProperty: TReadOnlyProperty<boolean>,
-                                patternStringProperty: TReadOnlyProperty<string>, unknownStringProperty: TReadOnlyProperty<string>, fill: TPaint, decimalPlaces: number | null ) => {
+                                patternStringProperty: TReadOnlyProperty<string>, unknownStringProperty: TReadOnlyProperty<string>,
+                                accessibleParagraph: PDOMValueType, fill: TPaint, decimalPlaces: number | null ) => {
 
       const readoutPatternStringProperty = createValueReadoutStringProperty(
         valueProperty,
@@ -103,10 +106,14 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
         font: new PhetFont( 16 ),
         maxWidth: 170,
         visibleProperty: visibleProperty,
-        accessibleParagraph: readoutPatternStringProperty
+        accessibleParagraph: accessibleParagraph
       } );
     };
 
+    const medianValueAccessibleParagraphProperty = new DerivedProperty( [ sceneModel.medianValueProperty ],
+        ( medianValue: number | null ) => medianValue === null ? 'null' : medianValue );
+    const meanValueAccessibleParagraphProperty = new DerivedProperty( [ sceneModel.meanValueProperty ],
+        ( meanValue: number | null ) => meanValue === null ? 'null' : meanValue );
     const readoutsNode = new VBox( {
       align: 'left',
       spacing: 8,
@@ -117,6 +124,9 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
           model.isMedianVisibleProperty,
           CenterAndVariabilityStrings.medianEqualsValueMPatternStringProperty,
           CenterAndVariabilityStrings.medianEqualsUnknownStringProperty,
+          CenterAndVariabilityFluent.a11y.medianReadout.accessibleParagraph.createProperty( {
+            value: medianValueAccessibleParagraphProperty
+          } ),
           CAVColors.medianColorProperty,
           null
         ),
@@ -125,6 +135,9 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
           model.isMeanVisibleProperty,
           CenterAndVariabilityStrings.meanEqualsValueMPatternStringProperty,
           CenterAndVariabilityStrings.meanEqualsUnknownStringProperty,
+          CenterAndVariabilityFluent.a11y.meanReadout.accessibleParagraph.createProperty( {
+            value: meanValueAccessibleParagraphProperty
+          } ),
           CAVColors.meanColorProperty,
           1
         )

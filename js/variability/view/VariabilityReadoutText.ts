@@ -12,19 +12,20 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Text, { TextOptions } from '../../../../scenery/js/nodes/Text.js';
 import centerAndVariability from '../../centerAndVariability.js';
+import { PDOMValueType } from '../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
 
 type SelfOptions = EmptySelfOptions;
 export type ValueReadoutTextOptions = SelfOptions & TextOptions;
 
 export default class VariabilityReadoutText extends Text {
 
-  public constructor( stringProperty: TReadOnlyProperty<string>, providedOptions: ValueReadoutTextOptions ) {
+  public constructor( stringProperty: TReadOnlyProperty<string>, accessibleParagraph: PDOMValueType, providedOptions: ValueReadoutTextOptions ) {
 
     const options = optionize<ValueReadoutTextOptions, SelfOptions, TextOptions>()( {
       font: new PhetFont( 16 ),
       maxWidth: 100,
       isDisposable: false,
-      accessibleParagraph: stringProperty
+      accessibleParagraph: accessibleParagraph
     }, providedOptions );
 
     super( stringProperty, options );

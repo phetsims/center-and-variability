@@ -120,6 +120,8 @@ addToMapIfDefined( 'a11y_predictMeanCheckbox_accessibleName', 'a11y.predictMeanC
 addToMapIfDefined( 'a11y_predictMeanCheckbox_accessibleHelpText', 'a11y.predictMeanCheckbox.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_infoDialog_dataValues', 'a11y.infoDialog.dataValuesStringProperty' );
 addToMapIfDefined( 'a11y_noKicksLeftResponse', 'a11y.noKicksLeftResponseStringProperty' );
+addToMapIfDefined( 'a11y_meanReadout_accessibleParagraph', 'a11y.meanReadout.accessibleParagraphStringProperty' );
+addToMapIfDefined( 'a11y_medianReadout_accessibleParagraph', 'a11y.medianReadout.accessibleParagraphStringProperty' );
 addToMapIfDefined( 'a11y_medianScreen_screenButtonsHelpText', 'a11y.medianScreen.screenButtonsHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_medianScreen_screenSummary_playArea', 'a11y.medianScreen.screenSummary.playAreaStringProperty' );
 addToMapIfDefined( 'a11y_medianScreen_screenSummary_controlArea', 'a11y.medianScreen.screenSummary.controlAreaStringProperty' );
@@ -166,8 +168,11 @@ addToMapIfDefined( 'a11y_variabilityScreen_pointerNode_accessibleName', 'a11y.va
 addToMapIfDefined( 'a11y_variabilityScreen_measuresRadioButtonGroup_accessibleName', 'a11y.variabilityScreen.measuresRadioButtonGroup.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_variabilityScreen_measuresRadioButtonGroup_accessibleHelpText', 'a11y.variabilityScreen.measuresRadioButtonGroup.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_variabilityScreen_measureAccordionBox_rangeAccessibleHelpText', 'a11y.variabilityScreen.measureAccordionBox.rangeAccessibleHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_variabilityScreen_measureAccordionBox_rangeAccessibleParagraph', 'a11y.variabilityScreen.measureAccordionBox.rangeAccessibleParagraphStringProperty' );
 addToMapIfDefined( 'a11y_variabilityScreen_measureAccordionBox_iqrAccessibleHelpText', 'a11y.variabilityScreen.measureAccordionBox.iqrAccessibleHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_variabilityScreen_measureAccordionBox_iqrAccessibleParagraph', 'a11y.variabilityScreen.measureAccordionBox.iqrAccessibleParagraphStringProperty' );
 addToMapIfDefined( 'a11y_variabilityScreen_measureAccordionBox_madAccessibleHelpText', 'a11y.variabilityScreen.measureAccordionBox.madAccessibleHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_variabilityScreen_measureAccordionBox_madAccessibleParagraph', 'a11y.variabilityScreen.measureAccordionBox.madAccessibleParagraphStringProperty' );
 addToMapIfDefined( 'a11y_variabilityScreen_rangeCheckbox_accessibleHelpText', 'a11y.variabilityScreen.rangeCheckbox.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_variabilityScreen_iqrCheckbox_accessibleHelpText', 'a11y.variabilityScreen.iqrCheckbox.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_variabilityScreen_madCheckbox_accessibleHelpText', 'a11y.variabilityScreen.madCheckbox.accessibleHelpTextStringProperty' );
@@ -365,6 +370,12 @@ const CenterAndVariabilityFluent = {
       dataValues: new FluentPattern<{ values: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_infoDialog_dataValues', _.get( CenterAndVariabilityStrings, 'a11y.infoDialog.dataValuesStringProperty' ), [{"name":"values"}] )
     },
     noKicksLeftResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_noKicksLeftResponse', _.get( CenterAndVariabilityStrings, 'a11y.noKicksLeftResponseStringProperty' ) ),
+    meanReadout: {
+      accessibleParagraph: new FluentPattern<{ value: 'null' | 1 | number | 'other' | TReadOnlyProperty<'null' | 1 | number | 'other'> }>( fluentSupport.bundleProperty, 'a11y_meanReadout_accessibleParagraph', _.get( CenterAndVariabilityStrings, 'a11y.meanReadout.accessibleParagraphStringProperty' ), [{"name":"value","variants":["null",1,{"type":"number","value":"other"}]}] )
+    },
+    medianReadout: {
+      accessibleParagraph: new FluentPattern<{ value: 'null' | 1 | number | 'other' | TReadOnlyProperty<'null' | 1 | number | 'other'> }>( fluentSupport.bundleProperty, 'a11y_medianReadout_accessibleParagraph', _.get( CenterAndVariabilityStrings, 'a11y.medianReadout.accessibleParagraphStringProperty' ), [{"name":"value","variants":["null",1,{"type":"number","value":"other"}]}] )
+    },
     _comment_2: new FluentComment( {"comment":"Content for the Median screen.","associatedKey":"medianScreen"} ),
     medianScreen: {
       screenButtonsHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_medianScreen_screenButtonsHelpText', _.get( CenterAndVariabilityStrings, 'a11y.medianScreen.screenButtonsHelpTextStringProperty' ) ),
@@ -475,8 +486,11 @@ const CenterAndVariabilityFluent = {
       },
       measureAccordionBox: {
         rangeAccessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variabilityScreen_measureAccordionBox_rangeAccessibleHelpText', _.get( CenterAndVariabilityStrings, 'a11y.variabilityScreen.measureAccordionBox.rangeAccessibleHelpTextStringProperty' ) ),
+        rangeAccessibleParagraph: new FluentPattern<{ value: 'null' | 1 | number | 'other' | TReadOnlyProperty<'null' | 1 | number | 'other'> }>( fluentSupport.bundleProperty, 'a11y_variabilityScreen_measureAccordionBox_rangeAccessibleParagraph', _.get( CenterAndVariabilityStrings, 'a11y.variabilityScreen.measureAccordionBox.rangeAccessibleParagraphStringProperty' ), [{"name":"value","variants":["null",1,{"type":"number","value":"other"}]}] ),
         iqrAccessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variabilityScreen_measureAccordionBox_iqrAccessibleHelpText', _.get( CenterAndVariabilityStrings, 'a11y.variabilityScreen.measureAccordionBox.iqrAccessibleHelpTextStringProperty' ) ),
-        madAccessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variabilityScreen_measureAccordionBox_madAccessibleHelpText', _.get( CenterAndVariabilityStrings, 'a11y.variabilityScreen.measureAccordionBox.madAccessibleHelpTextStringProperty' ) )
+        iqrAccessibleParagraph: new FluentPattern<{ value: 'null' | 1 | number | 'other' | TReadOnlyProperty<'null' | 1 | number | 'other'> }>( fluentSupport.bundleProperty, 'a11y_variabilityScreen_measureAccordionBox_iqrAccessibleParagraph', _.get( CenterAndVariabilityStrings, 'a11y.variabilityScreen.measureAccordionBox.iqrAccessibleParagraphStringProperty' ), [{"name":"value","variants":["null",1,{"type":"number","value":"other"}]}] ),
+        madAccessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variabilityScreen_measureAccordionBox_madAccessibleHelpText', _.get( CenterAndVariabilityStrings, 'a11y.variabilityScreen.measureAccordionBox.madAccessibleHelpTextStringProperty' ) ),
+        madAccessibleParagraph: new FluentPattern<{ value: 'null' | 1 | number | 'other' | TReadOnlyProperty<'null' | 1 | number | 'other'> }>( fluentSupport.bundleProperty, 'a11y_variabilityScreen_measureAccordionBox_madAccessibleParagraph', _.get( CenterAndVariabilityStrings, 'a11y.variabilityScreen.measureAccordionBox.madAccessibleParagraphStringProperty' ), [{"name":"value","variants":["null",1,{"type":"number","value":"other"}]}] )
       },
       rangeCheckbox: {
         accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variabilityScreen_rangeCheckbox_accessibleHelpText', _.get( CenterAndVariabilityStrings, 'a11y.variabilityScreen.rangeCheckbox.accessibleHelpTextStringProperty' ) )

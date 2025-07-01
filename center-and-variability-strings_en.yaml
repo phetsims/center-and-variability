@@ -143,6 +143,20 @@ a11y:
   infoDialog:
     dataValues: 'Data Values (in meters): {$values}'
   noKicksLeftResponse: No kicks left
+  meanReadout:
+    accessibleParagraph: |-
+      {$value ->
+      [null] Mean = ?
+      [1] Mean = 1 meter
+      *[other] Mean = {$value} meters
+      }
+  medianReadout:
+    accessibleParagraph: |-
+      {$value ->
+      [null] Median = ?
+      [1] Median = 1 meter
+      *[other] Median = {$value} meters
+      }
   # Content for the Median screen.
   medianScreen:
     screenButtonsHelpText: Kick soccer balls and explore data set to find value of median.
@@ -266,8 +280,26 @@ a11y:
       accessibleHelpText: Explore measures of variability.
     measureAccordionBox:
       rangeAccessibleHelpText: Predict and view range of kick distribution.
+      rangeAccessibleParagraph: |-
+        { $value ->
+        [null] Range = ?
+        [1] Range = 1 meter
+        *[other] Range = { $value } meters
+        }
       iqrAccessibleHelpText:   Predict and view IQR of kick distribution.
+      iqrAccessibleParagraph: |-
+        { $value ->
+        [null] IQR = ?
+        [1] IQR = 1 meter
+        *[other] IQR = { $value } meters
+        }
       madAccessibleHelpText:   Predict and view MAD of kick distribution.
+      madAccessibleParagraph: |-
+        { $value ->
+        [null] MAD = ?
+        [1] MAD = 1 meter
+        *[other] MAD = { $value } meters
+        }
     rangeCheckbox:
       accessibleHelpText: Explore with or without range highlighted on plot.
     iqrCheckbox:

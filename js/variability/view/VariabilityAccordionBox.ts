@@ -41,6 +41,7 @@ import IntervalToolRectangle from './IntervalToolRectangle.js';
 import VariabilityMeasureCheckbox from './VariabilityMeasureCheckbox.js';
 import VariabilityPlotNode from './VariabilityPlotNode.js';
 import VariabilityReadoutText from './VariabilityReadoutText.js';
+import FluentPattern from '../../../../chipper/js/browser/FluentPattern.js';
 
 export default class VariabilityAccordionBox extends CAVAccordionBox {
 
@@ -141,6 +142,13 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
                toFixed( value, roundToDecimal );
       } );
     };
+    const createAccessibleParagraphProperty = ( valueProperty: TReadOnlyProperty<number | null>, fluentPattern: FluentPattern<Record<string, unknown>> ) => {
+      const valueAccessibleParagraphProperty = new DerivedProperty(
+        [ valueProperty ], value => value === null ? 'null' : value );
+      return fluentPattern.createProperty( {
+        value: valueAccessibleParagraphProperty
+      } );
+    };
 
     const rangeValueProperty = createDerivedValueProperty( sceneModel => sceneModel.rangeValueProperty, null );
     const medianValueProperty = createDerivedValueProperty( sceneModel => sceneModel.medianValueProperty, null );
@@ -172,7 +180,8 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
                                    valueUnknownStringProperty: TReadOnlyProperty<string>, valuePatternStringProperty: PatternStringProperty<{
         value: UnknownDerivedProperty<number | string>;
       }> ) => {
-      return DerivedProperty.deriveAny( [ model.selectedSceneModelProperty, ...model.variabilitySceneModels.map( accessor ), valuePatternStringProperty, valueUnknownStringProperty ], () => {
+      return DerivedProperty.deriveAny( [ model.selectedSceneModelProperty, ...model.variabilitySceneModels.map( accessor ),
+        valuePatternStringProperty, valueUnknownStringProperty ], () => {
         const result = accessor( model.selectedSceneModelProperty.value ).value;
         return result === null ? valueUnknownStringProperty.value : valuePatternStringProperty.value;
       } );
@@ -185,7 +194,12 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         const rangeEqualsValueStringProperty = deriveStringProperty( vsm => vsm.rangeValueProperty,
           CenterAndVariabilityStrings.rangeEqualsUnknownStringProperty, rangePatternStringProperty );
 
-        const rangeReadoutText = new VariabilityReadoutText( rangeEqualsValueStringProperty, {
+        const rangeAccessibleParagraphProperty = createAccessibleParagraphProperty(
+          new DynamicProperty<number | null, number | null, VariabilitySceneModel>( model.selectedSceneModelProperty, {
+            derive: 'rangeValueProperty'
+          } ), CenterAndVariabilityFluent.a11y.variabilityScreen.measureAccordionBox.rangeAccessibleParagraph );
+
+        const rangeReadoutText = new VariabilityReadoutText( rangeEqualsValueStringProperty, rangeAccessibleParagraphProperty, {
           fill: CAVColors.rangeReadoutColorProperty,
           visibleProperty: model.isRangeVisibleProperty
         } );
@@ -204,7 +218,12 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         const medianEqualsValueStringProperty = deriveStringProperty( vsm => vsm.medianValueProperty,
           CenterAndVariabilityStrings.medianEqualsUnknownStringProperty, medianPatternStringProperty );
 
-        const medianReadoutText = new VariabilityReadoutText( medianEqualsValueStringProperty, {
+        const medianAccessibleParagraphProperty = createAccessibleParagraphProperty(
+          new DynamicProperty<number | null, number | null, VariabilitySceneModel>( model.selectedSceneModelProperty, {
+            derive: 'medianValueProperty'
+          } ), CenterAndVariabilityFluent.a11y.medianReadout.accessibleParagraph );
+
+        const medianReadoutText = new VariabilityReadoutText( medianEqualsValueStringProperty, medianAccessibleParagraphProperty, {
           fill: CAVColors.medianColorProperty,
           tandem: readoutsTandem.createTandem( 'medianReadoutText' ),
           phetioVisiblePropertyInstrumented: true,
@@ -216,7 +235,12 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
         const iqrEqualsValueStringProperty = deriveStringProperty( vsm => vsm.iqrValueProperty,
           CenterAndVariabilityStrings.iqrEqualsUnknownStringProperty, iqrPatternStringProperty );
 
-        const iqrReadoutText = new VariabilityReadoutText( iqrEqualsValueStringProperty, {
+        const iqrAccessibleParagraphProperty = createAccessibleParagraphProperty(
+          new DynamicProperty<number | null, number | null, VariabilitySceneModel>( model.selectedSceneModelProperty, {
+          derive: 'iqrValueProperty'
+        } ), CenterAndVariabilityFluent.a11y.variabilityScreen.measureAccordionBox.iqrAccessibleParagraph );
+
+        const iqrReadoutText = new VariabilityReadoutText( iqrEqualsValueStringProperty, iqrAccessibleParagraphProperty, {
           fill: CAVColors.iqrLabelColorProperty,
           visibleProperty: model.isIQRVisibleProperty
         } );
@@ -238,11 +262,19 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
 
         const meanEqualsValueStringProperty = deriveStringProperty( vsm => vsm.meanValueProperty,
           CenterAndVariabilityStrings.meanEqualsUnknownStringProperty, meanPatternStringProperty );
+        const meanAccessibleParagraphProperty = createAccessibleParagraphProperty(
+          new DynamicProperty<number | null, number | null, VariabilitySceneModel>( model.selectedSceneModelProperty, {
+            derive: 'meanValueProperty'
+          } ), CenterAndVariabilityFluent.a11y.meanReadout.accessibleParagraph );
 
         const madEqualsValueStringProperty = deriveStringProperty( vsm => vsm.madValueProperty,
           CenterAndVariabilityStrings.madEqualsUnknownStringProperty, madPatternStringProperty );
+        const madAccessibleParagraphProperty = createAccessibleParagraphProperty(
+          new DynamicProperty<number | null, number | null, VariabilitySceneModel>( model.selectedSceneModelProperty, {
+            derive: 'madValueProperty'
+          } ), CenterAndVariabilityFluent.a11y.variabilityScreen.measureAccordionBox.madAccessibleParagraph );
 
-        const meanReadoutText = new VariabilityReadoutText( meanEqualsValueStringProperty, {
+        const meanReadoutText = new VariabilityReadoutText( meanEqualsValueStringProperty, meanAccessibleParagraphProperty, {
           fill: CAVColors.meanColorProperty,
           tandem: readoutsTandem.createTandem( 'meanReadoutText' ),
           phetioVisiblePropertyInstrumented: true,
@@ -251,7 +283,7 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
           }
         } );
 
-        const madReadoutText = new VariabilityReadoutText( madEqualsValueStringProperty, {
+        const madReadoutText = new VariabilityReadoutText( madEqualsValueStringProperty, madAccessibleParagraphProperty, {
           fill: CAVColors.madColorProperty,
           visibleProperty: model.isMADVisibleProperty
         } );

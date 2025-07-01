@@ -159,6 +159,12 @@ type StringsType = {
       'dataValuesStringProperty': LocalizedStringProperty;
     };
     'noKicksLeftResponseStringProperty': LocalizedStringProperty;
+    'meanReadout': {
+      'accessibleParagraphStringProperty': LocalizedStringProperty;
+    };
+    'medianReadout': {
+      'accessibleParagraphStringProperty': LocalizedStringProperty;
+    };
     'medianScreen': {
       'screenButtonsHelpTextStringProperty': LocalizedStringProperty;
       'screenSummary': {
@@ -263,8 +269,11 @@ type StringsType = {
       };
       'measureAccordionBox': {
         'rangeAccessibleHelpTextStringProperty': LocalizedStringProperty;
+        'rangeAccessibleParagraphStringProperty': LocalizedStringProperty;
         'iqrAccessibleHelpTextStringProperty': LocalizedStringProperty;
+        'iqrAccessibleParagraphStringProperty': LocalizedStringProperty;
         'madAccessibleHelpTextStringProperty': LocalizedStringProperty;
+        'madAccessibleParagraphStringProperty': LocalizedStringProperty;
       };
       'rangeCheckbox': {
         'accessibleHelpTextStringProperty': LocalizedStringProperty;
