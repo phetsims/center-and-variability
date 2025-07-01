@@ -190,7 +190,7 @@ a11y:
       sortAccessibleHelpText:   Move card to sort data
     sortDataCheckbox:
       accessibleName:     Sort Data Cards
-      accessibleHelpText: Explore with or without data sorted numerically.
+      accessibleHelpText: Explore with or without data auto-sorted numerically.
     medianCheckbox:
       accessibleName:     Median on Data Cards
       accessibleHelpText: Analyze data cards with or without median value shown and located if data is sorted.
