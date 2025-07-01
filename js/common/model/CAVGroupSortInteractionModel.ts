@@ -49,8 +49,8 @@ export default class CAVGroupSortInteractionModel<T extends CAVSoccerSceneModel 
 
     if ( !this.isKeyboardFocusedProperty.value &&
          !this.hasKeyboardSelectedGroupItemProperty.value &&
+         !this.isGroupItemKeyboardGrabbedProperty.value &&
          selectedValue !== null ) {
-
       const stackHeight = sceneModel.getStackAtValue( selectedValue ).length;
       if ( selectedValue === sceneModel.medianValueProperty.value || stackHeight > MAX_HEIGHT ) {
 
