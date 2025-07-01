@@ -61,7 +61,7 @@ export default class VariabilityScreenView extends CAVScreenView<VariabilityScen
     this.intervalToolHeading = new Node( {
       visibleProperty: model.intervalToolModel.isVisibleProperty,
       accessibleHeading: CenterAndVariabilityFluent.a11y.variabilityScreen.intervalTool.accessibleHeadingStringProperty,
-      accessibleParagraph: CenterAndVariabilityFluent.a11y.variabilityScreen.intervalTool.accessibleHelpTextStringProperty
+      accessibleHelpText: CenterAndVariabilityFluent.a11y.variabilityScreen.intervalTool.accessibleHelpTextStringProperty
     } );
 
     const accordionBoxTandem = options.tandem.createTandem( 'variabilityMeasureAccordionBox' );
