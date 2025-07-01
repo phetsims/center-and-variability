@@ -280,10 +280,10 @@ a11y:
     infoButton:
       accessibleName: "{$measure} Details"
     infoDialog:
-      rangeMinusPattern: Range = {$max} minus {$min}
-      iqrMinusPattern:   IQR = {$q3} minus {$q1}
+      rangeMinusPattern: Range = {$max} - {$min}
+      iqrMinusPattern:   IQR = {$q3} - {$q1}
       boxPlot:
-        accessibleParagraph: There is a box plot with arrows pointing to min, Q1, median, Q3, and max. IQR = Q3 minus Q1.
+        accessibleParagraph: There is a box plot with arrows pointing to min, Q1, median, Q3, and max. IQR = Q3 - Q1.
       madEquationDescription: MAD = the quantity {$madValues} all over {$total}, which equals {$numerator} over {$total}.
       madPlot:
         accessibleParagraph: There is a diagram showing distances from each kick to left and right of mean. MAD = average of these distances.
