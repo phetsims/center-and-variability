@@ -70,11 +70,11 @@ predictMedian:                                                                 P
 rangeDescription:                                                              <strong>Range</strong> is the distance between the minimum and maximum data points.
 iqrDescription:                                                                <strong>Interquartile range (IQR)</strong> is the middle 50% of the data.
 dataValuesInMeters:                                                            "Data Values (in meters):"
-iqrEqualsQ3MinusQ3Pattern:                                                     IQR = {{q3}} – {{q1}}
+iqrEqualsQ3MinusQ3Pattern:                                                     IQR = {{q3}} − {{q1}}
 iqrEqualsIQRUnitsPattern:                                                      IQR = {{iqr}} {{units}}
 madDescription:                                                                <strong>Mean absolute deviation (MAD)</strong> is the average distance from each data point to the mean.
 madEqualsMADMetersPattern:                                                     MAD = {{mad}} meters
-rangeEqualsMaxMinusMinPattern:                                                 Range = {{max}} – {{min}}
+rangeEqualsMaxMinusMinPattern:                                                 Range = {{max}} − {{min}}
 rangeEqualsRangeUnitsPattern:                                                  Range = {{range}} {{units}}
 
 # keyboard help dialog strings
@@ -309,10 +309,10 @@ a11y:
     infoButton:
       accessibleName: "{$measure} Details"
     infoDialog:
-      rangeMinusPattern: Range = {$max} - {$min}
-      iqrMinusPattern:   IQR = {$q3} - {$q1}
+      rangeMinusPattern: Range = {$max} − {$min}
+      iqrMinusPattern:   IQR = {$q3} − {$q1}
       boxPlot:
-        accessibleParagraph: There is a box plot with arrows pointing to min, Q1, median, Q3, and max. IQR = Q3 - Q1.
+        accessibleParagraph: There is a box plot with arrows pointing to min, Q1, median, Q3, and max. IQR = Q3 − Q1.
       madEquationDescription: MAD = the quantity {$madValues} all over {$total}, which equals {$numerator} over {$total}.
       madPlot:
         accessibleParagraph: There is a diagram showing distances from each kick to left and right of mean. MAD = average of these distances.
