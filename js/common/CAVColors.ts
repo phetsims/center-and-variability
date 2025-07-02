@@ -69,7 +69,7 @@ const CAVColors = {
 
   medianAccordionBoxFillProperty: new ProfileColorProperty( centerAndVariability, 'medianAccordionBoxFill', { default: 'rgb( 238, 238, 238 )' } ),
   meanAndMedianAccordionBoxFillProperty: new ProfileColorProperty( centerAndVariability, 'meanAndMedianAccordionBoxFill', { default: '#FFFFFF' } ),
-  meanAndMedianAccordionBottomGradientColorProperty: new ProfileColorProperty( centerAndVariability, 'meanAndMedianAccordionBottomGradientColor', { default: 'rgba( 238, 238, 238, 0 )' } ),
+  meanAndMedianAccordionBottomGradientColorProperty: new ProfileColorProperty( centerAndVariability, 'meanAndMedianAccordionBottomGradientColor', { default: Color.WHITE.withAlpha( 0 ) } ),
   variabilityAccordionBottomGradientColorProperty: new ProfileColorProperty( centerAndVariability, 'variabilityAccordionBottomGradientColor', { default: Color.WHITE.withAlpha( 0 ) } ),
   variabilityAccordionBoxFillProperty: new ProfileColorProperty( centerAndVariability, 'variabilityAccordionBoxFill', { default: 'white' } ),
 
