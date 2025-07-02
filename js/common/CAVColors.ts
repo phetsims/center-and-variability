@@ -15,7 +15,6 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import PhetColorScheme from '../../../scenery-phet/js/PhetColorScheme.js';
 import Color from '../../../scenery/js/util/Color.js';
 import ProfileColorProperty from '../../../scenery/js/util/ProfileColorProperty.js';
 import centerAndVariability from '../centerAndVariability.js';
@@ -36,18 +35,18 @@ const CAVColors = {
     default: '#fdd10b'
   } ),
 
-  medianColorProperty: new ProfileColorProperty( centerAndVariability, 'medianColor', { default: '#f03000' } ),
+  medianColorProperty: new ProfileColorProperty( centerAndVariability, 'medianColor', { default: '#E02D00' } ),
   meanColorProperty: new ProfileColorProperty( centerAndVariability, 'meanColor', { default: '#8500bd' } ),
 
   // The following color Properties are used for elements in the plot nodes.
-  rangeReadoutColorProperty: new ProfileColorProperty( centerAndVariability, 'rangeReadoutColor', { default: new Color( '#215E2B' ) } ),
+  rangeReadoutColorProperty: new ProfileColorProperty( centerAndVariability, 'rangeReadoutColor', { default: new Color( '#000000' ) } ),
   iqrLabelColorProperty: new ProfileColorProperty( centerAndVariability, 'iqrLabelColor', { default: 'black' } ),
   madColorProperty: new ProfileColorProperty( centerAndVariability, 'madColor', { default: 'black' } ),
   iqrColorProperty: new ProfileColorProperty( centerAndVariability, 'iqrColor', { default: new Color( '#99ffff' ).withAlpha( 0.55 ) } ),
   boxWhiskerStrokeColorProperty: new ProfileColorProperty( centerAndVariability, 'boxWhiskerStrokeColor', { default: 'black' } ),
-  madRectangleColorProperty: new ProfileColorProperty( centerAndVariability, 'madRectangleColor', { default: new Color( '#cba3e6' ).withAlpha( 0.7 ) } ),
+  madRectangleColorProperty: new ProfileColorProperty( centerAndVariability, 'madRectangleColor', { default: new Color( '#F4E6FF' ).withAlpha( 0.7 ) } ),
 
-  variabilityDataPointFill: new ProfileColorProperty( centerAndVariability, 'variabilityDataPointFill', { default: '#949494' } ),
+  variabilityDataPointFill: new ProfileColorProperty( centerAndVariability, 'variabilityDataPointFill', { default: '#878787' } ),
   meanAndMedianDataPointFill: new ProfileColorProperty( centerAndVariability, 'meanAndMedianDataPointFill', { default: 'black' } ),
 
   // Darker gray than the ones in the plot area, to show up better in the radio button
@@ -58,7 +57,7 @@ const CAVColors = {
   intervalToolIconRectangleFillColorProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolIconRectangleFill', { default: '#fef8ab' } ),
   intervalToolIconShadedSphereMainColorProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolIconShadedSphereMainColor', { default: '#fdf47c' } ),
   intervalToolFillProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolFill', { default: Color.toColor( '#fefccf' ).withAlpha( 0.6 ) } ),
-  intervalToolStrokeProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolStroke', { default: PhetColorScheme.PHET_LOGO_YELLOW } ),
+  intervalToolStrokeProperty: new ProfileColorProperty( centerAndVariability, 'intervalToolStroke', { default: '#2E2E2E' } ),
 
   // On the Variability screen, there is a prediction tool labeled "Pointer". It is an arrow that the user can use to predict
   // any statistical measure or boundary of an interval.
@@ -68,7 +67,8 @@ const CAVColors = {
   // the maximum and minimum values in the data set. The range is depicted as a rectangle with a fill color.
   rangeFillProperty: new ProfileColorProperty( centerAndVariability, 'rangeFill', { default: new Color( '#c3fdb9' ).withAlpha( 0.7 ) } ),
 
-  meanAndMedianAccordionBoxFillProperty: new ProfileColorProperty( centerAndVariability, 'meanAndMedianAccordionBoxFill', { default: 'rgb( 238, 238, 238 )' } ),
+  medianAccordionBoxFillProperty: new ProfileColorProperty( centerAndVariability, 'medianAccordionBoxFill', { default: 'rgb( 238, 238, 238 )' } ),
+  meanAndMedianAccordionBoxFillProperty: new ProfileColorProperty( centerAndVariability, 'meanAndMedianAccordionBoxFill', { default: '#FFFFFF' } ),
   meanAndMedianAccordionBottomGradientColorProperty: new ProfileColorProperty( centerAndVariability, 'meanAndMedianAccordionBottomGradientColor', { default: 'rgba( 238, 238, 238, 0 )' } ),
   variabilityAccordionBottomGradientColorProperty: new ProfileColorProperty( centerAndVariability, 'variabilityAccordionBottomGradientColor', { default: Color.WHITE.withAlpha( 0 ) } ),
   variabilityAccordionBoxFillProperty: new ProfileColorProperty( centerAndVariability, 'variabilityAccordionBoxFill', { default: 'white' } ),

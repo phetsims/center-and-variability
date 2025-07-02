@@ -36,7 +36,7 @@ export default class MedianAccordionBox extends CAVAccordionBox {
 
     // Specify a "footprint" within which we do all the layout.
     const backgroundShape = CAVConstants.ACCORDION_BOX_CONTENTS_SHAPE_MEDIAN;
-    const backgroundNode = CAVAccordionBox.createBackgroundNode( backgroundShape, CAVColors.meanAndMedianAccordionBoxFillProperty );
+    const backgroundNode = CAVAccordionBox.createBackgroundNode( backgroundShape, CAVColors.medianAccordionBoxFillProperty );
 
     const cardNodeContainer = new InteractiveCardNodeContainer( model.interactiveCardContainerModel, model.isSortingDataProperty,
       model.selectedSceneModelProperty.value, model.medianVisibleProperty, {
@@ -75,9 +75,9 @@ export default class MedianAccordionBox extends CAVAccordionBox {
       tandem: tandem,
       top: top,
       centerX: layoutBounds.centerX,
-      titleNode: new AccordionBoxTitleNode( CenterAndVariabilityStrings.distanceInMetersAccordionBoxTitleStringProperty, CAVColors.meanAndMedianAccordionBoxFillProperty ),
+      titleNode: new AccordionBoxTitleNode( CenterAndVariabilityStrings.distanceInMetersAccordionBoxTitleStringProperty, CAVColors.medianAccordionBoxFillProperty ),
       expandedProperty: model.isAccordionBoxExpandedProperty,
-      fill: CAVColors.meanAndMedianAccordionBoxFillProperty
+      fill: CAVColors.medianAccordionBoxFillProperty
     } );
 
     // for pdom order
