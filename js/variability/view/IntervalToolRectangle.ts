@@ -106,6 +106,10 @@ export default class IntervalToolRectangle extends AccessibleSlider( Node, 0 ) {
       phetioEnabledPropertyInstrumented: true,
       isDisposable: false,
       accessibleName: CenterAndVariabilityFluent.a11y.variabilityScreen.intervalTool.rectangle.accessibleNameStringProperty,
+      pdomCreateAriaValueText: () => {
+        return accessibleObjectResponseStringProperty.value;
+      },
+      pdomDependencies: [ accessibleObjectResponseStringProperty ],
 
       // This tool is very large and panning in all directions so that the viewport follows the center of the Node
       // means that important content is shifted off screen. Instead, we only pan horizontally as this Node moves.
@@ -127,7 +131,6 @@ export default class IntervalToolRectangle extends AccessibleSlider( Node, 0 ) {
         rectangleNode.setRect( Math.min( viewX1, viewX2 ), rectBottom - rectHeight, Math.abs( viewX2 - viewX1 ), rectHeight );
         leftEdge.setLine( viewX1, rectBottom, viewX1, rectTop );
         rightEdge.setLine( viewX2, rectBottom, viewX2, rectTop );
-        this.ariaValueText = ariaValueString;
       } );
 
     const updateDragBounds = () => {
