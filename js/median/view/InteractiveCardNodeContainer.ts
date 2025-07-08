@@ -151,7 +151,7 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
       } );
 
       cardModel.indexProperty.lazyLink( ( index, oldIndex ) => {
-        if ( index !== null ) {
+        if ( index !== null && !cardModel.isDraggingProperty.value ) {
           if ( oldIndex === null || isSettingPhetioStateProperty.value || this.sceneModel.isClearingData || isResettingAllProperty.value ) {
             model.setAtHomeCell( cardModel );
           }
