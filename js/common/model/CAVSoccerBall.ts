@@ -12,6 +12,7 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import SoccerBall from '../../../../soccer-common/js/model/SoccerBall.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import centerAndVariability from '../../centerAndVariability.js';
+import CAVConstants from '../CAVConstants.js';
 
 export default class CAVSoccerBall extends SoccerBall {
 
@@ -23,7 +24,7 @@ export default class CAVSoccerBall extends SoccerBall {
 
   public constructor( isFirstSoccerBall: boolean, tandem: Tandem ) {
 
-    super( isFirstSoccerBall, tandem );
+    super( isFirstSoccerBall, CAVConstants.PHYSICAL_RANGE, tandem );
 
     this.isMedianObjectProperty = new BooleanProperty( false, {
       tandem: tandem.createTandem( 'isMedianObjectProperty' ),
