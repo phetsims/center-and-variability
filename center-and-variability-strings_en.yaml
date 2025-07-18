@@ -322,9 +322,9 @@ a11y:
                                       Define boundaries of interval region. Shift interval region to estimate distribution variability or future kick
                                       locations.
       handle1:
-        accessibleName: BoundaryA
+        accessibleName: Boundary A
       handle2:
-        accessibleName: BoundaryB
+        accessibleName: Boundary B
       rectangle:
         accessibleName: Interval Region
       rectangleObjectResponsePattern: Bounded by {$valueA} and {$valueB}, width {$width}
