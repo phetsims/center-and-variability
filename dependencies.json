@@ -1,5 +1,5 @@
 {
-  "comment": "# center-and-variability 1.2.0-rc.1 Mon Jul 21 2025 10:47:54 GMT-0700 (Pacific Daylight Time)",
+  "comment": "# center-and-variability 1.2.0-rc.2 Mon Jul 21 2025 11:03:20 GMT-0700 (Pacific Daylight Time)",
   "assert": {
     "sha": "f6d41b399ad32df2a00ab4b329981be0c574d77a",
     "branch": "HEAD"
@@ -17,7 +17,7 @@
     "branch": "HEAD"
   },
   "center-and-variability": {
-    "sha": "5593422d6201bf46b9645ef964ab03d4fe9d4a9b",
+    "sha": "04448c67167a08512142dfc667a680c9f59f2367",
     "branch": "1.2"
   },
   "chipper": {
@@ -50,7 +50,7 @@
   },
   "phet-io-sim-specific": {
     "sha": "e23e6334b18a5c8fb30ab03f69ce186336e8e7aa",
-    "branch": "center-and-variability-1.2"
+    "branch": "HEAD"
   },
   "phet-io-wrappers": {
     "sha": "161c0378b9d64222d346d94bd9a87955c4524697",
@@ -82,7 +82,7 @@
   },
   "soccer-common": {
     "sha": "d7d9ac66987af9207a59143d3ec47721ff3e4270",
-    "branch": "center-and-variability-1.2"
+    "branch": "HEAD"
   },
   "studio": {
     "sha": "0254103f342b17890c5fe862aae6df3b400620a8",
