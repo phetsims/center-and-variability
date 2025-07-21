@@ -48,7 +48,6 @@ import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 import { clamp } from '../../../../dot/js/util/clamp.js';
-import isResettingAllProperty from '../../../../scenery-phet/js/isResettingAllProperty.js';
 
 const FOCUS_HIGHLIGHT_Y_MARGIN = CAVConstants.CARD_SPACING + 3;
 
@@ -146,17 +145,6 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
           if ( this.celebrationNode.isReadyForCelebration ) {
             this.celebrationNode.celebrate();
             model.manuallySortedEmitter.emit();
-          }
-        }
-      } );
-
-      cardModel.indexProperty.lazyLink( ( index, oldIndex ) => {
-        if ( index !== null && !cardModel.isDraggingProperty.value ) {
-          if ( oldIndex === null || isSettingPhetioStateProperty.value || this.sceneModel.isClearingData || isResettingAllProperty.value ) {
-            model.setAtHomeCell( cardModel );
-          }
-          else {
-            model.animateToHomeCell( cardModel, 0.5 );
           }
         }
       } );
