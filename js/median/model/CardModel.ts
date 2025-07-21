@@ -30,6 +30,8 @@ import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import centerAndVariability from '../../centerAndVariability.js';
 import CardContainerModel from './CardContainerModel.js';
+import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
+import isResettingAllProperty from '../../../../scenery-phet/js/isResettingAllProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 type CardModelOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'>;
@@ -63,7 +65,7 @@ export default class CardModel extends PhetioObject {
     parameters: [ { valueType: 'number' } ]
   } );
 
-  public constructor( public readonly cardContainerModel: CardContainerModel, soccerBall: SoccerBall, position: Vector2, providedOptions: CardModelOptions ) {
+  public constructor( public readonly cardContainerModel: CardContainerModel, soccerBall: SoccerBall, position: Vector2, isClearingData: boolean, providedOptions: CardModelOptions ) {
 
     const options = optionize<CardModelOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioState: false,
@@ -98,6 +100,17 @@ export default class CardModel extends PhetioObject {
       valueComparisonStrategy: 'equalsFunction'
     } );
     this.addLinkedElement( this.soccerBall );
+
+    this.indexProperty.lazyLink( ( index, oldIndex ) => {
+      if ( index !== null && !this.isDraggingProperty.value ) {
+        if ( oldIndex === null || isSettingPhetioStateProperty.value || isClearingData || isResettingAllProperty.value ) {
+          cardContainerModel.setAtHomeCell( this );
+        }
+        else {
+          cardContainerModel.animateToHomeCell( this, 0.5 );
+        }
+      }
+    } );
   }
 
   public animateTo( destination: Vector2, duration: number ): void {

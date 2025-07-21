@@ -16,7 +16,6 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
@@ -27,7 +26,6 @@ import RepresentationContext from '../../common/model/RepresentationContext.js';
 import CardModel from './CardModel.js';
 
 import MedianModel from './MedianModel.js';
-import isResettingAllProperty from '../../../../scenery-phet/js/isResettingAllProperty.js';
 
 type SelfOptions = {
 
@@ -51,7 +49,7 @@ export default class CardContainerModel extends PhetioObject {
 
   public readonly numActiveCardsProperty: Property<number>;
 
-  public constructor( private readonly medianModel: MedianModel, providedOptions: CardContainerModelOptions ) {
+  public constructor( medianModel: MedianModel, providedOptions: CardContainerModelOptions ) {
 
     const options = optionize<CardContainerModelOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioType: CardContainerModel.CardContainerModelIO,
@@ -66,7 +64,7 @@ export default class CardContainerModel extends PhetioObject {
 
     // Allocate all the card models at start-up.
     this.cards = medianModel.selectedSceneModelProperty.value.soccerBalls.map( ( soccerBall, index ) => {
-      const card: CardModel = new CardModel( this, soccerBall, new Vector2( 0, 0 ), {
+      const card: CardModel = new CardModel( this, soccerBall, new Vector2( 0, 0 ), medianModel.selectedSceneModelProperty.value.isClearingData, {
         tandem: options.tandem.createTandem( 'cards' ).createTandem1Indexed( 'card', index )
       } );
 
@@ -193,13 +191,6 @@ export default class CardContainerModel extends PhetioObject {
       // we do not want the card swap sound to play if we are sorting data due to a value change.
       card.animationSoundEnabled = !valueChange;
       card.indexProperty.value = index;
-
-      if ( isSettingPhetioStateProperty.value || this.medianModel.selectedSceneModelProperty.value.isClearingData || isResettingAllProperty.value ) {
-        this.setAtHomeCell( card );
-      }
-      else {
-        this.animateToHomeCell( card, 0.5 );
-      }
     } );
     this.cardCellsChangedEmitter.emit();
   }
