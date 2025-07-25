@@ -1,5 +1,5 @@
 {
-  "comment": "# center-and-variability 1.2.0-rc.2 Mon Jul 21 2025 11:03:20 GMT-0700 (Pacific Daylight Time)",
+  "comment": "# center-and-variability 1.2.0-rc.2 Fri Jul 25 2025 09:26:05 GMT-0700 (Pacific Daylight Time)",
   "assert": {
     "sha": "f6d41b399ad32df2a00ab4b329981be0c574d77a",
     "branch": "HEAD"
@@ -17,7 +17,7 @@
     "branch": "HEAD"
   },
   "center-and-variability": {
-    "sha": "04448c67167a08512142dfc667a680c9f59f2367",
+    "sha": "5055dcf031ac29bdbd1bf2a20342ded75351e28c",
     "branch": "1.2"
   },
   "chipper": {
@@ -49,8 +49,8 @@
     "branch": "HEAD"
   },
   "phet-io-sim-specific": {
-    "sha": "e23e6334b18a5c8fb30ab03f69ce186336e8e7aa",
-    "branch": "HEAD"
+    "sha": "74818c58f99a0dd7a5006a6383d8a59ec237a694",
+    "branch": "center-and-variability-1.2"
   },
   "phet-io-wrappers": {
     "sha": "161c0378b9d64222d346d94bd9a87955c4524697",
