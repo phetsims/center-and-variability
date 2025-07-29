@@ -13,25 +13,22 @@ For an exemplar, see https://github.com/phetsims/balancing-chemical-equations/bl
 -->
 
 
-## 1.2 (in progress)
+## 1.2 (2025-07-29)
 
 ### New Features
-* 
-* 
-
-### Bug Fixes
-* 
-* 
+* Core description
+* Expanded region & culture (added Asia, Latin America, Oceania)
 
 ### Other Changes
-*  
-*
+* Updated colors to meet WCAG AA 
+* Now using common code implementation for group sort interaction 
 
 ## 1.1 (2023-11-01)
 
 ### New Features
 * New screen: Variability
-* Sound & Sonification 
+* Sound & Sonification
+* Region & culture (Africa, Africa Modest, USA)
 
 ## 1.0 (2022-04-12)
 
