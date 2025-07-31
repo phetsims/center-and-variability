@@ -66,7 +66,8 @@ const CAVConstants = {
   // for the accordion box margin
   PLOT_TYPE_PROPERTY: new EnumerationProperty( CAVQueryParameters.plotType === 'dotPlot' ? PlotType.DOT_PLOT : PlotType.LINE_PLOT, {
     tandem: Tandem.PREFERENCES.createTandem( 'plotTypeProperty' ),
-    phetioFeatured: true
+    phetioFeatured: true,
+    disableListenerLimit: true
   } ),
 
   CHART_VIEW_WIDTH: CHART_VIEW_WIDTH,
@@ -143,7 +144,8 @@ export const DATA_POINT_SCALE_PROPERTY = new DerivedProperty( [ MAX_KICKS_PROPER
   // There are only 4 valid values for MAX_KICKS_PROPERTY and those are set by the MAX_KICKS_CONFIG.
   return MAX_KICKS_CONFIG.find( config => config.kicks === maxKicks )!.scale;
 }, {
-  validValues: MAX_KICKS_CONFIG.map( config => config.scale )
+  validValues: MAX_KICKS_CONFIG.map( config => config.scale ),
+  disableListenerLimit: true
 } );
 
 centerAndVariability.register( 'CAVConstants', CAVConstants );

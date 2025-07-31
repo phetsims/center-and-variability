@@ -45,7 +45,7 @@ export default class VariabilityScreenSummaryContent extends CAVScreenSummaryCon
       return CAVScreenSummaryContent.METERS.map( meter =>
         DerivedProperty.deriveAny( ballValueProperties, () => {
           return sceneModel.getStackAtValue( meter ).length;
-        } )
+        }, { disableListenerLimit: true } )
       );
     } );
     const listNodes = model.sceneModels.map( ( sceneModel, i ) =>
