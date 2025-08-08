@@ -57,7 +57,6 @@ export default class SimulationPreferencesContentNode extends PreferencesPanelCo
       orientation: 'horizontal',
       tandem: plotTypeControlTandem.createTandem( 'radioButtonGroup' ),
       isDisposable: false,
-      accessibleName: CenterAndVariabilityFluent.plotTypeStringProperty,
       accessibleHelpText: CenterAndVariabilityFluent.a11y.preferences.plotTypeRadioButtonGroup.accessibleHelpTextStringProperty,
 
       // Hide or show the entire row, not just the radio button
@@ -94,8 +93,6 @@ export default class SimulationPreferencesContentNode extends PreferencesPanelCo
     const outliersDescription = new RichText( CenterAndVariabilityStrings.outliersDescriptionStringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS );
 
     const outliersSwitch = new ToggleSwitch( SHOW_OUTLIERS_PROPERTY, false, true, combineOptions<ToggleSwitchOptions>( {}, PreferencesDialogConstants.TOGGLE_SWITCH_OPTIONS, {
-      accessibleName: CenterAndVariabilityFluent.outliersStringProperty,
-      accessibleHelpText: CenterAndVariabilityFluent.outliersDescriptionStringProperty,
       tandem: outliersControlTandem.createTandem( 'toggleSwitch' ),
 
       // Show or hide the entire row, not just the toggle switch
