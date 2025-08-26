@@ -202,7 +202,7 @@ addToMapIfDefined( 'a11y_keyboardHelp_jumpBallToTickMarkDescription', 'a11y.keyb
 const createFluentFile = (): string => {
   let ftl = '';
   for (const [key, stringProperty] of fluentKeyToStringPropertyMap.entries()) {
-    ftl += `${key} = ${stringProperty.value}\n`;
+    ftl += `${key} = ${stringProperty.value.replace('\n','\n ')}\n`;
   }
   return ftl;
 };
