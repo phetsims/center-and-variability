@@ -26,7 +26,7 @@ import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
 import IntervalToolModel from './IntervalToolModel.js';
 import VariabilityMeasure from './VariabilityMeasure.js';
 import VariabilitySceneModel from './VariabilitySceneModel.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
 import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 
 type SelfOptions = EmptySelfOptions;

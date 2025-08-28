@@ -12,7 +12,7 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
 import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
 import GridBox from '../../../../scenery/js/layout/nodes/GridBox.js';
 import Line from '../../../../scenery/js/nodes/Line.js';

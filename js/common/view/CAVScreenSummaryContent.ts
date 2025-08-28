@@ -11,7 +11,7 @@ import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVConstants from '../CAVConstants.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
 import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
