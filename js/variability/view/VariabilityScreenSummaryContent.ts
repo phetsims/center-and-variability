@@ -6,19 +6,19 @@
  *
  */
 
-import CAVScreenSummaryContent from '../../common/view/CAVScreenSummaryContent.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
+import Property from '../../../../axon/js/Property.js';
+import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
 import centerAndVariability from '../../centerAndVariability.js';
-import VariabilityModel from '../model/VariabilityModel.js';
 import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 import { MAX_KICKS_PROPERTY } from '../../common/CAVConstants.js';
-import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
-import Node from '../../../../scenery/js/nodes/Node.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import Property from '../../../../axon/js/Property.js';
-import VariabilityMeasure from '../model/VariabilityMeasure.js';
-import FluentConstant from '../../../../chipper/js/browser/FluentConstant.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
+import CAVScreenSummaryContent from '../../common/view/CAVScreenSummaryContent.js';
+import VariabilityMeasure from '../model/VariabilityMeasure.js';
+import VariabilityModel from '../model/VariabilityModel.js';
+import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 
 export default class VariabilityScreenSummaryContent extends CAVScreenSummaryContent {
 
@@ -54,7 +54,7 @@ export default class VariabilityScreenSummaryContent extends CAVScreenSummaryCon
     );
 
     // create the remaining details node
-    const measureStringProperty = new DynamicProperty<string, string, FluentConstant>(
+    const measureStringProperty = new DynamicProperty<string, string, TReadOnlyProperty<string>>(
       new DerivedProperty( [ model.selectedVariabilityMeasureProperty ],
         measure => measure === VariabilityMeasure.RANGE ? CenterAndVariabilityFluent.rangeStringProperty :
                    measure === VariabilityMeasure.IQR ? CenterAndVariabilityFluent.interquartileRangeIQRStringProperty :
