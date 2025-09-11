@@ -1,5 +1,5 @@
 {
-  "comment": "# center-and-variability 1.1.13-rc.1 Tue Sep 09 2025 21:07:56 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# center-and-variability 1.1.13 Thu Sep 11 2025 11:21:46 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "94831413cd4dd4dc27c2a1aebbcafd3987934a99",
     "branch": "HEAD"
@@ -17,7 +17,7 @@
     "branch": "HEAD"
   },
   "center-and-variability": {
-    "sha": "cb40c15dc590823ca5a019a17199d54d3110b14d",
+    "sha": "2048af8ab3c420a1a8a368ffc8d52694c01d96c5",
     "branch": "1.1"
   },
   "chipper": {
