@@ -114,7 +114,6 @@ export default class CAVScreenView<T extends CAVSoccerSceneModel = CAVSoccerScen
 
     this.resetAllButton = new ResetAllButton( {
       listener: () => {
-        this.interruptSubtreeInput(); // cancel interactions that may be in progress
         model.reset();
       },
       right: this.layoutBounds.maxX - SoccerCommonConstants.SCREEN_VIEW_X_MARGIN,
