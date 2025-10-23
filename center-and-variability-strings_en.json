@@ -450,7 +450,7 @@
         }
       },
       "meanAndMedianAccordionBox": {
-        "accessibleHelpText": {
+        "accessibleParagraph": {
           "value": "Kick distance (meters) plot."
         }
       },

@@ -144,7 +144,7 @@ addToMapIfDefined( 'a11y_meanAndMedianScreen_screenSummary_currentDetails_soccer
 addToMapIfDefined( 'a11y_meanAndMedianScreen_screenSummary_currentDetails_plot', 'a11y.meanAndMedianScreen.screenSummary.currentDetails.plotStringProperty' );
 addToMapIfDefined( 'a11y_meanAndMedianScreen_screenSummary_controlArea', 'a11y.meanAndMedianScreen.screenSummary.controlAreaStringProperty' );
 addToMapIfDefined( 'a11y_meanAndMedianScreen_screenSummary_interactionHint_someBalls', 'a11y.meanAndMedianScreen.screenSummary.interactionHint.someBallsStringProperty' );
-addToMapIfDefined( 'a11y_meanAndMedianScreen_meanAndMedianAccordionBox_accessibleHelpText', 'a11y.meanAndMedianScreen.meanAndMedianAccordionBox.accessibleHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_meanAndMedianScreen_meanAndMedianAccordionBox_accessibleParagraph', 'a11y.meanAndMedianScreen.meanAndMedianAccordionBox.accessibleParagraphStringProperty' );
 addToMapIfDefined( 'a11y_meanAndMedianScreen_plotMedianCheckbox_accessibleName', 'a11y.meanAndMedianScreen.plotMedianCheckbox.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_meanAndMedianScreen_plotMedianCheckbox_accessibleHelpText', 'a11y.meanAndMedianScreen.plotMedianCheckbox.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_meanAndMedianScreen_meanCheckbox_accessibleName', 'a11y.meanAndMedianScreen.meanCheckbox.accessibleNameStringProperty' );
@@ -426,7 +426,7 @@ const CenterAndVariabilityFluent = {
         }
       },
       meanAndMedianAccordionBox: {
-        accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_meanAndMedianScreen_meanAndMedianAccordionBox_accessibleHelpText', _.get( CenterAndVariabilityStrings, 'a11y.meanAndMedianScreen.meanAndMedianAccordionBox.accessibleHelpTextStringProperty' ) )
+        accessibleParagraphStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_meanAndMedianScreen_meanAndMedianAccordionBox_accessibleParagraph', _.get( CenterAndVariabilityStrings, 'a11y.meanAndMedianScreen.meanAndMedianAccordionBox.accessibleParagraphStringProperty' ) )
       },
       plotMedianCheckbox: {
         accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_meanAndMedianScreen_plotMedianCheckbox_accessibleName', _.get( CenterAndVariabilityStrings, 'a11y.meanAndMedianScreen.plotMedianCheckbox.accessibleNameStringProperty' ) ),

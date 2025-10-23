@@ -211,7 +211,7 @@ type StringsType = {
         }
       };
       'meanAndMedianAccordionBox': {
-        'accessibleHelpTextStringProperty': LocalizedStringProperty;
+        'accessibleParagraphStringProperty': LocalizedStringProperty;
       };
       'plotMedianCheckbox': {
         'accessibleNameStringProperty': LocalizedStringProperty;

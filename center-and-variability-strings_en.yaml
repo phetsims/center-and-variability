@@ -223,7 +223,7 @@ a11y:
       interactionHint:
         someBalls: Move soccer balls or explore plot to analyze data.
     meanAndMedianAccordionBox:
-      accessibleHelpText: Kick distance (meters) plot.
+      accessibleParagraph: Kick distance (meters) plot.
     plotMedianCheckbox:
       accessibleName:     Median on Plot
       accessibleHelpText: Analyze data with or without median value shown and located on plot.

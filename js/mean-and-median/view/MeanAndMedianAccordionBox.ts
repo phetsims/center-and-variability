@@ -52,7 +52,8 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
 
     const meanAndMedianPlotNode = new MeanAndMedianPlotNode( model, sceneModel, playAreaNumberLineNode, model.isDataPointLayerVisibleProperty, {
       dataPointFill: 'black',
-      representationContext: 'accordion'
+      representationContext: 'accordion',
+      accessibleParagraph: CenterAndVariabilityStrings.a11y.meanAndMedianScreen.meanAndMedianAccordionBox.accessibleParagraphStringProperty
     } ).mutate( {
       bottom: backgroundShape.bounds.height
     } );
@@ -160,8 +161,7 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
         top: top,
         centerX: layoutBounds.centerX,
         expandedProperty: model.isAccordionBoxExpandedProperty,
-        fill: CAVColors.meanAndMedianAccordionBoxFillProperty,
-        accessibleHelpText: CenterAndVariabilityStrings.a11y.meanAndMedianScreen.meanAndMedianAccordionBox.accessibleHelpTextStringProperty
+        fill: CAVColors.meanAndMedianAccordionBoxFillProperty
       }
     );
 
