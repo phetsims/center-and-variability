@@ -106,7 +106,7 @@ export default class IntervalToolRectangle extends AccessibleSlider( Node, 0 ) {
       phetioEnabledPropertyInstrumented: true,
       isDisposable: false,
       accessibleName: CenterAndVariabilityFluent.a11y.variabilityScreen.intervalTool.rectangle.accessibleNameStringProperty,
-      pdomCreateAriaValueText: () => {
+      createAriaValueText: () => {
         return accessibleObjectResponseStringProperty.value;
       },
       descriptionDependencies: [ accessibleObjectResponseStringProperty ],
