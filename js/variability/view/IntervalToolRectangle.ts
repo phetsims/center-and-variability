@@ -109,7 +109,7 @@ export default class IntervalToolRectangle extends AccessibleSlider( Node, 0 ) {
       pdomCreateAriaValueText: () => {
         return accessibleObjectResponseStringProperty.value;
       },
-      pdomDependencies: [ accessibleObjectResponseStringProperty ],
+      descriptionDependencies: [ accessibleObjectResponseStringProperty ],
 
       // This tool is very large and panning in all directions so that the viewport follows the center of the Node
       // means that important content is shifted off screen. Instead, we only pan horizontally as this Node moves.
