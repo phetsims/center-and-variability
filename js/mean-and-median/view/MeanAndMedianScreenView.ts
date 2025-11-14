@@ -80,7 +80,7 @@ export default class MeanAndMedianScreenView extends CAVScreenView {
         roundToInterval: null, // continuous
         visibleProperty: model.isPredictMeanVisibleProperty,
         accessibleName: CenterAndVariabilityStrings.a11y.meanPredictionSlider.accessibleNameStringProperty,
-        pdomMapPDOMValue: value => roundToInterval( value, 0.1 ),
+        mapPDOMValue: value => roundToInterval( value, 0.1 ),
         tandem: predictMeanTandem,
 
         // It is rare to feature a NodeIO, but in this case it is important since the only other featured children

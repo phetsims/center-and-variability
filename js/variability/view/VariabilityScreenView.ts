@@ -78,7 +78,7 @@ export default class VariabilityScreenView extends CAVScreenView<VariabilityScen
         roundToInterval: null, // continuous
         visibleProperty: model.isPointerVisibleProperty,
         accessibleName: CenterAndVariabilityFluent.a11y.variabilityScreen.pointerNode.accessibleNameStringProperty,
-        pdomMapPDOMValue: value => roundToInterval( value, 0.1 ),
+        mapPDOMValue: value => roundToInterval( value, 0.1 ),
         tandem: pointerTandem,
 
         // It is rare to feature a NodeIO, but in this case it is important since the only other featured children

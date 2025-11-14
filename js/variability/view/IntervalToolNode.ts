@@ -50,7 +50,7 @@ export default class IntervalToolNode extends Node {
         },
         enabledRangeProperty: new Property<Range>( CAVConstants.VARIABILITY_DRAG_RANGE ),
         roundToInterval: null, // continuous
-        pdomMapPDOMValue: value => roundToInterval( value, 0.1 ),
+        mapPDOMValue: value => roundToInterval( value, 0.1 ),
         tandem: tandem.createTandem( 'handle1' ),
         phetioVisiblePropertyInstrumented: true,
         visiblePropertyOptions: {
@@ -69,7 +69,7 @@ export default class IntervalToolNode extends Node {
         },
         enabledRangeProperty: new Property<Range>( CAVConstants.VARIABILITY_DRAG_RANGE ),
         roundToInterval: null, // continuous
-        pdomMapPDOMValue: value => roundToInterval( value, 0.1 ),
+        mapPDOMValue: value => roundToInterval( value, 0.1 ),
         tandem: tandem.createTandem( 'handle2' ),
         phetioVisiblePropertyInstrumented: true,
         visiblePropertyOptions: {
