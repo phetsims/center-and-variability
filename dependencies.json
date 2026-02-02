@@ -17,7 +17,7 @@
     "branch": "HEAD"
   },
   "center-and-variability": {
-    "sha": "1d514e854dd1496fa562f7d1765b231ecf15e36e",
+    "sha": "6fa8afd5f93dabdf76819212c11c7c70f759ef30",
     "branch": "1.2"
   },
   "chipper": {
@@ -29,7 +29,7 @@
     "branch": "HEAD"
   },
   "joist": {
-    "sha": "ffe54b540fa3a713c0cdf722070c25e134dc782b",
+    "sha": "085149587a0219a496fbf8afb185a781f31a4618",
     "branch": "HEAD"
   },
   "kite": {
