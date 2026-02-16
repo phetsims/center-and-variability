@@ -42,18 +42,18 @@ export default class CAVKeyboardHelpMoveGrabbedBallAndOrCardSection extends Keyb
         labelInnerContent: moveGrabbedObjectsStringProperty
       } ),
       KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.keyboardHelpDialog.moveInLargerStepsStringProperty, KeyboardHelpIconFactory.pageUpPageDownRowIcon(), {
-        labelInnerContent: CenterAndVariabilityFluent.a11y.keyboardHelp.moveInLargerStepsDescriptionStringProperty
+        accessibleRowDescriptionProperty: CenterAndVariabilityFluent.a11y.keyboardHelp.moveInLargerStepsDescriptionStringProperty
       } ),
 
       KeyboardHelpSectionRow.labelWithIcon( jumpStartMessageStringProperty, TextKeyNode.home(), combineOptions<LabelWithIconOptions>( SECTION_LABEL_OPTIONS, {
-        labelInnerContent: jumpStartDescriptionStringProperty
+        accessibleRowDescriptionProperty: jumpStartDescriptionStringProperty
       } ) ),
       KeyboardHelpSectionRow.labelWithIcon( jumpEndMessageStringProperty, TextKeyNode.end(), combineOptions<LabelWithIconOptions>( SECTION_LABEL_OPTIONS, {
-        labelInnerContent: jumpEndDescriptionStringProperty
+        accessibleRowDescriptionProperty: jumpEndDescriptionStringProperty
       } ) ),
       KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.keyboardHelpDialog.jumpBallToTickMarkStringProperty,
         KeyboardHelpIconFactory.iconToIcon( new NumberKeyNode( 0 ), new NumberKeyNode( 9 ) ), {
-          labelInnerContent: CenterAndVariabilityFluent.a11y.keyboardHelp.jumpBallToTickMarkDescriptionStringProperty
+          accessibleRowDescriptionProperty: CenterAndVariabilityFluent.a11y.keyboardHelp.jumpBallToTickMarkDescriptionStringProperty
         }
       ) ] );
   }
