@@ -39,7 +39,7 @@ export default class CAVKeyboardHelpMoveGrabbedBallAndOrCardSection extends Keyb
         KeyboardHelpIconFactory.iconOrIcon(
           KeyboardHelpIconFactory.upDownArrowKeysRowIcon(),
           KeyboardHelpIconFactory.iconRow( [ LetterKeyNode.w(), LetterKeyNode.s() ], { spacing: 1.3 } ) ) ], {
-        labelInnerContent: moveGrabbedObjectsStringProperty
+        accessibleRowDescriptionProperty: moveGrabbedObjectsStringProperty
       } ),
       KeyboardHelpSectionRow.labelWithIcon( CenterAndVariabilityStrings.keyboardHelpDialog.moveInLargerStepsStringProperty, KeyboardHelpIconFactory.pageUpPageDownRowIcon(), {
         accessibleRowDescriptionProperty: CenterAndVariabilityFluent.a11y.keyboardHelp.moveInLargerStepsDescriptionStringProperty
