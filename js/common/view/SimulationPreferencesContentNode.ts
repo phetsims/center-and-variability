@@ -4,7 +4,7 @@
  * SimulationPreferencesContentNode displays general controls that globally affect the presentation or behavior of the simulation.
  *
  * @author Aaron Davis (PhET Interactive Simulations)
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import PreferencesControl from '../../../../joist/js/preferences/PreferencesControl.js';
