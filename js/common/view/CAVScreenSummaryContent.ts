@@ -6,18 +6,18 @@
  *
  */
 
-import ScreenSummaryContent, { ScreenSummaryContentOptions, SectionContent } from '../../../../joist/js/ScreenSummaryContent.js';
-import centerAndVariability from '../../centerAndVariability.js';
-import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
-import CAVConstants from '../CAVConstants.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
-import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
-import Node from '../../../../scenery/js/nodes/Node.js';
+import ScreenSummaryContent, { ScreenSummaryContentOptions, SectionContent } from '../../../../joist/js/ScreenSummaryContent.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import AccessibleListNode from '../../../../scenery-phet/js/accessibility/AccessibleListNode.js';
+import AccessibleList from '../../../../scenery-phet/js/accessibility/AccessibleList.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import centerAndVariability from '../../centerAndVariability.js';
+import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
+import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
+import CAVConstants from '../CAVConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 type CAVScreenSummaryContentOptions = SelfOptions & WithRequired<ScreenSummaryContentOptions, 'playAreaContent' | 'interactionHintContent' | 'controlAreaContent'>;
@@ -50,7 +50,7 @@ export default class CAVScreenSummaryContent extends ScreenSummaryContent {
     super( options );
   }
 
-  // Create an AccessibleListNode to provide information about the kicked soccer balls.
+  // Create the AccessibleList content to provide information about the kicked soccer balls.
   protected static createListItems( meterStackHeightProperties: TReadOnlyProperty<number>[], visibleProperty?: TReadOnlyProperty<boolean> ): Node {
     const listItems = CAVScreenSummaryContent.METERS.map( meter => {
       const index = meter - CAVConstants.PHYSICAL_RANGE.min;
@@ -62,7 +62,14 @@ export default class CAVScreenSummaryContent extends ScreenSummaryContent {
         visibleProperty: DerivedProperty.valueNotEqualsConstant( meterStackHeightProperties[ index ], 0 )
       };
     } );
-    return new AccessibleListNode( listItems, { punctuationStyle: 'semicolon', visibleProperty: visibleProperty } );
+
+    return new Node( {
+      visibleProperty: visibleProperty || null,
+      accessibleTemplate: AccessibleList.createTemplate( {
+        listItems: listItems,
+        punctuationStyle: 'semicolon'
+      } )
+    } );
   }
 
   protected static createInteractionHintContent(
