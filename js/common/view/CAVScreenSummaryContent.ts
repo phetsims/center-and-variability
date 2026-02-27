@@ -1,4 +1,4 @@
-// Copyright 2025, University of Colorado Boulder
+// Copyright 2025-2026, University of Colorado Boulder
 /**
  * Consolidates the common aspects of screen summaries for the Center and Variability simulation.
  *
