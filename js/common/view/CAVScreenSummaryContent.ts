@@ -65,7 +65,7 @@ export default class CAVScreenSummaryContent extends ScreenSummaryContent {
 
     return new Node( {
       visibleProperty: visibleProperty || null,
-      accessibleTemplate: AccessibleList.createTemplate( {
+      accessibleTemplate: AccessibleList.createTemplateProperty( {
         listItems: listItems,
         punctuationStyle: 'semicolon'
       } )
