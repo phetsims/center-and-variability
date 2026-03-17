@@ -17,7 +17,7 @@
     "branch": "HEAD"
   },
   "center-and-variability": {
-    "sha": "3926cb1e13ff016726eb6c7b3fcae9334a237cf2",
+    "sha": "7b813a39b0f09f526a71dc8accdfb114f6143715",
     "branch": "1.2"
   },
   "chipper": {
@@ -37,7 +37,7 @@
     "branch": "HEAD"
   },
   "perennial-alias": {
-    "sha": "311d5b72b7072d3889946250df46db702ed268d1",
+    "sha": "76c5d06a2a63f88d3d9db31e6c13b8c267d53de4",
     "branch": "HEAD"
   },
   "phet-core": {
