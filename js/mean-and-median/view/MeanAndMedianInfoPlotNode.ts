@@ -15,7 +15,6 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CAVColors from '../../common/CAVColors.js';
 import { DATA_POINT_SCALE_PROPERTY } from '../../common/CAVConstants.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
@@ -89,5 +88,3 @@ export default class MeanAndMedianInfoPlotNode extends MeanAndMedianPlotNode {
   }
 
 }
-
-centerAndVariability.register( 'MeanAndMedianInfoPlotNode', MeanAndMedianInfoPlotNode );

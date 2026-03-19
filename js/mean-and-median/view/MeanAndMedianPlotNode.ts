@@ -16,7 +16,6 @@ import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import ManualConstraint from '../../../../scenery/js/layout/constraints/ManualConstraint.js';
 import { SoccerBallPhase } from '../../../../soccer-common/js/model/SoccerBallPhase.js';
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import RepresentationContext from '../../common/model/RepresentationContext.js';
@@ -104,5 +103,3 @@ export default class MeanAndMedianPlotNode extends CAVPlotNode {
     model.isMeanVisibleProperty.link( updateOneKickTextVisibility );
   }
 }
-
-centerAndVariability.register( 'MeanAndMedianPlotNode', MeanAndMedianPlotNode );

@@ -17,7 +17,6 @@ import AlignBox from '../../../../scenery/js/layout/nodes/AlignBox.js';
 import ButtonNode from '../../../../sun/js/buttons/ButtonNode.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVColors from '../../common/CAVColors.js';
 import CAVConstants from '../../common/CAVConstants.js';
@@ -90,5 +89,3 @@ export default class MedianAccordionBox extends CAVAccordionBox {
     ] );
   }
 }
-
-centerAndVariability.register( 'MedianAccordionBox', MedianAccordionBox );

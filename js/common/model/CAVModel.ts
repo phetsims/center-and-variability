@@ -24,7 +24,6 @@ import IOType from '../../../../tandem/js/types/IOType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import ObjectLiteralIO from '../../../../tandem/js/types/ObjectLiteralIO.js';
 import VoidIO from '../../../../tandem/js/types/VoidIO.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CAVConstants from '../CAVConstants.js';
 import CAVGroupSortInteractionModel from './CAVGroupSortInteractionModel.js';
 import CAVSoccerSceneModel from './CAVSoccerSceneModel.js';
@@ -183,6 +182,3 @@ const CAVModelIO = new IOType<IntentionalAny, IntentionalAny>( 'CAVModelIO', {
     }
   }
 } );
-
-
-centerAndVariability.register( 'CAVModel', CAVModel );

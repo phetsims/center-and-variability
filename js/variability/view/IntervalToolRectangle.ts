@@ -26,7 +26,6 @@ import Line from '../../../../scenery/js/nodes/Line.js';
 import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import AccessibleSlider, { AccessibleSliderOptions } from '../../../../sun/js/accessibility/AccessibleSlider.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CAVColors from '../../common/CAVColors.js';
 import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 import { roundToInterval } from '../../../../dot/js/util/roundToInterval.js';
@@ -186,5 +185,3 @@ export default class IntervalToolRectangle extends AccessibleSlider( Node, 0 ) {
     this.addInputListener( dragListener );
   }
 }
-
-centerAndVariability.register( 'IntervalToolRectangle', IntervalToolRectangle );

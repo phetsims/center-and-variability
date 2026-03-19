@@ -16,7 +16,6 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import TPaint from '../../../../scenery/js/util/TPaint.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
-import centerAndVariability from '../../centerAndVariability.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -76,5 +75,3 @@ export default class CAVAccordionBox extends AccordionBox {
     } );
   }
 }
-
-centerAndVariability.register( 'CAVAccordionBox', CAVAccordionBox );

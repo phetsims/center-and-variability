@@ -8,7 +8,6 @@
 
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
-import centerAndVariability from '../../centerAndVariability.js';
 
 
 export default class IconArrowNode extends ArrowNode {
@@ -25,5 +24,3 @@ export default class IconArrowNode extends ArrowNode {
     } );
   }
 }
-
-centerAndVariability.register( 'IconArrowNode', IconArrowNode );

@@ -11,7 +11,6 @@ import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 import { MAX_KICKS_PROPERTY } from '../../common/CAVConstants.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
@@ -78,5 +77,3 @@ export default class VariabilityScreenSummaryContent extends CAVScreenSummaryCon
     } );
   }
 }
-
-centerAndVariability.register( 'VariabilityScreenSummaryContent', VariabilityScreenSummaryContent );

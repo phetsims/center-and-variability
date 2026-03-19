@@ -31,7 +31,6 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVColors from '../../common/CAVColors.js';
 import CAVConstants, { MAX_KICKS_PROPERTY } from '../../common/CAVConstants.js';
@@ -289,5 +288,3 @@ export default class MADNode extends CAVPlotNode {
 
   }
 }
-
-centerAndVariability.register( 'MADNode', MADNode );

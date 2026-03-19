@@ -16,12 +16,9 @@ import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import ToggleNode, { ToggleNodeElement, ToggleNodeOptions } from '../../../../sun/js/ToggleNode.js';
-import centerAndVariability from '../../centerAndVariability.js';
 
 export default class CAVToggleNode<T, N extends Node = Node> extends ToggleNode<T, N> {
   public constructor( valueProperty: TReadOnlyProperty<T>, elements: ToggleNodeElement<T, N>[], providedOptions?: StrictOmit<ToggleNodeOptions, 'unselectedChildrenSceneGraphStrategy'> ) {
     super( valueProperty, elements, combineOptions<ToggleNodeOptions>( { unselectedChildrenSceneGraphStrategy: 'excluded' }, providedOptions ) );
   }
 }
-
-centerAndVariability.register( 'CAVToggleNode', CAVToggleNode );

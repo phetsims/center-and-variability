@@ -19,7 +19,6 @@ import timesSolidShape from '../../../../sherpa/js/fontawesome-5/timesSolidShape
 import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import ToggleSwitch, { ToggleSwitchOptions } from '../../../../sun/js/ToggleSwitch.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVColors from '../CAVColors.js';
 import CAVConstants, { MAX_KICKS_PROPERTY, SHOW_OUTLIERS_PROPERTY } from '../CAVConstants.js';
@@ -117,5 +116,3 @@ export default class SimulationPreferencesContentNode extends PreferencesPanelCo
     } );
   }
 }
-
-centerAndVariability.register( 'SimulationPreferencesContentNode', SimulationPreferencesContentNode );

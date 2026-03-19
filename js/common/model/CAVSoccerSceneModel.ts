@@ -19,7 +19,6 @@ import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioS
 import Tandem from '../../../../tandem/js/Tandem.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CAVSoccerBall from './CAVSoccerBall.js';
 
 export default class CAVSoccerSceneModel<T extends CAVSoccerBall = CAVSoccerBall> extends SoccerSceneModel<T> {
@@ -106,5 +105,3 @@ export default class CAVSoccerSceneModel<T extends CAVSoccerBall = CAVSoccerBall
 
   }
 }
-
-centerAndVariability.register( 'CAVSoccerSceneModel', CAVSoccerSceneModel );

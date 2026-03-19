@@ -13,7 +13,6 @@ import TProperty from '../../../../axon/js/TProperty.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CAVPlotNode from '../../common/view/CAVPlotNode.js';
 import CAVToggleNode from '../../common/view/CAVToggleNode.js';
 import VariabilityMeasure from '../model/VariabilityMeasure.js';
@@ -60,5 +59,3 @@ export default class VariabilityPlotNode extends Node {
     toggleNode.nodes.forEach( node => node.insertChild( 0, intervalToolNode ) );
   }
 }
-
-centerAndVariability.register( 'VariabilityPlotNode', VariabilityPlotNode );

@@ -12,7 +12,6 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import ComboBox from '../../../../sun/js/ComboBox.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CAVConstants from '../CAVConstants.js';
 import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 
@@ -37,5 +36,3 @@ export default class MaxKicksComboBox extends ComboBox<number> {
     } );
   }
 }
-
-centerAndVariability.register( 'MaxKicksComboBox', MaxKicksComboBox );

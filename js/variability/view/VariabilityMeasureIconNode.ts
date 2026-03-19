@@ -12,7 +12,6 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import TColor from '../../../../scenery/js/util/TColor.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import IconArrowNode from './IconArrowNode.js';
 
@@ -29,5 +28,3 @@ export default class VariabilityMeasureIconNode extends Node {
     } );
   }
 }
-
-centerAndVariability.register( 'VariabilityMeasureIconNode', VariabilityMeasureIconNode );

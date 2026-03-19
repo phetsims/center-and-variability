@@ -16,7 +16,6 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import SoccerCommonConstants from '../../../../soccer-common/js/SoccerCommonConstants.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CAVColors from '../CAVColors.js';
 import CAVObjectType from '../model/CAVObjectType.js';
 import CAVSoccerBall from '../model/CAVSoccerBall.js';
@@ -71,5 +70,3 @@ export default class MedianHighlightLayer extends Node {
     isPlayAreaMedianVisibleProperty.link( update );
   }
 }
-
-centerAndVariability.register( 'MedianHighlightLayer', MedianHighlightLayer );

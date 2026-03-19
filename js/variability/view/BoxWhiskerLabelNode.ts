@@ -14,7 +14,6 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import ProfileColorProperty from '../../../../scenery/js/util/ProfileColorProperty.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CAVColors from '../../common/CAVColors.js';
 import CAVConstants from '../../common/CAVConstants.js';
 
@@ -61,5 +60,3 @@ export default class BoxWhiskerLabelNode extends Node {
     } );
   }
 }
-
-centerAndVariability.register( 'BoxWhiskerLabelNode', BoxWhiskerLabelNode );

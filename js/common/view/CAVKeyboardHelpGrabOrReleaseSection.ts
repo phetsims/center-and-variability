@@ -10,12 +10,9 @@
 import Property from '../../../../axon/js/Property.js';
 import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
 import GrabReleaseKeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/GrabReleaseKeyboardHelpSection.js';
-import centerAndVariability from '../../centerAndVariability.js';
 
 export default class CAVKeyboardHelpGrabOrReleaseSection extends GrabReleaseKeyboardHelpSection {
   public constructor( title: TReadOnlyProperty<string> ) {
     super( title, new Property( '' ) );
   }
 }
-
-centerAndVariability.register( 'CAVKeyboardHelpGrabOrReleaseSection', CAVKeyboardHelpGrabOrReleaseSection );

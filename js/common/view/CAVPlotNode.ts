@@ -18,7 +18,6 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import MatrixBetweenProperty from '../../../../scenery/js/util/MatrixBetweenProperty.js';
 import TColor from '../../../../scenery/js/util/TColor.js';
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVConstants from '../CAVConstants.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
@@ -145,5 +144,3 @@ export default class CAVPlotNode extends Node {
     // No implementation because this node is powered by the model. Reset needed for uniformity with CardNodeContainer.
   }
 }
-
-centerAndVariability.register( 'CAVPlotNode', CAVPlotNode );

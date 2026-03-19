@@ -16,7 +16,6 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import { KickerImageSet } from '../../../../soccer-common/js/view/KickerImageSets.js';
 import SoccerSceneView from '../../../../soccer-common/js/view/SoccerSceneView.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CAVModel from '../model/CAVModel.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 import MedianHighlightLayer from './MedianHighlightLayer.js';
@@ -41,5 +40,3 @@ export default class CAVSceneView<T extends CAVSoccerSceneModel> extends SoccerS
     this.backSceneViewLayer.addChild( medianHighlightLayer );
   }
 }
-
-centerAndVariability.register( 'CAVSceneView', CAVSceneView );

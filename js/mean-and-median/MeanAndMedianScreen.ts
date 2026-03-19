@@ -12,7 +12,6 @@ import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js'
 import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
 import Image from '../../../scenery/js/nodes/Image.js';
 import meanAndMedianScreenIcon_png from '../../images/meanAndMedianScreenIcon_png.js';
-import centerAndVariability from '../centerAndVariability.js';
 import CenterAndVariabilityStrings from '../CenterAndVariabilityStrings.js';
 import CAVScreen, { CAVScreenOptions } from '../common/CAVScreen.js';
 import MeanAndMedianModel from './model/MeanAndMedianModel.js';
@@ -48,5 +47,3 @@ export default class MeanAndMedianScreen extends CAVScreen<CAVSoccerSceneModel, 
     );
   }
 }
-
-centerAndVariability.register( 'MeanAndMedianScreen', MeanAndMedianScreen );

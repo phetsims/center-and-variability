@@ -23,7 +23,6 @@ import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js'
 import ButtonNode from '../../../../sun/js/buttons/ButtonNode.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVColors from '../../common/CAVColors.js';
@@ -175,5 +174,3 @@ export default class MeanAndMedianAccordionBox extends CAVAccordionBox {
     ] );
   }
 }
-
-centerAndVariability.register( 'MeanAndMedianAccordionBox', MeanAndMedianAccordionBox );

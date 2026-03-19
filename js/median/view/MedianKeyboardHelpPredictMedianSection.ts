@@ -12,7 +12,6 @@
  */
 
 import SliderControlsKeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/SliderControlsKeyboardHelpSection.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 
 export default class MedianKeyboardHelpPredictMedianSection extends SliderControlsKeyboardHelpSection {
@@ -28,5 +27,3 @@ export default class MedianKeyboardHelpPredictMedianSection extends SliderContro
     } );
   }
 }
-
-centerAndVariability.register( 'MedianKeyboardHelpPredictMedianSection', MedianKeyboardHelpPredictMedianSection );

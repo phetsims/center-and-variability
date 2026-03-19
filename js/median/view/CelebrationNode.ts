@@ -25,7 +25,6 @@ import soundManager from '../../../../tambo/js/soundManager.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import sortCelebration_mp3 from '../../../sounds/sortCelebration_mp3.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import AsyncCounter from '../../common/model/AsyncCounter.js';
@@ -287,5 +286,3 @@ export default class CelebrationNode extends Panel {
     } );
   }
 }
-
-centerAndVariability.register( 'CelebrationNode', CelebrationNode );

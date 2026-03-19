@@ -20,7 +20,6 @@ import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioO
 import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import RepresentationContext from '../../common/model/RepresentationContext.js';
 import CardModel from './CardModel.js';
@@ -226,5 +225,3 @@ export default class CardContainerModel extends PhetioObject {
     }
   } );
 }
-
-centerAndVariability.register( 'CardContainerModel', CardContainerModel );

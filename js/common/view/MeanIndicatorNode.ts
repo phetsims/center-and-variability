@@ -12,7 +12,6 @@
 import Shape from '../../../../kite/js/Shape.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import SoccerCommonColors from '../../../../soccer-common/js/SoccerCommonColors.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CAVColors from '../CAVColors.js';
 import CAVConstants from '../CAVConstants.js';
 
@@ -40,5 +39,3 @@ export default class MeanIndicatorNode extends Path {
     } );
   }
 }
-
-centerAndVariability.register( 'MeanIndicatorNode', MeanIndicatorNode );

@@ -10,7 +10,6 @@
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import InfoTitleDescriptionRichText from '../../common/view/InfoTitleDescriptionRichText.js';
@@ -75,5 +74,3 @@ export default class MedianInfoNode extends VBox {
     updateDataValuesDisplay();
   }
 }
-
-centerAndVariability.register( 'MedianInfoNode', MedianInfoNode );

@@ -8,7 +8,6 @@
  */
 
 import Tandem from '../../../../tandem/js/Tandem.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import CAVDialog from '../../common/view/CAVDialog.js';
 import MedianModel from '../model/MedianModel.js';
@@ -20,5 +19,3 @@ export default class MedianInfoDialog extends CAVDialog {
     super( medianInfoNode, tandem );
   }
 }
-
-centerAndVariability.register( 'MedianInfoDialog', MedianInfoDialog );

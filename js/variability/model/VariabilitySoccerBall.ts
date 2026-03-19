@@ -11,7 +11,6 @@
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CAVSoccerBall from '../../common/model/CAVSoccerBall.js';
 
 export default class VariabilitySoccerBall extends CAVSoccerBall {
@@ -51,5 +50,3 @@ export default class VariabilitySoccerBall extends CAVSoccerBall {
     super.reset();
   }
 }
-
-centerAndVariability.register( 'VariabilitySoccerBall', VariabilitySoccerBall );

@@ -24,7 +24,6 @@ import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js'
 import ButtonNode from '../../../../sun/js/buttons/ButtonNode.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVColors from '../../common/CAVColors.js';
@@ -341,5 +340,3 @@ export default class VariabilityAccordionBox extends CAVAccordionBox {
     this.intervalToolNode.setFocusHighlight( new HighlightFromNode( parentIntervalToolNode ) );
   }
 }
-
-centerAndVariability.register( 'VariabilityAccordionBox', VariabilityAccordionBox );

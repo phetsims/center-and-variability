@@ -11,7 +11,6 @@ import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Text, { TextOptions } from '../../../../scenery/js/nodes/Text.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import { PDOMValueType } from '../../../../scenery/js/accessibility/pdom/ParallelDOM.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -31,5 +30,3 @@ export default class VariabilityReadoutText extends Text {
     super( stringProperty, options );
   }
 }
-
-centerAndVariability.register( 'VariabilityReadoutText', VariabilityReadoutText );

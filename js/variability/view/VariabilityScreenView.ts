@@ -15,7 +15,6 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import ManualConstraint from '../../../../scenery/js/layout/constraints/ManualConstraint.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVColors from '../../common/CAVColors.js';
 import CAVConstants from '../../common/CAVConstants.js';
@@ -167,5 +166,3 @@ export default class VariabilityScreenView extends CAVScreenView<VariabilityScen
     super.step( dt );
   }
 }
-
-centerAndVariability.register( 'VariabilityScreenView', VariabilityScreenView );

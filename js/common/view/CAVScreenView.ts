@@ -36,7 +36,6 @@ import SoccerSceneView from '../../../../soccer-common/js/view/SoccerSceneView.j
 import SoccerScreenView, { SoccerScreenViewOptions } from '../../../../soccer-common/js/view/SoccerScreenView.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import VariabilityKickerImageSets from '../../variability/view/VariabilityKickerImageSets.js';
@@ -476,5 +475,3 @@ export default class CAVScreenView<T extends CAVSoccerSceneModel = CAVSoccerScen
     }
   }
 }
-
-centerAndVariability.register( 'CAVScreenView', CAVScreenView );

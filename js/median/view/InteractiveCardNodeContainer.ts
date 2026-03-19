@@ -35,7 +35,6 @@ import animatedPanZoomSingleton from '../../../../scenery/js/listeners/animatedP
 import { NodeTranslationOptions } from '../../../../scenery/js/nodes/Node.js';
 import sharedSoundPlayers from '../../../../tambo/js/sharedSoundPlayers.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import CardModel from '../model/CardModel.js';
@@ -406,5 +405,3 @@ export default class InteractiveCardNodeContainer extends CardNodeContainer {
     };
   }
 }
-
-centerAndVariability.register( 'InteractiveCardNodeContainer', InteractiveCardNodeContainer );

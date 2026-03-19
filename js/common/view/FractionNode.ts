@@ -11,7 +11,6 @@
 import HSeparator from '../../../../scenery/js/layout/nodes/HSeparator.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import centerAndVariability from '../../centerAndVariability.js';
 
 export default class FractionNode extends VBox {
   public constructor( numerator: Node, denominator: Node ) {
@@ -22,5 +21,3 @@ export default class FractionNode extends VBox {
     } );
   }
 }
-
-centerAndVariability.register( 'FractionNode', FractionNode );

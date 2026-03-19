@@ -11,7 +11,6 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import Shape from '../../../../kite/js/Shape.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Path, { PathOptions } from '../../../../scenery/js/nodes/Path.js';
-import centerAndVariability from '../../centerAndVariability.js';
 
 // The length of the lines that extend perpendicularly from the ends of the bar
 const DROP_LINE_LENGTH = 6;
@@ -56,5 +55,3 @@ export default class IntervalBarNode extends Path {
     this.shape = shape;
   }
 }
-
-centerAndVariability.register( 'IntervalBarNode', IntervalBarNode );

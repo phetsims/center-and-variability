@@ -8,7 +8,6 @@
  */
 
 import { QueryStringMachine } from '../../../query-string-machine/js/QueryStringMachineModule.js';
-import centerAndVariability from '../centerAndVariability.js';
 
 const CAVQueryParameters = QueryStringMachine.getAll( {
 
@@ -36,5 +35,4 @@ const CAVQueryParameters = QueryStringMachine.getAll( {
   }
 } );
 
-centerAndVariability.register( 'CAVQueryParameters', CAVQueryParameters );
 export default CAVQueryParameters;

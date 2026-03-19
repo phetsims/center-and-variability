@@ -11,7 +11,6 @@
 
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import CAVDialog from '../../common/view/CAVDialog.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
@@ -30,5 +29,3 @@ export default class MeanAndMedianInfoDialog extends CAVDialog {
     super( meanAndMedianInfoNode, tandem );
   }
 }
-
-centerAndVariability.register( 'MeanAndMedianInfoDialog', MeanAndMedianInfoDialog );

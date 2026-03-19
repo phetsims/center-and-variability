@@ -14,7 +14,6 @@ import Property from '../../../../axon/js/Property.js';
 import Range from '../../../../dot/js/Range.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import PredictionSlider, { PredictionSliderOptions } from '../../common/view/PredictionSlider.js';
 
 type IntervalToolPredictionSliderOptions = PredictionSliderOptions;
@@ -50,5 +49,3 @@ export default class IntervalToolPredictionSlider extends PredictionSlider {
     super( predictionProperty, modelViewTransform, dragRange, options );
   }
 }
-
-centerAndVariability.register( 'IntervalToolPredictionSlider', IntervalToolPredictionSlider );

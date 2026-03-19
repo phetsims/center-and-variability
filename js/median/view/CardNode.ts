@@ -30,7 +30,6 @@ import soundManager from '../../../../tambo/js/soundManager.js';
 import cardDrop_mp3 from '../../../../tambo/sounds/cardDrop_mp3.js';
 import cardPickup_mp3 from '../../../../tambo/sounds/cardPickup_mp3.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import CardModel from '../model/CardModel.js';
 
@@ -167,5 +166,3 @@ export default class CardNode extends Node {
     this.touchArea = this.mouseArea;
   }
 }
-
-centerAndVariability.register( 'CardNode', CardNode );

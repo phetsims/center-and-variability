@@ -13,7 +13,6 @@ import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import TColor from '../../../../scenery/js/util/TColor.js';
 import Checkbox, { CheckboxOptions } from '../../../../sun/js/Checkbox.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import AccordionBoxCheckboxFactory from '../../common/view/AccordionBoxCheckboxFactory.js';
 import VariabilityMeasureIconNode from './VariabilityMeasureIconNode.js';
@@ -34,5 +33,3 @@ export default class VariabilityMeasureCheckbox extends Checkbox {
     }, options ) );
   }
 }
-
-centerAndVariability.register( 'VariabilityMeasureCheckbox', VariabilityMeasureCheckbox );

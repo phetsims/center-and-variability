@@ -10,7 +10,6 @@
 import Screen, { ScreenOptions } from '../../../joist/js/Screen.js';
 import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
 import WithRequired from '../../../phet-core/js/types/WithRequired.js';
-import centerAndVariability from '../centerAndVariability.js';
 import CAVColors from '../common/CAVColors.js';
 import CAVModel from './model/CAVModel.js';
 import CAVSoccerSceneModel from './model/CAVSoccerSceneModel.js';
@@ -30,5 +29,3 @@ export default class CAVScreen<T extends CAVSoccerSceneModel, M extends CAVModel
     super( createModel, createView, options );
   }
 }
-
-centerAndVariability.register( 'CAVScreen', CAVScreen );

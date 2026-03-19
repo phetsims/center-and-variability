@@ -10,7 +10,6 @@ import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
-import centerAndVariability from '../../centerAndVariability.js';
 
 export default class MADIconNode extends Node {
   public constructor() {
@@ -51,5 +50,3 @@ export default class MADIconNode extends Node {
     } );
   }
 }
-
-centerAndVariability.register( 'MADIconNode', MADIconNode );

@@ -20,7 +20,6 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import TColor from '../../../../scenery/js/util/TColor.js';
 import KickDistributionStrategy, { KickDistributionStrategySpecification } from '../../../../soccer-common/js/model/KickDistributionStrategy.js';
 import NumberTone from '../../../../soccer-common/js/model/NumberTone.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CAVConstants, { MAX_KICKS_PROPERTY } from '../../common/CAVConstants.js';
 import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
 import IntervalToolModel from './IntervalToolModel.js';
@@ -206,5 +205,3 @@ export default class VariabilityModel extends CAVModel<VariabilitySceneModel> {
     this.resetEmitter.emit();
   }
 }
-
-centerAndVariability.register( 'VariabilityModel', VariabilityModel );

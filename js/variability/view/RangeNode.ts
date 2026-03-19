@@ -16,7 +16,6 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import SoccerBall from '../../../../soccer-common/js/model/SoccerBall.js';
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CAVColors from '../../common/CAVColors.js';
 import CAVConstants, { DATA_POINT_SCALE_PROPERTY } from '../../common/CAVConstants.js';
 import CAVObjectType from '../../common/model/CAVObjectType.js';
@@ -123,5 +122,3 @@ export default class RangeNode extends CAVPlotNode {
     rangeRectangle.moveToBack();
   }
 }
-
-centerAndVariability.register( 'RangeNode', RangeNode );

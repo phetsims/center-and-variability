@@ -15,7 +15,6 @@ import Shape from '../../../../kite/js/Shape.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import Path, { PathOptions } from '../../../../scenery/js/nodes/Path.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CAVColors from '../CAVColors.js';
 
 export type BarStyle = 'continuous' | 'split';
@@ -98,5 +97,3 @@ export default class MedianBarNode extends Path {
     this.medianArrowNode.visible = false;
   }
 }
-
-centerAndVariability.register( 'MedianBarNode', MedianBarNode );

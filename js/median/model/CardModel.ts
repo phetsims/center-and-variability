@@ -28,7 +28,6 @@ import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CardContainerModel from './CardContainerModel.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 import isResettingAllProperty from '../../../../scenery-phet/js/isResettingAllProperty.js';
@@ -159,5 +158,3 @@ export default class CardModel extends PhetioObject {
     valueType: CardModel
   } );
 }
-
-centerAndVariability.register( 'CardModel', CardModel );

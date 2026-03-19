@@ -20,7 +20,6 @@ import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import SceneryConstants from '../../../../scenery/js/SceneryConstants.js';
 import AccessibleSlider, { AccessibleSliderOptions } from '../../../../sun/js/accessibility/AccessibleSlider.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import PredictionThumbNode, { PredictionThumbNodeOptions } from './PredictionThumbNode.js';
 
 type SelfOptions = {
@@ -110,5 +109,3 @@ export default class PredictionSlider extends AccessibleSlider( Node, 0 ) {
     } ) );
   }
 }
-
-centerAndVariability.register( 'PredictionSlider', PredictionSlider );

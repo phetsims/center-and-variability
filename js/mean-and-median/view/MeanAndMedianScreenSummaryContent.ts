@@ -7,7 +7,6 @@
  */
 
 import CAVScreenSummaryContent from '../../common/view/CAVScreenSummaryContent.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import MeanAndMedianModel from '../model/MeanAndMedianModel.js';
 import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 import { MAX_KICKS_PROPERTY } from '../../common/CAVConstants.js';
@@ -54,5 +53,3 @@ export default class MeanAndMedianScreenSummaryContent extends CAVScreenSummaryC
     } );
   }
 }
-
-centerAndVariability.register( 'MeanAndMedianScreenSummaryContent', MeanAndMedianScreenSummaryContent );

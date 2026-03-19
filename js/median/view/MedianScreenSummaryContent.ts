@@ -9,7 +9,6 @@
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 import { MAX_KICKS_PROPERTY } from '../../common/CAVConstants.js';
 import CAVScreenSummaryContent from '../../common/view/CAVScreenSummaryContent.js';
@@ -71,5 +70,3 @@ export default class MedianScreenSummaryContent extends CAVScreenSummaryContent 
       } );
   }
 }
-
-centerAndVariability.register( 'MedianScreenSummaryContent', MedianScreenSummaryContent );

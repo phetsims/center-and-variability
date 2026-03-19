@@ -22,7 +22,6 @@ import timesSolidShape from '../../../../sherpa/js/fontawesome-5/timesSolidShape
 import { SoccerBallPhase } from '../../../../soccer-common/js/model/SoccerBallPhase.js';
 import SoccerObjectNode, { SoccerObjectNodeOptions } from '../../../../soccer-common/js/view/SoccerObjectNode.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CAVColors from '../CAVColors.js';
 import CAVConstants, { DATA_POINT_SCALE_PROPERTY } from '../CAVConstants.js';
 import CAVObjectType from '../model/CAVObjectType.js';
@@ -122,5 +121,3 @@ export default class DataPointNode extends SoccerObjectNode {
     super.addDebugText( soccerBall );
   }
 }
-
-centerAndVariability.register( 'DataPointNode', DataPointNode );

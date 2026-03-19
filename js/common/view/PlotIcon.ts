@@ -15,7 +15,6 @@ import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Path, { PathOptions } from '../../../../scenery/js/nodes/Path.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CAVColors from '../CAVColors.js';
 
 const RECTANGLE_DIMENSION = 28;
@@ -75,5 +74,3 @@ export default class PlotIcon extends Node {
     } );
   }
 }
-
-centerAndVariability.register( 'PlotIcon', PlotIcon );

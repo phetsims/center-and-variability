@@ -9,7 +9,6 @@
 
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import SoccerCommonColors from '../../../../soccer-common/js/SoccerCommonColors.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CAVColors from '../CAVColors.js';
 import CAVConstants from '../CAVConstants.js';
 
@@ -25,5 +24,3 @@ export default class PlayAreaMedianIndicatorNode extends ArrowNode {
     } );
   }
 }
-
-centerAndVariability.register( 'PlayAreaMedianIndicatorNode', PlayAreaMedianIndicatorNode );

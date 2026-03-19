@@ -13,7 +13,6 @@ import NumberTone, { toStepDiscrete } from '../../../../soccer-common/js/model/N
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import marimbaToneE3_mp3 from '../../../sounds/marimbaToneE3_mp3.js';
-import centerAndVariability from '../../centerAndVariability.js';
 
 const INITIAL_OUTPUT_LEVEL = 0.2;
 
@@ -29,8 +28,6 @@ const lowerSoundClip = new SoundClip( marimbaToneE3_mp3, {
 
 soundManager.addSoundGenerator( upperSoundClip );
 soundManager.addSoundGenerator( lowerSoundClip );
-
-centerAndVariability.register( 'NumberTone', NumberTone );
 
 /**
  * Get the corresponding step above a base frequency for a note in the pentatonic scale.
@@ -84,5 +81,3 @@ export default class MedianAnimationTone {
     NumberTone.playValue( median );
   }
 }
-
-centerAndVariability.register( 'MedianAnimationTone', MedianAnimationTone );

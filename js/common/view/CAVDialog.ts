@@ -9,7 +9,6 @@
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Dialog from '../../../../sun/js/Dialog.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import centerAndVariability from '../../centerAndVariability.js';
 
 export default class CAVDialog extends Dialog {
   public constructor( node: Node, tandem: Tandem ) {
@@ -21,4 +20,3 @@ export default class CAVDialog extends Dialog {
     } );
   }
 }
-centerAndVariability.register( 'CAVDialog', CAVDialog );

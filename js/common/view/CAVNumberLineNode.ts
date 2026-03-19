@@ -18,7 +18,6 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import NumberLineNode, { NumberLineNodeOptions } from '../../../../soccer-common/js/view/NumberLineNode.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CAVColors from '../CAVColors.js';
 import MeanIndicatorNode from './MeanIndicatorNode.js';
 
@@ -83,5 +82,3 @@ export default class CAVNumberLineNode extends NumberLineNode {
       } );
   }
 }
-
-centerAndVariability.register( 'CAVNumberLineNode', CAVNumberLineNode );

@@ -15,7 +15,6 @@ import KeyboardHelpSectionRow, { LabelWithIconOptions } from '../../../../scener
 import LetterKeyNode from '../../../../scenery-phet/js/keyboard/LetterKeyNode.js';
 import NumberKeyNode from '../../../../scenery-phet/js/keyboard/NumberKeyNode.js';
 import TextKeyNode from '../../../../scenery-phet/js/keyboard/TextKeyNode.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import { SECTION_LABEL_OPTIONS } from './CAVKeyboardHelpNode.js';
@@ -58,5 +57,3 @@ export default class CAVKeyboardHelpMoveGrabbedBallAndOrCardSection extends Keyb
       ) ] );
   }
 }
-
-centerAndVariability.register( 'CAVKeyboardHelpMoveGrabbedBallAndOrCardSection', CAVKeyboardHelpMoveGrabbedBallAndOrCardSection );

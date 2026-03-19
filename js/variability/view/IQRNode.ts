@@ -22,7 +22,6 @@ import Path from '../../../../scenery/js/nodes/Path.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVColors from '../../common/CAVColors.js';
 import CAVConstants, { SHOW_OUTLIERS_PROPERTY } from '../../common/CAVConstants.js';
@@ -316,5 +315,3 @@ export default class IQRNode extends CAVPlotNode {
     sceneModel.variabilityDataMeasuresUpdatedEmitter.addListener( updateIQRNode );
   }
 }
-
-centerAndVariability.register( 'IQRNode', IQRNode );

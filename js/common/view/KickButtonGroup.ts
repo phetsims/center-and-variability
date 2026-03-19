@@ -22,7 +22,6 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import SoccerSceneModel from '../../../../soccer-common/js/model/SoccerSceneModel.js';
 import KickButton, { KICK_BUTTON_FONT } from '../../../../soccer-common/js/view/KickButton.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVSoccerSceneModel from '../model/CAVSoccerSceneModel.js';
 import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
@@ -102,5 +101,3 @@ export default class KickButtonGroup extends VBox {
     } );
   }
 }
-
-centerAndVariability.register( 'KickButtonGroup', KickButtonGroup );

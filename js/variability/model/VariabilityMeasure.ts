@@ -8,7 +8,6 @@
 
 import Enumeration from '../../../../phet-core/js/Enumeration.js';
 import EnumerationValue from '../../../../phet-core/js/EnumerationValue.js';
-import centerAndVariability from '../../centerAndVariability.js';
 
 export default class VariabilityMeasure extends EnumerationValue {
   public static readonly RANGE = new VariabilityMeasure();
@@ -17,5 +16,3 @@ export default class VariabilityMeasure extends EnumerationValue {
 
   public static readonly enumeration = new Enumeration( VariabilityMeasure );
 }
-
-centerAndVariability.register( 'VariabilityMeasure', VariabilityMeasure );

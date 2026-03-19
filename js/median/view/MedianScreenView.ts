@@ -11,7 +11,6 @@
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVColors from '../../common/CAVColors.js';
 import CAVConstants from '../../common/CAVConstants.js';
@@ -74,5 +73,3 @@ export default class MedianScreenView extends CAVScreenView {
     this.cavSetPDOMOrder( controls, [ predictMedianNode ], this.medianAccordionBox.infoButton );
   }
 }
-
-centerAndVariability.register( 'MedianScreenView', MedianScreenView );

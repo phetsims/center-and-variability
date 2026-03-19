@@ -10,7 +10,6 @@
 import Emitter from '../../../../axon/js/Emitter.js';
 import Shape from '../../../../kite/js/Shape.js';
 import InfoButton, { InfoButtonOptions } from '../../../../scenery-phet/js/buttons/InfoButton.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import { BUTTON_AND_TITLE_MARGIN } from './CAVAccordionBox.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
@@ -34,4 +33,3 @@ export default class CAVInfoButton extends InfoButton {
     super( options );
   }
 }
-centerAndVariability.register( 'CAVInfoButton', CAVInfoButton );

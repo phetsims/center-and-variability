@@ -164,6 +164,4 @@ const CenterAndVariabilityImages = {
   } )
 };
 
-centerAndVariability.register( 'CenterAndVariabilityImages', CenterAndVariabilityImages );
-
 export default CenterAndVariabilityImages;

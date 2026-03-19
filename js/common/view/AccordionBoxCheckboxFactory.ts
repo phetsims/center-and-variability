@@ -20,7 +20,6 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
 import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVColors from '../CAVColors.js';
 import CAVConstants from '../CAVConstants.js';
@@ -136,5 +135,3 @@ export default class AccordionBoxCheckboxFactory {
     };
   }
 }
-
-centerAndVariability.register( 'AccordionBoxCheckboxFactory', AccordionBoxCheckboxFactory );

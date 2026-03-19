@@ -7,7 +7,6 @@
  * @author Chris Klusendorf (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */
-import centerAndVariability from '../../centerAndVariability.js';
 
 export default class AsyncCounter {
 
@@ -52,5 +51,3 @@ export default class AsyncCounter {
     }
   }
 }
-
-centerAndVariability.register( 'AsyncCounter', AsyncCounter );

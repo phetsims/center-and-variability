@@ -22,7 +22,6 @@ import SoccerCommonColors from '../../../../soccer-common/js/SoccerCommonColors.
 import { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
 import sharedSoundPlayers from '../../../../tambo/js/sharedSoundPlayers.js';
 import TSoundPlayer from '../../../../tambo/js/TSoundPlayer.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import VariabilityMeasureIconNode from '../../variability/view/VariabilityMeasureIconNode.js';
 import CAVColors from '../CAVColors.js';
@@ -203,5 +202,3 @@ export default class PlayAreaCheckboxFactory {
     );
   }
 }
-
-centerAndVariability.register( 'PlayAreaCheckboxFactory', PlayAreaCheckboxFactory );

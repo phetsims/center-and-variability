@@ -8,7 +8,6 @@
  */
 
 import SliderControlsKeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/SliderControlsKeyboardHelpSection.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 
 export default class VariabilityKeyboardHelpSection extends SliderControlsKeyboardHelpSection {
@@ -23,5 +22,3 @@ export default class VariabilityKeyboardHelpSection extends SliderControlsKeyboa
     } );
   }
 }
-
-centerAndVariability.register( 'VariabilityKeyboardHelpSection', VariabilityKeyboardHelpSection );

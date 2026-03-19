@@ -14,7 +14,6 @@ import dragIndicatorHand_png from '../../../../scenery-phet/images/dragIndicator
 import SortCueArrowNode from '../../../../scenery-phet/js/accessibility/group-sort/view/SortCueArrowNode.js';
 import Image from '../../../../scenery/js/nodes/Image.js';
 import Node, { NodeOptions, NodeTranslationOptions } from '../../../../scenery/js/nodes/Node.js';
-import centerAndVariability from '../../centerAndVariability.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -49,5 +48,3 @@ export default class CardDragIndicatorNode extends Node {
     super( options );
   }
 }
-
-centerAndVariability.register( 'CardDragIndicatorNode', CardDragIndicatorNode );

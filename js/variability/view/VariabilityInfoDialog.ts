@@ -10,7 +10,6 @@
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CAVDialog from '../../common/view/CAVDialog.js';
 import CAVToggleNode from '../../common/view/CAVToggleNode.js';
 import VariabilityMeasure from '../model/VariabilityMeasure.js';
@@ -40,5 +39,3 @@ export default class VariabilityInfoDialog extends CAVDialog {
     super( toggleNode, tandem );
   }
 }
-
-centerAndVariability.register( 'VariabilityInfoDialog', VariabilityInfoDialog );

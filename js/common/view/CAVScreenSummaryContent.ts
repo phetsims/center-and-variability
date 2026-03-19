@@ -14,7 +14,6 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import AccessibleList from '../../../../scenery-phet/js/accessibility/AccessibleList.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVConstants from '../CAVConstants.js';
@@ -82,5 +81,3 @@ export default class CAVScreenSummaryContent extends ScreenSummaryContent {
       } ) );
   }
 }
-
-centerAndVariability.register( 'CAVScreenSummaryContent', CAVScreenSummaryContent );

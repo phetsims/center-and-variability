@@ -19,7 +19,6 @@ import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import AlignGroup from '../../../scenery/js/layout/constraints/AlignGroup.js';
 import Tandem from '../../../tandem/js/Tandem.js';
-import centerAndVariability from '../centerAndVariability.js';
 import CAVColors from './CAVColors.js';
 import CAVQueryParameters from './CAVQueryParameters.js';
 import PlotType from './model/PlotType.js';
@@ -148,5 +147,4 @@ export const DATA_POINT_SCALE_PROPERTY = new DerivedProperty( [ MAX_KICKS_PROPER
   disableListenerLimit: true
 } );
 
-centerAndVariability.register( 'CAVConstants', CAVConstants );
 export default CAVConstants;

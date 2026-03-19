@@ -19,7 +19,6 @@ import GroupSelectModel from '../../../../scenery-phet/js/accessibility/group-so
 import isResettingAllProperty from '../../../../scenery-phet/js/isResettingAllProperty.js';
 import CardSounds from '../../../../tambo/js/sound-generators/CardSounds.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CardContainerModel, { CardContainerModelOptions } from './CardContainerModel.js';
 import CardModel from './CardModel.js';
 import MedianModel from './MedianModel.js';
@@ -163,5 +162,3 @@ export default class InteractiveCardContainerModel extends CardContainerModel {
   }
 
 }
-
-centerAndVariability.register( 'InteractiveCardContainerModel', InteractiveCardContainerModel );

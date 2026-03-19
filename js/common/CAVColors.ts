@@ -84,5 +84,4 @@ const CAVColors = {
   kicker4RadioButtonFillColorProperty: new ProfileColorProperty( centerAndVariability, 'kicker4RadioButtonFillColorProperty', { default: '#eeda63' } )
 };
 
-centerAndVariability.register( 'CAVColors', CAVColors );
 export default CAVColors;

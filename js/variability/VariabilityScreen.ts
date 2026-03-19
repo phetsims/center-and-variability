@@ -12,7 +12,6 @@ import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js'
 import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
 import Image from '../../../scenery/js/nodes/Image.js';
 import variabilityScreenIcon_png from '../../images/variabilityScreenIcon_png.js';
-import centerAndVariability from '../centerAndVariability.js';
 import CenterAndVariabilityStrings from '../CenterAndVariabilityStrings.js';
 import CAVScreen, { CAVScreenOptions } from '../common/CAVScreen.js';
 import VariabilityModel from './model/VariabilityModel.js';
@@ -46,5 +45,3 @@ export default class VariabilityScreen extends CAVScreen<VariabilitySceneModel, 
     );
   }
 }
-
-centerAndVariability.register( 'VariabilityScreen', VariabilityScreen );

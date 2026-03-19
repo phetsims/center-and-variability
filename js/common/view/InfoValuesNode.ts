@@ -14,7 +14,6 @@ import ManualConstraint from '../../../../scenery/js/layout/constraints/ManualCo
 import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVColors from '../CAVColors.js';
 import CAVConstants from '../CAVConstants.js';
@@ -142,5 +141,3 @@ export default class InfoValuesNode<T extends CAVSoccerBall> extends Node {
     // optional decorations in subclasses
   }
 }
-
-centerAndVariability.register( 'InfoValuesNode', InfoValuesNode );

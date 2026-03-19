@@ -24,7 +24,6 @@ import ContinuousPropertySoundClip from '../../../../tambo/js/sound-generators/C
 import soundManager from '../../../../tambo/js/soundManager.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import intervalToolLoop_wav from '../../../sounds/intervalToolLoop_wav.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CAVColors from '../../common/CAVColors.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import IntervalToolModel from '../model/IntervalToolModel.js';
@@ -173,5 +172,3 @@ export default class IntervalToolNode extends Node {
     this.pdomOrder = [ handle1, handle2, rectangle ];
   }
 }
-
-centerAndVariability.register( 'IntervalToolNode', IntervalToolNode );

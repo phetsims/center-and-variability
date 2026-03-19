@@ -19,7 +19,6 @@ import KickDistributionStrategy, { KickDistributionStrategySpecification } from 
 import NumberTone from '../../../../soccer-common/js/model/NumberTone.js';
 import sharedSoundPlayers from '../../../../tambo/js/sharedSoundPlayers.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CAVConstants, { MAX_KICKS_PROPERTY } from '../../common/CAVConstants.js';
 import CAVModel, { CAVModelOptions } from '../../common/model/CAVModel.js';
 import CAVSoccerBall from '../../common/model/CAVSoccerBall.js';
@@ -223,5 +222,3 @@ export default class MeanAndMedianModel extends CAVModel {
     }
   }
 }
-
-centerAndVariability.register( 'MeanAndMedianModel', MeanAndMedianModel );

@@ -16,7 +16,6 @@ import Property from '../../../../axon/js/Property.js';
 import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
 import phetioStateSetEmitter from '../../../../tandem/js/phetioStateSetEmitter.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CAVConstants from '../../common/CAVConstants.js';
 
 export default class IntervalToolModel {
@@ -107,5 +106,3 @@ export default class IntervalToolModel {
     this.deltaStableProperty.value = this.getIntervalToolWidth();
   }
 }
-
-centerAndVariability.register( 'IntervalToolModel', IntervalToolModel );

@@ -15,7 +15,6 @@ import InteractiveHighlightingNode from '../../../../scenery/js/accessibility/vo
 import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import Panel from '../../../../sun/js/Panel.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CenterAndVariabilityStrings from '../../CenterAndVariabilityStrings.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
@@ -158,5 +157,3 @@ export default class CardNodeContainer extends InteractiveHighlightingNode {
     return this.model.getCardsInCellOrder().map( card => this.cardMap.get( card )! );
   }
 }
-
-centerAndVariability.register( 'CardNodeContainer', CardNodeContainer );

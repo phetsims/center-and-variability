@@ -15,7 +15,6 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import TColor from '../../../../scenery/js/util/TColor.js';
 import tshirtSolidShape from '../../../../sherpa/js/fontawesome-5/tshirtSolidShape.js';
 import RectangularRadioButtonGroup, { RectangularRadioButtonGroupOptions } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import VariabilitySceneModel from '../model/VariabilitySceneModel.js';
 import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 
@@ -73,5 +72,3 @@ export default class SceneKickerRadioButtonGroup extends RectangularRadioButtonG
       } ), options );
   }
 }
-
-centerAndVariability.register( 'SceneKickerRadioButtonGroup', SceneKickerRadioButtonGroup );

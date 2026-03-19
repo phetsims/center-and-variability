@@ -16,7 +16,6 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Path, { PathOptions } from '../../../../scenery/js/nodes/Path.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import timesSolidShape from '../../../../sherpa/js/fontawesome-5/timesSolidShape.js';
-import centerAndVariability from '../../centerAndVariability.js';
 import CAVColors from '../../common/CAVColors.js';
 import CAVConstants from '../../common/CAVConstants.js';
 import PlotType from '../../common/model/PlotType.js';
@@ -118,5 +117,3 @@ export default class RangeIconNode extends Node {
     } );
   }
 }
-
-centerAndVariability.register( 'RangeIconNode', RangeIconNode );
