@@ -13,11 +13,11 @@
     "branch": "HEAD"
   },
   "brand": {
-    "sha": "bdbadd032f78ce9f03e39677ea7b5248769977d2",
+    "sha": "37dd401600c0e5ff23685eb43c1caea9ee8f31d5",
     "branch": "HEAD"
   },
   "center-and-variability": {
-    "sha": "648364abc7440dd16012922df8c5f2f51b9b9fed",
+    "sha": "03b1b47cc3926efc412337000a5477eeae9c0d24",
     "branch": "1.1"
   },
   "chipper": {
