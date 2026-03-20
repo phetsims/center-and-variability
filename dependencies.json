@@ -17,11 +17,11 @@
     "branch": "HEAD"
   },
   "center-and-variability": {
-    "sha": "01accc41b52d10ea61bece40a834af55b9a0c7e6",
+    "sha": "1dab91149765fb3a99ab75a967d255a62c324bda",
     "branch": "1.2"
   },
   "chipper": {
-    "sha": "2ceced43a10a48093d226ea39b0e82ebc3da729a",
+    "sha": "59b8f67bd1a876a9d7360386daa6135ca4f1395e",
     "branch": "HEAD"
   },
   "dot": {
@@ -37,7 +37,7 @@
     "branch": "HEAD"
   },
   "perennial-alias": {
-    "sha": "76c5d06a2a63f88d3d9db31e6c13b8c267d53de4",
+    "sha": "81594a77a91b02749c2c5e9f01cc19b6366cf873",
     "branch": "HEAD"
   },
   "phet-core": {
