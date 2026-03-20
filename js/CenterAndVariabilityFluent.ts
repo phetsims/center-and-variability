@@ -552,3 +552,5 @@ const CenterAndVariabilityFluent = {
 };
 
 export default CenterAndVariabilityFluent;
+
+centerAndVariability.register('CenterAndVariabilityFluent', CenterAndVariabilityFluent);

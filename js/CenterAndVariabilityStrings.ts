@@ -333,4 +333,6 @@ type StringsType = {
 
 const CenterAndVariabilityStrings = getStringModule( 'CENTER_AND_VARIABILITY' ) as StringsType;
 
+centerAndVariability.register( 'CenterAndVariabilityStrings', CenterAndVariabilityStrings );
+
 export default CenterAndVariabilityStrings;
