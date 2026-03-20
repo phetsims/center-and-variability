@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2023-2026, University of Colorado Boulder
 
 /**
  * VariabilityMeasure is used to identify which kind of variability the user has selected to explore.

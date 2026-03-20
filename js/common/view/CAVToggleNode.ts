@@ -1,4 +1,4 @@
-// Copyright 2023-2025, University of Colorado Boulder
+// Copyright 2023-2026, University of Colorado Boulder
 
 /**
  * CAVToggleNode is a custom ToggleNode that excludes unselected children from the scene graph to enhance performance.

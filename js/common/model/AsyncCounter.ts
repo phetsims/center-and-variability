@@ -1,4 +1,4 @@
-// Copyright 2022-2023, University of Colorado Boulder
+// Copyright 2022-2026, University of Colorado Boulder
 
 /**
  * AsyncCounter manages the animations that play during card animation sequences.

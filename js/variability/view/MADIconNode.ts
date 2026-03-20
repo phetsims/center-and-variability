@@ -1,4 +1,4 @@
-// Copyright 2023-2025, University of Colorado Boulder
+// Copyright 2023-2026, University of Colorado Boulder
 
 /**
  * `MADIconNode` represents the icon for the MAD radio button. This icon displays a vertical line at the center
