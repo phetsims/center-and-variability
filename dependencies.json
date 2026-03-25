@@ -17,7 +17,7 @@
     "branch": "HEAD"
   },
   "center-and-variability": {
-    "sha": "eeb0c6db5aa49b5367af67620b5d77c359c763f1",
+    "sha": "758a4b4c9dff70d1cb0fe1686756b41cfd25e3ac",
     "branch": "1.1"
   },
   "chipper": {
@@ -69,7 +69,7 @@
     "branch": "HEAD"
   },
   "scenery": {
-    "sha": "90d8ee3e98705c58ee61e05a919f9e9a7214049a",
+    "sha": "214d734083463b0430613b2f9057ec30e207ca4d",
     "branch": "HEAD"
   },
   "scenery-phet": {
