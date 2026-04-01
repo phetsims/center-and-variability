@@ -16,6 +16,11 @@ export default class CAVDialog extends Dialog {
       isDisposable: false,
       closeButtonTouchAreaXDilation: 10,
       closeButtonTouchAreaYDilation: 10,
+      accessibleNameConfiguration: 'aria-label',
+
+      // TODO: What should this be? Likely each subclass has its own. See
+      //    https://github.com/phetsims/center-and-variability/issues/670
+      accessibleName: 'Info Dialog',
       tandem: tandem
     } );
   }
