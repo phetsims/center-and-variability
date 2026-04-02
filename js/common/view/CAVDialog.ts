@@ -10,7 +10,6 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Dialog, { DialogOptions } from '../../../../sun/js/Dialog.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 
 export default class CAVDialog extends Dialog {
   public constructor( node: Node, tandem: Tandem, providedOptions?: DialogOptions ) {
@@ -19,7 +18,6 @@ export default class CAVDialog extends Dialog {
       closeButtonTouchAreaXDilation: 10,
       closeButtonTouchAreaYDilation: 10,
       accessibleNameConfiguration: 'aria-label',
-      accessibleName: CenterAndVariabilityFluent.a11y.infoDialog.accessibleNameStringProperty,
       tandem: tandem
     }, providedOptions );
 

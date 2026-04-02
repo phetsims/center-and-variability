@@ -156,7 +156,6 @@ type StringsType = {
       'accessibleHelpTextStringProperty': LocalizedStringProperty;
     };
     'infoDialog': {
-      'accessibleNameStringProperty': LocalizedStringProperty;
       'dataValuesStringProperty': LocalizedStringProperty;
     };
     'variabilityInfoDialog': {
@@ -199,6 +198,9 @@ type StringsType = {
       };
       'infoButton': {
         'accessibleNameStringProperty': LocalizedStringProperty;
+      };
+      'infoDialog': {
+        'accessibleNameStringProperty': LocalizedStringProperty;
       }
     };
     'meanAndMedianScreen': {
@@ -229,6 +231,7 @@ type StringsType = {
         'accessibleNameStringProperty': LocalizedStringProperty;
       };
       'infoDialog': {
+        'accessibleNameStringProperty': LocalizedStringProperty;
         'meanEquationDescriptionStringProperty': LocalizedStringProperty;
       }
     };
@@ -292,6 +295,7 @@ type StringsType = {
         'accessibleNameStringProperty': LocalizedStringProperty;
       };
       'infoDialog': {
+        'accessibleNameStringProperty': LocalizedStringProperty;
         'rangeMinusPatternStringProperty': LocalizedStringProperty;
         'iqrMinusPatternStringProperty': LocalizedStringProperty;
         'boxPlot': {

@@ -141,7 +141,6 @@ a11y:
     accessibleName:     Predict Mean Pointer
     accessibleHelpText: Show or hide movable prediction pointer on field.
   infoDialog:
-    accessibleName: Info
     dataValues: 'Data Values (in meters): {$values}'
   variabilityInfoDialog:
     accessibleName: Mean Absolution Deviation Details
@@ -199,6 +198,8 @@ a11y:
       accessibleHelpText: Analyze data cards with or without median value shown and located if data is sorted.
     infoButton:
       accessibleName: Median Details
+    infoDialog:
+      accessibleName: Median Details
 
   # Content for the Mean and Median screen.
   meanAndMedianScreen:
@@ -236,6 +237,7 @@ a11y:
     infoButton:
       accessibleName: Median and Mean Details
     infoDialog:
+      accessibleName: Mean and Median Details
       meanEquationDescription: Mean = {$values} all over {$total}, which equals {$sum} over {$total}
 
   # Content for the Variability screen.
@@ -312,6 +314,12 @@ a11y:
     infoButton:
       accessibleName: "{$measure} Details"
     infoDialog:
+      accessibleName:
+        select_measure:
+          range: Range Details
+          iqr:   Interquartile Range Details
+          mad:   Mean Absolute Deviation Details
+
       rangeMinusPattern: Range = {$max} − {$min}
       iqrMinusPattern:   IQR = {$q3} − {$q1}
       boxPlot:

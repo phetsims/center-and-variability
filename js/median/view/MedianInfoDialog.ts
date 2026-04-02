@@ -8,6 +8,7 @@
  */
 
 import Tandem from '../../../../tandem/js/Tandem.js';
+import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 import CAVSoccerSceneModel from '../../common/model/CAVSoccerSceneModel.js';
 import CAVDialog from '../../common/view/CAVDialog.js';
 import MedianModel from '../model/MedianModel.js';
@@ -16,6 +17,8 @@ import MedianInfoNode from './MedianInfoNode.js';
 export default class MedianInfoDialog extends CAVDialog {
   public constructor( model: MedianModel, sceneModel: CAVSoccerSceneModel, tandem: Tandem ) {
     const medianInfoNode = new MedianInfoNode( model, sceneModel, tandem.createTandem( 'medianInfoNode' ) );
-    super( medianInfoNode, tandem );
+    super( medianInfoNode, tandem, {
+      accessibleName: CenterAndVariabilityFluent.a11y.medianScreen.infoDialog.accessibleNameStringProperty
+    } );
   }
 }

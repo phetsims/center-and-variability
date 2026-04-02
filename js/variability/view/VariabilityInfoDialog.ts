@@ -7,6 +7,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -37,8 +38,16 @@ export default class VariabilityInfoDialog extends CAVDialog {
       alignChildren: ToggleNode.NONE
     } );
 
+    const accessibleNameStringProperty = CenterAndVariabilityFluent.a11y.variabilityScreen.infoDialog.accessibleName.createProperty( {
+      measure: new DerivedProperty( [ model.selectedVariabilityMeasureProperty ], selectedMeasure => {
+        return selectedMeasure === VariabilityMeasure.RANGE ? 'range' :
+               selectedMeasure === VariabilityMeasure.IQR ? 'iqr' :
+               'mad';
+      } )
+    } );
+
     super( toggleNode, tandem, {
-      accessibleName: CenterAndVariabilityFluent.a11y.variabilityInfoDialog.accessibleNameStringProperty
+      accessibleName: accessibleNameStringProperty
     } );
   }
 }

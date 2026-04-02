@@ -343,9 +343,6 @@
       }
     },
     "infoDialog": {
-      "accessibleName": {
-        "value": "Info"
-      },
       "dataValues": {
         "value": "Data Values (in meters): {$values}"
       }
@@ -430,6 +427,11 @@
         "accessibleName": {
           "value": "Median Details"
         }
+      },
+      "infoDialog": {
+        "accessibleName": {
+          "value": "Median Details"
+        }
       }
     },
     "meanAndMedianScreen": {
@@ -484,6 +486,9 @@
         }
       },
       "infoDialog": {
+        "accessibleName": {
+          "value": "Mean and Median Details"
+        },
         "meanEquationDescription": {
           "value": "Mean = {$values} all over {$total}, which equals {$sum} over {$total}"
         }
@@ -601,6 +606,9 @@
         }
       },
       "infoDialog": {
+        "accessibleName": {
+          "value": "{ $measure ->\n  [range] Range Details\n  [iqr] Interquartile Range Details\n  *[mad] Mean Absolute Deviation Details\n}"
+        },
         "rangeMinusPattern": {
           "value": "Range = {$max} − {$min}"
         },
