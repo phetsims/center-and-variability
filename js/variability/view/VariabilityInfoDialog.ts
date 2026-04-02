@@ -10,6 +10,7 @@
 import NumberLineNode from '../../../../soccer-common/js/view/NumberLineNode.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 import CAVDialog from '../../common/view/CAVDialog.js';
 import CAVToggleNode from '../../common/view/CAVToggleNode.js';
 import VariabilityMeasure from '../model/VariabilityMeasure.js';
@@ -36,6 +37,8 @@ export default class VariabilityInfoDialog extends CAVDialog {
       alignChildren: ToggleNode.NONE
     } );
 
-    super( toggleNode, tandem );
+    super( toggleNode, tandem, {
+      accessibleName: CenterAndVariabilityFluent.a11y.variabilityInfoDialog.accessibleNameStringProperty
+    } );
   }
 }

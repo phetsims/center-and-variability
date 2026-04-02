@@ -6,22 +6,23 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import Dialog from '../../../../sun/js/Dialog.js';
+import Dialog, { DialogOptions } from '../../../../sun/js/Dialog.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import CenterAndVariabilityFluent from '../../CenterAndVariabilityFluent.js';
 
 export default class CAVDialog extends Dialog {
-  public constructor( node: Node, tandem: Tandem ) {
-    super( node, {
+  public constructor( node: Node, tandem: Tandem, providedOptions?: DialogOptions ) {
+    const options = optionize<DialogOptions, EmptySelfOptions, DialogOptions>()( {
       isDisposable: false,
       closeButtonTouchAreaXDilation: 10,
       closeButtonTouchAreaYDilation: 10,
       accessibleNameConfiguration: 'aria-label',
-
-      // TODO: What should this be? Likely each subclass has its own. See
-      //    https://github.com/phetsims/center-and-variability/issues/670
-      accessibleName: 'Info Dialog',
+      accessibleName: CenterAndVariabilityFluent.a11y.infoDialog.accessibleNameStringProperty,
       tandem: tandem
-    } );
+    }, providedOptions );
+
+    super( node, options );
   }
 }

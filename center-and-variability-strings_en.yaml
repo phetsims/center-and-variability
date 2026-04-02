@@ -141,7 +141,10 @@ a11y:
     accessibleName:     Predict Mean Pointer
     accessibleHelpText: Show or hide movable prediction pointer on field.
   infoDialog:
+    accessibleName: Info
     dataValues: 'Data Values (in meters): {$values}'
+  variabilityInfoDialog:
+    accessibleName: Mean Absolution Deviation Details
   noKicksLeftResponse: No kicks left
   meanReadout:
     accessibleParagraph: |-

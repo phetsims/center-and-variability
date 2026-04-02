@@ -119,7 +119,9 @@ addToMapIfDefined( 'a11y_predictMedianCheckbox_accessibleName', 'a11y.predictMed
 addToMapIfDefined( 'a11y_predictMedianCheckbox_accessibleHelpText', 'a11y.predictMedianCheckbox.accessibleHelpTextStringProperty' );
 addToMapIfDefined( 'a11y_predictMeanCheckbox_accessibleName', 'a11y.predictMeanCheckbox.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_predictMeanCheckbox_accessibleHelpText', 'a11y.predictMeanCheckbox.accessibleHelpTextStringProperty' );
+addToMapIfDefined( 'a11y_infoDialog_accessibleName', 'a11y.infoDialog.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_infoDialog_dataValues', 'a11y.infoDialog.dataValuesStringProperty' );
+addToMapIfDefined( 'a11y_variabilityInfoDialog_accessibleName', 'a11y.variabilityInfoDialog.accessibleNameStringProperty' );
 addToMapIfDefined( 'a11y_noKicksLeftResponse', 'a11y.noKicksLeftResponseStringProperty' );
 addToMapIfDefined( 'a11y_meanReadout_accessibleParagraph', 'a11y.meanReadout.accessibleParagraphStringProperty' );
 addToMapIfDefined( 'a11y_medianReadout_accessibleParagraph', 'a11y.medianReadout.accessibleParagraphStringProperty' );
@@ -368,7 +370,11 @@ const CenterAndVariabilityFluent = {
       accessibleHelpTextStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_predictMeanCheckbox_accessibleHelpText', _.get( CenterAndVariabilityStrings, 'a11y.predictMeanCheckbox.accessibleHelpTextStringProperty' ) )
     },
     infoDialog: {
+      accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_infoDialog_accessibleName', _.get( CenterAndVariabilityStrings, 'a11y.infoDialog.accessibleNameStringProperty' ) ),
       dataValues: new FluentPattern<{ values: FluentVariable }>( fluentSupport.bundleProperty, 'a11y_infoDialog_dataValues', _.get( CenterAndVariabilityStrings, 'a11y.infoDialog.dataValuesStringProperty' ), [{"name":"values"}] )
+    },
+    variabilityInfoDialog: {
+      accessibleNameStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_variabilityInfoDialog_accessibleName', _.get( CenterAndVariabilityStrings, 'a11y.variabilityInfoDialog.accessibleNameStringProperty' ) )
     },
     noKicksLeftResponseStringProperty: new FluentConstant( fluentSupport.bundleProperty, 'a11y_noKicksLeftResponse', _.get( CenterAndVariabilityStrings, 'a11y.noKicksLeftResponseStringProperty' ) ),
     meanReadout: {

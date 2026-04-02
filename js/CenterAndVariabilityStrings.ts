@@ -156,7 +156,11 @@ type StringsType = {
       'accessibleHelpTextStringProperty': LocalizedStringProperty;
     };
     'infoDialog': {
+      'accessibleNameStringProperty': LocalizedStringProperty;
       'dataValuesStringProperty': LocalizedStringProperty;
+    };
+    'variabilityInfoDialog': {
+      'accessibleNameStringProperty': LocalizedStringProperty;
     };
     'noKicksLeftResponseStringProperty': LocalizedStringProperty;
     'meanReadout': {

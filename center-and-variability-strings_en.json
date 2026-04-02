@@ -343,8 +343,16 @@
       }
     },
     "infoDialog": {
+      "accessibleName": {
+        "value": "Info"
+      },
       "dataValues": {
         "value": "Data Values (in meters): {$values}"
+      }
+    },
+    "variabilityInfoDialog": {
+      "accessibleName": {
+        "value": "Mean Absolution Deviation Details"
       }
     },
     "noKicksLeftResponse": {
