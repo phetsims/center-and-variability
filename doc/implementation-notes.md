@@ -23,13 +23,13 @@ internal documentation (source code comments) and external documentation (design
 
 Before reading this document, please read:
 
-- [model.md](https://github.com/phetsims/center-and-variability/blob/main/doc/model.md), a high-level description of the
+- [model.md](model.md), a high-level description of the
   simulation model
 
 In addition to this document, you are encouraged to read:
 
-- [PhET Development Overview](https://github.com/phetsims/phet-info/blob/main/doc/phet-development-overview.md)
-- [PhET Software Design Patterns](https://github.com/phetsims/phet-info/blob/main/doc/phet-software-design-patterns.md)
+- [PhET Development Overview](../../phet-info/doc/phet-development-overview.md)
+- [PhET Software Design Patterns](../../phet-info/doc/phet-software-design-patterns.md)
 - [Center and Variability HTML5 design document](https://docs.google.com/document/d/19OG6qtThtkH89zCQmkIckM6ZKV8W1zkCT0ZghXKcL9U/edit#) (
   definitely incomplete and out of date, but worth a look)
 
@@ -39,14 +39,14 @@ In addition to this document, you are encouraged to read:
 
 This simulation makes use of a model-view transform to map model coordinates (horizontally: meters, vertically: number
 of data points) to view coordinates in the soccer
-area [CAVScreenView.ts](https://github.com/phetsims/center-and-variability/blob/main/js/common/view/CAVScreenView.ts),
+area [CAVScreenView.ts](../js/common/view/CAVScreenView.ts),
 and in the charts which are shown in the accordion box and info dialogs. The plotNode model-view
 transform (`PLOT_NODE_TRANSFORM`) can be found in [CAVConstants.ts](../js/common/CAVConstants.ts).
 
 ### Query Parameters
 
 Query parameters are used to enable sim-specific features. Sim-specific query parameters are documented
-in [CAVQueryParameters.ts](https://github.com/phetsims/center-and-variability/blob/main/js/common/CAVQueryParameters.ts).
+in [CAVQueryParameters.ts](../js/common/CAVQueryParameters.ts).
 
 ### Memory Management
 
@@ -66,7 +66,7 @@ The mathematical definitions of the statistical measures of center and spread ar
 In order to avoid performance problems and spurious intermediate values in the Variability screen, measures are computed
 as a batch, then signified via `updateDataMeasures` and `variabilityDataMeasuresUpdatedEmitter`.
 Likewise, `deltaStableProperty`
-in [IntervalToolModel.ts](https://github.com/phetsims/center-and-variability/blob/main/js/variability/model/IntervalToolModel.ts)
+in [IntervalToolModel.ts](../js/variability/model/IntervalToolModel.ts)
 works around inconsistent intermediate values.
 
 ## Main Architecture & Scenes
@@ -123,4 +123,4 @@ the sim. So there is no sim-specific use of PhetioGroup or PhetioCapsule. See ex
 PhET-iO API.
 
 See
-also [soccer-common/implementation-notes.md](https://github.com/phetsims/soccer-common/blob/main/doc/implementation-notes.md).
+also [soccer-common/implementation-notes.md](../../soccer-common/doc/implementation-notes.md).

@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../design-lab/schemas/known-deviations.schema.json
+#
+# Spec statements the SHIPPED Center and Variability implementation is known to fail where the design is right and the
+# sim is wrong, or where the design deliberately departs from the published API. Each statement still runs on every
+# spec run: its failure is reported WAIVED rather than FAIL, and its pass is reported as a stale waiver to remove. This
+# file describes only the shipped implementation, so design-lab/scripts/create-sandbox.ts scrubs it and a re-inferred
+# implementation is held to the full spec.
+
+center-and-variability/specs/design.spec.ts:
+  - statement: The PhET-iO API of the designed screens has no breaking changes against the design
+    reason: >-
+      Three deliberate or vocabulary-bound departures from the published API. (1) The design selects the Variability
+      kicker with an enumeration of jersey numbers, selectedKickerProperty; the shipped sim exposes a reference-typed
+      selectedSceneModelProperty, which the design vocabulary cannot state. (2) A ball's valueProperty is designed as a
+      plain nullable-number Property; the shipped sim gives it a library subtype, SoccerBallValuePropertyIO, that only
+      adds validation. (3) The kick-count readout's string is a Property of its own in the design and a link to a
+      pattern string in the shipped sim, and the two readouts in the Variability accordion box link theirs likewise.
+  - statement: No featured PhET-iO Elements exist beyond the design
+    reason: >-
+      The shipped sim features implementation conveniences the design leaves to the implementation: the derived
+      pattern strings behind the kick buttons and readouts and inside the info dialogs, the kick buttons' self-visibility
+      switches, and the reference-typed kicker selector the design replaces with an enumeration.

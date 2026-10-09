@@ -79,3 +79,18 @@ Variability Screen
 * Kicker 2 is unimodal and symmetric with a larger standard deviation
 * Kicker 3 will kick a skewed right distribution
 * Kicker 4 will kick a skewed left distribution.
+
+### Kick Distribution Values
+
+Every distribution is a table of relative frequencies for the 15 whole-meter distances, 1 through 15 in order; the
+table need not be normalized. A skew type is applied to the same base table: the right-skewed data set is the table
+below, and the left-skewed data set is that table reversed.
+
+* Right-skewed (Random Skew, and Kicker 3): [10, 25, 45, 30, 18, 12, 10, 5, 4, 4, 4, 4, 4, 4, 4]
+* Left-skewed (Random Skew, and Kicker 4): [4, 4, 4, 4, 4, 4, 4, 5, 10, 12, 18, 30, 45, 25, 10]
+* Kicker 1 (narrow, symmetric): [0, 0, 0, 1, 3, 12, 20, 32, 20, 12, 3, 1, 0, 0, 0]
+* Kicker 2 (wide, symmetric): [3, 5, 10, 10, 25, 32, 45, 65, 45, 32, 25, 10, 10, 5, 3]
+
+The Median and Mean & Median screens each choose left or right skew with equal probability on startup and on Reset
+All. A PhET-iO client may replace any scene's distribution, or dictate the exact distance of each kick in order; see
+the kick distribution strategy documentation in the PhET-iO API.
